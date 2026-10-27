@@ -8,6 +8,7 @@ use App\Models\AsScheduleWorker;
 use App\Models\AsScheduleWorkerOffDay;
 use App\Models\WorkerGrant;
 use App\Support\Tier;
+use App\Support\WorkDays;
 use App\Support\WorkerContext;
 use App\Support\WorkerGrantState;
 use Illuminate\Http\Request;
@@ -74,7 +75,7 @@ class GlobalWorkerController extends Controller
     private function row(AsGlobalWorker $g, $cards, ?WorkerGrant $grant = null): array
     {
         return ['id' => (int) $g->id, 'workerName' => $g->workerName, 'email' => $g->email, 'phone' => $g->phone, 'costPerHalfDay' => (float) $g->costPerHalfDay,
-            'skills' => $g->skills ?: [], 'offWeekdays' => $g->offWeekdays ?: [], 'notes' => $g->notes,
+            'skills' => $g->skills ?: [], 'offWeekdays' => $g->offWeekdays ?: [], 'dayParts' => WorkDays::json($g->dayParts), 'notes' => $g->notes,
             'seasons' => collect($cards)->map(fn ($c) => ['id' => (int) $c->seasonId, 'title' => $c->seasonTitle, 'cardId' => (int) $c->id])->values()->all(),
             'login' => $grant ? WorkerGrantState::withLinks($grant) : null];
     }
@@ -90,6 +91,7 @@ class GlobalWorkerController extends Controller
             'skills.*' => ['string', Rule::in(array_keys(AsScheduleWorker::SKILLS))],
             'offWeekdays' => 'nullable|array',
             'offWeekdays.*' => 'integer|min:0|max:6',
+            'dayParts' => 'nullable|array',
             'notes' => 'nullable|string|max:2000',
         ]);
     }
@@ -103,7 +105,7 @@ class GlobalWorkerController extends Controller
         return ['workerName' => trim((string) $request->input('workerName')), 'email' => $request->filled('email') ? trim((string) $request->input('email')) : null,
             'phone' => $request->filled('phone') ? trim((string) $request->input('phone')) : null,
             'costPerHalfDay' => is_numeric($request->input('costPerHalfDay')) ? (float) $request->input('costPerHalfDay') : 0,
-            'skills' => $skills ?: null, 'offWeekdays' => $off ?: null, 'notes' => $request->input('notes')];
+            'skills' => $skills ?: null, 'offWeekdays' => $off ?: null, 'dayParts' => WorkDays::parts($request->input('dayParts', []), $off), 'notes' => $request->input('notes')];
     }
 
     public function store(Request $request)
@@ -139,11 +141,14 @@ class GlobalWorkerController extends Controller
             return response()->json(['success' => false, 'message' => 'Please check what you entered.', 'errors' => $v->errors()], 422);
         }
         $f = $this->facts($request);
+        if (! $request->has('dayParts')) {
+            $f['dayParts'] = WorkDays::parts($g->dayParts, (array) ($f['offWeekdays'] ?? []));   // a caller that does not know the half days keeps them
+        }
         $f['personKey'] = AsGlobalWorker::personKey($f['workerName'], $f['email'], $f['phone']);
         if ($twin = AsGlobalWorker::where('userId', Auth::id())->where('personKey', $f['personKey'])->where('deleteStatus', 1)->where('id', '!=', $g->id)->first()) {
             return response()->json(['success' => false, 'message' => $twin->workerName . ' is already on your roster with that name and number or email.'], 422);
         }
-        $offChanged = ($g->offWeekdays ?: []) != ($f['offWeekdays'] ?: []);
+        $offChanged = ($g->offWeekdays ?: []) != ($f['offWeekdays'] ?: []) || (WorkDays::parts($g->dayParts) ?? []) != ($f['dayParts'] ?? []);
         DB::transaction(function () use ($g, $f, $offChanged) {
             $g->update($f);
             // Who they are, on every season card that is them (pay stays each season's own).
@@ -154,8 +159,9 @@ class GlobalWorkerController extends Controller
                 ->pluck('id');
             AsScheduleWorker::whereIn('id', $cardIds)->update(['workerName' => $f['workerName'], 'email' => $f['email'], 'phone' => $f['phone'],
                 'skills' => $f['skills'] ? json_encode($f['skills']) : null, 'updated_at' => now()]);
-            // Their usual weekdays off, too, when they changed here (the season sheets write them back the same way).
+            // Their usual week too, the days off and the half days, when it changed here (the season sheets write it back the same way).
             if ($offChanged) {
+                AsScheduleWorker::whereIn('id', $cardIds)->update(['dayParts' => $f['dayParts'] ? json_encode($f['dayParts']) : null]);
                 AsScheduleWorkerOffDay::whereIn('workerId', $cardIds)->delete();
                 foreach ($cardIds as $cid) {
                     foreach ((array) ($f['offWeekdays'] ?? []) as $dow) {
@@ -206,7 +212,7 @@ class GlobalWorkerController extends Controller
         }
         $card = AsScheduleWorker::create([
             'croppingScheduleId' => $season->id, 'workerName' => $g->workerName, 'email' => $g->email, 'phone' => $g->phone,
-            'costPerHalfDay' => $g->costPerHalfDay, 'skills' => $g->skills, 'notes' => $g->notes, 'globalWorkerId' => $g->id,
+            'costPerHalfDay' => $g->costPerHalfDay, 'skills' => $g->skills, 'dayParts' => WorkDays::parts($g->dayParts, (array) ($g->offWeekdays ?? [])), 'notes' => $g->notes, 'globalWorkerId' => $g->id,
             'priority' => (int) AsScheduleWorker::active()->where('croppingScheduleId', $season->id)->max('priority') + 1, 'deleteStatus' => 1,
         ]);
         foreach ((array) ($g->offWeekdays ?? []) as $dow) {

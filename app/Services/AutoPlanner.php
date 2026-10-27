@@ -8,6 +8,7 @@ use App\Models\AsAutoTask;
 use App\Models\AsScheduleLot;
 use App\Models\AsScheduleWorker;
 use App\Support\AutoBook;
+use App\Support\WorkDays;
 use Illuminate\Support\Carbon;
 
 /**
@@ -182,20 +183,21 @@ class AutoPlanner
      * off, or, on a plan without the Workers module, the helpers the wizard
      * was told about (names and the weekdays they cannot come).
      *
-     * @return \Illuminate\Support\Collection<int, array{id:int,name:string,off:int[],dates:string[],skills:string[],priority:int,email:?string}>
+     * @return \Illuminate\Support\Collection<int, array{id:int,name:string,off:int[],parts:array<int,string>,dates:string[],skills:string[],priority:int,email:?string}>
      */
     public static function people(AsAutoSeason $auto)
     {
         $cards = AsScheduleWorker::active()->where('croppingScheduleId', $auto->croppingScheduleId)->with(['offDays', 'offDates'])->get();
         if ($cards->count()) {
             return $cards->map(fn ($w) => ['id' => (int) $w->id, 'name' => (string) $w->workerName, 'email' => $w->email,
-                'off' => $w->offDays->pluck('dayOfWeek')->map(fn ($d) => (int) $d)->all(),
+                'off' => $off = $w->offDays->pluck('dayOfWeek')->map(fn ($d) => (int) $d)->all(),
+                'parts' => WorkDays::parts($w->dayParts, $off) ?? [],
                 'dates' => $w->offDates->map(fn ($o) => substr((string) $o->offDate, 0, 10))->all(),
                 'skills' => (array) ($w->skills ?? []), 'priority' => (int) $w->priority])->values();
         }
 
         return collect((array) ($auto->answers['crew'] ?? []))->values()->map(fn ($c, $i) => ['id' => -1 - $i, 'name' => (string) ($c['name'] ?? ('Helper ' . ($i + 1))), 'email' => null,
-            'off' => array_map('intval', (array) ($c['off'] ?? [])), 'dates' => [], 'skills' => [], 'priority' => $i + 1]);
+            'off' => $off = array_map('intval', (array) ($c['off'] ?? [])), 'parts' => WorkDays::parts($c['parts'] ?? [], $off) ?? [], 'dates' => [], 'skills' => [], 'priority' => $i + 1]);
     }
 
     /** Days to try, nearest the agronomic day first, a later day before an earlier one. */
@@ -250,6 +252,9 @@ class AutoPlanner
     /**
      * Who can do it that day: the workers off neither by weekday nor by date,
      * with a half day free, the skilled ones first, the least loaded first.
+     * One who comes only a morning or an afternoon that weekday (WorkDays)
+     * takes one task, and a morning task only in the morning, an afternoon
+     * task only in the afternoon.
      * Null when too few are free. A farm with no workers listed is the
      * family's: three half days a day.
      */
@@ -262,7 +267,15 @@ class AutoPlanner
         }
         $dow = (int) $day->dayOfWeek;
         $skill = self::SKILL_FOR[$t->kind] ?? null;
-        $free = $workers->filter(fn ($w) => ! in_array($dow, $w['off'], true) && ! in_array($d, $w['dates'], true) && ($load[$d][$w['id']] ?? 0) < 2)
+        $when = WorkDays::TIME[$t->timeOfDay] ?? null;
+        $free = $workers->filter(function ($w) use ($dow, $d, $load, $when) {
+            if (in_array($dow, $w['off'], true) || in_array($d, $w['dates'], true)) {
+                return false;
+            }
+            $half = $w['parts'][$dow] ?? null;
+
+            return $half ? ($load[$d][$w['id']] ?? 0) < 1 && (! $when || $when === $half) : ($load[$d][$w['id']] ?? 0) < 2;
+        })
             ->sortBy(fn ($w) => [$skill && in_array($skill, $w['skills'], true) ? 0 : 1, $load[$d][$w['id']] ?? 0, $w['priority']])->values();
         if ($free->count() >= $need) {
             return $free->take($need)->pluck('id')->map(fn ($v) => (int) $v)->all();

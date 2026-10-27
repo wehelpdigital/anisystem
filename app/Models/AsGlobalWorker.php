@@ -11,12 +11,13 @@ class AsGlobalWorker extends BaseModel
 {
     protected $table = 'as_global_workers';
 
-    protected $fillable = ['userId', 'workerName', 'email', 'phone', 'costPerHalfDay', 'skills', 'offWeekdays', 'notes', 'personKey', 'deleteStatus'];
+    protected $fillable = ['userId', 'workerName', 'email', 'phone', 'costPerHalfDay', 'skills', 'offWeekdays', 'dayParts', 'notes', 'personKey', 'deleteStatus'];
 
     protected $casts = [
         'costPerHalfDay' => 'decimal:2',
         'skills' => 'array',
         'offWeekdays' => 'array',
+        'dayParts' => 'array',
         'deleteStatus' => 'integer',
     ];
 

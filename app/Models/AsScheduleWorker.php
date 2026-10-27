@@ -28,6 +28,7 @@ class AsScheduleWorker extends BaseModel
         'costPerHalfDay',
         'priority',
         'skills',
+        'dayParts',
         'notes',
         'globalWorkerId',
         'deleteStatus',
@@ -37,6 +38,7 @@ class AsScheduleWorker extends BaseModel
         'costPerHalfDay' => 'decimal:2',
         'priority' => 'integer',
         'skills' => 'array',
+        'dayParts' => 'array',
         'deleteStatus' => 'integer',
     ];
 

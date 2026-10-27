@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Manager;
 use App\Models\AsScheduleWorker;
 use App\Models\AsScheduleWorkerOffDate;
 use App\Models\AsScheduleWorkerOffDay;
+use App\Support\WorkDays;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -290,11 +291,12 @@ class WorkerController extends BaseScheduleController
             'costPerHalfDay' => is_numeric($request->costPerHalfDay) ? $request->costPerHalfDay : 0,
             'priority' => $nextPriority,
             'skills' => $this->normalizeSkills($request->input('skills', []), $allowedSkillKeys),
+            'dayParts' => $global ? WorkDays::parts($global->dayParts, (array) ($global->offWeekdays ?? [])) : null,
             'notes' => $request->notes,
             'globalWorkerId' => $global?->id,
             'deleteStatus' => 1,
         ]);
-        // Their weekdays off come with them from the roster.
+        // Their week comes with them from the roster: the days off, and the half days above.
         foreach ((array) ($global?->offWeekdays ?? []) as $dow) {
             AsScheduleWorkerOffDay::create(['workerId' => $worker->id, 'dayOfWeek' => (int) $dow]);
         }
@@ -412,6 +414,7 @@ class WorkerController extends BaseScheduleController
                 'worker' => $worker,
                 'offDates' => $worker->offDates,
                 'offDays' => $worker->offDays->pluck('dayOfWeek'),
+                'dayParts' => WorkDays::json($worker->dayParts),
             ],
         ]);
     }
@@ -432,13 +435,18 @@ class WorkerController extends BaseScheduleController
             'offDates.*' => 'nullable|date',
             'offDays'    => 'nullable|array',
             'offDays.*'  => 'integer|min:0|max:6',
+            'dayParts'   => 'nullable|array',
         ]);
 
         if ($validator->fails()) {
             return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
-        DB::transaction(function () use ($worker, $request) {
+        $off = array_values(array_map('intval', array_unique((array) $request->input('offDays', []))));
+        // The half days come only from a page that shows them; an older page leaves them as they were.
+        $parts = $request->has('dayParts') ? WorkDays::parts($request->input('dayParts', []), $off) : WorkDays::parts($worker->dayParts, $off);
+        DB::transaction(function () use ($worker, $request, $parts) {
+            $worker->update(['dayParts' => $parts]);
             AsScheduleWorkerOffDate::where('workerId', $worker->id)->delete();
             AsScheduleWorkerOffDay::where('workerId', $worker->id)->delete();
 
@@ -451,9 +459,9 @@ class WorkerController extends BaseScheduleController
                 AsScheduleWorkerOffDay::create(['workerId' => $worker->id, 'dayOfWeek' => (int) $dow]);
             }
         });
-        // Their usual weekdays off are theirs, not the season's: the roster keeps them.
+        // Their usual week is theirs, not the season's: the roster keeps it, the half days too.
         if ($worker->globalWorkerId) {
-            \App\Models\AsGlobalWorker::where('id', $worker->globalWorkerId)->update(['offWeekdays' => json_encode(array_values(array_map('intval', array_unique((array) $request->input('offDays', [])))))]);
+            \App\Models\AsGlobalWorker::where('id', $worker->globalWorkerId)->update(['offWeekdays' => json_encode($off), 'dayParts' => $parts ? json_encode($parts) : null]);
         }
 
         return $this->jsonOk('Rules saved.');

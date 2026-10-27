@@ -17,6 +17,7 @@ use App\Support\FieldProfile;
 use App\Support\SoilConditions;
 use App\Support\VarietyBook;
 use App\Support\VarietyLearned;
+use App\Support\WorkDays;
 use Illuminate\Support\Carbon;
 
 /**
@@ -125,7 +126,8 @@ class AutoBrain
             'pastProblems' => array_values(array_filter(array_map(fn ($k) => AutoBook::PROBLEMS[$k][0] ?? null, (array) ($a['problems'] ?? [])))),
             'pastPestsAndDiseases' => array_values((array) ($a['cropProblemNames'] ?? [])),
             'notes' => $a['notes'] ?? null,
-            'workers' => $people->map(fn ($p) => ['name' => $p['name'], 'offWeekdays' => array_map(fn ($d) => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][$d] ?? $d, $p['off']), 'skills' => $p['skills']])->values()->all(),
+            'workers' => $people->map(fn ($p) => ['name' => $p['name'], 'offWeekdays' => array_map(fn ($d) => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][$d] ?? $d, $p['off']),
+                'halfDays' => WorkDays::words($p['parts'] ?? []) ?: null, 'skills' => $p['skills']])->values()->all(),
             'enso' => EnsoOutlook::forPrompt(),
         ];
     }
@@ -336,7 +338,7 @@ class AutoBrain
             . "3. PREVENTION FIRST: preventive sprays only at the stages the crop book and the risks call for, and threshold based ones say \"only if you find\" in the summary. Name products by ACTIVE INGREDIENT with its IRAC, FRAC or HRAC group, a label rate range as NUMBERS (per 16 L knapsack and per ha), and never a brand. Every product, soil amendment and fertilizer gets a number: a rate per hectare and the amount for this lot (never \"as per label\" or \"as recommended\"). Rotate modes of action.\n"
             . "4. SAFETY on every spray: the protective clothing, the re-entry time, the days before harvest (pre harvest interval) to respect, not near water or bees where it applies, and tank mix cautions (never propanil within 14 days of carbamates or organophosphates on rice; copper and sulfur not with oils; nothing alkaline with most insecticides). Put the farm's whole list in safetyChecks and the mixes to avoid in compatibility.\n"
             . "5. Each task: a short title a farmer understands, a one line summary of what to do, and why (the agronomy, in plain words). critical = true only where a few days late costs yield (transplanting, basal and panicle fertilizer, the first weed control, harvest at maturity).\n"
-            . "6. weather: \"spray\" for any spraying, \"fert\" for granular fertilizer, \"dry\" for land preparation, sowing in the field and harvest, \"any\" otherwise. crew: workers needed (1 to 6). early/late: days the task may move before or after its day.\n"
+            . "6. weather: \"spray\" for any spraying, \"fert\" for granular fertilizer, \"dry\" for land preparation, sowing in the field and harvest, \"any\" otherwise. crew: workers needed (1 to 6). early/late: days the task may move before or after its day. time: \"morning\" or \"afternoon\" when the work is best done then, \"any\" otherwise; a worker with halfDays comes only that half of that weekday.\n"
             . "7. No dashes in the words you write. Plain English. Use the farmer's crop and lot names.\n"
             . ($market !== '' ? "8. THE SALE: among the after harvest tasks, one that plans the sale from THE MARKET: the months this crop usually sells best here, and whether drying and storing it pays more than selling at harvest (the sell or keep line). A guide, never a promised price.\n" : '')
             . "\n"

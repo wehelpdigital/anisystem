@@ -38,6 +38,7 @@
     .gw-chips { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .6rem; }
     .gw-chip { padding: .16rem .55rem; border-radius: 999px; font-size: .7rem; font-weight: 700; color: var(--color-gray-700); background: var(--color-gray-100); }
     .gw-chip.is-off { color: #8a5a00; background: #fff4d6; }
+    .gw-chip.is-half { color: #2d5016; background: #eef6e4; }
     .gw-chip.is-season { color: var(--color-brand-700); background: #eaf4dc; text-decoration: none; }
     .gw-acts { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .75rem; }
     .gw-acts .btn { padding: .35rem .7rem; font-size: .78rem; }
@@ -53,7 +54,7 @@
     .gw-srow[disabled] { opacity: .6; cursor: default; }
     html.dark .gw-card, html.dark .gw-srow { background: #1a1d23; border-color: #2a2f38; }
     html.dark .gw-who b, html.dark .gw-srow b { color: #e5e7eb; }
-    html.dark .gw-chip { background: #20242c; color: #cbd5e1; } html.dark .gw-chip.is-season { background: #1c2616; color: #c5e09f; } html.dark .gw-chip.is-off { background: #2a2210; color: #f3d9a4; }
+    html.dark .gw-chip { background: #20242c; color: #cbd5e1; } html.dark .gw-chip.is-season { background: #1c2616; color: #c5e09f; } html.dark .gw-chip.is-off { background: #2a2210; color: #f3d9a4; } html.dark .gw-chip.is-half { background: #1c2616; color: #c5e09f; }
     @media (prefers-reduced-motion: reduce) { .gw-hero img, .gw-card { animation: none; } .gw-card, .gw-pill { transition: none; } }
 
     /* Login access (2026-10-18, the owner): the same login a season card gives,
@@ -207,9 +208,8 @@
         <div><span class="form-label">Skills</span><div class="gw-pills" id="gwSkills">
             @foreach ($skills as $k => $label)<button type="button" class="gw-pill" data-skill="{{ $k }}" aria-pressed="false">{{ $label }}</button>@endforeach
         </div></div>
-        <div><span class="form-label">Weekdays they do not work</span><div class="gw-pills" id="gwOff">
-            @foreach (['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $i => $d)<button type="button" class="gw-pill" data-dow="{{ $i }}" aria-pressed="false">{{ $d }}</button>@endforeach
-        </div><p class="form-hint">A change here reaches every season they are in, so the plan does not give them work on these days.</p></div>
+        <div><span class="form-label">Days they work</span><div id="gwOff"></div>
+            <p class="form-hint">Tap a day to set it: a whole day, the morning only, the afternoon only, or a day off. A change here reaches every season they are in, so the plan gives them work only when they come.</p></div>
         <div><label class="form-label" for="gwNotes">Notes</label><textarea id="gwNotes" rows="2" maxlength="2000" class="form-input"></textarea></div>
     </div>
     <div class="sheet-footer"><button type="button" class="btn btn-primary w-full" id="gwSave">Save worker</button></div>
@@ -336,6 +336,7 @@
 @endsection
 
 @push('scripts')
+@include('partials.work-days')
 <script>
 (() => {
     const U = {
@@ -379,7 +380,7 @@
         <div class="gw-top"><span class="gw-av" style="--h:${(g.id * 137) % 360}">${esc((g.workerName || '?').trim().charAt(0).toUpperCase())}</span>
             <span class="gw-who"><b>${esc(g.workerName)}</b><small>${esc([g.phone, g.email].filter(Boolean).join(' · ') || 'No contact yet')}</small></span>
             <span class="gw-pay">${g.costPerHalfDay ? esc(MONEY + Number(g.costPerHalfDay).toLocaleString()) : 'No pay set'}<small>a half day</small></span></div>
-        <div class="gw-chips">${(g.skills || []).map((k) => `<span class="gw-chip">${esc(SKILLS[k] || k)}</span>`).join('')}${(g.offWeekdays || []).map((d) => `<span class="gw-chip is-off">Off ${DOW[d]}</span>`).join('')}</div>
+        <div class="gw-chips">${(g.skills || []).map((k) => `<span class="gw-chip">${esc(SKILLS[k] || k)}</span>`).join('')}${(g.offWeekdays || []).map((d) => `<span class="gw-chip is-off">Off ${DOW[d]}</span>`).join('')}${Object.entries(window.workDays.partsOf(g.dayParts)).filter(([d]) => !(g.offWeekdays || []).map(Number).includes(Number(d))).map(([d, p]) => `<span class="gw-chip is-half">${DOW[d]} ${p === 'am' ? 'AM' : 'PM'} only</span>`).join('')}</div>
         <div class="gw-chips">${(g.seasons || []).length ? g.seasons.map((s) => `<a class="gw-chip is-season" href="${U.seasonWorkers(s.id)}">${esc(s.title)}</a>`).join('') : '<span class="gw-chip">Not on a season yet</span>'}</div>
         ${loginStrip(g)}
         <div class="gw-acts"><button type="button" class="btn btn-primary" data-act="season" data-id="${g.id}">Add to a season</button>
@@ -394,19 +395,22 @@
     $('gwQ').addEventListener('input', paint);
 
     const pills = (box, attr, on) => box.querySelectorAll('[' + attr + ']').forEach((b) => b.setAttribute('aria-pressed', String(on.includes(isNaN(b.getAttribute(attr)) ? b.getAttribute(attr) : Number(b.getAttribute(attr))))));
-    ['gwSkills', 'gwOff'].forEach((id) => $(id).addEventListener('click', (e) => { const b = e.target.closest('.gw-pill'); if (b) b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true')); }));
+    $('gwSkills').addEventListener('click', (e) => { const b = e.target.closest('.gw-pill'); if (b) b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true')); });
     const openEdit = (g) => {
         editing = g;
         $('gwSheetTitle').textContent = g ? 'Edit ' + g.workerName : 'Add a worker';
         $('gwName').value = g?.workerName || ''; $('gwEmail').value = g?.email || ''; $('gwPhone').value = g?.phone || '';
         $('gwCost').value = g?.costPerHalfDay || ''; $('gwNotes').value = g?.notes || '';
-        pills($('gwSkills'), 'data-skill', g?.skills || []); pills($('gwOff'), 'data-dow', g?.offWeekdays || []);
+        pills($('gwSkills'), 'data-skill', g?.skills || []);
+        $('gwOff').innerHTML = window.workDays.html(g?.offWeekdays || [], g?.dayParts || {}, g?.workerName || '');
         window.openSheet('gwSheet');
     };
     $('gwAdd').addEventListener('click', () => openEdit(null));
     $('gwSave').addEventListener('click', async () => {
         const body = { workerName: $('gwName').value.trim(), email: $('gwEmail').value.trim(), phone: $('gwPhone').value.trim(), costPerHalfDay: $('gwCost').value, notes: $('gwNotes').value,
-            skills: [...$('gwSkills').querySelectorAll('[aria-pressed="true"]')].map((b) => b.dataset.skill), offWeekdays: [...$('gwOff').querySelectorAll('[aria-pressed="true"]')].map((b) => Number(b.dataset.dow)) };
+            skills: [...$('gwSkills').querySelectorAll('[aria-pressed="true"]')].map((b) => b.dataset.skill) };
+        const week = window.workDays.read($('gwOff').querySelector('[data-wd]'));
+        body.offWeekdays = week.off; body.dayParts = week.parts;
         if (!body.workerName) return window.toast?.('Give the worker a name.', 'error');
         $('gwSave').disabled = true;
         try {
@@ -557,7 +561,7 @@
         if (g.email || !email) return;
         try {
             await window.api(U.one(g.id), { method: 'PUT', body: { workerName: g.workerName, email, phone: g.phone || '', costPerHalfDay: g.costPerHalfDay || 0,
-                notes: g.notes || '', skills: g.skills || [], offWeekdays: g.offWeekdays || [] } });
+                notes: g.notes || '', skills: g.skills || [], offWeekdays: g.offWeekdays || [], dayParts: g.dayParts || {} } });
             g.email = email;
             const card = document.querySelector('[data-login="' + g.id + '"]')?.closest('.gw-card');
             const contact = card?.querySelector('.gw-who small');

@@ -194,13 +194,9 @@
         <input type="hidden" id="rulesWorkerId" value="">
 
         <div>
-            <span class="form-label">Weekly off days</span>
-            <p class="form-hint mt-0! mb-2">Tap the days this worker is off.</p>
-            <div id="rulesDayGroup" data-chip-group class="flex flex-wrap gap-2">
-                @foreach (['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'] as $i => $day)
-                    <button type="button" class="chip px-3!" data-value="{{ $i }}" data-day="{{ $i }}">{{ $day }}</button>
-                @endforeach
-            </div>
+            <span class="form-label">Days they work</span>
+            <p class="form-hint mt-0! mb-2">Tap a day to set it: a whole day, the morning only, the afternoon only, or a day off. Their workers list keeps the same.</p>
+            <div id="rulesDayGroup"></div>
         </div>
 
         <div>
@@ -361,6 +357,7 @@
 @endpush
 
 @push('scripts')
+@include('partials.work-days')
 @php
     $jsWorkers = $schedule->workers->map(fn ($w) => [
         'id' => $w->id,
@@ -372,6 +369,7 @@
         'skills' => $w->skills ?? [],
         'notes' => $w->notes,
         'offDays' => $w->offDays->pluck('dayOfWeek')->map(fn ($d) => (int) $d)->values(),
+        'dayParts' => \App\Support\WorkDays::json($w->dayParts),
         'offDates' => $w->offDates->map(fn ($d) => $d->offDate->format('Y-m-d'))->values(),
         'login' => ($grantByWorker ?? [])[$w->id] ?? null,
         // The person in Global Workers, where their login and access are given.
@@ -426,6 +424,10 @@ const __init = () => {
         const parts = [];
         if ((w.offDays || []).length) {
             parts.push('Off: ' + [...w.offDays].sort((a, b) => a - b).map((d) => DAY_NAMES[d]).join(', '));
+        }
+        const half = Object.entries(window.workDays.partsOf(w.dayParts)).filter(([d]) => !(w.offDays || []).map(Number).includes(Number(d)));
+        if (half.length) {
+            parts.push(half.map(([d, p]) => DAY_NAMES[d] + ' ' + (p === 'am' ? 'AM' : 'PM') + ' only').join(', '));
         }
         if ((w.offDates || []).length) {
             parts.push(`${w.offDates.length} other ${w.offDates.length === 1 ? 'day' : 'days'} off`);
@@ -707,7 +709,7 @@ const __init = () => {
             const gwRow = GW_ROWS.find((g) => Number(g.id) === personId) || {};
             const offDays = (gwRow.offWeekdays || []).map(Number);
             WORKERS.push({ id: res.data.id, workerName: res.data.workerName, email: res.data.email, phone: res.data.phone, costPerHalfDay: res.data.costPerHalfDay,
-                priority: Number(res.data.priority) || 1, skills: res.data.skills || [], notes: res.data.notes, offDays, offDates: [],
+                priority: Number(res.data.priority) || 1, skills: res.data.skills || [], notes: res.data.notes, offDays, dayParts: res.data.dayParts || {}, offDates: [],
                 login: (CAN_LOGINS && gwRow.login) || null, globalWorkerId: personId });
             renderList();
             tellBoard('sm:worker-saved', res.data);
@@ -863,6 +865,7 @@ const __init = () => {
                 skills: res.data.skills || [],
                 notes: res.data.notes,
                 offDays: prev ? prev.offDays : [],
+                dayParts: res.data.dayParts || (prev ? prev.dayParts : {}),
                 offDates: prev ? prev.offDates : [],
                 login: prev ? prev.login : null,
                 globalWorkerId: res.data.globalWorkerId ? Number(res.data.globalWorkerId) : (prev ? prev.globalWorkerId : null),
@@ -932,7 +935,7 @@ const __init = () => {
         // Prefill from local state, then refresh from the server.
         let offDays = worker.offDays || [];
         offDatesState = [...(worker.offDates || [])].sort();
-        applyDayPills(offDays);
+        applyDayPills(offDays, worker.dayParts, worker.workerName);
         renderOffDates();
         openSheet('rulesSheet');
 
@@ -942,18 +945,16 @@ const __init = () => {
             offDatesState = (res.data.offDates || [])
                 .map((r) => String(r.offDate).substring(0, 10))
                 .sort();
-            applyDayPills(offDays);
+            applyDayPills(offDays, res.data.dayParts, worker.workerName);
             renderOffDates();
         } catch (err) {
             toast(err.message, 'error');
         }
     }
 
-    function applyDayPills(offDays) {
-        const set = (offDays || []).map(Number);
-        document.querySelectorAll('#rulesDayGroup .chip').forEach((c) => {
-            c.classList.toggle('is-selected', set.includes(Number(c.getAttribute('data-day'))));
-        });
+    // Each weekday whole, a morning, an afternoon or off (partials/work-days, 2026-10-28).
+    function applyDayPills(offDays, dayParts, name) {
+        document.getElementById('rulesDayGroup').innerHTML = window.workDays.html((offDays || []).map(Number), dayParts || {}, name || '');
     }
 
     document.getElementById('rulesAddDateBtn').addEventListener('click', () => {
@@ -978,18 +979,20 @@ const __init = () => {
     document.getElementById('saveRulesBtn').addEventListener('click', async (e) => {
         const btn = e.currentTarget;
         const id = document.getElementById('rulesWorkerId').value;
-        const offDays = chipValues(document.getElementById('rulesDayGroup')).map(Number);
+        const week = window.workDays.read(document.querySelector('#rulesDayGroup [data-wd]'));
+        const offDays = week.off;
 
         btn.disabled = true;
         try {
             const res = await api(`{{ route('sm.workers.rules.save') }}?scheduleId=${SCHEDULE_ID}&id=${id}`, {
                 method: 'POST',
-                body: { offDays, offDates: offDatesState },
+                body: { offDays, dayParts: week.parts, offDates: offDatesState },
             });
             toast(res.message);
             const w = WORKERS.find((x) => String(x.id) === String(id));
             if (w) {
                 w.offDays = offDays;
+                w.dayParts = week.parts;
                 w.offDates = [...offDatesState];
                 renderList();
             }
@@ -1016,7 +1019,7 @@ const __init = () => {
             priority: Number(d.priority) || 1,
             skills: d.skills || [],
             notes: d.notes,
-            offDays: (d.offDays || []).map(Number), offDates: [],
+            offDays: (d.offDays || []).map(Number), dayParts: d.dayParts || {}, offDates: [],
             login: null,
         });
         renderList();

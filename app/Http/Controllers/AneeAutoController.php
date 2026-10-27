@@ -27,6 +27,7 @@ use App\Support\FieldCatalogue;
 use App\Support\FieldProfile;
 use App\Support\MediaStore;
 use App\Support\Tier;
+use App\Support\WorkDays;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -257,9 +258,9 @@ class AneeAutoController extends Controller
             })->filter()->values(),
             'canWorkers' => $canWorkers,
             'workers' => $cards->map(fn ($w) => ['id' => (int) $w->id, 'name' => $w->workerName, 'email' => $w->email, 'phone' => $w->phone, 'globalWorkerId' => $w->globalWorkerId,
-                'off' => $w->offDays->pluck('dayOfWeek')->map(fn ($d) => (int) $d)->values()])->values(),
-            'roster' => $canWorkers ? AsGlobalWorker::where('userId', Auth::id())->where('deleteStatus', 1)->orderBy('workerName')->get(['id', 'workerName', 'email', 'phone', 'offWeekdays'])
-                ->map(fn ($g) => ['id' => (int) $g->id, 'name' => $g->workerName, 'email' => $g->email, 'phone' => $g->phone, 'off' => $g->offWeekdays ?: []])->values() : [],
+                'off' => $w->offDays->pluck('dayOfWeek')->map(fn ($d) => (int) $d)->values(), 'parts' => WorkDays::json($w->dayParts)])->values(),
+            'roster' => $canWorkers ? AsGlobalWorker::where('userId', Auth::id())->where('deleteStatus', 1)->orderBy('workerName')->get()
+                ->map(fn ($g) => ['id' => (int) $g->id, 'name' => $g->workerName, 'email' => $g->email, 'phone' => $g->phone, 'off' => $g->offWeekdays ?: [], 'parts' => WorkDays::json($g->dayParts)])->values() : [],
             'book' => ['signs' => AutoBook::SOIL_SIGNS, 'ph' => AutoBook::PH, 'water' => AutoBook::WATER, 'problems' => AutoBook::PROBLEMS, 'imbalance' => AutoBook::IMBALANCE],
             'crops' => $crops,
             'latest' => AutoBook::latestDate()->toDateString(), 'today' => now('Asia/Manila')->toDateString(),
@@ -399,7 +400,7 @@ class AneeAutoController extends Controller
             return $no;
         }
         $v = Validator::make($request->all(), ['workers' => 'nullable|array|max:60', 'workers.*.name' => 'required|string|max:255', 'workers.*.email' => 'nullable|email|max:255',
-            'workers.*.phone' => 'nullable|string|max:32', 'workers.*.off' => 'nullable|array', 'workers.*.off.*' => 'integer|min:0|max:6']);
+            'workers.*.phone' => 'nullable|string|max:32', 'workers.*.off' => 'nullable|array', 'workers.*.off.*' => 'integer|min:0|max:6', 'workers.*.parts' => 'nullable|array']);
         if ($v->fails()) {
             return $this->json(false, 'Each worker needs a name' . (str_contains($v->errors()->first(), 'email') ? ', and the email must be real' : '') . '.', [], 422);
         }
@@ -408,7 +409,11 @@ class AneeAutoController extends Controller
         if (! Tier::scheduleCan($schedule, 'workers')) {
             // No Workers module on this plan: the helpers are kept for planning only.
             $a = (array) $auto->answers;
-            $a['crew'] = $list->map(fn ($w) => ['name' => mb_substr(trim((string) $w['name']), 0, 80), 'off' => array_values(array_unique(array_map('intval', (array) ($w['off'] ?? []))))])->values()->all();
+            $a['crew'] = $list->map(function ($w) {
+                $off = array_values(array_unique(array_map('intval', (array) ($w['off'] ?? []))));
+
+                return ['name' => mb_substr(trim((string) $w['name']), 0, 80), 'off' => $off, 'parts' => WorkDays::parts($w['parts'] ?? [], $off)];
+            })->values()->all();
             $auto->update(['answers' => $a]);
 
             return $this->json(true, 'Saved.');
@@ -422,7 +427,10 @@ class AneeAutoController extends Controller
             foreach ($list->values() as $i => $w) {
                 $card = ! empty($w['id']) ? AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->find((int) $w['id']) : null;
                 $global = ! empty($w['globalWorkerId']) ? AsGlobalWorker::where('userId', Auth::id())->where('deleteStatus', 1)->find((int) $w['globalWorkerId']) : null;
-                $facts = ['workerName' => mb_substr(trim((string) $w['name']), 0, 255), 'email' => ($w['email'] ?? null) ?: null, 'phone' => ($w['phone'] ?? null) ?: null, 'priority' => $i + 1];
+                $off = array_values(array_unique(array_map('intval', (array) ($w['off'] ?? []))));
+                // A page that does not send the half days (an older one still open) keeps what was there.
+                $parts = WorkDays::parts(array_key_exists('parts', $w) ? $w['parts'] : ($card?->dayParts ?? $global?->dayParts), $off);
+                $facts = ['workerName' => mb_substr(trim((string) $w['name']), 0, 255), 'email' => ($w['email'] ?? null) ?: null, 'phone' => ($w['phone'] ?? null) ?: null, 'dayParts' => $parts, 'priority' => $i + 1];
                 if (! $card) {
                     $card = AsScheduleWorker::create($facts + ['croppingScheduleId' => $schedule->id, 'costPerHalfDay' => $global?->costPerHalfDay ?? 0,
                         'skills' => $global?->skills, 'notes' => $global?->notes, 'globalWorkerId' => $global?->id, 'deleteStatus' => 1]);
@@ -430,12 +438,14 @@ class AneeAutoController extends Controller
                     $card->update($facts);
                 }
                 AsScheduleWorkerOffDay::where('workerId', $card->id)->delete();
-                foreach (array_unique(array_map('intval', (array) ($w['off'] ?? []))) as $dow) {
+                foreach ($off as $dow) {
                     AsScheduleWorkerOffDay::create(['workerId' => $card->id, 'dayOfWeek' => $dow]);
                 }
                 try {
+                    // Their week is theirs, not the season's: the roster keeps it (2026-10-28, the owner:
+                    // "settings for selected workers should be synced in the global workers").
                     $g = AsGlobalWorker::forCard($card->fresh(), (int) Auth::id());
-                    $g->update(['offWeekdays' => array_values(array_unique(array_map('intval', (array) ($w['off'] ?? []))))]);
+                    $g->update(['offWeekdays' => $off, 'dayParts' => $parts]);
                 } catch (\Throwable $e) {
                     report($e);
                 }

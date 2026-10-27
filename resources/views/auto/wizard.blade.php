@@ -121,10 +121,6 @@
     .au-w { display: grid; gap: .5rem; padding: .8rem; border-radius: 1rem; border: 1px solid var(--color-gray-200); background: var(--color-white); margin-bottom: .6rem; animation: auIn .3s var(--au-ease) both; }
     .au-w-top { display: flex; gap: .5rem; align-items: center; }
     .au-w-top input { flex: 1; min-width: 0; }
-    .au-days { display: flex; gap: .3rem; flex-wrap: wrap; }
-    .au-day { width: 2.6rem; padding: .4rem 0; border-radius: .7rem; font-size: .74rem; font-weight: 800; color: var(--color-gray-400); background: var(--color-gray-100);
-        transition: background-color .28s var(--au-ease), color .28s var(--au-ease); }
-    .au-day[aria-pressed="true"] { color: #fff; background: var(--color-brand-600); }
     .au-x { flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; color: var(--color-gray-400); display: grid; place-items: center; }
     .au-x:hover { background: #fde8e8; color: #b91c1c; }
     /* The farm's workers come from one button and a list (2026-10-28, the owner:
@@ -456,7 +452,7 @@
     <div class="sheet-handle"></div>
     <div class="sheet-header"><h3 class="sheet-title">Your workers</h3><button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button></div>
     <div class="sheet-body">
-        <p class="text-sm text-gray-500 mb-3">Tap a worker to add them to this season. You can fix their name, email or phone first, and the change is kept on your workers list too.</p>
+        <p class="text-sm text-gray-500 mb-3">Tap a worker to add them to this season. You can fix their name, email, phone or days first, and the change is kept on your workers list too.</p>
         <input type="search" id="auGwQ" class="form-input mb-3" placeholder="Search your workers" autocomplete="off" maxlength="60">
         <div id="auGwRows"></div>
     </div>
@@ -494,6 +490,7 @@
 </dialog>
 @include('partials.farm-lots')
 @include('partials.variety-pick')
+@include('partials.work-days')
 
 <div class="au-modal" id="auModal" hidden><div id="auModalBox"></div></div>
 
@@ -841,27 +838,44 @@
     });
 
     /* ---- 2. the workers ---- */
-    S.crewList = S.canWorkers ? S.workers.map((w) => ({ id: w.id, globalWorkerId: w.globalWorkerId, name: w.name, email: w.email || '', phone: w.phone || '', off: w.off || [] }))
-        : (S.answers.crew || []).map((c) => ({ name: c.name, off: c.off || [] }));
-    const saveWorkers = () => put(U.workers, { workers: S.crewList.filter((w) => (w.name || '').trim()).map((w) => ({ id: w.id || null, globalWorkerId: w.globalWorkerId || null, name: w.name.trim(), email: w.email || null, phone: w.phone || null, off: w.off })) })
-        .then((r) => { (r.data && r.data.workers || []).forEach((w) => { const row = S.crewList.find((c) => c.id === w.id) || S.crewList.find((c) => !c.id && (c.name || '').trim() === w.name); if (row) { row.id = w.id; row.globalWorkerId = w.globalWorkerId || row.globalWorkerId; } }); });
+    // A worker's week: each day whole, a morning, an afternoon or off (partials/work-days, 2026-10-28).
+    const WD = window.workDays;
+    S.crewList = S.canWorkers ? S.workers.map((w) => ({ id: w.id, globalWorkerId: w.globalWorkerId, name: w.name, email: w.email || '', phone: w.phone || '', off: w.off || [], parts: WD.partsOf(w.parts) }))
+        : (S.answers.crew || []).map((c) => ({ name: c.name, off: c.off || [], parts: WD.partsOf(c.parts) }));
+    const saveWorkers = () => put(U.workers, { workers: S.crewList.filter((w) => (w.name || '').trim()).map((w) => ({ id: w.id || null, globalWorkerId: w.globalWorkerId || null, name: w.name.trim(), email: w.email || null, phone: w.phone || null, off: w.off, parts: w.parts })) })
+        .then((r) => {
+            (r.data && r.data.workers || []).forEach((w) => { const row = S.crewList.find((c) => c.id === w.id) || S.crewList.find((c) => !c.id && (c.name || '').trim() === w.name); if (row) { row.id = w.id; row.globalWorkerId = w.globalWorkerId || row.globalWorkerId; } });
+            // The server wrote each one's name, contact and week to the farm's list (2026-10-28, the owner: "settings for
+            // selected workers should be synced in the global workers"): the list in the sheet says the same, new faces too.
+            S.crewList.filter((w) => w.globalWorkerId && (w.name || '').trim()).forEach((w) => {
+                const facts = { name: w.name.trim(), email: w.email || '', phone: w.phone || '', off: [...w.off], parts: { ...w.parts } };
+                const g = S.roster.find((x) => String(x.id) === String(w.globalWorkerId));
+                if (g) Object.assign(g, facts); else if (S.canWorkers) S.roster.push({ id: w.globalWorkerId, ...facts });
+            });
+            S.roster.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+            if (S.canWorkers) paintGwOpen();
+        });
     const gwIn = (g) => S.crewList.some((w) => String(w.globalWorkerId) === String(g.id));
-    const paintWorkers = () => {
-        $('auWSub').textContent = S.canWorkers ? 'Anee gives out the work by who can come, and emails each one their day. Tap the days each one can work.' : 'Anee gives out the work by who can come. Tap the days each helper can work.';
-        $('auWNote').hidden = S.canWorkers;
-        $('auWNote').textContent = 'On your plan the helpers are kept for planning only. Worker cards, their logins and their morning emails come with Solo Farmer.';
+    const paintGwOpen = () => {
         const left = S.roster.filter((g) => !gwIn(g)).length;
         $('auGwOpen').hidden = !(S.canWorkers && S.roster.length);
         $('auGwOpen').innerHTML = left ? '<span aria-hidden="true">👥</span>Add from your workers<em>' + left + '</em>' : '<span aria-hidden="true">👥</span>All your workers are in';
+    };
+    const paintWorkers = () => {
+        $('auWSub').textContent = (S.canWorkers ? 'Anee gives out the work by who can come, and emails each one their day.' : 'Anee gives out the work by who can come.')
+            + ' Tap a day to set it: a whole day, the morning only, the afternoon only, or a day off.';
+        $('auWNote').hidden = S.canWorkers;
+        $('auWNote').textContent = 'On your plan the helpers are kept for planning only. Worker cards, their logins and their morning emails come with Solo Farmer.';
+        paintGwOpen();
         $('auWorkers').innerHTML = S.crewList.map((w, i) => '<div class="au-w" data-w="' + i + '"><div class="au-w-top"><input type="text" class="form-input" data-wf="name" value="' + esc(w.name) + '" placeholder="Name" maxlength="255">'
             + '<button type="button" class="au-x" data-wx aria-label="Remove">✕</button></div>'
             + (S.canWorkers ? '<div class="au-row is-2"><input type="email" class="form-input" data-wf="email" value="' + esc(w.email) + '" placeholder="Email, for the morning list (optional)"><input type="tel" class="form-input" data-wf="phone" value="' + esc(w.phone) + '" placeholder="Phone (optional)"></div>' : '')
-            + '<div><span class="text-xs font-bold text-gray-500">Days they can work</span><div class="au-days mt-1">' + DOW.map((d, k) => '<button type="button" class="au-day" data-dow="' + k + '" aria-pressed="' + !w.off.includes(k) + '">' + d + '</button>').join('') + '</div></div></div>').join('')
+            + '<div><span class="text-xs font-bold text-gray-500">Days they work</span><div class="mt-1">' + WD.html(w.off, w.parts, w.name) + '</div></div></div>').join('')
             || '<p class="text-sm text-gray-500 mb-3">No workers yet. A farm worked by the family alone is fine: Anee plans for a small crew.</p>';
     };
     // The farm's workers sheet: one worker open at a time, their details put right there, then added.
-    let GW = null; // { id, name, email, phone } of the worker open in the sheet
-    const gwSay = (g) => [g.email, g.phone, (g.off || []).length ? 'Off ' + g.off.map((k) => DOW[k]).join(', ') : 'Works every day'].filter(Boolean).join(' · ');
+    let GW = null; // { id, name, email, phone, off, parts } of the worker open in the sheet
+    const gwSay = (g) => [g.email, g.phone, WD.words(g.off, g.parts) || 'Works every day'].filter(Boolean).join(' · ');
     const gwRow = (g) => {
         const isIn = gwIn(g), open = !isIn && GW && GW.id === g.id, d = open ? GW : g;
         const say = gwSay(g);
@@ -872,6 +886,7 @@
                 + '<label class="au-gw-l">Name<input type="text" class="form-input" data-gf="name" value="' + esc(d.name) + '" maxlength="255" autocomplete="off"></label>'
                 + '<div class="au-row is-2"><label class="au-gw-l"><span>Email <small>(for the morning list)</small></span><input type="email" class="form-input" data-gf="email" value="' + esc(d.email || '') + '" maxlength="255" autocomplete="off" placeholder="Optional"></label>'
                 + '<label class="au-gw-l">Phone<input type="tel" class="form-input" data-gf="phone" value="' + esc(d.phone || '') + '" maxlength="32" autocomplete="off" placeholder="Optional"></label></div>'
+                + '<div class="au-gw-l"><span>Days they work <small>(tap a day to change it)</small></span>' + WD.html(d.off, d.parts, d.name) + '</div>'
                 + '<p class="au-gw-err" hidden></p>'
                 + '<div class="au-gw-acts"><button type="button" class="btn btn-white btn-sm" data-gcancel>Cancel</button><button type="button" class="btn btn-primary btn-sm" data-gadd>Add to this season</button></div>'
                 + '</div></div></div>')
@@ -903,8 +918,9 @@
             const was = $('auGwRows').querySelector('.au-gw.is-open');
             if (was && was !== box) gwFold(was, false);
             if (GW && GW.id === g.id) { GW = null; gwFold(box, false); return; }
-            GW = { id: g.id, name: g.name, email: g.email || '', phone: g.phone || '' };
+            GW = { id: g.id, name: g.name, email: g.email || '', phone: g.phone || '', off: (g.off || []).map(Number), parts: WD.partsOf(g.parts) };
             ['name', 'email', 'phone'].forEach((k) => { box.querySelector('[data-gf="' + k + '"]').value = GW[k]; });
+            box.querySelector('[data-wd]').outerHTML = WD.html(GW.off, GW.parts, GW.name);
             box.querySelector('.au-gw-err').hidden = true;
             gwFold(box, true);
             return;
@@ -917,7 +933,7 @@
         err.hidden = true;
         if (!name) { err.textContent = 'Each worker needs a name.'; err.hidden = false; return; }
         if (email && !mail.checkValidity()) { err.textContent = 'That email does not look right.'; err.hidden = false; return; }
-        const row = { id: null, globalWorkerId: g.id, name, email, phone, off: (g.off || []).map(Number) };
+        const row = { id: null, globalWorkerId: g.id, name, email, phone, off: [...GW.off], parts: { ...GW.parts } };
         S.crewList.push(row);
         add.disabled = true;
         try { await saveWorkers(); } catch (_) {
@@ -925,8 +941,8 @@
             add.disabled = false;
             return;
         }
-        // Who they are was put right on their card, and the server carried it to the farm's list.
-        Object.assign(g, { name, email, phone });
+        // Who they are and their week were put right on their card, and the server carried them to the farm's list.
+        Object.assign(g, { name, email, phone, off: [...row.off], parts: { ...row.parts } });
         GW = null;
         gwFold(box, false);
         box.classList.add('is-in');
@@ -938,16 +954,18 @@
         paintWorkers();
         window.toast?.(name + ' is in this season. Check their days below.');
     });
-    $('auAddWorker').addEventListener('click', () => { S.crewList.push({ id: null, name: '', email: '', phone: '', off: [0] }); paintWorkers(); $('auWorkers').lastElementChild?.querySelector('input')?.focus(); });
+    $('auGwRows').addEventListener('workdays:change', (e) => { if (!GW) return; const r = WD.read(e.target); GW.off = r.off; GW.parts = r.parts; });
+    $('auAddWorker').addEventListener('click', () => { S.crewList.push({ id: null, name: '', email: '', phone: '', off: [0], parts: {} }); paintWorkers(); $('auWorkers').lastElementChild?.querySelector('input')?.focus(); });
     $('auWorkers').addEventListener('input', (e) => { const row = e.target.closest('[data-w]'); if (!row) return; S.crewList[Number(row.dataset.w)][e.target.dataset.wf] = e.target.value; later('workers', saveWorkers, 900); });
     $('auWorkers').addEventListener('click', (e) => {
         const row = e.target.closest('[data-w]'); if (!row) return;
         const w = S.crewList[Number(row.dataset.w)];
         if (e.target.closest('[data-wx]')) { S.crewList.splice(Number(row.dataset.w), 1); paintWorkers(); later('workers', saveWorkers, 200); return; }
-        const d = e.target.closest('[data-dow]'); if (!d) return;
-        const k = Number(d.dataset.dow);
-        w.off = w.off.includes(k) ? w.off.filter((x) => x !== k) : [...w.off, k];
-        d.setAttribute('aria-pressed', String(!w.off.includes(k)));
+    });
+    $('auWorkers').addEventListener('workdays:change', (e) => {
+        const row = e.target.closest('[data-w]'); if (!row) return;
+        const w = S.crewList[Number(row.dataset.w)], r = WD.read(e.target);
+        w.off = r.off; w.parts = r.parts;
         later('workers', saveWorkers, 600);
     });
 
