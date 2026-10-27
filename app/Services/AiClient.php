@@ -60,6 +60,9 @@ class AiClient
     /** The system prompt of the ask in hand, when the caller brought one. */
     private ?string $system = null;
 
+    /** The provider's own words and status for the last failed ask, for an operator's check (never shown to a farmer). */
+    public ?array $lastProviderError = null;
+
     /**
      * @param  array<int, array{mime:string,data:string}>|array{mime:string,data:string}|null  $image
      *   One picture or several. A single one is still accepted as it always
@@ -599,6 +602,7 @@ class AiClient
     /** Provider errors are for the operator; clients get something actionable. */
     private function providerError(?string $message, int $status): string
     {
+        $this->lastProviderError = ['status' => $status, 'message' => mb_substr((string) $message, 0, 300)];
         if ($message) {
             // 402: the provider account's prepaid balance is used up, and every ask fails until it is topped up.
             logger()->{$status === 402 ? 'error' : 'warning'}('AI provider error', ['status' => $status, 'message' => $message]);
