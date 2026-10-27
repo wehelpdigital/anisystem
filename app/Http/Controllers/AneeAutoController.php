@@ -255,7 +255,9 @@ class AneeAutoController extends Controller
                     'crop' => $l->crop, 'variety' => $l->variety, 'method' => $al->method, 'fieldDate' => $al->fieldDate?->toDateString(), 'sowDate' => $al->sowDate?->toDateString(),
                     'treeMonths' => $al->treeMonths, 'province' => $l->locProvince, 'town' => $l->locTown, 'barangay' => $l->locBarangay,
                     'pin' => $l->pinLat ? ['lat' => (float) $l->pinLat, 'lng' => (float) $l->pinLng] : null,
-                    'calcId' => $al->calcId, 'fert' => $al->fert, 'imbalance' => (bool) $al->imbalance, 'imbalanceReason' => $al->imbalanceReason] : null;
+                    'calcId' => $al->calcId, 'fert' => $al->fert, 'imbalance' => (bool) $al->imbalance, 'imbalanceReason' => $al->imbalanceReason]
+                    // How its planting is asked, from the first paint, so the lot card does not jump when the goals come back.
+                    + ($l->crop ? ['plant' => AutoGoal::plantOptions($l->crop, $pm = AutoGoal::protoMethod($l->crop, $al->method)), 'protoMethod' => $pm] : []) : null;
             })->filter()->values(),
             'canWorkers' => $canWorkers,
             'workers' => $cards->map(fn ($w) => ['id' => (int) $w->id, 'name' => $w->workerName, 'email' => $w->email, 'phone' => $w->phone, 'globalWorkerId' => $w->globalWorkerId,

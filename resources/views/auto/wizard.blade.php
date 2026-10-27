@@ -226,6 +226,9 @@
     .au-goals-h small { display: block; font-size: .76rem; line-height: 1.45; color: var(--color-gray-500); }
     .au-goals-wait { font-size: .82rem; color: var(--color-gray-500); }
     .au-goals-g { display: grid; gap: .5rem; }
+    @media (min-width: 768px) { .au-goals-g { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; } }
+    /* On a phone a lot's pane sits flat in its step's card: no box in a box eating the width. */
+    @media (max-width: 639.98px) { #auFPane > .au-rl { border: 0; border-top: 1px dashed var(--color-gray-200); border-radius: 0; padding: .9rem 0 0; } }
     .au-gc { display: grid; gap: .4rem; width: 100%; padding: .7rem .8rem; border-radius: 1rem; text-align: left; cursor: pointer; border: 1.5px solid var(--color-gray-200); background: var(--color-white);
         transition: border-color .28s var(--au-ease), background-color .28s var(--au-ease), box-shadow .28s var(--au-ease), transform .2s var(--au-ease); animation: auFade .3s var(--au-ease) both; }
     .au-gc:active { transform: scale(.99); }
@@ -311,7 +314,27 @@
     @media (max-width: 639.98px) { .au-acc-in { padding-left: .1rem; } }
 
     /* Fertilizer */
-    .au-ltabs { display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: none; margin-bottom: .8rem; padding-bottom: .1rem; }
+    /* Every lot's tab in sight: they wrap instead of running off the screen (2026-10-28, the owner: the fertilizer lot by lot looked bad on a phone). */
+    .au-ltabs { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .8rem; padding-bottom: .1rem; }
+    .au-fgoal { display: flex; align-items: center; gap: .65rem; margin: .7rem 0 .2rem; padding: .65rem .75rem; border-radius: 1rem; background: linear-gradient(115deg, #f3f8ec, #fff); border: 1px solid #cfe3b8; }
+    .au-fgoal > span:first-child { flex: none; font-size: 1.2rem; }
+    .au-fgoal > span:nth-child(2) { flex: 1; min-width: 0; display: grid; }
+    .au-fgoal small { font-size: .66rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
+    .au-fgoal b { font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-fgoal em { font-style: normal; font-size: .74rem; line-height: 1.4; color: var(--color-gray-600); }
+    .au-fgoal em b { font-size: .74rem; }
+    .au-fgoal .au-link { flex: none; }
+    .au-fcta { margin-top: 1rem; text-align: center; }
+    .au-fcta .au-big { max-width: 100%; white-space: normal; }
+    .au-fcta p { margin: .5rem auto 0; max-width: 26rem; font-size: .74rem; line-height: 1.45; color: var(--color-gray-500); }
+    .au-flines { display: grid; }
+    .au-flines > div { display: flex; align-items: baseline; gap: .7rem; padding: .45rem .1rem; border-bottom: 1px solid var(--color-gray-100); font-size: .84rem; }
+    .au-flines > div:last-child { border-bottom: 0; }
+    .au-flines b { flex: none; min-width: 4.4rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-flines span { flex: 1; min-width: 0; color: var(--color-gray-700); }
+    .au-flines small { display: inline-block; margin-left: .2rem; padding: 0 .4rem; border-radius: 999px; font-size: .7rem; font-weight: 800; color: #2d5016; background: #eef6e4; }
+    html.dark .au-fgoal { background: #17220f; border-color: #2b3a1c; } html.dark .au-fgoal b { color: #eef3e8; } html.dark .au-fgoal em { color: #b9c5ad; }
+    html.dark .au-flines > div { border-color: #2b3a1c; } html.dark .au-flines b { color: #eef3e8; } html.dark .au-flines span { color: #c7d0bd; } html.dark .au-flines small { background: #1c2616; color: #c5e09f; }
     .au-ltabs::-webkit-scrollbar { display: none; }
     .au-ltab { flex: none; display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .85rem; border-radius: 999px; font-size: .82rem; font-weight: 800; color: var(--color-gray-600);
         background: var(--color-white); border: 1px solid var(--color-gray-200); transition: background-color .28s var(--au-ease), color .28s var(--au-ease), border-color .28s var(--au-ease); }
@@ -357,6 +380,11 @@
     .au-review div { display: flex; gap: .7rem; padding: .55rem 0; border-bottom: 1px dashed var(--color-gray-200); font-size: .84rem; }
     .au-review b { flex: 0 0 7rem; color: var(--color-gray-500); font-weight: 700; }
     .au-review span { color: var(--color-gray-800); min-width: 0; }
+    /* On a phone each answer sits under its name, so a long lot name does not squeeze it into a column. */
+    @media (max-width: 639.98px) {
+        .au-review div { flex-direction: column; gap: .15rem; }
+        .au-review b { flex: none; font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
+    }
     .au-lock { display: flex; gap: .6rem; margin-top: 1rem; padding: .8rem .9rem; border-radius: 1rem; background: #fff6dd; border: 1px solid #f3d98f; color: #6b4a00; font-size: .82rem; line-height: 1.5; }
 
     /* The farm's lots (2026-10-16, the owner): a lot of the season can come
@@ -864,7 +892,8 @@
        shows the three goals, each with the fertilizer it takes, and the farmer picks one. ---- */
     const LEVELS = @json(collect(\App\Support\AutoGoal::LEVELS)->map(fn ($l) => ['label' => $l[0], 'icon' => $l[1], 'say' => $l[4]]));
     S.goalIn = (S.answers.goals && !Array.isArray(S.answers.goals)) ? S.answers.goals : {};
-    S.goalOut = {};
+    // How each lot's planting is asked, from the page's first paint; the goals themselves come with the count.
+    S.goalOut = Object.fromEntries(S.lots.filter((l) => l.plant).map((l) => [l.id, { plant: l.plant, method: l.protoMethod }]));
     const goalOf = (l) => (S.goalIn[l.id] = S.goalIn[l.id] || {});
     const fmt1 = (v) => String(Math.round(Number(v) * 10) / 10);
     const goalBlock = (l) => {
@@ -896,7 +925,10 @@
     const paintGoal = (l) => { const box = lotEl(l.id)?.querySelector('[data-goal]'); if (box) box.innerHTML = goalBlock(l); };
     // Saves a lot's planting or its pick (when given) and brings every lot's goals back counted.
     const saveGoals = async (l) => {
-        const r = await put(U.goal, l ? { lotId: l.id, goal: goalOf(l) } : {}, 'POST');
+        let r;
+        // A count that fails says so on the goal cards, with a way to try again, instead of counting forever.
+        try { r = await put(U.goal, l ? { lotId: l.id, goal: goalOf(l) } : {}, 'POST'); S.goalErr = false; }
+        catch (err) { S.goalErr = true; if (step === 6 && S.analysis) paintGoalCards(); throw err; }
         const before = JSON.stringify(Object.fromEntries(Object.entries(S.goalOut).map(([k, o]) => [k, [o.plant, o.method]])));
         S.goalOut = (r.data && r.data.goals) || {};
         // The planting asked changes with the crop and its way in: then the block is painted again.
@@ -904,6 +936,9 @@
         S.lots.forEach((x) => { if (before !== after) paintGoal(x); else paintGoalOut(x); });
         if (step === 6 && S.analysis) paintGoalCards();
         if (step === 6) navSay();
+        // The goal shows on the Fertilizer and Start steps too.
+        if (step === 7) paintFert();
+        if (step === 8) paintReview();
     };
     const goalsSoon = (l, ms = 700) => later(l ? 'goal' + l.id : 'goals', () => saveGoals(l), ms);
     $('auLots').addEventListener('click', (e) => {
@@ -1537,7 +1572,7 @@
     const kg = (v) => { const n = Number(v) || 0; return n >= 10 ? String(Math.round(n)) : fmt1(n); };
     const goalCards = (lotId, rg) => {
         const go = S.goalOut[lotId], l = lotById(lotId);
-        if (!go || !go.levels || !l) return '<p class="au-goals-wait">Counting the goals…</p>';
+        if (!go || !go.levels || !l) return S.goalErr ? '<p class="au-goals-wait">The goals could not be counted just now. <button type="button" class="au-link" data-goal-retry>Try again</button></p>' : '<p class="au-goals-wait">Counting the goals…</p>';
         const pick = goalOf(l).pick, words = (rg && rg.words) || {}, lotHa = Number(go.areaHa) || 1, one = Math.abs(lotHa - 1) < 0.001;
         const row = (name, ha, lot, cls) => '<tr' + (cls ? ' class="' + cls + '"' : '') + '><td>' + name + '</td><td>' + kg(ha) + '</td>' + (one ? '' : '<td>' + kg(lot) + '</td>') + '</tr>';
         return '<div class="au-goals-h"><b>Choose your goal</b><small>Each one takes its own fertilizer. The one you pick is the target Anee plans the season for.</small></div>'
@@ -1573,7 +1608,10 @@
         navSay();
         goalsSoon(l, 100);
     };
-    $('auReading').addEventListener('click', (e) => { const c = e.target.closest('[data-level]'); if (c) pickGoal(c); });
+    $('auReading').addEventListener('click', (e) => {
+        const c = e.target.closest('[data-level]'); if (c) pickGoal(c);
+        if (e.target.closest('[data-goal-retry]')) { S.goalErr = false; paintGoalCards(); goalsSoon(null, 0); }
+    });
     $('auReading').addEventListener('keydown', (e) => {
         const c = e.target.closest('[data-level]'); if (!c) return;
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pickGoal(c); }
@@ -1627,33 +1665,44 @@
         if (!l) { $('auFPane').innerHTML = ''; return; }
         const read = ((S.analysis || {}).lots || []).find((r) => r.lotId === l.id) || {};
         const fr = read.fertilizer || {};
-        let html = '<div class="au-rl" style="--i:0"><h4>' + (cropOf(l.crop)?.icon || '🌱') + ' ' + esc(l.name) + ' · ' + esc(cropName(l.crop).split(',')[0]) + (l.size ? ' · ' + l.size + ' ' + (l.unit === 'sqm' ? 'm²' : 'ha') : '') + '</h4>';
+        // The lot first, said plainly (2026-10-28, the owner: "fix the layout in all the steps like in the fertilizer lot by
+        // lot, the layout is bad especially in mobile"): its goal, then the plan, then Anee's advice folded, one row each.
+        let html = '<div class="au-rl" style="--i:0"><h4>' + (cropOf(l.crop)?.icon || '🌱') + ' ' + esc(l.name) + '</h4>'
+            + '<p class="au-rl-lead">' + esc([cropName(l.crop).split(',')[0], l.size ? l.size + ' ' + (l.unit === 'sqm' ? 'm²' : 'ha') : ''].filter(Boolean).join(' · ')) + '</p>';
         // The goal picked on the Reading step: the fertilizer is planned for it.
         const pk = goalOf(l).pick, lv = pk && ((S.goalOut[l.id] || {}).levels || {})[pk];
-        if (lv) html += '<div class="au-note is-ok"><span>' + lv.icon + '</span><span>Your goal: <b>' + esc(lv.label) + ', ' + fmt1(lv.t) + ' t/ha</b>. It takes about ' + needLine(lv.need) + ' kg a hectare. <button type="button" class="au-link" data-go-goal>Change it</button></span></div>';
-        if (fr.focus) html += '<h5>Anee\'s advice for this soil</h5><p>' + esc(fr.focus) + '</p>'
-            + ((fr.goodSources || []).length ? '<div class="au-chips mt-1">' + fr.goodSources.map((x) => '<span class="au-chip">👍 ' + esc(x) + '</span>').join('') + (fr.avoid || []).map((x) => '<span class="au-chip is-warn">✋ ' + esc(x) + '</span>').join('') + '</div>' : '')
-            + ((fr.micros || []).length ? '<p class="mt-2 text-sm"><b>Micronutrients and foliars worth adding:</b> ' + esc(fr.micros.join(', ')) + '</p>' : '');
+        if (lv) html += '<div class="au-fgoal"><span aria-hidden="true">' + lv.icon + '</span><span><small>Your goal</small><b>' + esc(lv.label) + '</b><em>' + fmt1(lv.t) + ' t/ha · ' + needLine(lv.need) + ' kg a hectare</em></span>'
+            + '<button type="button" class="au-link" data-go-goal>Change</button></div>';
+        const tips = '<div class="au-rows">'
+            + acc('🧑‍🌾', 'Anee\'s advice for this soil', first(fr.focus), para(fr.focus))
+            + acc('👍', 'Good sources for this soil', first((fr.goodSources || [])[0]), list((fr.goodSources || []).map(esc)), (fr.goodSources || []).length)
+            + acc('✋', 'Keep away from', first((fr.avoid || [])[0]), list((fr.avoid || []).map(esc)), (fr.avoid || []).length, true)
+            + acc('🧪', 'Micronutrients and foliars worth adding', first((fr.micros || [])[0]), list((fr.micros || []).map(esc)), (fr.micros || []).length)
+            + '</div>';
         if (!l.fert) {
-            html += '<div class="text-center mt-4"><button type="button" class="au-big" data-open-fert>🧪 Plan the fertilizer for ' + esc(l.name) + '</button><p class="text-xs text-gray-500 mt-2">Common grades, Yara, MAP, DAP, Philippine products, or your own label with its NPK, sulfur, calcium and trace elements.</p></div>';
+            html += tips + '<div class="au-fcta"><button type="button" class="au-big" data-open-fert>🧪 Plan the fertilizer</button><p>Common grades, Yara, MAP, DAP, Philippine products, or your own label with its NPK, sulfur, calcium and trace elements.</p></div>';
         } else {
-            const f = l.fert, goal = (f.goal || {}).tPerHa || read.goal?.tPerHa || null, reach = f.reach != null ? Number(f.reach) : null;
+            const f = l.fert, goal = (f.goal || {}).tPerHa || (lv && lv.t) || null, reach = f.reach != null ? Number(f.reach) : null;
+            const qty = (x) => { const a = Number(x.amount) || 0, u = String(x.unit || 'kg'); return fmt1(a) + ' ' + (u === 'bag' ? (a === 1 ? 'bag' : 'bags') : u); };
+            if ((f.lines || []).length) html += '<h5>Your plan</h5><div class="au-flines">' + f.lines.map((x) => '<div><b>' + esc(qty(x)) + '</b><span>' + esc(x.name || '') + (x.grade ? ' <small>' + esc(x.grade) + '</small>' : '') + '</span></div>').join('') + '</div>';
             html += '<h5>What the plan gives against the need</h5><div class="au-bars">' + ['N', 'P2O5', 'K2O'].map((k) => {
                 const n = (f.needs || {})[k]; if (!n) return '';
                 const scale = Math.max(n.need * 1.45, n.plan * 1.05, 1);
                 return '<div class="au-bar is-' + (n.state === 'right' ? 'ok' : n.state) + '"><b>' + LAB[k] + '</b><span class="au-bar-t"><span data-w="' + Math.min(100, n.plan / scale * 100) + '"></span><i style="left:' + (n.need / scale * 100) + '%"></i></span><em>' + (n.state === 'short' ? 'Short' : n.state === 'over' ? 'Too much' : 'Enough') + '</em></div>';
-            }).join('') + '</div><p class="text-xs text-gray-500 mt-1">The dark mark is the need for your goal; the bar is your plan, in kg per hectare (' + esc(f.npkPerHa || '') + ').</p>';
-            const micro = Object.entries(f.micros || {}).filter(([, m]) => ['short', 'over', 'right', 'extra'].includes(m.state));
-            if (micro.length) html += '<h5>Secondary and micronutrients</h5><div class="au-chips">' + micro.map(([k, m]) => '<span class="au-chip' + (m.state === 'short' ? ' is-warn' : m.state === 'over' ? ' is-bad' : '') + '">' + esc(k) + ' · ' + ({ short: 'short', over: 'too much', right: 'enough', extra: 'extra' })[m.state] + '</span>').join('') + '</div>';
+            }).join('') + '</div><p class="text-xs text-gray-500 mt-1">The dark mark is the need for your goal; the bar is your plan, in kg a hectare (' + esc(f.npkPerHa || '') + ').</p>';
+            // Only what matters: an element short, too much or just right (an element the plan carries with no need is left out).
+            const micro = Object.entries(f.micros || {}).filter(([, m]) => ['short', 'over', 'right'].includes(m.state));
+            if (micro.length) html += '<h5>Secondary and micronutrients</h5><div class="au-chips">' + micro.map(([k, m]) => '<span class="au-chip' + (m.state === 'short' ? ' is-warn' : m.state === 'over' ? ' is-bad' : '') + '">' + esc(MICRO_NAME[k] || k) + ' · ' + ({ short: 'short', over: 'too much', right: 'enough' })[m.state] + '</span>').join('') + '</div>';
             if (reach != null) {
                 const t = goal ? Math.round(goal * reach / 10) / 10 : null;
                 html += '<div class="au-yield"><span class="au-gauge"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42" pathLength="1"/><circle class="fg" cx="50" cy="50" r="42" pathLength="1" data-reach="' + Math.min(100, reach) + '"/></svg><b>' + Math.round(reach) + '%</b></span>'
-                    + '<p>' + (t ? 'The barrel holds about <b>' + t + ' t/ha</b> of your ' + goal + ' t/ha goal.' : 'The plan reaches <b>' + Math.round(reach) + '%</b> of the goal.') + ' The shortest plank sets the harvest; the others cannot raise it.</p></div>';
+                    + '<p>' + (t ? 'The plan carries about <b>' + t + ' t/ha</b> of the ' + fmt1(goal) + ' t/ha it was made for.' : 'The plan reaches <b>' + Math.round(reach) + '%</b> of the goal.') + ' The shortest plank sets the harvest; the others cannot raise it.</p></div>';
             }
             const rk = risks(f);
             html += rk.length ? '<h5>Risks from this plan</h5>' + rk.map((r, i) => '<div class="au-risk" style="animation-delay:' + i * 60 + 'ms"><span>' + r[0] + '</span><span>' + r[1] + '</span></div>').join('') : '<div class="au-note is-ok"><span>✅</span><span>Balanced for your goal. Anee times each application for the moments the crop needs it most.</span></div>';
             if (l.imbalance) html += '<div class="au-note is-info"><span>📝</span><span>You chose to go on with this plan: ' + esc(BOOK.imbalance[l.imbalanceReason] || 'noted') + '. Anee plans with it and leans on timing and foliars to make the most of it.</span></div>';
-            html += '<div class="flex gap-2 mt-4"><button type="button" class="btn btn-white flex-1" data-open-fert>Change the plan</button></div>'
+            html += '<button type="button" class="btn btn-white w-full mt-4" data-open-fert>Change the plan</button>'
+                + '<h5>Anee\'s advice</h5>' + tips
                 + '<p class="au-disc">These bars and the barrel are a guide, not a promise. The real need and harvest depend on the variety, how much of its own nutrients your soil gives, the weather, and how and when the fertilizer goes on. A soil test makes all of it surer.</p>';
         }
         $('auFPane').innerHTML = html + '</div>';
@@ -1663,8 +1712,14 @@
         });
         if (S.lots.findIndex((x) => x.id === FLOT) < S.lots.length - 1) navLabel($('auNext'), '', 'Next lot', 'next'); else navLabel($('auNext'), 'Next: ', 'Start', 'next');
     };
+    const MICRO_NAME = { Ca: 'Calcium', Mg: 'Magnesium', S: 'Sulfur', Zn: 'Zinc', B: 'Boron', Fe: 'Iron', Mn: 'Manganese', Cu: 'Copper', Mo: 'Molybdenum', Si: 'Silicon', Co: 'Cobalt' };
     $('auFTabs').addEventListener('click', (e) => { const b = e.target.closest('[data-l]'); if (b) { FLOT = Number(b.dataset.l); paintFert(); } });
-    $('auFPane').addEventListener('click', (e) => { if (e.target.closest('[data-open-fert]')) openFert(lotById(FLOT)); if (e.target.closest('[data-go-goal]')) show(6, true); });
+    $('auFPane').addEventListener('click', (e) => {
+        if (e.target.closest('[data-open-fert]')) openFert(lotById(FLOT));
+        if (e.target.closest('[data-go-goal]')) show(6, true);
+        const h = e.target.closest('.au-acc-h');
+        if (h) { const box = h.closest('.au-acc'), open = !box.classList.contains('is-open'); box.classList.toggle('is-open', open); h.setAttribute('aria-expanded', String(open)); }
+    });
 
     /* NPK Plus, in a window of its own, prefilled from the lot and the reading. */
     const NPK_CONDS = ['acidic', 'neutral', 'alkaline', 'sodic', 'saline', 'acid_sulfate', 'low_om', 'peat', 'waterlogged'];
@@ -1728,6 +1783,7 @@
     const paintReview = () => {
         const sr = S.answers.soilRead || {};
         $('auReview').innerHTML = S.lots.map((l) => '<div><b>' + esc(l.name) + '</b><span>' + (cropOf(l.crop)?.icon || '') + ' ' + esc(cropName(l.crop)) + (l.variety ? ', ' + esc(l.variety) : '') + ' · ' + (l.method === 'tree' ? 'standing trees' : esc(dayLabel(l).split(' (')[0].toLowerCase()) + ' ' + fmtDate(l.fieldDate))
+            + (() => { const pk = goalOf(l).pick, lv = pk && ((S.goalOut[l.id] || {}).levels || {})[pk]; return lv ? ' · goal ' + esc(lv.label.toLowerCase()) + ', ' + fmt1(lv.t) + ' t/ha' : ''; })()
             + ' · ' + (l.fert ? (l.imbalance ? 'fertilizer plan kept as is' : 'fertilizer planned') : '<span class="text-amber-700 font-bold">no fertilizer plan yet</span>') + '</span></div>').join('')
             + '<div><b>Workers</b><span>' + (S.crewList.length ? esc(S.crewList.map((w) => w.name).filter(Boolean).join(', ')) : 'The family') + '</span></div>'
             + '<div><b>Soil</b><span>' + esc([TEX[sr.texture] || 'not sure'].concat((sr.conditions || []).map((c) => COND[c] || c)).join(', ')) + '</span></div>'
