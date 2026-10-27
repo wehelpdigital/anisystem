@@ -260,6 +260,17 @@
     .au-gc-t tr.is-micro td:first-child { color: #2d5016; }
     .au-gc-t td small { display: inline-block; margin-left: .25rem; padding: 0 .35rem; border-radius: 999px; font-size: .62rem; font-weight: 800; color: #2d5016; background: #e4efd4; }
     .au-gc-unfed { padding: .4rem .55rem; border-radius: .7rem; font-size: .74rem; line-height: 1.45; color: #6b4a00; background: #fff6dd; border: 1px solid #f3d98f; }
+    .au-gc-bags { display: grid; gap: .1rem; padding: .5rem .6rem; border-radius: .8rem; background: #f8fbf4; border: 1px solid #dcebc8; }
+    .au-gc-bags > b { font-size: .66rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: #3d6823; margin-bottom: .15rem; }
+    .au-gc-bags > div { display: flex; align-items: baseline; gap: .6rem; padding: .28rem 0; font-size: .78rem; }
+    .au-gc-bags > div + div { border-top: 1px solid #e4efd4; }
+    .au-gc-bags em { flex: none; min-width: 5.2rem; font-style: normal; font-weight: 800; color: var(--color-gray-900); }
+    .au-gc-bags span { flex: 1; min-width: 0; color: var(--color-gray-700); }
+    .au-gc-bags span small { display: inline-block; margin-left: .2rem; padding: 0 .35rem; border-radius: 999px; font-size: .64rem; font-weight: 800; color: #2d5016; background: #e4efd4; }
+    .au-gc-bags span i { display: block; font-style: normal; font-size: .7rem; color: var(--color-gray-500); }
+    .au-gc-bags > p { margin-top: .2rem; font-size: .7rem; line-height: 1.4; color: var(--color-gray-500); }
+    html.dark .au-gc-bags { background: #17220f; border-color: #2b3a1c; } html.dark .au-gc-bags > b { color: #a5c97e; } html.dark .au-gc-bags em { color: #eef3e8; }
+    html.dark .au-gc-bags span { color: #c7d0bd; } html.dark .au-gc-bags > div + div { border-color: #2b3a1c; } html.dark .au-gc-bags span small { background: #1c2616; color: #c5e09f; }
     .au-gc-as { font-size: .72rem; line-height: 1.45; color: var(--color-gray-500); }
     .au-gc-add { display: flex; gap: .45rem; padding: .4rem .55rem; border-radius: .7rem; font-size: .74rem; line-height: 1.45; color: #2d4a17; background: #f3f8ec; border: 1px solid #dcebc8; }
     .au-gc-add b { color: #1d330d; }
@@ -1646,6 +1657,17 @@
     const NUTW = { N: 'Nitrogen (N)', P2O5: 'Phosphorus (P₂O₅)', K2O: 'Potassium (K₂O)' };
     const needLine = (need) => Object.entries(NUT).map(([k, w]) => w + ' <b>' + Math.round(Number(need[k] || 0)) + '</b>').join(' · ');
     const kg = (v) => { const n = Number(v) || 0; return n >= 10 ? String(Math.round(n)) : fmt1(n); };
+    // A goal's fertilizer in 50 kg bags (and kilos for the small ones), a hectare and for the lot.
+    const bagsHtml = (lv, one) => {
+        const rows = lv.bags || [];
+        if (!rows.length) return '';
+        const amt = (b, lot) => { const bags = lot ? b.bagsLot : b.bagsHa, kgs = lot ? b.kgLot : b.kgHa;
+            return b.micro ? kg(kgs) + ' kg' + (bags ? ' (about ' + fmt1(bags) + (bags === 1 ? ' bag)' : ' bags)') : '') : fmt1(bags) + (bags === 1 ? ' bag' : ' bags'); };
+        return '<div class="au-gc-bags"><b>In bags of 50 kg, an estimate</b>'
+            + rows.map((b) => '<div><em>' + esc(amt(b, false)) + '</em><span>' + esc(b.name) + (b.grade ? ' <small>' + esc(b.grade) + '</small>' : '')
+                + (one ? '' : '<i>' + esc(amt(b, true)) + ' for this lot</i>') + (b.note ? '<i>' + esc(b.note) + '</i>' : '') + '</span></div>').join('')
+            + '<p>One way to meet it with fertilizers sold everywhere. On the Fertilizer step you plan with your own.</p></div>';
+    };
     const goalCards = (lotId, rg) => {
         const go = S.goalOut[lotId], l = lotById(lotId);
         if (!go || !go.levels || !l) return S.goalErr ? '<p class="au-goals-wait">The goals could not be counted just now. <button type="button" class="au-link" data-goal-retry>Try again</button></p>' : '<p class="au-goals-wait">Counting the goals…</p>';
@@ -1661,6 +1683,8 @@
                 + Object.entries(NUTW).map(([n, w]) => row(w, (lv.need || {})[n], (lv.lotNeed || {})[n])).join('')
                 + (lv.micros || []).map((m) => row(esc(m.name) + (m.likely ? ' <small>fixes a shortage</small>' : ''), m.need, m.lot, 'is-micro')).join('')
                 + '</tbody></table>'
+                // The same need in bags of the fertilizers sold everywhere, an estimate (AutoGoal::bags).
+                + bagsHtml(lv, one)
                 // A crop with no fertilizer figures of its own is counted as a close one (AutoGoal::PROXY): said plainly.
                 + (lv.needAs ? '<p class="au-gc-as">Counted as for ' + esc(lv.needAs) + ', a close crop: this one has no fertilizer figures of its own yet.</p>' : '')
                 // What its micronutrients add: left unfed, the scarcest of them would hold the harvest to what the soil gives alone.

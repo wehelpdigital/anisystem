@@ -437,7 +437,10 @@ final class AutoGoal
                 'needAs' => $own || ! $need ? null : CropCatalog::label((string) $needCrop),
                 'without' => $without !== null && $without < $lv['t'] ? $without : null,
                 // What the traditional yield leaves unfed: the shortages that stay.
-                'unfed' => $feed === [] ? $out['feed'] : []];
+                'unfed' => $feed === [] ? $out['feed'] : [],
+                // The same need in bags of common fertilizer, an estimate (2026-10-28, the owner: "in choosing a goal ... explain
+                // how many bags of fertilizer (an estimate) to use for each").
+                'bags' => self::bags($need, $micros, (array) ($soil['conditions'] ?? []), $areaHa)];
         }
         $out['levels'] = $levels;
         $out['tPerHa'] = $out['pick'] ? $levels[$out['pick']]['t'] : null;
@@ -523,6 +526,94 @@ final class AutoGoal
         }
 
         return null;
+    }
+
+    /**
+     * A goal's need as bags of the fertilizers sold everywhere, one sensible way to meet it, a hectare and for the lot:
+     * complete 14-14-14 for the phosphorus and potassium together, DAP for the phosphorus left, muriate of potash (sulfate
+     * of potash on salty or sodic soil) for the potassium left, then urea for the nitrogen left (ammonium sulfate on an
+     * alkaline or sodic soil, where urea loses its nitrogen to the air: the rule ProtocolCare::fixes follows). The secondary
+     * and micro elements fed for the goal come as kilos of their usual carriers, less what the bags above already bring.
+     * 50 kg bags, rounded to half a bag; an estimate, the Fertilizer step plans with the farmer's own products.
+     *
+     * @return list<array{name: string, grade: string, kgHa: float, bagsHa: ?float, kgLot: float, bagsLot: ?float, micro: bool, note: string}>
+     */
+    public static function bags(array $need, array $micros, array $conds, float $areaHa): array
+    {
+        $N = (float) ($need['N'] ?? 0);
+        $P = (float) ($need['P2O5'] ?? 0);
+        $K = (float) ($need['K2O'] ?? 0);
+        $alk = (in_array('alkaline', $conds, true) || in_array('sodic', $conds, true)) && ! in_array('acidic', $conds, true) && ! in_array('acid_sulfate', $conds, true);
+        $salty = in_array('saline', $conds, true) || in_array('sodic', $conds, true);
+        $rows = [];
+        $add = function (string $name, string $grade, float $kg, bool $micro = false, string $note = '') use (&$rows, $areaHa) {
+            if ($kg < ($micro ? 0.05 : 5)) {
+                return;
+            }
+            $half = fn ($v) => max(0.5, round($v * 2) / 2);
+            // A carrier of a secondary element in bag amounts (gypsum, kieserite) is said in bags too.
+            $bagged = ! $micro || $kg >= 25;
+            $rows[] = ['name' => $name, 'grade' => $grade, 'kgHa' => round($kg, $kg >= 10 ? 0 : 1), 'bagsHa' => $bagged ? $half($kg / 50) : null,
+                'kgLot' => round($kg * $areaHa, $kg * $areaHa >= 10 ? 0 : 1), 'bagsLot' => $bagged ? $half($kg * $areaHa / 50) : null, 'micro' => $micro, 'note' => $note];
+        };
+        $S = 0.0;
+        $Ca = 0.0;
+        // Phosphorus and potassium together from complete, as far as the smaller of the two goes.
+        $both = min($P, $K);
+        if ($both > 0) {
+            $kg = $both / 0.14;
+            $add('Complete', '14-14-14', $kg);
+            [$N, $P, $K] = [max(0, $N - $kg * 0.14), $P - $both, $K - $both];
+        }
+        if ($P > 0) {
+            $kg = $P / 0.46;
+            $add('DAP', '18-46-0', $kg);
+            $N = max(0, $N - $kg * 0.18);
+        }
+        if ($K > 0) {
+            if ($salty) {
+                $kg = $K / 0.50;
+                $add('Sulfate of potash', '0-0-50', $kg, false, 'not muriate: this soil has salt or sodium');
+                $S += $kg * 0.18;
+            } else {
+                $add('Muriate of potash', '0-0-60', $K / 0.60);
+            }
+        }
+        if ($N > 0) {
+            if ($alk) {
+                $kg = $N / 0.21;
+                $add('Ammonium sulfate', '21-0-0', $kg, false, 'not urea: urea loses nitrogen to the air on this soil');
+                $S += $kg * 0.24;
+            } else {
+                $add('Urea', '46-0-0', $N / 0.46);
+            }
+        }
+        // The secondary and micro elements, as kilos of their usual carriers.
+        $want = [];
+        foreach ($micros as $m) {
+            $want[$m['el']] = (float) $m['need'];
+        }
+        if (($want['Ca'] ?? 0) > 0) {
+            $kg = $want['Ca'] / 0.23;
+            $add('Gypsum', 'calcium sulfate', $kg, true);
+            $S += $kg * 0.18;
+        }
+        if (($want['Mg'] ?? 0) > 0) {
+            $kg = $want['Mg'] / 0.16;
+            $add('Kieserite', 'magnesium sulfate', $kg, true);
+            $S += $kg * 0.22;
+        }
+        if (($want['S'] ?? 0) > $S) {
+            $add('Gypsum', 'for the sulfur', ($want['S'] - $S) / 0.18, true);
+        }
+        foreach (['Zn' => ['Zinc sulfate', 'monohydrate', 0.33, ''], 'Fe' => ['Ferrous sulfate', 'iron', 0.19, 'as a spray on the leaves'], 'Mn' => ['Manganese sulfate', 'manganese', 0.31, ''],
+            'B' => ['Borax', 'boron', 0.11, 'keep to the dose: more burns'], 'Cu' => ['Copper sulfate', 'copper', 0.25, ''], 'Mo' => ['Sodium molybdate', 'molybdenum', 0.39, '']] as $el => [$name, $grade, $pct, $note]) {
+            if (($want[$el] ?? 0) > 0) {
+                $add($name, $grade, $want[$el] / $pct, true, $note);
+            }
+        }
+
+        return $rows;
     }
 
     /** The steps and the three goals as words for a prompt. */
