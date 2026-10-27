@@ -240,6 +240,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-27: the daily news reading runs on the owner's own Claude (true once its key is kept).
             'newsClaude' => method_exists(\App\Models\AiSetting::class, 'newsReader') && (bool) rescue(fn () => \App\Models\AiSetting::newsReader(), null, false),
             // 2026-10-27: the price records reach the calculators' palay card, the chats, the season reports and Anee Auto.
+            // 2026-10-27: every AI ask goes to the owner's Claude first, and to Gemini when Claude cannot answer.
+            'claudeFirst' => class_exists(\App\Support\ClaudeFirst::class) && method_exists(\App\Models\AiSetting::class, 'onClaude'),
             'marketEverywhere' => class_exists(\App\Support\MarketLines::class) && \Illuminate\Support\Facades\Route::has('bilad.palay') && method_exists(\App\Support\MarketBook::class, 'sellLine'),
             // 2026-10-19: the Seed Count and Distance Calculator in Quick Tools.
             'seedCount' => class_exists(\App\Support\SeedSpacing::class) && \Illuminate\Support\Facades\Route::has('seedcalc.page'),
@@ -300,8 +302,11 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             $r = method_exists(\App\Models\AiSetting::class, 'newsReader') ? rescue(fn () => \App\Models\AiSetting::newsReader(), null, false) : null;
 
             return ['on' => (bool) $r, 'from' => $r ? (filled(config('services.anthropic.key')) ? 'environment' : 'settings') : null,
-                'model' => $r?->effectiveModel(), 'lastCheck' => json_decode((string) \App\Models\AsSiteSetting::get('market.news_check', ''), true)];
+                'model' => $r?->onClaude()?->effectiveModel(), 'lastCheck' => json_decode((string) \App\Models\AsSiteSetting::get('market.news_check', ''), true)];
         })(),
+        // Every AI ask on the owner's Claude first, Gemini when it cannot answer (2026-10-27, App\Support\ClaudeFirst):
+        // on or off, where the key comes from, the models, a rest, the last answer, problem and check. Never the key.
+        'claudeFirst' => class_exists(\App\Support\ClaudeFirst::class) ? rescue(fn () => \App\Support\ClaudeFirst::state(), null, false) : null,
         'scheduler' => (function () {
             $tick = \App\Models\AsSiteSetting::get('scheduler.tick');
             $at = $tick ? \Carbon\Carbon::parse($tick) : null;

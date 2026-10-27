@@ -35,8 +35,9 @@ final class AiUsage
                 'userId' => $userId,
                 'payerId' => $payerId,
                 'refId' => $refId,
-                'provider' => mb_substr((string) $settings->provider, 0, 16),
-                'model' => mb_substr((string) $settings->effectiveModel(), 0, 80),
+                // The model that answered, when the run says (Claude first answers on the owner's key: ClaudeFirst).
+                'provider' => mb_substr((string) (($result['provider'] ?? '') ?: $settings->provider), 0, 16),
+                'model' => mb_substr((string) (($result['model'] ?? '') ?: $settings->effectiveModel()), 0, 80),
                 'tokensIn' => $in,
                 'tokensOut' => $out,
                 // A search paid for by this run (a kept brief's notes cost nothing again: ResearchShelf).

@@ -26,7 +26,7 @@ class MarketNewsCommand extends Command
             $r = $ai->ask($settings, [], 'Reply with the word ok.', null, 64, ['system' => 'You answer in one word.', 'timeout' => 60]);
             // The provider's own words, on the shelf only (the deploy check shows the plain error).
             \App\Models\AsSiteSetting::put('market.news_check_detail', json_encode($ai->lastProviderError));
-            $out = ['at' => now('Asia/Manila')->toIso8601String(), 'via' => $settings->provider . ' ' . $settings->effectiveModel(), 'ok' => (bool) ($r['ok'] ?? false),
+            $out = ['at' => now('Asia/Manila')->toIso8601String(), 'via' => ($r['provider'] ?? $settings->provider) . ' ' . ($r['model'] ?? $settings->effectiveModel()), 'ok' => (bool) ($r['ok'] ?? false),
                 'answer' => mb_substr((string) ($r['text'] ?? ''), 0, 40), 'error' => $r['error'] ?? null, 'tokensIn' => (int) ($r['tokensIn'] ?? 0), 'tokensOut' => (int) ($r['tokensOut'] ?? 0)];
             \App\Models\AsSiteSetting::put('market.news_check', json_encode($out));
             $this->line(json_encode($out));

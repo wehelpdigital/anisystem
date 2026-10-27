@@ -1463,7 +1463,7 @@ class CropProtocolController extends Controller
         for ($try = 0; $try < 3; $try++) {
             $onPhase($try + 1);
             $ask = $try === 0 ? $brief : "IMPORTANT: the previous attempt answered from memory without using the search tool. You MUST use the web search tool now: run the searches, read the pages, and write the notes from what they say.\n\n" . $brief;
-            $got = $this->ai->ask($s, [], $ask, null, 3200, ['search' => true, 'timeout' => AiClient::TIMEOUT_SEARCHED]);
+            $got = $this->ai->ask($s, [], $ask, null, 3200, ['search' => true, 'timeout' => AiClient::TIMEOUT_SEARCHED, 'onBeat' => fn () => $onPhase($try + 1)]);
             $spent['tokensIn'] += (int) ($got['tokensIn'] ?? 0);
             $spent['tokensOut'] += (int) ($got['tokensOut'] ?? 0);
             $spent['tokensCached'] = ($spent['tokensCached'] ?? 0) + (int) ($got['tokensCached'] ?? 0);

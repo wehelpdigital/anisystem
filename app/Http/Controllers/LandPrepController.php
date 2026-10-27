@@ -749,14 +749,14 @@ Write short plain notes of what the pages say (at most 250 words), then end with
 PROMPT;
         $doc = $settings->forDocument();
         $began = microtime(true);
-        $r = $this->ai->ask($doc, [], $prompt, null, 1800, ['search' => true, 'timeout' => AiClient::TIMEOUT_SEARCHED]);
+        $r = $this->ai->ask($doc, [], $prompt, null, 1800, ['search' => true, 'timeout' => AiClient::TIMEOUT_SEARCHED, 'onBeat' => fn () => $beat('research')]);
         $in = (int) ($r['tokensIn'] ?? 0);
         $out = (int) ($r['tokensOut'] ?? 0);
         if (! ($r['ok'] ?? false) && microtime(true) - $began < 45) {
             // A quick failure (not a stall) gets one more try; a stall does not.
             $beat('research', 2);
             sleep(2);
-            $r = $this->ai->ask($doc, [], $prompt, null, 1800, ['search' => true, 'timeout' => AiClient::TIMEOUT_SEARCHED]);
+            $r = $this->ai->ask($doc, [], $prompt, null, 1800, ['search' => true, 'timeout' => AiClient::TIMEOUT_SEARCHED, 'onBeat' => fn () => $beat('research', 2)]);
             $in += (int) ($r['tokensIn'] ?? 0);
             $out += (int) ($r['tokensOut'] ?? 0);
         }

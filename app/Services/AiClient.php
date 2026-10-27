@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\AiSetting;
+use App\Support\ClaudeFirst;
 use Illuminate\Support\Facades\Http;
 
 /**
@@ -37,6 +38,15 @@ class AiClient
     /** The per-call timeout, the caller's or the default. */
     private int $timeout = self::TIMEOUT;
 
+    /* Claude answers as a stream (2026-10-27), so a long document is told
+     * from a stall by silence, not by the clock: nothing heard (not even the
+     * stream's pings) for CLAUDE_SILENCE seconds is a stall. A job that beats
+     * its heart (onBeat) may let one answer run to CLAUDE_JOB_CAP, since the
+     * beat keeps it alive while the words come; anything else keeps its own
+     * clock. */
+    private const CLAUDE_SILENCE = 120;
+    private const CLAUDE_JOB_CAP = 420;
+
     /**
      * The most one ask may carry in, in tokens (~4 characters each): a
      * ceiling on what the house pays for a single question, and on what any
@@ -70,11 +80,6 @@ class AiClient
      */
     public function ask(AiSetting $settings, array $history, string $prompt, array|null $image = null, ?int $maxOut = null, array $opts = []): array
     {
-        $key = $settings->plainApiKey();
-        if (! $key) {
-            return $this->fail('The AI is not configured yet. Please contact support.');
-        }
-
         // Refused before the provider is paid: see MAX_PROMPT_TOKENS.
         $carried = (int) ceil((mb_strlen($prompt) + array_sum(array_map(fn ($t) => mb_strlen((string) ($t['text'] ?? '')), $history))) / 4);
         if ($carried > self::MAX_PROMPT_TOKENS) {
@@ -88,15 +93,50 @@ class AiClient
         // A job that is not Anee talking (a receipt read for the payments
         // desk) brings its own system prompt: no persona, no farm rules.
         $this->system = isset($opts['system']) && trim((string) $opts['system']) !== '' ? (string) $opts['system'] : null;
+        // A job's heartbeat (askForJson's and researchThenJson's onPhase, or the caller's own): a long Claude answer beats it as it comes.
+        $beat = is_callable($opts['onBeat'] ?? null) ? $opts['onBeat'] : null;
+        $pictures = self::pictures($image);
+
+        /* The owner's Claude first (App\Support\ClaudeFirst), while its key
+         * works and it is not resting; whatever it cannot answer, the
+         * settings row's own model answers in the same ask. */
+        $claude = ClaudeFirst::reads($pictures) && ! ClaudeFirst::resting() ? $settings->onClaude() : null;
+        if ($claude) {
+            $this->lastProviderError = null;
+            $this->stalled = false;
+            try {
+                $r = $this->askClaude($claude, (string) $claude->plainApiKey(), $history, $prompt, $pictures, $maxOut, $search, $beat);
+            } catch (\Throwable $e) {
+                // Nothing heard for CLAUDE_SILENCE is a stall; the caller's clock running out on a long answer is not.
+                $this->stalled = str_contains($e->getMessage(), 'too slow');
+                logger()->warning('Claude first: no answer', ['error' => mb_substr($e->getMessage(), 0, 200)]);
+                $r = $this->fail('The AI could not be reached. Please try again in a moment.');
+            }
+            if ($r['ok'] ?? false) {
+                ClaudeFirst::answered((string) ($r['model'] ?? $claude->effectiveModel()));
+
+                return $this->finish($r + ['provider' => 'claude', 'model' => $claude->effectiveModel()], $opts);
+            }
+            ClaudeFirst::failed($this->lastProviderError, $claude->effectiveModel(), $this->stalled);
+            if ($beat) {
+                // The Claude try may have used most of a job's clock: it is still alive.
+                rescue($beat, null, false);
+            }
+        }
+
+        $key = $settings->plainApiKey();
+        if (! $key) {
+            return $this->fail('The AI is not configured yet. Please contact support.');
+        }
 
         /* The settings row's cap is sized for a chat answer. A caller whose
          * answer is a document — the when-to-plant JSON — says so here, or
          * the reply is cut mid-object and reads as "unreadable". */
         try {
             $r = match ($settings->provider) {
-                'openai' => $this->askOpenAi($settings, $key, $history, $prompt, self::pictures($image), $maxOut, $search),
-                'gemini' => $this->askGemini($settings, $key, $history, $prompt, self::pictures($image), $maxOut, $search),
-                default => $this->askClaude($settings, $key, $history, $prompt, self::pictures($image), $maxOut, $search),
+                'openai' => $this->askOpenAi($settings, $key, $history, $prompt, $pictures, $maxOut, $search),
+                'gemini' => $this->askGemini($settings, $key, $history, $prompt, $pictures, $maxOut, $search),
+                default => $this->askClaude($settings, $key, $history, $prompt, $pictures, $maxOut, $search, $beat),
             };
         } catch (\Throwable $e) {
             report($e);
@@ -104,6 +144,15 @@ class AiClient
             return $this->fail('The AI could not be reached. Please try again in a moment.');
         }
 
+        return $this->finish($r + ['provider' => (string) $settings->provider, 'model' => $settings->effectiveModel()], $opts);
+    }
+
+    /** Whether the last Claude try heard nothing for CLAUDE_SILENCE (a stall, not a slow answer). */
+    private bool $stalled = false;
+
+    /** An answer as every caller takes it: the source lists filled in, and an agency's name taken out (GovSource). */
+    private function finish(array $r, array $opts): array
+    {
         $r += ['searched' => false, 'sources' => []];
         /* Anee's own words never give a government body as her source (the
          * owner, 2026-10-17): the prompt says so (GovSource::RULE), and what
@@ -151,6 +200,11 @@ class AiClient
             $sum['tokensOut'] += (int) ($r['tokensOut'] ?? 0);
             $sum['tokensCached'] += (int) ($r['tokensCached'] ?? 0);
             $sum['searched'] = $sum['searched'] || (bool) ($r['searched'] ?? false);
+            // Who answered (Claude first, or the settings row's model): the usage ledger records it.
+            if (! empty($r['ok']) && ! empty($r['provider'])) {
+                $sum['provider'] = (string) $r['provider'];
+                $sum['model'] = (string) ($r['model'] ?? '');
+            }
             foreach ((array) ($r['sources'] ?? []) as $src) {
                 if (! in_array($src, $sum['sources'], true)) {
                     $sum['sources'][] = $src;
@@ -164,7 +218,7 @@ class AiClient
             $onPhase('document', 1);
         }
         $began = microtime(true);
-        $result = $this->ask($settings, [], $prompt, $image, $maxOut, $opts);
+        $result = $this->ask($settings, [], $prompt, $image, $maxOut, $opts + ['onBeat' => $onPhase ? fn () => $onPhase('document', 1) : null]);
         $fold($result);
         $timedOut = (microtime(true) - $began) > 0.8 * (int) $opts['timeout'];
         if (! ($result['ok'] ?? false) && ($retryAfterTimeout || ! $timedOut)) {
@@ -173,7 +227,7 @@ class AiClient
             if ($onPhase) {
                 $onPhase('document', 2);
             }
-            $result = $this->ask($settings, [], $prompt, $image, $maxOut, $opts);
+            $result = $this->ask($settings, [], $prompt, $image, $maxOut, $opts + ['onBeat' => $onPhase ? fn () => $onPhase('document', 2) : null]);
             $fold($result);
         }
         if (! ($result['ok'] ?? false)) {
@@ -193,7 +247,7 @@ class AiClient
                 ['role' => 'assistant', 'text' => (string) $result['text']],
             ], 'That was not valid JSON. Return ONLY the JSON object described, with no fences and no commentary.', null, $maxOut, ['timeout' => $opts['timeout'], 'keepAgencies' => ! empty($opts['keepAgencies']),
                 // A job with its own system prompt (a news sort) keeps it on the retry, not Anee's whole persona (2026-10-19).
-                'system' => $opts['system'] ?? null]);
+                'system' => $opts['system'] ?? null, 'onBeat' => $onPhase ? fn () => $onPhase('document-json', 1) : null]);
             $fold($retry);
             if ($retry['ok'] ?? false) {
                 $data = $parse((string) $retry['text']);
@@ -276,7 +330,8 @@ class AiClient
             if ($onPhase) {
                 $onPhase('research', $try + 1);
             }
-            $got = $this->ask($settings, [], $brief, null, $notesMaxOut, ['search' => true, 'timeout' => self::TIMEOUT_SEARCHED]);
+            $got = $this->ask($settings, [], $brief, null, $notesMaxOut, ['search' => true, 'timeout' => self::TIMEOUT_SEARCHED,
+                'onBeat' => $onPhase ? fn () => $onPhase('research', $try + 1) : null]);
             $spent['tokensIn'] += (int) ($got['tokensIn'] ?? 0);
             $spent['tokensOut'] += (int) ($got['tokensOut'] ?? 0);
             $spent['tokensCached'] += (int) ($got['tokensCached'] ?? 0);
@@ -346,7 +401,7 @@ class AiClient
         return array_map(fn ($p) => \App\Support\ModelImage::fitEncoded($p), $list);
     }
 
-    private function askClaude(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null, bool $search = false): array
+    private function askClaude(AiSetting $s, string $key, array $history, string $prompt, array $images, ?int $maxOut = null, bool $search = false, ?callable $beat = null): array
     {
         $messages = [];
         foreach ($history as $turn) {
@@ -369,11 +424,14 @@ class AiClient
          * re-run by the API on the model it picks (server-side fallback). Older models keep the old request. */
         $model = $s->effectiveModel();
         $current = (bool) preg_match('/^claude-(opus-(4-[678]|5)|sonnet-5|fable-5|haiku-5)/', $model);
+        $answer = (int) ($maxOut ?? $s->maxOutputTokens);
         $body = [
             'model' => $model,
-            'max_tokens' => (int) ($maxOut ?? $s->maxOutputTokens) + ($current ? 4096 : 0),
+            // A document thinks longer before it writes than a chat answer does.
+            'max_tokens' => $answer + ($current ? ($answer >= 4000 ? 8192 : 4096) : 0),
             'system' => $this->system ?? $s->instructions(),
             'messages' => $messages,
+            'stream' => true,
         ];
         if (! $current) {
             $body['temperature'] = (float) $s->temperature;
@@ -388,7 +446,20 @@ class AiClient
         if ($search) {
             $body['tools'] = [['type' => $current && ! str_starts_with($model, 'claude-haiku') ? 'web_search_20260209' : 'web_search_20250305', 'name' => 'web_search', 'max_uses' => self::SEARCH_MAX_USES]];
         }
-        $res = Http::timeout($this->timeout)
+        // Curl stops a stream that has been silent for CLAUDE_SILENCE; a job's heart beats every twenty seconds meanwhile.
+        $options = ['curl' => [CURLOPT_LOW_SPEED_LIMIT => 1, CURLOPT_LOW_SPEED_TIME => self::CLAUDE_SILENCE]];
+        if ($beat) {
+            $lastBeat = microtime(true);
+            $options['progress'] = function () use (&$lastBeat, $beat): void {
+                if (microtime(true) - $lastBeat >= 20) {
+                    $lastBeat = microtime(true);
+                    rescue($beat, null, false);
+                }
+            };
+        }
+        $res = Http::timeout($beat ? max($this->timeout, self::CLAUDE_JOB_CAP) : $this->timeout)
+            ->connectTimeout(20)
+            ->withOptions($options)
             ->withHeaders($headers)
             ->post('https://api.anthropic.com/v1/messages', $body);
 
@@ -396,16 +467,37 @@ class AiClient
             return $this->fail($this->providerError($res->json('error.message'), $res->status()));
         }
 
-        $json = $res->json();
+        $json = self::unstream($res->body());
+        if (! empty($json['error'])) {
+            // Trouble after the stream began (overloaded, mostly): the provider's words, as for any failed ask.
+            return $this->fail($this->providerError((string) ($json['error']['message'] ?? ''), ($json['error']['type'] ?? '') === 'overloaded_error' ? 529 : 500));
+        }
         if (($json['stop_reason'] ?? '') === 'refusal') {
             logger()->warning('Claude declined', ['model' => $model, 'category' => $json['stop_details']['category'] ?? null]);
+            $this->lastProviderError = ['status' => 200, 'message' => 'refusal: ' . ($json['stop_details']['category'] ?? 'none')];
 
             return $this->fail('The AI declined to answer that.');
         }
-        $text = collect($json['content'] ?? [])
-            ->where('type', 'text')
-            ->pluck('text')
-            ->implode("\n");
+        // Text blocks in a row are one passage cut around its citations; a search between two starts a new one.
+        $text = '';
+        $gap = false;
+        foreach ((array) ($json['content'] ?? []) as $block) {
+            if (($block['type'] ?? '') !== 'text') {
+                $gap = $text !== '';
+
+                continue;
+            }
+            $text .= ($gap ? "\n\n" : '') . (string) ($block['text'] ?? '');
+            $gap = false;
+        }
+        if (in_array($json['stop_reason'] ?? '', ['max_tokens', 'pause_turn'], true)) {
+            logger()->warning('Claude stopped early', ['model' => $model, 'stop' => $json['stop_reason'], 'out' => $json['usage']['output_tokens'] ?? null]);
+            if (trim($text) === '') {
+                $this->lastProviderError = ['status' => 200, 'message' => 'stopped early: ' . $json['stop_reason']];
+
+                return $this->fail('The AI could not answer that. Please try again.');
+            }
+        }
         // What it read: every page the search tool handed back.
         $sources = [];
         foreach ((array) ($json['content'] ?? []) as $block) {
@@ -422,13 +514,72 @@ class AiClient
         return [
             'ok' => true,
             'text' => trim($text),
-            'tokensIn' => (int) ($json['usage']['input_tokens'] ?? 0),
+            // Every token read, the cached ones too (as Gemini counts them); the cached ones apart.
+            'tokensIn' => (int) ($json['usage']['input_tokens'] ?? 0) + (int) ($json['usage']['cache_read_input_tokens'] ?? 0)
+                + (int) ($json['usage']['cache_creation_input_tokens'] ?? 0),
             'tokensOut' => (int) ($json['usage']['output_tokens'] ?? 0),
             'tokensCached' => (int) ($json['usage']['cache_read_input_tokens'] ?? 0),
             'searched' => (int) ($json['usage']['server_tool_use']['web_search_requests'] ?? 0) > 0,
             'sources' => self::uniqueSources($sources),
+            // The model that wrote it: a decline re-run by the API (fallbacks) names the one that answered.
+            'model' => (string) ($json['model'] ?? $model),
             'error' => null,
         ];
+    }
+
+    /**
+     * A streamed answer read back into the shape of a whole one: the content
+     * blocks with their text, the stop reason, the usage (the closing count
+     * over the opening one), the model, and an error the stream itself sent.
+     */
+    private static function unstream(string $raw): array
+    {
+        $msg = ['content' => [], 'stop_reason' => null, 'usage' => []];
+        foreach (preg_split("/\r?\n\r?\n/", $raw) as $event) {
+            $data = '';
+            foreach (preg_split("/\r?\n/", $event) as $line) {
+                if (str_starts_with($line, 'data:')) {
+                    $data .= ltrim(substr($line, 5));
+                }
+            }
+            $e = $data !== '' ? json_decode($data, true) : null;
+            if (! is_array($e)) {
+                continue;
+            }
+            $i = (int) ($e['index'] ?? 0);
+            switch ($e['type'] ?? '') {
+                case 'message_start':
+                    $msg['model'] = $e['message']['model'] ?? null;
+                    $msg['usage'] = (array) ($e['message']['usage'] ?? []);
+                    break;
+                case 'content_block_start':
+                    $msg['content'][$i] = (array) ($e['content_block'] ?? []);
+                    break;
+                case 'content_block_delta':
+                    if (($e['delta']['type'] ?? '') === 'text_delta') {
+                        $msg['content'][$i]['text'] = ($msg['content'][$i]['text'] ?? '') . (string) ($e['delta']['text'] ?? '');
+                    }
+                    break;
+                case 'message_delta':
+                    $msg['stop_reason'] = $e['delta']['stop_reason'] ?? $msg['stop_reason'];
+                    if (isset($e['delta']['stop_details'])) {
+                        $msg['stop_details'] = $e['delta']['stop_details'];
+                    }
+                    foreach ((array) ($e['usage'] ?? []) as $k => $v) {
+                        if ($v !== null) {
+                            $msg['usage'][$k] = $v;
+                        }
+                    }
+                    break;
+                case 'error':
+                    $msg['error'] = (array) ($e['error'] ?? []);
+                    break;
+            }
+        }
+        ksort($msg['content']);
+        $msg['content'] = array_values($msg['content']);
+
+        return $msg;
     }
 
     /** @param  array<int, array{mime:string,data:string}>  $images */
@@ -600,7 +751,7 @@ class AiClient
     // ------------------------------------------------------------------
 
     /** Whether a provider's words say its account has run out of prepaid credit. */
-    private static function outOfCredit(?string $message): bool
+    public static function outOfCredit(?string $message): bool
     {
         return (bool) preg_match('/credit balance is too low|prepayment credits are depleted|insufficient.{0,20}(credit|quota|balance)/i', (string) $message);
     }

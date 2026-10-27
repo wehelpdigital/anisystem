@@ -117,7 +117,7 @@ final class MarketNews
         $ai = app(AiClient::class);
         // The owner's own Claude when its key is kept (2026-10-27); else Anee's cheapest model, as before.
         $settings = AiSetting::newsReader() ?? AiSetting::current()->cheap('low');
-        $stat['via'] = $settings->provider . ' ' . $settings->effectiveModel();
+        $stat['via'] = ($c = $settings->onClaude()) ? 'claude ' . $c->effectiveModel() . ' (else ' . $settings->effectiveModel() . ')' : $settings->provider . ' ' . $settings->effectiveModel();
         foreach (self::candidates($limit)->chunk(12) as $batch) {
             $known = DB::table('as_market_events')->where('day', '>=', now()->subMonths(18)->toDateString())->orderByDesc('day')->limit(60)->get(['eventKey', 'day', 'title', 'crops']);
             $prompt = self::prompt($batch, $known);

@@ -326,6 +326,36 @@ class AiSetting extends BaseModel
     {
         $c = clone $this;
         $c->model = (string) (config('services.ai_fast_model') ?: (self::FAST_MODELS[$this->provider] ?? $this->effectiveModel()));
+        $c->tier = 'fast';
+
+        return $c;
+    }
+
+    /** Which of the three models a copy is on (main, fast, cheap), so Claude first picks its own of the same kind. */
+    public string $tier = 'main';
+
+    /** A copy's own Claude model, over the tier's (the news reader's). */
+    public ?string $claudeModel = null;
+
+    /**
+     * This ask on the owner's Claude (App\Support\ClaudeFirst): a copy on
+     * Claude with the owner's key and the model of the same kind, or null
+     * when Claude first is off, no key is kept, or these settings are on
+     * Claude already. The news reader asks for Claude whatever the switch.
+     */
+    public function onClaude(): ?static
+    {
+        if ($this->provider === 'claude' || ($this->claudeModel === null && ! \App\Support\ClaudeFirst::on())) {
+            return null;
+        }
+        $key = \App\Support\ClaudeFirst::key();
+        if ($key === '') {
+            return null;
+        }
+        $c = clone $this;
+        $c->provider = 'claude';
+        $c->model = $this->claudeModel ?: \App\Support\ClaudeFirst::model($this->tier);
+        $c->keyOverride = $key;
 
         return $c;
     }
@@ -359,18 +389,17 @@ class AiSetting extends BaseModel
      * Claude with the owner's Anthropic key, from ANTHROPIC_API_KEY or, kept encrypted on the shared settings
      * shelf, news.claude_key (`php artisan news:claude-key`). Null when no key is kept, and the reading then
      * stays on Anee's cheapest model. Thinking low: it is a sorting job.
+     *
+     * Since the evening of 2026-10-27 it is Anee's cheapest model with its own Claude model (onClaude), so a
+     * used up balance falls back to Gemini like every other ask (App\Support\ClaudeFirst).
      */
     public static function newsReader(): ?static
     {
-        $key = trim((string) (config('services.anthropic.key') ?: AiKeyCipher::decrypt((string) \App\Models\AsSiteSetting::get('news.claude_key', ''))));
-        if ($key === '') {
+        if (\App\Support\ClaudeFirst::key() === '') {
             return null;
         }
-        $c = clone static::current();
-        $c->provider = 'claude';
-        $c->model = (string) (\App\Models\AsSiteSetting::get('news.claude_model') ?: config('services.anthropic.news_model') ?: self::NEWS_CLAUDE_MODEL);
-        $c->thinkingLevel = 'low';
-        $c->keyOverride = $key;
+        $c = static::current()->cheap('low');
+        $c->claudeModel = (string) (\App\Models\AsSiteSetting::get('news.claude_model') ?: config('services.anthropic.news_model') ?: self::NEWS_CLAUDE_MODEL);
 
         return $c;
     }
@@ -381,6 +410,7 @@ class AiSetting extends BaseModel
         $c = clone $this;
         $c->model = (string) (config('services.ai_cheap_model') ?: (self::CHEAP_MODELS[$this->provider] ?? $this->effectiveModel()));
         $c->thinkingLevel = in_array($thinking, ['minimal', 'low'], true) ? $thinking : 'minimal';
+        $c->tier = 'cheap';
 
         return $c;
     }

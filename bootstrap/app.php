@@ -100,6 +100,12 @@ return Application::configure(basePath: dirname(__DIR__))
             ->when(fn () => \App\Models\AsSiteSetting::yes('market.news_check_now'))
             ->before(fn () => \App\Models\AsSiteSetting::put('market.news_check_now', '0'))
             ->withoutOverlapping(5)->runInBackground();
+        // "Check the owner's Claude now" (2026-10-27, App\Support\ClaudeFirst): ai.claude_check_now on the settings
+        // shelf makes the next minute's pass run the live check (key, speed, search, pictures) into ai.claude_check.
+        $schedule->command('ai:claude-check')->everyMinute()
+            ->when(fn () => \App\Models\AsSiteSetting::yes('ai.claude_check_now'))
+            ->before(fn () => \App\Models\AsSiteSetting::put('ai.claude_check_now', '0'))
+            ->withoutOverlapping(15)->runInBackground();
         $schedule->command('news:roundup --force')->everyMinute()
             ->when(fn () => \App\Models\AsSiteSetting::yes('news.run_now'))
             ->before(fn () => \App\Models\AsSiteSetting::put('news.run_now', '0'))
