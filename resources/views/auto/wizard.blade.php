@@ -73,8 +73,19 @@
     .au-tag svg { width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); }
     .au-nav { position: sticky; bottom: 0; z-index: 20; display: flex; align-items: center; gap: .6rem; margin: 1rem -1rem 0; padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom));
         background: rgb(249 250 251 / .94); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-top: 1px solid var(--color-gray-200); }
-    .au-nav .btn { min-width: 0; }
-    .au-nav #auNext { margin-left: auto; }
+    /* One line each, on any phone (2026-10-28, the owner: "fix back to workers button and anee reads it button it looks
+       bad in mobile"): an arrow and the step's name, "Back to" and "Next:" only where there is room. */
+    .au-nav .btn { min-width: 0; min-height: 2.85rem; display: inline-flex; align-items: center; justify-content: center; gap: .35rem; white-space: nowrap; }
+    .au-nav .btn > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    .au-nav .btn svg { flex: none; width: 1.05rem; height: 1.05rem; }
+    .au-nav #auBack { flex: 0 1 auto; }
+    .au-nav #auNext { flex: 0 1 auto; margin-left: auto; transition: background-color .28s var(--au-ease), box-shadow .28s var(--au-ease); }
+    .au-nav #auNext.is-read { background: #f5c518; border-color: #f5c518; color: #1f2a17; }
+    .au-nav #auNext.is-read:hover { background: #e9b90c; border-color: #e9b90c; }
+    @media (max-width: 639.98px) {
+        .au-nav-w { display: none; }
+        .au-nav .btn { padding-left: .95rem; padding-right: .95rem; }
+    }
     .au-nav [hidden] { display: none !important; }
     .au-nav small { font-size: .74rem; color: var(--color-gray-500); font-weight: 700; }
     html.dark .au-nav { background: rgb(16 20 13 / .94); border-color: #2b3a1c; }
@@ -574,6 +585,13 @@
     /* ---- the rail and the steps ---- */
     $('auRail').innerHTML = STEPS.map((s, i) => '<button type="button" data-go="' + i + '"><i></i><span>' + s + '</span></button>').join('');
     const reached = () => Math.max(Number(S.step) || 0, step);
+    // A nav button's words: the lead ("Back to ", "Next: ") shows only where there is room; an arrow on the side it goes.
+    const ARROW = { back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 6l-6 6 6 6"/></svg>',
+        next: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg>' };
+    const navLabel = (b, lead, word, dir) => {
+        b.setAttribute('aria-label', (lead + word).replace(/^🔎 /, ''));
+        b.innerHTML = (dir === 'back' ? ARROW.back : '') + '<span>' + (lead ? '<span class="au-nav-w">' + esc(lead) + '</span>' : '') + esc(word) + '</span>' + (dir === 'next' ? ARROW.next : '');
+    };
     // The rail, the step count and the two buttons, over the steps still asked.
     const navSay = () => {
         const shown = STEPS.map((_, i) => i).filter((i) => !stepHidden(i));
@@ -582,9 +600,14 @@
         const p = prevOf(step);
         // The first step has no Back: the header's arrow leaves the setup (no seasons page since 2026-10-27, the owner).
         $('auBack').hidden = p < 0;
-        if (p >= 0) $('auBack').textContent = 'Back to ' + STEPS[p];
+        if (p >= 0) navLabel($('auBack'), 'Back to ', STEPS[p], 'back');
         $('auNext').hidden = step === STEPS.length - 1;
-        if (step !== 7) $('auNext').textContent = step === 5 ? 'Next: Anee reads it' : step === 6 ? 'Next: Fertilizer' : 'Next: ' + STEPS[nextOf(step)];
+        // The reading is the next thing to do on its own step (2026-10-28, the owner: "if read the farm is important then
+        // make it the next step, not next:fertilizer"): until Anee has read the farm, Next reads it.
+        const read = step === 6 && !S.analysis;
+        $('auNext').classList.toggle('is-read', read);
+        if (read) navLabel($('auNext'), '', '🔎 Read the farm', null);
+        else if (step !== 7) navLabel($('auNext'), 'Next: ', step === 5 ? 'Anee reads it' : STEPS[nextOf(step)], 'next');
     };
     const show = async (n, back = false) => {
         n = Math.max(0, Math.min(STEPS.length - 1, n));
@@ -604,6 +627,7 @@
     $('auNext').addEventListener('click', () => {
         // The fertilizer step walks the lots one by one before it moves on.
         if (step === 7) { const at = S.lots.findIndex((x) => x.id === FLOT); if (at >= 0 && at < S.lots.length - 1) { FLOT = S.lots[at + 1].id; paintFert(); window.scrollTo({ top: 0, behavior: still() ? 'auto' : 'smooth' }); return; } }
+        if (step === 6 && !S.analysis) return runReading();
         const gap = gapOf(step);
         if (gap) return window.toast?.(gap, 'error');
         show(nextOf(step));
@@ -1303,7 +1327,7 @@
             const d = r.data && r.data.status === 'ready' ? r.data : await window.aneeWait.poll({ id: ID, job: U.job, phases: window.aneeWait.phases.research, every: 3000, limit: 260 });
             S.analysis = d.analysis; S.readingsLeft = Math.max(0, (S.readingsLeft || 3) - 1); S.step = Math.max(S.step, 7);
             await window.aneeWait.done({ title: 'Done!', line: 'Here is how I read your farm.' });
-            paintReading();
+            paintReading(); navSay();
         } catch (err) { window.aneeWait.fail(); window.toast?.(err.message, 'error'); }
     };
 
@@ -1364,7 +1388,7 @@
             $('auFPane').querySelectorAll('[data-w]').forEach((s) => { s.style.width = s.dataset.w + '%'; });
             $('auFPane').querySelectorAll('[data-reach]').forEach((c) => { c.style.strokeDashoffset = String(1 - Number(c.dataset.reach) / 100); });
         });
-        $('auNext').textContent = S.lots.findIndex((x) => x.id === FLOT) < S.lots.length - 1 ? 'Next lot' : 'Next: Start';
+        if (S.lots.findIndex((x) => x.id === FLOT) < S.lots.length - 1) navLabel($('auNext'), '', 'Next lot', 'next'); else navLabel($('auNext'), 'Next: ', 'Start', 'next');
     };
     $('auFTabs').addEventListener('click', (e) => { const b = e.target.closest('[data-l]'); if (b) { FLOT = Number(b.dataset.l); paintFert(); } });
     $('auFPane').addEventListener('click', (e) => { if (e.target.closest('[data-open-fert]')) openFert(lotById(FLOT)); });
