@@ -211,11 +211,43 @@
     .au-rl h5 { margin: .75rem 0 .25rem; font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
     .au-rl p, .au-rl li { font-size: .84rem; line-height: 1.55; color: var(--color-gray-700); }
     .au-rl ul { margin: .2rem 0 0 1rem; list-style: disc; }
-    .au-facts { display: grid; gap: .4rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: .5rem; }
-    @media (min-width: 640px) { .au-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    .au-facts div { padding: .5rem .6rem; border-radius: .8rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
-    .au-facts small { display: block; font-size: .62rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
-    .au-facts b { font-size: .92rem; color: var(--color-gray-900); }
+    /* The reading, one row per item, each folded until tapped (2026-10-28, the owner: "make it 1 row per item and make
+       it expandable (contracted by default) and make it look good"). */
+    .au-rl > p.au-rl-lead { margin-top: .35rem; color: var(--color-gray-600); }
+    .au-rows { margin-top: .7rem; border-top: 1px solid var(--color-gray-100); }
+    .au-rows > :last-child { border-bottom: 0; }
+    .au-kv { display: flex; align-items: center; gap: .7rem; padding: .62rem .1rem; border-bottom: 1px solid var(--color-gray-100); font-size: .86rem; }
+    .au-kv > span:first-child { flex: none; width: 1.9rem; height: 1.9rem; border-radius: .65rem; display: grid; place-items: center; background: #f3f8ec; font-size: .95rem; }
+    .au-kv > span:nth-child(2) { flex: 1; min-width: 0; color: var(--color-gray-600); font-weight: 600; }
+    .au-kv > b { flex: none; font-weight: 800; color: var(--color-gray-900); }
+    .au-kv > b.is-none { font-weight: 600; color: var(--color-gray-400); }
+    .au-acc { border-bottom: 1px solid var(--color-gray-100); }
+    .au-acc-h { display: flex; align-items: center; gap: .7rem; width: 100%; padding: .62rem .1rem; text-align: left; border-radius: .7rem; transition: background-color .28s var(--au-ease); }
+    .au-acc-h:hover { background: #f8fbf4; }
+    .au-acc-i { flex: none; width: 1.9rem; height: 1.9rem; border-radius: .65rem; display: grid; place-items: center; background: #f3f8ec; font-size: .95rem; }
+    .au-acc-t { flex: 1; min-width: 0; display: grid; }
+    .au-acc-t b { font-size: .88rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-acc-t small { font-size: .76rem; line-height: 1.4; color: var(--color-gray-500); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        transition: opacity .28s var(--au-ease); }
+    .au-acc-n { flex: none; min-width: 1.4rem; padding: .05rem .45rem; border-radius: 999px; font-size: .7rem; font-weight: 800; text-align: center; color: #2d5016; background: #e4efd4; }
+    .au-acc-n.is-warn { color: #8a5a00; background: #fff4d6; }
+    .au-acc-h > svg { flex: none; width: 1rem; height: 1rem; color: var(--color-gray-400); transition: transform .28s var(--au-ease); }
+    .au-acc.is-open .au-acc-h > svg { transform: rotate(180deg); }
+    .au-acc.is-open .au-acc-t small { opacity: 0; }
+    .au-acc-b { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s var(--au-ease); }
+    .au-acc.is-open .au-acc-b { grid-template-rows: 1fr; }
+    .au-acc-b > div { overflow: hidden; }
+    .au-acc-in { padding: 0 .1rem .85rem 2.6rem; }
+    .au-acc-in p + p, .au-acc-in p + ul, .au-acc-in ul + p, .au-acc-in h6 { margin-top: .45rem; }
+    .au-acc-in h6 { font-size: .7rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
+    .au-acc-in ul { margin: .15rem 0 0 1rem; list-style: disc; }
+    .au-acc-in li + li { margin-top: .2rem; }
+    .au-acc-in ul.is-plain { margin-left: 0; list-style: none; }
+    .au-risk-i { padding: .5rem .65rem; border-radius: .8rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .au-risk-i + .au-risk-i { margin-top: .4rem; }
+    .au-risk-i b { display: block; font-size: .84rem; color: var(--color-gray-900); }
+    .au-risk-i small { display: block; margin-top: .2rem; font-size: .74rem; line-height: 1.45; color: var(--color-gray-500); }
+    @media (max-width: 639.98px) { .au-acc-in { padding-left: .1rem; } }
 
     /* Fertilizer */
     .au-ltabs { display: flex; gap: .35rem; overflow-x: auto; scrollbar-width: none; margin-bottom: .8rem; padding-bottom: .1rem; }
@@ -301,13 +333,19 @@
     html.dark .au-note.is-info, html.dark .au-fold { background: #10202b; border-color: #1f3a4d; color: #b5d3ea; }
     html.dark .au-fold > button, html.dark .au-fold-in p { color: #b5d3ea; }
     html.dark .au-tools a { background: #0d1a23; border-color: #1f3a4d; color: #9fc3dd; } html.dark .au-tools a b { color: #d4e7f5; }
-    html.dark .au-facts div { background: #1a2114; border-color: #2b3a1c; } html.dark .au-facts b { color: #eef3e8; }
+    html.dark .au-rows, html.dark .au-kv, html.dark .au-acc { border-color: #2b3a1c; }
+    html.dark .au-kv > span:first-child, html.dark .au-acc-i { background: #1c2616; }
+    html.dark .au-kv > b, html.dark .au-acc-t b, html.dark .au-risk-i b { color: #eef3e8; }
+    html.dark .au-kv > span:nth-child(2), html.dark .au-rl > p.au-rl-lead { color: #b9c5ad; }
+    html.dark .au-acc-h:hover { background: #1a2216; }
+    html.dark .au-acc-n { background: #1c2616; color: #c5e09f; } html.dark .au-acc-n.is-warn { background: #2a2210; color: #f3d9a4; }
+    html.dark .au-risk-i { background: #1a2114; border-color: #2b3a1c; }
     html.dark .au-yield { background: #2a2410; border-color: #5b4d16; } html.dark .au-yield p { color: #f0dfa0; } html.dark .au-yield p b { color: #fff3c4; }
     html.dark .au-add { background: #1a2114; border-color: #3f5a2a; color: #c5e09f; }
     html.dark .au-bar-t { background: #26301e; } html.dark .au-bar-t i { background: #f1f5e9; }
     @media (prefers-reduced-motion: reduce) {
         .au-top::after, .au-top img, .au-reading-cta img, .au-big, .au-step.is-on, .au-lot, .au-w, .au-rl, .au-reads div, .au-note, .au-risk, .au-q, .au-from, .au-tag.is-bump { animation: none; }
-        .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after, .au-link, .au-gw, .au-gw-s, .au-gw-f { transition: none; }
+        .au-frame, .au-modal, .au-modal > div, .au-bar-t span, .au-gauge .fg, .au-fold-in, .au-rail button i::after, .au-link, .au-gw, .au-gw-s, .au-gw-f, .au-acc-b, .au-acc-h, .au-acc-h > svg, .au-acc-t small { transition: none; }
     }
 </style>
 
@@ -1303,25 +1341,61 @@
         }
         const lotName = (id) => (S.lots.find((l) => l.id === id) || {}).name || 'Lot';
         const sea = A.season || {};
+        // One row per item: an icon, the name and its first sentence; a tap unfolds the rest. All folded at first.
+        const first = (s) => String(s || '').split(/(?<=[.!?])\s+/)[0];
+        const list = (xs, plain) => (xs || []).length ? '<ul' + (plain ? ' class="is-plain"' : '') + '>' + xs.map((x) => '<li>' + x + '</li>').join('') + '</ul>' : '';
+        const acc = (icon, title, teaser, body, count, warn) => body ? '<div class="au-acc"><button type="button" class="au-acc-h" aria-expanded="false"><span class="au-acc-i" aria-hidden="true">' + icon + '</span>'
+            + '<span class="au-acc-t"><b>' + esc(title) + '</b>' + (teaser ? '<small>' + esc(teaser) + '</small>' : '') + '</span>'
+            + (count ? '<span class="au-acc-n' + (warn ? ' is-warn' : '') + '">' + count + '</span>' : '') + CHEV + '</button>'
+            + '<div class="au-acc-b"><div><div class="au-acc-in">' + body + '</div></div></div></div>' : '';
+        const para = (s) => s ? '<p>' + esc(s) + '</p>' : '';
+        const kv = (icon, label, value) => '<div class="au-kv"><span aria-hidden="true">' + icon + '</span><span>' + esc(label) + '</span><b' + (value ? '' : ' class="is-none"') + '>' + esc(value || 'not found') + '</b></div>';
         $('auReading').innerHTML = '<div class="au-rl" style="--i:0"><h4>🌏 ' + esc(A.headline || 'The season ahead') + '</h4>'
-            + (sea.outlook ? '<p class="mt-1">' + esc(sea.outlook) + '</p>' : '')
-            + '<div class="au-facts">' + [['ENSO', sea.enso], ['Rain', sea.rain], ['Typhoons', sea.typhoon], ['Heat', sea.heat]].filter((x) => x[1]).map((x) => '<div><small>' + x[0] + '</small><b class="text-xs font-semibold">' + esc(x[1]) + '</b></div>').join('') + '</div>'
-            + ((sea.watch || []).length ? '<h5>Watch for</h5><ul>' + sea.watch.map((w) => '<li>' + esc(w) + '</li>').join('') + '</ul>' : '') + '</div>'
+            + (sea.outlook ? '<p class="au-rl-lead">' + esc(sea.outlook) + '</p>' : '')
+            + '<div class="au-rows">'
+            + acc('🌊', 'ENSO', first(sea.enso), para(sea.enso))
+            + acc('🌧️', 'Rain', first(sea.rain), para(sea.rain))
+            + acc('🌀', 'Typhoons', first(sea.typhoon), para(sea.typhoon))
+            + acc('🌡️', 'Heat', first(sea.heat), para(sea.heat))
+            + acc('👀', 'Watch for', first((sea.watch || [])[0]), list((sea.watch || []).map(esc)), (sea.watch || []).length)
+            + '</div></div>'
             + (A.lots || []).map((r, i) => {
-                const v = r.variety || {}, so = r.soil || {}, g = r.goal || {}, f = r.fertilizer || {};
+                const v = r.variety || {}, so = r.soil || {}, g = r.goal || {}, f = r.fertilizer || {}, risks = r.risks || [];
                 return '<div class="au-rl" style="--i:' + (i + 1) + '"><h4>🌾 ' + esc(lotName(r.lotId)) + (v.name ? ' · ' + esc(v.name) : '') + '</h4>'
-                    + '<div class="au-facts"><div><small>Matures in</small><b>' + (v.maturityDays ? v.maturityDays + ' days' : 'not found') + '</b></div><div><small>Potential</small><b>' + (v.yieldPotentialTPerHa ? v.yieldPotentialTPerHa + ' t/ha' : 'not found') + '</b></div>'
-                    + '<div><small>Usual</small><b>' + (v.averageTPerHa ? v.averageTPerHa + ' t/ha' : 'not found') + '</b></div><div><small>Realistic goal</small><b>' + (g.tPerHa ? g.tPerHa + ' t/ha' : 'not set') + '</b></div></div>'
-                    + (v.traits && v.traits.length ? '<h5>The variety</h5><ul>' + v.traits.slice(0, 5).map((t) => '<li>' + esc(t) + '</li>').join('') + (v.cautions || []).slice(0, 3).map((t) => '<li>⚠️ ' + esc(t) + '</li>').join('') + '</ul>' : '')
-                    + (so.reading ? '<h5>The soil</h5><p>' + esc(so.reading) + '</p>' + ((so.lockouts || []).length ? '<div class="au-chips mt-1">' + so.lockouts.map((x) => '<span class="au-chip is-warn">🔒 ' + esc(x) + '</span>').join('') + (so.unlocks || []).map((x) => '<span class="au-chip">🔓 ' + esc(x) + '</span>').join('') + '</div>' : '') : '')
-                    + (f.focus ? '<h5>The fertilizer that matters</h5><p>' + esc(f.focus) + '</p>' + ((f.critical || []).length ? '<ul>' + f.critical.map((c) => '<li><b>' + esc(c.stage) + ':</b> ' + esc(c.why) + '</li>').join('') + '</ul>' : '') : '')
-                    + ((r.risks || []).length ? '<h5>Risks to get ahead of</h5><ul>' + r.risks.slice(0, 5).map((x) => '<li><b>' + esc(x.risk) + '.</b> ' + esc(x.prevent || x.why || '') + '</li>').join('') + '</ul>' : '')
-                    + (g.why ? '<p class="mt-2 text-xs text-gray-500">' + esc(g.why) + '</p>' : '') + '</div>';
+                    + '<div class="au-rows">'
+                    + kv('⏳', 'Matures in', v.maturityDays ? v.maturityDays + ' days' : '')
+                    + kv('🏆', 'Potential', v.yieldPotentialTPerHa ? v.yieldPotentialTPerHa + ' t/ha' : '')
+                    + kv('📊', 'Usual harvest', v.averageTPerHa ? v.averageTPerHa + ' t/ha' : '')
+                    + acc('🎯', 'Realistic goal' + (g.tPerHa ? ': ' + g.tPerHa + ' t/ha' : ''), first(g.why), para(g.why))
+                    + acc('🧬', 'The variety', v.season ? first(v.season) : first((v.traits || [])[0]),
+                        (v.by ? '<p><b>' + esc(v.by) + '</b></p>' : '') + para(v.season) + list((v.traits || []).map(esc)) + ((v.cautions || []).length ? '<h6>Careful</h6>' + list(v.cautions.map((t) => '⚠️ ' + esc(t)), true) : ''),
+                        (v.cautions || []).length ? (v.cautions.length === 1 ? '1 caution' : v.cautions.length + ' cautions') : 0, true)
+                    + acc('🧪', 'The soil', first(so.reading), para(so.reading)
+                        + ((so.lockouts || []).length ? '<h6>Locked up in this soil</h6>' + list(so.lockouts.map((x) => '🔒 ' + esc(x)), true) : '')
+                        + ((so.unlocks || []).length ? '<h6>What frees them</h6>' + list(so.unlocks.map((x) => '🔓 ' + esc(x)), true) : ''))
+                    + acc('🚜', 'Land preparation', first(r.landPrep), para(r.landPrep))
+                    + acc('🌱', 'The fertilizer that matters', first(f.focus), para(f.focus)
+                        + ((f.critical || []).length ? '<h6>When it counts</h6>' + list(f.critical.map((c) => '<b>' + esc(c.stage) + ':</b> ' + esc(c.why))) : '')
+                        + ((f.avoid || []).length ? '<h6>Keep away from</h6>' + list(f.avoid.map(esc)) : ''))
+                    + acc('🛡️', 'Risks to get ahead of', risks.map((x) => x.risk).filter(Boolean).join(', '),
+                        risks.map((x) => '<div class="au-risk-i"><b>' + esc(x.risk) + '</b>' + (x.prevent ? '<p>' + esc(x.prevent) + '</p>' : '') + (x.why ? '<small>' + esc(x.why) + '</small>' : '') + '</div>').join(''),
+                        risks.length, true)
+                    + '</div></div>';
             }).join('')
-            + (A.water || A.workforce ? '<div class="au-rl"><h4>💧 Water and hands</h4>' + (A.water ? '<p>' + esc(A.water) + '</p>' : '') + (A.workforce ? '<p class="mt-1">' + esc(A.workforce) + '</p>' : '') + '</div>' : '')
+            + (A.water || A.workforce || (A.dataGaps || []).length ? '<div class="au-rl" style="--i:' + ((A.lots || []).length + 1) + '"><h4>💧 Water and hands</h4><div class="au-rows">'
+                + acc('💧', 'Water', first(A.water), para(A.water))
+                + acc('👥', 'Your workers', first(A.workforce), para(A.workforce))
+                + acc('🔍', 'What would make it sharper', first((A.dataGaps || [])[0]), list((A.dataGaps || []).map(esc)), (A.dataGaps || []).length)
+                + '</div></div>' : '')
             + '<p class="text-center text-xs text-gray-400 mb-3">Read ' + esc(A.at || '') + (A.searched ? ', with what Anee found on the web' : '') + '. ' + (S.readingsLeft > 0 ? '<button type="button" class="underline font-bold text-brand-700" id="auReread">Read it again</button> (changed an answer?)' : '') + '</p>';
         $('auReread')?.addEventListener('click', runReading);
     };
+    $('auReading').addEventListener('click', (e) => {
+        const h = e.target.closest('.au-acc-h'); if (!h) return;
+        const box = h.closest('.au-acc'), open = !box.classList.contains('is-open');
+        box.classList.toggle('is-open', open);
+        h.setAttribute('aria-expanded', String(open));
+    });
     const runReading = async () => {
         await flush();
         window.aneeWait.show({ title: 'Anee is reading your farm…', sub: 'The varieties, the season, the soil and the water. A minute or two.', stay: 'Stay on this page while she reads. Nothing is charged: it is part of Anee Auto.',
