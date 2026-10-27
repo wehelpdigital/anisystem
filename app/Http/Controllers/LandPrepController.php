@@ -1488,11 +1488,8 @@ PROMPT;
         $method = (string) ($params['method'] ?? '');
         if ($request->input('mode') === 'new') {
             $pbCrop = \App\Support\CropStages::normalize($crop) ?? \App\Support\CropStages::normalize(\App\Support\CropCatalog::label($crop));
-            $want = match (true) {
-                LP::hasNursery($crop, $method) => 'DAT',
-                in_array($method, ['dsr_wet_broadcast', 'dsr_wet_drum', 'dsr_dry', 'direct'], true) => 'DAS',
-                default => 'DAP',
-            };
+            // A seedbed first counts DAT; straight into the field is the crop's own one of DAS and DAP (CropCatalog::fieldCounter).
+            $want = LP::hasNursery($crop, $method) ? 'DAT' : \App\Support\CropCatalog::fieldCounter($crop);
             $dayType = ProtocolBuilderController::fitDayType($pbCrop, $want);
             $title = trim((string) $request->input('title')) ?: mb_substr('Land prep: ' . $r->title, 0, 190);
             $p = AsProtocol::create([
@@ -1583,7 +1580,7 @@ PROMPT;
         $crop = (string) ($params['crop'] ?? ($report['crop']['key'] ?? ''));
         $method = (string) ($params['method'] ?? ($report['method']['key'] ?? ''));
         $nursery = LP::hasNursery($crop, $method);
-        $dayType = $nursery ? 'DAT' : (in_array($method, ['dsr_wet_broadcast', 'dsr_wet_drum', 'dsr_dry', 'direct'], true) ? 'DAS' : 'DAP');
+        $dayType = $nursery ? 'DAT' : \App\Support\CropCatalog::fieldCounter($crop);
         $cropKey = \App\Support\CropStages::normalize($crop) ?? \App\Support\CropStages::normalize(\App\Support\CropCatalog::label($crop)) ?? $crop;
         $variety = trim((string) ($params['variety'] ?? ($report['variety'] ?? '')));
         $loc = (array) ($params['location'] ?? []);
@@ -1623,7 +1620,7 @@ PROMPT;
                 $lCrop = (string) ($l['crop']['key'] ?? $crop);
                 $lMethod = (string) ($l['method']['key'] ?? $method);
                 $nursery = isset($l['crop']) ? LP::hasNursery($lCrop, $lMethod) : $mainNursery;
-                $lDayType = isset($l['crop']) ? ($nursery ? 'DAT' : (in_array($lMethod, ['dsr_wet_broadcast', 'dsr_wet_drum', 'dsr_dry', 'direct'], true) ? 'DAS' : 'DAP')) : $dayType;
+                $lDayType = isset($l['crop']) ? ($nursery ? 'DAT' : \App\Support\CropCatalog::fieldCounter($lCrop)) : $dayType;
                 $lCropKey = isset($l['crop']) ? (\App\Support\CropStages::normalize($lCrop) ?? \App\Support\CropStages::normalize(\App\Support\CropCatalog::label($lCrop)) ?? $lCrop) : $cropKey;
                 $lVariety = isset($l['crop']) ? trim((string) ($l['variety'] ?? '')) : $variety;
                 $defs = [];

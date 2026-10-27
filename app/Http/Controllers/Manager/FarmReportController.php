@@ -101,7 +101,7 @@ class FarmReportController extends BaseScheduleController
 
     /**
      * The count each lot keeps, as a word: AGE for a tree (months since
-     * planting), DAT once the lot has a transplant (its column or a ticked
+     * planting), DAT once a sown-then-transplanted lot has its transplant (its column or a ticked
      * transplant activity -- LotCalendar::effectiveAnchors), else the lot's
      * own day type, else the season's.
      *
@@ -117,7 +117,8 @@ class FarmReportController extends BaseScheduleController
             $type = strtoupper((string) ($lot->dayType ?: ''));
             if ($type === 'TREE' || \App\Support\CropStages::isPerennial($lot->crop ?? null)) {
                 $out[$lot->id] = 'AGE';
-            } elseif (isset($transplant[$lot->id]) && $type !== 'DAP') {
+            } elseif (isset($transplant[$lot->id]) && ! in_array($type, ['DAP', 'DAS'], true)) {
+                // A transplant flips only a sown-then-transplanted lot (as LotCalendar::ageOf and the board count).
                 $out[$lot->id] = 'DAT';
             } else {
                 $out[$lot->id] = $type !== '' ? $type : strtoupper((string) ($schedule->dayType ?: 'DAS'));

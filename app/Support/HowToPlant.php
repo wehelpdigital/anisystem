@@ -559,7 +559,7 @@ final class HowToPlant
         return self::WAY_CROP[$crop][$way['key'] ?? ''] ?? $crop;
     }
 
-    /** How the protocol counts its days for a way: DAT with a nursery before transplanting, DAS when sown, DAP planted, TREE for trees. */
+    /** How the protocol counts its days for a way: DAT with a nursery before transplanting, TREE for trees, else straight into the field: the crop's own one of DAS and DAP (they are the same count, the owner 2026-10-27). */
     public static function wantDayType(string $crop, array $way): string
     {
         if (self::perennial($crop)) {
@@ -571,7 +571,7 @@ final class HowToPlant
             return 'DAT';
         }
 
-        return $word === 'sowing' ? 'DAS' : 'DAP';
+        return CropCatalog::fieldCounter($crop);
     }
 
     /**

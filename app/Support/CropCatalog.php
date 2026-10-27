@@ -635,13 +635,20 @@ class CropCatalog
      * Read off how the crop is actually established, not off a preference:
      *   • a crop raised in a seedbed and moved         → DAT, or DAS if
      *     somebody direct-seeds it instead
-     *   • a crop sown where it stands                  → DAS or DAP
+     *   • a crop sown where it stands                  → DAS or DAP, one
+     *     of them: the crop's own word
      *   • a crop planted as a cutting, tuber or set    → DAP only, because
      *     there was never a seed in the ground
      *   • a standing perennial                         → TREE only
      *
      * The first entry is the one the form picks by default: the way the crop
      * is most often grown here.
+     *
+     * DAS and DAP are never both offered for one crop (2026-10-27, the owner:
+     * "i selected corn then it has 2 options dap and das. technically its the
+     * same right?"). Both count from the day the crop goes straight into the
+     * field, so a crop keeps one of them, its own word (corn says DAP, carrot
+     * DAS); only DAT, a seedbed first, is a different count.
      *
      * @return array<int, string>
      */
@@ -656,15 +663,42 @@ class CropCatalog
         }
 
         $crop = self::CROPS[$key];
-        if (! empty($crop['counters'])) {
-            return $crop['counters'];
+        $list = ! empty($crop['counters']) ? $crop['counters'] : match ($crop['counter'] ?? 'DAP') {
+            'DAT' => ['DAT', 'DAS'],
+            'DAS' => ['DAS'],
+            default => ['DAP'],
+        };
+        // Straight into the field once: the first of DAS and DAP stands for both.
+        $field = false;
+
+        return array_values(array_filter($list, function ($c) use (&$field) {
+            if ($c !== 'DAS' && $c !== 'DAP') {
+                return true;
+            }
+            if ($field) {
+                return false;
+            }
+
+            return $field = true;
+        }));
+    }
+
+    /**
+     * The count of a crop that goes straight into the field (sown or planted
+     * where it grows, no seedbed): its own word of DAS and DAP. A seedbed
+     * crop sown in place counts DAS; a crop the book does not know, DAS.
+     */
+    public static function fieldCounter(?string $key): string
+    {
+        // A tool's own crop word ("corn", a label) is read as the book's key.
+        $key = $key !== null && ! isset(self::CROPS[$key]) ? (CropStages::normalize($key) ?? $key) : $key;
+        foreach (self::countersFor($key) as $c) {
+            if ($c === 'DAS' || $c === 'DAP') {
+                return $c;
+            }
         }
 
-        return match ($crop['counter'] ?? 'DAP') {
-            'DAT' => ['DAT', 'DAS'],
-            'DAS' => ['DAS', 'DAP'],
-            default => ['DAP', 'DAS'],
-        };
+        return 'DAP';
     }
 
     /** The crop's own typical days to harvest, before a lot overrides it. */

@@ -120,7 +120,8 @@ class PlanPort
             $lCrop = (string) ($l['crop']['key'] ?? $crop);
             $lMethod = (string) ($l['method']['key'] ?? $method);
             $nursery = LP::hasNursery($lCrop, $lMethod);
-            $dayType = $nursery ? 'DAT' : (in_array($lMethod, ['dsr_wet_broadcast', 'dsr_wet_drum', 'dsr_dry', 'direct'], true) ? 'DAS' : 'DAP');
+            // Straight into the field: the crop's own one of DAS and DAP (CropCatalog::fieldCounter).
+            $dayType = $nursery ? 'DAT' : CropCatalog::fieldCounter($lCrop);
             $lVariety = isset($l['crop']) ? trim((string) ($l['variety'] ?? '')) : $variety;
             $defs = [];
             foreach ((array) ($report['lotSteps'][$i] ?? $report['steps'] ?? []) as $s) {

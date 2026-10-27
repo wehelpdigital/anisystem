@@ -3147,18 +3147,15 @@ PROMPT;
      */
     public static function counterFor(string $method, string $crop): string
     {
-        // The crop's own count first (corn is DAP even when sown in place),
-        // bent by the method: seedlings set out → DAT; a crop the app counts
-        // from transplanting but sown in place → DAS; the rest → DAP.
-        $own = \App\Support\CropStages::counter($crop);
+        // Seedlings set out → DAT. Anything else goes straight into the field,
+        // and DAS and DAP are the same count there (the owner, 2026-10-27):
+        // the crop's own word of the two (corn DAP even when sown in place,
+        // rice sown in place DAS, a tree planted DAP).
         if (in_array($method, ['transplanted', 'nursery', 'tree_seedlings'], true)) {
             return 'DAT';
         }
-        if (str_starts_with($method, 'direct')) {
-            return $own === 'DAT' ? 'DAS' : ($own === 'AGE' ? 'DAP' : $own);
-        }
 
-        return in_array($own, ['DAT', 'AGE'], true) ? 'DAP' : $own;
+        return \App\Support\CropCatalog::fieldCounter($crop);
     }
 
     private function json(bool $ok, string $message, array $data = [], int $status = 200)

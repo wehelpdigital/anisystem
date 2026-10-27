@@ -813,7 +813,8 @@ class ActivityController extends BaseScheduleController
         }
         $lotDayZero = [];
         foreach ($schedule->lots as $lot) {
-            if ($fromTransplant && isset($tp[$lot->id]) && strtoupper((string) $lot->dayType) !== 'DAP') {
+            // Only a sown-then-transplanted lot flips; DAS and DAP count straight from the field day (LotCalendar::ageOf).
+            if ($fromTransplant && isset($tp[$lot->id]) && ! in_array(strtoupper((string) $lot->dayType), ['DAP', 'DAS'], true)) {
                 $lotDayZero[$lot->id] = $tp[$lot->id];
             } elseif (isset($dz[$lot->id])) {
                 $lotDayZero[$lot->id] = $dz[$lot->id];

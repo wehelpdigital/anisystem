@@ -175,8 +175,9 @@ final class AutoBook
         foreach (CropCatalog::countersFor($key) as $c) {
             $out += match ($c) {
                 'DAT' => ['transplanted' => 'Transplanted from a seedbed (DAT)'],
-                'DAS' => ['direct' => 'Direct seeded in the field (DAS)'],
-                default => ['planted' => 'Planted in the field (DAP)'],
+                // DAS and DAP are one way, straight into the field: a crop has one of them (CropCatalog::countersFor).
+                'DAS' => ['direct' => 'Sown straight in the field (DAS)'],
+                default => ['planted' => 'Planted straight in the field (DAP)'],
             };
         }
 

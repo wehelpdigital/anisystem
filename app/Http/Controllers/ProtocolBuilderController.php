@@ -55,8 +55,9 @@ class ProtocolBuilderController extends Controller
     /** How a protocol counts its days, and which counters its tasks may use. */
     public const DAY_TYPES = [
         'DAT' => ['label' => 'DAS → DAT', 'sub' => 'Sown in a seedbed, then transplanted. The count starts again at transplanting. Work before the program is counted back from the sowing.', 'counters' => ['DAS', 'DAT'], 'icon' => '🌾'],
-        'DAS' => ['label' => 'DAS only', 'sub' => 'Direct seeded. One count from sowing to harvest.', 'counters' => ['DAS'], 'icon' => '🌱'],
-        'DAP' => ['label' => 'DAP', 'sub' => 'Planted from seedlings, cuttings, tubers or setts. Days after planting.', 'counters' => ['DAP'], 'icon' => '🪴'],
+        // DAS and DAP are one count, straight into the field; a crop is offered the one it is known by (CropCatalog::countersFor).
+        'DAS' => ['label' => 'DAS only', 'sub' => 'Sown straight in the field. One count from sowing to harvest.', 'counters' => ['DAS'], 'icon' => '🌱'],
+        'DAP' => ['label' => 'DAP', 'sub' => 'Sown or planted straight in the field, from seed, cuttings, tubers or setts. One count from planting to harvest.', 'counters' => ['DAP'], 'icon' => '🪴'],
         // A standing orchard has no sowing and no planting this season. The
         // board counts an orchard lot's days from the day its program starts —
         // DOS, the Day of Start (activities-js activityRefCounter) — while the
@@ -1643,6 +1644,10 @@ PROMPT;
         }
         if ($keep !== null && $want === $keep && $want !== 'TREE' && ! in_array('TREE', $allowed, true)) {
             return $want;
+        }
+        // DAS and DAP are the same count, straight into the field: the crop's own word of the two, never its seedbed one.
+        if (in_array($want, ['DAS', 'DAP'], true) && in_array($field = \App\Support\CropCatalog::fieldCounter($crop), $allowed, true)) {
+            return $field;
         }
 
         return $allowed[0] ?? 'DAS';

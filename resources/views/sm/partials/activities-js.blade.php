@@ -4647,8 +4647,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!WHEN_ASKED) return false;
         const selected = getActivityLotIds();
         if (selected.length === 0) return true;
-        // Transplant (DAT) only applies to DAS/DAT lots — never DAP-only.
-        if (selected.every((id) => lotDayType(id) === 'DAP')) return false;
+        // Transplant (DAT 0) only applies to a sown-then-transplanted lot: DAS and DAP go straight into the field and never flip.
+        if (selected.every((id) => lotDayType(id) === 'DAP' || lotDayType(id) === 'DAS')) return false;
         const start = parseLocalDate(($id('activityTargetDate').value || '').trim());
         for (const lotId of selected) {
             const tSrc = LOT_TRANSPLANT_SOURCE[lotId];
