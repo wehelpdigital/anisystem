@@ -873,8 +873,13 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             $say = $al?->method === 'tree' ? 'Trees, ' . intdiv((int) $al->treeMonths, 12) . ' yr'
                 : ($day === null ? '' : ($day < 0 ? ($al->method === 'transplanted' && $das !== null && $das >= 0 ? 'DAS ' . $das . ' · transplant in ' . (-$day) . ' d' : abs($day) . ' days to ' . $counter . ' 0') : $counter . ' ' . $day));
 
+            // How far through its season the lot is, field day to harvest, for the header's bar.
+            $span = $al?->fieldDate && $al?->harvestDate ? max(1, (int) $al->fieldDate->diffInDays($al->harvestDate, false)) : null;
+
             return ['id' => (int) $l->id, 'name' => $l->lotName, 'crop' => $l->crop ? CropCatalog::label($l->crop) : null, 'icon' => CropCatalog::CROPS[$l->crop]['icon'] ?? '🌱',
-                'variety' => $l->variety, 'day' => $day, 'say' => $say, 'stage' => $stage, 'harvest' => $al?->harvestDate?->format('M j')];
+                'variety' => $l->variety, 'day' => $day, 'say' => $say, 'stage' => $stage, 'harvest' => $al?->harvestDate?->format('M j'),
+                'pct' => $span && $day !== null ? max(0, min(100, (int) round($day / $span * 100))) : null,
+                'toHarvest' => $al?->harvestDate ? (int) $today->diffInDays(Carbon::parse($al->harvestDate->toDateString(), 'Asia/Manila'), false) : null];
         })->values();
 
         $sky = $this->planner->skies($lots);
@@ -908,6 +913,10 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
 
         $before = (int) $request->query('before', 0);
         $events = AsAutoEvent::where('autoId', $auto->id)->when($before > 0, fn ($q) => $q->where('id', '<', $before))->orderByDesc('id')->limit(30)->get()->reverse()->values();
+        // What the cards need beside the events: the tasks they name (as they stand now), the lots and the people.
+        $taskIds = $events->flatMap(fn ($e) => array_merge([$e->taskId], (array) ($e->data['tasks'] ?? [])))->filter()->map(fn ($x) => (int) $x)->unique()->values();
+        $ctx = ['tasks' => $taskIds->isEmpty() ? collect() : AsAutoTask::where('autoId', $auto->id)->whereIn('id', $taskIds)->get()->keyBy('id'),
+            'lots' => $lots, 'people' => $people, 'today' => $today];
 
         return $this->json(true, 'ok', [
             'status' => $auto->status, 'title' => $this->schedule($auto)->title, 'lots' => $lotFacts, 'week' => $week,
@@ -915,14 +924,15 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             'done' => $tasks->where('status', 'done')->sortByDesc('doneAt')->take(6)->map($row)->values(),
             'ready' => $ready, 'left' => AsAutoTask::where('autoId', $auto->id)->where('deleteStatus', 1)->where('status', 'planned')->count(),
             'doneCount' => AsAutoTask::where('autoId', $auto->id)->where('deleteStatus', 1)->where('status', 'done')->count(),
-            'events' => $events->map(fn ($e) => $this->eventRow($e))->values(), 'hasMore' => $events->count() === 30,
+            'doneToday' => $tasks->where('status', 'done')->filter(fn ($t) => $t->doneDate && $t->doneDate->isSameDay($today))->map($row)->values(),
+            'events' => $events->map(fn ($e) => $this->eventRow($e, $ctx))->values(), 'hasMore' => $events->count() === 30,
             'plan' => ['safety' => array_slice((array) ($auto->plan['safety'] ?? []), 0, 12), 'compatibility' => array_slice((array) ($auto->plan['compatibility'] ?? []), 0, 8)],
             'cant' => collect(AutoBook::CANT)->map(fn ($c, $k) => ['key' => $k, 'label' => $c[0], 'emoji' => $c[1]])->values(),
             'people' => $people->map(fn ($p) => ['id' => $p['id'], 'name' => $p['name']])->values(),
         ]);
     }
 
-    private function eventRow(AsAutoEvent $e): array
+    private function eventRow(AsAutoEvent $e, array $ctx = []): array
     {
         $body = (string) $e->body;
         // Anee writes a little markdown now and then: bold survives, the rest is plain words.
@@ -930,7 +940,75 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
 
         return ['id' => (int) $e->id, 'role' => $e->role, 'kind' => $e->kind, 'html' => $html, 'data' => $e->data, 'taskId' => $e->taskId,
             'media' => collect((array) $e->media)->map(fn ($m) => ['type' => $m['type'] ?? 'image', 'url' => MediaStore::url($m['path'] ?? null)])->filter(fn ($m) => $m['url'])->values(),
-            'at' => $e->created_at ? Carbon::parse($e->created_at)->timezone('Asia/Manila')->format('M j, g:i A') : ''];
+            'at' => $e->created_at ? Carbon::parse($e->created_at)->timezone('Asia/Manila')->format('M j, g:i A') : '',
+            'time' => $e->created_at ? Carbon::parse($e->created_at)->timezone('Asia/Manila')->format('g:i A') : '',
+            'day' => $e->created_at ? $this->dayWord(Carbon::parse($e->created_at)->timezone('Asia/Manila')) : '',
+            'card' => $ctx ? $this->cardOf($e, $ctx) : null];
+    }
+
+    /** "Today", "Yesterday", or the weekday and date, for the story's day lines. */
+    private function dayWord(Carbon $at): string
+    {
+        $today = now('Asia/Manila')->startOfDay();
+
+        return $at->isSameDay($today) ? 'Today' : ($at->isSameDay($today->copy()->subDay()) ? 'Yesterday' : $at->format($at->year === $today->year ? 'l, M j' : 'l, M j, Y'));
+    }
+
+    /**
+     * What a story line shows as a card (2026-10-27, the owner: "don't make it look like a simple chat. so daily
+     * thing should appear as cards"): the morning, a task done, a day that could not be, a task moved, what the
+     * farmer showed and what Anee saw, each lot's plan. Null for plain talk (a question and its answer).
+     */
+    private function cardOf(AsAutoEvent $e, array $ctx): ?array
+    {
+        $d = (array) ($e->data ?? []);
+        $lots = $ctx['lots'];
+        $lotOf = fn ($id) => $id ? ['name' => $lots->get($id)?->lotName, 'icon' => CropCatalog::CROPS[$lots->get($id)?->crop]['icon'] ?? '🌱'] : null;
+        $when = function (?string $date) use ($ctx) {
+            if (! $date) {
+                return null;
+            }
+            $c = Carbon::parse($date, 'Asia/Manila');
+
+            return $c->isSameDay($ctx['today']) ? 'Today' : ($c->isSameDay($ctx['today']->copy()->addDay()) ? 'Tomorrow' : ($c->isSameDay($ctx['today']->copy()->subDay()) ? 'Yesterday' : $c->format('D, M j')));
+        };
+        $task = function ($id) use ($ctx, $lotOf, $when) {
+            $t = $id ? $ctx['tasks']->get((int) $id) : null;
+
+            return $t ? ['id' => (int) $t->id, 'title' => $t->title, 'emoji' => AutoBook::KINDS[$t->kind][1] ?? '🧑‍🌾', 'kind' => AutoBook::KINDS[$t->kind][0] ?? 'Farm work',
+                'tone' => AutoBook::KINDS[$t->kind][3] ?? 'leaf', 'lot' => $lotOf($t->lotId)['name'] ?? null, 'critical' => (bool) $t->critical, 'status' => $t->status,
+                'date' => $when($t->plannedDate?->toDateString()), 'done' => $t->status === 'done', 'doneDate' => $when($t->doneDate?->toDateString())] : null;
+        };
+        $why = ['weather' => 'for the weather', 'workers' => 'for the workers', 'both' => 'for the weather and the workers', 'late' => 'it is due', 'new' => null];
+        // A re-plan's list names new tasks too (from null): only the ones that really moved are said.
+        $movedList = fn ($list) => array_values(array_map(fn ($m) => ['title' => $m['title'] ?? '', 'to' => $when($m['to'] ?? null), 'why' => $why[$m['why'] ?? ''] ?? null],
+            array_slice(array_filter((array) $list, fn ($m) => is_array($m) && ! empty($m['to']) && (! array_key_exists('from', $m) || $m['from'] !== null)), 0, 6)));
+
+        return match (true) {
+            $e->kind === 'briefing' && ! empty($d['finished']) => ['type' => 'finished'],
+            $e->kind === 'briefing' && ($d['kind'] ?? null) === 'welcome' => ['type' => 'welcome'],
+            $e->kind === 'briefing' && ! empty($d['date']) => [
+                'type' => 'morning', 'date' => Carbon::parse($d['date'])->format('l, M j'), 'isToday' => Carbon::parse($d['date'])->isSameDay($ctx['today']),
+                'sky' => $d['sky'] ?? null, 'lots' => $d['lots'] ?? null,
+                'tasks' => array_values(array_filter(array_map($task, (array) ($d['tasks'] ?? [])))),
+                'moved' => isset($d['movedList']) ? $movedList($d['movedList']) : null, 'movedCount' => (int) ($d['moved'] ?? 0), 'late' => (int) ($d['late'] ?? 0),
+            ],
+            $e->kind === 'done' => ['type' => 'done', 'task' => $task($e->taskId), 'lot' => $lotOf($e->lotId), 'used' => $d['used'] ?? null,
+                'workers' => ($t = $ctx['tasks']->get((int) $e->taskId)) ? collect((array) ($t->doneData['workers'] ?? []))->map(fn ($w) => $ctx['people']->get($w)['name'] ?? null)->filter()->values()->all() : [],
+                'note' => ($t = $ctx['tasks']->get((int) $e->taskId)) ? $t->doneNote : null],
+            $e->kind === 'cant' => ['type' => 'cant', 'task' => $task($e->taskId), 'reason' => isset(AutoBook::CANT[$d['reason'] ?? '']) ? ['label' => AutoBook::CANT[$d['reason']][0], 'emoji' => AutoBook::CANT[$d['reason']][1]] : null,
+                'from' => $when($d['from'] ?? null)],
+            $e->kind === 'moved' => ['type' => 'moved', 'task' => $task($e->taskId), 'to' => $when($d['to'] ?? null),
+                'from' => $when(collect((array) ($d['moved'] ?? []))->first(fn ($m) => (int) ($m['id'] ?? 0) === (int) $e->taskId)['from'] ?? null),
+                'others' => $movedList(array_filter((array) ($d['moved'] ?? []), fn ($m) => (int) ($m['id'] ?? 0) !== (int) $e->taskId))],
+            $e->kind === 'reply' && ! empty($d['what']) => ['type' => 'diagnosis', 'lot' => $lotOf($e->lotId)],
+            $e->kind === 'reply' && $e->taskId && isset($d['moved']) => ['type' => 'praise', 'moved' => $movedList($d['moved'])],
+            $e->kind === 'observation' => ['type' => 'seen', 'lot' => $lotOf($e->lotId)],
+            $e->kind === 'plan' => ['type' => 'lotplan', 'lot' => $lotOf($e->lotId), 'tasks' => (int) ($d['tasks'] ?? 0)],
+            $e->kind === 'analysis' => ['type' => 'reading'],
+            $e->kind === 'setup' => ['type' => 'setup', 'lots' => (int) ($d['lots'] ?? 0)],
+            default => null,
+        };
     }
 
     private function liveTask(AsAutoSeason $auto, int $taskId): AsAutoTask

@@ -97,7 +97,30 @@ class AutoMorning
         if ($moved) {
             $lines[] = 'I moved ' . count($moved) . ' task' . (count($moved) > 1 ? 's' : '') . ' for the weather or the workers: ' . implode('; ', array_map(fn ($m) => $m['title'] . ' to ' . Carbon::parse($m['to'])->format('D, M j'), array_slice($moved, 0, 3))) . (count($moved) > 3 ? '; and more' : '') . '.';
         }
-        AsAutoEvent::say($auto->id, 'briefing', implode("\n", $lines), ['date' => $today->toDateString(), 'tasks' => $tasks->pluck('id')->all(), 'moved' => count($moved)]);
+        // The same morning as data, for the morning card the season page draws (2026-10-27, the owner: "daily thing
+        // should appear as cards"): the sky, each lot's day and stage, and what moved.
+        $lotCards = [];
+        foreach ($als as $lotId => $al) {
+            if (! ($lot = $lots->get($lotId))) {
+                continue;
+            }
+            $counter = AutoBook::counterOf((string) $al->method);
+            $d = $al->fieldDate ? (int) Carbon::parse($al->fieldDate->toDateString(), 'Asia/Manila')->diffInDays($today, false) : null;
+            $stage = null;
+            if ($d !== null && $d >= 0) {
+                try {
+                    $stage = \App\Support\CropStages::stageFor($lot->crop, $d, $counter, $lot->maturityDays())['label'] ?? null;
+                } catch (\Throwable $e) {
+                }
+            }
+            $lotCards[] = ['name' => $lot->lotName, 'icon' => \App\Support\CropCatalog::CROPS[$lot->crop]['icon'] ?? '🌱', 'counter' => $counter, 'day' => $d, 'stage' => $stage];
+        }
+        AsAutoEvent::say($auto->id, 'briefing', implode("\n", $lines), [
+            'date' => $today->toDateString(), 'tasks' => $tasks->pluck('id')->all(), 'moved' => count($moved),
+            'sky' => $sky ? array_intersect_key($sky, array_flip(['emoji', 'pop', 'mm', 'wind', 'tmax'])) : null,
+            'lots' => $lotCards, 'late' => $late,
+            'movedList' => array_map(fn ($m) => ['id' => $m['id'] ?? null, 'title' => $m['title'], 'to' => $m['to'], 'why' => $m['why'] ?? null], array_slice($moved, 0, 6)),
+        ]);
     }
 
     private function todays(AsAutoSeason $auto, Carbon $today)
