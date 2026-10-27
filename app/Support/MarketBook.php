@@ -104,13 +104,38 @@ final class MarketBook
         });
     }
 
-    /** The places an item has farmgate prices for: the country, the regions, the provinces. */
+    /**
+     * The places a farmer can pick for an item: the country, the regions with
+     * its prices, and EVERY province the records know (2026-10-27, the owner:
+     * "i searched pangasinan in where you sell and it did not appear"). A
+     * province with no prices of its own for this item comes with 'last' null
+     * and reads its region's, else the country's (pick()).
+     */
     public static function places(string $item): array
     {
-        return Cache::remember('market:places:' . $item . ':' . self::ver(), 86400, fn () => DB::table('as_market_series')->where('itemKey', $item)->where('level', 'f')
-            ->orderByRaw("FIELD(geoLevel, 'national', 'region', 'province')")->orderBy('regionName')->orderBy('geoName')
-            ->get(['geoKey', 'geoName', 'geoLevel', 'regionName', 'lastYm', 'points'])
-            ->map(fn ($r) => ['key' => $r->geoKey, 'name' => $r->geoName, 'level' => $r->geoLevel, 'region' => $r->regionName, 'last' => $r->lastYm, 'points' => (int) $r->points])->values()->all());
+        return Cache::remember('market:places2:' . $item . ':' . self::ver(), 86400, function () use ($item) {
+            $out = DB::table('as_market_series')->where('itemKey', $item)->where('level', 'f')
+                ->get(['geoKey', 'geoName', 'geoLevel', 'regionName', 'lastYm', 'points'])
+                ->map(fn ($r) => ['key' => $r->geoKey, 'name' => $r->geoName, 'level' => $r->geoLevel, 'region' => $r->regionName, 'last' => $r->lastYm, 'points' => (int) $r->points])->all();
+            $have = array_flip(array_column($out, 'key'));
+            foreach (self::provinceBook() as $k => $p) {
+                if (! isset($have[$k])) {
+                    $out[] = ['key' => $k, 'name' => $p['name'], 'level' => 'province', 'region' => $p['region'], 'last' => null, 'points' => 0];
+                }
+            }
+            $rank = ['national' => 0, 'region' => 1, 'province' => 2];
+            usort($out, fn ($a, $b) => [$rank[$a['level']] ?? 3, (string) $a['region'], $a['name']] <=> [$rank[$b['level']] ?? 3, (string) $b['region'], $b['name']]);
+
+            return $out;
+        });
+    }
+
+    /** Every province in the price records, with its region (read off every crop's records): key => [name, region, regionCode]. */
+    public static function provinceBook(): array
+    {
+        return self::$memo['provinceBook'] ??= Cache::remember('market:provincebook:' . self::ver(), 86400, fn () => DB::table('as_market_series')
+            ->where('level', 'f')->where('geoLevel', 'province')->select('geoKey', 'geoName', 'regionName', 'regionCode')->distinct()->get()
+            ->mapWithKeys(fn ($r) => [$r->geoKey => ['name' => $r->geoName, 'region' => $r->regionName, 'regionCode' => $r->regionCode]])->all());
     }
 
     /** One series, as month index => price. */
@@ -196,9 +221,18 @@ final class MarketBook
                 return [$reg, ($own['name'] ?? 'This province') . ' has too few recent prices of its own, so its region\'s are read.'];
             }
         }
+        // A province with no prices of this item at all reads its region's (the region from any crop's records).
+        $prov = ! $own ? (self::provinceBook()[$geo] ?? null) : null;
+        if ($prov && $prov['regionCode']) {
+            $reg = self::series($item, 'f', $prov['regionCode']);
+            if (self::enough($reg)) {
+                return [$reg, $prov['name'] . ' has no prices of its own for this, so its region\'s are read.'];
+            }
+        }
         $ph = self::series($item, 'f', 'PH');
         if (self::enough($ph) || ($ph && $ph['v'])) {
-            return [$ph, $geo === 'PH' ? '' : ($own ? ($own['name'] . ' has too few recent prices of its own, so the country\'s are read.') : 'No prices are kept for that place, so the country\'s are read.')];
+            return [$ph, $geo === 'PH' ? '' : ($own ? ($own['name'] . ' has too few recent prices of its own, so the country\'s are read.')
+                : ($prov ? $prov['name'] . ' has no prices of its own for this, so the country\'s are read.' : 'No prices are kept for that place, so the country\'s are read.'))];
         }
 
         return $own && $own['v'] ? [$own, ''] : null;

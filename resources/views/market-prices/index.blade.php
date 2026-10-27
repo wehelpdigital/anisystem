@@ -206,6 +206,9 @@
 
     /* ---- the sheets ---- */
     .mp-search { width: 100%; margin-bottom: .7rem; }
+    /* The searched lists (crops, places) hold one height however few rows the search leaves (the owner, 2026-10-27). */
+    #mpSheet.mp-tall { height: 86vh; height: 86dvh; }
+    @media (min-width: 640px) { #mpSheet.mp-tall { height: min(85vh, 44rem); } }
     .mp-opts { display: grid; gap: .4rem; }
     .mp-opt { display: flex; align-items: center; gap: .7rem; width: 100%; padding: .65rem .8rem; border-radius: .95rem; text-align: left; border: 1.5px solid var(--color-gray-200); background: var(--color-white);
         transition: border-color .28s var(--mp-e), background-color .28s var(--mp-e); }
@@ -378,6 +381,8 @@
     const openSheet = (title, rows, cb, find = true) => {
         $('mpSheetTitle').textContent = title; sheetRows = rows; sheetPick = cb;
         $('mpSheetFind').value = ''; $('mpSheetFind').hidden = !find;
+        // A list with a search keeps its height while the search narrows it.
+        $('mpSheet').classList.toggle('mp-tall', find);
         paintSheet(); window.openSheet('mpSheet');
         if (find && window.matchMedia('(min-width: 768px)').matches) setTimeout(() => $('mpSheetFind').focus(), 250);
     };
@@ -417,7 +422,8 @@
         if (regs.length) { rows.push({ head: 'Regions' }); regs.forEach((p) => rows.push({ key: p.key, title: p.name, sub: 'Prices up to ' + ymWord(p.last), on: st.place === p.key, find: p.name + ' region' })); }
         const provs = list.filter((p) => p.level === 'province');
         let reg = null;
-        provs.forEach((p) => { if (p.region !== reg) { reg = p.region; rows.push({ head: reg || 'Provinces' }); } rows.push({ key: p.key, title: p.name, sub: (p.region ? p.region + ', ' : '') + 'prices up to ' + ymWord(p.last), on: st.place === p.key, find: p.name + ' ' + (p.region || '') }); });
+        // Every province is listed; one without prices of its own for this crop reads its region's.
+        provs.forEach((p) => { if (p.region !== reg) { reg = p.region; rows.push({ head: reg || 'Provinces' }); } rows.push({ key: p.key, title: p.name, sub: (p.region ? p.region + ', ' : '') + (p.last ? 'prices up to ' + ymWord(p.last) : 'uses its region\'s or the country\'s prices'), on: st.place === p.key, find: p.name + ' ' + (p.region || '') }); });
         openSheet('Where you sell', rows, (k) => {
             const p = list.find((x) => x.key === k);
             st.place = k; st.placeName = k === 'PH' ? 'The whole country' : (p ? p.name : k); st.saved = null;
