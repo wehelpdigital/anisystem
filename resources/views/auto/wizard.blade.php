@@ -618,7 +618,7 @@
         if (!l.method) return 'say how it goes into the field.';
         if (l.method !== 'tree' && !l.fieldDate) return 'pick the planting day.';
         if (!(Number(l.size) > 0)) return 'say how big it is.';
-        if (!l.pin && !(l.province && l.town)) return 'pick its province and town, or drop a pin.';
+        if (!l.pin && !(l.province && l.town)) return LINK[l.id] ? 'drop a pin, or give your lot its town with Edit the lot.' : 'pick its province and town, or drop a pin.';
         return null;
     };
     const saveLot = (l, extra = {}) => put(U.lot, Object.assign({ lotId: l.id, name: l.name, size: l.size, unit: l.unit || 'ha', crop: l.crop, variety: l.variety || '', method: l.method,
@@ -631,7 +631,7 @@
     const farmView = (l) => {
         if (!LINK[l.id]) return null;
         if (FLROWS) return farmRow(l);
-        return { id: LINK[l.id], name: l.name, place: [l.barangay, townName(l.town), l.province].filter(Boolean).join(', '), areaHa: l.unit === 'ha' ? l.size : null };
+        return { id: LINK[l.id], name: l.name, place: [l.barangay, townName(l.town), l.province].filter(Boolean).join(', '), areaHa: l.unit === 'ha' ? l.size : null, pin: l.pin || null };
     };
     const fmtHa = (a) => String(window.aneeLots ? window.aneeLots.fmtHa(a) : (Number(a) ? a + ' ha' : '')).replace(' ha', ' ha').replace(' sq m', ' sq m');
     /* The variety, two ways (partials/variety-pick, 2026-10-16): searched in
@@ -645,11 +645,13 @@
         const ms = methodsOf(l);
         const fv = farmView(l);
         const askSize = !(fv && Number(fv.areaHa) > 0);
+        // A lot already on its map brings its spot along: no second pin is asked.
+        const mapped = !!(fv && farmPin(fv));
         return '<div class="au-lot" data-lot="' + l.id + '" style="--i:' + i + '">'
             + '<div class="au-lot-h"><span class="au-lot-n">' + (i + 1) + '</span><input type="text" data-f="name" value="' + esc(l.name) + '" maxlength="255" aria-label="Lot name"' + (fv ? ' readonly title="The name of your lot. Edit the lot to change it."' : '') + '><span class="au-lot-st" data-st></span></div>'
             + '<div class="au-lot-b">'
             + '<span class="au-lab">Which of your lots is it? <small>(optional)</small></span>'
-            + (fv ? '<button type="button" class="au-pin is-set" data-act="farm"><span aria-hidden="true">🗺️</span><span><b>' + esc(fv.name) + '</b><small>' + esc([fv.place, Number(fv.areaHa) > 0 ? (window.aneeLots && window.aneeLots.fmtSize ? window.aneeLots.fmtSize(fv) : fmtHa(fv.areaHa)) : ''].filter(Boolean).join(' · ')) + '</small></span></button>'
+            + (fv ? '<button type="button" class="au-pin is-set" data-act="farm"><span aria-hidden="true">🗺️</span><span><b>' + esc(fv.name) + '</b><small>' + esc([fv.place, Number(fv.areaHa) > 0 ? (window.aneeLots && window.aneeLots.fmtSize ? window.aneeLots.fmtSize(fv) : fmtHa(fv.areaHa)) : '', mapped ? 'On the map' : ''].filter(Boolean).join(' · ')) + '</small></span></button>'
                 + '<div class="au-flot-acts"><button type="button" class="au-link" data-act="farm">Change</button><button type="button" class="au-link" data-act="farmEdit">Edit the lot</button></div>'
                 // Preview answers and Edit answers (2026-10-19, the owner): each opens a sheet (partials/farm-lots).
                 + (window.aneeLots && window.aneeLots.ansButtons ? window.aneeLots.ansButtons('data-act="farmPrev"', 'data-act="farmAns"', 'is-under') : '')
@@ -667,7 +669,7 @@
             + (fv ? '' : '<div class="au-row is-2"><div><span class="au-lab">Province</span><button type="button" class="au-tag' + (l.province ? '' : ' is-none') + '" data-act="prov"><span>' + esc(l.province || 'Choose the province') + '</span>' + CHEV + '</button></div>'
                 + '<div><span class="au-lab">Town or city</span><button type="button" class="au-tag' + (l.town ? '' : ' is-none') + '" data-act="town"' + (l.province ? '' : ' disabled') + '><span>' + esc(l.town ? townName(l.town) : (l.province ? 'Choose the town' : 'Province first')) + '</span>' + CHEV + '</button></div></div>'
                 + '<label class="au-lab">Barangay <small>(optional)</small></label><input type="text" class="form-input w-full" data-f="barangay" maxlength="120" value="' + esc(l.barangay || '') + '">')
-            + '<span class="au-lab">Pin on the map <small>(optional)</small></span><button type="button" class="au-pin' + (l.pin ? ' is-set' : '') + '" data-act="pin"><span aria-hidden="true">📍</span><span>' + (l.pin ? 'Pinned at ' + l.pin.lat.toFixed(4) + ', ' + l.pin.lng.toFixed(4) + '<small>Tap to move it</small>' : 'Drop a pin on the lot<small>Optional: the weather and the soil are then read at the exact spot</small>') + '</span></button>'
+            + (mapped ? '' : '<span class="au-lab">Pin on the map <small>(optional)</small></span><button type="button" class="au-pin' + (l.pin ? ' is-set' : '') + '" data-act="pin"><span aria-hidden="true">📍</span><span>' + (l.pin ? 'Pinned at ' + Number(l.pin.lat).toFixed(4) + ', ' + Number(l.pin.lng).toFixed(4) + '<small>Tap to move it</small>' : 'Drop a pin on the lot<small>Optional: the weather and the soil are then read at the exact spot</small>') + '</span></button>')
             + '</div></div>';
     };
     const dayLabel = (l) => ({ transplanted: 'Transplanting day (DAT 0)', direct: 'Sowing day in the field (DAS 0)', planted: 'Planting day (DAP 0)' })[l.method] || 'Planting day';
@@ -900,12 +902,27 @@
         if (rows.length || !Object.keys(LINK).length) FLROWS = rows;
         return FLROWS;
     }
+    /* Where a farm lot sits on its map: its pin, or the middle of the outline
+       drawn for it. A lot that has one is never asked for a pin again (the
+       owner, 2026-10-28: "it asks me to drop a pin on the map even though the
+       selected map has already a pin dropped and location mapped or drawn"). */
+    const farmPin = (fl) => {
+        const p = fl && fl.pin;
+        if (p && Number.isFinite(Number(p.lat)) && Number.isFinite(Number(p.lng))) return { lat: +Number(p.lat).toFixed(7), lng: +Number(p.lng).toFixed(7) };
+        const b = fl && Array.isArray(fl.boundary) && fl.boundary.length >= 3 ? fl.boundary : null;
+        if (!b) return null;
+        const mid = (i) => +(b.reduce((s, x) => s + Number(x[i]), 0) / b.length).toFixed(7);
+        return { lat: mid(0), lng: mid(1) };
+    };
     function fillFromFarm(l, fl) {
-        const was = JSON.stringify([l.name, l.size, l.unit, l.province, l.town, l.barangay]);
+        const now = () => JSON.stringify([l.name, l.size, l.unit, l.province, l.town, l.barangay, l.pin ? [Number(l.pin.lat), Number(l.pin.lng)] : null]);
+        const was = now();
         if (fl.name) l.name = String(fl.name).slice(0, 255);
         if (Number(fl.areaHa) > 0) { l.size = Number(fl.areaHa); l.unit = 'ha'; }
         if (fl.province && fl.town) { l.province = fl.province; l.town = fl.town; l.barangay = String(fl.barangay || '').slice(0, 120); }
-        return JSON.stringify([l.name, l.size, l.unit, l.province, l.town, l.barangay]) !== was;
+        const at = farmPin(fl);
+        if (at) l.pin = at;
+        return now() !== was;
     }
     const saveLinks = () => put(U.answers, { farmLots: Object.entries(LINK).map(([lotId, farmLotId]) => ({ lotId: Number(lotId), farmLotId })) });
     async function linkLot(l, fl) {
