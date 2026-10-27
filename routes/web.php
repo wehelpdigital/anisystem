@@ -73,8 +73,22 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
     }
 
     return response()->json([
-        'commit' => substr((string) env('RAILWAY_GIT_COMMIT_SHA', 'unknown'), 0, 7),
-        'builtAt' => (string) env('RAILWAY_DEPLOYMENT_ID', 'unknown'),
+        // Railway named the commit; Laravel Cloud builds from a clone whose .git comes along, so HEAD names it there.
+        'commit' => substr((string) (env('RAILWAY_GIT_COMMIT_SHA') ?: rescue(function () {
+            $head = trim((string) @file_get_contents(base_path('.git/HEAD')));
+            if (! str_starts_with($head, 'ref: ')) {
+                return $head;
+            }
+            $ref = substr($head, 5);
+            $sha = trim((string) @file_get_contents(base_path('.git/' . $ref)));
+            if ($sha === '' && preg_match('/^([0-9a-f]{40}) ' . preg_quote($ref, '/') . '$/m', (string) @file_get_contents(base_path('.git/packed-refs')), $m)) {
+                $sha = $m[1];
+            }
+
+            return $sha;
+        }, '', false) ?: 'unknown'), 0, 7),
+        // When the build ran: Composer writes the autoloader then.
+        'builtAt' => (string) (env('RAILWAY_DEPLOYMENT_ID') ?: (is_file(base_path('vendor/composer/autoload_real.php')) ? date('c', (int) filemtime(base_path('vendor/composer/autoload_real.php'))) : 'unknown')),
         'markers' => [
             'eyeFilterButton' => str_contains($source, 'id="viewFilterBtn"'),
             'dragGrip' => str_contains($source, 'A grip says the card can be dragged'),
@@ -300,6 +314,17 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             }
         })(),
         'viewCacheCompiled' => count(glob(storage_path('framework/views/*.php')) ?: []),
+        // Whether a page's source and the compiled copy that serves it agree (2026-10-28: a deploy finished and
+        // the Anee Auto pages still showed the footer). The source says no-footer; if the compiled copy does not,
+        // the views are served stale; if the source does not either, the build is older than the change.
+        'viewFresh' => rescue(function () {
+            $src = resource_path('views/auto/season.blade.php');
+            $compiled = app('blade.compiler')->getCompiledPath($src);
+
+            return ['sourceNoFooter' => str_contains((string) @file_get_contents($src), 'no-footer'),
+                'compiledNoFooter' => is_file($compiled) ? str_contains((string) file_get_contents($compiled), 'no-footer') : null,
+                'sourceAt' => date('c', (int) @filemtime($src)), 'compiledAt' => is_file($compiled) ? date('c', (int) filemtime($compiled)) : null];
+        }, null, false),
         // Whether the deployed environment can reach the mailing list at all
         // -- booleans only, never the token. A signup that verified on the live
         // site and never reached Acumbamail is either this or a refusal in
