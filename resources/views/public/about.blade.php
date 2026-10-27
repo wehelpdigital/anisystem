@@ -37,9 +37,16 @@
 @section('content')
 
     {{-- ================= HERO ================= --}}
-    <section class="ab-hero">
-        <span class="ab-blob is-a" aria-hidden="true"></span>
-        <span class="ab-blob is-b" aria-hidden="true"></span>
+    {{-- The farmers behind anee.io fill the header (2026-10-27, the owner: "header has no background image and the
+         filipino farmers text is yellow which is hard to read"): their photo under a deep green shade, darkest
+         behind the words, so the white heading and its gold line read clearly; the family and their sign stay
+         in sight on the right. The facts sit on a white card across the header's foot. --}}
+    @php $p1 = $pic('powered-by'); @endphp
+    <section class="ab-hero on-dark">
+        <img src="{{ $p1['src'] }}" @if ($p1['set']) srcset="{{ $p1['set'] }}, {{ $p1['src'] }} 1600w" sizes="100vw" @endif
+             alt="{{ $ph ? 'The farmers behind anee.io in their palayan, with a Powered by anee.io sign' : 'The farmers behind anee.io in their rice field, with a Powered by anee.io sign' }}"
+             class="ab-hero-bg" loading="eager" fetchpriority="high" width="1600" height="1195">
+        <div class="ab-hero-shade" aria-hidden="true"></div>
         <div class="relative max-w-6xl mx-auto px-4 sm:px-6 ab-hero-grid">
             <div class="ab-hero-copy">
                 <span class="ab-chip animate-fade-up"><span class="ab-chip-dot"></span>About anee.io</span>
@@ -61,23 +68,16 @@
                     <li>Works on any phone</li>
                 </ul>
             </div>
-            <div class="ab-hero-art animate-fade-up" style="animation-delay:.1s">
-                @php $p1 = $pic('powered-by'); $p2 = $pic('palay-phone'); @endphp
-                <figure class="ab-ph is-main">
-                    <img src="{{ $p1['src'] }}" alt="{{ $ph ? 'A farming family in their palayan with a Powered by anee.io sign' : 'A farming family in their rice field with a Powered by anee.io sign' }}" loading="eager" fetchpriority="high" width="1600" height="1195">
-                </figure>
-                <figure class="ab-ph is-small">
-                    <img src="{{ $p2['src'] }}" @if ($p2['set']) srcset="{{ $p2['set'] }}" sizes="(min-width: 1024px) 15rem, 40vw" @endif alt="A farmer checking his phone among ripe rice" loading="eager" width="1600" height="1195">
-                </figure>
+            <div class="ab-hero-side animate-fade-up" style="animation-delay:.2s">
+                <div class="ab-float is-ani" aria-hidden="true"><b>ani</b><small>harvest</small></div>
                 <div class="ab-float is-anee">
                     <img src="{{ $face }}" alt="">
                     <span><b>Anee</b><small>Your smart farm technician</small></span>
                 </div>
-                <div class="ab-float is-ani" aria-hidden="true">
-                    <b>ani</b><small>harvest</small>
-                </div>
             </div>
         </div>
+    </section>
+    <div class="ab-facts-band">
         <div class="relative max-w-5xl mx-auto px-4 sm:px-6">
             <dl class="ab-facts animate-fade-up" style="animation-delay:.3s">
                 <div><dt>{{ $abTools }}</dt><dd>tools for one season</dd></div>
@@ -86,7 +86,7 @@
                 <div><dt>{{ \App\Support\Region::money(0, 0) }}</dt><dd>to start, on Libre</dd></div>
             </dl>
         </div>
-    </section>
+    </div>
 
     {{-- ================= FROM OUR FIELDS TO YOURS ================= --}}
     <section class="hp-sec bg-white" id="ab-story">
@@ -339,50 +339,53 @@
     .ab-textlink svg { width: 1.05rem; height: 1.05rem; flex: none; transition: transform .28s var(--hp-ease); }
     .ab-textlink:hover svg { transform: translateX(4px); }
 
-    /* Hero: words on the left, the farm on the right, the facts across the foot. */
-    .ab-hero { position: relative; isolation: isolate; overflow: hidden; padding: 3.25rem 0 3.5rem;
-        background: linear-gradient(175deg, #fbf8ee 0%, #f3f7ea 55%, #fff 100%); }
-    @media (min-width: 1024px) { .ab-hero { padding: 4.5rem 0 4.5rem; } }
-    .ab-blob { position: absolute; z-index: -1; border-radius: 999px; filter: blur(60px); opacity: .55; pointer-events: none; }
-    .ab-blob.is-a { width: 28rem; height: 28rem; top: -10rem; right: -8rem; background: #d9ebc2; }
-    .ab-blob.is-b { width: 22rem; height: 22rem; bottom: -8rem; left: -8rem; background: #fbe7a4; opacity: .45; }
-    .ab-hero-grid { display: grid; gap: 2.75rem; align-items: center; }
-    @media (min-width: 1024px) { .ab-hero-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 3.5rem; } }
+    /* Hero: the farmers' photo under a shade darkest behind the words; the facts on a card across its foot. */
+    .ab-hero { position: relative; isolation: isolate; overflow: hidden; padding: 3.5rem 0 6.5rem; background-color: #16290d; }
+    @media (min-width: 1024px) { .ab-hero { padding: 5rem 0 8rem; min-height: 42rem; display: flex; align-items: center; } .ab-hero > div { width: 100%; } }
+    .ab-hero-bg { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 62% 38%;
+        transform: scale(1.04); animation: abDrift 28s ease-in-out infinite alternate; }
+    @keyframes abDrift { to { transform: scale(1.1) translate(-1%, -.6%); } }
+    .ab-hero-shade { position: absolute; inset: 0; z-index: -1; pointer-events: none;
+        background: linear-gradient(180deg, rgb(10 22 6 / .72) 0%, rgb(12 26 7 / .8) 55%, rgb(10 22 6 / .9) 100%); }
+    @media (min-width: 1024px) { .ab-hero-shade {
+        background: linear-gradient(90deg, rgb(9 20 5 / .9) 0%, rgb(12 26 7 / .82) 34%, rgb(14 30 8 / .42) 64%, rgb(14 30 8 / .18) 100%),
+            linear-gradient(180deg, rgb(10 22 6 / .35) 0%, transparent 30%, transparent 62%, rgb(10 22 6 / .7) 100%); } }
+    /* The words keep to the left; the right of the band is the family and their sign, left in plain sight. */
+    .ab-hero-grid { display: grid; gap: 1.75rem; }
+    .ab-hero-copy, .ab-hero-side { max-width: 40rem; }
     .ab-chip { display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .95rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
-        letter-spacing: .1em; text-transform: uppercase; color: var(--hp-deep); background: #fff; box-shadow: inset 0 0 0 1px #dfe9d2, 0 6px 16px -10px rgb(20 33 12 / .35); }
-    .ab-chip-dot { width: .5rem; height: .5rem; border-radius: 999px; background: var(--hp-sun); box-shadow: 0 0 0 3px rgb(245 197 24 / .25); }
-    .ab-h1 { margin-top: 1.25rem; font-family: var(--font-heading); font-weight: 800; letter-spacing: -.025em; line-height: 1.04; color: var(--hp-ink);
-        font-size: clamp(2.35rem, 5.6vw, 4rem); text-wrap: balance; }
-    .ab-lede { margin-top: 1.75rem; max-width: 34rem; font-size: clamp(1.02rem, 1.6vw, 1.16rem); line-height: 1.7; color: #4b5563; text-wrap: pretty; }
+        letter-spacing: .1em; text-transform: uppercase; color: #fff; background: rgb(255 255 255 / .12); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .28);
+        -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+    .ab-chip-dot { width: .5rem; height: .5rem; border-radius: 999px; background: var(--hp-sun); box-shadow: 0 0 0 3px rgb(245 197 24 / .3); }
+    .ab-h1 { margin-top: 1.25rem; font-family: var(--font-heading); font-weight: 800; letter-spacing: -.025em; line-height: 1.04; color: #fff;
+        font-size: clamp(2.35rem, 5.6vw, 4.2rem); text-wrap: balance; text-shadow: 0 2px 28px rgb(0 0 0 / .35); }
+    /* Gradient text paints its fill as a background: a shadow would sit on top of it, so the gold goes without. */
+    .ab-h1 .hp-shimmer { text-shadow: none; filter: drop-shadow(0 2px 14px rgb(0 0 0 / .35)); }
+    .ab-lede { margin-top: 1.75rem; max-width: 34rem; font-size: clamp(1.02rem, 1.6vw, 1.18rem); line-height: 1.7; color: #e3ecd8; text-wrap: pretty; }
     .ab-ctas { margin-top: 1.9rem; display: flex; flex-wrap: wrap; gap: .75rem; }
-    .ab-ticks { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .45rem 1.2rem; font-size: .88rem; font-weight: 700; color: #4b5563; }
+    .ab-ticks { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .45rem 1.2rem; font-size: .88rem; font-weight: 700; color: #e3ecd8; }
     .ab-ticks li { display: inline-flex; align-items: center; gap: .4rem; }
-    .ab-ticks li::before { content: ''; width: 1.05rem; height: 1.05rem; flex: none; border-radius: 999px; background: #e3f0d3
-        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232f5219' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / .68rem no-repeat; }
+    .ab-ticks li::before { content: ''; width: 1.05rem; height: 1.05rem; flex: none; border-radius: 999px; background: var(--hp-sun)
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314210c' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 13l4 4L19 7'/%3E%3C/svg%3E") center / .66rem no-repeat; }
     @media (max-width: 639.98px) { .ab-ctas > * { width: 100%; } }
 
-    .ab-hero-art { position: relative; padding: 0 0 3.2rem 0; }
-    @media (min-width: 640px) { .ab-hero-art { padding: 0 0 3.5rem 3rem; } }
-    .ab-ph { margin: 0; overflow: hidden; border-radius: 1.6rem; background: #e6efda; box-shadow: 0 34px 70px -40px rgb(20 33 12 / .75); }
-    .ab-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .ab-ph.is-main { aspect-ratio: 4 / 3.3; }
-    .ab-ph.is-small { position: absolute; left: 0; bottom: 0; width: 44%; aspect-ratio: 1; border-radius: 1.3rem;
-        box-shadow: 0 0 0 6px #fff, 0 26px 50px -28px rgb(20 33 12 / .8); }
-    @media (max-width: 639.98px) { .ab-ph.is-small { left: .75rem; width: 40%; } }
-    .ab-float { position: absolute; display: flex; align-items: center; gap: .65rem; padding: .6rem .9rem .6rem .6rem; border-radius: 1.1rem;
-        background: #fff; box-shadow: 0 20px 40px -22px rgb(20 33 12 / .6); animation: abBob 6s ease-in-out infinite; }
-    .ab-float.is-anee { right: .75rem; bottom: .5rem; }
+    /* Under the words: the word ani and Anee, side by side. */
+    .ab-hero-side { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+    .ab-float { display: flex; align-items: center; gap: .65rem; padding: .6rem .9rem .6rem .6rem; border-radius: 1.1rem;
+        background: #fff; box-shadow: 0 20px 40px -22px rgb(0 0 0 / .7); animation: abBob 6s ease-in-out infinite; }
     .ab-float.is-anee img { width: 2.6rem; height: 2.6rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 3px var(--hp-sun); }
     .ab-float.is-anee b { display: block; font-family: var(--font-heading); font-weight: 800; color: var(--hp-ink); line-height: 1.1; }
     .ab-float.is-anee small { display: block; font-size: .74rem; font-weight: 700; color: var(--hp-green); }
-    .ab-float.is-ani { top: 1rem; right: 1rem; flex-direction: column; align-items: flex-start; gap: 0; padding: .55rem .85rem;
-        background: var(--hp-ink); animation-delay: -3s; }
+    .ab-float.is-ani { flex-direction: column; align-items: flex-start; gap: 0; padding: .55rem .85rem; background: var(--hp-ink);
+        box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35), 0 20px 40px -22px rgb(0 0 0 / .7); animation-delay: -3s; }
     .ab-float.is-ani b { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: var(--hp-sun); line-height: 1; }
     .ab-float.is-ani small { font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #dbe7cd; }
     @keyframes abBob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -6px; } }
 
-    .ab-facts { margin-top: 3rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 1.4rem; overflow: hidden;
-        background: #fff; border: 1px solid #e4ecda; box-shadow: 0 26px 50px -38px rgb(20 33 12 / .55); }
+    /* The facts card rides up over the header's foot; the band is white below the photo. */
+    .ab-facts-band { position: relative; z-index: 2; margin-top: -4rem; background: linear-gradient(180deg, transparent 0 4rem, #fff 4rem); }
+    .ab-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 1.4rem; overflow: hidden;
+        background: #fff; border: 1px solid #e4ecda; box-shadow: 0 30px 60px -36px rgb(20 33 12 / .6); }
     @media (min-width: 768px) { .ab-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
     .ab-facts div { padding: 1.15rem .9rem; text-align: center; }
     .ab-facts div + div { border-left: 1px solid #edf2e6; }
@@ -473,6 +476,8 @@
     .ab-guide-go { flex: none; color: #9ca3af; transition: color .28s var(--hp-ease), transform .28s var(--hp-ease); }
     .ab-guide-go svg { width: 1.05rem; height: 1.05rem; }
     .ab-guide:hover .ab-guide-go { color: var(--hp-green); transform: translateX(3px); }
+    .ab-ph { margin: 0; overflow: hidden; border-radius: 1.6rem; background: #e6efda; box-shadow: 0 34px 70px -40px rgb(20 33 12 / .75); }
+    .ab-ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .ab-ph-farm { position: relative; padding-bottom: 1.6rem; }
     @media (min-width: 1024px) { .ab-ph-farm { position: sticky; top: 6rem; } }
     .ab-ph.is-farm { aspect-ratio: 4 / 4.6; }
@@ -528,7 +533,7 @@
         box-shadow: 0 0 0 4px var(--hp-sun), 0 0 0 12px rgb(245 197 24 / .18); animation: abBob 5s ease-in-out infinite; }
 
     @media (prefers-reduced-motion: reduce) {
-        .ab-float, .ab-final-face { animation: none !important; }
+        .ab-float, .ab-final-face, .ab-hero-bg { animation: none !important; }
         .ab-chapter, .ab-chapter-pic img, .ab-pillar, .ab-guide, .ab-guide-go, .ab-stop, .ab-value, .ab-link, .ab-textlink svg { transition: none !important; }
     }
 </style>
