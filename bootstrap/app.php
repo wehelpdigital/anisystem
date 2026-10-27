@@ -94,6 +94,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // shelf makes the next minute's pass write one (forced) and clears it.
         // The market shelf reads the morning's stories for imports, tariffs and bans (2026-10-27, App\Support\MarketNews).
         $schedule->command('market:news')->dailyAt('05:40')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
+        // "Check the news reader now": market.news_check_now on the settings shelf makes the next minute's pass
+        // send one small request on the reader's key and write the answer to market.news_check.
+        $schedule->command('market:news --check')->everyMinute()
+            ->when(fn () => \App\Models\AsSiteSetting::yes('market.news_check_now'))
+            ->before(fn () => \App\Models\AsSiteSetting::put('market.news_check_now', '0'))
+            ->withoutOverlapping(5)->runInBackground();
         $schedule->command('news:roundup --force')->everyMinute()
             ->when(fn () => \App\Models\AsSiteSetting::yes('news.run_now'))
             ->before(fn () => \App\Models\AsSiteSetting::put('news.run_now', '0'))

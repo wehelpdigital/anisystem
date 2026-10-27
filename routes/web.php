@@ -293,6 +293,13 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
         // site and never reached Acumbamail is either this or a refusal in
         // the logs, and this answers the first without a dashboard visit.
         // Whether the scheduler is running: it writes a tick every five minutes.
+        // The daily news reading on the owner's Claude (2026-10-27): where its key comes from and the last live check.
+        'newsReader' => (function () {
+            $r = method_exists(\App\Models\AiSetting::class, 'newsReader') ? rescue(fn () => \App\Models\AiSetting::newsReader(), null, false) : null;
+
+            return ['on' => (bool) $r, 'from' => $r ? (filled(config('services.anthropic.key')) ? 'environment' : 'settings') : null,
+                'model' => $r?->effectiveModel(), 'lastCheck' => json_decode((string) \App\Models\AsSiteSetting::get('market.news_check', ''), true)];
+        })(),
         'scheduler' => (function () {
             $tick = \App\Models\AsSiteSetting::get('scheduler.tick');
             $at = $tick ? \Carbon\Carbon::parse($tick) : null;
