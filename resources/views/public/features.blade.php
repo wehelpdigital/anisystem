@@ -26,6 +26,8 @@
         return ! empty($it['url']) ? url($it['url']) : null;
     };
     $fFilm = fn (string $key) => $HW::video($key);
+    // Every tool's screen as the app is now (2026-10-27, the owner: "update all screenshots"), filmed or not.
+    $fShot = fn (string $key) => $HW::shot($key);
     // New this month: on their cards and in the band.
     // (2026-10-18: the tools placed in the season this week.)
     $fNew = ['globalLots', 'varietyFinder', 'landprep', 'lcc', 'news', 'nutrientFinder', 'compat', 'auto'];
@@ -137,6 +139,7 @@
         background: #f5c518; box-shadow: 0 0 0 5px rgb(245 197 24 / .25), 0 10px 20px -10px rgb(0 0 0 / .5); transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .fz-play svg { width: 1rem; height: 1rem; margin-left: 2px; }
     .fz-shot:hover .fz-play, .fz-shot:focus-visible .fz-play { transform: scale(1.1); }
+    .fz-shot.is-still { cursor: default; }
     .fz-new { position: absolute; z-index: 3; left: .8rem; top: .8rem; padding: .18rem .55rem; border-radius: 999px; font-size: .62rem; font-weight: 900; letter-spacing: .08em;
         text-transform: uppercase; color: #1f1500; background: #f5c518; }
     .fz-tool-body { position: relative; display: flex; flex: 1; flex-direction: column; gap: .35rem; padding: 0 1.15rem 1.15rem; }
@@ -203,8 +206,10 @@
         .fz-plan { grid-column: 2; font-size: .72rem; }
         .fz-go { grid-column: 2; padding-top: .2rem; font-size: .76rem; }
         .fz-new { left: auto; right: 4.1rem; top: .5rem; font-size: .55rem; padding: .1rem .45rem; }
-        .fz-tool.no-film .fz-new { right: .8rem; }
-        .fz-tool.no-film .fz-tool-body { padding: .8rem .9rem .8rem .8rem; }
+        .fz-tool.no-film .fz-new, .fz-tool.no-play .fz-new { right: .8rem; }
+        .fz-tool.no-film .fz-tool-body, .fz-tool.no-play .fz-tool-body { padding: .8rem .9rem .8rem .8rem; }
+        /* A screen with no film has nothing to play on a phone, where the little screens are hidden. */
+        .fz-shot.is-still { display: none; }
         /* Anee Auto keeps its six steps under the words. */
         .fz-step.is-auto .fz-tool { flex-direction: column; align-items: stretch; }
         .fz-step.is-auto .fz-shot { order: 0; position: absolute; right: .3rem; top: .9rem; z-index: 2; }
@@ -262,7 +267,7 @@
                     your workers and every {{ $ph ? 'peso' : 'dollar' }}, with Anee, your smart farm technician, beside you. Every screen below is the real thing.
                 </p>
                 <div class="fz-stats">
-                    <div><b>{{ $fCount }}</b><small>tools, each on film</small></div>
+                    <div><b>{{ $fCount }}</b><small>tools, each on a phone</small></div>
                     <div><b>{{ count($fSteps) }}</b><small>steps of the season</small></div>
                     <div><b>{{ $ph ? '85' : '100' }}</b><small>crops it knows by stage</small></div>
                 </div>
@@ -322,13 +327,18 @@
                     </div>
                     <div class="fz-tools">
                         @foreach ($st['items'] as $ti => $it)
-                            @php $film = $fFilm($it['key']); $guide = $fGuide($it); @endphp
-                            <article class="fz-tool reveal {{ $film ? '' : 'no-film' }}" id="tool-{{ $it['key'] }}" style="--reveal-delay: {{ ($ti % 3) * 0.06 }}s">
+                            @php $film = $fFilm($it['key']); $shot = $fShot($it['key']); $guide = $fGuide($it); @endphp
+                            <article class="fz-tool reveal {{ $film || $shot ? '' : 'no-film' }} {{ $film ? '' : 'no-play' }}" id="tool-{{ $it['key'] }}" style="--reveal-delay: {{ ($ti % 3) * 0.06 }}s">
                                 @if ($film)
                                     <button type="button" class="fz-shot" data-film="{{ $film[0] }}" data-poster="{{ $film[1] }}" data-key="{{ $it['key'] }}" aria-label="Watch {{ $it['name'] }} at work">
-                                        <img src="{{ $film[1] }}" alt="{{ $it['name'] }} on a phone" loading="lazy" decoding="async" width="540" height="1170">
+                                        <img src="{{ $shot[0] ?? $film[1] }}" @if (! empty($shot[1])) srcset="{{ $shot[1] }}" sizes="(min-width: 768px) 9rem, 40vw" @endif alt="{{ $it['name'] }} on a phone" loading="lazy" decoding="async" width="540" height="1170">
                                         <span class="fz-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
                                     </button>
+                                @elseif ($shot)
+                                    {{-- Not filmed yet: its screen as it is, without a play button. --}}
+                                    <span class="fz-shot is-still">
+                                        <img src="{{ $shot[0] }}" @if ($shot[1]) srcset="{{ $shot[1] }}" sizes="(min-width: 768px) 9rem, 40vw" @endif alt="{{ $it['name'] }} on a phone" loading="lazy" decoding="async" width="540" height="1170">
+                                    </span>
                                 @endif
                                 @if (in_array($it['key'], $fNew, true))<span class="fz-new">New</span>@endif
                                 <div class="fz-tool-body">

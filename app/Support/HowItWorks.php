@@ -712,6 +712,26 @@ class HowItWorks
         ];
     }
 
+    /**
+     * A tool's phone screenshot of the app as it is now (2026-10-27, the owner: "update all screenshots in
+     * /features, and in homepage"): public/images/site/app/how/{key}.webp at 540 wide, with a 480 copy.
+     * Every tool has one, filmed or not. [src, srcset] or null.
+     */
+    public static function shot(string $key): ?array
+    {
+        $file = public_path('images/site/app/how/' . $key . '.webp');
+        if (! is_file($file)) {
+            return null;
+        }
+        $v = '?v=' . filemtime($file);
+        $small = public_path('images/site/app/how/' . $key . '-480.webp');
+
+        return [
+            asset('images/site/app/how/' . $key . '.webp') . $v,
+            is_file($small) ? asset('images/site/app/how/' . $key . '-480.webp') . $v . ' 480w, ' . asset('images/site/app/how/' . $key . '.webp') . $v . ' 540w' : null,
+        ];
+    }
+
     /** The crop tables' words, said without dashes, the way the site writes. */
     public static function plain(?string $s): string
     {

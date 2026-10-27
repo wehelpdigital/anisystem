@@ -544,7 +544,8 @@
                                 </div>
                                 <div class="hp-infos">
                                     @foreach ($st['items'] as $j => $it)
-                                        <div class="hp-info{{ $j === $on ? ' is-on' : '' }}" id="hpInfo-{{ $it['key'] }}" data-info="{{ $it['key'] }}" data-name="{{ $it['name'] }}" data-short="{{ $it['short'] }}">
+                                        @php $shot = $HW::shot($it['key']); @endphp
+                                        <div class="hp-info{{ $j === $on ? ' is-on' : '' }}" id="hpInfo-{{ $it['key'] }}" data-info="{{ $it['key'] }}" data-name="{{ $it['name'] }}" data-short="{{ $it['short'] }}" @if ($shot) data-shot="{{ $shot[0] }}" @endif>
                                             <p class="hp-info-k">
                                                 <span class="hp-info-ico{{ str_starts_with($it['icon'], 'anee/') ? ' is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
                                                 <span>{{ $it['name'] }}@if ($it['anee'])<i class="hp-anee-tag">Anee does it</i>@endif</span>
@@ -609,6 +610,8 @@
                                     <span class="hp-nofilm-s"></span>
                                     <ul class="hp-nofilm-g"></ul>
                                     <span class="hp-nofilm-plan"></span>
+                                    {{-- Its screen as the app is now, when there is one (2026-10-27). --}}
+                                    <img class="hp-nofilm-shot" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="">
                                 </div>
                             </div>
                             <span class="hp-film-tag" data-step-tag>{{ $hpSteps[0]['items'][0]['name'] }}</span>
@@ -2462,6 +2465,10 @@
     .hp-info-plan small { display: block; margin-top: .1rem; font-size: .74rem; font-weight: 700; color: #6b7f5a; }
     .hp-info.is-on .hp-info-plan { animation: hpInfoIn .45s var(--hp-ease) .2s backwards; }
     /* The phone, for a tool with no film yet: the tool's own card on the screen. */
+    .hp-nofilm-shot { display: none; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; background: #fff; }
+    .hp-nofilm.has-shot { padding: 0; }
+    .hp-nofilm.has-shot > :not(.hp-nofilm-shot) { display: none; }
+    .hp-nofilm.has-shot .hp-nofilm-shot { display: block; animation: hpInfoIn .45s var(--hp-ease) backwards; }
     .hp-nofilm { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .55rem;
         padding: 1.4rem 1.1rem; text-align: center; opacity: 0; visibility: hidden; pointer-events: none;
         background: radial-gradient(120% 70% at 50% 0%, #ffffff 0%, #eef5e5 55%, #e1ecd3 100%);
@@ -4192,6 +4199,9 @@
                 noFilm.querySelector('.hp-nofilm-g').innerHTML = [...info.querySelectorAll('.hp-info-g li > span:last-child')]
                     .map((g) => '<li>' + g.innerHTML + '</li>').join('');
                 noFilm.querySelector('.hp-nofilm-plan').textContent = info.querySelector('.hp-info-plan > span')?.firstChild?.textContent || '';
+                // A tool with a screenshot shows the screen itself; the words are the fallback.
+                noFilm.classList.toggle('has-shot', !!info.dataset.shot);
+                if (info.dataset.shot) { const im = noFilm.querySelector('.hp-nofilm-shot'); im.src = info.dataset.shot; im.alt = (info.dataset.name || '') + ' on a phone'; }
                 noFilm.classList.add('is-on');
             };
             video.pause();
