@@ -509,7 +509,7 @@ class HowItWorks
                 'title' => 'Reports and analysis',
                 'lede' => 'The records you kept all season add up on their own. See what it cost, what it earned and what to change.',
                 'say' => null,   // the owner took every step's Anee line out (2026-10-02)
-                'face' => 'delighted',
+                'face' => 'wink',   // winking since 2026-10-29 (the owner: "make it like happy anee or winking anee")
                 'pattern' => 'reports',
                 'glyph' => 'M4 19h16M7 16v-4m5 4V8m5 8v-6',
                 'items' => [

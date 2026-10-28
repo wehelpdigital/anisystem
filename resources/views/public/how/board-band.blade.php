@@ -15,8 +15,10 @@
     if ($hbSite) {
         $hb['notes'][3] = ['🗓️', 'See the days ahead', 'Every task on its day, by lot'];
     }
-    $hbPills = [['📅', 'Every task on its own day'], ['🌱', 'Each lot counted from its planting'], ['🌦️', 'The weather beside every day'],
-        ['👷', 'Workers, materials and costs on each task'], ['📧', "The day's plan by email to your workers"], ['🔁', 'Versions: the plan and your changes']];
+    // You make the board (2026-10-29, the owner: "clarify that you create your activity tasks, and manage it ... user might
+    // expect that it is auto created"); Anee Auto is the way to have it written for you.
+    $hbPills = [['✍️', 'You add each task, on its own day'], ['📋', 'Or bring in a protocol you wrote'], ['🌱', 'Each lot counted from its planting'],
+        ['🌦️', 'The weather beside every day'], ['👷', 'Workers, materials and costs on each task'], ['📧', "The day's plan by email to your workers"]];
 @endphp
 <section class="hw-band is-flip" id="hw-board" aria-labelledby="hw-board-h">
     <svg class="hw-band-svg" aria-hidden="true"></svg>
@@ -26,11 +28,12 @@
         @endif
         <p class="hw-step">Every day <span>on the board</span></p>
         <{{ $hwHead }} class="hw-h2" id="hw-board-h">{{ $hbSite ? 'Your season, day by day, on the Activities board' : 'Work the season on the board' }}</{{ $hwHead }}>
-        <p class="hw-sub">@if ($hbSite)Every task of the season sits on its own day, for each lot, counted from the day you planted. Add a note as you go, drag a task to another day when the weather turns, and tick it done: the shed and the costs follow.@else Add a note as you go, drag a task to another day when the weather turns, tick it done, and check the stage each lot is in.@endif</p>
+        <p class="hw-sub">@if ($hbSite)<b class="hw-sub-b">You build this board yourself.</b> Add each task of your season on its own day, for each lot, counted from the day you planted, or bring in a protocol you wrote in the Protocol Builder in one go. Then you run it: add a note as you go, drag a task to another day when the weather turns, and tick it done, and the shed and the costs follow.@else Add a note as you go, drag a task to another day when the weather turns, tick it done, and check the stage each lot is in.@endif</p>
         @if ($hbSite)
             <ul class="hw-pills">
                 @foreach ($hbPills as $k => [$e, $t])<li style="--k: {{ $k }}"><i aria-hidden="true">{{ $e }}</i>{{ $t }}</li>@endforeach
             </ul>
+            <p class="hw-band-or"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40"><span>Rather not write the tasks yourself? With <a href="#hw-step-auto">Anee Auto</a>, Anee writes every task for you and keeps them on track.</span></p>
             <div class="hw-band-cta">
                 <a href="{{ route('signup') }}" class="btn btn-accent">Start free</a>
                 <a href="{{ url('/features/daily-farm-tasks') }}" class="is-text">How the Activities board works <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>

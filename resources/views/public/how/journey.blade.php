@@ -930,6 +930,12 @@
     .hw-band.is-in .hw-pills li { animation: hwPillGlow 10s ease-in-out infinite; animation-delay: calc(2s + var(--k) * 2s); }
     @keyframes hwPillGlow { 0%, 14%, 100% { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); background: rgb(255 255 255 / .05); }
         4%, 10% { box-shadow: inset 0 0 0 1px rgb(245 197 24 / .7), 0 0 18px -4px rgb(245 197 24 / .5); background: rgb(245 197 24 / .12); } }
+    .hw-sub-b { color: #fff; font-weight: 800; }
+    /* The other way in: a line from Anee pointing to Anee Auto. */
+    .hw-band-or { display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.1rem; padding: .55rem .9rem .55rem .55rem; border-radius: 1rem; text-align: left;
+        font-size: .86rem; line-height: 1.45; color: var(--mute); background: rgb(245 197 24 / .08); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35); }
+    .hw-band-or img { flex: none; width: 2rem; height: 2rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px var(--acc); }
+    .hw-band-or a { font-weight: 800; color: var(--acc); text-decoration: underline; text-underline-offset: 3px; }
     .hw-band-cta { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-top: 1.3rem; }
     .hw-band-cta a.is-text { display: inline-flex; align-items: center; gap: .35rem; font-size: .9rem; font-weight: 800; color: var(--acc); }
     .hw-band-cta a.is-text svg { width: 1rem; height: 1rem; transition: transform .28s var(--ease); }
