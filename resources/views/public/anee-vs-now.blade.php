@@ -173,6 +173,12 @@
 
     $title = 'Anee vs Now: Your Farm Today and Your Farm With anee.io';
     $desc = 'See your season done the way you farm now and with Anee, your smart farm technician: nine jobs side by side, what guessing can cost a hectare beside a year of a plan, and what credits and Anee Auto do for you.';
+    // The field film's files (2026-10-29): each address carries the file's time, so a new cut reaches every browser.
+    $avnFilm = function (string $f) {
+        $path = public_path('videos/site/' . $f);
+
+        return asset('videos/site/' . $f) . (is_file($path) ? '?v=' . filemtime($path) : '');
+    };
 @endphp
 
 @section('title', $title)
@@ -267,6 +273,8 @@
     .avn-fm-x svg { width: 1.2rem; height: 1.2rem; }
     html.avn-lock { overflow: hidden; }
     .avn-ba-short { display: none; }
+    .avn-one { white-space: nowrap; }
+    @media (max-width: 420px) { .avn-fm-t { padding: .9rem 1rem 1.1rem; gap: .65rem; } .avn-fm-t b { font-size: .95rem; } }
     /* A phone: the captions shorter, the real crop's mark kept. */
     @media (max-width: 520px) {
         .avn-ba-say { max-width: 44%; padding: .45rem .55rem; font-size: .68rem; }
@@ -567,15 +575,15 @@
                     {{-- The owner's own fields (2026-10-29): a lodged palay field now, and a real Anee supported crop standing
                          strong, filmed in the field (silent, looped, played only while on screen). --}}
                     <img class="is-now" src="{{ asset('images/site/photos/lodged-palay.webp') }}" srcset="{{ asset('images/site/photos/lodged-palay-600.webp') }} 600w, {{ asset('images/site/photos/lodged-palay.webp') }} 1000w" sizes="(min-width: 1024px) 34rem, 100vw" alt="A palay field lodged flat before harvest" width="1000" height="750" fetchpriority="high">
-                    <video class="is-anee" data-avn-film muted loop playsinline preload="none" poster="{{ asset('videos/site/anee-standing-palay.webp') }}" aria-label="A real Anee supported palay crop, standing strong in the field">
-                        <source src="{{ asset('videos/site/anee-standing-palay.mp4') }}" type="video/mp4">
+                    <video class="is-anee" data-avn-film muted loop playsinline preload="none" poster="{{ $avnFilm('anee-standing-palay.webp') }}" aria-label="A real Anee supported palay crop, standing strong in the field">
+                        <source src="{{ $avnFilm('anee-standing-palay.mp4') }}" type="video/mp4">
                     </video>
                     <span class="avn-ba-tag is-now">Your Farm Now</span>
                     <span class="avn-ba-tag is-anee"><img src="{{ $face }}" alt="">With Anee</span>
                     {{-- Watch it big (2026-10-29, the owner: "have a button to click and shows a modal to expand it"). --}}
                     <button type="button" class="avn-ba-x" data-film-open aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg><span>Watch the field</span></button>
                     <span class="avn-ba-say is-now"><b>Lodged.</b> <span class="avn-ba-more">Nitrogen at the wrong time, and the harvest lies flat.</span><span class="avn-ba-short">The harvest lies flat.</span></span>
-                    <span class="avn-ba-say is-anee"><span class="avn-real"><i aria-hidden="true"></i>Real video of the field</span><span class="avn-ba-more">A real Anee supported crop, standing strong.</span><span class="avn-ba-short">Anee supported crop</span></span>
+                    <span class="avn-ba-say is-anee"><span class="avn-real"><i aria-hidden="true"></i>Real video of the field</span><span class="avn-ba-more avn-one">Anee supported, standing strong.</span><span class="avn-ba-short">Anee supported crop</span></span>
                     <span class="avn-ba-line" aria-hidden="true"></span>
                     <button type="button" class="avn-ba-knob" role="slider" aria-label="Drag to compare the farm now and with Anee" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg>
@@ -587,14 +595,14 @@
                     <div class="avn-fm-box">
                         <button type="button" class="avn-fm-x" data-film-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
                         <div class="avn-fm-v">
-                            <video muted loop playsinline controls preload="none" poster="{{ asset('videos/site/anee-standing-palay.webp') }}" aria-label="A real Anee supported palay crop, standing strong in the field">
-                                <source src="{{ asset('videos/site/anee-standing-palay.mp4') }}" type="video/mp4">
+                            <video muted loop playsinline controls preload="none" poster="{{ $avnFilm('anee-standing-palay.webp') }}" aria-label="A real Anee supported palay crop, standing strong in the field">
+                                <source src="{{ $avnFilm('anee-standing-palay-hd.mp4') }}" type="video/mp4">
                             </video>
                             <span class="avn-fm-rec"><i aria-hidden="true"></i>Real video of the field</span>
                         </div>
                         <div class="avn-fm-t">
                             <img src="{{ $face }}" alt="" width="80" height="80">
-                            <div><b id="avnFmH">A real Anee supported crop, standing strong</b><p>Filmed in the field just before harvest: full panicles on stems that stay upright, because the nitrogen went on at the stages the crop needed it.</p></div>
+                            <div><b id="avnFmH" class="avn-one">Anee supported, standing strong</b><p>Filmed in the field just before harvest: full panicles on stems that stay upright, because the nitrogen went on at the stages the crop needed it.</p></div>
                         </div>
                     </div>
                 </div>
