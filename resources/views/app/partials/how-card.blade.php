@@ -156,6 +156,14 @@
             }
             const tool = e.target.closest('[data-hwt-tool]');
             if (tool && sheet) { openSheet(tool.dataset.hwtTool, tool); return; }
+            // A plan opens to its tools, and closes again (several may stand open).
+            const plan = e.target.closest('[data-hwt-plan]');
+            if (plan) {
+                const w = plan.closest('.hwt-plw'), on = !w.classList.contains('is-open');
+                w.classList.toggle('is-open', on);
+                plan.setAttribute('aria-expanded', String(on));
+                return;
+            }
             if (e.target.closest('[data-hwt-close]')) { closeSheet(); return; }
             const auto = e.target.closest('[data-hwt-auto]');
             const autoCard = document.getElementById('aneeAutoCard');

@@ -26,6 +26,8 @@
     };
     $htTools = [];
     $htPlans = [];
+    // Each plan's own tools, by key, for the plans scene (a plan opens to show them).
+    $htOwn = [];
     foreach ($htStages as $si => $st) {
         foreach ($st['items'] as $it) {
             if (! $it) {
@@ -37,6 +39,7 @@
                 'anee' => (bool) $it['anee'], 'icon' => asset('images/' . $it['icon']), 'shot' => $shot[0] ?? null, 'plan' => $it['plan']['says'] ?? '', 'more' => $it['plan']['more'] ?? null,
                 'href' => $link[0] ?? null, 'go' => $link[1] ?? null, 'step' => $si];
             $htPlans[$it['plan']['tier'] ?? 'libre'] = ($htPlans[$it['plan']['tier'] ?? 'libre'] ?? 0) + 1;
+            $htOwn[$it['plan']['tier'] ?? 'libre'][] = $it['key'];
         }
     }
     $htCount = count($htTools);
@@ -45,7 +48,7 @@
     $htSum = 0;
     foreach (array_filter(config('tiers'), fn ($t, $k) => $k !== 'admin', ARRAY_FILTER_USE_BOTH) as $k => $t) {
         $htSum += $htPlans[$k] ?? 0;
-        $htLadder[] = ['name' => $t['name'], 'n' => $htSum, 'own' => $htPlans[$k] ?? 0];
+        $htLadder[] = ['name' => $t['name'], 'n' => $htSum, 'own' => $htPlans[$k] ?? 0, 'keys' => $htOwn[$k] ?? []];
     }
     $htFree = $htLadder[0]['n'] ?? 0;
     $htMaxStep = max(array_map(fn ($s) => count(array_filter($s['items'])), $htStages));
@@ -228,14 +231,37 @@
     .hwt-d p { margin-top: .45rem; font-size: .8rem; line-height: 1.5; color: var(--mute); }
 
     /* ---------- 5. what each plan opens ---------- */
-    .hwt-plans { display: grid; gap: .8rem; margin-top: 1.6rem; max-width: 46rem; }
-    .hwt-pl { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr) 4.2rem; gap: .7rem; align-items: center; }
-    @media (max-width: 520px) { .hwt-pl { grid-template-columns: minmax(0, 1fr) 4rem; } .hwt-pl > span { grid-column: 1 / -1; } }
+    .hwt-plans { display: grid; gap: .6rem; margin-top: 1.6rem; max-width: 46rem; }
+    .hwt-plw { border-radius: 1.1rem; background: rgb(255 255 255 / .035); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .07); transition: background-color .3s var(--e), box-shadow .3s var(--e); }
+    .hwt-plw.is-open { background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 55%, transparent); }
+    .hwt-pl { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr) 4.2rem 1.1rem; gap: .7rem; align-items: center; width: 100%; padding: .7rem .8rem; border-radius: 1.1rem; text-align: left; color: inherit; cursor: pointer; }
+    @media (max-width: 520px) { .hwt-pl { grid-template-columns: minmax(0, 1fr) 4rem 1.1rem; } .hwt-pl > span { grid-column: 1 / -1; } }
     .hwt-pl > span { font-size: .86rem; font-weight: 800; color: #fff; }
     .hwt-pl > div { height: 1.6rem; border-radius: .5rem; background: rgb(255 255 255 / .06); overflow: hidden; }
     .hwt-pl > div i { display: block; height: 100%; border-radius: .5rem; background: var(--c); }
     .hwt-pl > b { font-size: .86rem; font-weight: 800; color: #fff; text-align: right; font-variant-numeric: tabular-nums; }
     .hwt-pl > b small { display: block; font-size: .64rem; font-weight: 700; color: var(--mute); }
+    .hwt-pl-v { width: 1.1rem; height: 1.1rem; color: var(--mute); transition: transform .3s var(--e), color .3s var(--e); }
+    .hwt-plw.is-open .hwt-pl-v { transform: rotate(180deg); color: var(--c); }
+    /* A plan opened: its tools, grown open (grid rows, so the height eases with no measuring). */
+    .hwt-plb { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s var(--e); }
+    .hwt-plw.is-open .hwt-plb { grid-template-rows: 1fr; }
+    .hwt-plb > div { min-height: 0; overflow: hidden; }
+    .hwt-plb-in { padding: .1rem .8rem .9rem; }
+    .hwt-plb-h { display: flex; align-items: center; gap: .45rem; margin: .7rem 0 .45rem; font-size: .68rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+    .hwt-plb-h:first-child { margin-top: .2rem; color: var(--c); }
+    .hwt-plb-h em { font-style: normal; padding: .05rem .45rem; border-radius: 999px; font-size: .64rem; letter-spacing: 0; color: #0d1609; background: var(--c); }
+    .hwt-plb-g { display: grid; grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); gap: .4rem; }
+    @media (max-width: 420px) { .hwt-plb-g { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .hwt-pt { display: flex; align-items: center; gap: .5rem; min-width: 0; padding: .45rem .55rem; border-radius: .8rem; text-align: left; color: var(--ink); background: rgb(255 255 255 / .05);
+        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .07); transition: transform .28s var(--e), background-color .28s var(--e), box-shadow .28s var(--e); }
+    .hwt-pt:hover { transform: translateY(-2px); background: rgb(255 255 255 / .09); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 60%, transparent); }
+    .hwt-pt.is-new { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 40%, transparent); }
+    .hwt-pt img { flex: none; width: 1.75rem; height: 1.75rem; padding: .2rem; border-radius: .55rem; object-fit: contain; background: #f4f8ee; }
+    .hwt-pt span { flex: 1; min-width: 0; font-size: .74rem; font-weight: 800; line-height: 1.25; color: #fff; }
+    .hwt-pt i { flex: none; font-style: normal; font-size: .7rem; }
+    .hwt-plw.is-open .hwt-pt { animation: hwtPop .4s var(--e) both; animation-delay: calc(min(var(--k), 18) * 22ms + .1s); }
+    @media (prefers-reduced-motion: reduce) { .hwt-plb, .hwt-pl-v, .hwt-pt { transition: none !important; } .hwt-plw.is-open .hwt-pt { animation: none !important; } }
 
     /* ---------- 6. where to start ---------- */
     .hwt-doors { display: grid; gap: .7rem; margin-top: 1.6rem; }
@@ -390,13 +416,36 @@
         <div class="stm-wrap">
             <span class="stm-kick" data-in>Start free, grow when you are ready</span>
             <h2 class="stm-h2" data-in style="--d: 80ms">{{ $htFree }} of the {{ $htCount }} tools are free on every plan.</h2>
-            <p class="stm-p" data-in style="--d: 140ms">Each plan keeps every tool of the plans before it and adds its own. Tap a tool in the steps above to see the plan it comes with.</p>
+            <p class="stm-p" data-in style="--d: 140ms">Each plan keeps every tool of the plans before it and adds its own. Open a plan to see its tools, and tap one to see what it does.</p>
+            {{-- Each plan opens to its tools (2026-10-28, the owner: "show all the free tools if you expand libre, then show the
+                 all tools that encompasses libre + anee and so on ... expandable contractable ... clickable as well to show
+                 the purpose of each in a modal"): what it adds first, then what it keeps from the plans before; a tool opens
+                 its sheet, as in the steps. --}}
             <div class="hwt-plans">
                 @foreach ($htLadder as $i => $pl)
-                    <div class="hwt-pl" data-in style="--d: {{ 200 + $i * 120 }}ms">
-                        <span>{{ $pl['name'] }}</span>
-                        <div><i data-bar style="--v: {{ round($pl['n'] / max(1, $htCount), 3) }}; --d: {{ 300 + $i * 150 }}ms; --c: {{ ['#a8cc7e', '#7fb24f', '#5a8f2e', '#f5c518'][$i] ?? '#a8cc7e' }}"></i></div>
-                        <b><span data-count="{{ $pl['n'] }}">{{ $pl['n'] }}</span><small>of {{ $htCount }} tools</small></b>
+                    @php $plC = ['#a8cc7e', '#7fb24f', '#5a8f2e', '#f5c518'][$i] ?? '#a8cc7e'; @endphp
+                    <div class="hwt-plw" data-in style="--d: {{ 200 + $i * 120 }}ms; --c: {{ $plC }}">
+                        <button type="button" class="hwt-pl" aria-expanded="false" aria-controls="hwtPl{{ $i }}" data-hwt-plan>
+                            <span>{{ $pl['name'] }}</span>
+                            <div><i data-bar style="--v: {{ round($pl['n'] / max(1, $htCount), 3) }}; --d: {{ 300 + $i * 150 }}ms"></i></div>
+                            <b><span data-count="{{ $pl['n'] }}">{{ $pl['n'] }}</span><small>of {{ $htCount }} tools</small></b>
+                            <svg class="hwt-pl-v" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                        </button>
+                        <div class="hwt-plb" id="hwtPl{{ $i }}" role="region" aria-label="{{ $pl['name'] }} tools"><div><div class="hwt-plb-in">
+                            @foreach (array_reverse(array_slice($htLadder, 0, $i + 1), true) as $j => $from)
+                                @if ($from['keys'])
+                                    <p class="hwt-plb-h">{{ $j === $i ? ($i === 0 ? 'Free on every plan' : 'Added with ' . $from['name']) : 'Kept from ' . $from['name'] }} <em>{{ count($from['keys']) }}</em></p>
+                                    <div class="hwt-plb-g">
+                                        @foreach ($from['keys'] as $k => $key)
+                                            @php $t = $htTools[$key]; @endphp
+                                            <button type="button" class="hwt-pt{{ $j === $i ? ' is-new' : '' }}" data-hwt-tool="{{ $key }}" style="--k: {{ $k }}">
+                                                <img src="{{ $t['icon'] }}" alt="" loading="lazy" width="28" height="28"><span>{{ $t['name'] }}</span>@if ($t['anee'])<i title="Anee does the work">✨</i>@endif
+                                            </button>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div></div></div>
                     </div>
                 @endforeach
             </div>
