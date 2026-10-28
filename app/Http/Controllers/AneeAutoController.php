@@ -591,6 +591,115 @@ class AneeAutoController extends Controller
     }
 
     /**
+     * Anee's picks of variety for one lot, before the farmer chooses one (2026-10-28, the owner: "when selecting a crop
+     * and lot, do not have the selection of variety yet. do an analysis first (similar to the variety ranking) so that
+     * the user can have an idea for the ranking of what the variety to choose and present it before selecting a
+     * variety"). The records that fit the lot (VarietyBook::candidates: its island, ground, elevation, season and
+     * troubles), then weighed again by what each seed guards against among the troubles this lot had (VarietyShield),
+     * each with its days, yield, protection and why. No model, no credits.
+     */
+    public function varieties(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        $al = AsAutoLot::where('autoId', $auto->id)->where('lotId', (int) $request->query('lotId'))->firstOrFail();
+        $lot = AsScheduleLot::findOrFail($al->lotId);
+        if (! $lot->crop || ! \App\Support\VarietyBook::rows($lot->crop)) {
+            return $this->json(true, 'ok', ['picks' => []]);
+        }
+        $a = (array) $auto->answers;
+        $fp = (array) ($a['fieldProfile'] ?? []);
+        $legacy = $fp ? FieldProfile::legacy($fp) : [];
+        $water = $a['water'] ?? ($legacy['waterAuto'] ?? null);
+        $kind = AutoBook::WATER[$water ?? ''][2] ?? null;
+        $problems = array_values(array_unique(array_merge((array) ($legacy['problemsVariety'] ?? []), array_map(fn ($k) => ['drought' => 'drought', 'flood' => 'floods', 'salt' => 'salinity'][$k] ?? $k, (array) ($a['problems'] ?? [])))));
+        $month = $al->fieldDate ? (int) $al->fieldDate->month : (int) now('Asia/Manila')->addMonth()->month;
+        $case = [
+            'island' => \App\Support\VarietyBook::island(trim($lot->locTown . ', ' . $lot->locProvince, ', ')),
+            'envs' => \App\Support\VarietyBook::envsFor($lot->crop, $problems, $kind === 'rainfed' ? 'rainfed' : ($kind === 'partial' ? 'limited' : null), $legacy['elevation'] ?? null),
+            'elevation' => $legacy['elevation'] ?? null,
+            'season' => in_array($month, [6, 7, 8, 9, 10, 11], true) ? 'wet' : 'dry',
+            'problems' => $problems,
+        ];
+        // The troubles this lot had, as the catalogue's slugs, so a seed that guards against them counts.
+        $had = [];
+        foreach ((array) ($fp['outbreaks'] ?? []) as $k) {
+            $had[preg_replace('/^[a-z]+:/', '', (string) $k)] = true;
+        }
+        $rows = \App\Support\VarietyBook::candidates($lot->crop, $case, 12);
+        $picks = [];
+        foreach ($rows as $r) {
+            $sh = \App\Support\VarietyShield::of($r, $lot->crop);
+            $fit = (int) ($r['fit'] ?? 0);
+            $guards = [];
+            foreach ($sh['skip'] as $slug => $_) {
+                if (isset($had[$slug])) {
+                    $fit += 8;
+                    $guards[] = str_replace('-', ' ', $slug);
+                }
+            }
+            foreach ($sh['lighter'] as $slug => $_) {
+                $fit += isset($had[$slug]) ? 4 : 0;
+            }
+            foreach ($sh['weak'] as $slug => $_) {
+                $fit -= isset($had[$slug]) ? 8 : 2;
+            }
+            $why = [];
+            if ($case['envs'] && array_intersect((array) $r['envs'], $case['envs'])) {
+                $why[] = 'bred for ' . (\App\Support\VarietyBook::brief($r)['where'] ?: 'ground like yours');
+            }
+            if ($guards) {
+                $why[] = 'its seed guards against the ' . implode(', ', array_slice($guards, 0, 2)) . ' your lot had';
+            }
+            if ($r['year'] && $r['year'] >= (int) now()->year - 6) {
+                $why[] = 'a newer variety (' . $r['year'] . ')';
+            }
+            if ($r['domain'] && $case['island'] && (in_array('National', $r['domain'], true) || in_array($case['island'], $r['domain'], true))) {
+                $why[] = 'tried in ' . (in_array('National', $r['domain'], true) ? 'trials across the country' : $case['island']);
+            }
+            $b = \App\Support\VarietyBook::brief($r);
+            $picks[] = ['name' => $r['name'], 'alias' => $b['alias'], 'type' => $r['type'], 'kind' => $r['kind'], 'days' => $r['days'], 'daysUnit' => $r['daysUnit'],
+                'yield' => $r['yield'], 'top' => $r['yieldTop'] ?? null, 'unit' => $r['yieldUnit'], 'url' => $r['url'] ?? null, 'fit' => $fit,
+                'protection' => $sh['has'] ? self::shieldShort($sh) : null, 'weak' => array_values(array_map(fn ($w) => $w['name'], $sh['weak'])), 'why' => array_slice($why, 0, 3)];
+        }
+        usort($picks, fn ($x, $y) => $y['fit'] <=> $x['fit']);
+        // Both kinds where the crop has both: a hybrid among the five when one fits (and an inbred or OPV).
+        $five = array_slice($picks, 0, 5);
+        foreach (['hybrid', 'other'] as $t) {
+            $isT = fn ($x) => $t === 'hybrid' ? $x['type'] === 'hybrid' : $x['type'] !== 'hybrid';
+            if (count($five) === 5 && ! array_filter($five, $isT) && ($alt = array_values(array_filter($picks, $isT)))) {
+                $five[4] = $alt[0];
+            }
+        }
+        $picks = $five;
+        $top = max(1, (int) ($picks[0]['fit'] ?? 1));
+        foreach ($picks as &$pk) {
+            $pk['score'] = (int) max(30, min(99, round(100 * $pk['fit'] / $top)));
+        }
+        unset($pk);
+
+        return $this->json(true, 'ok', ['picks' => $picks, 'season' => $case['season'], 'finder' => \App\Support\VarietyBook::finderUrl($lot->crop)]);
+    }
+
+    /** A seed's protection in a few words for a card: "Bt: Asian corn borer, corn earworm · resists: rust". */
+    private static function shieldShort(array $sh): string
+    {
+        $bits = [];
+        if ($sh['bt']) {
+            $strong = array_keys(array_filter($sh['bt']['pests'], fn ($l) => $l === 'strong'));
+            $bits[] = 'Bt against ' . implode(', ', array_map(fn ($s) => str_replace(['asian corn borer', '-'], ['Asian corn borer', ' '], $s), $strong ?: array_keys($sh['bt']['pests'])));
+        }
+        $res = array_filter($sh['resist'], fn ($r) => in_array($r['code'], ['HR', 'R'], true));
+        if ($res) {
+            $bits[] = 'resists ' . implode(', ', array_slice(array_map(fn ($r) => $r['name'], $res), 0, 3));
+        }
+        if ($sh['tolerates']) {
+            $bits[] = 'takes ' . implode(', ', $sh['tolerates']);
+        }
+
+        return implode(' · ', $bits);
+    }
+
+    /**
      * The days of land preparation a lot needs before planting, by the Land Prep Planner's own count (its steps for
      * the crop and way of planting, bent by the lot's last season: a rice field rests 30 days without rice), plus a
      * week to book a machine when hiring takes that long. need = the days, why = in words.

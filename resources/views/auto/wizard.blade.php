@@ -55,6 +55,44 @@
     @keyframes auIn { from { opacity: 0; } }
     @keyframes auInBack { from { opacity: 0; } }
     .au-card { border-radius: 1.2rem; background: var(--color-white); border: 1px solid var(--color-gray-200); padding: 1.05rem 1.1rem; margin-bottom: .9rem; }
+    /* Anee's picks of variety (2026-10-28). */
+    .au-vpk:empty { display: none; }
+    .au-vpk { margin-top: .85rem; }
+    .au-vpk-h { display: flex; gap: .6rem; align-items: flex-start; }
+    .au-vpk-h > span { flex: none; font-size: 1.25rem; line-height: 1.2; }
+    .au-vpk-h > div { flex: 1; min-width: 0; }
+    .au-vpk-h b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-vpk-h small { display: block; margin-top: .1rem; font-size: .74rem; line-height: 1.45; color: var(--color-gray-500); }
+    .au-vpk-line { display: flex; align-items: center; gap: .5rem; width: 100%; padding: .55rem .75rem; border-radius: .9rem; text-align: left; font-size: .8rem; color: var(--color-gray-600); background: #f6faf1; border: 1px solid #e0ebd3; }
+    .au-vpk-line > span:nth-child(2) { flex: 1; min-width: 0; }
+    .au-vpk-line svg { flex: none; width: 1rem; height: 1rem; }
+    .au-vpks { display: grid; gap: .5rem; margin-top: .7rem; }
+    @media (min-width: 720px) { .au-vpks { grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); } }
+    .au-vp { display: grid; gap: .4rem; align-content: start; padding: .75rem .8rem; border-radius: 1rem; background: #fff; border: 1px solid #e3ecd8; animation: auFade .35s var(--au-ease) both; animation-delay: calc(var(--k) * 60ms);
+        transition: border-color .28s var(--au-ease), box-shadow .28s var(--au-ease); }
+    .au-vp.is-top { border-color: #9cc97a; box-shadow: 0 10px 22px -18px rgb(45 80 22 / .7); }
+    .au-vp.is-on { border-color: #4a7c2a; background: #f1f7ea; }
+    .au-vp-h { display: flex; align-items: center; gap: .55rem; }
+    .au-vp-h > div { flex: 1; min-width: 0; }
+    .au-vp-h b { display: block; font-size: .88rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-vp-h small { display: block; font-size: .7rem; color: var(--color-gray-500); }
+    .au-vp-n { flex: none; width: 1.55rem; height: 1.55rem; border-radius: 999px; display: grid; place-items: center; font-size: .75rem; font-weight: 900; color: #3d5226; background: #eef4e6; }
+    .au-vp.is-top .au-vp-n { color: #fff; background: #4a7c2a; }
+    .au-vp-s { flex: none; padding: .12rem .45rem; border-radius: 999px; font-size: .7rem; font-weight: 900; color: #3d5226; background: #e7f2da; }
+    .au-vp-c { display: flex; flex-wrap: wrap; gap: .3rem; }
+    .au-vp-c span { padding: .12rem .5rem; border-radius: 999px; font-size: .68rem; font-weight: 700; color: #3d5226; background: #eef4e6; }
+    .au-vp-p, .au-vp-w { margin: 0; font-size: .74rem; line-height: 1.45; color: var(--color-gray-700); }
+    .au-vp-w { color: #92400e; }
+    .au-vp-y { margin: 0; padding: 0; list-style: none; font-size: .72rem; line-height: 1.45; color: var(--color-gray-500); }
+    .au-vp-y li { padding: .2rem 0; }
+    .au-vp-a { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-top: .1rem; }
+    .au-vpk-more { margin: .5rem 0 0; font-size: .76rem; }
+    html.dark .au-vpk-h b, html.dark .au-vp-h b { color: #eef3e8; } html.dark .au-vpk-h small { color: #9aa88d; }
+    html.dark .au-vpk-line { background: #151c11; border-color: #2b3a1c; color: #b9c6ad; }
+    html.dark .au-vp { background: #10150c; border-color: #2b3a1c; } html.dark .au-vp.is-on { background: #1c2914; border-color: #6b9f3d; }
+    html.dark .au-vp-c span, html.dark .au-vp-s, html.dark .au-vp-n { background: #1c2616; color: #cfe6b8; } html.dark .au-vp-p { color: #c9d6bc; } html.dark .au-vp-w { color: #fbbf24; }
+    @media (prefers-reduced-motion: reduce) { .au-vp { animation: none !important; transition: none !important; } }
+
     /* When to plant: the year's weeks as bars, the three best, the day picked (2026-10-28). */
     .au-win { margin-top: .85rem; padding: .85rem; border-radius: 1rem; background: linear-gradient(160deg, #fbfdf8, #f2f8ea); border: 1px solid #e0ebd3; }
     .au-win:empty { display: none; }
@@ -797,7 +835,7 @@
         workers: @json(route('auto.workers', $auto->id)), answers: @json(route('auto.answers', $auto->id)), problems: @json(route('auto.problems', $auto->id)),
         analyze: @json(route('auto.analyze', $auto->id)), generate: @json(route('auto.generate', $auto->id)), job: () => @json(route('auto.job', $auto->id)), goal: @json(route('auto.goal', $auto->id)),
         fert: @json(route('auto.fert', $auto->id)), imbalance: @json(route('auto.imbalance', $auto->id)), ph: @json(asset('data/ph-locations.json')),
-        window: @json(route('auto.window', $auto->id)),
+        window: @json(route('auto.window', $auto->id)), varieties: @json(route('auto.varieties', $auto->id)),
         npk: @json(route('npk.page')) + '?frame=auto', buy: @json(route('ai.credits') . '?tab=buy'),
     };
     const STEPS = ['Season', 'Lots', 'Workers', 'Soil', 'Water', 'Troubles', 'Reading', 'Fertilizer', 'Start'];
@@ -1019,7 +1057,7 @@
     };
     const saveLot = (l, extra = {}) => put(U.lot, Object.assign({ lotId: l.id, name: l.name, size: l.size, unit: l.unit || 'ha', crop: l.crop, variety: l.variety || '', method: l.method,
         fieldDate: l.method === 'tree' ? null : l.fieldDate, treeMonths: l.method === 'tree' ? l.treeMonths : null, province: l.province, town: l.town, barangay: l.barangay,
-        lat: l.pin ? l.pin.lat : null, lng: l.pin ? l.pin.lng : null }, extra)).then((r) => { if (r && r.data) { l.sowDate = r.data.sowDate; l.method = r.data.method || l.method; } paintLotNotes(l); paintLotState(l); goalsSoon(null, 900); if (WIN[l.id] && WIN[l.id].key !== winKey(l)) loadWin(l); return r; });
+        lat: l.pin ? l.pin.lat : null, lng: l.pin ? l.pin.lng : null }, extra)).then((r) => { if (r && r.data) { l.sowDate = r.data.sowDate; l.method = r.data.method || l.method; } paintLotNotes(l); paintLotState(l); goalsSoon(null, 900); if (WIN[l.id] && WIN[l.id].key !== winKey(l)) loadWin(l); if (VPK[l.id] && VPK[l.id].key !== vpkKey(l)) loadVpk(l); return r; });
     const methodsOf = (l) => (cropOf(l.crop) || {}).methods || {};
     /* The farm lot this lot was filled from: the loaded row, or (until the
        farm's lots load) what was copied from it into this lot. */
@@ -1061,7 +1099,8 @@
             + '<div class="au-row is-2"><div><span class="au-lab">Variety <small>(optional, but it sharpens everything)</small></span><div data-var>' + varTag(l) + '</div></div>'
             + (l.method === 'tree' ? '<div></div>' : '<div><span class="au-lab" data-daylab>' + dayLabel(l) + '</span><label class="date-tag w-full" data-empty="Pick the day"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span class="dt-text">Pick the day</span>'
                 + '<input type="date" data-f="fieldDate" min="' + B.today + '" max="' + B.latest + '" value="' + (l.fieldDate || '') + '"></label></div>')
-            + '</div>' + (l.method === 'tree' ? '' : '<div class="au-win" data-win="' + l.id + '">' + winHtml(l) + '</div>') + '<div data-notes></div>'
+            + '</div><div class="au-vpk" data-vpk="' + l.id + '">' + vpkHtml(l) + '</div>'
+            + (l.method === 'tree' ? '' : '<div class="au-win" data-win="' + l.id + '">' + winHtml(l) + '</div>') + '<div data-notes></div>'
             + (fv ? '' : '<div class="au-row is-2"><div><span class="au-lab">Province</span><button type="button" class="au-tag' + (l.province ? '' : ' is-none') + '" data-act="prov"><span>' + esc(l.province || 'Choose the province') + '</span>' + CHEV + '</button></div>'
                 + '<div><span class="au-lab">Town or city</span><button type="button" class="au-tag' + (l.town ? '' : ' is-none') + '" data-act="town"' + (l.province ? '' : ' disabled') + '><span>' + esc(l.town ? townName(l.town) : (l.province ? 'Choose the town' : 'Province first')) + '</span>' + CHEV + '</button></div></div>'
                 + '<label class="au-lab">Barangay <small>(optional)</small></label><input type="text" class="form-input w-full" data-f="barangay" maxlength="120" value="' + esc(l.barangay || '') + '">')
@@ -1187,7 +1226,7 @@
     const dayLabel = (l) => ({ transplanted: 'Transplanting day (DAT 0)', direct: 'Sowing day in the field (DAS 0)', planted: 'Planting day (DAP 0)' })[l.method] || 'Planting day';
     const paintLots = () => {
         $('auLots').innerHTML = S.lots.map(lotCard).join('');
-        S.lots.forEach((l) => { paintLotNotes(l); paintLotState(l); loadWin(l); });
+        S.lots.forEach((l) => { paintLotNotes(l); paintLotState(l); loadWin(l); loadVpk(l); });
         window.smDateTags?.($('auLots'));
         const cap = S.lotCap;
         $('auAddLot').hidden = cap != null && S.lots.length >= cap;
@@ -1279,6 +1318,56 @@
         const sq = e.target.closest('[data-wsq]'); if (!sq) return;
         const l = lotById(e.target.closest('[data-win]').dataset.win); if (!l || !WIN[l.id]) return;
         WIN[l.id].squeeze = sq.checked; paintLotState(l); later('squeeze', saveSqueeze, 200);
+    });
+    /* ---- Anee's picks of variety, before one is chosen (2026-10-28, the owner: "do an analysis first (similar to the
+       variety ranking) so that the user can have an idea for the ranking of what the variety to choose and present it
+       before selecting a variety"). The records that fit the lot, weighed by what each seed guards against. ---- */
+    const VPK = {};
+    const vpkKey = (l) => [l.crop, l.province || '', l.town || '', l.fieldDate ? l.fieldDate.slice(0, 7) : ''].join('|');
+    const loadVpk = async (l) => {
+        if (!l.crop) { const b = document.querySelector('[data-vpk="' + l.id + '"]'); if (b) b.innerHTML = ''; return; }
+        const k = vpkKey(l);
+        if (VPK[l.id] && VPK[l.id].key === k) { paintVpk(l); return; }
+        VPK[l.id] = { key: k, loading: true, open: VPK[l.id] ? VPK[l.id].open : false };
+        paintVpk(l);
+        try { const r = await window.api(U.varieties + '?lotId=' + l.id); Object.assign(VPK[l.id], r.data || {}, { loading: false }); }
+        catch (_) { Object.assign(VPK[l.id], { loading: false, picks: [] }); }
+        paintVpk(l);
+    };
+    const vpkHtml = (l) => {
+        const st = VPK[l.id];
+        if (!l.crop || !st) return '';
+        if (st.loading) return '<div class="au-vpk-h"><span aria-hidden="true">🔬</span><b>Anee is ranking the varieties for this lot…</b></div>';
+        const ps = st.picks || [];
+        if (!ps.length) return '';
+        const folded = !!l.variety && !st.open;
+        if (folded) return '<button type="button" class="au-vpk-line" data-vpkopen><span aria-hidden="true">🔬</span><span>Anee\'s picks for this lot: <b>' + esc(ps.slice(0, 3).map((p) => p.alias || p.name).join(', ')) + '</b></span>' + CHEV + '</button>';
+        const unit = (p) => p.unit === 't/ha' ? ' t/ha' : ' ' + (p.unit || '');
+        return '<div class="au-vpk-h"><span aria-hidden="true">🔬</span><div><b>Anee\'s picks for this lot</b><small>From the records of every registered variety: what fits this ground, this ' + esc(st.season || '') + ' season and the troubles it had, and what each seed guards against. Tap one to use it, or choose your own above.</small></div>'
+            + (l.variety ? '<button type="button" class="au-link" data-vpkclose>Fold</button>' : '') + '</div>'
+            + '<div class="au-vpks">' + ps.map((p, i) => '<div class="au-vp' + (i === 0 ? ' is-top' : '') + (l.variety === p.name ? ' is-on' : '') + '" style="--k:' + i + '">'
+                + '<div class="au-vp-h"><span class="au-vp-n">' + (i + 1) + '</span><div><b>' + esc(p.name) + '</b>' + (p.alias ? '<small>' + esc(p.alias) + '</small>' : '') + '</div><span class="au-vp-s">' + p.score + '</span></div>'
+                + '<div class="au-vp-c">' + (p.days ? '<span>⏱ ' + Math.round(p.days) + ' ' + esc(p.daysUnit || 'days') + '</span>' : '') + (p.yield ? '<span>🌾 ' + fmt1(p.yield) + unit(p) + (p.top ? ', top ' + fmt1(p.top) : '') + '</span>' : '') + '<span>' + esc(p.type === 'hybrid' ? 'Hybrid' : (p.kind || 'Inbred')) + '</span></div>'
+                + (p.protection ? '<p class="au-vp-p">🛡️ ' + esc(p.protection) + '</p>' : '') + (p.weak && p.weak.length ? '<p class="au-vp-w">⚠️ Weak against ' + esc(p.weak.join(', ')) + '</p>' : '')
+                + (p.why && p.why.length ? '<ul class="au-vp-y">' + p.why.map((w) => '<li>' + esc(w) + '</li>').join('') + '</ul>' : '')
+                + '<div class="au-vp-a"><button type="button" class="au-pill" data-vpuse="' + esc(p.name) + '" aria-pressed="' + (l.variety === p.name) + '">' + (l.variety === p.name ? '✓ Chosen' : 'Use this variety') + '</button>'
+                + (p.url ? '<a class="au-link" href="' + esc(p.url) + '" target="_blank" rel="noopener">Its record</a>' : '') + '</div></div>').join('') + '</div>'
+            + (st.finder ? '<p class="au-vpk-more"><a class="au-link" href="' + esc(st.finder) + '" target="_blank" rel="noopener">Compare every variety in the finder</a></p>' : '');
+    };
+    const paintVpk = (l) => { const b = document.querySelector('[data-vpk="' + l.id + '"]'); if (b) b.innerHTML = vpkHtml(l); };
+    $('auLots').addEventListener('click', (e) => {
+        const box = e.target.closest('[data-vpk]'); if (!box) return;
+        const l = lotById(box.dataset.vpk); if (!l || !VPK[l.id]) return;
+        if (e.target.closest('[data-vpkopen]')) { VPK[l.id].open = true; paintVpk(l); return; }
+        if (e.target.closest('[data-vpkclose]')) { VPK[l.id].open = false; paintVpk(l); return; }
+        const use = e.target.closest('[data-vpuse]');
+        if (use) {
+            l.variety = use.dataset.vpuse; l.varRecord = null;
+            const v = lotEl(l.id)?.querySelector('[data-var]'); if (v) v.innerHTML = varTag(l);
+            VPK[l.id].open = false; paintVpk(l); paintLotState(l);
+            later('lot' + l.id, () => saveLot(l), 50);
+            window.toast?.(l.variety + ' chosen for ' + (l.name || 'this lot') + '.', 'success');
+        }
     });
     const lotEl = (id) => document.querySelector('.au-lot[data-lot="' + id + '"]');
     const lotById = (id) => S.lots.find((l) => String(l.id) === String(id));
