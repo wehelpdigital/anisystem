@@ -2,8 +2,7 @@
      its the same age and variety. tell that and make sure it looks great"). The owner's own photo, the levee between
      the plots: the left farmed the usual way, the right on Anee's guidance. On the homepage and on Anee vs Now.
 
-     When it comes into view: the photo settles in, the labels drop onto each side, a light runs down the levee, the
-     right side lights up, and the callouts under each side pop in. Expects $signup. --}}
+     When it comes into view: the photo settles in, the labels drop onto each side, the right side lights up, and the callouts under each side pop in. Expects $signup. --}}
 @php
     $saTick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
     $saX = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></svg>';
@@ -21,7 +20,6 @@
                 <img src="{{ asset('images/site/photos/same-age-plots.webp') }}" srcset="{{ asset('images/site/photos/same-age-plots-900.webp') }} 900w, {{ asset('images/site/photos/same-age-plots.webp') }} 1600w" sizes="(min-width: 1024px) 60rem, 100vw" alt="Two rice plots of the same age and variety on either side of a levee: the left paler and thinner, the right deep green and fuller" width="1600" height="1200" loading="lazy">
                 <span class="sa-side is-left" aria-hidden="true"></span>
                 <span class="sa-side is-right" aria-hidden="true"></span>
-                <span class="sa-levee" aria-hidden="true"><i></i></span>
                 <span class="sa-tag is-left">The usual way</span>
                 <span class="sa-tag is-right"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40">With Anee's guidance</span>
                 <span class="sa-same"><b>Same age</b><i aria-hidden="true">·</i><b>Same variety</b></span>
@@ -57,23 +55,21 @@
 @once
 @push('head')
 <style>
-    .sa { position: relative; overflow: hidden; background: radial-gradient(46rem 24rem at 90% 10%, #fdf6d8, transparent 60%), linear-gradient(180deg, #f2f8ea, #fbfdf8); }
+    .sa { position: relative; overflow: hidden; border-top: 1px solid #ecd9a0;
+        background: radial-gradient(rgb(184 138 0 / .1) 1px, transparent 1.4px) 0 0 / 18px 18px, radial-gradient(50rem 26rem at 85% 0%, #fdeeb8, transparent 65%), linear-gradient(180deg, #fff8e6, #fdf4dc); }
+    .sa::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: linear-gradient(90deg, #6b9f3d, #f5c518 50%, #6b9f3d); }
     .sa-fig { max-width: 60rem; margin: 2.4rem auto 0; }
     .sa-photo { position: relative; aspect-ratio: 4 / 3; border-radius: 1.8rem; overflow: hidden; background: #2b3a1c;
-        box-shadow: 0 0 0 1px rgb(245 197 24 / .4), 0 50px 90px -42px rgb(20 33 12 / .75); }
+        box-shadow: 0 0 0 1px rgb(184 138 0 / .35), 0 28px 50px -34px rgb(20 33 12 / .6); }
     .sa-photo > img { display: block; width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 1.6s cubic-bezier(.22,1,.36,1); }
     .sa-fig.is-in .sa-photo > img { transform: scale(1); }
-    /* Each side's wash: the left a little grey, the right a little gold, once the light has run down the levee. */
-    /* Each side follows the levee, which runs from 43% across at the top to 40% at the bottom of the photo. */
-    .sa-side { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .9s ease; }
-    .sa-side.is-left { clip-path: polygon(0 16%, 42.5% 16%, 40% 100%, 0 100%); background: linear-gradient(90deg, rgb(20 20 20 / .24), rgb(20 20 20 / .06)); transition-delay: 1.4s; }
-    .sa-side.is-right { clip-path: polygon(42.5% 16%, 100% 16%, 100% 100%, 40% 100%); background: radial-gradient(60% 80% at 72% 40%, rgb(253 230 138 / .24), transparent 70%); transition-delay: 1.6s; }
+    /* Each side's wash, the left a little grey, the right a little gold; each follows the levee, which runs from 43%
+       across at the top to 40% at the bottom of the photo. */
+    .sa-side { position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .9s ease;
+        -webkit-mask-image: linear-gradient(180deg, transparent 10%, #000 28%); mask-image: linear-gradient(180deg, transparent 10%, #000 28%); }
+    .sa-side.is-left { clip-path: polygon(0 0, 43% 0, 40% 100%, 0 100%); background: linear-gradient(90deg, rgb(20 20 20 / .24), rgb(20 20 20 / .06)); transition-delay: .9s; }
+    .sa-side.is-right { clip-path: polygon(43% 0, 100% 0, 100% 100%, 40% 100%); background: radial-gradient(60% 80% at 72% 40%, rgb(253 230 138 / .24), transparent 70%); transition-delay: 1.1s; }
     .sa-fig.is-in .sa-side { opacity: 1; }
-    /* The levee, traced by a light from the top of the photo to the bottom. */
-    .sa-levee { position: absolute; left: 43%; top: 0; bottom: 0; width: 4px; margin-left: -2px; pointer-events: none; transform: rotate(2.4deg); transform-origin: top; }
-    .sa-levee i { position: absolute; left: 0; right: 0; top: 0; height: 0; border-radius: 999px; background: linear-gradient(180deg, rgb(255 255 255 / 0), #fff 40%, #f5c518);
-        box-shadow: 0 0 14px 3px rgb(245 197 24 / .7); opacity: .95; transition: height 1.1s cubic-bezier(.45,0,.25,1) .5s, opacity .6s ease 2.2s; }
-    .sa-fig.is-in .sa-levee i { height: 100%; opacity: .55; }
     .sa-tag { position: absolute; z-index: 2; top: 1.1rem; display: inline-flex; align-items: center; gap: .45rem; padding: .45rem .9rem; border-radius: 999px; font-size: .86rem; font-weight: 900;
         box-shadow: 0 12px 26px -12px rgb(0 0 0 / .7); opacity: 0; transform: translateY(-10px); transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1); }
     .sa-tag.is-left { left: 1.1rem; color: #fff; background: rgb(60 60 60 / .78); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); transition-delay: .3s; }
@@ -82,7 +78,7 @@
     .sa-fig.is-in .sa-tag { opacity: 1; transform: none; }
     .sa-same { position: absolute; z-index: 2; left: 50%; bottom: 1.1rem; display: inline-flex; align-items: center; gap: .5rem; padding: .5rem 1rem; border-radius: 999px; white-space: nowrap;
         font-size: .9rem; color: #fff; background: rgb(10 14 7 / .72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .25);
-        opacity: 0; transform: translate(-50%, 10px); transition: opacity .5s cubic-bezier(.22,1,.36,1) 2s, transform .5s cubic-bezier(.22,1,.36,1) 2s; }
+        opacity: 0; transform: translate(-50%, 10px); transition: opacity .5s cubic-bezier(.22,1,.36,1) 1.5s, transform .5s cubic-bezier(.22,1,.36,1) 1.5s; }
     .sa-same b { font-weight: 900; }
     .sa-same i { font-style: normal; color: #f5c518; }
     .sa-fig.is-in .sa-same { opacity: 1; transform: translate(-50%, 0); }
@@ -90,10 +86,10 @@
         font-size: .68rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: #f5c518; background: rgb(10 14 7 / .62); }
     .sa-real i { width: .45rem; height: .45rem; border-radius: 999px; background: #ef4444; }
     /* The callouts under each side. */
-    .sa-notes { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: .8rem; margin-top: 1rem; }
+    .sa-notes { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: .8rem; margin-top: 1.4rem; }
     .sa-note { padding: .9rem 1rem 1rem; border-radius: 1.2rem; opacity: 0; transform: translateY(12px); transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1); }
-    .sa-note.is-left { background: #f3f4f1; box-shadow: inset 0 0 0 1px #e2e4de; transition-delay: 2.3s; }
-    .sa-note.is-right { background: linear-gradient(160deg, #fffaf0, #f3f9ea); box-shadow: inset 0 0 0 1.5px #c9dcb4, 0 18px 36px -28px rgb(47 82 25 / .7); transition-delay: 2.45s; }
+    .sa-note.is-left { background: #fff; box-shadow: inset 0 0 0 1px #e6e2d6; transition-delay: 1.9s; }
+    .sa-note.is-right { background: linear-gradient(160deg, #fff, #f3f9ea); box-shadow: inset 0 0 0 1.5px #c9dcb4, 0 14px 28px -22px rgb(47 82 25 / .55); transition-delay: 2.05s; }
     .sa-fig.is-in .sa-note { opacity: 1; transform: none; }
     .sa-note-h { display: flex; align-items: center; gap: .45rem; font-size: .74rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #6b7280; }
     .sa-note.is-right .sa-note-h { color: #3d6823; }
@@ -118,7 +114,7 @@
         .sa-note li svg { width: 1.1rem; height: 1.1rem; padding: .2rem; }
     }
     @media (prefers-reduced-motion: reduce) {
-        .sa-photo > img, .sa-side, .sa-levee i, .sa-tag, .sa-same, .sa-note { transition: none !important; }
+        .sa-photo > img, .sa-side, .sa-tag, .sa-same, .sa-note { transition: none !important; }
     }
 </style>
 @endpush
