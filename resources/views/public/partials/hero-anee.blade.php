@@ -320,7 +320,7 @@
     .hb-micro { position: absolute; inset: 0; }
     .hb-ph.is-play .hb-micro { animation: hbSpin 38s linear infinite; }
     .hb-mic { position: absolute; left: 50%; top: 50%; width: 1.7rem; height: 1.7rem; margin: -.85rem 0 0 -.85rem;
-        transform: rotate(var(--a)) translateY(-47cqw) rotate(calc(var(--a) * -1)); }
+        transform: rotate(var(--a)) translateY(-50cqw) rotate(calc(var(--a) * -1)); }
     .hb-mic b { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 999px; font-size: .62rem; font-weight: 900; color: #fff;
         background: color-mix(in srgb, var(--c) 40%, transparent); border: 1px solid color-mix(in srgb, var(--c) 70%, #fff);
         backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 0 10px color-mix(in srgb, var(--c) 40%, transparent); }
