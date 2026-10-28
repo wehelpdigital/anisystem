@@ -2,7 +2,7 @@
      animation per phase) about the benefits like higher yield, pest protection, complete nutrition, anti lodging"). Anee
      stays in the middle; around her one benefit at a time plays its own animation, and its card names it under her:
        yield      two piles of rice sacks, lying down, stack up one by one: the usual way stops, Anee's goes higher
-                  with an arrow up and a faded sack on top, the pile not yet done. No tonnage or cavans anywhere in
+                  with an arrow up and a faded sack on top, the pile not yet done; no tag above them. No tonnage or cavans anywhere in
                   the hero (the owner: specific yield numbers set the wrong expectations)
        pests      a shield draws itself round her and the pests that fly at it bounce off
        nutrition  eight nutrients, flat see through orbs each in its own color, fly in; each fills its own part of
@@ -73,7 +73,6 @@
                 </span>
                 <small>With Anee</small>
             </div>
-            <span class="hb-badge is-up">▲ And still climbing</span>
         </div>
 
         {{-- Pest protection: a shield draws itself, the pests bounce off it. --}}
@@ -216,10 +215,6 @@
     /* A benefit's layer: seen while its turn lasts. Each element rests in its finished state; .is-play runs it in. */
     .hb-ph { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; pointer-events: none; }
     .hb-ph.is-on { opacity: 1; }
-    .hb-badge { position: absolute; z-index: 6; left: 50%; top: 4%; transform: translateX(-50%); padding: .35rem .8rem; border-radius: 999px; white-space: nowrap;
-        font-size: .8rem; font-weight: 900; color: #14210c; background: #f5c518; box-shadow: 0 10px 22px -10px rgb(0 0 0 / .7); }
-    .hb-ph.is-play .hb-badge { animation: hbPop .6s cubic-bezier(.22,1,.36,1) 2.2s both; }
-    @keyframes hbPop { from { opacity: 0; transform: translateX(-50%) translateY(10px) scale(.8); } }
     @keyframes hbFade { from { opacity: 0; } }
     /* Yield: two piles of rice sacks lying down, either side of her, the same width and the same distance from her. The
        usual way stops at about 5.4 t; Anee's goes on to 8, its last two the brightest, and a faded sack on top says the
@@ -418,7 +413,6 @@
     @keyframes hbBar { to { transform: scaleX(1); } }
     @media (max-width: 639.98px) {
         .hb { width: min(100%, 23rem); }
-        .hb-badge { font-size: .7rem; padding: .28rem .65rem; }
         .hb-bug { font-size: 1.15rem; }
         .hb-nut { width: 2.05rem; height: 2.05rem; margin: -1.025rem 0 0 -1.025rem; font-size: .72rem; }
         .hb-pile-up { width: 1.8rem; height: 1.8rem; } .hb-pile-up svg { width: 1rem; height: 1rem; }
