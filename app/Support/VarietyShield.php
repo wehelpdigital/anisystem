@@ -162,7 +162,8 @@ final class VarietyShield
 
         // The registration ratings: the record's, with its papers' where the record has none of that name.
         $ratings = array_merge((array) ($rec['trials']['ratings'] ?? []), (array) ($rec['ratings'] ?? []));
-        $slugs = $crop ? self::cropSlugs($crop) : [];
+        $kinds = $crop ? self::cropSlugs($crop) : [];
+        $slugs = array_keys($kinds);
         $resist = [];
         $weak = [];
         foreach ($ratings as $name => $code) {
@@ -214,7 +215,10 @@ final class VarietyShield
             if (str_starts_with($slug, 'name:') || isset($skip[$slug])) {
                 continue;
             }
-            if (in_array($r['code'], ['HR', 'R'], true)) {
+            // A disease rated resistant needs no preventive spray. An insect rated resistant in the trials (without a Bt
+            // protein) only takes less damage there: it is scouted before any spray, not left unwatched.
+            $disease = ! in_array($kinds[$slug] ?? 'Fungus', ['Insect', 'Mite', 'Snail', 'Rodent', 'Bird'], true);
+            if (in_array($r['code'], ['HR', 'R'], true) && $disease) {
                 $skip[$slug] = 'rating';
                 unset($lighter[$slug]);
             } elseif (! isset($lighter[$slug])) {
@@ -266,10 +270,14 @@ final class VarietyShield
         }
         // A pest the Bt line already speaks for is not said again from its rating.
         $btSaid = (array) ($s['bt']['pests'] ?? []);
-        $res = array_filter($s['resist'], fn ($r, $slug) => in_array($r['code'], ['HR', 'R'], true) && ! isset($btSaid[$slug]), ARRAY_FILTER_USE_BOTH);
-        $mid = array_filter($s['resist'], fn ($r, $slug) => in_array($r['code'], ['MR', 'T'], true) && ! isset($btSaid[$slug]), ARRAY_FILTER_USE_BOTH);
+        $res = array_filter($s['resist'], fn ($r, $slug) => ($s['skip'][$slug] ?? '') === 'rating' || (str_starts_with($slug, 'name:') && in_array($r['code'], ['HR', 'R'], true)), ARRAY_FILTER_USE_BOTH);
+        $less = array_filter($s['resist'], fn ($r, $slug) => ! isset($res[$slug]) && ! isset($btSaid[$slug]) && in_array($r['code'], ['HR', 'R'], true), ARRAY_FILTER_USE_BOTH);
+        $mid = array_filter($s['resist'], fn ($r, $slug) => ! isset($res[$slug]) && ! isset($less[$slug]) && ! isset($btSaid[$slug]), ARRAY_FILTER_USE_BOTH);
         if ($res) {
             $bits[] = 'resistant to ' . self::andList(array_map(fn ($r) => $r['name'] . ' (' . $r['code'] . ')', $res)) . ': no preventive sprays for ' . (count($res) > 1 ? 'them' : 'it') . ', only if it shows past the threshold';
+        }
+        if ($less) {
+            $bits[] = 'took little damage from ' . self::andList(array_map(fn ($r) => $r['name'] . ' (' . $r['code'] . ')', $less)) . ' in its trials: no calendar sprays, scout before spraying';
         }
         if ($mid) {
             $bits[] = 'moderately resistant or tolerant to ' . self::andList(array_map(fn ($r) => $r['name'] . ' (' . $r['code'] . ')', $mid)) . ': fewer sprays, scout before spraying';
@@ -355,7 +363,7 @@ final class VarietyShield
         return array_values(array_filter(array_merge($m[1], $m[2])));
     }
 
-    /** The slugs a crop's catalogue holds. */
+    /** The slugs a crop's catalogue holds, each with its kind (Insect, Fungus ...). */
     private static function cropSlugs(string $crop): array
     {
         static $memo = [];
@@ -365,7 +373,7 @@ final class VarietyShield
         try {
             $key = str_starts_with($crop, 'rice') ? 'rice' : (str_starts_with($crop, 'corn') ? 'corn' : $crop);
             $memo[$crop] = \Illuminate\Support\Facades\Schema::hasTable('as_crop_problems')
-                ? \Illuminate\Support\Facades\DB::table('as_crop_problems')->where('deleteStatus', 1)->where('crops', 'like', '%' . $key . '%')->pluck('slug')->all() : [];
+                ? \Illuminate\Support\Facades\DB::table('as_crop_problems')->where('deleteStatus', 1)->where('crops', 'like', '%' . $key . '%')->pluck('kind', 'slug')->all() : [];
         } catch (\Throwable $e) {
             $memo[$crop] = [];
         }
