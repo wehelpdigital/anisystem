@@ -119,7 +119,7 @@ class HowToPlantController extends Controller
         ]);
     }
 
-    /** The tool itself: every plan today (config tiers howToPlant). */
+    /** The tool itself: Libre + Anee and up since 2026-10-29 (config tiers howToPlant). The public guides stay free. */
     private function gate(): void
     {
         if (! Tier::farmCan('howToPlant')) {

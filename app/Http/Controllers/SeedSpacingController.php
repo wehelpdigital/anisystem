@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Support\SeedPenalty;
 use App\Support\SeedSpacing;
+use App\Support\Tier;
 use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -24,6 +25,8 @@ class SeedSpacingController extends Controller
 
     public function page()
     {
+        $this->gate();
+
         return view('seed-spacing.index', ['boot' => SeedSpacing::boot()]);
     }
 
@@ -34,6 +37,7 @@ class SeedSpacingController extends Controller
      */
     public function variety(Request $request)
     {
+        $this->gate();
         $crop = (string) $request->query('crop', '');
         $name = mb_substr(trim((string) $request->query('name', '')), 0, 120);
         $vy = array_key_exists($crop, SeedSpacing::CROPS) && $name !== '' ? SeedSpacing::varietyYield(['crop' => $crop, 'variety' => $name]) : null;
@@ -51,6 +55,7 @@ class SeedSpacingController extends Controller
      */
     public function context(Request $request)
     {
+        $this->gate();
         $crop = (string) $request->query('crop', '');
         if (! array_key_exists($crop, SeedSpacing::CROPS)) {
             return $this->json(false, 'Pick a crop first.', [], 422);
@@ -85,6 +90,7 @@ class SeedSpacingController extends Controller
     /** Save one: counted again here, so what is kept is what the rule says. */
     public function save(Request $request)
     {
+        $this->gate();
         $c = SeedSpacing::clean($request->all());
         if (! $c) {
             return $this->json(false, SeedSpacing::missing(SeedSpacing::read($request->all())) ?: 'Fill in the spacing first.', [], 422);
@@ -110,6 +116,7 @@ class SeedSpacingController extends Controller
     /** One saved calculation, its inputs to put back on the page. */
     public function one(int $id)
     {
+        $this->gate();
         $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)
             ->where('status', 'ready')->where('deleteStatus', 1)->first();
         if (! $r) {
@@ -122,11 +129,13 @@ class SeedSpacingController extends Controller
 
     public function list(Request $request)
     {
+        $this->gate();
         return $this->json(true, 'ok', $this->shelf(max(1, (int) $request->query('page', 1))));
     }
 
     public function destroy(int $id)
     {
+        $this->gate();
         DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.', $this->shelf(1));
@@ -152,6 +161,17 @@ class SeedSpacingController extends Controller
             'hasMore' => $rows->count() > $per,
             'page' => $page,
         ];
+    }
+
+    /**
+     * The tool's own door: Libre + Anee and up since 2026-10-29 (the owner). count() stays open: the Crop Protocol and
+     * NPK Plus read the seeds a spacing takes through it.
+     */
+    private function gate(): void
+    {
+        if (! Tier::farmCan('seedCount')) {
+            Tier::farmDenyFor('seedCount', 'The Seed Count and Distance Calculator comes with {plan}. Buy the right amount of seed for the stand you want.');
+        }
     }
 
     private function json(bool $ok, string $message, array $data = [], int $status = 200)

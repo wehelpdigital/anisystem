@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Support\MarketBook;
+use App\Support\Tier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -26,12 +27,15 @@ class MarketPriceController extends Controller
 
     public function page()
     {
+        $this->gate();
+
         return view('market-prices.index', ['catalog' => MarketBook::ready() ? MarketBook::catalog() : []]);
     }
 
     /** The places an item has prices for. */
     public function places(Request $request)
     {
+        $this->gate();
         $item = (string) $request->query('item');
         if (! isset(MarketBook::items()[$item])) {
             return $this->json(false, 'Pick a crop first.', [], 422);
@@ -43,6 +47,7 @@ class MarketPriceController extends Controller
     /** One item at one place, with the sell plan when a harvest month is given. */
     public function outlook(Request $request)
     {
+        $this->gate();
         $c = $this->clean($request->all());
         if (! $c) {
             return $this->json(false, 'Pick a crop first.', [], 422);
@@ -57,6 +62,7 @@ class MarketPriceController extends Controller
 
     public function save(Request $request)
     {
+        $this->gate();
         $c = $this->clean($request->all());
         if (! $c) {
             return $this->json(false, 'Pick a crop first.', [], 422);
@@ -78,6 +84,7 @@ class MarketPriceController extends Controller
     /** A saved forecast, as it was that day. */
     public function one(int $id)
     {
+        $this->gate();
         $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)
             ->where('status', 'ready')->where('deleteStatus', 1)->first();
         if (! $r) {
@@ -91,11 +98,13 @@ class MarketPriceController extends Controller
 
     public function list(Request $request)
     {
+        $this->gate();
         return $this->json(true, 'ok', $this->shelf(max(1, (int) $request->query('page', 1))));
     }
 
     public function destroy(int $id)
     {
+        $this->gate();
         DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.', $this->shelf(1));
@@ -164,6 +173,17 @@ class MarketPriceController extends Controller
             'hasMore' => $rows->count() > $per,
             'page' => $page,
         ];
+    }
+
+    /**
+     * The tool's own door: Libre + Anee and up since 2026-10-29 (the owner). Palay's going price for Benta o Bilad
+     * and the Hatian (palay()) stays open on their own routes, and every analysis reads the prices server side.
+     */
+    private function gate(): void
+    {
+        if (! Tier::farmCan('marketPrices')) {
+            Tier::farmDenyFor('marketPrices', 'The Market Price Forecast comes with {plan}. See the months your crop sells highest before you plant and before you sell.');
+        }
     }
 
     private function json(bool $ok, string $message, array $data = [], int $status = 200)

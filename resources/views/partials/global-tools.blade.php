@@ -491,35 +491,53 @@
         @endif
         {{-- Market Price Forecast (2026-10-27, the owner): when to sell, from the crop's prices and the imports that moved them. --}}
         @if ($qOn('market'))
-        <a href="{{ route('market.page') }}" class="qa-tile qa-build">
+        @php $qMarketLocked = ! \App\Support\Tier::farmCan('marketPrices'); $qMarketRung = \App\Support\Tier::farmUnlocksAt('marketPrices'); @endphp
+        <a href="{{ route('market.page') }}" class="qa-tile qa-build"
+           @if ($qMarketLocked) data-tier-lock="{{ $qMarketRung }}" data-lock-say="The Market Price Forecast comes with {{ \App\Support\Tier::withPlan($qMarketRung) }}. See the months your crop sells highest before you plant and before you sell." @endif>
             <span class="qa-ico"><img src="{{ asset('images/icons/market-forecast.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
-            <span class="qa-txt">
+            <span class="qa-txt {{ $qMarketLocked ? 'tl-dim' : '' }}">
                 <b>Market Price Forecast{{ \App\Support\Tagalog::flag('market-forecast') }}</b>
                 <i>Pick your crop and where you sell. See its price these years, the forecast for this year and next, the best months to sell, and what imports did to it.</i>
             </span>
-            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            @if ($qMarketLocked)
+                <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+            @else
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            @endif
         </a>
         @endif
         {{-- Seed Count and Distance (2026-10-19, the owner): the seeds for a spacing, or the spacing for the seeds. --}}
         @if ($qOn('seedcalc'))
-        <a href="{{ route('seedcalc.page') }}" class="qa-tile qa-build">
+        @php $qSeedcalcLocked = ! \App\Support\Tier::farmCan('seedCount'); $qSeedcalcRung = \App\Support\Tier::farmUnlocksAt('seedCount'); @endphp
+        <a href="{{ route('seedcalc.page') }}" class="qa-tile qa-build"
+           @if ($qSeedcalcLocked) data-tier-lock="{{ $qSeedcalcRung }}" data-lock-say="The Seed Count and Distance Calculator comes with {{ \App\Support\Tier::withPlan($qSeedcalcRung) }}. Buy the right amount of seed for the stand you want." @endif>
             <span class="qa-ico"><img src="{{ asset('images/icons/seed-count.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
-            <span class="qa-txt">
+            <span class="qa-txt {{ $qSeedcalcLocked ? 'tl-dim' : '' }}">
                 <b>Seed Count and Distance Calculator{{ \App\Support\Tagalog::flag('seed-count-distance') }}</b>
                 <i>Play with the distance between rows and plants, and see the seeds you need, the plants that will stand and the harvest they can carry. Or start from your seeds and see the spacing.</i>
             </span>
-            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            @if ($qSeedcalcLocked)
+                <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+            @else
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            @endif
         </a>
         @endif
         {{-- How to Plant (2026-10-19, the owner): how traditional farmers plant each crop, step by step, and into the Protocol Builder. --}}
         @if (\Illuminate\Support\Facades\Route::has('htp.page') && $qOn('htp'))
-        <a href="{{ route('htp.page') }}" class="qa-tile qa-build">
+        @php $qHtpLocked = ! \App\Support\Tier::farmCan('howToPlant'); $qHtpRung = \App\Support\Tier::farmUnlocksAt('howToPlant'); @endphp
+        <a href="{{ route('htp.page') }}" class="qa-tile qa-build"
+           @if ($qHtpLocked) data-tier-lock="{{ $qHtpRung }}" data-lock-say="How to Plant comes with {{ \App\Support\Tier::withPlan($qHtpRung) }}. See how traditional farmers plant every crop, step by step." @endif>
             <span class="qa-ico"><img src="{{ asset('images/icons/how-to-plant.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
-            <span class="qa-txt">
+            <span class="qa-txt {{ $qHtpLocked ? 'tl-dim' : '' }}">
                 <b>How to Plant{{ \App\Support\Tagalog::flag('how-to-plant') }}</b>
                 <i>How traditional farmers plant every crop, step by step with the days, a video where there is one, and what to change for a higher yield. Send it to your Protocol Builder.</i>
             </span>
-            <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            @if ($qHtpLocked)
+                <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+            @else
+                <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+            @endif
         </a>
         @endif
 

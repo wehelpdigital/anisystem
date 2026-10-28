@@ -15,7 +15,7 @@
  * and `aiAnalyses` is the four analysis wizards (What to Plant, When to
  * Plant, Variety Research, Crop Protocol). Libre has neither; Libre + Anee
  * (2026-09-18) is Libre with both, for ₱70 a month: the same farm limits,
- * the same ads, and the whole of Anee. Solo and Owner have always had both.
+ * no ads (Ads::showTo() shows them to Libre only), and the whole of Anee. Solo and Owner have always had both.
  *
  * Every limit the gates read lives HERE and only here. null = unlimited.
  * The comparison table (App\Support\PlanCompare, on /pricing/compare and the
@@ -50,9 +50,9 @@ return [
         'npkPlus'           => false,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
-        'marketPrices'      => true,    // the Market Price Forecast: every plan, no credits (2026-10-27)
-        'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
-        'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
+        'marketPrices'      => false,   // the Market Price Forecast: Libre + Anee and up (2026-10-29, the owner)
+        'seedCount'         => false,   // the Seed Count and Distance Calculator: Libre + Anee and up (2026-10-29, the owner)
+        'howToPlant'        => false,   // How to Plant: Libre + Anee and up (2026-10-29, the owner)
         'inventory'         => false,   // and so is the shed
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -90,6 +90,7 @@ return [
             'Anee: AI chat, analyses and credits (Libre + Anee)',
             'The field helpers and the Compatibility Checker (Libre + Anee)',
             'Satellite Weather, NPK Plus and Maps (Libre + Anee)',
+            'Market Price Forecast, Seed Count and Distance, How to Plant (Libre + Anee)',
             'Workers and inventory (Solo Farmer)',
             'Video recording, worker logins, Collab Room',
             'Full weather, all reports, document uploads',
@@ -97,8 +98,10 @@ return [
     ],
 
     /* Libre, plus Anee. Every farm limit above, word for word -- the one
-       season, the one lot, the two days of weather, the ads -- and the whole
-       of Anee: the chat, the four analyses, Realign, and the credit shop. */
+       season, the one lot, the two days of weather -- with no ads, and the
+       whole of Anee: the chat, the four analyses, Realign, and the credit
+       shop. Since 2026-10-29 the Market Price Forecast, Seed Count and
+       Distance and How to Plant start here too. */
     'libreAnee' => [
         'name'    => 'Libre + Anee',
         'price'   => 70,
@@ -119,9 +122,9 @@ return [
         'npkPlus'           => true,
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
-        'marketPrices'      => true,    // the Market Price Forecast: every plan, no credits (2026-10-27)
-        'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
-        'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
+        'marketPrices'      => true,    // Libre + Anee and up (2026-10-29, the owner)
+        'seedCount'         => true,    // Libre + Anee and up (2026-10-29, the owner)
+        'howToPlant'        => true,    // Libre + Anee and up (2026-10-29, the owner)
         'inventory'         => false,
         'workerLogins'      => false,
         'videoRecording'    => false,
@@ -152,15 +155,17 @@ return [
             'Field helpers: the pest, disease, weed, nutrient and variety finders and the Compatibility Checker',
             'Satellite Weather and the NPK Plus calculator',
             'Maps: draw and measure up to 3 fields',
+            'The Market Price Forecast, the Seed Count and Distance Calculator and How to Plant',
             'Buy AI credit packs whenever you need more',
-            'Shows a few ads',
+            'No ads',
         ],
         'sheet' => [
             'Your Libre plan exactly as it is',
             'Anee AI chat: ask anything, show a photo',
             'Every AI analysis, the Land Prep Planner and Anee Auto',
             'The field helpers, Satellite Weather, NPK Plus and Maps',
-            'Buy AI credit packs whenever you need more',
+            'The Market Price Forecast, Seed Count and How to Plant',
+            'Buy AI credit packs whenever you need more, and no ads',
         ],
         'excludes' => [
             'Workers and inventory (Solo Farmer)',
