@@ -74,7 +74,22 @@
             @foreach ($hbBugs as $i => $b)
                 <span class="hb-bug" style="--a: {{ 20 + $i * 72 }}deg; --k: {{ $i }}">{{ $b }}<i></i></span>
             @endforeach
-            <span class="hb-badge is-shield">✓ Protected</span>
+            {{-- Protected, as a shield (the owner: "protected should be an animated shield icon"): it pops in, its edge
+                 draws, it fills, the check draws, then it beats, rings and shines while the pests bounce off. --}}
+            <span class="hb-shico">
+                <svg viewBox="0 0 48 56">
+                    <defs>
+                        <linearGradient id="hbShG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6ee7b7"/><stop offset="1" stop-color="#047857"/></linearGradient>
+                        <clipPath id="hbShC"><path d="M24 3L43 10V27C43 40 35 49 24 53C13 49 5 40 5 27V10Z"/></clipPath>
+                    </defs>
+                    <path class="f" d="M24 3L43 10V27C43 40 35 49 24 53C13 49 5 40 5 27V10Z" fill="url(#hbShG)"/>
+                    <path class="f" d="M24 3L5 10V27C5 40 13 49 24 53Z" fill="#fff" opacity=".14"/>
+                    <g clip-path="url(#hbShC)"><rect class="sh" x="-30" y="-12" width="12" height="84" fill="#fff" opacity=".5"/></g>
+                    <path class="o" d="M24 3L43 10V27C43 40 35 49 24 53C13 49 5 40 5 27V10Z" fill="none" stroke="#d1fae5" stroke-width="2.2" stroke-linejoin="round" pathLength="100"/>
+                    <path class="c" d="M15 28.5l6.5 6.5L33.5 22" fill="none" stroke="#fff" stroke-width="4.6" stroke-linecap="round" stroke-linejoin="round" pathLength="100"/>
+                </svg>
+                <i></i>
+            </span>
         </div>
 
         {{-- Complete nutrition: each nutrient flies in, fills its own part of the ring, then feeds her. --}}
@@ -180,7 +195,6 @@
     .hb-ph.is-on { opacity: 1; }
     .hb-badge { position: absolute; z-index: 6; left: 50%; top: 4%; transform: translateX(-50%); padding: .35rem .8rem; border-radius: 999px; white-space: nowrap;
         font-size: .8rem; font-weight: 900; color: #14210c; background: #f5c518; box-shadow: 0 10px 22px -10px rgb(0 0 0 / .7); }
-    .hb-badge.is-shield { background: #a7f3d0; color: #064e3b; }
     .hb-badge.is-stand { background: #fff; }
     .hb-ph.is-play .hb-badge { animation: hbPop .6s cubic-bezier(.22,1,.36,1) 2.2s both; }
     @keyframes hbPop { from { opacity: 0; transform: translateX(-50%) translateY(10px) scale(.8); } }
@@ -233,6 +247,23 @@
         45% { opacity: 1; transform: rotate(var(--a)) translateY(-35cqw) rotate(calc(var(--a) * -1)); }
         100% { opacity: 0; transform: rotate(var(--a)) translateY(-58cqw) rotate(calc(var(--a) * -1 + 60deg)) scale(.6); } }
     @keyframes hbHit { 0% { opacity: .9; transform: scale(.4); } 100% { opacity: 0; transform: scale(1.5); } }
+    /* The shield icon on top: pops in, its edge draws, it fills, the check draws; then it beats, rings and shines. */
+    .hb-shico { position: absolute; z-index: 6; left: 50%; top: 1.5%; width: 12cqw; aspect-ratio: 48 / 56; transform: translateX(-50%);
+        filter: drop-shadow(0 0 10px rgb(52 211 153 / .7)) drop-shadow(0 8px 14px rgb(0 0 0 / .5)); }
+    .hb-shico svg { display: block; width: 100%; height: 100%; overflow: visible; }
+    .hb-shico .o, .hb-shico .c { stroke-dasharray: 100; }
+    .hb-shico i { position: absolute; inset: -12%; border-radius: 42% 42% 50% 50%; border: 2px solid #34d399; opacity: 0; }
+    .hb-ph.is-play .hb-shico { animation: hbShPop .7s cubic-bezier(.34,1.56,.64,1) .2s both, hbShBeat 1.6s ease-in-out 2s infinite; }
+    .hb-ph.is-play .hb-shico .o { animation: hbShDraw .9s ease-out .3s both; }
+    .hb-ph.is-play .hb-shico .f { animation: hbFade .5s ease-out .9s both; }
+    .hb-ph.is-play .hb-shico .c { animation: hbShDraw .45s ease-out 1.3s both; }
+    .hb-ph.is-play .hb-shico .sh { animation: hbShine 2.4s ease-in-out 1.6s infinite; }
+    .hb-ph.is-play .hb-shico i { animation: hbShRing 1.6s ease-out 2s infinite; }
+    @keyframes hbShPop { from { opacity: 0; transform: translateX(-50%) scale(.3) rotate(-15deg); } }
+    @keyframes hbShBeat { 0%, 30%, 100% { scale: 1; } 12% { scale: 1.09; } }
+    @keyframes hbShDraw { from { stroke-dashoffset: 100; } }
+    @keyframes hbShine { 0% { transform: translateX(-10px) rotate(20deg); } 45%, 100% { transform: translateX(78px) rotate(20deg); } }
+    @keyframes hbShRing { 0% { opacity: .8; transform: scale(.85); } 100% { opacity: 0; transform: scale(1.55); } }
     /* Nutrition: each nutrient in its own color flies in and fills its own part of the ring, then beats and sends a drop
        in to her. */
     .hb-nring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 0 5px rgb(255 255 255 / .18)); }
