@@ -16,6 +16,7 @@
         </div>
 
         <figure class="sa-fig" data-sa>
+            <div class="sa-stage">
             <div class="sa-photo">
                 <img src="{{ asset('images/site/photos/same-age-plots.webp') }}" srcset="{{ asset('images/site/photos/same-age-plots-900.webp') }} 900w, {{ asset('images/site/photos/same-age-plots.webp') }} 1600w" sizes="(min-width: 1024px) 60rem, 100vw" alt="Two rice plots of the same age and variety on either side of a levee: the left paler and thinner, the right deep green and fuller" width="1600" height="1200" loading="lazy">
                 <span class="sa-side is-left" aria-hidden="true"></span>
@@ -24,6 +25,17 @@
                 <span class="sa-tag is-right"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40">With Anee's guidance</span>
                 <span class="sa-same"><b>Same age</b><i aria-hidden="true">·</i><b>Same variety</b></span>
                 <span class="sa-real"><i aria-hidden="true"></i>Real photo</span>
+            </div>
+            {{-- The Anee side, up close (2026-10-29, the owner: "use this photo in a circle mask animated to look like it
+                 is the zoomed version of the side of anee"): a ring lands on the right plot, a beam opens from it, and a
+                 round lens shows the owner's close photo of that side. The script lays the beam along the two lines that
+                 touch both circles, whatever the width. --}}
+            <svg class="sa-beam" aria-hidden="true"><path class="sa-beam-f"/><path class="sa-beam-l" pathLength="1"/><path class="sa-beam-l" pathLength="1"/></svg>
+            <span class="sa-aim" aria-hidden="true"><i></i></span>
+            <span class="sa-lens">
+                <span class="sa-lens-c"><img src="{{ asset('images/site/photos/same-age-closeup.webp') }}" alt="The Anee side up close: thick, deep green palay with dew on its leaves" width="720" height="720" loading="lazy"></span>
+                <b><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40">Up close, the Anee side</b>
+            </span>
             </div>
             <figcaption class="sa-notes">
                 <div class="sa-note is-left">
@@ -85,6 +97,39 @@
     .sa-real { position: absolute; z-index: 2; right: 1.1rem; bottom: 1.2rem; display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .65rem .3rem .5rem; border-radius: 999px;
         font-size: .68rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: #f5c518; background: rgb(10 14 7 / .62); }
     .sa-real i { width: .45rem; height: .45rem; border-radius: 999px; background: #ef4444; }
+    /* The Anee side up close: a ring on the right plot, a beam from it, and a round lens with the close photo. The lens
+       hangs past the photo's edge where the page has room. */
+    .sa-stage { position: relative; }
+    .sa-beam { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .sa-beam-f { fill: rgb(255 255 255 / .16); opacity: 0; transition: opacity .6s ease 1.6s; }
+    .sa-beam-l { fill: none; stroke: rgb(255 255 255 / .92); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1;
+        filter: drop-shadow(0 1px 2px rgb(0 0 0 / .45)); transition: stroke-dashoffset .6s cubic-bezier(.45,0,.25,1) 1.45s; }
+    .sa-fig.is-in .sa-beam-f { opacity: 1; }
+    .sa-fig.is-in .sa-beam-l { stroke-dashoffset: 0; }
+    .sa-aim { position: absolute; z-index: 2; left: 62%; top: 70%; width: 7%; aspect-ratio: 1; border-radius: 999px; transform: translate(-50%, -50%);
+        box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgb(245 197 24 / .95), 0 0 22px rgb(245 197 24 / .6), inset 0 0 0 999px rgb(255 255 255 / .08);
+        opacity: 0; scale: .2; transition: opacity .4s ease 1.2s, scale .55s cubic-bezier(.34,1.56,.64,1) 1.2s; }
+    .sa-aim i { position: absolute; inset: 0; border-radius: 999px; border: 2px solid #f5c518; opacity: 0; }
+    .sa-fig.is-in .sa-aim { opacity: 1; scale: 1; }
+    .sa-fig.is-in .sa-aim i { animation: saPing 1.8s ease-out 1.8s infinite; }
+    @keyframes saPing { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(2.2); } }
+    .sa-lens { position: absolute; z-index: 3; right: 3%; top: 24%; width: 36%; aspect-ratio: 1; transform-origin: 15% 85%;
+        opacity: 0; scale: .25; transition: opacity .45s ease 1.75s, scale .8s cubic-bezier(.34,1.4,.64,1) 1.75s; }
+    @media (min-width: 1100px) { .sa-lens { right: -6%; top: 22%; width: 33%; } }
+    .sa-fig.is-in .sa-lens { opacity: 1; scale: 1; }
+    .sa-lens-c { position: absolute; inset: 0; overflow: hidden; border-radius: 999px; background: #2b3a1c;
+        box-shadow: 0 0 0 5px #fff, 0 0 0 9px #f5c518, 0 30px 60px -20px rgb(20 33 12 / .75); }
+    .sa-lens-c img { display: block; width: 100%; height: 100%; object-fit: cover; scale: 1.7; transition: scale 1.6s cubic-bezier(.22,1,.36,1) 1.75s; }
+    .sa-fig.is-in .sa-lens-c img { scale: 1.08; animation: saDrift 16s ease-in-out 3.4s infinite alternate; }
+    @keyframes saDrift { to { transform: translate(-3%, -2%) scale(1.06); } }
+    /* The lens's glass: a soft shine at the top and a darker edge. */
+    .sa-lens-c::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+        background: radial-gradient(60% 45% at 32% 20%, rgb(255 255 255 / .32), rgb(255 255 255 / 0) 70%); box-shadow: inset 0 0 26px rgb(0 0 0 / .45); }
+    .sa-lens b { position: absolute; left: 50%; bottom: -1rem; z-index: 1; width: max-content; display: inline-flex; align-items: center; gap: .4rem; padding: .35rem .8rem .35rem .4rem; border-radius: 999px;
+        white-space: nowrap; font-size: .8rem; font-weight: 900; color: #14210c; background: #f5c518; box-shadow: 0 12px 24px -12px rgb(0 0 0 / .7);
+        transform: translateX(-50%) translateY(8px); opacity: 0; transition: opacity .4s ease 2.35s, transform .45s cubic-bezier(.22,1,.36,1) 2.35s; }
+    .sa-lens b img { width: 1.4rem; height: 1.4rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px #fff; }
+    .sa-fig.is-in .sa-lens b { opacity: 1; transform: translateX(-50%) translateY(0); }
     /* The callouts under each side. */
     .sa-notes { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: .8rem; margin-top: 1.4rem; }
     .sa-note { padding: .9rem 1rem 1rem; border-radius: 1.2rem; opacity: 0; transform: translateY(12px); transition: opacity .55s cubic-bezier(.22,1,.36,1), transform .55s cubic-bezier(.22,1,.36,1); }
@@ -112,9 +157,16 @@
         .sa-note-h img { width: 1.1rem; height: 1.1rem; }
         .sa-note li { font-size: .8rem; gap: .4rem; }
         .sa-note li svg { width: 1.1rem; height: 1.1rem; padding: .2rem; }
+        /* On a phone the lens sits higher and the ring lower, so the beam between them shows. */
+        .sa-lens { top: 17%; width: 31%; }
+        .sa-aim { left: 57%; top: 77%; width: 8%; }
+        .sa-lens-c { box-shadow: 0 0 0 3px #fff, 0 0 0 6px #f5c518, 0 20px 40px -16px rgb(20 33 12 / .75); }
+        .sa-lens b { bottom: -.85rem; gap: .3rem; padding: .25rem .6rem .25rem .3rem; font-size: .62rem; }
+        .sa-lens b img { width: 1.05rem; height: 1.05rem; }
     }
     @media (prefers-reduced-motion: reduce) {
-        .sa-photo > img, .sa-side, .sa-tag, .sa-same, .sa-note { transition: none !important; }
+        .sa-photo > img, .sa-side, .sa-tag, .sa-same, .sa-note, .sa-beam-f, .sa-beam-l, .sa-aim, .sa-lens, .sa-lens-c img, .sa-lens b { transition: none !important; }
+        .sa-aim i, .sa-lens-c img { animation: none !important; }
     }
 </style>
 @endpush
@@ -123,6 +175,27 @@
 (() => {
     // The two plots play in once, the first time they are seen.
     document.querySelectorAll('[data-sa]').forEach((fig) => {
+        // The beam from the ring to the lens: the two lines that touch both circles from outside, and the band between
+        // them. Laid out from the boxes before any scaling, again whenever the photo changes size.
+        const stage = fig.querySelector('.sa-stage'), svg = fig.querySelector('.sa-beam'), aim = fig.querySelector('.sa-aim'), lens = fig.querySelector('.sa-lens');
+        if (stage && svg && aim && lens) {
+            const [band, l1, l2] = svg.querySelectorAll('path');
+            const lay = () => {
+                const W = stage.offsetWidth, H = stage.offsetHeight;
+                const r1 = aim.offsetWidth / 2, x1 = aim.offsetLeft, y1 = aim.offsetTop; // its box is pulled back by half, so left/top are its centre
+                const r2 = lens.offsetWidth / 2, x2 = lens.offsetLeft + r2, y2 = lens.offsetTop + r2;
+                const dx = x2 - x1, dy = y2 - y1, d = Math.hypot(dx, dy);
+                if (!W || d <= Math.abs(r2 - r1)) return;
+                const t = Math.atan2(dy, dx), a = Math.acos((r1 - r2) / d);
+                const at = (x, y, r, k) => [x + r * Math.cos(t + k * a), y + r * Math.sin(t + k * a)].map((v) => v.toFixed(1)).join(' ');
+                svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+                l1.setAttribute('d', `M${at(x1, y1, r1, 1)}L${at(x2, y2, r2, 1)}`);
+                l2.setAttribute('d', `M${at(x1, y1, r1, -1)}L${at(x2, y2, r2, -1)}`);
+                band.setAttribute('d', `M${at(x1, y1, r1, 1)}L${at(x2, y2, r2, 1)}L${at(x2, y2, r2, -1)}L${at(x1, y1, r1, -1)}Z`);
+            };
+            lay();
+            if ('ResizeObserver' in window) new ResizeObserver(lay).observe(stage); else addEventListener('resize', lay);
+        }
         if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) { fig.classList.add('is-in'); return; }
         const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { fig.classList.add('is-in'); io.disconnect(); } }, { threshold: .3 });
         io.observe(fig);
