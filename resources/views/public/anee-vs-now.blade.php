@@ -218,7 +218,8 @@
     .avn-crumbs [aria-current] { color: var(--hp-sun); }
     .avn-h1 { margin-top: 1rem; font-family: var(--font-heading); font-weight: 800; line-height: 1.06; letter-spacing: -.02em; font-size: clamp(2.3rem, 6vw, 4rem); text-wrap: balance; }
     .avn-h1 .is-now { color: #fca5a5; }
-    .avn-h1 .is-vs { display: inline-block; margin: 0 .2em; padding: .02em .3em .06em; border-radius: .3em; font-size: .55em; vertical-align: .32em; color: #14210c; background: var(--hp-sun); }
+    .avn-h1 .is-vs { display: inline-flex; align-items: center; justify-content: center; margin: 0 .2em; padding: .16em .32em .1em; border-radius: .3em; font-size: .55em;
+        line-height: 1; vertical-align: .38em; color: #14210c; background: var(--hp-sun); }
     .avn-lede { margin-top: 2.1rem; max-width: 36rem; color: #d3dec7; font-size: clamp(1.02rem, 1.7vw, 1.16rem); line-height: 1.7; }
     .avn-lede b { color: #fff; }
     .avn-ctas { margin-top: 1.7rem; display: flex; flex-wrap: wrap; gap: .75rem; }
@@ -236,6 +237,35 @@
     .avn-real i { width: .5rem; height: .5rem; border-radius: 999px; background: #ef4444; box-shadow: 0 0 0 3px rgb(239 68 68 / .3); animation: avnRec 1.4s ease-in-out infinite; }
     @keyframes avnRec { 50% { opacity: .35; box-shadow: 0 0 0 6px rgb(239 68 68 / 0); } }
     .avn-ba-say b { color: #fca5a5; }
+    /* The button that opens the film big: under the With Anee tag. */
+    .avn-ba-x { position: absolute; z-index: 5; top: 3.3rem; right: .9rem; display: inline-flex; align-items: center; gap: .4rem; padding: .4rem .75rem .4rem .5rem; border-radius: 999px;
+        font-size: .76rem; font-weight: 800; color: #fff; background: rgb(10 14 7 / .62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .28); cursor: pointer; transition: background-color .28s var(--hp-ease), transform .28s var(--hp-ease), opacity .28s var(--hp-ease); }
+    .avn-ba-x svg { width: 1.05rem; height: 1.05rem; padding: .15rem; border-radius: 999px; color: #14210c; background: var(--hp-sun); }
+    .avn-ba-x:hover { background: rgb(10 14 7 / .8); transform: translateY(-1px); }
+    .avn-ba-x:focus-visible { outline: 3px solid var(--hp-sun); outline-offset: 2px; }
+    @media (max-width: 520px) { .avn-ba-x { top: 2.9rem; right: .6rem; padding: .35rem; } .avn-ba-x span { display: none; } }
+    /* The film, big. */
+    .avn-fm { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 1rem; }
+    .avn-fm[hidden] { display: none; }
+    .avn-fm-bg { position: absolute; inset: 0; background: rgb(6 10 4 / .82); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transition: opacity .3s var(--hp-ease); }
+    .avn-fm-box { position: relative; width: min(60rem, 100%); max-height: calc(100vh - 2rem); overflow: auto; border-radius: 1.6rem; background: #0f170a;
+        box-shadow: 0 50px 100px -30px rgb(0 0 0 / .9), inset 0 0 0 1px rgb(245 197 24 / .3); opacity: 0; transform: translateY(18px) scale(.97);
+        transition: opacity .32s var(--hp-ease), transform .32s var(--hp-ease); }
+    .avn-fm.is-on .avn-fm-bg, .avn-fm.is-on .avn-fm-box { opacity: 1; transform: none; }
+    .avn-fm-v { position: relative; background: #000; }
+    .avn-fm-v video { display: block; width: 100%; max-height: calc(100vh - 11rem); aspect-ratio: 4 / 3; object-fit: contain; background: #000; }
+    .avn-fm-rec { position: absolute; left: 1rem; top: 1rem; display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .75rem .35rem .55rem; border-radius: 999px;
+        font-size: .74rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--hp-sun); background: rgb(10 14 7 / .7); pointer-events: none; }
+    .avn-fm-rec i { width: .55rem; height: .55rem; border-radius: 999px; background: #ef4444; animation: avnRec 1.4s ease-in-out infinite; }
+    .avn-fm-t { display: flex; align-items: flex-start; gap: .8rem; padding: 1rem 1.2rem 1.2rem; color: #fff; }
+    .avn-fm-t img { flex: none; width: 2.6rem; height: 2.6rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px var(--hp-sun); }
+    .avn-fm-t b { display: block; font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; line-height: 1.25; }
+    .avn-fm-t p { margin-top: .3rem; font-size: .88rem; line-height: 1.55; color: #c9d8bb; }
+    .avn-fm-x { position: absolute; z-index: 3; top: .8rem; right: .8rem; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; color: #fff;
+        background: rgb(10 14 7 / .7); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .25); cursor: pointer; }
+    .avn-fm-x svg { width: 1.2rem; height: 1.2rem; }
+    html.avn-lock { overflow: hidden; }
     .avn-ba-short { display: none; }
     /* A phone: the captions shorter, the real crop's mark kept. */
     @media (max-width: 520px) {
@@ -494,7 +524,8 @@
         .avn-job-in, .avn-face, .avn-switch::before, .avn-switch button, .avn-dock, .avn-bar-t i, .avn-bar-t b,
         .avn-meter-bar b, .avn-hour-c p, .avn-hour-t, .avn-qa .a, .avn-qa button svg, .avn-chip, .avn-pack, .avn-tool, .avn-turn, .avn-ba-tag, .avn-ba-say { transition: none !important; }
         .avn-ba.is-hint .avn-ba-knob { animation: none; }
-        .avn-real i { animation: none; }
+        .avn-real i, .avn-fm-rec i { animation: none; }
+        .avn-fm-bg, .avn-fm-box, .avn-ba-x { transition: none !important; }
         .avn-gain-t i { transition: none !important; } .avn-gain-row.is-get i.is-more::after { animation: none; }
         /* No turning over: the side shown simply changes. */
         .avn-face.is-anee, .avn-job.is-anee .avn-job-in { transform: none; }
@@ -536,19 +567,37 @@
                     {{-- The owner's own fields (2026-10-29): a lodged palay field now, and a real Anee supported crop standing
                          strong, filmed in the field (silent, looped, played only while on screen). --}}
                     <img class="is-now" src="{{ asset('images/site/photos/lodged-palay.webp') }}" srcset="{{ asset('images/site/photos/lodged-palay-600.webp') }} 600w, {{ asset('images/site/photos/lodged-palay.webp') }} 1000w" sizes="(min-width: 1024px) 34rem, 100vw" alt="A palay field lodged flat before harvest" width="1000" height="750" fetchpriority="high">
-                    <video class="is-anee" data-avn-film muted loop playsinline preload="metadata" poster="{{ asset('videos/site/anee-standing-palay.webp') }}" aria-label="A real Anee supported palay crop, standing strong in the field">
+                    <video class="is-anee" data-avn-film muted loop playsinline preload="none" poster="{{ asset('videos/site/anee-standing-palay.webp') }}" aria-label="A real Anee supported palay crop, standing strong in the field">
                         <source src="{{ asset('videos/site/anee-standing-palay.mp4') }}" type="video/mp4">
                     </video>
-                    <span class="avn-ba-tag is-now">Now</span>
+                    <span class="avn-ba-tag is-now">Your Farm Now</span>
                     <span class="avn-ba-tag is-anee"><img src="{{ $face }}" alt="">With Anee</span>
+                    {{-- Watch it big (2026-10-29, the owner: "have a button to click and shows a modal to expand it"). --}}
+                    <button type="button" class="avn-ba-x" data-film-open aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg><span>Watch the field</span></button>
                     <span class="avn-ba-say is-now"><b>Lodged.</b> <span class="avn-ba-more">Nitrogen at the wrong time, and the harvest lies flat.</span><span class="avn-ba-short">The harvest lies flat.</span></span>
-                    <span class="avn-ba-say is-anee"><span class="avn-real"><i aria-hidden="true"></i>Real Anee supported crop</span><span class="avn-ba-more">Standing strong, filmed in the field.</span></span>
+                    <span class="avn-ba-say is-anee"><span class="avn-real"><i aria-hidden="true"></i>Real video of the field</span><span class="avn-ba-more">A real Anee supported crop, standing strong.</span><span class="avn-ba-short">Anee supported crop</span></span>
                     <span class="avn-ba-line" aria-hidden="true"></span>
                     <button type="button" class="avn-ba-knob" role="slider" aria-label="Drag to compare the farm now and with Anee" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg>
                     </button>
                 </div>
                 <p class="avn-ba-help">Drag the yellow handle to compare</p>
+                <div class="avn-fm" id="avnFm" role="dialog" aria-modal="true" aria-labelledby="avnFmH" hidden>
+                    <div class="avn-fm-bg" data-film-close></div>
+                    <div class="avn-fm-box">
+                        <button type="button" class="avn-fm-x" data-film-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+                        <div class="avn-fm-v">
+                            <video muted loop playsinline controls preload="none" poster="{{ asset('videos/site/anee-standing-palay.webp') }}" aria-label="A real Anee supported palay crop, standing strong in the field">
+                                <source src="{{ asset('videos/site/anee-standing-palay.mp4') }}" type="video/mp4">
+                            </video>
+                            <span class="avn-fm-rec"><i aria-hidden="true"></i>Real video of the field</span>
+                        </div>
+                        <div class="avn-fm-t">
+                            <img src="{{ $face }}" alt="" width="80" height="80">
+                            <div><b id="avnFmH">A real Anee supported crop, standing strong</b><p>Filmed in the field just before harvest: full panicles on stems that stay upright, because the nitrogen went on at the stages the crop needed it.</p></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -884,7 +933,7 @@
         };
         let drag = false;
         const at = (x) => { const r = ba.getBoundingClientRect(); set((x - r.left) / r.width * 100); };
-        ba.addEventListener('pointerdown', (e) => { drag = true; ba.setPointerCapture(e.pointerId); at(e.clientX); ba.classList.remove('is-hint'); });
+        ba.addEventListener('pointerdown', (e) => { if (e.target.closest('[data-film-open]')) return; drag = true; ba.setPointerCapture(e.pointerId); at(e.clientX); ba.classList.remove('is-hint'); });
         ba.addEventListener('pointermove', (e) => { if (drag) at(e.clientX); });
         ba.addEventListener('pointerup', () => { drag = false; });
         ba.addEventListener('pointercancel', () => { drag = false; });
@@ -895,9 +944,33 @@
         });
         set(50);
         const film = ba.querySelector('[data-avn-film]');
+        let filmSeen = false, big = false;
         if (film && !calm && 'IntersectionObserver' in window) {
-            new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { film.play().catch(() => {}); } else { film.pause(); } }), { threshold: .2 }).observe(ba);
+            new IntersectionObserver((es) => es.forEach((e) => { filmSeen = e.isIntersecting; if (e.isIntersecting && !big) { film.play().catch(() => {}); } else { film.pause(); } }), { threshold: .2 }).observe(ba);
         }
+        // The film, big: opened by its button, closed by the x, the backdrop or Escape; the small one rests meanwhile.
+        const fm = document.getElementById('avnFm'), fmv = fm && fm.querySelector('video'), opener = ba.querySelector('[data-film-open]');
+        // The hero's column fades in on a transform, which would hold a fixed modal inside it: the modal lives on the body.
+        if (fm) document.body.appendChild(fm);
+        const openFm = () => {
+            if (!fm) return;
+            big = true; film && film.pause();
+            fm.hidden = false; document.documentElement.classList.add('avn-lock');
+            requestAnimationFrame(() => requestAnimationFrame(() => fm.classList.add('is-on')));
+            try { fmv.currentTime = film ? film.currentTime : 0; } catch (_) {}
+            fmv.play().catch(() => {});
+            fm.querySelector('.avn-fm-x').focus({ preventScroll: true });
+        };
+        const shutFm = () => {
+            if (!fm || fm.hidden) return;
+            big = false; fmv.pause(); fm.classList.remove('is-on'); document.documentElement.classList.remove('avn-lock');
+            setTimeout(() => { fm.hidden = true; }, calm ? 0 : 320);
+            if (film && filmSeen && !calm) film.play().catch(() => {});
+            opener && opener.focus({ preventScroll: true });
+        };
+        opener && opener.addEventListener('click', (e) => { e.stopPropagation(); openFm(); });
+        fm && fm.addEventListener('click', (e) => { if (e.target.closest('[data-film-close]')) shutFm(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') shutFm(); });
         // A nudge once it is seen, so the handle reads as something to move.
         if (!calm && 'IntersectionObserver' in window) {
             const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { ba.classList.add('is-hint'); io.disconnect(); } }, { threshold: .6 });
