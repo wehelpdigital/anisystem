@@ -178,16 +178,162 @@ final class DeficiencyCatalogue
 
     /* ---- photos -------------------------------------------------------- */
 
-    /** An entry's photo, or its nutrient's general one (named as a stand in), or null. */
+    /**
+     * How near two crops are, for a photo of one shown for the other (2026-10-28, the owner: "if no images are found
+     * online, then look for a same deficiency on a different crop but nearest to the family of that crop ... but have a
+     * disclaimer that it is a different crop but its near on how it looks"): crop or plant => [genus, family, order,
+     * look]. The look is the last resort and only where shortages show alike: a grass shows them in stripes, a broad
+     * leaf herb or tree between its veins; an onion, a taro or a cactus has no look alike outside its own kin. The
+     * plants that are not crops here are the ones some stand in photos really show.
+     */
+    public const KIN = [
+        'rice' => ['oryza', 'Poaceae', 'Poales', 'grass'], 'corn_yellow' => ['zea', 'Poaceae', 'Poales', 'grass'], 'corn_sweet' => ['zea', 'Poaceae', 'Poales', 'grass'],
+        'corn_glutinous' => ['zea', 'Poaceae', 'Poales', 'grass'], 'sorghum' => ['sorghum', 'Poaceae', 'Poales', 'grass'], 'sugarcane' => ['saccharum', 'Poaceae', 'Poales', 'grass'],
+        'bamboo' => ['bamboo', 'Poaceae', 'Poales', 'grass'], 'pineapple' => ['ananas', 'Bromeliaceae', 'Poales', ''],
+        'mungbean' => ['vigna', 'Fabaceae', 'Fabales', 'herb'], 'cowpea' => ['vigna', 'Fabaceae', 'Fabales', 'herb'], 'stringbean' => ['vigna', 'Fabaceae', 'Fabales', 'herb'],
+        'limabean' => ['phaseolus', 'Fabaceae', 'Fabales', 'herb'], 'soybean' => ['glycine', 'Fabaceae', 'Fabales', 'herb'], 'peanut' => ['arachis', 'Fabaceae', 'Fabales', 'herb'],
+        'wingedbean' => ['psophocarpus', 'Fabaceae', 'Fabales', 'herb'], 'pigeonpea' => ['cajanus', 'Fabaceae', 'Fabales', 'herb'], 'tamarind' => ['tamarindus', 'Fabaceae', 'Fabales', 'tree'],
+        'sweetpotato' => ['ipomoea', 'Convolvulaceae', 'Solanales', 'herb'], 'kangkong' => ['ipomoea', 'Convolvulaceae', 'Solanales', 'herb'],
+        'potato' => ['solanum', 'Solanaceae', 'Solanales', 'herb'], 'tomato' => ['solanum', 'Solanaceae', 'Solanales', 'herb'], 'eggplant' => ['solanum', 'Solanaceae', 'Solanales', 'herb'],
+        'chili' => ['capsicum', 'Solanaceae', 'Solanales', 'herb'], 'bellpepper' => ['capsicum', 'Solanaceae', 'Solanales', 'herb'], 'tobacco' => ['nicotiana', 'Solanaceae', 'Solanales', 'herb'],
+        'cassava' => ['manihot', 'Euphorbiaceae', 'Malpighiales', 'herb'], 'rubber' => ['hevea', 'Euphorbiaceae', 'Malpighiales', 'tree'], 'mangosteen' => ['garcinia', 'Clusiaceae', 'Malpighiales', 'tree'],
+        'taro' => ['colocasia', 'Araceae', 'Alismatales', ''], 'ubi' => ['dioscorea', 'Dioscoreaceae', 'Dioscoreales', ''],
+        'carrot' => ['daucus', 'Apiaceae', 'Apiales', 'herb'], 'celery' => ['apium', 'Apiaceae', 'Apiales', 'herb'],
+        'radish' => ['raphanus', 'Brassicaceae', 'Brassicales', 'herb'], 'pechay' => ['brassica', 'Brassicaceae', 'Brassicales', 'herb'], 'cabbage' => ['brassica', 'Brassicaceae', 'Brassicales', 'herb'],
+        'mustard' => ['brassica', 'Brassicaceae', 'Brassicales', 'herb'], 'broccoli' => ['brassica', 'Brassicaceae', 'Brassicales', 'herb'], 'cauliflower' => ['brassica', 'Brassicaceae', 'Brassicales', 'herb'],
+        'papaya' => ['carica', 'Caricaceae', 'Brassicales', 'tree'], 'malunggay' => ['moringa', 'Moringaceae', 'Brassicales', 'tree'],
+        'ginger' => ['zingiber', 'Zingiberaceae', 'Zingiberales', ''], 'turmeric' => ['curcuma', 'Zingiberaceae', 'Zingiberales', ''],
+        'abaca' => ['musa', 'Musaceae', 'Zingiberales', ''], 'banana' => ['musa', 'Musaceae', 'Zingiberales', ''],
+        'lettuce' => ['lactuca', 'Asteraceae', 'Asterales', 'herb'], 'alugbati' => ['basella', 'Basellaceae', 'Caryophyllales', 'herb'], 'dragonfruit' => ['selenicereus', 'Cactaceae', 'Caryophyllales', ''],
+        'saluyot' => ['corchorus', 'Malvaceae', 'Malvales', 'herb'], 'okra' => ['abelmoschus', 'Malvaceae', 'Malvales', 'herb'], 'cotton' => ['gossypium', 'Malvaceae', 'Malvales', 'herb'],
+        'cacao' => ['theobroma', 'Malvaceae', 'Malvales', 'tree'], 'durian' => ['durio', 'Malvaceae', 'Malvales', 'tree'],
+        'ampalaya' => ['momordica', 'Cucurbitaceae', 'Cucurbitales', 'herb'], 'squash' => ['cucurbita', 'Cucurbitaceae', 'Cucurbitales', 'herb'], 'cucumber' => ['cucumis', 'Cucurbitaceae', 'Cucurbitales', 'herb'],
+        'melon' => ['cucumis', 'Cucurbitaceae', 'Cucurbitales', 'herb'], 'patola' => ['luffa', 'Cucurbitaceae', 'Cucurbitales', 'herb'], 'upo' => ['lagenaria', 'Cucurbitaceae', 'Cucurbitales', 'herb'],
+        'sayote' => ['sechium', 'Cucurbitaceae', 'Cucurbitales', 'herb'], 'watermelon' => ['citrullus', 'Cucurbitaceae', 'Cucurbitales', 'herb'],
+        'strawberry' => ['fragaria', 'Rosaceae', 'Rosales', 'herb'], 'jackfruit' => ['artocarpus', 'Moraceae', 'Rosales', 'tree'],
+        'onion' => ['allium', 'Amaryllidaceae', 'Asparagales', ''], 'onion_spring' => ['allium', 'Amaryllidaceae', 'Asparagales', ''], 'garlic' => ['allium', 'Amaryllidaceae', 'Asparagales', ''],
+        'shallot' => ['allium', 'Amaryllidaceae', 'Asparagales', ''],
+        'oilpalm' => ['elaeis', 'Arecaceae', 'Arecales', 'palm'], 'coconut' => ['cocos', 'Arecaceae', 'Arecales', 'palm'],
+        'mango' => ['mangifera', 'Anacardiaceae', 'Sapindales', 'tree'], 'cashew' => ['anacardium', 'Anacardiaceae', 'Sapindales', 'tree'],
+        'calamansi' => ['citrus', 'Rutaceae', 'Sapindales', 'tree'], 'citrus' => ['citrus', 'Rutaceae', 'Sapindales', 'tree'], 'pomelo' => ['citrus', 'Rutaceae', 'Sapindales', 'tree'],
+        'lanzones' => ['lansium', 'Meliaceae', 'Sapindales', 'tree'], 'santol' => ['sandoricum', 'Meliaceae', 'Sapindales', 'tree'], 'rambutan' => ['nephelium', 'Sapindaceae', 'Sapindales', 'tree'],
+        'avocado' => ['persea', 'Lauraceae', 'Laurales', 'tree'], 'guava' => ['psidium', 'Myrtaceae', 'Myrtales', 'tree'],
+        'chico' => ['manilkara', 'Sapotaceae', 'Ericales', 'tree'], 'starapple' => ['chrysophyllum', 'Sapotaceae', 'Ericales', 'tree'],
+        'atis' => ['annona', 'Annonaceae', 'Magnoliales', 'tree'], 'guyabano' => ['annona', 'Annonaceae', 'Magnoliales', 'tree'],
+        'coffee' => ['coffea', 'Rubiaceae', 'Gentianales', 'tree'],
+        // What some stand in photos really show.
+        'common-bean' => ['phaseolus', 'Fabaceae', 'Fabales', 'herb'], 'ornamental-ginger' => ['zingiber', 'Zingiberaceae', 'Zingiberales', ''],
+        'flowering-ginger' => ['alpinia', 'Zingiberaceae', 'Zingiberales', ''], 'breadfruit' => ['artocarpus', 'Moraceae', 'Rosales', 'tree'],
+        'endive' => ['cichorium', 'Asteraceae', 'Asterales', 'herb'], 'date-palm' => ['phoenix', 'Arecaceae', 'Arecales', 'palm'], 'palm' => ['', 'Arecaceae', 'Arecales', 'palm'],
+        'zucchini' => ['cucurbita', 'Cucurbitaceae', 'Cucurbitales', 'herb'], 'scarlet-eggplant' => ['solanum', 'Solanaceae', 'Solanales', 'herb'],
+        'gardenia' => ['gardenia', 'Rubiaceae', 'Gentianales', 'tree'], 'groundcover' => ['', '', '', 'herb'], 'ornamental-tree' => ['', '', '', 'tree'],
+    ];
+
+    /** The plants above that are not crops of the catalogue, in words. */
+    private const PLANTS = ['common-bean' => 'common bean', 'ornamental-ginger' => 'ornamental ginger', 'flowering-ginger' => 'flowering ginger', 'breadfruit' => 'breadfruit',
+        'endive' => 'endive', 'date-palm' => 'date palm', 'palm' => 'another palm', 'zucchini' => 'zucchini', 'scarlet-eggplant' => 'scarlet eggplant', 'gardenia' => 'gardenia',
+        'groundcover' => 'a groundcover plant', 'ornamental-tree' => 'an ornamental tree'];
+
+    /**
+     * 4 the same genus, 3 the same family, 2 the same order and the same look (ginger and banana), 1 the same order or
+     * only the same look (a tree and a shrub of one order, two broad leaf herbs), 0 nothing alike.
+     */
+    public static function kin(string $a, string $b): int
+    {
+        $x = self::KIN[$a] ?? null;
+        $y = self::KIN[$b] ?? null;
+        if (! $x || ! $y) {
+            return 0;
+        }
+        if ($x[0] !== '' && $x[0] === $y[0]) {
+            return 4;
+        }
+        if ($x[1] !== '' && $x[1] === $y[1]) {
+            return 3;
+        }
+        $look = $x[3] === $y[3];
+        if ($x[2] !== '' && $x[2] === $y[2]) {
+            return $look ? 2 : 1;
+        }
+
+        return $look && $x[3] !== '' ? 1 : 0;
+    }
+
+    /** A crop or plant in words: "chili", "common bean". */
+    public static function plantName(string $k): string
+    {
+        // "Onion, bulb" and "Citrus, dalandan or ponkan" say their first words.
+        return self::PLANTS[$k] ?? mb_strtolower(trim(explode(',', (string) (FieldCatalogue::crops()[$k][1] ?? str_replace('_', ' ', $k)))[0]));
+    }
+
+    /**
+     * An entry's photo. Its own crop's when there is one; else the nearest crop's photo of the same shortage (the same
+     * genus, then family, then kind of plant; a stand in picked by hand wins a tie, it was matched by eye); else its
+     * nutrient's general one. A stand in carries `shows` (what it really is), `kin` and `note`, the words said under it.
+     */
     public static function photo(?string $slug, ?string $nutrient = null): ?array
     {
         $all = self::file('deficiency-photos.json');
         $p = $slug !== null ? ($all['entries'][$slug] ?? null) : null;
+        if ($p && empty($p['standin'])) {
+            return ! empty($p['src']) ? $p : null;
+        }
+        $e = $slug !== null ? (self::entries()[$slug] ?? null) : null;
+        $nutrient ??= $e['nutrient'] ?? null;
+        $crop = $e['crop'] ?? null;
+        if ($crop && $nutrient) {
+            $best = $p ? ['p' => $p, 'k' => self::kin($crop, (string) ($p['shows'] ?? ''))] : null;
+            foreach (self::ownPhotos()[$nutrient] ?? [] as $c => $own) {
+                $k = self::kin($crop, $c);
+                if ($c !== $crop && $k > ($best['k'] ?? 0)) {
+                    $best = ['p' => ['standin' => true, 'shows' => $c] + $own, 'k' => $k];
+                }
+            }
+            $p = $best['p'] ?? null;
+        }
         if (! $p && $nutrient !== null && ! empty($all['general'][$nutrient])) {
-            $p = $all['general'][$nutrient] + ['standin' => true];
+            $p = ['standin' => true] + $all['general'][$nutrient];
+        }
+        if (! $p || empty($p['src'])) {
+            return null;
+        }
+        $shows = (string) ($p['shows'] ?? '');
+        $kin = $crop && $shows !== '' ? self::kin($crop, $shows) : 0;
+
+        return $p + ['kin' => $kin, 'note' => self::standinNote($crop, $shows, $kin, $nutrient)];
+    }
+
+    /** The words under a stand in: what crop it really is, how near, and that it is a different crop. */
+    public static function standinNote(?string $crop, string $shows, int $kin, ?string $nutrient): string
+    {
+        $n = mb_strtolower(self::NUTRIENTS[$nutrient][0] ?? 'this');
+        $for = $crop ? self::plantName($crop) : 'this crop';
+        if ($shows === '') {
+            return 'The photo shows ' . $n . ' deficiency on another crop: no free photo of it on ' . $for . ' was found.';
+        }
+        $on = self::plantName($shows);
+        $near = [4 => ', a close relative of ' . $for . ', so it looks much the same', 3 => ', from the same plant family as ' . $for . ', so it looks much the same',
+            2 => ', a distant relative of ' . $for . ', so the signs look alike', 1 => ', a different crop on which the signs look alike'][$kin] ?? ', a different crop';
+
+        return 'This photo shows ' . $n . ' deficiency on ' . $on . $near . '. It is not ' . $for . ': no free photo of it on ' . $for . ' was found.';
+    }
+
+    /** Every crop's own photo, by nutrient: nutrient => crop => photo (the first entry of that crop). */
+    private static function ownPhotos(): array
+    {
+        if (isset(self::$memo['ownPhotos'])) {
+            return self::$memo['ownPhotos'];
+        }
+        $out = [];
+        $entries = self::entries();
+        foreach ((array) (self::file('deficiency-photos.json')['entries'] ?? []) as $slug => $p) {
+            $e = $entries[$slug] ?? null;
+            if ($e && empty($p['standin']) && ! empty($p['src'])) {
+                $out[$e['nutrient']][$e['crop']] ??= $p;
+            }
         }
 
-        return $p && ! empty($p['src']) ? $p : null;
+        return self::$memo['ownPhotos'] = $out;
     }
 
     /* ---- fertilizers sold here ------------------------------------------ */

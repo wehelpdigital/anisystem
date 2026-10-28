@@ -21,11 +21,13 @@
     $items = collect($D::entries())->map(function ($e, $slug) use ($D, $S, $F) {
         $ph = $D::photo($slug, $e['nutrient']);
 
-        // A card shows only the crop's own photo; a stand in waits for the page, where it is said to be one.
+        // A card shows the crop's own photo, or the nearest crop's with that crop's name on it (2026-10-28, the owner:
+        // "nearest to the family of that crop ... but have a disclaimer that it is a different crop").
         $own = $ph && empty($ph['standin']);
 
-        return $e + ['url' => $D::url($e), 'thumb' => $own ? $S::img($ph['thumb'] ?? $ph['src']) : null, 'alt' => $own ? ($ph['alt'] ?? $e['name']) : $e['name'],
-            'standin' => ! empty($ph['standin']), 'cropName' => $F::crops()[$e['crop']] ?? [$e['crop'], $e['crop'], '🌱', 'rice']];
+        return $e + ['url' => $D::url($e), 'thumb' => $ph && ($own || ($ph['kin'] ?? 0) >= 1) ? $S::img($ph['thumb'] ?? $ph['src']) : null, 'alt' => $own ? ($ph['alt'] ?? $e['name']) : ($ph['note'] ?? $e['name']),
+            'standin' => ! empty($ph['standin']), 'near' => $ph && ! $own && ($ph['kin'] ?? 0) >= 1 ? (($ph['shows'] ?? '') !== '' ? $D::plantName((string) $ph['shows']) : 'another crop') : null,
+            'cropName' => $F::crops()[$e['crop']] ?? [$e['crop'], $e['crop'], '🌱', 'rice']];
     })->sortBy(fn ($e) => [array_search($e['crop'], array_keys($crops), true), $e['rank']])->values();
     $onShelf = fn ($g) => $items->filter(fn ($e) => $e['group'] === $g);
     $faces = $items->filter(fn ($e) => $e['thumb'] && ! $e['standin'])->unique('thumb')->unique('group')->take(3)->values();
@@ -80,6 +82,8 @@
         .wk-card .nd-sym { position: absolute; right: .55rem; top: .55rem; display: grid; place-items: center; min-width: 2rem; height: 2rem; padding: 0 .35rem; border-radius: .6rem; font-family: var(--font-heading); font-size: .84rem; font-weight: 800; color: #fff;
             background: hsl(var(--g) 50% 38%); box-shadow: 0 6px 14px -8px rgb(0 0 0 / .6); }
         .wk-card .nd-alt { display: block; margin-top: .25rem; font-size: .7rem; font-style: italic; color: #6b7280; }
+        .wk-card .nd-near { position: absolute; left: .55rem; bottom: .55rem; max-width: calc(100% - 1.1rem); padding: .2rem .55rem; border-radius: 999px; font-size: .64rem; font-weight: 800;
+            color: #fff; background: rgb(15 23 10 / .62); backdrop-filter: blur(4px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         @media (prefers-reduced-motion: reduce) { .nd-nut, .nd-crops a { transition: none; } }
     </style>
 @endpush
@@ -221,6 +225,7 @@
                             @endif
                             <span class="wk-tag">{{ $e['cropName'][0] }}</span>
                             <span class="nd-sym" aria-hidden="true">{{ $e['symbol'] }}</span>
+                            @if ($e['near'])<span class="nd-near" title="{{ $e['alt'] }}">Shown on {{ $e['near'] }}</span>@endif
                         </span>
                         <div class="wk-in">
                             <b>{{ $e['name'] }}</b>

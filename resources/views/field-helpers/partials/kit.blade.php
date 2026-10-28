@@ -394,6 +394,11 @@
     .fhc-ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.22,1,.36,1); }
     .fhc-card:hover .fhc-ph img { transform: scale(1.05); }
     .fhc-ph .none { position: absolute; inset: 0; display: grid; place-items: center; color: hsl(var(--g) 40% 55%); }
+    /* A photo of a near crop, named on it (2026-10-28). */
+    .fhc-ph .fhc-near { position: absolute; left: .45rem; bottom: .45rem; max-width: calc(100% - .9rem); padding: .16rem .5rem; border-radius: 999px; font-size: .6rem; font-weight: 800;
+        color: #fff; background: rgb(15 23 10 / .62); backdrop-filter: blur(4px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .fh-rc-near { position: absolute; right: .25rem; bottom: .25rem; display: grid; place-items: center; width: 1.1rem; height: 1.1rem; border-radius: 999px; font-size: .7rem; font-weight: 800;
+        color: #fff; background: rgb(15 23 10 / .62); }
     .fhc-ph .none svg { width: 2.4rem; height: 2.4rem; }
     .fhc-ph i { position: absolute; left: .45rem; top: .45rem; padding: .18rem .5rem; border-radius: 999px; font-style: normal; font-size: .6rem; font-weight: 800; letter-spacing: .05em;
         text-transform: uppercase; color: hsl(var(--g) 60% 20%); background: hsl(var(--g) 60% 93% / .94); }
@@ -1076,7 +1081,9 @@
     // A result card's small photo, a button of its own; with none, `fallback` (a leaf, a symbol) in a tile carrying `act` (' data-fold="…"').
     FH.rcPhoto = (i, fallback, act, note) => (i.thumb
         ? '<button type="button" class="fh-rc-ph"' + FH.lbAttr([FH.lbItem(i, note)]) + ' aria-haspopup="dialog" aria-label="' + esc('See the photo of ' + i.name + ' larger') + '">'
-            + '<img src="' + esc(i.thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer"><span class="fh-rc-zoom" aria-hidden="true">' + FH.icon.zoom + '</span></button>'
+            + '<img src="' + esc(i.thumb) + '" alt="" loading="lazy" referrerpolicy="no-referrer"><span class="fh-rc-zoom" aria-hidden="true">' + FH.icon.zoom + '</span>'
+            // A photo of a near crop (i.near, its name) is marked on the small photo; the note says it when shown large.
+            + (i.near ? '<span class="fh-rc-near" title="' + esc('Shown on ' + i.near) + '">≈</span>' : '') + '</button>'
         : '<span class="fh-rc-ph is-none"' + (act || '') + ' aria-hidden="true">' + (fallback || '') + '</span>');
     // A Creative Commons licence said in words ("CC BY SA 4.0", "CC BY 3.0 au", "CC0 1.0") as the address of its deed; '' for any other.
     const licUrl = (s) => {
@@ -1413,7 +1420,7 @@
             const loc = FH.localOf(i);
             return '<button type="button" class="fhc-card" style="--g: ' + (i.hue || 98) + '" data-k="' + esc(i.k) + '">'
                 + '<span class="fhc-ph">' + (i.thumb ? '<img src="' + esc(i.thumb) + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">' : '<span class="none">' + FH.icon.leaf + '</span>')
-                + '<i>' + esc(cfg.tag(i)) + '</i></span>'
+                + '<i>' + esc(cfg.tag(i)) + '</i>' + (i.near ? '<small class="fhc-near">Shown on ' + esc(i.near) + '</small>' : '') + '</span>'
                 + '<span class="fhc-in"><b>' + esc(i.name) + '</b>' + (loc ? '<em>' + esc(loc) + '</em>' : '') + (i.sci ? '<small>' + esc(i.sci) + '</small>' : '') + '</span></button>';
         };
         const draw = () => { if (drawn) return; grid.innerHTML = cfg.items.map(card).join(''); cards = [...grid.children]; drawn = true; };

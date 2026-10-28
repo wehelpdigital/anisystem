@@ -12,9 +12,9 @@
     $crops = $book['crops'];
     $ndCrop = $F::cropKey(request('crop') ?: ($defaultCrop ?? null));
     $ndCrop = isset($crops[$ndCrop]) ? $ndCrop : array_key_first($crops);
-    $faces = collect($book['entries'])->filter(fn ($e) => $e['thumb'] && in_array($ndCrop, $e['crops'], true))->unique('thumb')->take(3);
+    $faces = collect($book['entries'])->filter(fn ($e) => $e['thumb'] && ! $e['standin'] && in_array($ndCrop, $e['crops'], true))->unique('thumb')->take(3);
     if ($faces->count() < 3) {
-        $faces = collect($book['entries'])->filter(fn ($e) => $e['thumb'])->unique('thumb')->take(3);
+        $faces = collect($book['entries'])->filter(fn ($e) => $e['thumb'] && ! $e['standin'])->unique('thumb')->take(3);
     }
     // Each photo's original page and licence, for the credit under it when it is shown large (2026-10-17).
     $ndEntries = collect($book['entries'])->map(function ($e) {
@@ -153,7 +153,7 @@
     /* ---- One entry, in the catalogue's second pane ------------------- */
     const text = (icon, h, t) => (t ? FH.sec(icon, h, '<p>' + esc(t) + '</p>') : '');
     // A stand in photo says so, under it and when it is shown large.
-    const standin = (i) => (i.standin ? 'The photo shows ' + String(i.kind).toLowerCase() + ' deficiency on another crop: no free photo of it on this crop was found.' : '');
+    const standin = (i) => (i.standin ? i.note || 'The photo shows ' + String(i.kind).toLowerCase() + ' deficiency on another crop: no free photo of it on this crop was found.' : '');
     const detail = (i) => {
         const where = (i.where || []).map((k) => D.where[k]).filter(Boolean), signs = (i.signs || []).map((k) => D.signs[k]).filter(Boolean);
         const chips = (list) => '<ul class="fhd-chips">' + list.map((l) => '<li>' + esc(l) + '</li>').join('') + '</ul>';
@@ -196,7 +196,7 @@
         const sum = '<i>' + (i.materials || []).length + ' to apply</i>' + (ps.length ? '<i>' + ps.length + ' sold here</i>' : '');
         // The small photo shows it large (2026-10-17, the owner); the name folds the card.
         return '<article class="fh-rc' + (open ? ' is-open' : '') + '" style="--g: ' + i.hue + '" data-k="' + esc(i.k) + '">'
-            + '<div class="fh-rc-top">' + FH.rcPhoto(i, symOf(i), ' data-fold="' + esc(i.k) + '"')
+            + '<div class="fh-rc-top">' + FH.rcPhoto(i, symOf(i), ' data-fold="' + esc(i.k) + '"', standin(i))
             + '<button type="button" class="fh-rc-head" data-fold="' + esc(i.k) + '" aria-expanded="' + open + '" aria-controls="' + id + '">'
             + '<span class="fh-rc-t"><b>' + esc(i.name) + '</b><small><em>' + esc(i.sym + ', ' + i.kind) + '</em>' + (full ? '<span class="nd-match">Fits what you see</span>' : '') + '</small>'
             + '<span class="fh-rc-sum">' + sum + '</span></span></button>'

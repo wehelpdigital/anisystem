@@ -139,9 +139,12 @@ final class FieldBook
                 'causes' => (string) ($e['causes'] ?? ''), 'confuse' => (string) ($e['confuse'] ?? ''), 'confirm' => (string) ($e['confirm'] ?? ''),
                 'fix' => (string) ($e['fix'] ?? ''), 'prevent' => (string) ($e['prevent'] ?? ''), 'materials' => $e['materials'],
                 'ranks' => (object) [$e['crop'] => $e['rank']],
-                // The list's small picture is the crop's own photo only; the entry shows a stand in, said to be one.
-                'thumb' => $ph && empty($ph['standin']) ? SitePages::img($ph['thumb'] ?? $ph['src']) : null, 'photo' => $ph ? SitePages::img($ph['src']) : null,
+                // The list's small picture: the crop's own photo, or the nearest crop's with its name on it (2026-10-28, the
+                // owner: "look for a same deficiency on a different crop but nearest to the family of that crop ... but have a
+                // disclaimer that it is a different crop"). `note` says so under it and when it is shown large.
+                'thumb' => $ph && (empty($ph['standin']) || ($ph['kin'] ?? 0) >= 1) ? SitePages::img($ph['thumb'] ?? $ph['src']) : null, 'photo' => $ph ? SitePages::img($ph['src']) : null,
                 'alt' => (string) ($ph['alt'] ?? $e['name']), 'credit' => trim((string) ($ph['credit'] ?? '')) ?: null, 'standin' => ! empty($ph['standin']),
+                'near' => ! empty($ph['standin']) && ($ph['kin'] ?? 0) >= 1 ? (($ph['shows'] ?? '') !== '' ? $D::plantName((string) $ph['shows']) : 'another crop') : null, 'note' => $ph['note'] ?? null,
                 'sources' => self::sources(array_map(fn ($x) => ['label' => $x['title'] ?? ($x['label'] ?? ''), 'url' => $x['url'] ?? null], $e['sources'])),
             ];
             if (! isset($byNc[$e['nutrient']][$e['crop']])) {

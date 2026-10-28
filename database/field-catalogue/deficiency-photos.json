@@ -239,7 +239,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/44263355572/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/1869/44263355572_cdcbd0e752_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "flowering-ginger"
   },
   "guava-potassium-deficiency": {
    "src": "/images/site/deficiencies/guava-potassium-deficiency.webp",
@@ -259,7 +260,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/39575220174/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4623/39575220174_296914b073_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "breadfruit"
   },
   "lettuce-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/lettuce-phosphorus-deficiency.webp",
@@ -289,7 +291,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Endivien_Bormangel,_Hinrichs-Berger,_Jan,_LTZ_Augustenberg.jpg",
    "license": "CC BY 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Endivien_Bormangel%2C_Hinrichs-Berger%2C_Jan%2C_LTZ_Augustenberg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "endive"
   },
   "oilpalm-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/oilpalm-nitrogen-deficiency.webp",
@@ -309,7 +312,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/33977810776/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/2855/33977810776_7b9c3e1aee_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "palm"
   },
   "oilpalm-magnesium-deficiency": {
    "src": "/images/site/deficiencies/oilpalm-magnesium-deficiency.webp",
@@ -329,7 +333,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/14600867158/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/3913/14600867158_2a8f57914b_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "palm"
   },
   "papaya-potassium-deficiency": {
    "src": "/images/site/deficiencies/papaya-potassium-deficiency.webp",
@@ -399,7 +404,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Phaseolus_vulgaris_nitrogen_deficiency.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Phaseolus_vulgaris_nitrogen_deficiency.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "stringbean-potassium-deficiency": {
    "src": "/images/site/deficiencies/stringbean-potassium-deficiency.webp",
@@ -409,7 +415,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/c2/K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "sugarcane-iron-deficiency": {
    "src": "/images/site/deficiencies/sugarcane-iron-deficiency.webp",
@@ -479,7 +486,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/33893278323/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4172/33893278323_7921af18a5_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "banana"
   },
   "abaca-potassium-deficiency": {
    "src": "/images/site/deficiencies/abaca-potassium-deficiency.webp",
@@ -489,7 +497,8 @@
    "page": "https://www.flickr.com/photos/22503286@N06/5087815254/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/4146/5087815254_e7a3115aff_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cotton"
   },
   "abaca-magnesium-deficiency": {
    "src": "/images/site/deficiencies/abaca-magnesium-deficiency.webp",
@@ -499,7 +508,8 @@
    "page": "https://www.ipmimages.org/browse/image/1234182",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1234182.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cotton"
   },
   "alugbati-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/alugbati-nitrogen-deficiency.webp",
@@ -509,7 +519,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "alugbati-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/alugbati-phosphorus-deficiency.webp",
@@ -519,7 +530,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "alugbati-potassium-deficiency": {
    "src": "/images/site/deficiencies/alugbati-potassium-deficiency.webp",
@@ -529,7 +541,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "alugbati-magnesium-deficiency": {
    "src": "/images/site/deficiencies/alugbati-magnesium-deficiency.webp",
@@ -539,7 +552,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "ampalaya-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/ampalaya-nitrogen-deficiency.webp",
@@ -559,7 +573,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "ampalaya-potassium-deficiency": {
    "src": "/images/site/deficiencies/ampalaya-potassium-deficiency.webp",
@@ -579,7 +594,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "ampalaya-calcium-deficiency": {
    "src": "/images/site/deficiencies/ampalaya-calcium-deficiency.webp",
@@ -589,7 +605,8 @@
    "page": "https://www.ipmimages.org/browse/image/5332017",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5332017.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "squash"
   },
   "atis-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/atis-nitrogen-deficiency.webp",
@@ -599,7 +616,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "atis-potassium-deficiency": {
    "src": "/images/site/deficiencies/atis-potassium-deficiency.webp",
@@ -609,7 +627,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "atis-magnesium-deficiency": {
    "src": "/images/site/deficiencies/atis-magnesium-deficiency.webp",
@@ -619,7 +638,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "atis-zinc-deficiency": {
    "src": "/images/site/deficiencies/atis-zinc-deficiency.webp",
@@ -629,7 +649,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "atis-iron-deficiency": {
    "src": "/images/site/deficiencies/atis-iron-deficiency.webp",
@@ -639,7 +660,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373192",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373192.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "atis-boron-deficiency": {
    "src": "/images/site/deficiencies/atis-boron-deficiency.webp",
@@ -649,7 +671,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15556254487/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7523/15556254487_cb9453f447_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "avocado-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/avocado-nitrogen-deficiency.webp",
@@ -659,7 +682,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "avocado-zinc-deficiency": {
    "src": "/images/site/deficiencies/avocado-zinc-deficiency.webp",
@@ -669,7 +693,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "avocado-iron-deficiency": {
    "src": "/images/site/deficiencies/avocado-iron-deficiency.webp",
@@ -679,7 +704,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373192",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373192.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "bamboo-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/bamboo-nitrogen-deficiency.webp",
@@ -689,7 +715,8 @@
    "page": "https://www.ipmimages.org/browse/image/1440088",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1440088.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tobacco"
   },
   "bamboo-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/bamboo-phosphorus-deficiency.webp",
@@ -699,7 +726,8 @@
    "page": "https://www.ipmimages.org/browse/image/5332037",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5332037.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "bamboo-potassium-deficiency": {
    "src": "/images/site/deficiencies/bamboo-potassium-deficiency.webp",
@@ -709,7 +737,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K-deficient_maize_on_Cedara_2_2003-01-13.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/d/d1/K-deficient_maize_on_Cedara_2_2003-01-13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "bamboo-magnesium-deficiency": {
    "src": "/images/site/deficiencies/bamboo-magnesium-deficiency.webp",
@@ -719,7 +748,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg",
    "license": "CC BY 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "bamboo-iron-deficiency": {
    "src": "/images/site/deficiencies/bamboo-iron-deficiency.webp",
@@ -729,7 +759,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Amit_000_P_010_-_Copy.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Amit_000_P_010_-_Copy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "sugarcane"
   },
   "banana-potassium-deficiency": {
    "src": "/images/site/deficiencies/banana-potassium-deficiency.webp",
@@ -749,7 +780,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "banana-zinc-deficiency": {
    "src": "/images/site/deficiencies/banana-zinc-deficiency.webp",
@@ -779,7 +811,8 @@
    "page": "https://data.mendeley.com/datasets/dh5cpvn48j/1",
    "license": "CC BY 4.0",
    "big": "https://data.mendeley.com/public-files/datasets/dh5cpvn48j/files/17b97ec7-184f-46e0-8fa5-24a7683b5567/file_downloaded#pepper/pepper_photo/DSC05893.JPG",
-   "standin": true
+   "standin": true,
+   "shows": "chili"
   },
   "bellpepper-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-phosphorus-deficiency.webp",
@@ -789,7 +822,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "bellpepper-potassium-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-potassium-deficiency.webp",
@@ -799,7 +833,8 @@
    "page": "https://data.mendeley.com/datasets/dh5cpvn48j/1",
    "license": "CC BY 4.0",
    "big": "https://data.mendeley.com/public-files/datasets/dh5cpvn48j/files/17b97ec7-184f-46e0-8fa5-24a7683b5567/file_downloaded#pepper/pepper_photo/DSC06938.JPG",
-   "standin": true
+   "standin": true,
+   "shows": "chili"
   },
   "bellpepper-magnesium-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-magnesium-deficiency.webp",
@@ -809,7 +844,8 @@
    "page": "https://data.mendeley.com/datasets/dh5cpvn48j/1",
    "license": "CC BY 4.0",
    "big": "https://data.mendeley.com/public-files/datasets/dh5cpvn48j/files/17b97ec7-184f-46e0-8fa5-24a7683b5567/file_downloaded#pepper/pepper_photo/DSC08003.JPG",
-   "standin": true
+   "standin": true,
+   "shows": "chili"
   },
   "bellpepper-calcium-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-calcium-deficiency.webp",
@@ -829,7 +865,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Brassica_oleracea_Cauliflower_Bloemkool_stikstofgebrek.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/3/32/Brassica_oleracea_Cauliflower_Bloemkool_stikstofgebrek.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cauliflower"
   },
   "broccoli-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/broccoli-phosphorus-deficiency.webp",
@@ -839,7 +876,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "broccoli-potassium-deficiency": {
    "src": "/images/site/deficiencies/broccoli-potassium-deficiency.webp",
@@ -849,7 +887,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K_deficient_cabbage_2017_05_10_6923.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/6/62/K_deficient_cabbage_2017_05_10_6923.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "broccoli-magnesium-deficiency": {
    "src": "/images/site/deficiencies/broccoli-magnesium-deficiency.webp",
@@ -859,7 +898,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "broccoli-calcium-deficiency": {
    "src": "/images/site/deficiencies/broccoli-calcium-deficiency.webp",
@@ -869,7 +909,8 @@
    "page": "https://www.ipmimages.org/browse/image/5077026",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5077026.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "cabbage-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/cabbage-phosphorus-deficiency.webp",
@@ -879,7 +920,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "cabbage-magnesium-deficiency": {
    "src": "/images/site/deficiencies/cabbage-magnesium-deficiency.webp",
@@ -889,7 +931,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "cacao-magnesium-deficiency": {
    "src": "/images/site/deficiencies/cacao-magnesium-deficiency.webp",
@@ -899,7 +942,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "cacao-zinc-deficiency": {
    "src": "/images/site/deficiencies/cacao-zinc-deficiency.webp",
@@ -909,7 +953,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "cacao-iron-deficiency": {
    "src": "/images/site/deficiencies/cacao-iron-deficiency.webp",
@@ -919,7 +964,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/13669749005/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7179/13669749005_821492b905_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "coffee"
   },
   "calamansi-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/calamansi-nitrogen-deficiency.webp",
@@ -929,7 +975,8 @@
    "page": "https://zenodo.org/records/8294078",
    "license": "CC BY 4.0",
    "big": "https://zenodo.org/api/records/8294078/files/CitrusUAT_dataset.zip/content#CitrusUAT_dataset/Images/N_031.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "calamansi-potassium-deficiency": {
    "src": "/images/site/deficiencies/calamansi-potassium-deficiency.webp",
@@ -939,7 +986,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "calamansi-magnesium-deficiency": {
    "src": "/images/site/deficiencies/calamansi-magnesium-deficiency.webp",
@@ -949,7 +997,8 @@
    "page": "https://zenodo.org/records/8294078",
    "license": "CC BY 4.0",
    "big": "https://zenodo.org/api/records/8294078/files/CitrusUAT_dataset.zip/content#CitrusUAT_dataset/Images/Mg_010.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "calamansi-zinc-deficiency": {
    "src": "/images/site/deficiencies/calamansi-zinc-deficiency.webp",
@@ -959,7 +1008,8 @@
    "page": "https://zenodo.org/records/8294078",
    "license": "CC BY 4.0",
    "big": "https://zenodo.org/api/records/8294078/files/CitrusUAT_dataset.zip/content#CitrusUAT_dataset/Images/Zn_091.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "calamansi-iron-deficiency": {
    "src": "/images/site/deficiencies/calamansi-iron-deficiency.webp",
@@ -969,7 +1019,8 @@
    "page": "https://zenodo.org/records/8294078",
    "license": "CC BY 4.0",
    "big": "https://zenodo.org/api/records/8294078/files/CitrusUAT_dataset.zip/content#CitrusUAT_dataset/Images/Fe_001.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "carrot-potassium-deficiency": {
    "src": "/images/site/deficiencies/carrot-potassium-deficiency.webp",
@@ -979,7 +1030,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Potassium_deficiency_in_potatoes.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/5/57/Potassium_deficiency_in_potatoes.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "potato"
   },
   "carrot-magnesium-deficiency": {
    "src": "/images/site/deficiencies/carrot-magnesium-deficiency.webp",
@@ -989,7 +1041,8 @@
    "page": "https://www.flickr.com/photos/141760766@N08/27057825523/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/7344/27057825523_2f158e2069_o.png",
-   "standin": true
+   "standin": true,
+   "shows": "potato"
   },
   "carrot-boron-deficiency": {
    "src": "/images/site/deficiencies/carrot-boron-deficiency.webp",
@@ -999,7 +1052,8 @@
    "page": "https://www.ipmimages.org/browse/image/5331069",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5331069.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "radish"
   },
   "cashew-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/cashew-nitrogen-deficiency.webp",
@@ -1009,7 +1063,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "cashew-potassium-deficiency": {
    "src": "/images/site/deficiencies/cashew-potassium-deficiency.webp",
@@ -1019,7 +1074,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "cashew-zinc-deficiency": {
    "src": "/images/site/deficiencies/cashew-zinc-deficiency.webp",
@@ -1029,7 +1085,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "cashew-boron-deficiency": {
    "src": "/images/site/deficiencies/cashew-boron-deficiency.webp",
@@ -1039,7 +1096,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15556254487/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7523/15556254487_cb9453f447_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "cassava-potassium-deficiency": {
    "src": "/images/site/deficiencies/cassava-potassium-deficiency.webp",
@@ -1049,7 +1107,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Potassium_deficiency_in_potatoes.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/5/57/Potassium_deficiency_in_potatoes.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "potato"
   },
   "cassava-magnesium-deficiency": {
    "src": "/images/site/deficiencies/cassava-magnesium-deficiency.webp",
@@ -1059,7 +1118,8 @@
    "page": "https://www.flickr.com/photos/141760766@N08/27057825523/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/7344/27057825523_2f158e2069_o.png",
-   "standin": true
+   "standin": true,
+   "shows": "potato"
   },
   "cauliflower-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/cauliflower-phosphorus-deficiency.webp",
@@ -1069,7 +1129,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "cauliflower-potassium-deficiency": {
    "src": "/images/site/deficiencies/cauliflower-potassium-deficiency.webp",
@@ -1109,7 +1170,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "celery-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/celery-phosphorus-deficiency.webp",
@@ -1119,7 +1181,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "celery-potassium-deficiency": {
    "src": "/images/site/deficiencies/celery-potassium-deficiency.webp",
@@ -1129,7 +1192,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "celery-magnesium-deficiency": {
    "src": "/images/site/deficiencies/celery-magnesium-deficiency.webp",
@@ -1139,7 +1203,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "celery-calcium-deficiency": {
    "src": "/images/site/deficiencies/celery-calcium-deficiency.webp",
@@ -1149,7 +1214,8 @@
    "page": "https://www.flickr.com/photos/128394688@N07/16846117238/",
    "license": "CC BY SA 2.0",
    "big": "https://live.staticflickr.com/8712/16846117238_17b4afa199_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "celery-boron-deficiency": {
    "src": "/images/site/deficiencies/celery-boron-deficiency.webp",
@@ -1159,7 +1225,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Endivien_Bormangel,_Hinrichs-Berger,_Jan,_LTZ_Augustenberg.jpg",
    "license": "CC BY 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Endivien_Bormangel%2C_Hinrichs-Berger%2C_Jan%2C_LTZ_Augustenberg.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "endive"
   },
   "chico-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/chico-nitrogen-deficiency.webp",
@@ -1169,7 +1236,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "chico-potassium-deficiency": {
    "src": "/images/site/deficiencies/chico-potassium-deficiency.webp",
@@ -1179,7 +1247,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "chico-magnesium-deficiency": {
    "src": "/images/site/deficiencies/chico-magnesium-deficiency.webp",
@@ -1189,7 +1258,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "chico-zinc-deficiency": {
    "src": "/images/site/deficiencies/chico-zinc-deficiency.webp",
@@ -1199,7 +1269,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "chico-boron-deficiency": {
    "src": "/images/site/deficiencies/chico-boron-deficiency.webp",
@@ -1209,7 +1280,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15556254487/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7523/15556254487_cb9453f447_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "chili-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/chili-phosphorus-deficiency.webp",
@@ -1219,7 +1291,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "chili-potassium-deficiency": {
    "src": "/images/site/deficiencies/chili-potassium-deficiency.webp",
@@ -1259,7 +1332,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_B-Mangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/13/Tomate_Blatt_B-Mangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "citrus-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/citrus-nitrogen-deficiency.webp",
@@ -1279,7 +1353,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "citrus-magnesium-deficiency": {
    "src": "/images/site/deficiencies/citrus-magnesium-deficiency.webp",
@@ -1299,7 +1374,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/41941114725/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/1762/41941114725_c6c90a9bd1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "date-palm"
   },
   "coffee-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/coffee-nitrogen-deficiency.webp",
@@ -1339,7 +1415,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "corn-glutinous-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-phosphorus-deficiency.webp",
@@ -1349,7 +1426,8 @@
    "page": "https://www.ipmimages.org/browse/image/5332037",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5332037.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-glutinous-potassium-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-potassium-deficiency.webp",
@@ -1359,7 +1437,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K-deficient_maize_on_Cedara_2_2003-01-13.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/d/d1/K-deficient_maize_on_Cedara_2_2003-01-13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-glutinous-sulfur-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-sulfur-deficiency.webp",
@@ -1369,7 +1448,8 @@
    "page": "https://www.flickr.com/photos/22503286@N06/5087811468/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/4152/5087811468_a2d25977a2_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-glutinous-magnesium-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-magnesium-deficiency.webp",
@@ -1379,7 +1459,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg",
    "license": "CC BY 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-glutinous-zinc-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-zinc-deficiency.webp",
@@ -1389,7 +1470,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Maize_of_Zn_deficiency,_symptoms_on_leaves.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Maize_of_Zn_deficiency%2C_symptoms_on_leaves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-sweet-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-phosphorus-deficiency.webp",
@@ -1399,7 +1481,8 @@
    "page": "https://www.ipmimages.org/browse/image/5332037",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5332037.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-sweet-potassium-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-potassium-deficiency.webp",
@@ -1409,7 +1492,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K-deficient_maize_on_Cedara_2_2003-01-13.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/d/d1/K-deficient_maize_on_Cedara_2_2003-01-13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-sweet-sulfur-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-sulfur-deficiency.webp",
@@ -1419,7 +1503,8 @@
    "page": "https://www.flickr.com/photos/22503286@N06/5087811468/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/4152/5087811468_a2d25977a2_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-sweet-magnesium-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-magnesium-deficiency.webp",
@@ -1429,7 +1514,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg",
    "license": "CC BY 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-sweet-zinc-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-zinc-deficiency.webp",
@@ -1439,7 +1525,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Maize_of_Zn_deficiency,_symptoms_on_leaves.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Maize_of_Zn_deficiency%2C_symptoms_on_leaves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-yellow-sulfur-deficiency": {
    "src": "/images/site/deficiencies/corn-yellow-sulfur-deficiency.webp",
@@ -1469,7 +1556,8 @@
    "page": "https://www.ipmimages.org/browse/image/1440088",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1440088.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tobacco"
   },
   "cotton-sulfur-deficiency": {
    "src": "/images/site/deficiencies/cotton-sulfur-deficiency.webp",
@@ -1479,7 +1567,8 @@
    "page": "https://www.ipmimages.org/browse/image/1402098",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1402098.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tobacco"
   },
   "cotton-magnesium-deficiency": {
    "src": "/images/site/deficiencies/cotton-magnesium-deficiency.webp",
@@ -1499,7 +1588,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Phaseolus_vulgaris_nitrogen_deficiency.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Phaseolus_vulgaris_nitrogen_deficiency.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "cowpea-potassium-deficiency": {
    "src": "/images/site/deficiencies/cowpea-potassium-deficiency.webp",
@@ -1509,7 +1599,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/c2/K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "cowpea-iron-deficiency": {
    "src": "/images/site/deficiencies/cowpea-iron-deficiency.webp",
@@ -1519,7 +1610,8 @@
    "page": "https://www.ipmimages.org/browse/image/5364031",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5364031.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "cucumber-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/cucumber-nitrogen-deficiency.webp",
@@ -1539,7 +1631,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "cucumber-potassium-deficiency": {
    "src": "/images/site/deficiencies/cucumber-potassium-deficiency.webp",
@@ -1549,7 +1642,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "cucumber-magnesium-deficiency": {
    "src": "/images/site/deficiencies/cucumber-magnesium-deficiency.webp",
@@ -1569,7 +1663,8 @@
    "page": "https://www.ipmimages.org/browse/image/5332017",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5332017.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "squash"
   },
   "dragonfruit-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/dragonfruit-nitrogen-deficiency.webp",
@@ -1579,7 +1674,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "dragonfruit-potassium-deficiency": {
    "src": "/images/site/deficiencies/dragonfruit-potassium-deficiency.webp",
@@ -1589,7 +1685,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "dragonfruit-magnesium-deficiency": {
    "src": "/images/site/deficiencies/dragonfruit-magnesium-deficiency.webp",
@@ -1599,7 +1696,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "dragonfruit-iron-deficiency": {
    "src": "/images/site/deficiencies/dragonfruit-iron-deficiency.webp",
@@ -1609,7 +1707,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373192",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373192.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "durian-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/durian-nitrogen-deficiency.webp",
@@ -1619,7 +1718,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "durian-potassium-deficiency": {
    "src": "/images/site/deficiencies/durian-potassium-deficiency.webp",
@@ -1629,7 +1729,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/14720642156/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/3872/14720642156_5970d7d4cf_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "durian-magnesium-deficiency": {
    "src": "/images/site/deficiencies/durian-magnesium-deficiency.webp",
@@ -1639,7 +1740,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "eggplant-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/eggplant-nitrogen-deficiency.webp",
@@ -1659,7 +1761,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "eggplant-potassium-deficiency": {
    "src": "/images/site/deficiencies/eggplant-potassium-deficiency.webp",
@@ -1679,7 +1782,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "eggplant-calcium-deficiency": {
    "src": "/images/site/deficiencies/eggplant-calcium-deficiency.webp",
@@ -1689,7 +1793,8 @@
    "page": "https://www.flickr.com/photos/35387910@N04/6011378943/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/6138/6011378943_54961b0c18_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "eggplant-boron-deficiency": {
    "src": "/images/site/deficiencies/eggplant-boron-deficiency.webp",
@@ -1699,7 +1804,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_B-Mangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/13/Tomate_Blatt_B-Mangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "ginger-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/ginger-nitrogen-deficiency.webp",
@@ -1709,7 +1815,8 @@
    "page": "https://ornamentalhorticulture.com.br/rbho/article/view/692",
    "license": "CC BY 4.0",
    "big": "https://ornamentalhorticulture.com.br/rbho/article/view/692/502",
-   "standin": true
+   "standin": true,
+   "shows": "ornamental-ginger"
   },
   "ginger-potassium-deficiency": {
    "src": "/images/site/deficiencies/ginger-potassium-deficiency.webp",
@@ -1719,7 +1826,8 @@
    "page": "https://ornamentalhorticulture.com.br/rbho/article/view/692",
    "license": "CC BY 4.0",
    "big": "https://ornamentalhorticulture.com.br/rbho/article/view/692/502",
-   "standin": true
+   "standin": true,
+   "shows": "ornamental-ginger"
   },
   "ginger-magnesium-deficiency": {
    "src": "/images/site/deficiencies/ginger-magnesium-deficiency.webp",
@@ -1729,7 +1837,8 @@
    "page": "https://ornamentalhorticulture.com.br/rbho/article/view/692",
    "license": "CC BY 4.0",
    "big": "https://ornamentalhorticulture.com.br/rbho/article/view/692/502",
-   "standin": true
+   "standin": true,
+   "shows": "ornamental-ginger"
   },
   "ginger-calcium-deficiency": {
    "src": "/images/site/deficiencies/ginger-calcium-deficiency.webp",
@@ -1739,7 +1848,8 @@
    "page": "https://ornamentalhorticulture.com.br/rbho/article/view/692",
    "license": "CC BY 4.0",
    "big": "https://ornamentalhorticulture.com.br/rbho/article/view/692/502",
-   "standin": true
+   "standin": true,
+   "shows": "ornamental-ginger"
   },
   "guava-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/guava-nitrogen-deficiency.webp",
@@ -1749,7 +1859,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "guava-magnesium-deficiency": {
    "src": "/images/site/deficiencies/guava-magnesium-deficiency.webp",
@@ -1759,7 +1870,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "guava-zinc-deficiency": {
    "src": "/images/site/deficiencies/guava-zinc-deficiency.webp",
@@ -1769,7 +1881,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "guava-boron-deficiency": {
    "src": "/images/site/deficiencies/guava-boron-deficiency.webp",
@@ -1779,7 +1892,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15556254487/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7523/15556254487_cb9453f447_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "guyabano-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/guyabano-nitrogen-deficiency.webp",
@@ -1789,7 +1903,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "guyabano-potassium-deficiency": {
    "src": "/images/site/deficiencies/guyabano-potassium-deficiency.webp",
@@ -1799,7 +1914,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "guyabano-magnesium-deficiency": {
    "src": "/images/site/deficiencies/guyabano-magnesium-deficiency.webp",
@@ -1809,7 +1925,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "guyabano-boron-deficiency": {
    "src": "/images/site/deficiencies/guyabano-boron-deficiency.webp",
@@ -1819,7 +1936,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15556254487/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7523/15556254487_cb9453f447_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "jackfruit-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/jackfruit-nitrogen-deficiency.webp",
@@ -1829,7 +1947,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "jackfruit-magnesium-deficiency": {
    "src": "/images/site/deficiencies/jackfruit-magnesium-deficiency.webp",
@@ -1839,7 +1958,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "jackfruit-zinc-deficiency": {
    "src": "/images/site/deficiencies/jackfruit-zinc-deficiency.webp",
@@ -1849,7 +1969,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "jackfruit-iron-deficiency": {
    "src": "/images/site/deficiencies/jackfruit-iron-deficiency.webp",
@@ -1859,7 +1980,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373192",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373192.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "jackfruit-boron-deficiency": {
    "src": "/images/site/deficiencies/jackfruit-boron-deficiency.webp",
@@ -1869,7 +1991,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15556254487/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7523/15556254487_cb9453f447_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "kangkong-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/kangkong-nitrogen-deficiency.webp",
@@ -1879,7 +2002,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "kangkong-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/kangkong-phosphorus-deficiency.webp",
@@ -1889,7 +2013,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "kangkong-potassium-deficiency": {
    "src": "/images/site/deficiencies/kangkong-potassium-deficiency.webp",
@@ -1899,7 +2024,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "kangkong-magnesium-deficiency": {
    "src": "/images/site/deficiencies/kangkong-magnesium-deficiency.webp",
@@ -1909,7 +2035,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "lanzones-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/lanzones-nitrogen-deficiency.webp",
@@ -1919,7 +2046,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "lanzones-potassium-deficiency": {
    "src": "/images/site/deficiencies/lanzones-potassium-deficiency.webp",
@@ -1929,7 +2057,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "lanzones-zinc-deficiency": {
    "src": "/images/site/deficiencies/lanzones-zinc-deficiency.webp",
@@ -1939,7 +2068,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "lettuce-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/lettuce-nitrogen-deficiency.webp",
@@ -1949,7 +2079,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "lettuce-potassium-deficiency": {
    "src": "/images/site/deficiencies/lettuce-potassium-deficiency.webp",
@@ -1959,7 +2090,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K_deficient_cabbage_2017_05_10_6923.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/6/62/K_deficient_cabbage_2017_05_10_6923.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "lettuce-magnesium-deficiency": {
    "src": "/images/site/deficiencies/lettuce-magnesium-deficiency.webp",
@@ -1979,7 +2111,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Phaseolus_vulgaris_nitrogen_deficiency.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Phaseolus_vulgaris_nitrogen_deficiency.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "limabean-potassium-deficiency": {
    "src": "/images/site/deficiencies/limabean-potassium-deficiency.webp",
@@ -1989,7 +2122,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/c2/K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "limabean-zinc-deficiency": {
    "src": "/images/site/deficiencies/limabean-zinc-deficiency.webp",
@@ -1999,7 +2133,8 @@
    "page": "https://www.ipmimages.org/browse/image/5364032",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5364032.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "malunggay-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/malunggay-nitrogen-deficiency.webp",
@@ -2009,7 +2144,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "malunggay-potassium-deficiency": {
    "src": "/images/site/deficiencies/malunggay-potassium-deficiency.webp",
@@ -2019,7 +2155,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/9570327169/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/3759/9570327169_3793e0e6f2_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "guava"
   },
   "malunggay-zinc-deficiency": {
    "src": "/images/site/deficiencies/malunggay-zinc-deficiency.webp",
@@ -2029,7 +2166,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "mango-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/mango-nitrogen-deficiency.webp",
@@ -2039,7 +2177,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "mango-potassium-deficiency": {
    "src": "/images/site/deficiencies/mango-potassium-deficiency.webp",
@@ -2049,7 +2188,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "mango-magnesium-deficiency": {
    "src": "/images/site/deficiencies/mango-magnesium-deficiency.webp",
@@ -2059,7 +2199,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "mango-zinc-deficiency": {
    "src": "/images/site/deficiencies/mango-zinc-deficiency.webp",
@@ -2069,7 +2210,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "mango-iron-deficiency": {
    "src": "/images/site/deficiencies/mango-iron-deficiency.webp",
@@ -2079,7 +2221,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373192",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373192.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "mango-boron-deficiency": {
    "src": "/images/site/deficiencies/mango-boron-deficiency.webp",
@@ -2089,7 +2232,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15556254487/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7523/15556254487_cb9453f447_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "mangosteen-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/mangosteen-nitrogen-deficiency.webp",
@@ -2099,7 +2243,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "mangosteen-potassium-deficiency": {
    "src": "/images/site/deficiencies/mangosteen-potassium-deficiency.webp",
@@ -2129,7 +2274,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "melon-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/melon-phosphorus-deficiency.webp",
@@ -2139,7 +2285,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "melon-potassium-deficiency": {
    "src": "/images/site/deficiencies/melon-potassium-deficiency.webp",
@@ -2149,7 +2296,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "melon-magnesium-deficiency": {
    "src": "/images/site/deficiencies/melon-magnesium-deficiency.webp",
@@ -2159,7 +2307,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "melon-calcium-deficiency": {
    "src": "/images/site/deficiencies/melon-calcium-deficiency.webp",
@@ -2169,7 +2318,8 @@
    "page": "https://www.ipmimages.org/browse/image/1235005",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1235005.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "watermelon"
   },
   "mungbean-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/mungbean-nitrogen-deficiency.webp",
@@ -2179,7 +2329,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Phaseolus_vulgaris_nitrogen_deficiency.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Phaseolus_vulgaris_nitrogen_deficiency.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "mungbean-potassium-deficiency": {
    "src": "/images/site/deficiencies/mungbean-potassium-deficiency.webp",
@@ -2189,7 +2340,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/c2/K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "mungbean-zinc-deficiency": {
    "src": "/images/site/deficiencies/mungbean-zinc-deficiency.webp",
@@ -2199,7 +2351,8 @@
    "page": "https://www.ipmimages.org/browse/image/5364032",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5364032.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "mungbean-iron-deficiency": {
    "src": "/images/site/deficiencies/mungbean-iron-deficiency.webp",
@@ -2209,7 +2362,8 @@
    "page": "https://www.ipmimages.org/browse/image/5364031",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5364031.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "mustard-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/mustard-nitrogen-deficiency.webp",
@@ -2219,7 +2373,8 @@
    "page": "https://doi.org/10.3390/agriculture10100461",
    "license": "CC BY 4.0",
    "big": "https://mdpi-res.com/agriculture/agriculture-10-00461/article_deploy/html/images/agriculture-10-00461-g001.png",
-   "standin": true
+   "standin": true,
+   "shows": "pechay"
   },
   "mustard-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/mustard-phosphorus-deficiency.webp",
@@ -2229,7 +2384,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "mustard-potassium-deficiency": {
    "src": "/images/site/deficiencies/mustard-potassium-deficiency.webp",
@@ -2239,7 +2395,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K_deficient_cabbage_2017_05_10_6923.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/6/62/K_deficient_cabbage_2017_05_10_6923.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "mustard-magnesium-deficiency": {
    "src": "/images/site/deficiencies/mustard-magnesium-deficiency.webp",
@@ -2249,7 +2406,8 @@
    "page": "https://doi.org/10.3390/agriculture10100461",
    "license": "CC BY 4.0",
    "big": "https://mdpi-res.com/agriculture/agriculture-10-00461/article_deploy/html/images/agriculture-10-00461-g004.png",
-   "standin": true
+   "standin": true,
+   "shows": "pechay"
   },
   "mustard-calcium-deficiency": {
    "src": "/images/site/deficiencies/mustard-calcium-deficiency.webp",
@@ -2259,7 +2417,8 @@
    "page": "https://doi.org/10.3390/agriculture10100461",
    "license": "CC BY 4.0",
    "big": "https://mdpi-res.com/agriculture/agriculture-10-00461/article_deploy/html/images/agriculture-10-00461-g003.png",
-   "standin": true
+   "standin": true,
+   "shows": "pechay"
   },
   "okra-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/okra-nitrogen-deficiency.webp",
@@ -2269,7 +2428,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "okra-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/okra-phosphorus-deficiency.webp",
@@ -2279,7 +2439,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "okra-potassium-deficiency": {
    "src": "/images/site/deficiencies/okra-potassium-deficiency.webp",
@@ -2289,7 +2450,8 @@
    "page": "https://www.flickr.com/photos/22503286@N06/5087815254/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/4146/5087815254_e7a3115aff_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cotton"
   },
   "okra-magnesium-deficiency": {
    "src": "/images/site/deficiencies/okra-magnesium-deficiency.webp",
@@ -2299,7 +2461,8 @@
    "page": "https://www.ipmimages.org/browse/image/1234182",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1234182.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cotton"
   },
   "okra-calcium-deficiency": {
    "src": "/images/site/deficiencies/okra-calcium-deficiency.webp",
@@ -2309,7 +2472,8 @@
    "page": "https://www.flickr.com/photos/35387910@N04/6011378943/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/6138/6011378943_54961b0c18_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "okra-boron-deficiency": {
    "src": "/images/site/deficiencies/okra-boron-deficiency.webp",
@@ -2319,7 +2483,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_B-Mangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/13/Tomate_Blatt_B-Mangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "papaya-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/papaya-nitrogen-deficiency.webp",
@@ -2329,7 +2494,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "papaya-magnesium-deficiency": {
    "src": "/images/site/deficiencies/papaya-magnesium-deficiency.webp",
@@ -2339,7 +2505,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "papaya-calcium-deficiency": {
    "src": "/images/site/deficiencies/papaya-calcium-deficiency.webp",
@@ -2349,7 +2516,8 @@
    "page": "https://www.flickr.com/photos/35387910@N04/6011378943/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/6138/6011378943_54961b0c18_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "papaya-zinc-deficiency": {
    "src": "/images/site/deficiencies/papaya-zinc-deficiency.webp",
@@ -2359,7 +2527,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "patola-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/patola-nitrogen-deficiency.webp",
@@ -2379,7 +2548,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "patola-potassium-deficiency": {
    "src": "/images/site/deficiencies/patola-potassium-deficiency.webp",
@@ -2389,7 +2559,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "patola-magnesium-deficiency": {
    "src": "/images/site/deficiencies/patola-magnesium-deficiency.webp",
@@ -2399,7 +2570,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "peanut-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/peanut-nitrogen-deficiency.webp",
@@ -2419,7 +2591,8 @@
    "page": "https://www.ipmimages.org/browse/image/5465948",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5465948.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "soybean"
   },
   "peanut-zinc-deficiency": {
    "src": "/images/site/deficiencies/peanut-zinc-deficiency.webp",
@@ -2429,7 +2602,8 @@
    "page": "https://www.ipmimages.org/browse/image/5364032",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5364032.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "peanut-iron-deficiency": {
    "src": "/images/site/deficiencies/peanut-iron-deficiency.webp",
@@ -2459,7 +2633,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "pechay-potassium-deficiency": {
    "src": "/images/site/deficiencies/pechay-potassium-deficiency.webp",
@@ -2499,7 +2674,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Phaseolus_vulgaris_nitrogen_deficiency.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Phaseolus_vulgaris_nitrogen_deficiency.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "pigeonpea-potassium-deficiency": {
    "src": "/images/site/deficiencies/pigeonpea-potassium-deficiency.webp",
@@ -2509,7 +2685,8 @@
    "page": "https://www.ipmimages.org/browse/image/5465948",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5465948.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "soybean"
   },
   "pigeonpea-zinc-deficiency": {
    "src": "/images/site/deficiencies/pigeonpea-zinc-deficiency.webp",
@@ -2519,7 +2696,8 @@
    "page": "https://www.ipmimages.org/browse/image/5364032",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5364032.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "pigeonpea-iron-deficiency": {
    "src": "/images/site/deficiencies/pigeonpea-iron-deficiency.webp",
@@ -2529,7 +2707,8 @@
    "page": "https://www.ipmimages.org/browse/image/5465943",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5465943.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "soybean"
   },
   "pineapple-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/pineapple-nitrogen-deficiency.webp",
@@ -2539,7 +2718,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/33893278323/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4172/33893278323_7921af18a5_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "banana"
   },
   "pineapple-potassium-deficiency": {
    "src": "/images/site/deficiencies/pineapple-potassium-deficiency.webp",
@@ -2549,7 +2729,8 @@
    "page": "https://www.flickr.com/photos/22503286@N06/5087815254/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/4146/5087815254_e7a3115aff_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cotton"
   },
   "pineapple-magnesium-deficiency": {
    "src": "/images/site/deficiencies/pineapple-magnesium-deficiency.webp",
@@ -2559,7 +2740,8 @@
    "page": "https://www.ipmimages.org/browse/image/1234182",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1234182.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cotton"
   },
   "pineapple-calcium-deficiency": {
    "src": "/images/site/deficiencies/pineapple-calcium-deficiency.webp",
@@ -2569,7 +2751,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/32416931791/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/301/32416931791_473ec7bde7_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "banana"
   },
   "pineapple-iron-deficiency": {
    "src": "/images/site/deficiencies/pineapple-iron-deficiency.webp",
@@ -2579,7 +2762,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Amit_000_P_010_-_Copy.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Amit_000_P_010_-_Copy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "sugarcane"
   },
   "pineapple-boron-deficiency": {
    "src": "/images/site/deficiencies/pineapple-boron-deficiency.webp",
@@ -2589,7 +2773,8 @@
    "page": "https://www.flickr.com/photos/97499887@N06/24954808580/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/1510/24954808580_9225722047_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "banana"
   },
   "pomelo-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/pomelo-nitrogen-deficiency.webp",
@@ -2599,7 +2784,8 @@
    "page": "https://zenodo.org/records/8294078",
    "license": "CC BY 4.0",
    "big": "https://zenodo.org/api/records/8294078/files/CitrusUAT_dataset.zip/content#CitrusUAT_dataset/Images/N_041.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "pomelo-potassium-deficiency": {
    "src": "/images/site/deficiencies/pomelo-potassium-deficiency.webp",
@@ -2609,7 +2795,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "pomelo-magnesium-deficiency": {
    "src": "/images/site/deficiencies/pomelo-magnesium-deficiency.webp",
@@ -2619,7 +2806,8 @@
    "page": "https://zenodo.org/records/8294078",
    "license": "CC BY 4.0",
    "big": "https://zenodo.org/api/records/8294078/files/CitrusUAT_dataset.zip/content#CitrusUAT_dataset/Images/Mg_064.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "pomelo-zinc-deficiency": {
    "src": "/images/site/deficiencies/pomelo-zinc-deficiency.webp",
@@ -2629,7 +2817,8 @@
    "page": "https://zenodo.org/records/8294078",
    "license": "CC BY 4.0",
    "big": "https://zenodo.org/api/records/8294078/files/CitrusUAT_dataset.zip/content#CitrusUAT_dataset/Images/Zn_037.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "potato-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/potato-nitrogen-deficiency.webp",
@@ -2639,7 +2828,8 @@
    "page": "https://www.ipmimages.org/browse/image/1440088",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1440088.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tobacco"
   },
   "potato-sulfur-deficiency": {
    "src": "/images/site/deficiencies/potato-sulfur-deficiency.webp",
@@ -2649,7 +2839,8 @@
    "page": "https://www.ipmimages.org/browse/image/1402098",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1402098.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tobacco"
   },
   "potato-calcium-deficiency": {
    "src": "/images/site/deficiencies/potato-calcium-deficiency.webp",
@@ -2659,7 +2850,8 @@
    "page": "https://www.flickr.com/photos/35387910@N04/6011378943/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/6138/6011378943_54961b0c18_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "potato-boron-deficiency": {
    "src": "/images/site/deficiencies/potato-boron-deficiency.webp",
@@ -2669,7 +2861,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_B-Mangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/13/Tomate_Blatt_B-Mangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "radish-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/radish-nitrogen-deficiency.webp",
@@ -2679,7 +2872,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "radish-potassium-deficiency": {
    "src": "/images/site/deficiencies/radish-potassium-deficiency.webp",
@@ -2689,7 +2883,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K_deficient_cabbage_2017_05_10_6923.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/6/62/K_deficient_cabbage_2017_05_10_6923.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "radish-magnesium-deficiency": {
    "src": "/images/site/deficiencies/radish-magnesium-deficiency.webp",
@@ -2699,7 +2894,8 @@
    "page": "https://www.flickr.com/photos/141760766@N08/27057825523/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/7344/27057825523_2f158e2069_o.png",
-   "standin": true
+   "standin": true,
+   "shows": "potato"
   },
   "radish-calcium-deficiency": {
    "src": "/images/site/deficiencies/radish-calcium-deficiency.webp",
@@ -2709,7 +2905,8 @@
    "page": "https://www.ipmimages.org/browse/image/5077026",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5077026.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "radish-boron-deficiency": {
    "src": "/images/site/deficiencies/radish-boron-deficiency.webp",
@@ -2729,7 +2926,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "rambutan-potassium-deficiency": {
    "src": "/images/site/deficiencies/rambutan-potassium-deficiency.webp",
@@ -2739,7 +2937,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "rambutan-magnesium-deficiency": {
    "src": "/images/site/deficiencies/rambutan-magnesium-deficiency.webp",
@@ -2749,7 +2948,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "rambutan-zinc-deficiency": {
    "src": "/images/site/deficiencies/rambutan-zinc-deficiency.webp",
@@ -2759,7 +2959,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "rice-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/rice-phosphorus-deficiency.webp",
@@ -2789,7 +2990,8 @@
    "page": "https://www.flickr.com/photos/22503286@N06/5087811468/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/4152/5087811468_a2d25977a2_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "rice-magnesium-deficiency": {
    "src": "/images/site/deficiencies/rice-magnesium-deficiency.webp",
@@ -2819,7 +3021,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Amit_000_P_010_-_Copy.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Amit_000_P_010_-_Copy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "sugarcane"
   },
   "rubber-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/rubber-nitrogen-deficiency.webp",
@@ -2829,7 +3032,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "rubber-potassium-deficiency": {
    "src": "/images/site/deficiencies/rubber-potassium-deficiency.webp",
@@ -2839,7 +3043,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/14720642156/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/3872/14720642156_5970d7d4cf_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "rubber-magnesium-deficiency": {
    "src": "/images/site/deficiencies/rubber-magnesium-deficiency.webp",
@@ -2849,7 +3054,8 @@
    "page": "https://www.ipmimages.org/browse/image/1234182",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1234182.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cotton"
   },
   "saluyot-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/saluyot-nitrogen-deficiency.webp",
@@ -2859,7 +3065,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "saluyot-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/saluyot-phosphorus-deficiency.webp",
@@ -2869,7 +3076,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "saluyot-potassium-deficiency": {
    "src": "/images/site/deficiencies/saluyot-potassium-deficiency.webp",
@@ -2879,7 +3087,8 @@
    "page": "https://www.flickr.com/photos/22503286@N06/5087815254/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/4146/5087815254_e7a3115aff_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cotton"
   },
   "santol-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/santol-nitrogen-deficiency.webp",
@@ -2889,7 +3098,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "santol-potassium-deficiency": {
    "src": "/images/site/deficiencies/santol-potassium-deficiency.webp",
@@ -2899,7 +3109,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "santol-zinc-deficiency": {
    "src": "/images/site/deficiencies/santol-zinc-deficiency.webp",
@@ -2909,7 +3120,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "sayote-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/sayote-nitrogen-deficiency.webp",
@@ -2919,7 +3131,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "sayote-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/sayote-phosphorus-deficiency.webp",
@@ -2929,7 +3142,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "sayote-potassium-deficiency": {
    "src": "/images/site/deficiencies/sayote-potassium-deficiency.webp",
@@ -2939,7 +3153,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "sayote-magnesium-deficiency": {
    "src": "/images/site/deficiencies/sayote-magnesium-deficiency.webp",
@@ -2949,7 +3164,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "sorghum-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/sorghum-phosphorus-deficiency.webp",
@@ -2959,7 +3175,8 @@
    "page": "https://www.ipmimages.org/browse/image/5332037",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5332037.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "sorghum-potassium-deficiency": {
    "src": "/images/site/deficiencies/sorghum-potassium-deficiency.webp",
@@ -2969,7 +3186,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K-deficient_maize_on_Cedara_2_2003-01-13.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/d/d1/K-deficient_maize_on_Cedara_2_2003-01-13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "sorghum-sulfur-deficiency": {
    "src": "/images/site/deficiencies/sorghum-sulfur-deficiency.webp",
@@ -2979,7 +3197,8 @@
    "page": "https://www.flickr.com/photos/22503286@N06/5087811468/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/4152/5087811468_a2d25977a2_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "sorghum-magnesium-deficiency": {
    "src": "/images/site/deficiencies/sorghum-magnesium-deficiency.webp",
@@ -2989,7 +3208,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg",
    "license": "CC BY 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "sorghum-zinc-deficiency": {
    "src": "/images/site/deficiencies/sorghum-zinc-deficiency.webp",
@@ -2999,7 +3219,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Maize_of_Zn_deficiency,_symptoms_on_leaves.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Maize_of_Zn_deficiency%2C_symptoms_on_leaves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "sorghum-iron-deficiency": {
    "src": "/images/site/deficiencies/sorghum-iron-deficiency.webp",
@@ -3009,7 +3230,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Amit_000_P_010_-_Copy.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Amit_000_P_010_-_Copy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "sugarcane"
   },
   "soybean-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/soybean-nitrogen-deficiency.webp",
@@ -3019,7 +3241,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Phaseolus_vulgaris_nitrogen_deficiency.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Phaseolus_vulgaris_nitrogen_deficiency.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "soybean-zinc-deficiency": {
    "src": "/images/site/deficiencies/soybean-zinc-deficiency.webp",
@@ -3029,7 +3252,8 @@
    "page": "https://www.ipmimages.org/browse/image/5364032",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5364032.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "soybean-iron-deficiency": {
    "src": "/images/site/deficiencies/soybean-iron-deficiency.webp",
@@ -3049,7 +3273,8 @@
    "page": "https://rsdjournal.org/index.php/rsd/article/view/2269",
    "license": "CC BY 4.0",
    "big": "https://rsdjournal.org/index.php/rsd/article/download/2269/1852",
-   "standin": true
+   "standin": true,
+   "shows": "zucchini"
   },
   "squash-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/squash-phosphorus-deficiency.webp",
@@ -3059,7 +3284,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "squash-potassium-deficiency": {
    "src": "/images/site/deficiencies/squash-potassium-deficiency.webp",
@@ -3069,7 +3295,8 @@
    "page": "https://rsdjournal.org/index.php/rsd/article/view/2269",
    "license": "CC BY 4.0",
    "big": "https://rsdjournal.org/index.php/rsd/article/download/2269/1852",
-   "standin": true
+   "standin": true,
+   "shows": "zucchini"
   },
   "squash-magnesium-deficiency": {
    "src": "/images/site/deficiencies/squash-magnesium-deficiency.webp",
@@ -3079,7 +3306,8 @@
    "page": "https://rsdjournal.org/index.php/rsd/article/view/2269",
    "license": "CC BY 4.0",
    "big": "https://rsdjournal.org/index.php/rsd/article/download/2269/1852",
-   "standin": true
+   "standin": true,
+   "shows": "zucchini"
   },
   "squash-calcium-deficiency": {
    "src": "/images/site/deficiencies/squash-calcium-deficiency.webp",
@@ -3099,7 +3327,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "starapple-potassium-deficiency": {
    "src": "/images/site/deficiencies/starapple-potassium-deficiency.webp",
@@ -3109,7 +3338,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/16797305505/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7599/16797305505_6372626e7d_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "avocado"
   },
   "starapple-magnesium-deficiency": {
    "src": "/images/site/deficiencies/starapple-magnesium-deficiency.webp",
@@ -3119,7 +3349,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373194",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373194.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "starapple-iron-deficiency": {
    "src": "/images/site/deficiencies/starapple-iron-deficiency.webp",
@@ -3129,7 +3360,8 @@
    "page": "https://www.ipmimages.org/browse/image/5373192",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/768x512/5373192.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "strawberry-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/strawberry-nitrogen-deficiency.webp",
@@ -3139,7 +3371,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "strawberry-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/strawberry-phosphorus-deficiency.webp",
@@ -3149,7 +3382,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "strawberry-potassium-deficiency": {
    "src": "/images/site/deficiencies/strawberry-potassium-deficiency.webp",
@@ -3159,7 +3393,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "strawberry-magnesium-deficiency": {
    "src": "/images/site/deficiencies/strawberry-magnesium-deficiency.webp",
@@ -3169,7 +3404,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "strawberry-calcium-deficiency": {
    "src": "/images/site/deficiencies/strawberry-calcium-deficiency.webp",
@@ -3189,7 +3425,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_B-Mangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/13/Tomate_Blatt_B-Mangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "sugarcane-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/sugarcane-nitrogen-deficiency.webp",
@@ -3199,7 +3436,8 @@
    "page": "https://www.ipmimages.org/browse/image/1440088",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1440088.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tobacco"
   },
   "sugarcane-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/sugarcane-phosphorus-deficiency.webp",
@@ -3209,7 +3447,8 @@
    "page": "https://www.ipmimages.org/browse/image/5332037",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5332037.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "sugarcane-potassium-deficiency": {
    "src": "/images/site/deficiencies/sugarcane-potassium-deficiency.webp",
@@ -3219,7 +3458,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K-deficient_maize_on_Cedara_2_2003-01-13.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/d/d1/K-deficient_maize_on_Cedara_2_2003-01-13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "sugarcane-sulfur-deficiency": {
    "src": "/images/site/deficiencies/sugarcane-sulfur-deficiency.webp",
@@ -3229,7 +3469,8 @@
    "page": "https://www.flickr.com/photos/22503286@N06/5087811468/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/4152/5087811468_a2d25977a2_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "sugarcane-magnesium-deficiency": {
    "src": "/images/site/deficiencies/sugarcane-magnesium-deficiency.webp",
@@ -3239,7 +3480,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg",
    "license": "CC BY 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "sugarcane-zinc-deficiency": {
    "src": "/images/site/deficiencies/sugarcane-zinc-deficiency.webp",
@@ -3249,7 +3491,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Maize_of_Zn_deficiency,_symptoms_on_leaves.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Maize_of_Zn_deficiency%2C_symptoms_on_leaves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "sugarcane-manganese-deficiency": {
    "src": "/images/site/deficiencies/sugarcane-manganese-deficiency.webp",
@@ -3259,7 +3502,8 @@
    "page": "https://www.ipmimages.org/browse/image/1402099",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/1402099.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "tobacco"
   },
   "sweetpotato-potassium-deficiency": {
    "src": "/images/site/deficiencies/sweetpotato-potassium-deficiency.webp",
@@ -3269,7 +3513,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Potassium_deficiency_in_potatoes.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/5/57/Potassium_deficiency_in_potatoes.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "potato"
   },
   "sweetpotato-magnesium-deficiency": {
    "src": "/images/site/deficiencies/sweetpotato-magnesium-deficiency.webp",
@@ -3279,7 +3524,8 @@
    "page": "https://www.flickr.com/photos/141760766@N08/27057825523/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/7344/27057825523_2f158e2069_o.png",
-   "standin": true
+   "standin": true,
+   "shows": "potato"
   },
   "tamarind-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/tamarind-nitrogen-deficiency.webp",
@@ -3289,7 +3535,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "cacao"
   },
   "tamarind-potassium-deficiency": {
    "src": "/images/site/deficiencies/tamarind-potassium-deficiency.webp",
@@ -3299,7 +3546,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/9570327169/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/3759/9570327169_3793e0e6f2_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "guava"
   },
   "tamarind-zinc-deficiency": {
    "src": "/images/site/deficiencies/tamarind-zinc-deficiency.webp",
@@ -3309,7 +3557,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "taro-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/taro-nitrogen-deficiency.webp",
@@ -3319,7 +3568,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/33893278323/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4172/33893278323_7921af18a5_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "banana"
   },
   "taro-magnesium-deficiency": {
    "src": "/images/site/deficiencies/taro-magnesium-deficiency.webp",
@@ -3329,7 +3579,8 @@
    "page": "https://www.flickr.com/photos/141760766@N08/27057825523/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/7344/27057825523_2f158e2069_o.png",
-   "standin": true
+   "standin": true,
+   "shows": "potato"
   },
   "taro-calcium-deficiency": {
    "src": "/images/site/deficiencies/taro-calcium-deficiency.webp",
@@ -3339,7 +3590,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/32416931791/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/301/32416931791_473ec7bde7_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "banana"
   },
   "taro-iron-deficiency": {
    "src": "/images/site/deficiencies/taro-iron-deficiency.webp",
@@ -3349,7 +3601,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/44263355572/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/1869/44263355572_cdcbd0e752_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "flowering-ginger"
   },
   "tobacco-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/tobacco-nitrogen-deficiency.webp",
@@ -3439,7 +3692,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "turmeric-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/turmeric-nitrogen-deficiency.webp",
@@ -3449,7 +3703,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/33893278323/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/4172/33893278323_7921af18a5_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "banana"
   },
   "turmeric-potassium-deficiency": {
    "src": "/images/site/deficiencies/turmeric-potassium-deficiency.webp",
@@ -3459,7 +3714,8 @@
    "page": "https://ornamentalhorticulture.com.br/rbho/article/view/692",
    "license": "CC BY 4.0",
    "big": "https://ornamentalhorticulture.com.br/rbho/article/view/692/502",
-   "standin": true
+   "standin": true,
+   "shows": "ornamental-ginger"
   },
   "turmeric-magnesium-deficiency": {
    "src": "/images/site/deficiencies/turmeric-magnesium-deficiency.webp",
@@ -3469,7 +3725,8 @@
    "page": "https://ornamentalhorticulture.com.br/rbho/article/view/692",
    "license": "CC BY 4.0",
    "big": "https://ornamentalhorticulture.com.br/rbho/article/view/692/502",
-   "standin": true
+   "standin": true,
+   "shows": "ornamental-ginger"
   },
   "turmeric-iron-deficiency": {
    "src": "/images/site/deficiencies/turmeric-iron-deficiency.webp",
@@ -3479,7 +3736,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/44263355572/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/1869/44263355572_cdcbd0e752_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "flowering-ginger"
   },
   "ubi-potassium-deficiency": {
    "src": "/images/site/deficiencies/ubi-potassium-deficiency.webp",
@@ -3489,7 +3747,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/15243363620/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/3927/15243363620_53da35506e_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "taro"
   },
   "ubi-magnesium-deficiency": {
    "src": "/images/site/deficiencies/ubi-magnesium-deficiency.webp",
@@ -3499,7 +3758,8 @@
    "page": "https://www.flickr.com/photos/141760766@N08/27057825523/",
    "license": "CC BY 2.0",
    "big": "https://live.staticflickr.com/7344/27057825523_2f158e2069_o.png",
-   "standin": true
+   "standin": true,
+   "shows": "potato"
   },
   "upo-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/upo-nitrogen-deficiency.webp",
@@ -3519,7 +3779,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "upo-potassium-deficiency": {
    "src": "/images/site/deficiencies/upo-potassium-deficiency.webp",
@@ -3529,7 +3790,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "upo-magnesium-deficiency": {
    "src": "/images/site/deficiencies/upo-magnesium-deficiency.webp",
@@ -3539,7 +3801,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "upo-calcium-deficiency": {
    "src": "/images/site/deficiencies/upo-calcium-deficiency.webp",
@@ -3549,7 +3812,8 @@
    "page": "https://www.ipmimages.org/browse/image/5332017",
    "license": "CC BY 3.0 US",
    "big": "https://bugwoodcloud.org/images/3072x2048/5332017.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "squash"
   },
   "watermelon-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/watermelon-nitrogen-deficiency.webp",
@@ -3559,7 +3823,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Spitskool_stikstofgebrek_%28nitrogen_deficiency%29_Brassica_oleracea_convar._capitata_var._alba.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "cabbage"
   },
   "watermelon-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/watermelon-phosphorus-deficiency.webp",
@@ -3569,7 +3834,8 @@
    "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
    "license": "CC0 1.0",
    "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "lettuce"
   },
   "watermelon-potassium-deficiency": {
    "src": "/images/site/deficiencies/watermelon-potassium-deficiency.webp",
@@ -3579,7 +3845,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "watermelon-magnesium-deficiency": {
    "src": "/images/site/deficiencies/watermelon-magnesium-deficiency.webp",
@@ -3589,7 +3856,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "tomato"
   },
   "watermelon-calcium-deficiency": {
    "src": "/images/site/deficiencies/watermelon-calcium-deficiency.webp",
@@ -3609,7 +3877,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:Phaseolus_vulgaris_nitrogen_deficiency.jpg",
    "license": "CC BY SA 3.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Phaseolus_vulgaris_nitrogen_deficiency.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "wingedbean-potassium-deficiency": {
    "src": "/images/site/deficiencies/wingedbean-potassium-deficiency.webp",
@@ -3619,7 +3888,8 @@
    "page": "https://commons.wikimedia.org/wiki/File:K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg",
    "license": "CC BY SA 4.0",
    "big": "https://upload.wikimedia.org/wikipedia/commons/c/c2/K-deficient_dry_bean_2_2012_02_16_Cedara_037.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true
+   "standin": true,
+   "shows": "common-bean"
   },
   "corn-yellow-calcium-deficiency": {
    "src": "/images/site/deficiencies/corn-yellow-calcium-deficiency.webp",
@@ -3639,7 +3909,8 @@
    "page": "https://ccsenet.org/journal/index.php/jas/article/view/0/46773",
    "license": "CC BY 4.0",
    "big": "https://ccsenet.org/journal/index.php/jas/article/download/0/0/46773/49985 (Figure 4b, page 186)",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "mangosteen-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/mangosteen-phosphorus-deficiency.webp",
@@ -3669,7 +3940,8 @@
    "page": "https://data.mendeley.com/datasets/34gb2gr7p2/1",
    "license": "CC BY 4.0",
    "big": "https://data.mendeley.com/public-files/datasets/34gb2gr7p2/files/94f8cc04-d2ee-4cf4-86b2-9b0ad631ec5a/file_downloaded#Maize Nutrient Deficiency Dataset/Nitrogen/2 (75).jpeg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "corn-glutinous-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-nitrogen-deficiency.webp",
@@ -3679,7 +3951,8 @@
    "page": "https://data.mendeley.com/datasets/34gb2gr7p2/1",
    "license": "CC BY 4.0",
    "big": "https://data.mendeley.com/public-files/datasets/34gb2gr7p2/files/242f870e-d6f0-41e1-bee5-98287a03112a/file_downloaded#Maize Nutrient Deficiency Dataset/Nitrogen/2 (32).jpeg",
-   "standin": true
+   "standin": true,
+   "shows": "corn_yellow"
   },
   "bellpepper-iron-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-iron-deficiency.webp",
@@ -3689,7 +3962,8 @@
    "page": "https://data.mendeley.com/datasets/dh5cpvn48j/1",
    "license": "CC BY 4.0",
    "big": "https://data.mendeley.com/public-files/datasets/dh5cpvn48j/files/17b97ec7-184f-46e0-8fa5-24a7683b5567/file_downloaded#pepper/pepper_photo/DSC07030.JPG",
-   "standin": true
+   "standin": true,
+   "shows": "chili"
   },
   "citrus-manganese-deficiency": {
    "src": "/images/site/deficiencies/citrus-manganese-deficiency.webp",
@@ -3709,7 +3983,8 @@
    "page": "https://zenodo.org/records/8294078",
    "license": "CC BY 4.0",
    "big": "https://zenodo.org/api/records/8294078/files/CitrusUAT_dataset.zip/content#CitrusUAT_dataset/Images/Mn_007.jpg",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "rice-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/rice-nitrogen-deficiency.webp",
@@ -3769,7 +4044,8 @@
    "page": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0252866",
    "license": "CC BY 4.0",
    "big": "https://journals.plos.org/plosone/article/figure/image?size=original&id=10.1371/journal.pone.0252866.g007",
-   "standin": true
+   "standin": true,
+   "shows": "scarlet-eggplant"
   },
   "soybean-magnesium-deficiency": {
    "src": "/images/site/deficiencies/soybean-magnesium-deficiency.webp",
@@ -3819,7 +4095,8 @@
    "page": "https://doi.org/10.3390/plants11010040",
    "license": "CC BY 4.0",
    "big": "https://mdpi-res.com/plants/plants-11-00040/article_deploy/html/images/plants-11-00040-g001.png",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "pomelo-boron-deficiency": {
    "src": "/images/site/deficiencies/pomelo-boron-deficiency.webp",
@@ -3829,7 +4106,8 @@
    "page": "https://doi.org/10.3390/plants11010040",
    "license": "CC BY 4.0",
    "big": "https://mdpi-res.com/plants/plants-11-00040/article_deploy/html/images/plants-11-00040-g001.png",
-   "standin": true
+   "standin": true,
+   "shows": "citrus"
   },
   "pechay-boron-deficiency": {
    "src": "/images/site/deficiencies/pechay-boron-deficiency.webp",
@@ -3849,7 +4127,8 @@
    "page": "https://doi.org/10.3390/agriculture10100461",
    "license": "CC BY 4.0",
    "big": "https://mdpi-res.com/agriculture/agriculture-10-00461/article_deploy/html/images/agriculture-10-00461-g007.png",
-   "standin": true
+   "standin": true,
+   "shows": "pechay"
   },
   "squash-boron-deficiency": {
    "src": "/images/site/deficiencies/squash-boron-deficiency.webp",
@@ -3859,7 +4138,8 @@
    "page": "https://rsdjournal.org/index.php/rsd/article/view/2359",
    "license": "CC BY 4.0",
    "big": "https://rsdjournal.org/index.php/rsd/article/download/2359/1884",
-   "standin": true
+   "standin": true,
+   "shows": "zucchini"
   }
  },
  "general": {
@@ -3870,7 +4150,8 @@
    "credit": "Scot Nelson, CC0 1.0, via Flickr",
    "page": "https://www.flickr.com/photos/62295966@N07/16233464175/",
    "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/8596/16233464175_ff7cac1833_o.jpg"
+   "big": "https://live.staticflickr.com/8596/16233464175_ff7cac1833_o.jpg",
+   "shows": "groundcover"
   },
   "k": {
    "src": "/images/site/deficiencies/general-k.webp",
@@ -3879,7 +4160,8 @@
    "credit": "Scot Nelson, CC0 1.0, via Flickr",
    "page": "https://www.flickr.com/photos/62295966@N07/25002992546/",
    "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/1569/25002992546_17d1269aa8_o.jpg"
+   "big": "https://live.staticflickr.com/1569/25002992546_17d1269aa8_o.jpg",
+   "shows": "avocado"
   },
   "mg": {
    "src": "/images/site/deficiencies/general-mg.webp",
@@ -3888,7 +4170,8 @@
    "credit": "Scot Nelson, CC0 1.0, via Flickr",
    "page": "https://www.flickr.com/photos/62295966@N07/14840241853/",
    "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/3899/14840241853_4039c2acec_o.jpg"
+   "big": "https://live.staticflickr.com/3899/14840241853_4039c2acec_o.jpg",
+   "shows": "tomato"
   },
   "ca": {
    "src": "/images/site/deficiencies/general-ca.webp",
@@ -3897,7 +4180,8 @@
    "credit": "Scot Nelson, CC0 1.0, via Flickr",
    "page": "https://www.flickr.com/photos/62295966@N07/9737392836/",
    "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/7392/9737392836_021bd7a41d_o.jpg"
+   "big": "https://live.staticflickr.com/7392/9737392836_021bd7a41d_o.jpg",
+   "shows": "tomato"
   },
   "zn": {
    "src": "/images/site/deficiencies/general-zn.webp",
@@ -3906,7 +4190,8 @@
    "credit": "Scot Nelson (photo by Erika Magarifuji Location), CC0 1.0, via Flickr",
    "page": "https://www.flickr.com/photos/62295966@N07/15834663759/",
    "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg"
+   "big": "https://live.staticflickr.com/7493/15834663759_ea147ee1e1_o.jpg",
+   "shows": "citrus"
   },
   "fe": {
    "src": "/images/site/deficiencies/general-fe.webp",
@@ -3915,7 +4200,8 @@
    "credit": "Scot Nelson, CC0 1.0, via Flickr",
    "page": "https://www.flickr.com/photos/62295966@N07/11376214843/",
    "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/3740/11376214843_36ba439b40_o.jpg"
+   "big": "https://live.staticflickr.com/3740/11376214843_36ba439b40_o.jpg",
+   "shows": "gardenia"
   },
   "mn": {
    "src": "/images/site/deficiencies/general-mn.webp",
@@ -3924,7 +4210,8 @@
    "credit": "R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org",
    "page": "https://www.ipmimages.org/browse/image/1402099",
    "license": "CC BY 3.0 US",
-   "big": "https://bugwoodcloud.org/images/3072x2048/1402099.jpg"
+   "big": "https://bugwoodcloud.org/images/3072x2048/1402099.jpg",
+   "shows": "tobacco"
   },
   "b": {
    "src": "/images/site/deficiencies/general-b.webp",
@@ -3933,7 +4220,8 @@
    "credit": "Scot Nelson, CC0 1.0, via Flickr",
    "page": "https://www.flickr.com/photos/62295966@N07/9543099088/",
    "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/3817/9543099088_14bd5462ee_o.jpg"
+   "big": "https://live.staticflickr.com/3817/9543099088_14bd5462ee_o.jpg",
+   "shows": "coconut"
   },
   "n": {
    "src": "/images/site/deficiencies/general-n.webp",
@@ -3942,7 +4230,8 @@
    "credit": "Maja Dumat, CC BY 2.0, via Flickr",
    "page": "https://www.flickr.com/photos/47439717@N05/31700888857/",
    "license": "CC BY 2.0",
-   "big": "https://live.staticflickr.com/7859/31700888857_e96b667852_o.jpg"
+   "big": "https://live.staticflickr.com/7859/31700888857_e96b667852_o.jpg",
+   "shows": "chili"
   },
   "s": {
    "src": "/images/site/deficiencies/general-s.webp",
@@ -3951,7 +4240,8 @@
    "credit": "R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org",
    "page": "https://www.ipmimages.org/browse/image/1402098",
    "license": "CC BY 3.0 US",
-   "big": "https://bugwoodcloud.org/images/3072x2048/1402098.jpg"
+   "big": "https://bugwoodcloud.org/images/3072x2048/1402098.jpg",
+   "shows": "tobacco"
   },
   "cu": {
    "src": "/images/site/deficiencies/general-cu.webp",
@@ -3960,7 +4250,8 @@
    "credit": "Florida Division of Plant Industry, Florida Department of Agriculture, CC BY 3.0 US, via ipmimages.org",
    "page": "https://www.ipmimages.org/browse/image/5373166",
    "license": "CC BY 3.0 US",
-   "big": "https://bugwoodcloud.org/images/768x512/5373166.jpg"
+   "big": "https://bugwoodcloud.org/images/768x512/5373166.jpg",
+   "shows": "ornamental-tree"
   },
   "mo": {
    "src": "/images/site/deficiencies/general-mo.webp",
@@ -3969,7 +4260,8 @@
    "credit": "Alandmanson, CC BY SA 4.0, via Wikimedia Commons",
    "page": "https://commons.wikimedia.org/wiki/File:Mo_deficienct_maize_subsistence_farmer_Vulindlela_2017_05_09_6666.jpg",
    "license": "CC BY SA 4.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/d/db/Mo_deficienct_maize_subsistence_farmer_Vulindlela_2017_05_09_6666.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+   "big": "https://upload.wikimedia.org/wikipedia/commons/d/db/Mo_deficienct_maize_subsistence_farmer_Vulindlela_2017_05_09_6666.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+   "shows": "corn_yellow"
   }
  }
 }
