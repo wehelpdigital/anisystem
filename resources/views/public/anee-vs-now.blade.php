@@ -227,9 +227,23 @@
     /* The picture to drag: the farm now on the left, with Anee on the right, the handle between. */
     .avn-ba { position: relative; aspect-ratio: 4 / 3; border-radius: 1.6rem; overflow: hidden; user-select: none; touch-action: pan-y; cursor: ew-resize;
         box-shadow: 0 40px 80px -40px rgb(0 0 0 / .9), 0 0 0 1px rgb(255 255 255 / .12); --cut: 50%; }
-    .avn-ba > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-    .avn-ba img.is-now { filter: saturate(.75) contrast(1.02); }
-    .avn-ba img.is-anee { clip-path: inset(0 0 0 var(--cut)); }
+    .avn-ba > img, .avn-ba > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; background: #1a2614; }
+    .avn-ba > img.is-now { filter: saturate(.8) contrast(1.04) brightness(.95); }
+    .avn-ba > video.is-anee { clip-path: inset(0 0 0 var(--cut)); filter: saturate(1.08) contrast(1.03); }
+    /* The real crop's mark: a red dot that beats, like a recording. */
+    .avn-real { display: flex; align-items: center; justify-content: flex-end; gap: .4rem; margin-bottom: .25rem; font-size: .7rem; font-weight: 900; letter-spacing: .06em;
+        text-transform: uppercase; color: var(--hp-sun); }
+    .avn-real i { width: .5rem; height: .5rem; border-radius: 999px; background: #ef4444; box-shadow: 0 0 0 3px rgb(239 68 68 / .3); animation: avnRec 1.4s ease-in-out infinite; }
+    @keyframes avnRec { 50% { opacity: .35; box-shadow: 0 0 0 6px rgb(239 68 68 / 0); } }
+    .avn-ba-say b { color: #fca5a5; }
+    .avn-ba-short { display: none; }
+    /* A phone: the captions shorter, the real crop's mark kept. */
+    @media (max-width: 520px) {
+        .avn-ba-say { max-width: 44%; padding: .45rem .55rem; font-size: .68rem; }
+        .avn-ba-say .avn-ba-more { display: none; }
+        .avn-ba-say .avn-ba-short { display: inline; }
+        .avn-real { font-size: .6rem; letter-spacing: .03em; margin-bottom: 0; }
+    }
     .avn-ba-tag { position: absolute; top: .9rem; z-index: 2; display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .75rem; border-radius: 999px;
         font-size: .78rem; font-weight: 900; letter-spacing: .03em; box-shadow: 0 10px 22px -12px rgb(0 0 0 / .8); transition: opacity .28s var(--hp-ease); }
     .avn-ba-tag.is-now { left: .9rem; color: #fff; background: rgb(180 35 24 / .92); }
@@ -480,6 +494,7 @@
         .avn-job-in, .avn-face, .avn-switch::before, .avn-switch button, .avn-dock, .avn-bar-t i, .avn-bar-t b,
         .avn-meter-bar b, .avn-hour-c p, .avn-hour-t, .avn-qa .a, .avn-qa button svg, .avn-chip, .avn-pack, .avn-tool, .avn-turn, .avn-ba-tag, .avn-ba-say { transition: none !important; }
         .avn-ba.is-hint .avn-ba-knob { animation: none; }
+        .avn-real i { animation: none; }
         .avn-gain-t i { transition: none !important; } .avn-gain-row.is-get i.is-more::after { animation: none; }
         /* No turning over: the side shown simply changes. */
         .avn-face.is-anee, .avn-job.is-anee .avn-job-in { transform: none; }
@@ -518,12 +533,16 @@
             <div class="animate-fade-up" style="animation-delay:.14s">
                 {{-- Drag the handle (or use the arrow keys on it): the farm now on the left, with Anee on the right. --}}
                 <div class="avn-ba" id="avnBa">
-                    <img class="is-now" src="{{ asset('images/site/lp/sacks.webp') }}" alt="A farmer among his fertilizer sacks, unsure, his notebook in his hand" width="1400" height="1046" fetchpriority="high">
-                    <img class="is-anee" src="{{ asset('images/site/lp/palay-phone.webp') }}" alt="A farmer smiling at anee.io on his phone among his ripening palay" width="1400" height="1046">
+                    {{-- The owner's own fields (2026-10-29): a lodged palay field now, and a real Anee supported crop standing
+                         strong, filmed in the field (silent, looped, played only while on screen). --}}
+                    <img class="is-now" src="{{ asset('images/site/photos/lodged-palay.webp') }}" srcset="{{ asset('images/site/photos/lodged-palay-600.webp') }} 600w, {{ asset('images/site/photos/lodged-palay.webp') }} 1000w" sizes="(min-width: 1024px) 34rem, 100vw" alt="A palay field lodged flat before harvest" width="1000" height="750" fetchpriority="high">
+                    <video class="is-anee" data-avn-film muted loop playsinline preload="metadata" poster="{{ asset('videos/site/anee-standing-palay.webp') }}" aria-label="A real Anee supported palay crop, standing strong in the field">
+                        <source src="{{ asset('videos/site/anee-standing-palay.mp4') }}" type="video/mp4">
+                    </video>
                     <span class="avn-ba-tag is-now">Now</span>
                     <span class="avn-ba-tag is-anee"><img src="{{ $face }}" alt="">With Anee</span>
-                    <span class="avn-ba-say is-now">Guessing the sacks, the days and the price</span>
-                    <span class="avn-ba-say is-anee">Every decision read from his own farm</span>
+                    <span class="avn-ba-say is-now"><b>Lodged.</b> <span class="avn-ba-more">Nitrogen at the wrong time, and the harvest lies flat.</span><span class="avn-ba-short">The harvest lies flat.</span></span>
+                    <span class="avn-ba-say is-anee"><span class="avn-real"><i aria-hidden="true"></i>Real Anee supported crop</span><span class="avn-ba-more">Standing strong, filmed in the field.</span></span>
                     <span class="avn-ba-line" aria-hidden="true"></span>
                     <button type="button" class="avn-ba-knob" role="slider" aria-label="Drag to compare the farm now and with Anee" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg>
@@ -875,6 +894,10 @@
             if (e.key === 'ArrowRight') { set(now + 5); e.preventDefault(); }
         });
         set(50);
+        const film = ba.querySelector('[data-avn-film]');
+        if (film && !calm && 'IntersectionObserver' in window) {
+            new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { film.play().catch(() => {}); } else { film.pause(); } }), { threshold: .2 }).observe(ba);
+        }
         // A nudge once it is seen, so the handle reads as something to move.
         if (!calm && 'IntersectionObserver' in window) {
             const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { ba.classList.add('is-hint'); io.disconnect(); } }, { threshold: .6 });
