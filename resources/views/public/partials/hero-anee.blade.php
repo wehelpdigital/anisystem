@@ -2,15 +2,14 @@
      animation per phase) about the benefits like higher yield, pest protection, complete nutrition, anti lodging"). Anee
      stays in the middle; around her one benefit at a time plays its own animation, and its card names it under her:
        yield      two piles of rice sacks, lying down, stack up one by one: the usual way stops at about 5.4 t, Anee's
-                  goes on to 8 t with an arrow up and a faded sack on top, the pile not yet done (the same example as
-                  How It Works and Anee vs Now)
+                  goes past 8 t with an arrow up and a faded sack on top, the pile not yet done. Never "up to" a
+                  number here (the owner: that limits it; "we wanna say more")
        pests      a shield draws itself round her and the pests that fly at it bounce off
-       nutrition  eight nutrients, each its own color, fly in; each fills its own part of the ring round her, then
-                  beats and sends its drop in to her
+       nutrition  eight nutrients, flat see through orbs each in its own color, fly in; each fills its own part of
+                  the ring round her, then floats, a dashed ring with a dot turning round it, and sends its drop in to her
        lodging    a field of ripening palay (drawn plants: tillers, long leaves, drooping golden heads) bends in the
                   gusts and stands back up
-       timing     a sky split in two: the sun's rays on the dry morning side, strong rain and lightning on the other,
-                  and the work set on the dry morning
+       timing     a sky split in two: the sun's rays on one side, strong rain and lightning on the other
      Each card (the owner: the titles were "too simple") carries the benefit's name, a heading, a line, a number and a
      bar that fills while its turn lasts, in the benefit's own color. Played only while on screen; the first benefit at
      rest when motion is not welcome (every element's resting style is its finished state, the animations only bring it
@@ -20,7 +19,7 @@
     // Each benefit's card: its color, its name, a heading (the <em> part in color), a line, and a number.
     $hbPhases = [
         ['k' => 'yield', 'c' => '#f5c518', 'g' => 'rgb(245 197 24 / .28)', 'e' => '🌾', 'kick' => 'Higher yield',
-            'h' => 'A Bigger Harvest, <em>Every Season</em>', 'w' => 'Every decision made for more grain per hectare', 'pre' => 'Up to', 'n' => '8 t', 'u' => 'per hectare'],
+            'h' => 'A Bigger Harvest, <em>Every Season</em>', 'w' => 'Every decision made for more grain per hectare', 'pre' => '', 'n' => '8 t+', 'u' => 'per hectare'],
         ['k' => 'pests', 'c' => '#34d399', 'g' => 'rgb(52 211 153 / .26)', 'e' => '🛡️', 'kick' => 'Pest and disease protection',
             'h' => 'Caught Early. <em>Stopped Fast.</em>', 'w' => 'Anee spots the threat and names what works', 'pre' => 'Knows', 'n' => '229', 'u' => 'pests and diseases'],
         ['k' => 'nutri', 'c' => '#a3e635', 'g' => 'rgb(163 230 53 / .24)', 'e' => '🧪', 'kick' => 'Complete nutrition',
@@ -69,7 +68,7 @@
                 </span>
                 <small>With Anee</small>
             </div>
-            <span class="hb-badge is-up">▲ Up to 2.6 t more per hectare</span>
+            <span class="hb-badge is-up">▲ 8 t and still climbing</span>
         </div>
 
         {{-- Pest protection: a shield draws itself, the pests bounce off it. --}}
@@ -140,12 +139,13 @@
                 <span class="hb-sunglow"></span>
                 <div class="hb-storm">
                     <span class="hb-clouds"></span>
+                    <svg class="hb-bolt is-a" viewBox="0 0 40 100" preserveAspectRatio="none"><path d="M26 0L15 36L23 38L11 66L19 67L7 100"/><path class="br" d="M19 51L29 58L26 71"/></svg>
+                    <svg class="hb-bolt is-b" viewBox="0 0 40 100" preserveAspectRatio="none"><path d="M21 0L12 31L20 32L9 60L17 61L6 88"/></svg>
                     @foreach ($hbRain as [$x, $h, $w, $d, $k])<i style="left: {{ $x }}%; width: {{ $w }}px; height: {{ $h }}cqw; --d: {{ $d }}s; --k: {{ $k }}s"></i>@endforeach
                     <span class="hb-flash"></span>
+                    <span class="hb-flash is-b"></span>
                 </div>
             </div>
-            <span class="hb-slot is-am">Thu 7 AM<b>✓ Spray</b></span>
-            <span class="hb-slot is-pm">Thu 3 PM<b>🌧️ Heavy rain</b></span>
         </div>
 
         <div class="hb-core">
@@ -283,14 +283,20 @@
         background: var(--c); box-shadow: 0 0 10px var(--c); transform: rotate(var(--a)) translateY(-31cqw); }
     .hb-ph.is-play .hb-feed { animation: hbFeed 2.2s ease-in calc(1.8s + var(--k) * .17s) infinite; }
     @keyframes hbFeed { 0% { opacity: 0; transform: rotate(var(--a)) translateY(-31cqw); } 8% { opacity: 1; } 45%, 100% { opacity: 0; transform: rotate(var(--a)) translateY(-19cqw) scale(.4); } }
+    /* Each nutrient a flat, see through orb in its own color: a tinted glass disc with a bright edge, a dashed ring with a
+       dot turning round it, and a gentle float. */
     .hb-nut { position: absolute; left: 50%; top: 50%; width: 2.6rem; height: 2.6rem; margin: -1.3rem 0 0 -1.3rem; display: grid; place-items: center; border-radius: 999px;
-        font-size: .88rem; font-weight: 900; color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / .35);
-        background: radial-gradient(circle at 32% 28%, rgb(255 255 255 / .6), rgb(255 255 255 / 0) 46%), var(--c);
-        box-shadow: 0 0 0 2.5px rgb(255 255 255 / .9), 0 0 18px var(--c), 0 8px 18px -8px rgb(0 0 0 / .7);
+        font-size: .88rem; font-weight: 900; color: #fff; text-shadow: 0 1px 3px rgb(0 0 0 / .35);
+        background: color-mix(in srgb, var(--c) 42%, transparent); border: 1.5px solid color-mix(in srgb, var(--c) 70%, #fff);
+        backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 0 16px color-mix(in srgb, var(--c) 45%, transparent);
         transform: rotate(var(--a)) translateY(-35cqw) rotate(calc(var(--a) * -1)); }
-    .hb-ph.is-play .hb-nut { animation: hbIn .7s cubic-bezier(.22,1,.36,1) calc(.15s + var(--k) * .12s) both, hbBeat 2.2s ease-in-out calc(1.8s + var(--k) * .17s) infinite; }
+    .hb-nut::before { content: ''; position: absolute; inset: -7px; border-radius: 999px; border: 1px dashed color-mix(in srgb, var(--c) 70%, #fff); opacity: .75;
+        background: radial-gradient(circle at 50% 0, color-mix(in srgb, var(--c) 60%, #fff) 0 2.5px, transparent 3px); }
+    .hb-ph.is-play .hb-nut { animation: hbIn .7s cubic-bezier(.22,1,.36,1) calc(.15s + var(--k) * .12s) both, hbFloat 2.6s ease-in-out calc(1s + var(--k) * .2s) infinite; }
+    .hb-ph.is-play .hb-nut::before { animation: hbSpin calc(4s + var(--k) * .35s) linear infinite; }
+    .hb-ph.is-play .hb-nut:nth-of-type(even)::before { animation-direction: reverse; }
     @keyframes hbIn { from { opacity: 0; transform: rotate(calc(var(--a) - 50deg)) translateY(-56cqw) rotate(calc((var(--a) - 50deg) * -1)) scale(.5); } }
-    @keyframes hbBeat { 0%, 30%, 100% { scale: 1; } 10% { scale: 1.16; } }
+    @keyframes hbFloat { 50% { translate: 0 -5px; } }
     /* Lodging: the gusts, and a field of ripening palay, a row behind and a row in front, that bends and stands back up. */
     .hb-wind { position: absolute; z-index: 3; left: -10%; top: var(--y); width: 30%; height: 2px; border-radius: 999px; opacity: 0;
         background: linear-gradient(90deg, transparent, rgb(219 234 254 / .9), transparent); }
@@ -305,15 +311,18 @@
     .hb-tall.is-flip svg { scale: -1 1; }
     .hb-ph.is-play .hb-tall svg { animation: hbBend 1.7s ease-in-out calc(.3s + var(--k) * .06s) 2; }
     @keyframes hbBend { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(13deg); } 50% { transform: rotate(5deg); } 70% { transform: rotate(9deg); } }
-    /* Timing: a sky split in two, the sun's rays on the dry morning side and strong rain, with lightning, on the other. */
-    .hb-sky { position: absolute; inset: 4%; border-radius: 999px; overflow: hidden; }
-    .hb-rays { position: absolute; left: -66%; top: -64%; width: 180%; height: 180%;
+    /* Timing: the sun's rays on one side, strong rain with lightning on the other. No hard edge: the whole sky reaches
+       past the circle and fades out into the hero (the owner: "i don't like that it is enclosed in circle"). The sun
+       sits where it did, about a quarter in and a quarter down. */
+    .hb-sky { position: absolute; inset: -14%; pointer-events: none;
+        -webkit-mask: radial-gradient(closest-side, #000 50%, rgb(0 0 0 / .55) 74%, transparent 100%); mask: radial-gradient(closest-side, #000 50%, rgb(0 0 0 / .55) 74%, transparent 100%); }
+    .hb-rays { position: absolute; left: -58.75%; top: -57.2%; width: 180%; height: 180%;
         background: repeating-conic-gradient(from 0deg, rgb(255 238 170 / .34) 0deg 5deg, rgb(255 238 170 / 0) 5deg 14deg);
-        -webkit-mask: radial-gradient(closest-side, #000 6%, rgb(0 0 0 / .6) 30%, transparent 64%); mask: radial-gradient(closest-side, #000 6%, rgb(0 0 0 / .6) 30%, transparent 64%); }
+        -webkit-mask: radial-gradient(closest-side, #000 5%, rgb(0 0 0 / .55) 28%, transparent 60%); mask: radial-gradient(closest-side, #000 5%, rgb(0 0 0 / .55) 28%, transparent 60%); }
     .hb-ph.is-play .hb-rays { animation: hbRaysIn 1s cubic-bezier(.22,1,.36,1) both, hbSpin 36s linear infinite; }
     @keyframes hbRaysIn { from { opacity: 0; scale: .4; } }
     .hb-sunglow { position: absolute; inset: 0;
-        background: radial-gradient(circle at 24% 26%, rgb(255 251 225 / .95) 0 4.5%, rgb(253 224 71 / .7) 8%, rgb(251 146 60 / .28) 22%, rgb(251 146 60 / 0) 48%); }
+        background: radial-gradient(circle at 31.25% 32.8%, rgb(255 251 225 / .95) 0 3.3%, rgb(253 224 71 / .7) 5.8%, rgb(251 146 60 / .28) 16%, rgb(251 146 60 / 0) 35%); }
     .hb-ph.is-play .hb-sunglow { animation: hbFade .9s ease-out both; }
     .hb-storm { position: absolute; inset: 0; background: linear-gradient(180deg, rgb(15 23 42 / .96), rgb(30 41 59 / .85) 45%, rgb(51 65 85 / .55));
         -webkit-mask: linear-gradient(100deg, transparent 44%, #000 60%); mask: linear-gradient(100deg, transparent 44%, #000 60%); }
@@ -326,18 +335,21 @@
     .hb-storm i { position: absolute; top: -14%; border-radius: 2px; opacity: 0; rotate: 14deg;
         background: linear-gradient(rgb(219 234 254 / 0), rgb(219 234 254 / .9)); }
     .hb-ph.is-play .hb-storm i { animation: hbFall var(--d) linear calc(.7s + var(--k)) infinite; }
-    @keyframes hbFall { 0% { opacity: 0; transform: translateY(0); } 12% { opacity: 1; } 100% { opacity: .8; transform: translateY(120cqw); } }
-    .hb-flash { position: absolute; inset: 0; background: rgb(226 232 240); opacity: 0; }
+    @keyframes hbFall { 0% { opacity: 0; transform: translateY(0); } 12% { opacity: 1; } 100% { opacity: .8; transform: translateY(140cqw); } }
+    /* Lightning: two bolts out of the clouds, each with its own flash of light round it, at their own times. */
+    .hb-bolt { position: absolute; overflow: visible; opacity: 0; fill: none; stroke: #f8fafc; stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round;
+        filter: drop-shadow(0 0 3px #e0f2fe) drop-shadow(0 0 10px #93c5fd) drop-shadow(0 0 22px rgb(96 165 250 / .8)); }
+    .hb-bolt .br { stroke-width: 1.1; }
+    .hb-bolt.is-a { left: 69%; top: 15%; width: 9%; height: 34%; }
+    .hb-bolt.is-b { left: 83%; top: 21%; width: 6%; height: 24%; }
+    .hb-ph.is-play .hb-bolt.is-a { animation: hbBolt 2.6s linear 1.8s infinite; }
+    .hb-ph.is-play .hb-bolt.is-b { animation: hbBolt 3.4s linear 2.9s infinite; }
+    @keyframes hbBolt { 0%, 10%, 100% { opacity: 0; } 1.5% { opacity: 1; } 3.5% { opacity: .15; } 5.5% { opacity: .95; } 8% { opacity: .3; } }
+    .hb-flash { position: absolute; inset: 0; opacity: 0; background: radial-gradient(circle at 73% 26%, rgb(226 232 240 / .85), rgb(226 232 240 / 0) 55%); }
+    .hb-flash.is-b { background: radial-gradient(circle at 86% 30%, rgb(226 232 240 / .7), rgb(226 232 240 / 0) 45%); }
     .hb-ph.is-play .hb-flash { animation: hbFlash 2.6s linear 1.8s infinite; }
-    @keyframes hbFlash { 0%, 9%, 100% { opacity: 0; } 2% { opacity: .5; } 4% { opacity: .1; } 6% { opacity: .35; } }
-    .hb-slot { position: absolute; z-index: 6; display: grid; gap: .1rem; padding: .45rem .7rem; border-radius: .9rem; font-size: .72rem; font-weight: 800; color: #4b5563; background: #fff;
-        box-shadow: 0 12px 24px -12px rgb(0 0 0 / .7); }
-    .hb-slot b { font-size: .86rem; color: #14210c; }
-    .hb-slot.is-am { left: 3%; bottom: 14%; box-shadow: 0 0 0 3px #a3e635, 0 12px 24px -12px rgb(0 0 0 / .7); }
-    .hb-slot.is-pm { right: 3%; bottom: 14%; opacity: .9; }
-    .hb-ph.is-play .hb-slot.is-pm { animation: hbPopS .5s cubic-bezier(.22,1,.36,1) 1.6s both; }
-    .hb-ph.is-play .hb-slot.is-am { animation: hbPopS .5s cubic-bezier(.22,1,.36,1) 2.3s both; }
-    @keyframes hbPopS { from { opacity: 0; transform: translateY(12px) scale(.85); } }
+    .hb-ph.is-play .hb-flash.is-b { animation: hbFlash 3.4s linear 2.9s infinite; }
+    @keyframes hbFlash { 0%, 9%, 100% { opacity: 0; } 2% { opacity: .6; } 4% { opacity: .1; } 6% { opacity: .4; } }
     /* The benefit's card under her, in its own color: name, heading, line, a number, and a bar that fills while its turn
        lasts. All five share one grid cell, so the cards' row is as tall as the tallest. */
     .hb-cards { position: relative; display: grid; margin-top: -.6rem; }
@@ -378,7 +390,6 @@
         .hb-badge { font-size: .7rem; padding: .28rem .65rem; }
         .hb-bug { font-size: 1.15rem; }
         .hb-nut { width: 2.05rem; height: 2.05rem; margin: -1.025rem 0 0 -1.025rem; font-size: .72rem; }
-        .hb-slot { font-size: .62rem; padding: .35rem .55rem; } .hb-slot b { font-size: .74rem; }
         .hb-pile-n { font-size: .9rem; padding: .25rem .45rem; } .hb-pile.is-anee .hb-pile-n { font-size: 1.15rem; }
         .hb-up { width: .9rem; height: .9rem; }
         .hb-pile small { font-size: .6rem; padding: .18rem .45rem; }
