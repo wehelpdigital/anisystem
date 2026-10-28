@@ -1224,7 +1224,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
                 ->orWhere(fn ($w) => $w->where('status', 'done')->where('doneDate', '>=', $today->copy()->subDays(1)->toDateString()));
         })->orderBy('plannedDate')->orderByDesc('critical')->orderBy('sortOrder')->get();
 
-        $lotFacts = $lots->map(function ($l) use ($als, $today) {
+        $lotFacts = $lots->map(function ($l) use ($als, $today, $auto) {
             $al = $als->get($l->id);
             $day = $al?->fieldDate ? (int) Carbon::parse($al->fieldDate->toDateString(), 'Asia/Manila')->diffInDays($today, false) : null;
             $das = $al?->sowDate ? (int) Carbon::parse($al->sowDate->toDateString(), 'Asia/Manila')->diffInDays($today, false) : null;
@@ -1244,6 +1244,10 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
 
             return ['id' => (int) $l->id, 'name' => $l->lotName, 'crop' => $l->crop ? CropCatalog::label($l->crop) : null, 'icon' => CropCatalog::CROPS[$l->crop]['icon'] ?? '🌱',
                 'variety' => $l->variety, 'day' => $day, 'say' => $say, 'stage' => $stage, 'harvest' => $al?->harvestDate?->format('M j'),
+                // The harvest survey (2026-10-28): due from three days before the harvest day, until it is recorded.
+                'harvestDue' => $al?->harvestDate && ! $l->harvestedAt && $al->harvestDate->lte($today->copy()->addDays(3)),
+                'harvestedAt' => $l->harvestedAt ? Carbon::parse($l->harvestedAt)->format('M j') : null,
+                'reportUrl' => route('sm.anee.season', ['id' => $auto->croppingScheduleId, 'lotId' => $l->id]),
                 'pct' => $span && $day !== null ? max(0, min(100, (int) round($day / $span * 100))) : null,
                 'toHarvest' => $al?->harvestDate ? (int) $today->diffInDays(Carbon::parse($al->harvestDate->toDateString(), 'Asia/Manila'), false) : null];
         })->values();

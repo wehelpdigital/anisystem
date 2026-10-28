@@ -593,6 +593,12 @@ class FarmReportController extends BaseScheduleController
         return view('sm.anee-report', ['schedule' => $schedule, 'kind' => 'sofar']);
     }
 
+    /** The season report of an Anee Auto season: part of what its lots paid for (2026-10-28). */
+    private function includedReport(\App\Models\AsCroppingSchedule $schedule, string $kind): bool
+    {
+        return $kind === 'season' && (int) ($schedule->aneeAuto ?? 0) === 1;
+    }
+
     /** The size the report is priced by: one lot when one is asked about, else every lot of the season. */
     private function aneeLots(\App\Models\AsCroppingSchedule $schedule, int $lotId): int
     {
@@ -620,8 +626,10 @@ class FarmReportController extends BaseScheduleController
             'kind' => $kind,
             // What the page shows and charges: the engine's figure for this season's size
             // (App\Support\AiPricing, 4x to 6x since 2026-10-16); `quote` is the same, for a page that sends it back.
-            'price' => AiPricing::credits($kind, ['lots' => $this->aneeLots($schedule, (int) $request->query('lotId', 0))]),
-            'quote' => AiPricing::credits($kind, ['lots' => $this->aneeLots($schedule, (int) $request->query('lotId', 0))]),
+            // An Anee Auto season's final report comes with it (2026-10-28, the owner: "after the harvest date is complete,
+            // have a survey ... and do a final post analysis"): its lots are paid for the whole season.
+            'price' => $this->includedReport($schedule, $kind) ? 0 : AiPricing::credits($kind, ['lots' => $this->aneeLots($schedule, (int) $request->query('lotId', 0))]),
+            'quote' => $this->includedReport($schedule, $kind) ? 0 : AiPricing::credits($kind, ['lots' => $this->aneeLots($schedule, (int) $request->query('lotId', 0))]),
             'balance' => round($credits->balance($payer->id), 2),
             'unlimited' => $credits->unlimited((int) $payer->id),
             'blockers' => $blockers,
@@ -717,6 +725,9 @@ class FarmReportController extends BaseScheduleController
            one lot never costs more than the whole season; a page that sends
            the `quote` back is charged that, and a stale one is refused. */
         $quote = AiPricing::quote($kind, ['lots' => $this->aneeLots($schedule, $lotId)]);
+        if ($this->includedReport($schedule, $kind)) {
+            $quote['credits'] = 0;
+        }
         $price = AiPricing::agreed($request, $quote, (int) $quote['credits']);
         if ($price === null) {
             return $this->jsonFail('This report now costs ' . $quote['credits'] . ' credits. Please run it again.', 409, ['quote' => $quote['credits']]);

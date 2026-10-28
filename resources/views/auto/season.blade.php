@@ -46,6 +46,45 @@
         transition: background-color .28s var(--ac-ease); }
     .ac-hbtn:hover { background: rgb(255 255 255 / .22); }
     .ac-lots { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr)); gap: .45rem; margin-top: .8rem; }
+    /* The harvest, lot by lot, and the milestones (2026-10-28). */
+    .ac-hv { position: relative; z-index: 1; display: grid; gap: .45rem; margin-top: .45rem; }
+    .ac-hv:empty { display: none; }
+    .ac-hvc { display: flex; align-items: center; gap: .65rem; padding: .7rem .8rem; border-radius: 1rem; animation: acHvIn .45s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i) * 80ms); }
+    .ac-hvc.is-due { color: #3b2f00; background: linear-gradient(135deg, #fff6d6, #ffe08a); box-shadow: 0 12px 26px -18px rgb(245 197 24 / .9); }
+    .ac-hvc.is-done { color: #eaf3df; background: rgb(255 255 255 / .1); border: 1px solid rgb(255 255 255 / .16); }
+    .ac-hvc > span { flex: none; font-size: 1.5rem; }
+    .ac-hvc.is-due > span { animation: acHvBob 1.8s ease-in-out infinite; }
+    .ac-hvc > div { flex: 1; min-width: 0; }
+    .ac-hvc b { display: block; font-size: .88rem; font-weight: 800; }
+    .ac-hvc small { display: block; margin-top: .1rem; font-size: .74rem; line-height: 1.4; opacity: .85; }
+    .ac-hvb { flex: none; padding: .55rem .9rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: #fff; background: #4a7c2a; white-space: nowrap; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .ac-hvb:hover { transform: translateY(-2px); }
+    .ac-hvb.is-report { color: #3b2f00; background: #f5c518; }
+    @media (max-width: 560px) { .ac-hvc { flex-wrap: wrap; } .ac-hvb { width: 100%; text-align: center; } }
+    @keyframes acHvIn { from { opacity: 0; transform: translateY(6px); } }
+    @keyframes acHvBob { 50% { transform: translateY(-3px) rotate(-8deg); } }
+    .ac-hvs { margin-top: .6rem; border: 1px solid var(--color-gray-200); border-radius: .9rem; padding: .55rem .75rem; }
+    .ac-hvs summary { cursor: pointer; font-weight: 800; font-size: .88rem; }
+    .ac-hvs summary small { font-weight: 600; color: var(--color-gray-400); }
+    .ac-hvg { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: .55rem .7rem; margin-top: .55rem; }
+    .ac-hvf { display: grid; gap: .25rem; }
+    .ac-hvf > span { font-size: .74rem; font-weight: 800; color: var(--color-gray-600); }
+    .ac-hvf small { font-weight: 600; color: var(--color-gray-400); }
+    .ac-cele { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; pointer-events: auto; background: rgb(10 20 6 / 0); transition: background-color .4s ease; }
+    .ac-cele.is-on { background: rgb(10 20 6 / .35); }
+    .ac-cele-c { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+    .ac-cele-c i { position: absolute; top: -2rem; left: var(--x); width: .55rem; height: .9rem; border-radius: .15rem; background: var(--c); transform: rotate(var(--r)); }
+    .ac-cele.is-on .ac-cele-c i { animation: acFall 2.8s cubic-bezier(.3,.6,.4,1) forwards; animation-delay: var(--d); }
+    @keyframes acFall { to { transform: translateY(110vh) rotate(calc(var(--r) + 540deg)); } }
+    .ac-cele-b { position: relative; display: grid; justify-items: center; gap: .3rem; max-width: 20rem; padding: 1.3rem 1.4rem; border-radius: 1.4rem; text-align: center; background: #fff; box-shadow: 0 30px 60px -20px rgb(0 0 0 / .5);
+        transform: scale(.6); opacity: 0; transition: transform .45s cubic-bezier(.34,1.56,.64,1), opacity .3s ease; }
+    .ac-cele.is-on .ac-cele-b { transform: none; opacity: 1; }
+    .ac-cele-b img { width: 5rem; height: 5rem; animation: acHvBob 1.6s ease-in-out infinite; }
+    .ac-cele-b b { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #14210c; }
+    .ac-cele-b span { font-size: .85rem; line-height: 1.45; color: var(--color-gray-600); }
+    html.dark .ac-cele-b { background: #161c12; } html.dark .ac-cele-b b { color: #eef3e8; } html.dark .ac-cele-b span { color: #b9c6ad; }
+    html.dark .ac-hvs { border-color: #2b3a1c; }
+    @media (prefers-reduced-motion: reduce) { .ac-hvc, .ac-hvc > span, .ac-cele-b img { animation: none !important; } .ac-cele-b, .ac-cele { transition: none !important; } }
     .ac-lot { display: flex; align-items: center; gap: .55rem; padding: .55rem .7rem; border-radius: 1rem; background: rgb(255 255 255 / .1); border: 1px solid rgb(255 255 255 / .14);
         animation: acIn .4s var(--ac-ease) both; animation-delay: calc(var(--i) * 70ms); }
     .ac-lot > span { flex: none; font-size: 1.4rem; }
@@ -342,6 +381,8 @@
             <div class="min-w-0"><h2 id="acTitle">{{ $schedule->title }}</h2><p id="acSay" data-tl="anee-auto">Anee plans, you follow.</p></div>
         </div>
         <div class="ac-lots" id="acLots"></div>
+        {{-- The harvest, lot by lot (2026-10-28): the survey when it is due, then the final report. --}}
+        <div class="ac-hv" id="acHarvest"></div>
         <div class="ac-week" id="acWeek"></div>
         <div class="ac-acts">
             <button type="button" class="ac-hbtn" id="acTodayBtn">📋 Today</button>
@@ -396,6 +437,9 @@
         done: (t) => @json(url('/app/auto/' . $auto->id . '/task')) + '/' + t + '/done', cant: (t) => @json(url('/app/auto/' . $auto->id . '/task')) + '/' + t + '/cant',
     };
     const FACE = @json(\App\Support\AneeEmoji::url('happy'));
+    // The harvest record, the same questions the board's Set as harvested asks (App\Support\PostHarvestFields::HARVEST).
+    const HV = { url: @json(route('sm.lots.harvest') . '?scheduleId=' . $schedule->id), cats: @json(collect(\App\Support\PostHarvestFields::HARVEST)->mapWithKeys(fn ($c) => [$c => \App\Support\PostHarvestFields::for($c)])),
+        names: { yield: ['🧺', 'The harvest'], quality: ['🔎', 'Its quality'], storage: ['☀️', 'Drying and storage'], market: ['💰', 'The sale'] }, cheer: @json(\App\Support\AneeEmoji::url('cheer')) };
     const SHOP_NOTE = 'These links only show who may be selling it. Anee does not recommend a shop or a brand: read the label and buy only FPA registered products.';
     let F = null, EV = [], open = new Set();
 
@@ -609,6 +653,72 @@
         requestAnimationFrame(() => document.querySelectorAll('.ac-bar i[data-w]').forEach((b) => { b.style.width = b.dataset.w + '%'; }));
         const pick = $('acLotPick');
         pick.innerHTML = '<option value="">The whole farm</option>' + F.lots.map((l) => '<option value="' + l.id + '">' + esc(l.name) + '</option>').join('');
+        paintHarvest();
+        milestones();
+    };
+    /* ---- the harvest (2026-10-28, the owner: "after the harvest date is complete, have a survey as well (similar to the
+       activities module when you set the lot as harvested) asking the details of the harvest and do a final post analysis
+       (similar to the post analysis in reports)"): a lot whose harvest is due asks for its record; a recorded one opens
+       its final report, which comes with Anee Auto. ---- */
+    const paintHarvest = () => {
+        const due = F.lots.filter((l) => l.harvestDue), done = F.lots.filter((l) => l.harvestedAt);
+        $('acHarvest').innerHTML = due.map((l, i) => '<div class="ac-hvc is-due" style="--i:' + i + '"><span aria-hidden="true">🧺</span><div><b>Harvest time for ' + esc(l.name) + '</b><small>Planned for ' + esc(l.harvest || 'about now') + '. Record what came off the field and Anee writes the season\'s final report.</small></div><button type="button" class="ac-hvb" data-hv="' + l.id + '">Record the harvest</button></div>').join('')
+            + done.map((l, i) => '<div class="ac-hvc is-done" style="--i:' + (due.length + i) + '"><span aria-hidden="true">✅</span><div><b>' + esc(l.name) + ' harvested ' + esc(l.harvestedAt) + '</b><small>The final report reads the whole season: what was done, what it cost, what it made, and what to do better.</small></div><a class="ac-hvb is-report" href="' + esc(l.reportUrl) + '">📊 Final report</a></div>').join('');
+    };
+    const hvField = (cat, f) => {
+        const id = 'hv_' + cat + '_' + f.key, ph = f.placeholder ? ' placeholder="' + esc(f.placeholder) + '"' : '';
+        const input = f.type === 'select' ? '<select class="form-select" id="' + id + '" data-hvf="' + cat + '.' + f.key + '"><option value="">Choose</option>' + Object.entries(f.options || {}).map(([k, v]) => '<option value="' + esc(k) + '">' + esc(v) + '</option>').join('') + '</select>'
+            : '<input class="form-input" id="' + id + '" data-hvf="' + cat + '.' + f.key + '" type="' + (['number', 'percent', 'money'].includes(f.type) ? 'number' : 'text') + '"' + (['number', 'percent', 'money'].includes(f.type) ? ' min="0" step="any" inputmode="decimal"' : '') + ph + (f.type === 'unit' ? ' list="acHvUnits"' : '') + '>';
+        return '<label class="ac-hvf" for="' + id + '"><span>' + esc(f.label) + (cat === 'yield' && (f.key === 'yieldAmount' || f.key === 'yieldUnit') ? '' : ' <small>(optional)</small>') + '</span>' + input + '</label>';
+    };
+    const harvestModal = (l) => modal('<h3>🧺 The harvest of ' + esc(l.name) + '</h3><p class="ac-msub">How much came off the field is all Anee needs. The rest makes the final report sharper: answer what you know.</p>'
+        + '<label class="ac-lab" for="acHvDate">Harvested on</label><input type="date" id="acHvDate" class="form-input" max="' + today() + '" value="' + today() + '">'
+        + '<datalist id="acHvUnits"><option value="kg"><option value="sacks"><option value="cavans"><option value="tons"></datalist>'
+        + Object.entries(HV.cats).map(([cat, fs], i) => '<details class="ac-hvs"' + (i === 0 ? ' open' : '') + '><summary>' + HV.names[cat][0] + ' ' + HV.names[cat][1] + (i === 0 ? '' : ' <small>(optional)</small>') + '</summary><div class="ac-hvg">' + fs.map((f) => hvField(cat, f)).join('') + '</div></details>').join('')
+        + '<label class="ac-lab" for="acHvNote">Notes <small class="font-normal text-gray-400">(optional)</small></label><textarea id="acHvNote" class="form-textarea w-full" rows="2" maxlength="2000" placeholder="Like: lodged in one corner after the storm"></textarea>'
+        + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Not yet</button><button type="button" class="btn btn-primary" id="acHvOk">Save the harvest</button></div>', (box) => {
+        box.querySelector('#acHvOk').addEventListener('click', async (e) => {
+            const answers = {};
+            box.querySelectorAll('[data-hvf]').forEach((el) => { const v = el.value.trim(); if (v === '') return; const [cat, key] = el.dataset.hvf.split('.'); (answers[cat] = answers[cat] || {})[key] = v; });
+            if (!answers.yield || !answers.yield.yieldAmount || !answers.yield.yieldUnit) return window.toast?.('Say how much was harvested and what it was measured in.', 'error');
+            e.target.disabled = true; e.target.textContent = 'Saving…';
+            try {
+                await window.api(HV.url, { method: 'POST', body: { lotId: l.id, harvestedAt: box.querySelector('#acHvDate').value || today(), notes: box.querySelector('#acHvNote').value, answers } });
+                closeModal();
+                celebrate('🧺 ' + l.name + ' is harvested!', 'Well done. Your final report is ready to write.');
+                setTimeout(() => load(true), 600);
+            } catch (err) { window.toast?.(err.message, 'error'); e.target.disabled = false; e.target.textContent = 'Save the harvest'; }
+        });
+    });
+    $('acHarvest').addEventListener('click', (e) => { const b = e.target.closest('[data-hv]'); if (b) { const l = F.lots.find((x) => String(x.id) === b.dataset.hv); if (l) harvestModal(l); } });
+
+    /* ---- milestones (2026-10-28, the owner: "make sure that it is interactive enough like using anee emojis, have
+       animations, milestone animations"): a quarter, half and three quarters of the season's tasks done, every task of
+       today done, a lot harvested. Each one once, kept in the browser. ---- */
+    const MS_KEY = 'ac-ms-' + @json($auto->id);
+    const msSeen = () => { try { return JSON.parse(localStorage.getItem(MS_KEY) || '[]'); } catch (_) { return []; } };
+    const msMark = (k) => { try { const a = msSeen(); a.push(k); localStorage.setItem(MS_KEY, JSON.stringify(a.slice(-60))); } catch (_) {} };
+    const celebrate = (title, line) => {
+        const el = document.createElement('div');
+        el.className = 'ac-cele'; el.setAttribute('role', 'status');
+        const bits = still() ? '' : Array.from({ length: 36 }, (_, i) => '<i style="--x:' + (Math.random() * 100).toFixed(1) + '%;--d:' + (Math.random() * .6).toFixed(2) + 's;--r:' + Math.round(Math.random() * 360) + 'deg;--c:' + ['#f5c518', '#4a7c2a', '#8fc96a', '#ef7676', '#7cc4f5'][i % 5] + '"></i>').join('');
+        el.innerHTML = '<div class="ac-cele-c">' + bits + '</div><div class="ac-cele-b"><img src="' + HV.cheer + '" alt=""><b>' + esc(title) + '</b><span>' + esc(line) + '</span></div>';
+        document.body.appendChild(el);
+        requestAnimationFrame(() => el.classList.add('is-on'));
+        setTimeout(() => { el.classList.remove('is-on'); setTimeout(() => el.remove(), 500); }, 3600);
+        el.addEventListener('click', () => { el.classList.remove('is-on'); setTimeout(() => el.remove(), 400); });
+    };
+    let MS_BOOT = true;
+    const milestones = () => {
+        const all = F.doneCount + F.left, pct = all ? F.doneCount / all * 100 : 0, seen = msSeen();
+        const fire = (k, t, l) => { if (seen.includes(k)) return false; msMark(k); if (!MS_BOOT || k.startsWith('harv')) { celebrate(t, l); return true; } return false; };
+        // On the first paint a milestone passed long ago is only remembered, not cheered again.
+        [[75, '🌾 Three quarters of the season done!', 'The harvest is coming into view.'], [50, '🎯 Halfway through the season!', 'Every task done so far is in the log.'], [25, '🌱 A quarter of the season done!', 'You and Anee are on track.']]
+            .some(([n, t, l]) => pct >= n && fire('pct' + n, t, l));
+        const todayIso = today();
+        if (F.today && !F.today.length && F.doneToday && F.doneToday.length) fire('day' + todayIso, '✅ Every task of today is done!', 'Rest well. Anee plans tomorrow at dawn.');
+        F.lots.filter((l) => l.harvestedAt).forEach((l) => { if (!seen.includes('harv' + l.id)) msMark('harv' + l.id); });
+        MS_BOOT = false;
     };
     const load = async (keepScroll = false) => {
         try {
