@@ -81,6 +81,11 @@ class AneeAutoController extends Controller
     private const OBSERVE_PER_LOT = 2;
     private const ASK_BASE = 10;
     private const ASK_PER_LOT = 5;
+    // The season's allowance a lot (2026-10-28, the owner: "go with it 1500 per lot"): the questions and readings of the
+    // field a lot's credits include for the whole season. Past them each one costs its own price (AiPrices autoAsk,
+    // autoObserve), agreed first and taken only when Anee answers. The day's caps above still stop a busy day.
+    private const SEASON_ASKS = 150;
+    private const SEASON_OBSERVES = 45;
     private const READINGS = 3;
     /** A season's calendar is long: one call may write for five minutes, so a job is dead only after eight quiet ones. */
     private const JOB_STALE = 480;
@@ -1417,6 +1422,8 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             'canAddLot' => $auto->status === AsAutoSeason::ACTIVE && ($this->lotCap() === null || AsAutoLot::where('autoId', $auto->id)->count() < $this->lotCap()),
             // The tabs the farmer's options turn on (AutoOptions): the shed and the payroll.
             'shed' => $shedOn, 'pay' => AutoPay::on($auto),
+            // The season's allowance (2026-10-28): what is left, and what one more costs past it.
+            'allowance' => ['ask' => $this->allowance($auto, 'ask'), 'observe' => $this->allowance($auto, 'observe')],
         ]);
     }
 
@@ -1763,6 +1770,10 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
         if ($used >= $cap) {
             return $this->json(false, 'That is ' . $cap . ' observations today. Send the next one tomorrow, or ask in the chat.', [], 429);
         }
+        [$stop, $extra] = $this->pastAllowance($request, $auto, 'observe');
+        if ($stop) {
+            return $stop;
+        }
         $lotId = $request->filled('lotId') ? (int) $request->input('lotId') : null;
         if ($lotId && ! AsAutoLot::where('autoId', $auto->id)->where('lotId', $lotId)->exists()) {
             $lotId = null;
@@ -1838,8 +1849,52 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             'what' => $data['what'] ?? null, 'confidence' => $data['confidence'] ?? null, 'severity' => $data['severity'] ?? null,
             'reading' => $data['reading'] ?? null, 'actions' => array_slice((array) ($data['actions'] ?? []), 0, 6), 'watch' => $data['watch'] ?? null, 'added' => $added,
         ], ['lotId' => $lotId, 'taskId' => null]);
+        $this->chargeExtra($auto, 'observe', $extra);
 
         return $this->json(true, 'Read.');
+    }
+
+    /** The season's allowance of questions ('ask') or readings of the field ('observe'): used, cap, left, and one more's price. */
+    private function allowance(AsAutoSeason $auto, string $kind): array
+    {
+        $ask = $kind === 'ask';
+        $cap = ($ask ? self::SEASON_ASKS : self::SEASON_OBSERVES) * max(1, (int) $auto->lotsPaid);
+        $used = AsAutoEvent::where('autoId', $auto->id)->where('kind', $ask ? 'ask' : 'observation')->where('role', 'farmer')->count();
+
+        return ['cap' => $cap, 'used' => $used, 'left' => max(0, $cap - $used), 'price' => AiPrices::of($ask ? 'autoAsk' : 'autoObserve')];
+    }
+
+    /**
+     * Past the allowance, a question or a reading costs its price: the page asks first (409 with `extra`), the farmer
+     * agrees (`pay`), and must have the credits. [a refusal or null, the price to take when Anee answers (0 within it)].
+     */
+    private function pastAllowance(Request $request, AsAutoSeason $auto, string $kind): array
+    {
+        $a = $this->allowance($auto, $kind);
+        if ($a['left'] > 0) {
+            return [null, 0];
+        }
+        $word = $kind === 'ask' ? 'question' : 'reading of the field';
+        $words = $kind === 'ask' ? 'questions' : 'readings of the field';
+        $payer = $this->payer();
+        if (! $request->boolean('pay')) {
+            return [$this->json(false, 'You have used this season\'s ' . $a['cap'] . ' ' . $words . '. One more costs ' . $a['price'] . ' credits.',
+                ['extra' => ['price' => $a['price'], 'what' => $kind, 'cap' => $a['cap']]], 409), 0];
+        }
+        if (! $this->credits->unlimited((int) $payer->id) && $this->credits->balance($payer->id) < $a['price']) {
+            return [$this->json(false, 'One more ' . $word . ' takes ' . $a['price'] . ' credits and you have ' . number_format((int) floor($this->credits->balance($payer->id))) . '.', ['outOfCredits' => true], 402), 0];
+        }
+
+        return [null, (int) $a['price']];
+    }
+
+    /** A question or reading past the allowance is paid once Anee has answered it. */
+    private function chargeExtra(AsAutoSeason $auto, string $kind, int $price): void
+    {
+        if ($price > 0) {
+            $this->credits->chargeAllowingNegative((int) $this->payer()->id, $price,
+                'Anee Auto: ' . ($kind === 'ask' ? 'a question' : 'a reading of the field') . ' past the season\'s allowance (' . $this->schedule($auto)->title . ')');
+        }
     }
 
     /**
@@ -1913,6 +1968,10 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
         if ($used >= $cap) {
             return $this->json(false, 'That is ' . $cap . ' questions today. Ask again tomorrow, or use Anee\'s chat.', [], 429);
         }
+        [$stop, $extra] = $this->pastAllowance($request, $auto, 'ask');
+        if ($stop) {
+            return $stop;
+        }
         AsAutoEvent::say($auto->id, 'ask', $q, [], ['role' => 'farmer', 'userId' => Auth::id()]);
         $recent = AsAutoEvent::where('autoId', $auto->id)->orderByDesc('id')->limit(10)->get()->reverse()
             ->map(fn ($e) => ($e->role === 'farmer' ? 'Farmer: ' : 'Anee: ') . mb_substr(strip_tags((string) $e->body), 0, 400))->values()->all();
@@ -1923,6 +1982,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             return $this->json(false, $res['error'] ?? 'Anee could not answer just now. Please try again.', [], 502);
         }
         AsAutoEvent::say($auto->id, 'reply', trim((string) $res['text']), ['kind' => 'answer']);
+        $this->chargeExtra($auto, 'ask', $extra);
 
         return $this->json(true, 'Answered.');
     }

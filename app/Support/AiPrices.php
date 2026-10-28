@@ -47,10 +47,14 @@ final class AiPrices
         'npk' => 80,
         'npkplan' => 25,
         'npkproto' => 20,
-        // 2026-10-12: Anee Auto, per lot, for the whole season. 1,200 since 2026-10-28 (was 1,000): the season now
-        // writes its plan again until approved and includes its final report, about P207 a lot at Gemini's rates,
-        // so 1,000 had fallen to 4.2x; 1,200 holds 5x for one lot and 5.7x for ten (AiPricing, kind 'auto').
-        'auto' => 1200,
+        // 2026-10-12: Anee Auto, per lot, for the whole season. 1,500 since 2026-10-28 (the owner's pick; was 1,000):
+        // the season writes its plan again until approved and includes its final report, about P207 a lot at Gemini's
+        // rates (6.3x), with a season allowance of questions and observations a lot (AneeAutoController::SEASON_ASKS,
+        // SEASON_OBSERVES) so a season that asks all day cannot cost more than it paid.
+        'auto' => 1500,
+        // Past that allowance, one more question or one more reading of the field (5x their cost, AiPricing kinds).
+        'autoAsk' => 18,
+        'autoObserve' => 25,
         // Satellite Weather, a week of the page (App\Support\SkyPass keeps it above cost).
         'skypass' => 50,
         // 2026-10-14: the LCC Checker, Anee reading leaf photos against the leaf color chart.

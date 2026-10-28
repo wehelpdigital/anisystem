@@ -729,6 +729,7 @@
         milestones();
         $('acAddLot').hidden = !F.canAddLot;
         $('acShedBtn').hidden = !F.shed;
+        $('acText').placeholder = placeholder(mode);
         $('acPayBtn').hidden = !F.pay;
     };
     /* ---- the harvest (2026-10-28, the owner: "after the harvest date is complete, have a survey as well (similar to the
@@ -1149,7 +1150,7 @@
     const setMode = (m) => {
         mode = m;
         document.querySelectorAll('.ac-mode').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)));
-        $('acText').placeholder = m === 'ask' ? 'Ask Anee about your season' : 'What do you see? Like: yellow leaves on the lower part, patches near the canal';
+        $('acText').placeholder = placeholder(m);
         $('acLotPick').hidden = m !== 'observe' || !(F && F.lots.length > 1);
         $('acQuick').hidden = m !== 'ask';
     };
@@ -1198,6 +1199,25 @@
     });
     $('acText').addEventListener('input', () => { const t = $('acText'); t.style.height = 'auto'; t.style.height = Math.min(128, t.scrollHeight) + 'px'; });
     const typing = () => { $('acToday')?.insertAdjacentHTML('beforebegin', '<div class="ac-row" id="acTyping">' + avatar + '<div class="ac-bub"><span class="ac-typing"><i></i><i></i><i></i></span></div></div>'); scrollEnd(); };
+    /* The season's allowance (2026-10-28): what is left, in the box's own words; past it, one more costs its price,
+       asked first and taken only when Anee answers. */
+    const placeholder = (m) => {
+        const a = F && F.allowance ? F.allowance[m === 'ask' ? 'ask' : 'observe'] : null;
+        const left = !a ? '' : a.left > 0 ? (a.left <= 30 ? ' (' + a.left + ' left this season)' : '') : ' (' + a.price + ' credits each now)';
+        return (m === 'ask' ? 'Ask Anee about your season' : 'What do you see? Like: yellow leaves on the lower part, patches near the canal') + left;
+    };
+    const askToPay = (x, msg) => new Promise((resolve) => {
+        let done = false;
+        const fin = (v) => { if (!done) { done = true; resolve(v); } };
+        modal('<h3>' + (x.what === 'ask' ? '💬' : '👀') + ' This season\'s ' + x.cap + ' ' + (x.what === 'ask' ? 'questions are' : 'readings are') + ' used</h3>'
+            + '<p class="ac-msub">' + esc(msg) + ' The credits are taken only when Anee answers.</p>'
+            + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Not now</button><button type="button" class="btn btn-primary" data-pay-ok>' + (x.what === 'ask' ? 'Ask' : 'Send') + ' for ' + x.price + ' credits</button></div>', (box) => {
+            box.querySelector('[data-pay-ok]').addEventListener('click', () => { fin(true); closeModal(); });
+            box.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => fin(false)));
+        });
+        const m = $('acModal'), watch = new MutationObserver(() => { if (!m.classList.contains('is-on')) { watch.disconnect(); fin(false); } });
+        watch.observe(m, { attributes: true, attributeFilter: ['class'] });
+    });
     $('acSend').addEventListener('click', async () => {
         const text = $('acText').value.trim();
         if (mode === 'ask' && !text) return;
@@ -1208,19 +1228,28 @@
             : '<div class="ac-row is-me">' + card('leaf', '📷 From the field', '', (text ? '<div>' + esc(text) + '</div>' : (voice ? '🎙️ Voice note' : '')) + (photos.length ? '<div class="ac-media' + (photos.length === 1 ? ' is-one' : '') + '">' + photos.map((p) => '<img src="' + p.url + '" alt="">').join('') + '</div>' : ''), '') + '</div>';
         $('acToday') ? $('acToday').insertAdjacentHTML('beforebegin', said) : $('acFeed').insertAdjacentHTML('beforeend', said);
         typing();
-        try {
-            if (mode === 'ask') await window.api(U.ask, { method: 'POST', body: { text } });
-            else {
-                const fd = new FormData();
-                fd.append('text', text); if ($('acLotPick').value) fd.append('lotId', $('acLotPick').value);
-                photos.forEach((p) => fd.append('photos[]', p.file));
-                frames.forEach((f) => fd.append('frames[]', f));
-                if (video) fd.append('video', video);
-                if (voice) fd.append('audio', voice.blob, 'voice.' + voice.ext);
-                await window.api(U.observe, { method: 'POST', body: fd });
-            }
-            $('acText').value = ''; $('acText').style.height = ''; photos = []; video = null; frames = []; voice = null; paintAtt(); setMode('ask');
-        } catch (err) { window.toast?.(err.message, 'error'); }
+        const send = (pay) => {
+            if (mode === 'ask') return window.api(U.ask, { method: 'POST', body: { text, pay: pay ? 1 : 0 } });
+            const fd = new FormData();
+            fd.append('text', text); if ($('acLotPick').value) fd.append('lotId', $('acLotPick').value);
+            photos.forEach((p) => fd.append('photos[]', p.file));
+            frames.forEach((f) => fd.append('frames[]', f));
+            if (video) fd.append('video', video);
+            if (voice) fd.append('audio', voice.blob, 'voice.' + voice.ext);
+            if (pay) fd.append('pay', '1');
+            return window.api(U.observe, { method: 'POST', body: fd });
+        };
+        const clear = () => { $('acText').value = ''; $('acText').style.height = ''; photos = []; video = null; frames = []; voice = null; paintAtt(); setMode('ask'); };
+        try { await send(false); clear(); }
+        catch (err) {
+            if (err.status === 409 && err.data && err.data.extra) {
+                $('acTyping')?.remove();
+                if (await askToPay(err.data.extra, err.message)) {
+                    typing();
+                    try { await send(true); clear(); } catch (e2) { window.toast?.(e2.message, 'error'); }
+                }
+            } else window.toast?.(err.message, 'error');
+        }
         $('acSend').disabled = false;
         await load(true); scrollEnd();
     });

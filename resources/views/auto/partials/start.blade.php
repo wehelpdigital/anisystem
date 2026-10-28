@@ -38,6 +38,7 @@
     .aus-price { margin: .3rem 0 .8rem; padding: .9rem 1rem; border-radius: 1rem; background: linear-gradient(115deg, #f3f8ec, #e4efd4); border: 1px solid #cfe3b8; }
     .aus-price b { display: block; font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800; color: #2d5016; }
     .aus-price span { font-size: .8rem; color: #3d5226; }
+    .aus-price small { display: block; margin-top: .35rem; font-size: .74rem; line-height: 1.45; color: #4b6236; }
     .aus-final { display: flex; gap: .6rem; align-items: flex-start; font-size: .82rem; line-height: 1.5; color: var(--color-gray-700); cursor: pointer; }
     .aus-final input { margin-top: .2rem; width: 1.1rem; height: 1.1rem; flex: none; accent-color: var(--color-brand-600); }
     .aus-bal { margin-top: .6rem; font-size: .78rem; color: var(--color-gray-500); }
@@ -52,7 +53,7 @@
     html.dark .aus-warn { background: #2a2210; border-color: #5b4716; color: #f3d9a4; }
     html.dark .aus-warn b { color: #fde7b0; }
     html.dark .aus-price { background: #17220f; border-color: #2b3a1c; }
-    html.dark .aus-price b { color: #c5e09f; } html.dark .aus-price span { color: #b7c9a3; }
+    html.dark .aus-price b { color: #c5e09f; } html.dark .aus-price span { color: #b7c9a3; } html.dark .aus-price small { color: #a9bd94; }
     html.dark .aus-count b { color: #eef3e8; }
     html.dark .aus-count button { background: #1c2616; border-color: #2b3a1c; color: #c5e09f; }
     @media (prefers-reduced-motion: reduce) { .aus-veil, .aus-card, .aus-pane, .aus-face, .aus-go::after { animation: none; transition: none; } }
@@ -80,7 +81,7 @@
                 </div>
             </div>
             <div class="aus-pane" id="ausPaneConfirm" hidden>
-                <div class="aus-price"><b id="ausTotal">{{ number_format(\App\Support\AiPrices::of('auto')) }} credits</b><span id="ausEach">{{ number_format(\App\Support\AiPrices::of('auto')) }} credits per lot, for the whole season</span></div>
+                <div class="aus-price"><b id="ausTotal">{{ number_format(\App\Support\AiPrices::of('auto')) }} credits</b><span id="ausEach">{{ number_format(\App\Support\AiPrices::of('auto')) }} credits per lot, for the whole season</span><small>Each lot includes 150 questions and 45 readings of the field for the season. Past that, one more question is {{ \App\Support\AiPrices::of('autoAsk') }} credits and one more reading {{ \App\Support\AiPrices::of('autoObserve') }}.</small></div>
                 <label class="aus-final"><input type="checkbox" id="ausAgree"><span>I understand the credits are taken now and <b>cannot be returned</b>, even if I stop. Anee keeps everything I type, so I can finish setting it up any time.</span></label>
                 <p class="aus-bal" id="ausBal"></p>
                 <p class="aus-why" id="ausWhy" hidden></p>
