@@ -483,6 +483,9 @@
         </div>
     </section>
 
+    {{-- ================= A REAL FIELD, FILMED (2026-10-29) ================= --}}
+    @include('public.partials.field-film', ['signup' => $signup])
+
     {{-- ================= THE SEASON IN EIGHT STEPS ================= --}}
     {{-- The answer, shown: How It Works' steps as tabs (eight since
          2026-10-13). Here Anee Auto, the easiest way, is step 1 (the owner,
