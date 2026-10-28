@@ -807,6 +807,7 @@
             <nav class="flex flex-wrap items-center justify-center text-xs" style="column-gap:1.75rem;row-gap:.5rem;" aria-label="Legal">
                 <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">Privacy</a>
                 <a href="{{ route('legal.show', ['slug' => 'terms']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">Terms</a>
+                <a href="{{ route('legal.show', ['slug' => 'eula']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">EULA</a>
                 <a href="{{ route('legal.show', ['slug' => 'cookies']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">Cookies</a>
                 <a href="{{ route('legal.show', ['slug' => 'about']) }}" class="text-gray-500 hover:text-brand-700 font-semibold">About</a>
             </nav>

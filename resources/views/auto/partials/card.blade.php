@@ -53,7 +53,7 @@
         <div class="ac-txt">
             <span class="ac-kick">Anee Auto</span>
             <h2 id="acTitle">Anee plans your season. You just follow.</h2>
-            <p>She writes it, then keeps it on track every day.</p>
+            <p><b class="text-white">No need to think about what to do next.</b> She writes the season and tells you each day.</p>
         </div>
     </div>
     <div class="ac-acts">

@@ -576,7 +576,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 text-xs text-gray-500 flex flex-col sm:flex-row justify-between gap-2">
                 {{-- The legal pages, reachable before anyone signs up (inside the app
                      they sit in the app footer instead). --}}
-                <span>© {{ date('Y') }} anee.io · <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" class="hover:text-accent-500">Privacy</a> · <a href="{{ route('legal.show', ['slug' => 'terms']) }}" class="hover:text-accent-500">Terms</a> · <a href="{{ route('legal.show', ['slug' => 'cookies']) }}" class="hover:text-accent-500">Cookies</a> · <a href="{{ route('landing') }}" class="hover:text-accent-500">Start free</a></span>
+                <span>© {{ date('Y') }} anee.io · <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" class="hover:text-accent-500">Privacy</a> · <a href="{{ route('legal.show', ['slug' => 'terms']) }}" class="hover:text-accent-500">Terms</a> · <a href="{{ route('legal.show', ['slug' => 'eula']) }}" class="hover:text-accent-500">EULA</a> · <a href="{{ route('legal.show', ['slug' => 'cookies']) }}" class="hover:text-accent-500">Cookies</a> · <a href="{{ route('landing') }}" class="hover:text-accent-500">Start free</a></span>
                 <span class="inline-flex items-center gap-1.5">
                     Helping {{ \App\Support\Region::t('farmersOf') }} reach maximum yield and income
                     <svg class="w-3.5 h-3.5 text-brand-500 footer-heart" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-7.5-4.9-9.6-9A5.6 5.6 0 0 1 12 6.3a5.6 5.6 0 0 1 9.6 5.7C19.5 16.1 12 21 12 21z"/></svg>

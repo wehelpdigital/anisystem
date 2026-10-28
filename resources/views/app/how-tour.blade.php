@@ -114,17 +114,17 @@
     /* ---------- 2. the steps ---------- */
     .hwt-steps { display: grid; gap: 1.2rem; margin-top: 1.4rem; }
     @media (min-width: 1000px) { .hwt-steps { grid-template-columns: 17rem minmax(0, 1fr); align-items: start; gap: 1.6rem; } }
-    .hwt-rail { display: flex; gap: .45rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: .2rem .1rem .5rem; margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; scrollbar-width: none; }
+    .hwt-rail { display: flex; gap: .45rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 1rem; padding: .2rem .1rem .5rem; margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; scrollbar-width: none; }
     .hwt-rail::-webkit-scrollbar { display: none; }
     .hwt-railbox { position: relative; min-width: 0; }
-    .hwt-swipe { position: absolute; right: -1rem; top: 0; bottom: .5rem; width: 4.4rem; display: flex; align-items: center; justify-content: flex-end; padding-right: .55rem;
-        pointer-events: none; color: var(--gold); background: linear-gradient(90deg, rgb(11 20 7 / 0), rgb(11 20 7 / .97) 62%); transition: opacity .28s var(--e); }
-    .hwt-swipe b { display: flex; align-items: center; justify-content: center; width: 2.1rem; height: 2.1rem; padding-left: .35rem; border-radius: 999px;
-        background: rgb(245 197 24 / .14); box-shadow: inset 0 0 0 1.5px rgb(245 197 24 / .55), 0 0 16px rgb(245 197 24 / .25); }
-    .hwt-swipe svg { width: 1.05rem; height: 1.05rem; animation: hwtSwipe 1.3s var(--e) infinite; }
-    .hwt-swipe svg + svg { margin-left: -.6rem; opacity: .55; animation-delay: .14s; }
-    @keyframes hwtSwipe { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
-    .hwt-railbox.is-end .hwt-swipe { opacity: 0; }
+    /* Above the steps, never over them (2026-10-28, the owner: "remove the circle of the arrow telling to swipe ... move
+       it up the tabs do not overlap it in the tabs"): a line that says they swipe, its arrows nudging the way to go. */
+    .hwt-swipe { display: flex; align-items: center; justify-content: flex-end; gap: .1rem; margin: 0 0 .35rem; font-size: .7rem; font-weight: 800; color: var(--gold); transition: opacity .28s var(--e); }
+    .hwt-swipe svg { width: .95rem; height: .95rem; animation: hwtSwipe 1.3s var(--e) infinite; }
+    .hwt-swipe svg:first-of-type { margin-left: .2rem; }
+    .hwt-swipe svg + svg { margin-left: -.55rem; opacity: .55; animation-delay: .14s; }
+    @keyframes hwtSwipe { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+    .hwt-railbox.is-end .hwt-swipe { opacity: .35; }
     @media (min-width: 1000px) { .hwt-swipe { display: none; } }
     @media (min-width: 1000px) { .hwt-rail { flex-direction: column; overflow: visible; margin: 0; padding: 0; position: sticky; top: 1rem; } }
     .hwt-r { flex: none; scroll-snap-align: start; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .1rem .6rem; align-items: center; min-width: 9.5rem; padding: .6rem .75rem;
@@ -171,14 +171,14 @@
     .hwt-sheet-bg { position: absolute; inset: 0; background: rgb(5 10 3 / .6); opacity: 0; transition: opacity .3s var(--e); }
     .hwt-sheet.is-on .hwt-sheet-bg { opacity: 1; }
     .hwt-sheet-in { position: relative; width: 100%; max-height: 88%; overflow-y: auto; padding: 1.1rem 1rem calc(1.2rem + env(safe-area-inset-bottom, 0px)); border-radius: 1.5rem 1.5rem 0 0;
-        background: #142010; box-shadow: 0 -20px 50px -20px rgb(0 0 0 / .8), inset 0 1px 0 rgb(255 255 255 / .08); transform: translateY(100%); transition: transform .42s var(--e); }
+        background: #142010; box-shadow: 0 -20px 50px -20px rgb(0 0 0 / .8), inset 0 1px 0 rgb(255 255 255 / .08); transform: translateY(100%); transition: transform .42s var(--e); will-change: transform; overscroll-behavior: contain; }
     @media (min-width: 900px) { .hwt-sheet { align-items: stretch; } .hwt-sheet-in { width: 30rem; max-height: none; border-radius: 1.5rem 0 0 1.5rem; transform: translateX(100%); } }
     .hwt-sheet.is-on .hwt-sheet-in { transform: none; }
     .hwt-sheet-x { position: absolute; right: .8rem; top: .8rem; width: 2.4rem; height: 2.4rem; border-radius: .85rem; display: grid; place-items: center; color: #fff; background: rgb(255 255 255 / .08); }
     .hwt-sheet-x svg { width: 1.1rem; height: 1.1rem; }
     .hwt-shot { display: grid; place-items: center; margin: .2rem 0 1rem; }
     .hwt-shot div { width: min(15rem, 70%); padding: .45rem; border-radius: 1.6rem; background: #0a1206; box-shadow: 0 22px 40px -22px rgb(0 0 0 / .9), inset 0 0 0 1px rgb(255 255 255 / .1); }
-    .hwt-shot img { display: block; width: 100%; border-radius: 1.2rem; }
+    .hwt-shot img { display: block; width: 100%; height: auto; aspect-ratio: 540 / 1169; object-fit: cover; border-radius: 1.2rem; background: #0f1a0b; }
     .hwt-sh-h { display: flex; gap: .7rem; align-items: center; padding-right: 2.6rem; }
     .hwt-sh-h img { flex: none; width: 2.8rem; height: 2.8rem; padding: .35rem; border-radius: .9rem; object-fit: contain; background: #f4f8ee; }
     .hwt-sh-h b { display: block; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; line-height: 1.2; color: #fff; }
@@ -309,6 +309,7 @@
             <div class="hwt-steps" data-in style="--d: 160ms">
                 {{-- On a phone the steps scroll sideways: arrows at the edge say so until the last one is in view (2026-10-28, the owner). --}}
                 <div class="hwt-railbox">
+                <p class="hwt-swipe" aria-hidden="true">Swipe for all {{ count($htStages) }} steps<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg></p>
                 <div class="hwt-rail" role="tablist" aria-label="The steps of a season">
                     @foreach ($htStages as $k => $s)
                         @php $n = count(array_filter($s['items'])); @endphp
@@ -320,7 +321,6 @@
                         </button>
                     @endforeach
                 </div>
-                <span class="hwt-swipe" aria-hidden="true"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg></b></span>
                 </div>
                 <div>
                     @foreach ($htStages as $k => $s)

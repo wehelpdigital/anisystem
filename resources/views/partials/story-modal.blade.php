@@ -29,7 +29,7 @@
     .stm[hidden] { display: none; }
     /* Closing: nothing moves behind the fade, and nothing takes a tap. */
     .stm.is-closing { pointer-events: none; }
-    .stm.is-closing .stm-bg i, .stm.is-closing .stm-load-face { animation-play-state: paused; }
+    .stm.is-closing .stm-bg i, .stm.is-closing .stm-load-face, .stm.is-sheet .stm-bg i { animation-play-state: paused; }
     .stm *, .stm *::before, .stm *::after { box-sizing: border-box; }
     /* Slow light behind the story. */
     .stm-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }

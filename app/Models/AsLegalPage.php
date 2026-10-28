@@ -28,6 +28,8 @@ class AsLegalPage extends BaseModel
     public const CORE = [
         'privacy' => 'Privacy Policy',
         'terms' => 'Terms of Service',
+        // 2026-10-28: ticked at sign up (App\Support\Legal::EULA_VERSION).
+        'eula' => 'End User License Agreement',
         'cookies' => 'Cookie Policy',
         'about' => 'About anee.io',
     ];
@@ -36,12 +38,16 @@ class AsLegalPage extends BaseModel
     public const SHORT = [
         'privacy' => 'Privacy',
         'terms' => 'Terms',
+        'eula' => 'EULA',
         'cookies' => 'Cookies',
         'about' => 'About',
     ];
 
     /** The day the standard wording was last revised (shown when it stands in). */
     public const DEFAULTS_DATE = '2026-09-25';
+
+    /** A page whose standard wording came later than the rest. */
+    private const DEFAULT_DATES = ['eula' => '2026-10-28'];
 
     public function scopePublished($q)
     {
@@ -78,7 +84,7 @@ class AsLegalPage extends BaseModel
             'isPublished' => 1,
             'deleteStatus' => 1,
         ]);
-        $page->updated_at = Carbon::parse(self::DEFAULTS_DATE, 'Asia/Manila');
+        $page->updated_at = Carbon::parse(self::DEFAULT_DATES[$slug] ?? self::DEFAULTS_DATE, 'Asia/Manila');
 
         return $page;
     }

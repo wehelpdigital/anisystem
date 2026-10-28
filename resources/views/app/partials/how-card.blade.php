@@ -174,31 +174,38 @@
             const k = (i + (e.key === 'ArrowRight' || e.key === 'ArrowDown' ? 1 : tabs.length - 1)) % tabs.length;
             show(k); tabs[k].focus();
         }));
-        let back = null;
+        let back = null, hideT = null;
+        /* A tool's sheet (2026-10-28, the owner: "opening tools info or clicking the tools in this section ... is glitchy").
+           Three things made it jump: a sheet closing hid the next one opened within its fade (the timer is cleared now),
+           the phone picture loaded after the sheet rose and pushed it taller (its shape is kept now), and the story's
+           drifting light repainted under the rising sheet (it rests while a sheet is open). */
         const openSheet = (key, from) => {
             const t = data[key];
             if (!t) return;
+            clearTimeout(hideT);
             back = from;
             sheet.querySelector('[data-hwt-body]').innerHTML =
-                (t.shot ? `<div class="hwt-shot"><div><img src="${esc(t.shot)}" alt="${esc(t.name)} in the app" loading="lazy"></div></div>` : '')
+                (t.shot ? `<div class="hwt-shot"><div><img src="${esc(t.shot)}" alt="${esc(t.name)} in the app" width="540" height="1169" decoding="async"></div></div>` : '')
                 + `<div class="hwt-sh-h"><img src="${esc(t.icon)}" alt=""><div><b>${esc(t.name)}</b><small>${t.anee ? '✨ Anee does the work · ' : ''}${esc(t.short)}</small></div></div>`
                 + `<p class="hwt-sh-p">${esc(t.what)}</p>`
                 + (t.gets && t.gets.length ? `<div class="hwt-sh-g">${t.gets.map((g) => `<div>${esc(g)}</div>`).join('')}</div>` : '')
                 + `<p class="hwt-sh-plan">${esc(t.plan)}${t.more ? '. ' + esc(t.more) : ''}</p>`
                 + (t.href ? `<a class="hwt-sh-go" href="${esc(t.href)}">${esc(t.go || 'Open it now')} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg></a>` : '');
             sheet.querySelector('.hwt-sheet-in').scrollTop = 0;
+            b.classList.add('is-sheet');
             sheet.hidden = false;
             requestAnimationFrame(() => requestAnimationFrame(() => sheet.classList.add('is-on')));
             setTimeout(() => sheet.querySelector('.hwt-sheet-x').focus({ preventScroll: true }), 60);
         };
         const closeSheet = () => {
-            if (sheet.hidden) return;
+            if (sheet.hidden || !sheet.classList.contains('is-on')) return;
             sheet.classList.remove('is-on');
-            setTimeout(() => { sheet.hidden = true; back?.focus({ preventScroll: true }); }, 380);
+            clearTimeout(hideT);
+            hideT = setTimeout(() => { sheet.hidden = true; b.classList.remove('is-sheet'); back?.focus({ preventScroll: true }); }, 420);
         };
         // Escape closes the sheet first, then the tour.
         b.addEventListener('keydown', (e) => { if (e.key === 'Escape' && sheet && !sheet.hidden) { e.stopPropagation(); closeSheet(); } });
-        b.addEventListener('stm:closed', () => { if (sheet) { sheet.classList.remove('is-on'); sheet.hidden = true; } });
+        b.addEventListener('stm:closed', () => { clearTimeout(hideT); b.classList.remove('is-sheet'); if (sheet) { sheet.classList.remove('is-on'); sheet.hidden = true; } });
     };
     const open = () => window.aneeStory.open(box, card, init);
     card.addEventListener('click', open);

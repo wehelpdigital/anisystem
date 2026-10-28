@@ -1236,11 +1236,16 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
      * The farmer approves the protocol and the season starts (2026-10-28): from here the setup is closed for good, the
      * days are placed again from today, and Anee says the plan of each lot in the season's log.
      */
-    public function approve(int $id)
+    public function approve(Request $request, int $id)
     {
         $auto = $this->auto($id);
         if ($no = $this->setupOnly($auto)) {
             return $no;
+        }
+        // The Anee Auto agreement, read to the end and ticked on the wizard's last page (2026-10-28): its version is
+        // sent back, kept with the season and in as_terms_acceptances. Without it, the season does not start.
+        if ((string) $request->input('agree') !== \App\Support\Legal::AUTO_VERSION) {
+            return $this->json(false, 'Read the Anee Auto agreement to the end and tick it first.', ['agreement' => true], 422);
         }
         if (empty($auto->plan['draft']) || ! AsAutoTask::where('autoId', $auto->id)->where('origin', 'plan')->where('deleteStatus', 1)->exists()) {
             return $this->json(false, 'Let Anee write the protocol first.', [], 422);
@@ -1248,11 +1253,14 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
         $plan = (array) $auto->plan;
         $made = (array) ($plan['made'] ?? []);
         unset($plan['draft'], $plan['made']);
-        DB::transaction(function () use ($auto, $plan) {
-            $auto->update(['status' => AsAutoSeason::ACTIVE, 'plan' => $plan]);
+        $answers = (array) $auto->answers;
+        $answers['agreement'] = ['version' => \App\Support\Legal::AUTO_VERSION, 'at' => now()->toIso8601String(), 'by' => (int) Auth::id(), 'ip' => $request->ip()];
+        DB::transaction(function () use ($auto, $plan, $answers) {
+            $auto->update(['status' => AsAutoSeason::ACTIVE, 'plan' => $plan, 'answers' => $answers]);
             AsCroppingSchedule::where('id', $auto->croppingScheduleId)->update(['status' => 'generated']);
         });
         $auto = $auto->fresh();
+        \App\Support\Legal::record((int) Auth::id(), 'anee-auto', \App\Support\Legal::AUTO_VERSION, (int) $auto->id, $request);
         $this->planner->plan($auto);
         rescue(fn () => \App\Support\AutoMix::audit($auto), null, true);
         foreach ((array) ($auto->plan['lots'] ?? []) as $l) {

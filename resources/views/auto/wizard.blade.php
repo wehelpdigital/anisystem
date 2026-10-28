@@ -134,11 +134,46 @@
     .au-psp small { display: block; font-size: .72rem; color: var(--color-gray-500); }
     .au-pr-go { border-color: #f3d98f; }
     .au-pr-go .au-lock { margin-top: 0; }
+    .au-easy { margin: .45rem 0 .2rem; padding: .55rem .75rem; border-radius: .85rem; font-size: .84rem; line-height: 1.45; color: #2d5016; background: #f1f8e8; border: 1px solid #d5e8bf; }
+    html.dark .au-easy { color: #cfe6b8; background: #172412; border-color: #2b3a1c; }
     .au-pr-ok { display: flex; align-items: center; gap: .55rem; margin-top: .9rem; font-size: .88rem; font-weight: 800; color: var(--color-gray-800); cursor: pointer; }
     .au-pr-ok input { width: 1.2rem; height: 1.2rem; accent-color: #4a7c2a; }
     .au-pr-acts { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem; margin-top: .9rem; }
     .au-big.is-gold { color: #3b2f00; background: #f5c518; box-shadow: 0 12px 26px -14px rgb(245 197 24 / .9); }
     .au-big[disabled] { opacity: .5; cursor: not-allowed; }
+    /* The agreement: small type in a box read to its end, a hint that bounces until it is, then the tick. */
+    .au-terms { position: relative; margin-top: .9rem; }
+    .au-terms-box { max-height: 21rem; overflow-y: auto; overscroll-behavior: contain; padding: .9rem 1rem 1.4rem; border-radius: 1rem; font-size: .74rem; line-height: 1.6; color: var(--color-gray-600);
+        background: var(--color-gray-50); border: 1px solid var(--color-gray-200); scroll-behavior: smooth; }
+    .au-terms-box:focus-visible { outline: 2px solid #f5c518; outline-offset: 2px; }
+    .au-terms-box h4 { font-family: var(--font-heading); font-size: .92rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-terms-box h5 { margin-top: .9rem; font-size: .78rem; font-weight: 800; color: var(--color-gray-800); }
+    .au-terms-box p, .au-terms-box ul { margin-top: .35rem; }
+    .au-terms-box ul { padding-left: 1.1rem; list-style: disc; }
+    .au-terms-box li + li { margin-top: .2rem; }
+    .au-terms-box a { font-weight: 700; color: var(--color-brand-700); text-decoration: underline; }
+    .au-t-ver { font-size: .68rem; color: var(--color-gray-500); }
+    .au-t-end { margin-top: 1rem !important; text-align: center; font-weight: 800; color: var(--color-gray-500); }
+    .au-terms-hint { position: absolute; left: 50%; bottom: .7rem; translate: -50% 0; display: inline-flex; white-space: nowrap; align-items: center; gap: .35rem; padding: .4rem .85rem; border-radius: 999px;
+        font-size: .76rem; font-weight: 800; color: #2b2100; background: #f5c518; box-shadow: 0 0 0 1px rgb(59 47 0 / .25), 0 10px 22px -10px rgb(0 0 0 / .55);
+        transition: background-color .28s var(--au-ease), color .28s var(--au-ease), opacity .28s var(--au-ease); }
+    .au-terms-hint svg { width: 1rem; height: 1rem; animation: auHint 1.3s var(--au-ease) infinite; }
+    .au-terms-hint.is-read { color: #fff; background: #4a7c2a; box-shadow: 0 10px 22px -10px rgb(0 0 0 / .55); }
+    .au-terms-hint.is-read svg { animation: auHintTick 1.3s var(--au-ease) infinite; }
+    .au-terms-hint.is-done { opacity: 0; pointer-events: none; }
+    @keyframes auHint { 50% { transform: translateY(4px); } }
+    @keyframes auHintTick { 50% { transform: translateY(4px) scale(1.1); } }
+    .au-terms-agree { display: flex; align-items: flex-start; gap: .6rem; margin-top: .9rem; padding: .75rem .85rem; border-radius: .95rem; font-size: .8rem; line-height: 1.5; font-weight: 700;
+        color: var(--color-gray-800); background: #f6f9f1; border: 1.5px solid #cfe3b8; cursor: pointer; transition: opacity .28s var(--au-ease), border-color .28s var(--au-ease); }
+    .au-terms-agree input { flex: none; width: 1.2rem; height: 1.2rem; margin-top: .1rem; accent-color: #4a7c2a; }
+    .au-terms-agree a { color: var(--color-brand-700); text-decoration: underline; }
+    .au-terms-agree.is-locked { opacity: .55; cursor: not-allowed; }
+    .au-terms-agree:not(.is-locked) { border-color: #f5c518; animation: auAgree 1.6s var(--au-ease) 2; }
+    @keyframes auAgree { 50% { box-shadow: 0 0 0 5px rgb(245 197 24 / .25); } }
+    .au-terms-acts { display: flex; justify-content: flex-end; margin-top: .9rem; }
+    html.dark .au-terms-box { background: #11170d; border-color: #2b3a1c; color: #b9c6ad; } html.dark .au-terms-box h4, html.dark .au-terms-box h5 { color: #eef3e8; }
+    html.dark .au-terms-agree { background: #142010; border-color: #2b3a1c; color: #dbe5d0; }
+    @media (prefers-reduced-motion: reduce) { .au-terms-hint svg, .au-terms-agree { animation: none !important; } .au-terms-box { scroll-behavior: auto; } }
     html.dark .au-pr-c h4, html.dark .au-pt-h b, html.dark .au-pt-p span b, html.dark .au-psp b, html.dark .au-pr-ok, html.dark .au-pf-l b { color: #eef3e8; }
     html.dark .au-pr-strat { background: #10202b; border-color: #1f3a4d; color: #9fc3dd; }
     html.dark .au-pt { background: #151c11; border-color: #232e1b; } html.dark .au-pt.is-crit { background: #2a2210; border-color: #5b4716; }
@@ -740,6 +775,7 @@
     <section class="au-step" data-step="0">
         <div class="au-card">
             <h3 class="au-h">Your season</h3>
+            <p class="au-easy">🧑‍🌾 <b>You will not have to figure out what to do each day. Anee tells you, you just follow.</b></p>
             <p class="au-sub">A name you will know it by, and anything Anee should keep in mind about it.</p>
             <label class="au-lab" for="auTitle">Season name</label>
             <input type="text" id="auTitle" class="form-input w-full" maxlength="255" placeholder="Like Wet season palay 2026">
@@ -864,6 +900,23 @@
         <div id="auProto"></div>
     </section>
 
+    {{-- 9. The agreement --}}
+    <section class="au-step" data-step="9">
+        <div class="au-card">
+            <h3 class="au-h">Before Anee takes over</h3>
+            <p class="au-sub">One last thing. Anee Auto is your guide, and you stay in charge of your farm. Read the agreement to the end, tick the box, and Anee starts your season.</p>
+            <div class="au-terms">
+                <div class="au-terms-box" id="auTermsBox" tabindex="0" role="document" aria-label="The Anee Auto agreement">@include('auto.partials.terms')</div>
+                <button type="button" class="au-terms-hint" id="auTermsHint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-6-6l6 6 6-6"/></svg><span>Scroll down to read it all</span></button>
+            </div>
+            <label class="au-terms-agree is-locked" id="auTermsAgree" for="auTermsOk">
+                <input type="checkbox" id="auTermsOk" disabled>
+                <span>I have read the Anee Auto agreement to the end. I understand that Anee is a guide, that I can override her at any time, and that anee.io is not responsible for what happens on my farm. I agree to it, to the <a href="{{ url('/legal/eula') }}" target="_blank" rel="noopener">End User License Agreement</a> and to the <a href="{{ url('/legal/terms') }}" target="_blank" rel="noopener">Terms of Service</a>.</span>
+            </label>
+            <div class="au-terms-acts"><button type="button" class="btn btn-cta is-go" id="auStart" disabled>Agree and start Anee Auto</button></div>
+        </div>
+    </section>
+
     <div class="au-nav">
         <button type="button" class="btn btn-white" id="auBack">Back</button>
         <small id="auNavSay"></small>
@@ -955,7 +1008,11 @@
         protocol: @json(route('auto.protocol', $auto->id)), approve: @json(route('auto.approve', $auto->id)),
         npk: @json(route('npk.page')) + '?frame=auto', buy: @json(route('ai.credits') . '?tab=buy'),
     };
-    const STEPS = ['Season', 'Lots', 'Workers', 'Soil', 'Water', 'Troubles', 'Reading', 'Fertilizer', 'Start'];
+    // The last page is the agreement (2026-10-28): read to the end and ticked before the season starts.
+    const STEPS = ['Season', 'Lots', 'Workers', 'Soil', 'Water', 'Troubles', 'Reading', 'Fertilizer', 'Protocol', 'Agreement'];
+    const AGREE = @json(\App\Support\Legal::AUTO_VERSION);
+    // The protocol read and ticked; the agreement read to its end (the last two pages).
+    let PROTO_OK = false, READ = false;
     const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const CHEV = @json($chev);
     const BOOK = B.book;
@@ -1071,6 +1128,8 @@
         if (n === 1) { for (const l of S.lots) { const g = lotGap(l); if (g) return (l.name || 'A lot') + ': ' + g; } }
         if (n === 4 && !S.answers.water) return 'Pick where the water comes from.';
         if (n === 6 && !S.analysis) return 'Let Anee read the farm first.';
+        if (n === 8 && !S.protocolDraft) return 'Let Anee write your protocol first.';
+        if (n === 8 && !PROTO_OK) return 'Read the protocol and tick that you are ready.';
         // The target is the farmer's pick, one for each lot, before the fertilizer is planned for it.
         if (n === 6) { const l = S.lots.find((x) => !goalOf(x).pick); if (l) return 'Choose a goal for ' + (l.name || 'each lot') + ': it sets the fertilizer.'; }
         return null;
@@ -1082,6 +1141,8 @@
         if (n === 4) paintWater();
         if (n === 5) { paintProblems(); paintFrom(); }
         if (n === 6) paintReading();
+        // A box short enough to need no scroll counts as read at once.
+        if (n === 9) requestAnimationFrame(() => termsEdge());
         if (n === 7) paintFert();
         if (n === 8) { paintReview(); paintStart(); }
     };
@@ -2497,8 +2558,8 @@
                 + (P.safety.length ? '<h5>Every time you spray</h5><ul>' + P.safety.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '')
                 + (P.compatibility.length ? '<h5>Never mix</h5><ul>' + P.compatibility.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '') + '</div>' : '')
             + '<div class="au-card au-pr-go"><div class="au-lock"><span aria-hidden="true">🔒</span><span><b>Approving starts the season, and there is no going back.</b> The answers and the protocol are fixed from then on: Anee runs the season from them, every morning. You steer it by telling her what happened, what you saw and what cannot be done that day.</span></div>'
-                + '<label class="au-pr-ok"><input type="checkbox" id="auProtoOk"> I have read the protocol and I am ready to start</label>'
-                + '<div class="au-pr-acts"><button type="button" class="au-big is-gold" id="auApprove" disabled>✅ Approve and start Anee Auto</button>'
+                + '<label class="au-pr-ok"><input type="checkbox" id="auProtoOk"' + (PROTO_OK ? ' checked' : '') + '> I have read the protocol and I am ready to start</label>'
+                + '<div class="au-pr-acts"><button type="button" class="btn btn-cta is-go" id="auApprove"' + (PROTO_OK ? '' : ' disabled') + '>Next: the agreement</button>'
                 + (S.protocolRunsLeft ? '<button type="button" class="au-link" id="auRewrite">Write it again (' + S.protocolRunsLeft + ' left)</button>' : '') + '</div></div>'
             + '</div>';
     };
@@ -2507,17 +2568,41 @@
         const h = e.target.closest('.au-ps .au-acc-h');
         if (h) { const open = h.getAttribute('aria-expanded') !== 'true'; h.setAttribute('aria-expanded', String(open)); h.nextElementSibling.style.gridTemplateRows = open ? '1fr' : '0fr'; return; }
         if (e.target.closest('#auRewrite')) { $('auGenerate').click(); return; }
-        if (e.target.closest('#auApprove')) {
-            const b = $('auApprove'); b.disabled = true;
+        if (e.target.closest('#auApprove')) { show(9); return; }
+    });
+    $('auProto').addEventListener('change', (e) => { if (e.target.id === 'auProtoOk') { PROTO_OK = e.target.checked; $('auApprove').disabled = !e.target.checked; } });
+
+    /* ---- the agreement (2026-10-28, the owner: "before starting ... another wizard page about eula that anee is just a
+       guide and user can still override the decisions of anee ... disable the continue if user did not check yet and
+       if did not scrolled down the text yet. with animated arrow saying to scroll down and check"). The box must be
+       read to its end before the tick opens, and the tick before Start. The version goes with the start. ---- */
+    const termsBox = $('auTermsBox');
+    const termsEdge = () => {
+        if (READ || !termsBox) return;
+        if (termsBox.scrollTop + termsBox.clientHeight >= termsBox.scrollHeight - 12) {
+            READ = true;
+            $('auTermsOk').disabled = false;
+            $('auTermsAgree').classList.remove('is-locked');
+            $('auTermsHint').classList.add('is-read');
+            $('auTermsHint').querySelector('span').textContent = 'Read. Now tick the box to start';
+        }
+    };
+    termsBox?.addEventListener('scroll', termsEdge, { passive: true });
+    $('auTermsOk')?.addEventListener('change', (e) => { $('auStart').disabled = !e.target.checked; $('auTermsHint').classList.toggle('is-done', e.target.checked); });
+    $('auTermsHint')?.addEventListener('click', () => { if (!READ) termsBox.scrollBy({ top: termsBox.clientHeight * .8, behavior: still() ? 'auto' : 'smooth' }); else $('auTermsOk').focus(); });
+    $('auStart')?.addEventListener('click', async () => {
+        const b = $('auStart');
+        if (!READ || !$('auTermsOk').checked) return;
+        {
+            b.disabled = true;
             try {
-                const r = await put(U.approve, {}, 'POST');
+                const r = await put(U.approve, { agree: AGREE }, 'POST');
                 window.aneeWait.show({ title: 'Anee Auto is starting!', sub: 'Placing every task around the weather and your workers.', lines: ['Your season is locked in', 'Tomorrow at dawn, your first morning plan'] });
                 await window.aneeWait.done({ title: 'Your season has started! 🎉', line: 'See you tomorrow morning with today\'s work.' });
                 location.href = (r.data && r.data.url) || @json(route('auto.show', $auto->id));
             } catch (err) { b.disabled = false; }
         }
     });
-    $('auProto').addEventListener('change', (e) => { if (e.target.id === 'auProtoOk') $('auApprove').disabled = !e.target.checked; });
 
     /* ---- a modal ---- */
     const modal = (html, onOk, onMount) => {

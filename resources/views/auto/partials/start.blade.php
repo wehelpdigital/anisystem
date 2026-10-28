@@ -15,9 +15,14 @@
         box-shadow: 0 30px 70px -30px rgb(0 0 0 / .6); transform: translateY(14px) scale(.98); transition: transform .34s cubic-bezier(.22,1,.36,1); }
     .aus-veil.is-on .aus-card { transform: none; }
     .aus-head { position: relative; padding: 1.1rem 1.2rem 1rem; color: #fff; background: radial-gradient(120% 160% at 100% 0%, #6aa33a 0%, #2d5016 58%, #142509 100%); }
-    .aus-head h3 { font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; }
-    .aus-head p { margin-top: .2rem; font-size: .82rem; line-height: 1.5; color: #d6e8c2; }
-    .aus-face { position: absolute; right: .9rem; top: .8rem; width: 3.2rem; height: 3.2rem; border-radius: 999px; background: rgb(255 255 255 / .14); padding: .2rem; animation: ausBob 3.6s ease-in-out infinite; }
+    /* The face sits beside the title, so it never covers the words (2026-10-28, the owner: on a phone "the image or
+       icon of anee in the upper right corner of the modal is overlapping the text"). */
+    .aus-top { display: flex; align-items: center; gap: .75rem; }
+    .aus-head h3 { font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; line-height: 1.2; }
+    .aus-top small { display: block; margin-top: .1rem; font-size: .72rem; font-weight: 800; color: #f5c518; }
+    .aus-head p { margin-top: .6rem; font-size: .82rem; line-height: 1.5; color: #d6e8c2; }
+    .aus-head p.aus-easy { margin-top: .45rem; padding: .5rem .65rem; border-radius: .8rem; font-size: .82rem; color: #fff; background: rgb(255 255 255 / .1); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .14); }
+    .aus-face { flex: none; width: 3.2rem; height: 3.2rem; border-radius: 999px; background: rgb(255 255 255 / .14); padding: .2rem; animation: ausBob 3.6s ease-in-out infinite; }
     .aus-face img { width: 100%; height: 100%; object-fit: contain; }
     @keyframes ausBob { 50% { transform: translateY(-4px) rotate(3deg); } }
     .aus-x { position: absolute; right: .6rem; bottom: .6rem; }
@@ -62,9 +67,12 @@
 <div class="aus-veil" id="ausVeil" hidden role="dialog" aria-modal="true" aria-labelledby="ausTitle">
     <div class="aus-card">
         <div class="aus-head">
-            <span class="aus-face"><img src="{{ \App\Support\AneeEmoji::url('salute') }}" alt=""></span>
-            <h3 id="ausTitle">Anee Auto</h3>
-            <p>Anee plans the whole season and keeps it on track: the weather, your workers, the fertilizer at the right moments. You follow, and tell her when a day cannot be done.</p>
+            <div class="aus-top">
+                <span class="aus-face"><img src="{{ \App\Support\AneeEmoji::url('salute') }}" alt=""></span>
+                <div><h3 id="ausTitle">Anee Auto</h3><small>Your season, run by Anee</small></div>
+            </div>
+            <p>Anee plans the whole season and keeps it on track: the weather, your workers, the fertilizer at the right moments. Tell her when a day cannot be done.</p>
+            <p class="aus-easy"><b>You do not have to think about what to do. Anee tells you each day, you just follow.</b></p>
         </div>
         <div class="aus-body">
             <div class="aus-pane" id="ausPaneCount">

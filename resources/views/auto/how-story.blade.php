@@ -468,7 +468,7 @@
                 <span class="acs-me" data-in><img src="{{ $asFace('wave') }}" alt=""></span>
                 <span class="stm-kick" data-in style="--d: 60ms">Anee Auto</span>
                 <h2 class="stm-h" data-in style="--d: 120ms">Anee plans your season. <em>You just follow.</em></h2>
-                <p class="stm-p" data-in style="--d: 200ms">Tell her about your farm once. She writes every task of the season for each lot, tells you and your crew what to do each morning, and moves the work when the rain or the crew changes.</p>
+                <p class="stm-p" data-in style="--d: 200ms">Tell her about your farm once. She writes every task of the season for each lot, tells you and your crew what to do each morning, and moves the work when the rain or the crew changes. <b class="text-white">You do not have to think about what to do: just follow Anee.</b></p>
                 <div class="acs-chips" data-in style="--d: 280ms"><span>📅 The whole season, written</span><span>🌦️ Moved around the rain</span><span>👷 Your crew told each morning</span></div>
                 <button type="button" class="stm-next" data-stm-next data-in style="--d: 360ms">See how she does it
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-6-6l6 6 6-6"/></svg></button>

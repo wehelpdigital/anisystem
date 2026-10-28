@@ -89,7 +89,10 @@ class RegisterController extends Controller
                 },
             ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // The End User License Agreement (2026-10-28), ticked.
+            'eula' => ['accepted'],
         ], [
+            'eula.accepted' => 'Please read and tick the agreement to create your account.',
             'phone.regex' => $phoneRule['error'],
             'phone.required' => 'Please enter your mobile number.',
             'firstName.required' => 'Please enter your first name.',
@@ -114,6 +117,7 @@ class RegisterController extends Controller
 
         $this->sendVerification($user);
         \App\Support\SignupSource::record($user, $request);
+        \App\Support\Legal::record((int) $user->id, 'eula', \App\Support\Legal::EULA_VERSION, null, $request);
 
         $request->session()->put('signup.email', $user->email);
         // One page view long: the inbox page reports the signup to the ads.

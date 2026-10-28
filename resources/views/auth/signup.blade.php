@@ -20,6 +20,12 @@
         @keyframes suIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
         .su-show { display: inline-flex; align-items: center; gap: .55rem; min-height: 2.5rem; font-size: .88rem; color: #374151; cursor: pointer; user-select: none; }
         .su-show input { width: 1.15rem; height: 1.15rem; }
+        .su-agree { display: flex; align-items: flex-start; gap: .6rem; padding: .7rem .8rem; border-radius: .9rem; font-size: .8rem; line-height: 1.5; color: #374151; background: #f6f9f1; border: 1px solid #dfeccf; cursor: pointer; }
+        .su-agree input { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .1rem; accent-color: #4a7c2a; }
+        .su-agree a { font-weight: 800; color: #2d5016; text-decoration: underline; }
+        html.dark .su-agree { color: #d6e2cb; background: #142010; border-color: #2b3a1c; } html.dark .su-agree a { color: #a8cc7e; }
+        .su-legal { margin-top: .6rem; font-size: .72rem; line-height: 1.45; text-align: center; color: #6b7280; }
+        .su-legal a { text-decoration: underline; }
         @media (prefers-reduced-motion: reduce) { .su-sum { animation: none; } }
     </style>
 @endpush
@@ -35,6 +41,9 @@
 
         <div class="card card-body">
             @include('auth.partials.google-button')
+            @if (filled(config('services.google.client_id')))
+                <p class="su-legal">Continuing with Google means you agree to the <a href="{{ route('legal.show', ['slug' => 'eula']) }}" target="_blank" rel="noopener">End User License Agreement</a>, the <a href="{{ route('legal.show', ['slug' => 'terms']) }}" target="_blank" rel="noopener">Terms of Service</a> and the <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+            @endif
 
             {{-- After a refused try the page opens at the top, and the field
                  that was wrong may be a screen below: say so here first. --}}
@@ -124,6 +133,16 @@
                         <input type="checkbox" id="suShow" class="rounded border-gray-300 text-brand-600 focus:ring-brand-500">
                         Show the password
                     </label>
+                </div>
+
+                {{-- The agreement (2026-10-28, the owner: "in the registration of anee.io, add a eula"): ticked, and kept
+                     with its version (App\Support\Legal). --}}
+                <div>
+                    <label class="su-agree" for="eula">
+                        <input type="checkbox" id="eula" name="eula" value="1" @checked(old('eula')) required @error('eula') aria-invalid="true" aria-describedby="eulaErr" @enderror>
+                        <span>I have read and agree to the <a href="{{ route('legal.show', ['slug' => 'eula']) }}" target="_blank" rel="noopener">End User License Agreement</a>, the <a href="{{ route('legal.show', ['slug' => 'terms']) }}" target="_blank" rel="noopener">Terms of Service</a> and the <a href="{{ route('legal.show', ['slug' => 'privacy']) }}" target="_blank" rel="noopener">Privacy Policy</a>. I understand that Anee's advice is a guide and that the decisions on my farm are mine.</span>
+                    </label>
+                    @error('eula')<p class="form-error" id="eulaErr">{{ $message }}</p>@enderror
                 </div>
 
                 <button type="submit" class="btn btn-accent btn-lg w-full">Create my free account</button>
