@@ -23,9 +23,19 @@
         ['sack.png', 'The shed and the payroll', 'What to buy soon, and payday counted'],
         ['anee/avatar-160.jpg', 'A report when it is done', 'What went well, and what to change'],
     ];
-    // The same hectare of palay, a field that could give about 5.6 tons, at 20 pesos a kilo (as the in-app story tells it).
-    $axLoss = [['⏰', 'Fertilizer late or at the wrong stage', '0.4'], ['🐛', 'A pest seen too late', '0.4'], ['🌀', 'A typhoon week with no plan', '0.2'], ['🌾', 'Lodging: nitrogen at the wrong time', '0.9']];
-    $axGain = [['🎯', 'Fertilizer on time, by stage', '0.4'], ['🔍', 'Weekly scouting, an early spray', '0.4'], ['🌀', 'Work moved around the storm', '0.2'], ['🌾', 'Nitrogen split by stage: the crop stands', '0.9']];
+    // The same hectare of palay, a field that could give about 8 tons (2026-10-29, the owner: "show it that the total
+    // yield is around 8 tons"), at 20 pesos a kilo. What the old way loses, the precise way keeps.
+    $axPotential = 8.0;
+    $axKilo = 20;
+    $axLoss = [['⏰', 'Fertilizer late or at the wrong stage', 0.6], ['🐛', 'A pest seen too late', 0.6], ['🌀', 'A typhoon week with no plan', 0.4], ['🌾', 'Lodging: nitrogen at the wrong time', 1.0]];
+    $axGain = [['🎯', 'Fertilizer on time, by stage', 0.6], ['🔍', 'Weekly scouting, an early spray', 0.6], ['🌀', 'Work moved around the storm', 0.4], ['🌾', 'Nitrogen split by stage: the crop stands', 1.0]];
+    $axLost = array_sum(array_column($axLoss, 2));
+    $axKeep = $axPotential - $axLost;
+    $axWon = array_sum(array_column($axGain, 2));
+    $axT = fn (float $t) => number_format($t, 1);
+    $axOldPeso = (int) round($axKeep * 1000 * $axKilo);
+    $axNewPeso = (int) round(($axKeep + $axWon) * 1000 * $axKilo);
+    $axPeso = '<span class="hwx-peso">₱</span>';
 @endphp
 <section class="hwx" id="hw-step-auto" aria-labelledby="hwx-h">
     <div class="hwx-glow" aria-hidden="true"></div>
@@ -59,14 +69,20 @@
             <p class="hwx-demo-cap">A real morning on Anee Auto, in the app and by email</p>
         </div>
 
-        {{-- The five steps before she takes over. --}}
+        {{-- The five steps before she takes over (redrawn 2026-10-29, the owner: "change but still looking good and animated
+             the following steps"): a card each, its icon on a tile with the step's number; while the band is on screen a
+             light runs down the line and each card lights up as it passes, then "she takes over" glows, and it starts again. --}}
         <div class="hwx-flow-w">
             <p class="hwx-kick" data-x style="--d: 160ms">Five steps, then she takes over</p>
             <ol class="hwx-flow">
                 @foreach ($axFlow as $i => [$emo, $title, $line])
-                    <li data-x style="--d: {{ 220 + $i * 110 }}ms"><span class="hwx-n">{{ $i + 1 }}</span><div><b><i aria-hidden="true">{{ $emo }}</i>{{ $title }}</b><p>{{ $line }}</p></div></li>
+                    <li data-x style="--d: {{ 220 + $i * 110 }}ms; --k: {{ $i }}">
+                        <span class="hwx-n" aria-hidden="true"><i>{{ $emo }}</i><em>{{ $i + 1 }}</em></span>
+                        <div class="hwx-fc"><b>{{ $title }}</b><p>{{ $line }}</p></div>
+                    </li>
                 @endforeach
             </ol>
+            <p class="hwx-takeover" data-x style="--d: 820ms"><img src="{{ $axFace('wink') }}" alt="" width="32" height="32" loading="lazy"><span><b>Then Anee takes over.</b> Every day, until the harvest.</span></p>
         </div>
     </div>
 
@@ -88,19 +104,21 @@
         <div class="hwx-vs-g">
             <div class="hwx-col is-old">
                 <p class="hwx-col-h">😟 Traditional farming, what you do now</p>
-                <div class="hwx-bar"><i class="keep" style="--w: .661">3.7 t</i>@foreach ($axLoss as $k => $x)<i class="lost" style="--w: {{ round($x[2] / 5.6, 3) }}; --k: {{ $k + 1 }}"></i>@endforeach</div>
-                <ul>@foreach ($axLoss as $k => [$e, $t, $v])<li style="--k: {{ $k }}"><span>{{ $e }} {{ $t }}</span><b>−{{ $v }} t</b></li>@endforeach</ul>
-                <p class="hwx-tot"><span>Harvest worth</span><b>₱<span data-hw-count="74000">74,000</span></b></p>
+                <div class="hwx-bar-k" aria-hidden="true"><span style="--w: {{ round($axKeep / $axPotential, 3) }}"></span><span class="is-lost" style="--w: {{ round($axLost / $axPotential, 3) }}">−{{ $axT($axLost) }} t lost</span></div>
+                <div class="hwx-bar"><i class="keep" style="--w: {{ round($axKeep / $axPotential, 3) }}">{{ $axT($axKeep) }} t</i>@foreach ($axLoss as $k => $x)<i class="lost" style="--w: {{ round($x[2] / $axPotential, 3) }}; --k: {{ $k + 1 }}"></i>@endforeach</div>
+                <ul>@foreach ($axLoss as $k => [$e, $t, $v])<li style="--k: {{ $k }}"><span>{{ $e }} {{ $t }}</span><b>−{{ $axT($v) }} t</b></li>@endforeach</ul>
+                <p class="hwx-tot"><span>Total harvest <strong>{{ $axT($axKeep) }} t</strong></span><b>{!! $axPeso !!}<span data-hw-count="{{ $axOldPeso }}">{{ number_format($axOldPeso) }}</span></b></p>
             </div>
             <div class="hwx-col is-new">
                 <p class="hwx-col-h"><img src="{{ $axFace('starstruck') }}" alt="" width="26" height="26" loading="lazy"> Precision farming with Anee Auto</p>
-                <div class="hwx-bar"><i class="keep" style="--w: .661">3.7 t</i>@foreach ($axGain as $k => $x)<i class="gain" style="--w: {{ round($x[2] / 5.6, 3) }}; --k: {{ $k + 1 }}"></i>@endforeach</div>
-                <ul>@foreach ($axGain as $k => [$e, $t, $v])<li style="--k: {{ $k }}"><span>{{ $e }} {{ $t }}</span><b>+{{ $v }} t</b></li>@endforeach</ul>
-                <p class="hwx-tot"><span>Harvest worth</span><b>₱<span data-hw-count="112000">112,000</span></b></p>
+                <div class="hwx-bar-k" aria-hidden="true"><span style="--w: {{ round($axKeep / $axPotential, 3) }}"></span><span class="is-gain" style="--w: {{ round($axWon / $axPotential, 3) }}">+{{ $axT($axWon) }} t gained</span></div>
+                <div class="hwx-bar"><i class="keep" style="--w: {{ round($axKeep / $axPotential, 3) }}">{{ $axT($axKeep) }} t</i>@foreach ($axGain as $k => $x)<i class="gain" style="--w: {{ round($x[2] / $axPotential, 3) }}; --k: {{ $k + 1 }}"></i>@endforeach</div>
+                <ul>@foreach ($axGain as $k => [$e, $t, $v])<li style="--k: {{ $k }}"><span>{{ $e }} {{ $t }}</span><b>+{{ $axT($v) }} t</b></li>@endforeach</ul>
+                <p class="hwx-tot"><span>Total harvest <strong>{{ $axT($axKeep + $axWon) }} t</strong></span><b>{!! $axPeso !!}<span data-hw-count="{{ $axNewPeso }}">{{ number_format($axNewPeso) }}</span></b></p>
             </div>
         </div>
-        <p class="hwx-net"><b>About ₱<span data-hw-count="38000">38,000</span> more</b> from one hectare, with quicker decisions, the right answer for your own field, balanced nutrients, and the planting and price forecasts behind every step.</p>
-        <p class="hwx-fine">An example on a field that could give about 5.6 tons, at ₱20 a kilo. Not a promise: your season depends on your field, the weather and the work done.</p>
+        <p class="hwx-net"><b>About {!! $axPeso !!}<span data-hw-count="{{ $axNewPeso - $axOldPeso }}">{{ number_format($axNewPeso - $axOldPeso) }}</span> more</b> from one hectare, with quicker decisions, the right answer for your own field, balanced nutrients, and the planting and price forecasts behind every step.</p>
+        <p class="hwx-fine">An example on a hectare that could give about {{ $axT($axPotential) }} tons, at ₱{{ $axKilo }} a kilo. Not a promise: your season depends on your field, the weather and the work done.</p>
     </div>
 
     <div class="hwx-cta" data-x>
@@ -184,18 +202,41 @@
     @keyframes hwxToast { 0%, 48% { opacity: 0; transform: translateY(120%); } 54%, 86% { opacity: 1; transform: none; } 92%, 100% { opacity: 0; transform: translateY(120%); } }
     .hwx-demo-cap { font-size: .72rem; font-weight: 700; color: var(--soft); text-align: center; }
 
-    /* The five steps: a line that fills as they come in. */
-    .hwx-flow { position: relative; display: grid; gap: 1rem; margin: 1rem 0 0; padding: 0; list-style: none; }
-    .hwx-flow::before { content: ''; position: absolute; left: 1.05rem; top: 1rem; bottom: 1rem; width: 2px; background: rgb(168 204 126 / .2); }
-    .hwx-flow::after { content: ''; position: absolute; left: 1.05rem; top: 1rem; bottom: 1rem; width: 2px; background: linear-gradient(180deg, var(--acc), var(--leaf)); transform-origin: top; transform: scaleY(0); transition: transform 1.6s var(--ease) .3s; }
-    .hwx.is-in .hwx-flow::after { transform: none; }
-    .hwx-flow li { position: relative; display: flex; gap: .85rem; align-items: flex-start; }
-    .hwx-n { position: relative; z-index: 1; flex: none; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; font-weight: 900; color: #2b2100; background: var(--acc); box-shadow: 0 0 0 4px #13230c; }
-    .hwx.is-live .hwx-flow li:last-child .hwx-n { animation: hwxRing 2.6s ease-out infinite; }
-    @keyframes hwxRing { 0% { box-shadow: 0 0 0 4px #13230c, 0 0 0 4px rgb(245 197 24 / .6); } 100% { box-shadow: 0 0 0 4px #13230c, 0 0 0 16px rgb(245 197 24 / 0); } }
-    .hwx-flow b { display: flex; align-items: center; gap: .4rem; font-size: 1rem; font-weight: 800; color: #fff; }
-    .hwx-flow b i { font-style: normal; }
-    .hwx-flow p { margin-top: .2rem; font-size: .86rem; line-height: 1.55; color: var(--mute); }
+    /* The five steps: cards on a line. While the band is on screen a light runs down the line in 10 seconds and each
+       card lights up as it passes (two seconds each), then "she takes over" glows, and the loop starts again. */
+    .hwx-flow { position: relative; display: grid; gap: .65rem; margin: 1rem 0 0; padding: 0; list-style: none; --loop: 10s; }
+    .hwx-flow::before { content: ''; position: absolute; left: 1.4rem; top: 1.4rem; bottom: 1.4rem; width: 2px; margin-left: -1px; border-radius: 999px; background: rgb(168 204 126 / .18); }
+    .hwx-flow::after { content: ''; position: absolute; left: 1.4rem; top: 1.4rem; width: .7rem; height: .7rem; margin: -.35rem 0 0 -.35rem; border-radius: 999px; opacity: 0;
+        background: #fff7cc; box-shadow: 0 0 0 4px rgb(245 197 24 / .35), 0 0 18px 4px rgb(245 197 24 / .8); }
+    .hwx.is-live .hwx-flow::after { animation: hwxRun var(--loop) linear infinite; }
+    @keyframes hwxRun { 0% { top: 1.4rem; opacity: 0; } 3% { opacity: 1; } 84% { top: calc(100% - 1.4rem); opacity: 1; } 90%, 100% { top: calc(100% - 1.4rem); opacity: 0; } }
+    .hwx-flow li { position: relative; display: flex; gap: .8rem; align-items: center; }
+    .hwx-n { position: relative; z-index: 1; flex: none; display: grid; place-items: center; width: 2.8rem; height: 2.8rem; border-radius: .95rem;
+        background: #1c3011; box-shadow: 0 0 0 4px #13230c, inset 0 0 0 1px rgb(168 204 126 / .35); }
+    .hwx-n i { font-style: normal; font-size: 1.25rem; line-height: 1; }
+    .hwx-n em { position: absolute; top: -.45rem; right: -.45rem; display: grid; place-items: center; width: 1.25rem; height: 1.25rem; border-radius: 999px;
+        font-style: normal; font-size: .66rem; font-weight: 900; color: #2b2100; background: var(--acc); box-shadow: 0 0 0 2px #13230c; }
+    .hwx-fc { flex: 1; min-width: 0; padding: .7rem .85rem .75rem; border-radius: 1rem; background: rgb(255 255 255 / .04); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); }
+    .hwx-fc b { display: block; font-size: .98rem; font-weight: 800; line-height: 1.3; color: #fff; }
+    .hwx-fc p { margin-top: .2rem; font-size: .84rem; line-height: 1.5; color: var(--mute); }
+    .hwx.is-live .hwx-fc { animation: hwxCard var(--loop) var(--ease) infinite; animation-delay: calc(var(--k) * 1.7s); }
+    .hwx.is-live .hwx-n { animation: hwxTile var(--loop) var(--ease) infinite; animation-delay: calc(var(--k) * 1.7s); }
+    @keyframes hwxCard {
+        0%, 100% { background: rgb(255 255 255 / .04); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); transform: none; }
+        4%, 16% { background: linear-gradient(100deg, rgb(245 197 24 / .16), rgb(245 197 24 / .04)); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .6), 0 14px 30px -18px rgb(245 197 24 / .6); transform: translateX(4px); }
+        24% { background: rgb(255 255 255 / .04); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); transform: none; } }
+    @keyframes hwxTile {
+        0%, 100% { background: #1c3011; transform: none; }
+        4% { background: var(--acc); transform: scale(1.12); }
+        9%, 16% { background: var(--acc); transform: scale(1); }
+        24% { background: #1c3011; transform: none; } }
+    /* "Then Anee takes over": glows as the light reaches the end. */
+    .hwx-takeover { display: flex; align-items: center; gap: .6rem; margin-top: .8rem; padding: .6rem .8rem; border-radius: 999px; font-size: .86rem; color: var(--mute);
+        background: rgb(245 197 24 / .08); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35); }
+    .hwx-takeover img { flex: none; width: 2rem; height: 2rem; border-radius: 999px; background: #eef6e4; }
+    .hwx-takeover b { color: var(--acc); }
+    .hwx.is-live .hwx-takeover { animation: hwxOver var(--loop) var(--ease) infinite; }
+    @keyframes hwxOver { 0%, 82% { box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35); } 88%, 96% { box-shadow: inset 0 0 0 1px var(--acc), 0 0 0 6px rgb(245 197 24 / .12), 0 0 26px -4px rgb(245 197 24 / .7); } 100% { box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35); } }
 
     /* What she does every day. */
     .hwx-feats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; margin-top: 1rem; }
@@ -218,7 +259,16 @@
     .hwx-col.is-new { background: linear-gradient(160deg, rgb(245 197 24 / .1), rgb(245 197 24 / .03)); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45); }
     .hwx-col-h { display: flex; align-items: center; gap: .45rem; font-size: .92rem; font-weight: 800; color: #fff; }
     .hwx-col-h img { width: 1.6rem; height: 1.6rem; }
-    .hwx-bar { display: flex; gap: 2px; height: 1.6rem; margin-top: .8rem; }
+    /* Over the bar: the tons lost (over the red) or gained (over the gold), a small pointer under each. */
+    .hwx-bar-k { display: flex; gap: 2px; margin-top: .9rem; }
+    .hwx-bar-k span { flex: var(--w) 1 0%; min-width: 0; }
+    .hwx-bar-k .is-lost, .hwx-bar-k .is-gain { position: relative; padding-bottom: .35rem; text-align: center; white-space: nowrap; font-size: .74rem; font-weight: 900; font-variant-numeric: tabular-nums;
+        opacity: 0; transform: translateY(6px); transition: opacity .5s var(--ease) 1.9s, transform .5s var(--ease) 1.9s; }
+    .hwx-bar-k .is-lost { color: #f19b93; }
+    .hwx-bar-k .is-gain { color: var(--acc); }
+    .hwx-bar-k .is-lost::after, .hwx-bar-k .is-gain::after { content: ''; position: absolute; left: 50%; bottom: 0; width: .5rem; height: .3rem; margin-left: -.25rem; clip-path: polygon(0 0, 100% 0, 50% 100%); background: currentColor; }
+    .hwx.is-in .hwx-bar-k .is-lost, .hwx.is-in .hwx-bar-k .is-gain { opacity: 1; transform: none; }
+    .hwx-bar { display: flex; gap: 2px; height: 1.6rem; margin-top: .3rem; }
     .hwx-bar i { display: grid; place-items: center; flex: var(--w) 1 0%; min-width: 0; border-radius: .4rem; font-style: normal; font-size: .62rem; font-weight: 900; color: #1d330d;
         clip-path: inset(0 100% 0 0 round .4rem); transition: clip-path .7s var(--ease) calc(.3s + var(--k, 0) * .35s); }
     .hwx.is-in .hwx-bar i { clip-path: inset(0 0 0 0 round .4rem); }
@@ -231,8 +281,12 @@
     .hwx-col li b { flex: none; font-weight: 900; font-variant-numeric: tabular-nums; }
     .hwx-col.is-old li b { color: #f19b93; } .hwx-col.is-new li b { color: var(--acc); }
     .hwx-tot { display: flex; align-items: baseline; justify-content: space-between; margin-top: .9rem; padding-top: .7rem; border-top: 1px solid rgb(255 255 255 / .08); }
-    .hwx-tot span { font-size: .78rem; font-weight: 700; color: var(--mute); }
+    .hwx-tot > span { font-size: .78rem; font-weight: 700; color: var(--mute); }
+    .hwx-tot > span strong { margin-left: .2rem; font-size: .95rem; font-weight: 900; color: #fff; }
+    .hwx-col.is-new .hwx-tot > span strong { color: var(--acc); }
     .hwx-tot b { font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+    /* The peso sign: lighter and a little apart from the number (2026-10-29, the owner: "too bold ... make it spaced"). */
+    .hwx-peso { margin-right: .2em; font-family: var(--font-sans); font-weight: 500; font-size: .8em; opacity: .85; }
     .hwx-col.is-new .hwx-tot b { color: var(--acc); }
     .hwx-net { margin: 1rem auto 0; max-width: 40rem; text-align: center; font-size: .9rem; line-height: 1.6; color: var(--mute); }
     .hwx-net b { color: var(--acc); }
@@ -248,9 +302,10 @@
 
     @media (prefers-reduced-motion: reduce) {
         .hwx [data-x] { opacity: 1; transform: none; transition: none; }
-        .hwx-glow, .hwx-badge, .hwx-watch i, .hwx-tasks li, .hwx-tasks li i, .hwx-tasks li i::after, .hwx-tasks li em, .hwx-n { animation: none !important; }
+        .hwx-glow, .hwx-badge, .hwx-watch i, .hwx-tasks li, .hwx-tasks li i, .hwx-tasks li i::after, .hwx-tasks li em, .hwx-n, .hwx-fc, .hwx-takeover, .hwx-flow::after { animation: none !important; }
+        .hwx-bar-k .is-lost, .hwx-bar-k .is-gain { opacity: 1; transform: none; transition: none; }
         .hwx-toast { animation: none !important; opacity: 1; transform: none; }
-        .hwx-bar i { clip-path: none; transition: none; } .hwx-flow::after { transform: none; transition: none; }
+        .hwx-bar i { clip-path: none; transition: none; }
     }
 </style>
 @endpush
