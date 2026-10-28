@@ -34,7 +34,7 @@
             <span class="sa-aim" aria-hidden="true"><i></i></span>
             <span class="sa-lens">
                 <span class="sa-lens-c"><img src="{{ asset('images/site/photos/same-age-closeup.webp') }}" alt="The Anee side up close: thick, deep green palay with dew on its leaves" width="720" height="720" loading="lazy"></span>
-                <b><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40">Up close, the Anee side</b>
+                <b><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40">Healthy, up close</b>
             </span>
             </div>
             <figcaption class="sa-notes">
