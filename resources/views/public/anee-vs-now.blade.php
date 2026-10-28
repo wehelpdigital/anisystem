@@ -11,11 +11,12 @@
      The case in the order a farmer weighs it: the farm now beside the farm with Anee (a picture to drag across), the
      nine jobs of a season done both ways (one switch flips them all; on a phone each card turns over), what guessing
      can take from a hectare beside a year of a plan (bars that grow with the hectares), what each plan costs counted
-     in sacks of palay (the farmer's own yield and price), what credits buy, a morning with Anee Auto, and the way in.
+     what credits buy, a morning with Anee Auto, and the way in. (A palay calculator, each plan's season counted in
+     sacks, came out the same day: the owner found it confusing.)
 
      Honest numbers only: the losses are the site's "up to" figures (published Philippine rice loss estimates, on a
-     hectare grossing 60,000 to 100,000 pesos), the prices are the plans' and packs' own, the palay price is the
-     farmgate median of the last weeks (never named), and nothing promises a harvest. Anee Auto's price is never
+     hectare grossing 60,000 to 100,000 pesos), the prices are the plans' and packs' own, and nothing promises a
+     harvest. Anee Auto's price is never
      shown here. Plain words, no dashes, never "AI farm technician". --}}
 @php
     $ph = \App\Support\Region::ph();
@@ -58,18 +59,6 @@
         'n' => max(0, min(100, (int) ($l['n'] ?? 0))), 'title' => (string) ($l['title'] ?? ''),
     ])->filter(fn ($l) => $l['n'] > 0 && $l['title'] !== '')->values();
     $leakBy = fn (string $word) => $leaks->first(fn ($l) => str_contains(mb_strtolower($l['title']), $word));
-
-    // Fresh palay at the farm gate lately, across the country (the market shelf's median; never named). A starting
-    // point the farmer moves to their own price.
-    $palayKg = 19;
-    try {
-        $now = \App\Support\MarketBook::palayNow(null);
-        if (! empty($now['wet']['p'])) {
-            $palayKg = (int) round($now['wet']['p']);
-        }
-    } catch (\Throwable $e) {
-        // No market shelf: the plain default.
-    }
 
     // Credit packs as the app sells them, and what an answer costs.
     $packs = [];
@@ -130,7 +119,7 @@
     ];
 
     $title = 'Anee vs Now: Your Farm Today and Your Farm With anee.io';
-    $desc = 'See your season done the way you farm now and with Anee, your smart farm technician: nine jobs side by side, what guessing can cost a hectare, and what each plan costs counted in sacks of palay.';
+    $desc = 'See your season done the way you farm now and with Anee, your smart farm technician: nine jobs side by side, what guessing can cost a hectare beside a year of a plan, and what credits and Anee Auto do for you.';
 @endphp
 
 @section('title', $title)
@@ -177,7 +166,7 @@
     .avn-h1 { margin-top: 1rem; font-family: var(--font-heading); font-weight: 800; line-height: 1.06; letter-spacing: -.02em; font-size: clamp(2.3rem, 6vw, 4rem); text-wrap: balance; }
     .avn-h1 .is-now { color: #fca5a5; }
     .avn-h1 .is-vs { display: inline-block; margin: 0 .2em; padding: .02em .3em .06em; border-radius: .3em; font-size: .55em; vertical-align: .32em; color: #14210c; background: var(--hp-sun); }
-    .avn-lede { margin-top: 1.2rem; max-width: 36rem; color: #d3dec7; font-size: clamp(1.02rem, 1.7vw, 1.16rem); line-height: 1.7; }
+    .avn-lede { margin-top: 2.1rem; max-width: 36rem; color: #d3dec7; font-size: clamp(1.02rem, 1.7vw, 1.16rem); line-height: 1.7; }
     .avn-lede b { color: #fff; }
     .avn-ctas { margin-top: 1.7rem; display: flex; flex-wrap: wrap; gap: .75rem; }
     @media (max-width: 520px) { .avn-ctas > * { flex: 1 1 100%; justify-content: center; } }
@@ -299,37 +288,6 @@
     .avn-verdict p b { color: #fff; }
     .avn-note { margin-top: .9rem; font-size: .74rem; line-height: 1.5; color: rgb(255 255 255 / .5); }
 
-    /* ---- counted in sacks ---- */
-    .avn-sacks-sec { background: #fff; }
-    .avn-calc { display: grid; gap: 1.4rem; margin-top: 2.2rem; }
-    @media (min-width: 960px) { .avn-calc { grid-template-columns: minmax(0, 20rem) minmax(0, 1fr); gap: 2rem; align-items: start; } .avn-calc-in { position: sticky; top: 6rem; } }
-    .avn-calc-in { padding: 1.2rem; border-radius: 1.4rem; background: #f6faf1; border: 1px solid #e1edd3; }
-    .avn-calc-in .avn-ctrl-k { color: #4b5563; }
-    .avn-calc-in .avn-ctrl-k output { color: var(--hp-ink); }
-    .avn-calc-in .avn-range { accent-color: var(--anee); }
-    .avn-calc-in > div + div { margin-top: 1.1rem; }
-    .avn-harvest { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px dashed #d6e4c6; font-size: .86rem; color: #4b5563; line-height: 1.5; }
-    .avn-harvest b { display: block; font-family: var(--font-heading); font-size: 1.5rem; color: var(--hp-ink); font-variant-numeric: tabular-nums; }
-    .avn-mini { display: grid; gap: .35rem; margin-top: .85rem; }
-    .avn-mini p { display: flex; justify-content: space-between; gap: .6rem; padding: .45rem .65rem; border-radius: .75rem; font-size: .8rem; font-weight: 700; color: #374151; background: #fff; border: 1px solid #e3ecd9; }
-    .avn-mini p b { color: #7a4b00; font-variant-numeric: tabular-nums; white-space: nowrap; }
-    .avn-plans { display: grid; gap: .9rem; }
-    .avn-plan { padding: 1.1rem 1.15rem 1.2rem; border-radius: 1.3rem; background: #fff; border: 1px solid #e3ecd9; box-shadow: 0 18px 40px -34px rgb(20 33 12 / .6); }
-    .avn-plan-h { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .3rem .8rem; }
-    .avn-plan-h b { font-family: var(--font-heading); font-size: 1.12rem; font-weight: 800; color: var(--hp-ink); }
-    .avn-plan-h span { font-size: .84rem; font-weight: 800; color: #4b5563; }
-    .avn-plan-sacks { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .35rem; margin-top: .85rem; min-height: 3.3rem; }
-    .avn-sack { position: relative; width: 2.5rem; height: 3.1rem; }
-    .avn-sack svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-    .avn-sack .sk-out { fill: #f4efe2; stroke: #c9b98f; stroke-width: 1.5; }
-    .avn-sack .sk-fill { fill: #e3b30b; transition: transform .9s var(--hp-ease); transform-box: fill-box; transform-origin: bottom; }
-    .avn-plan-say { margin-top: .75rem; font-size: .9rem; line-height: 1.5; color: #374151; }
-    .avn-plan-say b { color: var(--hp-ink); font-variant-numeric: tabular-nums; }
-    .avn-plan-share { display: flex; align-items: center; gap: .6rem; margin-top: .7rem; font-size: .76rem; font-weight: 800; color: #4a7c2a; }
-    .avn-plan-share i { position: relative; flex: 1; height: .5rem; border-radius: 999px; background: #eef3e8; overflow: hidden; }
-    .avn-plan-share i b { position: absolute; top: 0; bottom: 0; left: 0; min-width: 3px; border-radius: 999px; background: #4a7c2a; transition: width .9s var(--hp-ease); }
-    .avn-plan-year { margin-top: .55rem; font-size: .78rem; font-weight: 700; color: #6b7280; }
-
     /* ---- credits ---- */
     .avn-credits-sec { background: linear-gradient(180deg, #f3f8ec, #fbfdf8); }
     .avn-packs { display: grid; gap: .7rem; margin-top: 2rem; }
@@ -416,7 +374,7 @@
     .avn-final p { margin: 1rem auto 0; max-width: 36rem; color: #d3dec7; line-height: 1.65; }
 
     @media (prefers-reduced-motion: reduce) {
-        .avn-job-in, .avn-face, .avn-switch::before, .avn-switch button, .avn-dock, .avn-bar-t i, .avn-bar-t b, .avn-sack .sk-fill, .avn-plan-share i b,
+        .avn-job-in, .avn-face, .avn-switch::before, .avn-switch button, .avn-dock, .avn-bar-t i, .avn-bar-t b,
         .avn-meter-bar b, .avn-hour-c p, .avn-hour-t, .avn-qa .a, .avn-qa button svg, .avn-chip, .avn-pack, .avn-tool, .avn-turn, .avn-ba-tag, .avn-ba-say { transition: none !important; }
         .avn-ba.is-hint .avn-ba-knob { animation: none; }
         /* No turning over: the side shown simply changes. */
@@ -569,61 +527,6 @@
                     <p data-verdict></p>
                 </div>
                 <p class="avn-note">The losses are the "up to" ranges from published Philippine rice loss estimates, on a hectare grossing {{ $money(60000) }} to {{ $money(100000) }} a season; the lighter part of each bar is the top of its range. They overlap, so they are not added up. Your farm's numbers differ, which is the point.</p>
-            </div>
-        </div>
-    </section>
-
-    {{-- ================= COUNTED IN SACKS ================= --}}
-    <section class="hp-sec avn-sacks-sec">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="hp-head reveal">
-                <p class="hp-kick">Counted in palay</p>
-                <h2 class="hp-h2">What a Plan Costs, <em>in Sacks of Your Own Harvest.</em></h2>
-                <p class="hp-p">Put in your hectares, your usual harvest and the price you get. Each plan's cost for a four month season is counted in kilos of your palay, the way a farmer counts.</p>
-            </div>
-            <div class="avn-calc" id="avnCalc">
-                <div class="avn-calc-in reveal">
-                    <div>
-                        <p class="avn-ctrl-k"><label for="avnCHa">Hectares</label><output id="avnCHaOut">1 ha</output></p>
-                        <input class="avn-range" type="range" id="avnCHa" min="0.5" max="10" step="0.5" value="1">
-                    </div>
-                    <div>
-                        <p class="avn-ctrl-k"><label for="avnYield">Sacks a hectare (50 kilo)</label><output id="avnYieldOut">80</output></p>
-                        <input class="avn-range" type="range" id="avnYield" min="30" max="160" step="5" value="80">
-                    </div>
-                    <div>
-                        <p class="avn-ctrl-k"><label for="avnPrice">Price of fresh palay, a kilo</label><output id="avnPriceOut">{{ $sym }}{{ $palayKg }}</output></p>
-                        <input class="avn-range" type="range" id="avnPrice" min="12" max="35" step="0.5" value="{{ $palayKg }}">
-                    </div>
-                    <p class="avn-harvest">Your harvest this season<b data-harvest>0 sacks</b><span data-worth></span></p>
-                    <div class="avn-mini" aria-live="polite">
-                        @foreach ($plans as $p)
-                            <p data-mini="{{ $p['month'] }}"><span>{{ $p['name'] }}, a season</span><b></b></p>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="avn-plans">
-                    @foreach ($plans as $pi => $p)
-                        <div class="avn-plan reveal" data-month="{{ $p['month'] }}" data-year="{{ $p['year'] }}" style="--reveal-delay: {{ $pi * 0.07 }}s">
-                            <p class="avn-plan-h"><b>{{ $p['name'] }}</b><span>{{ $money($p['month']) }} a month</span></p>
-                            <div class="avn-plan-sacks" data-sacks aria-hidden="true"></div>
-                            <p class="avn-plan-say" data-say></p>
-                            <p class="avn-plan-share"><span data-pct>0%</span><i aria-hidden="true"><b></b></i><span>of your harvest</span></p>
-                            @if ($p['year'] > 0 && $p['year'] < $p['month'] * 12)
-                                <p class="avn-plan-year">Or {{ $money($p['year']) }} for the whole year, {{ (int) round((1 - $p['year'] / ($p['month'] * 12)) * 100) }}% less{{ $p['credits'] ? ', with ' . $p['credits'] . ' credits for Anee every month' : '' }}.</p>
-                            @elseif ($p['credits'])
-                                <p class="avn-plan-year">With {{ $p['credits'] }} credits for Anee every month.</p>
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            <div class="hp-cta is-tight reveal">
-                <div class="hp-cta-row">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free, upgrade when it pays {!! $arrow !!}</a>
-                    <a href="{{ $pricing }}" class="hp-alt">See every plan</a>
-                </div>
-                <p class="hp-cta-note">{{ $freeName }} is free forever, with {{ $freeCount }} of the {{ $toolCount }} tools. No card needed.</p>
             </div>
         </div>
     </section>
@@ -925,56 +828,6 @@
             const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { shown = true; draw(); io.disconnect(); } }, { threshold: .25 });
             io.observe(leaks);
         } else { shown = true; draw(); }
-    }
-
-    // ---- Counted in sacks: each plan's season in kilos and sacks of the farmer's own palay. ----
-    const calc = document.getElementById('avnCalc');
-    if (calc) {
-        const $ = (id) => document.getElementById(id);
-        const SACK = 50, MONTHS = 4;
-        const sackSvg = (fill) => '<span class="avn-sack"><svg viewBox="0 0 40 50">'
-            + '<path class="sk-out" d="M10 6 Q20 2 30 6 L33 12 Q38 30 34 44 Q20 49 6 44 Q2 30 7 12 Z"/>'
-            + '<path class="sk-fill" style="transform: scaleY(' + fill.toFixed(3) + ')" d="M6.5 44 Q20 49 33.5 44 Q37.5 30 33 12 L7 12 Q2.5 30 6.5 44 Z" opacity=".9"/>'
-            + '<path d="M12 6 Q20 9 28 6" fill="none" stroke="#c9b98f" stroke-width="1.5"/></svg></span>';
-        let seen = false;
-        const draw = () => {
-            const h = parseFloat($('avnCHa').value) || 1, y = parseFloat($('avnYield').value) || 80, kg = parseFloat($('avnPrice').value) || 19;
-            $('avnCHaOut').textContent = (h % 1 ? h.toFixed(1) : h) + ' ha';
-            $('avnYieldOut').textContent = y;
-            $('avnPriceOut').textContent = sym + (kg % 1 ? kg.toFixed(2) : kg);
-            const sacks = h * y, worth = sacks * SACK * kg;
-            count(calc.querySelector('[data-harvest]'), sacks, (v) => Math.round(v).toLocaleString('en-PH') + ' sacks');
-            calc.querySelector('[data-worth]').textContent = 'worth about ' + fmt(worth) + ' at ' + sym + (kg % 1 ? kg.toFixed(2) : kg) + ' a kilo';
-            calc.querySelectorAll('[data-mini]').forEach((m) => {
-                const k = Number(m.dataset.mini) * MONTHS / kg;
-                m.querySelector('b').textContent = (k >= 100 ? Math.round(k).toLocaleString('en-PH') : k.toFixed(k < 10 ? 1 : 0)) + ' kilos of palay';
-            });
-            calc.querySelectorAll('.avn-plan').forEach((card) => {
-                const cost = Number(card.dataset.month) * MONTHS;
-                const kilos = cost / kg, inSacks = kilos / SACK, pct = cost / worth * 100;
-                const whole = Math.floor(inSacks), part = inSacks - whole;
-                const shownSacks = Math.min(8, whole + (part > 0.01 ? 1 : 0));
-                let html = '';
-                for (let i = 0; i < shownSacks; i++) html += sackSvg(seen ? (i < whole ? 1 : part) : 0);
-                card.querySelector('[data-sacks]').innerHTML = html + (whole + 1 > 8 ? '<span style="font-weight:900;color:#7a4b00">+' + (Math.ceil(inSacks) - 8) + '</span>' : '');
-                // The fill rises once drawn at zero, so it animates.
-                if (seen && !calm) {
-                    const fills = card.querySelectorAll('.sk-fill');
-                    fills.forEach((f) => { const to = f.style.transform; f.style.transform = 'scaleY(0)'; requestAnimationFrame(() => requestAnimationFrame(() => { f.style.transform = to; })); });
-                }
-                const sayK = kilos >= 100 ? Math.round(kilos).toLocaleString('en-PH') : kilos.toFixed(kilos < 10 ? 1 : 0);
-                card.querySelector('[data-say]').innerHTML = 'A four month season costs <b>' + fmt(cost) + '</b>: about <b>' + sayK + ' kilos</b> of your palay, '
-                    + (inSacks < 1 ? '<b>less than one sack</b>' : '<b>' + inSacks.toFixed(1) + ' sacks</b>') + ' of the <b>' + Math.round(sacks).toLocaleString('en-PH') + '</b> you harvest.';
-                count(card.querySelector('[data-pct]'), pct, (v) => (v < 1 ? v.toFixed(2) : v.toFixed(1)) + '%');
-                card.querySelector('.avn-plan-share i b').style.width = (seen ? Math.min(100, Math.max(.5, pct)) : 0) + '%';
-            });
-        };
-        ['avnCHa', 'avnYield', 'avnPrice'].forEach((id) => $(id).addEventListener('input', draw));
-        draw();
-        if ('IntersectionObserver' in window) {
-            const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { seen = true; draw(); io.disconnect(); } }, { threshold: .2 });
-            io.observe(calc);
-        } else { seen = true; draw(); }
     }
 
     // ---- Credits: what a pack buys. ----
