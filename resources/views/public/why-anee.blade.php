@@ -146,10 +146,42 @@
         </div>
     </section>
 
-    {{-- ================= THE DIFFERENCE ================= --}}
-    <section class="hp-sec bg-white">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 wa-diff">
-            <div class="reveal">
+    {{-- ================= THE DIFFERENCE (2026-10-28, the owner: "make this part or section look better with animation, it
+         looks bad now") =================
+         The same kind of model on both sides; what flows into it is the difference. When the two engines come into view,
+         each side's inputs pop in, the funnel under them draws itself, and the inputs flow down into the model: three
+         thin, slow lines for a general chat app (and a fourth, your farm, that stops short), seven busy ones for Anee.
+         Then out comes the answer. The flows run only while the section is on screen. --}}
+    @php
+        $waEngines = [
+            ['kind' => 'plain', 'name' => 'A general AI chat app', 'sub' => 'ChatGPT, Gemini and the like',
+                'in' => [['💬', 'Your question'], ['🌐', 'What it learned online'], ['🔎', 'A web search, sometimes']],
+                'thin' => ['🌾', 'Your farm, only as you describe it'],
+                // What it never sees, faded and struck through where Anee's column has its inputs (wide screens).
+                'ghost' => [['🪨', 'Your soil'], ['🌦️', 'Your forecast'], ['📈', 'Your weather history'], ['📒', 'Your season records']],
+                'out' => ['A general answer', 'You still work out what it means for your lot.']],
+            ['kind' => 'anee', 'name' => 'Anee', 'sub' => 'Your smart farm technician',
+                'in' => [['📷', 'Your question and photo'], ['🌾', 'Your lots, crop and variety'], ['🪨', 'Your field and your area\'s soil'],
+                    ['🌦️', 'The forecast and ENSO outlook'], ['📈', '20 years of your town\'s weather'], ['🧪', 'Varieties and products sold here'],
+                    ['📒', 'Your tasks, notes and harvests']],
+                'thin' => null,
+                'ghost' => [],
+                'out' => ['An answer for your field', 'Your lot, your variety, this week\'s weather.']],
+        ];
+        // The funnel: one line from each input, spread across the top, down into the model.
+        $waFunnel = function (int $n): array {
+            $out = [];
+            for ($i = 0; $i < $n; $i++) {
+                $x = $n === 1 ? 150 : 24 + $i * (252 / ($n - 1));
+                $out[] = sprintf('M%.1f 2C%.1f 42 150 34 150 74', $x, $x);
+            }
+            return $out;
+        };
+        $waChip = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2.5"/><path stroke-linecap="round" d="M9.5 2.8v2.4M14.5 2.8v2.4M9.5 18.8v2.4M14.5 18.8v2.4M2.8 9.5h2.4M2.8 14.5h2.4M18.8 9.5h2.4M18.8 14.5h2.4"/><path stroke-linecap="round" stroke-linejoin="round" d="M10 12.5l1.5 1.5 2.5-3"/></svg>';
+    @endphp
+    <section class="hp-sec bg-white wa-diff-sec">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="hp-head reveal">
                 <p class="hp-kick">The real difference</p>
                 <h2 class="hp-h2">The Model Is Not the Difference. <em>The Data Is.</em></h2>
                 <p class="hp-p">
@@ -157,35 +189,73 @@
                     only two things to work with: what it learned online and what you typed in the box. So its answer has to stay
                     general, and you still have to work out what it means for your lot.
                 </p>
-                <p class="hp-p">
-                    Anee runs on a top language model too. The difference is what she reads before she answers. Each of her
-                    analyses, from <a href="{{ $feat('when-to-plant-analysis') }}" class="wa-link">When to Plant</a> to the
-                    <a href="{{ $feat('crop-protocol-analysis') }}" class="wa-link">Crop Protocol</a>, pulls in your season and the
-                    records we keep for every town in the Philippines. That is how AI in agriculture should work: the answer fits
-                    your field, your variety and this week's weather.
-                </p>
             </div>
-            <div class="wa-vs">
-                <div class="wa-card is-plain reveal" style="--reveal-delay:.06s">
-                    <p class="wa-card-k">A general AI chat app</p>
-                    <p class="wa-card-s">ChatGPT, Gemini and the like</p>
-                    <ul>
-                        <li class="is-yes">{!! $tick !!}<span>Your question</span></li>
-                        <li class="is-yes">{!! $tick !!}<span>What it learned online, from farms in many countries</span></li>
-                        <li class="is-yes">{!! $tick !!}<span>A web search, when it decides to run one</span></li>
-                        <li class="is-no">{!! $dash !!}<span>Your farm, only as far as you describe it each time</span></li>
-                    </ul>
-                </div>
-                <div class="wa-card is-anee reveal" style="--reveal-delay:.14s">
-                    <p class="wa-card-k"><img src="{{ $face }}" alt="">Anee</p>
-                    <p class="wa-card-s">Your smart farm technician</p>
-                    <ul>
-                        @foreach (['Your question, and the photo you send', 'Your lots, crop, variety and planting date', 'Your field profile and your barangay\'s usual soil', 'The forecast for your farm and the ENSO outlook', 'Twenty years of rain, heat, typhoons, floods and droughts in your town', 'Registered varieties, fertilizers and pesticides sold here', 'Your season\'s tasks, notes, harvests and photos'] as $line)
-                            <li class="is-yes">{!! $tick !!}<span>{{ $line }}</span></li>
-                        @endforeach
-                    </ul>
-                </div>
+
+            <div class="wa-eng" data-wa-eng>
+                @foreach ($waEngines as $ei => $eng)
+                    @if ($ei === 1)
+                        <div class="wa-eng-eq" aria-hidden="true"><b>=</b><span>The same kind of model</span></div>
+                    @endif
+                    <div class="wa-eng-col is-{{ $eng['kind'] }}">
+                        <div class="wa-eng-head">
+                            @if ($eng['kind'] === 'anee')
+                                <img src="{{ $face }}" alt="" width="80" height="80">
+                            @else
+                                <span class="wa-eng-ic" aria-hidden="true">💬</span>
+                            @endif
+                            <p><b>{{ $eng['name'] }}</b><small>{{ $eng['sub'] }}</small></p>
+                        </div>
+                        <div class="wa-eng-in">
+                        @if ($eng['ghost'])
+                            <p class="wa-eng-ghosts" aria-hidden="true">
+                                @foreach ($eng['ghost'] as [$emo, $what])
+                                    <span><i>{{ $emo }}</i>{{ $what }}</span>
+                                @endforeach
+                            </p>
+                        @endif
+                        <ul class="wa-eng-list" aria-label="What it reads before it answers">
+                            @foreach ($eng['in'] as $ii => [$emo, $what])
+                                <li style="--i: {{ $ii }}"><i aria-hidden="true">{{ $emo }}</i>{{ $what }}</li>
+                            @endforeach
+                            @if ($eng['thin'])
+                                <li class="is-thin" style="--i: {{ count($eng['in']) }}"><i aria-hidden="true">{{ $eng['thin'][0] }}</i>{{ $eng['thin'][1] }}</li>
+                            @endif
+                        </ul>
+                        </div>
+                        <svg class="wa-eng-fun" viewBox="0 0 300 76" aria-hidden="true">
+                            @foreach ($waFunnel(count($eng['in'])) as $fi => $d)
+                                <path class="base" d="{{ $d }}" pathLength="100"/>
+                            @endforeach
+                            @if ($eng['thin'])
+                                <path class="thin" d="M288 2C288 30 236 34 212 46" pathLength="100"/>
+                            @endif
+                            @foreach ($waFunnel(count($eng['in'])) as $fi => $d)
+                                <path class="flow {{ $fi % 3 === 1 ? 'is-gold' : '' }}" d="{{ $d }}" pathLength="100" style="animation-delay: -{{ $fi * 0.23 }}s"/>
+                            @endforeach
+                        </svg>
+                        <div class="wa-eng-model">
+                            {!! $waChip !!}
+                            <p><b>A language model</b><small>The same kind on both sides</small></p>
+                        </div>
+                        <div class="wa-eng-out">
+                            @if ($eng['kind'] === 'anee')
+                                <img src="{{ $face }}" alt="" width="80" height="80">
+                            @else
+                                <span class="wa-eng-ic is-sm" aria-hidden="true">≈</span>
+                            @endif
+                            <p><b>{{ $eng['out'][0] }}</b><small>{{ $eng['out'][1] }}</small></p>
+                        </div>
+                    </div>
+                @endforeach
             </div>
+
+            <p class="hp-p wa-eng-foot reveal">
+                Anee runs on a top language model too. The difference is what she reads before she answers. Each of her
+                analyses, from <a href="{{ $feat('when-to-plant-analysis') }}" class="wa-link">When to Plant</a> to the
+                <a href="{{ $feat('crop-protocol-analysis') }}" class="wa-link">Crop Protocol</a>, pulls in your season and the
+                records we keep for every town in the Philippines. That is how AI in agriculture should work: the answer fits
+                your field, your variety and this week's weather.
+            </p>
         </div>
     </section>
 
@@ -435,25 +505,112 @@
     @keyframes waPop { from { opacity: 0; transform: translateY(10px) scale(.92); } to { opacity: 1; transform: none; } }
     @keyframes waBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 
-    /* ---- the difference: words beside two cards ---- */
-    .wa-diff { display: grid; gap: 2.5rem; align-items: center; }
-    @media (min-width: 1024px) { .wa-diff { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3.5rem; } }
-    .wa-vs { display: grid; gap: 1rem; }
-    @media (min-width: 640px) { .wa-vs { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); align-items: start; } }
-    .wa-card { padding: 1.3rem 1.25rem 1.4rem; border-radius: 1.4rem; }
-    .wa-card.is-plain { background: #f5f6f3; border: 1px solid #e5e7e1; }
-    .wa-card.is-anee { background: linear-gradient(170deg, #f3f9ea, #e6f2d6); border: 1.5px solid #c3dca5; box-shadow: 0 26px 50px -34px rgb(47 82 25 / .6); }
-    .wa-card-k { display: flex; align-items: center; gap: .55rem; font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: var(--hp-ink); }
-    .wa-card-k img { width: 2rem; height: 2rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px var(--hp-sun); }
-    .wa-card-s { margin-top: .2rem; font-size: .8rem; font-weight: 700; color: #6b7280; }
-    .wa-card.is-anee .wa-card-s { color: var(--hp-green); }
-    .wa-card ul { margin-top: 1rem; display: grid; gap: .6rem; }
-    .wa-card li { display: flex; gap: .55rem; align-items: flex-start; font-size: .9rem; line-height: 1.45; font-weight: 600; color: #374151; }
-    .wa-card li svg { flex: none; width: 1.25rem; height: 1.25rem; padding: .2rem; border-radius: 999px; margin-top: .05rem; }
-    .wa-card li.is-yes svg { color: #fff; background: var(--hp-green); }
-    .wa-card.is-plain li.is-yes svg { background: #9ca3af; }
-    .wa-card li.is-no { color: #9a3412; }
-    .wa-card li.is-no svg { color: #fff; background: #ea580c; }
+    /* ---- the difference: the same kind of model, fed two ways (2026-10-28) ----
+       Two engines side by side, their rows lined up on a subgrid (heads, inputs, funnel, model, answer), the = between
+       the two models. Stacked on a phone, the = between them. */
+    .wa-eng { margin: 2.75rem auto 0; max-width: 62rem; display: grid; gap: 1rem; }
+    .wa-eng-col { position: relative; display: flex; flex-direction: column; padding: 1.3rem 1.15rem 1.35rem; border-radius: 1.6rem; }
+    @media (min-width: 768px) {
+        .wa-eng { grid-template-columns: minmax(0, 1fr) 5.75rem minmax(0, 1fr); grid-template-rows: repeat(5, auto); gap: 0 .35rem; }
+        .wa-eng-col { grid-row: 1 / span 5; display: grid; grid-template-rows: subgrid; padding: 1.5rem 1.4rem 1.6rem; }
+        .wa-eng-col.is-plain { grid-column: 1; }
+        .wa-eng-col.is-anee { grid-column: 3; }
+        .wa-eng-eq { grid-column: 2; grid-row: 4; flex-direction: column; }
+    }
+    .wa-eng-col.is-plain { background: #f6f7f4; border: 1px solid #e5e7e1; }
+    .wa-eng-col.is-anee { background: radial-gradient(28rem 16rem at 50% 0%, #fdf8e1, transparent 70%), linear-gradient(175deg, #f3f9ea, #e2f0cf);
+        border: 1.5px solid #c3dca5; box-shadow: 0 34px 64px -42px rgb(47 82 25 / .75); }
+    .wa-eng-head { display: flex; align-items: center; gap: .65rem; }
+    .wa-eng-head img { flex: none; width: 2.5rem; height: 2.5rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--hp-sun); }
+    .wa-eng-ic { flex: none; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; font-size: 1.15rem; background: #e9ebe6; }
+    .wa-eng-ic.is-sm { width: 2.1rem; height: 2.1rem; font-size: 1.1rem; font-weight: 900; color: #6b7280; }
+    .wa-eng-head b { display: block; font-family: var(--font-heading); font-size: 1.12rem; font-weight: 800; color: var(--hp-ink); line-height: 1.2; }
+    .wa-eng-head small { display: block; margin-top: .1rem; font-size: .78rem; font-weight: 700; color: #6b7280; }
+    .is-anee .wa-eng-head small { color: var(--hp-green); }
+    /* The inputs: chips, set at the foot of their row so they sit right on top of the funnel. */
+    .wa-eng-in { margin-top: 1.1rem; display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; }
+    .wa-eng-list { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem; }
+    .wa-eng-in li { display: inline-flex; align-items: center; gap: .35rem; padding: .36rem .7rem .36rem .38rem; border-radius: 999px;
+        font-size: .78rem; font-weight: 700; line-height: 1.25; color: #4b5563; background: #fff; border: 1px solid #e3e6df; }
+    .wa-eng-in li i { flex: none; display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 999px; font-style: normal; font-size: .78rem; background: #eef0eb; }
+    .is-anee .wa-eng-in li { color: #24400f; border-color: #cfe3b8; box-shadow: 0 6px 14px -12px rgb(47 82 25 / .7); }
+    .is-anee .wa-eng-in li i { background: #e3f0d3; }
+    .wa-eng-in li.is-thin { color: #9a3412; background: #fff7ed; border: 1px dashed #fdba74; }
+    .wa-eng-in li.is-thin i { background: #ffedd5; }
+    /* What a general app never sees: faded, struck through, in the room Anee's longer list takes (wide screens only). */
+    .wa-eng-ghosts { display: none; flex-wrap: wrap; justify-content: center; gap: .4rem; }
+    .wa-eng-ghosts span { display: inline-flex; align-items: center; gap: .35rem; padding: .32rem .7rem .32rem .38rem; border-radius: 999px; font-size: .76rem; font-weight: 700;
+        color: #a3a8a0; border: 1px dashed #d4d8cf; text-decoration: line-through; text-decoration-color: rgb(156 163 175 / .8); }
+    .wa-eng-ghosts i { display: grid; place-items: center; width: 1.4rem; height: 1.4rem; border-radius: 999px; font-style: normal; font-size: .74rem; opacity: .5; filter: grayscale(1); }
+    @media (min-width: 768px) { .wa-eng-ghosts { display: flex; } }
+    /* The funnel: thin grey lines on one side, a busy green and gold stream on the other. */
+    .wa-eng-fun { display: block; width: 100%; max-width: 22rem; height: auto; margin: .35rem auto 0; overflow: visible; }
+    .wa-eng-fun path { fill: none; stroke-linecap: round; }
+    .wa-eng-fun .base { stroke: #dfe3d9; stroke-width: 2; }
+    .is-anee .wa-eng-fun .base { stroke: #c6e0a9; }
+    .wa-eng-fun .thin { stroke: #fb923c; stroke-width: 2; stroke-dasharray: 3 4; }
+    .wa-eng-fun .flow { stroke-width: 3.4; stroke-dasharray: 2 12; animation: waFlow 1s linear infinite; }
+    .is-plain .wa-eng-fun .flow { stroke: #a3a8a0; stroke-dasharray: 2 34; animation: waFlowSlow 3s linear infinite; }
+    .is-anee .wa-eng-fun .flow { stroke: #4a7c2a; }
+    .is-anee .wa-eng-fun .flow.is-gold { stroke: #e3b30b; }
+    @keyframes waFlow { to { stroke-dashoffset: -14; } }
+    @keyframes waFlowSlow { to { stroke-dashoffset: -36; } }
+    /* The model: one and the same chip on both sides. */
+    .wa-eng-model { position: relative; align-self: center; justify-self: center; display: inline-flex; align-items: center; gap: .6rem; margin: .1rem auto 0;
+        padding: .6rem 1.05rem .6rem .6rem; border-radius: 1.05rem; color: #fff; background: linear-gradient(135deg, #2b4419, #14210c);
+        box-shadow: 0 18px 32px -18px rgb(20 33 12 / .85); }
+    .wa-eng-model svg { flex: none; width: 2rem; height: 2rem; padding: .3rem; border-radius: .65rem; color: var(--hp-sun); background: rgb(255 255 255 / .12); }
+    .wa-eng-model b { display: block; font-size: .92rem; font-weight: 800; line-height: 1.2; }
+    .wa-eng-model small { display: block; font-size: .7rem; font-weight: 700; color: #b9caa8; }
+    .is-anee .wa-eng-model::after { content: ''; position: absolute; inset: -5px; border-radius: 1.3rem; border: 2px solid rgb(245 197 24 / .75); opacity: 0;
+        animation: waRing 1.8s ease-out infinite; pointer-events: none; }
+    @keyframes waRing { 0% { opacity: .9; transform: scale(.97); } 100% { opacity: 0; transform: scale(1.1); } }
+    /* The answer, dripping out of the model. */
+    .wa-eng-out { position: relative; align-self: start; display: flex; align-items: center; gap: .65rem; margin-top: 1.75rem; padding: .8rem 1rem; border-radius: 1.15rem; }
+    .wa-eng-out::before { content: ''; position: absolute; left: 50%; top: -1.75rem; width: 2px; height: 1.75rem; margin-left: -1px;
+        background: repeating-linear-gradient(180deg, currentColor 0 3px, transparent 3px 8px); opacity: .55; animation: waDrip .7s linear infinite; }
+    @keyframes waDrip { to { background-position: 0 8px; } }
+    .is-plain .wa-eng-out { color: #6b7280; background: #fff; border: 1px solid #e3e6df; }
+    .is-anee .wa-eng-out { color: #fff; background: linear-gradient(135deg, #3d6823, #24400f); box-shadow: 0 22px 40px -24px rgb(36 64 15 / .9); }
+    .is-anee .wa-eng-out::before { color: #4a7c2a; opacity: .8; }
+    .wa-eng-out img { flex: none; width: 2.1rem; height: 2.1rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px var(--hp-sun); }
+    .wa-eng-out b { display: block; font-size: .95rem; font-weight: 800; color: var(--hp-ink); line-height: 1.25; }
+    .is-anee .wa-eng-out b { color: #fff; }
+    .wa-eng-out small { display: block; margin-top: .1rem; font-size: .8rem; font-weight: 600; line-height: 1.4; }
+    .is-anee .wa-eng-out small { color: #d9ebc4; }
+    /* The = between the two models. */
+    .wa-eng-eq { display: flex; align-items: center; justify-content: center; gap: .45rem; text-align: center;
+        font-size: .66rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: #6b7280; line-height: 1.3; }
+    .wa-eng-eq b { flex: none; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 999px; font-size: 1.45rem; font-weight: 900;
+        color: var(--hp-ink); background: #fff; border: 2px solid #e3e6df; box-shadow: 0 12px 24px -16px rgb(20 33 12 / .6); }
+    .wa-eng-foot { max-width: 46rem; margin: 2.25rem auto 0; text-align: center; }
+
+    /* Played in, in order, the first time the engines are seen (JS present, motion welcome); the loops only while on screen. */
+    @media (prefers-reduced-motion: no-preference) {
+        .wa-eng-col { transition: opacity .6s var(--hp-ease), transform .6s var(--hp-ease); }
+        .wa-eng-col.is-anee { transition-delay: .12s; }
+        .wa-eng-in li { transition: opacity .45s var(--hp-ease) calc(.35s + var(--i) * 85ms), transform .45s var(--hp-ease) calc(.35s + var(--i) * 85ms); }
+        .wa-eng-fun .base { stroke-dasharray: 100; transition: stroke-dashoffset 1s var(--hp-ease) .9s; }
+        .wa-eng-fun .thin, .wa-eng-fun .flow { transition: opacity .5s ease 1.6s; }
+        .wa-eng-model { transition: opacity .5s var(--hp-ease) 1.45s, transform .5s var(--hp-ease) 1.45s; }
+        .wa-eng-eq b, .wa-eng-eq span { transition: opacity .5s var(--hp-ease) 1.7s, transform .5s var(--hp-ease) 1.7s; }
+        .wa-eng-out { transition: opacity .55s var(--hp-ease) 2.1s, transform .55s var(--hp-ease) 2.1s; }
+        .is-anee .wa-eng-out { transition-delay: 2.35s; }
+        html.js .wa-eng:not(.is-in) .wa-eng-col { opacity: 0; transform: translateY(18px); }
+        html.js .wa-eng:not(.is-in) .wa-eng-in li { opacity: 0; transform: translateY(10px) scale(.92); }
+        .wa-eng-ghosts { transition: opacity .8s ease .25s; }
+        html.js .wa-eng:not(.is-in) .wa-eng-ghosts { opacity: 0; }
+        html.js .wa-eng:not(.is-in) .wa-eng-fun .base { stroke-dashoffset: 100; }
+        html.js .wa-eng:not(.is-in) .wa-eng-fun .thin, html.js .wa-eng:not(.is-in) .wa-eng-fun .flow { opacity: 0; }
+        html.js .wa-eng:not(.is-in) .wa-eng-model { opacity: 0; transform: scale(.85); }
+        html.js .wa-eng:not(.is-in) .wa-eng-eq b, html.js .wa-eng:not(.is-in) .wa-eng-eq span { opacity: 0; transform: scale(.6); }
+        html.js .wa-eng:not(.is-in) .wa-eng-out { opacity: 0; transform: translateY(12px) scale(.96); }
+        .wa-eng:not(.is-live) .wa-eng-fun .flow, .wa-eng:not(.is-live) .wa-eng-model::after, .wa-eng:not(.is-live) .wa-eng-out::before { animation-play-state: paused; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .wa-eng-fun .flow { display: none; }
+        .wa-eng-model::after, .wa-eng-out::before { animation: none !important; }
+    }
 
     /* ---- what she reads: eight shelves wired into Anee ---- */
     .wa-reads { background: linear-gradient(180deg, #f6f9f0, #eef5e4); }
@@ -605,4 +762,19 @@
         .wa-shelf, .wa-pillar, .wa-qa-plus, .wa-qa-plus::after, .wa-link, .wa-textlink svg, .wa-crumbs a { transition: none !important; }
     }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+(() => {
+    // The two engines: played in the first time they are seen, their flows running only while on screen.
+    const eng = document.querySelector('[data-wa-eng]');
+    if (!eng) return;
+    if (!('IntersectionObserver' in window)) { eng.classList.add('is-in', 'is-live'); return; }
+    new IntersectionObserver((es) => es.forEach((e) => {
+        if (e.isIntersecting) eng.classList.add('is-in');
+        eng.classList.toggle('is-live', e.isIntersecting);
+    }), { rootMargin: '0px 0px -12% 0px' }).observe(eng);
+})();
+</script>
 @endpush
