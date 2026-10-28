@@ -1,6 +1,7 @@
 {{-- Typhoon season, days before harvest (2026-10-29, the owner: "this one is several days before harvest during strong
      typhoon season. remove the audio and describe what you see in the video. make the section look good"; later: it is the
-     2026 wet season, "where drought and too much water hit the crops"). Four silent
+     2026 wet season, "where drought and too much water hit the crops"; and the point is not that it stood but "high harvest
+     despite the bad weather that hit crops that's why lower yield on traditional farmers"). Four silent
      moments from the owner's own film of an Anee supported field, crossfaded into one 18 second loop; the list beside
      it says what each moment shows and lights up in step with the film. On the homepage and on Anee vs Now. Expects
      $signup. --}}
@@ -12,10 +13,10 @@
     };
     // What each moment shows, with when it starts in the loop (the cuts cross at 4.5, 9 and 13.5 seconds).
     $tfSeen = [
-        [0, 'Golden from end to end', 'Ripe panicles across the whole field, and every hill still standing.'],
+        [0, 'Golden from end to end', 'Ripe panicles across the whole field, after a season of bad weather.'],
         [4.75, 'Dry and ready for harvest', 'Firm, dry ground between the rows, ready for the harvester.'],
-        [9.25, 'Heavy heads, strong stems', 'The heads bow under the weight of their grain, on stems that did not fall.'],
-        [13.75, 'No flattened patches', 'An even field in the middle of typhoon season, ready for the harvester.'],
+        [9.25, 'Heads heavy with grain', 'The heads bow under the weight of their grain.'],
+        [13.75, 'A high harvest ahead', 'An even field from end to end: the grain that became 140 cavans a hectare.'],
     ];
 @endphp
 <section class="tf on-dark" id="typhoon-season" aria-labelledby="tfH">
@@ -25,8 +26,8 @@
             <div class="tf-copy">
                 <div class="reveal">
                     <p class="hp-kick">Real video from the 2026 wet season</p>
-                    <h2 class="hp-h2" id="tfH">Typhoon Season. Days Before Harvest. <em>Still Standing.</em></h2>
-                    <p class="hp-p">Filmed several days before harvest in the 2026 wet season, a hard season when drought and too much water both hit the crops, and strong typhoons came on top. This field followed Anee's guidance from planting to harvest. When the winds came, it was still standing: golden, even, and heavy with grain.</p>
+                    <h2 class="hp-h2" id="tfH">A Hard Season for Every Farm. <em>A High Harvest With Anee.</em></h2>
+                    <p class="hp-p">Filmed days before harvest in the 2026 wet season. Drought and too much water both hit the crops, strong typhoons came on top, and traditional farms harvested far less because of it. This farm followed Anee's guidance from planting to harvest and still brought in a high harvest.</p>
                 </div>
                 {{-- The harvest that season (2026-10-29, the owner): farms around it 60 to 115 cavans a hectare, this farm 140,
                      cavans of 60 kg, fresh weight. The bars grow and the numbers count up once seen. --}}
@@ -40,7 +41,7 @@
                         <p><span><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40">This farm, with Anee</span><b><span data-tf-n="140">140</span> cavans</b></p>
                         <span class="tf-ybar" aria-hidden="true"><i style="--a: 0%; --b: {{ round(140 / 160 * 100, 1) }}%"></i></span>
                     </div>
-                    <p class="tf-ynote">Cavans of 60 kg, fresh weight: 140 cavans is about 8.4 tons from one hectare, up to 80 cavans more than a farm at the low end, in the same typhoon season.</p>
+                    <p class="tf-ynote">Cavans of 60 kg, fresh weight: 140 cavans is about 8.4 tons from one hectare, up to 80 cavans more than a farm at the low end, in the same hard season.</p>
                 </div>
                 {{-- One moment at a time, in one place (2026-10-29, the owner: shorter, so the column balances the film):
                      when a moment's bar fills, the next fades in where it was. The dots say which, and jump the film. --}}
@@ -63,7 +64,7 @@
             </div>
             <div class="tf-media reveal" style="--reveal-delay: .1s">
                 <div class="tf-frame" data-tf>
-                    <video muted loop playsinline preload="none" poster="{{ $tfFilm('anee-typhoon-palay.webp') }}" aria-label="An Anee supported palay field several days before harvest in the 2026 wet season, golden and still standing">
+                    <video muted loop playsinline preload="none" poster="{{ $tfFilm('anee-typhoon-palay.webp') }}" aria-label="An Anee supported palay field several days before harvest in the 2026 wet season, golden and ready for a high harvest">
                         <source src="{{ $tfFilm('anee-typhoon-palay.mp4') }}" type="video/mp4">
                     </video>
                     <span class="tf-rec"><i aria-hidden="true"></i>Real video of the field</span>
@@ -78,7 +79,7 @@
         </div>
         <div class="hp-cta reveal">
             <div class="hp-cta-row">
-                <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Keep your field standing <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg></a>
+                <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Harvest more, even in a hard season <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg></a>
             </div>
             <p class="hp-cta-note">Start free. Anee's guidance comes with Libre + Anee.</p>
         </div>
