@@ -618,6 +618,8 @@ Route::middleware('auth')->group(function () {
     // no scheduleId; a season's Collab Room still passes its own.
     Route::get('/app/maps', [App\Http\Controllers\Manager\ScheduleMapController::class, 'page'])->name('maps.page');
     Route::get('/app/draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'page'])->name('draw.page');
+    // The dashboard's two explainers (2026-10-28), fetched the first time each opens (partials/story-modal).
+    Route::get('/app/how-tour', fn () => view('app.how-tour'))->name('how.tour');
     // Anee Auto (2026-10-12): Anee plans the season and keeps planning it.
     Route::get('/app/auto', [App\Http\Controllers\AneeAutoController::class, 'index'])->name('auto.index');
     Route::get('/app/auto/quote', [App\Http\Controllers\AneeAutoController::class, 'quote'])->name('auto.quote');
