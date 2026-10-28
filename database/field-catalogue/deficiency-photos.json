@@ -1,5 +1,5 @@
 {
- "note": "Photos of the nutrient deficiency entries (2026-10-16): free licences only, a stand in said as one. Built by the scratchpad nd/photos.py.",
+ "note": "Photos of the nutrient deficiency entries (2026-10-16): free licences only, a stand in said as one. Built by the scratchpad nd/photos.py. 2026-10-28: 49 more photos of the crops themselves from open access papers, datasets and Commons (scratchpad e_photos).",
  "entries": {
   "avocado-potassium-deficiency": {
    "src": "/images/site/deficiencies/avocado-potassium-deficiency.webp",
@@ -492,13 +492,12 @@
   "abaca-potassium-deficiency": {
    "src": "/images/site/deficiencies/abaca-potassium-deficiency.webp",
    "thumb": "/images/site/deficiencies/abaca-potassium-deficiency-480.webp",
-   "alt": "Cotton plants with some leaves turned yellow and orange from potassium shortage (small credit line in corner) (stand in: this is cotton, the closest crop with a photo), shown on another crop as a stand in for abaca",
-   "credit": "Soil Science, CC BY 2.0, via Flickr",
-   "page": "https://www.flickr.com/photos/22503286@N06/5087815254/",
-   "license": "CC BY 2.0",
-   "big": "https://live.staticflickr.com/4146/5087815254_e7a3115aff_o.jpg",
-   "standin": true,
-   "shows": "cotton"
+   "alt": "Young abaca plant grown without potassium, with yellowing that starts at the edges of older leaves and moves inward",
+   "credit": "Rosit et al. 2025, CC BY 4.0, via IJMABER",
+   "page": "https://ijmaberjournal.org/index.php/ijmaber/article/view/2611",
+   "license": "CC BY 4.0",
+   "big": "https://ijmaberjournal.org/index.php/ijmaber/article/download/2611/1498 (PDF, Figure 3, page 5)",
+   "standin": false
   },
   "abaca-magnesium-deficiency": {
    "src": "/images/site/deficiencies/abaca-magnesium-deficiency.webp",
@@ -806,46 +805,42 @@
   "bellpepper-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-nitrogen-deficiency.webp",
    "thumb": "/images/site/deficiencies/bellpepper-nitrogen-deficiency-480.webp",
-   "alt": "Small pale chili pepper plant whose lower leaves have turned yellow, from nitrogen shortage, shown on another crop as a stand in for bell pepper",
-   "credit": "Çetindağ et al., Pepper Nutrient Deficiency Dataset, CC BY 4.0, via Mendeley Data",
-   "page": "https://data.mendeley.com/datasets/dh5cpvn48j/1",
+   "alt": "Grid of nine photos of bell pepper plants grown without nitrogen, with pale yellow green plants and leaves and small fruits",
+   "credit": "Silva et al. 2017, CC BY 4.0, via Agrociencia Uruguay",
+   "page": "https://agrocienciauruguay.uy/index.php/agrociencia/article/view/155",
    "license": "CC BY 4.0",
-   "big": "https://data.mendeley.com/public-files/datasets/dh5cpvn48j/files/17b97ec7-184f-46e0-8fa5-24a7683b5567/file_downloaded#pepper/pepper_photo/DSC05893.JPG",
-   "standin": true,
-   "shows": "chili"
+   "big": "https://agrocienciauruguay.uy/index.php/agrociencia/article/download/155/137 (PDF, Figure 2, page 5)",
+   "standin": false
   },
   "bellpepper-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-phosphorus-deficiency.webp",
    "thumb": "/images/site/deficiencies/bellpepper-phosphorus-deficiency-480.webp",
-   "alt": "Lettuce plants whose older leaves take on a dull purple red tint from phosphorus shortage (stand in: this is lettuce, the closest crop with a photo), shown on another crop as a stand in for bell pepper",
-   "credit": "Scot Nelson, CC0 1.0, via Flickr",
-   "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
-   "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true,
-   "shows": "lettuce"
+   "alt": "Grid of nine photos of bell pepper plants grown without phosphorus, with dark green leaves, purple tints and few small fruits",
+   "credit": "Silva et al. 2017, CC BY 4.0, via Agrociencia Uruguay",
+   "page": "https://agrocienciauruguay.uy/index.php/agrociencia/article/view/155",
+   "license": "CC BY 4.0",
+   "big": "https://agrocienciauruguay.uy/index.php/agrociencia/article/download/155/137 (PDF, Figure 3, page 7)",
+   "standin": false
   },
   "bellpepper-potassium-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-potassium-deficiency.webp",
    "thumb": "/images/site/deficiencies/bellpepper-potassium-deficiency-480.webp",
-   "alt": "Chili pepper leaf that stays dark green but has dead brown patches at the tip and edges, from potassium shortage, shown on another crop as a stand in for bell pepper",
-   "credit": "Çetindağ et al., Pepper Nutrient Deficiency Dataset, CC BY 4.0, via Mendeley Data",
-   "page": "https://data.mendeley.com/datasets/dh5cpvn48j/1",
+   "alt": "Grid of nine photos of bell pepper plants grown without potassium, with yellowing new leaves and dead brown leaf edges",
+   "credit": "Silva et al. 2017, CC BY 4.0, via Agrociencia Uruguay",
+   "page": "https://agrocienciauruguay.uy/index.php/agrociencia/article/view/155",
    "license": "CC BY 4.0",
-   "big": "https://data.mendeley.com/public-files/datasets/dh5cpvn48j/files/17b97ec7-184f-46e0-8fa5-24a7683b5567/file_downloaded#pepper/pepper_photo/DSC06938.JPG",
-   "standin": true,
-   "shows": "chili"
+   "big": "https://agrocienciauruguay.uy/index.php/agrociencia/article/download/155/137 (PDF, Figure 4, page 8)",
+   "standin": false
   },
   "bellpepper-magnesium-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-magnesium-deficiency.webp",
    "thumb": "/images/site/deficiencies/bellpepper-magnesium-deficiency-480.webp",
-   "alt": "Chili pepper leaf turning yellow between the veins while a green band stays along each main vein, from magnesium shortage, shown on another crop as a stand in for bell pepper",
-   "credit": "Çetindağ et al., Pepper Nutrient Deficiency Dataset, CC BY 4.0, via Mendeley Data",
-   "page": "https://data.mendeley.com/datasets/dh5cpvn48j/1",
+   "alt": "Six photos of bell pepper leaves going yellow between green veins on the middle and upper plant, from magnesium shortage",
+   "credit": "Silva et al. 2017, CC BY 4.0, via Agrociencia Uruguay",
+   "page": "https://agrocienciauruguay.uy/index.php/agrociencia/article/view/155",
    "license": "CC BY 4.0",
-   "big": "https://data.mendeley.com/public-files/datasets/dh5cpvn48j/files/17b97ec7-184f-46e0-8fa5-24a7683b5567/file_downloaded#pepper/pepper_photo/DSC08003.JPG",
-   "standin": true,
-   "shows": "chili"
+   "big": "https://agrocienciauruguay.uy/index.php/agrociencia/article/download/155/137 (PDF, Figure 6, page 11)",
+   "standin": false
   },
   "bellpepper-calcium-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-calcium-deficiency.webp",
@@ -860,57 +855,52 @@
   "broccoli-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/broccoli-nitrogen-deficiency.webp",
    "thumb": "/images/site/deficiencies/broccoli-nitrogen-deficiency-480.webp",
-   "alt": "Cauliflower plants whose older leaves turn pale and reddish purple from nitrogen shortage (stand in: this is cauliflower, the closest crop with a photo), shown on another crop as a stand in for broccoli",
-   "credit": "Rasbak (Wikimedia Commons user), CC BY SA 3.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:Brassica_oleracea_Cauliflower_Bloemkool_stikstofgebrek.jpg",
-   "license": "CC BY SA 3.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/3/32/Brassica_oleracea_Cauliflower_Bloemkool_stikstofgebrek.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "cauliflower"
+   "alt": "Young broccoli plants grown without nitrogen, small and pale with older leaves turning yellow orange",
+   "credit": "de Almeida et al. 2020, CC BY 4.0, via MDPI (Agronomy)",
+   "page": "https://doi.org/10.3390/agronomy10101572",
+   "license": "CC BY 4.0",
+   "big": "https://pub.mdpi-res.com/agronomy/agronomy-10-01572/article_deploy/html/images/agronomy-10-01572-g002.png",
+   "standin": false
   },
   "broccoli-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/broccoli-phosphorus-deficiency.webp",
    "thumb": "/images/site/deficiencies/broccoli-phosphorus-deficiency-480.webp",
-   "alt": "Lettuce plants whose older leaves take on a dull purple red tint from phosphorus shortage (stand in: this is lettuce, the closest crop with a photo), shown on another crop as a stand in for broccoli",
-   "credit": "Scot Nelson, CC0 1.0, via Flickr",
-   "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
-   "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true,
-   "shows": "lettuce"
+   "alt": "Old broccoli leaf yellowing between green veins late in phosphorus shortage",
+   "credit": "de Almeida et al. 2020, CC BY 4.0, via MDPI (Agronomy)",
+   "page": "https://doi.org/10.3390/agronomy10101572",
+   "license": "CC BY 4.0",
+   "big": "https://pub.mdpi-res.com/agronomy/agronomy-10-01572/article_deploy/html/images/agronomy-10-01572-g002.png",
+   "standin": false
   },
   "broccoli-potassium-deficiency": {
    "src": "/images/site/deficiencies/broccoli-potassium-deficiency.webp",
    "thumb": "/images/site/deficiencies/broccoli-potassium-deficiency-480.webp",
-   "alt": "Cabbage with dry, scorched outer leaf edges from potassium shortage (stand in: this is cabbage, the closest crop with a photo), shown on another crop as a stand in for broccoli",
-   "credit": "Alandmanson, CC BY SA 4.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:K_deficient_cabbage_2017_05_10_6923.jpg",
-   "license": "CC BY SA 4.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/6/62/K_deficient_cabbage_2017_05_10_6923.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "cabbage"
+   "alt": "Broccoli leaves grown without potassium, wrinkled and wilting with pale yellow spots scattered between the veins",
+   "credit": "de Almeida et al. 2020, CC BY 4.0, via MDPI (Agronomy)",
+   "page": "https://doi.org/10.3390/agronomy10101572",
+   "license": "CC BY 4.0",
+   "big": "https://pub.mdpi-res.com/agronomy/agronomy-10-01572/article_deploy/html/images/agronomy-10-01572-g002.png",
+   "standin": false
   },
   "broccoli-magnesium-deficiency": {
    "src": "/images/site/deficiencies/broccoli-magnesium-deficiency.webp",
    "thumb": "/images/site/deficiencies/broccoli-magnesium-deficiency-480.webp",
-   "alt": "Tomato leaf with yellow patches between green veins from magnesium shortage (stand in: this is tomato, the closest crop with a photo), shown on another crop as a stand in for broccoli",
-   "credit": "Goldlocki (Wikimedia Commons user), CC BY SA 3.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:TomateBlattMgMangel.jpg",
-   "license": "CC BY SA 3.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/1/17/TomateBlattMgMangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "tomato"
+   "alt": "Broccoli leaf with yellow patches between green veins and a plant whose older leaves have yellowed, from magnesium shortage",
+   "credit": "de Almeida et al. 2020, CC BY 4.0, via MDPI (Agronomy)",
+   "page": "https://doi.org/10.3390/agronomy10101572",
+   "license": "CC BY 4.0",
+   "big": "https://pub.mdpi-res.com/agronomy/agronomy-10-01572/article_deploy/html/images/agronomy-10-01572-g002.png",
+   "standin": false
   },
   "broccoli-calcium-deficiency": {
    "src": "/images/site/deficiencies/broccoli-calcium-deficiency.webp",
    "thumb": "/images/site/deficiencies/broccoli-calcium-deficiency-480.webp",
-   "alt": "Cabbage head with brown, dried edges on the inner wrapper leaves (tip burn) from calcium shortage (stand in: this is cabbage, the closest crop with a photo), shown on another crop as a stand in for broccoli",
-   "credit": "David B. Langston, University of Georgia, Bugwood.org, CC BY 3.0 US, via ipmimages.org",
-   "page": "https://www.ipmimages.org/browse/image/5077026",
-   "license": "CC BY 3.0 US",
-   "big": "https://bugwoodcloud.org/images/768x512/5077026.jpg",
-   "standin": true,
-   "shows": "cabbage"
+   "alt": "Broccoli shoot grown without calcium, with a deformed, dying growing tip and curled young leaves",
+   "credit": "de Almeida et al. 2020, CC BY 4.0, via MDPI (Agronomy)",
+   "page": "https://doi.org/10.3390/agronomy10101572",
+   "license": "CC BY 4.0",
+   "big": "https://pub.mdpi-res.com/agronomy/agronomy-10-01572/article_deploy/html/images/agronomy-10-01572-g002.png",
+   "standin": false
   },
   "cabbage-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/cabbage-phosphorus-deficiency.webp",
@@ -1124,13 +1114,12 @@
   "cauliflower-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/cauliflower-phosphorus-deficiency.webp",
    "thumb": "/images/site/deficiencies/cauliflower-phosphorus-deficiency-480.webp",
-   "alt": "Lettuce plants whose older leaves take on a dull purple red tint from phosphorus shortage (stand in: this is lettuce, the closest crop with a photo), shown on another crop as a stand in for cauliflower",
-   "credit": "Scot Nelson, CC0 1.0, via Flickr",
-   "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
-   "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true,
-   "shows": "lettuce"
+   "alt": "Old cauliflower leaves turned yellow with large dead grey brown patches, an advanced phosphorus shortage sign",
+   "credit": "Bianco et al. 2015, CC BY 4.0, via PLOS ONE",
+   "page": "https://doi.org/10.1371/journal.pone.0123500",
+   "license": "CC BY 4.0",
+   "big": "https://journals.plos.org/plosone/article/figure/image?size=original&id=10.1371/journal.pone.0123500.g005",
+   "standin": false
   },
   "cauliflower-potassium-deficiency": {
    "src": "/images/site/deficiencies/cauliflower-potassium-deficiency.webp",
@@ -1286,13 +1275,12 @@
   "chili-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/chili-phosphorus-deficiency.webp",
    "thumb": "/images/site/deficiencies/chili-phosphorus-deficiency-480.webp",
-   "alt": "Lettuce plants whose older leaves take on a dull purple red tint from phosphorus shortage (stand in: this is lettuce, the closest crop with a photo), shown on another crop as a stand in for chili",
-   "credit": "Scot Nelson, CC0 1.0, via Flickr",
-   "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
-   "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true,
-   "shows": "lettuce"
+   "alt": "Potted chili pepper plant grown without phosphorus, compact with small, dark green leaves and few branches",
+   "credit": "Çetindağ et al., CC BY 4.0, via Mendeley Data",
+   "page": "https://data.mendeley.com/datasets/dh5cpvn48j/1",
+   "license": "CC BY 4.0",
+   "big": "https://data.mendeley.com/public-files/datasets/dh5cpvn48j/files/17b97ec7-184f-46e0-8fa5-24a7683b5567/file_downloaded (zip member pepper/pepper_photo/DSC07550.JPG, labelled p_leaf in pepper/Labels/DSC07550.xml)",
+   "standin": false
   },
   "chili-potassium-deficiency": {
    "src": "/images/site/deficiencies/chili-potassium-deficiency.webp",
@@ -1421,112 +1409,102 @@
   "corn-glutinous-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-phosphorus-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-glutinous-phosphorus-deficiency-480.webp",
-   "alt": "Young corn seedling with deep purple leaves from phosphorus shortage (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for corn",
-   "credit": "Mary Ann Hansen, Virginia Polytechnic Institute and State University, CC BY 3.0 US, via ipmimages.org",
-   "page": "https://www.ipmimages.org/browse/image/5332037",
-   "license": "CC BY 3.0 US",
-   "big": "https://bugwoodcloud.org/images/3072x2048/5332037.jpg",
-   "standin": true,
-   "shows": "corn_yellow"
+   "alt": "Young maize plant on sandy soil with purple leaf edges and stems from phosphorus shortage",
+   "credit": "C. Crozier (SoilScience.info), CC BY 2.0, via Flickr",
+   "page": "https://www.flickr.com/photos/22503286@N06/5087215399/",
+   "license": "CC BY 2.0",
+   "big": "https://live.staticflickr.com/4090/5087215399_c51b79c923_h.jpg",
+   "standin": false
   },
   "corn-glutinous-potassium-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-potassium-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-glutinous-potassium-deficiency-480.webp",
-   "alt": "Corn plant whose lower leaves are yellow then brown along the edges from potassium shortage (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for corn",
-   "credit": "Alandmanson, CC BY SA 4.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:K-deficient_maize_on_Cedara_2_2003-01-13.jpg",
-   "license": "CC BY SA 4.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/d/d1/K-deficient_maize_on_Cedara_2_2003-01-13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "corn_yellow"
+   "alt": "Rows of maize on red soil whose lower leaves are scorched brown along the edges, from severe potassium shortage",
+   "credit": "Alan Manson, CC BY-SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:K-deficient_maize_on_Cedara_1_2003-01-13.jpg",
+   "license": "CC BY-SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/7/7f/K-deficient_maize_on_Cedara_1_2003-01-13.jpg",
+   "standin": false
   },
   "corn-glutinous-sulfur-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-sulfur-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-glutinous-sulfur-deficiency-480.webp",
-   "alt": "Young corn plant with pale yellow leaves all over, newest leaves palest, from sulfur shortage (small credit line in corner) (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for corn",
-   "credit": "Soil Science, CC BY 2.0, via Flickr",
-   "page": "https://www.flickr.com/photos/22503286@N06/5087811468/",
+   "alt": "Field of young maize rows with yellow striped plants from sulfur shortage",
+   "credit": "C. Crozier (SoilScience.info), CC BY 2.0, via Flickr",
+   "page": "https://www.flickr.com/photos/22503286@N06/5087811146/",
    "license": "CC BY 2.0",
-   "big": "https://live.staticflickr.com/4152/5087811468_a2d25977a2_o.jpg",
-   "standin": true,
-   "shows": "corn_yellow"
+   "big": "https://live.staticflickr.com/4127/5087811146_f93469cd9c_h.jpg",
+   "standin": false
   },
   "corn-glutinous-magnesium-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-magnesium-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-glutinous-magnesium-deficiency-480.webp",
-   "alt": "Corn leaf with pale yellow stripes between green veins from magnesium shortage (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for corn",
-   "credit": "Alandmanson, CC BY 4.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg",
+   "alt": "Maize leaf with long pale yellow stripes between green veins, from magnesium shortage",
+   "credit": "Vishnu Khade, CC BY 4.0, via Mendeley Data",
+   "page": "https://data.mendeley.com/datasets/34gb2gr7p2/1",
    "license": "CC BY 4.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "corn_yellow"
+   "big": "https://data.mendeley.com/public-api/zip/34gb2gr7p2/download/1 (zip member Maize Nutrient Deficiency Dataset/Magnessium/1 (76).jpeg)",
+   "standin": false
   },
   "corn-glutinous-zinc-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-zinc-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-glutinous-zinc-deficiency-480.webp",
-   "alt": "Young corn plant with broad white to pale yellow bands on the young leaves from zinc shortage (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for corn",
-   "credit": "Agronom, CC BY SA 3.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:Maize_of_Zn_deficiency,_symptoms_on_leaves.jpg",
-   "license": "CC BY SA 3.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Maize_of_Zn_deficiency%2C_symptoms_on_leaves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "corn_yellow"
+   "alt": "Young maize leaves with broad pale white bands beside the midrib and reddish brown streaks, from severe zinc shortage",
+   "credit": "Agronom, CC BY-SA 3.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Maize_of_very_strong_Zn_deficiency,_symptoms_on_leaves.jpg",
+   "license": "CC BY-SA 3.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Maize_of_very_strong_Zn_deficiency%2C_symptoms_on_leaves.jpg",
+   "standin": false
   },
   "corn-sweet-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-phosphorus-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-sweet-phosphorus-deficiency-480.webp",
-   "alt": "Young corn seedling with deep purple leaves from phosphorus shortage (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for corn",
-   "credit": "Mary Ann Hansen, Virginia Polytechnic Institute and State University, CC BY 3.0 US, via ipmimages.org",
-   "page": "https://www.ipmimages.org/browse/image/5332037",
-   "license": "CC BY 3.0 US",
-   "big": "https://bugwoodcloud.org/images/3072x2048/5332037.jpg",
-   "standin": true,
-   "shows": "corn_yellow"
+   "alt": "Young maize seedling with purple leaves from phosphorus shortage on acid soil",
+   "credit": "Alan Manson, CC0 1.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:2005_1214_0928_Hlokozi_-_Acid-induced_P_deficiency.jpg",
+   "license": "CC0 1.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/f/f1/2005_1214_0928_Hlokozi_-_Acid-induced_P_deficiency.jpg",
+   "standin": false
   },
   "corn-sweet-potassium-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-potassium-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-sweet-potassium-deficiency-480.webp",
-   "alt": "Corn plant whose lower leaves are yellow then brown along the edges from potassium shortage (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for corn",
-   "credit": "Alandmanson, CC BY SA 4.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:K-deficient_maize_on_Cedara_2_2003-01-13.jpg",
-   "license": "CC BY SA 4.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/d/d1/K-deficient_maize_on_Cedara_2_2003-01-13.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "corn_yellow"
+   "alt": "Maize plant whose older leaves have dead brown tips and edges with some yellowing, from potassium shortage",
+   "credit": "Alan Manson, CC BY-SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:K-deficient_maize_on_Cedara_4_2003-01-13.jpg",
+   "license": "CC BY-SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/b/bc/K-deficient_maize_on_Cedara_4_2003-01-13.jpg",
+   "standin": false
   },
   "corn-sweet-sulfur-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-sulfur-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-sweet-sulfur-deficiency-480.webp",
-   "alt": "Young corn plant with pale yellow leaves all over, newest leaves palest, from sulfur shortage (small credit line in corner) (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for corn",
-   "credit": "Soil Science, CC BY 2.0, via Flickr",
-   "page": "https://www.flickr.com/photos/22503286@N06/5087811468/",
+   "alt": "Young maize plant with evenly pale yellow upper leaves from sulfur shortage",
+   "credit": "C. Crozier (SoilScience.info), CC BY 2.0, via Flickr",
+   "page": "https://www.flickr.com/photos/22503286@N06/5087215001/",
    "license": "CC BY 2.0",
-   "big": "https://live.staticflickr.com/4152/5087811468_a2d25977a2_o.jpg",
-   "standin": true,
-   "shows": "corn_yellow"
+   "big": "https://live.staticflickr.com/4128/5087215001_220e8564c8_h.jpg",
+   "standin": false
   },
   "corn-sweet-magnesium-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-magnesium-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-sweet-magnesium-deficiency-480.webp",
-   "alt": "Corn leaf with pale yellow stripes between green veins from magnesium shortage (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for corn",
-   "credit": "Alandmanson, CC BY 4.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg",
-   "license": "CC BY 4.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Mg_deficiency_Vulindlela_1995-3-30_2018_01_23_2235.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "corn_yellow"
+   "alt": "Two young maize plants laid on pavement, their leaves faintly striped and the older leaves turning reddish brown, from magnesium shortage",
+   "credit": "Mary Ann Hansen, Virginia Polytechnic Institute and State University, Bugwood.org, CC BY 3.0 US",
+   "page": "https://www.ipmimages.org/browse/image/5332036",
+   "license": "CC BY 3.0 US",
+   "big": "https://bugwoodcloud.org/images/1536x1024/5332036.jpg",
+   "standin": false
   },
   "corn-sweet-zinc-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-zinc-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-sweet-zinc-deficiency-480.webp",
-   "alt": "Young corn plant with broad white to pale yellow bands on the young leaves from zinc shortage (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for corn",
-   "credit": "Agronom, CC BY SA 3.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:Maize_of_Zn_deficiency,_symptoms_on_leaves.jpg",
-   "license": "CC BY SA 3.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/b/ba/Maize_of_Zn_deficiency%2C_symptoms_on_leaves.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "corn_yellow"
+   "alt": "Young maize plants with pale yellow striped leaves from zinc shortage in front, greener plants behind",
+   "credit": "Alan Manson, CC BY-SA 4.0, via Wikimedia Commons",
+   "page": "https://commons.wikimedia.org/wiki/File:Zinc-deficient_maize_plants.jpg",
+   "license": "CC BY-SA 4.0",
+   "big": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Zinc-deficient_maize_plants.jpg",
+   "standin": false
   },
   "corn-yellow-sulfur-deficiency": {
    "src": "/images/site/deficiencies/corn-yellow-sulfur-deficiency.webp",
@@ -1551,13 +1529,12 @@
   "cotton-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/cotton-nitrogen-deficiency.webp",
    "thumb": "/images/site/deficiencies/cotton-nitrogen-deficiency-480.webp",
-   "alt": "Tobacco plants whose lower leaves have turned pale yellow from nitrogen shortage (stand in: this is tobacco, the closest crop with a photo), shown on another crop as a stand in for cotton",
-   "credit": "R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org",
-   "page": "https://www.ipmimages.org/browse/image/1440088",
-   "license": "CC BY 3.0 US",
-   "big": "https://bugwoodcloud.org/images/3072x2048/1440088.jpg",
-   "standin": true,
-   "shows": "tobacco"
+   "alt": "Two pairs of potted cotton plants: in each pair the plant on the left, grown with low nitrogen, is shorter with pale yellow leaves beside a dark green plant",
+   "credit": "Zhu et al. 2021, CC BY 4.0, via Frontiers in Plant Science",
+   "page": "https://doi.org/10.3389/fpls.2021.748715",
+   "license": "CC BY 4.0",
+   "big": "https://www.frontiersin.org/files/Articles/748715/fpls-12-748715-HTML/image_m/fpls-12-748715-g001.jpg",
+   "standin": false
   },
   "cotton-sulfur-deficiency": {
    "src": "/images/site/deficiencies/cotton-sulfur-deficiency.webp",
@@ -1637,13 +1614,12 @@
   "cucumber-potassium-deficiency": {
    "src": "/images/site/deficiencies/cucumber-potassium-deficiency.webp",
    "thumb": "/images/site/deficiencies/cucumber-potassium-deficiency-480.webp",
-   "alt": "Tomato leaf yellow and brown along the edges from potassium shortage (stand in: this is tomato, the closest crop with a photo), shown on another crop as a stand in for cucumber",
-   "credit": "Goldlocki, CC BY SA 3.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
-   "license": "CC BY SA 3.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "tomato"
+   "alt": "Cucumber vine laid on pavement with leaves scorched brown and curled at the edges, from potassium shortage",
+   "credit": "Mary Ann Hansen, Virginia Polytechnic Institute and State University, Bugwood.org, CC BY 3.0 US",
+   "page": "https://www.ipmimages.org/browse/image/5332016",
+   "license": "CC BY 3.0 US",
+   "big": "https://bugwoodcloud.org/images/1536x1024/5332016.jpg",
+   "standin": false
   },
   "cucumber-magnesium-deficiency": {
    "src": "/images/site/deficiencies/cucumber-magnesium-deficiency.webp",
@@ -2238,13 +2214,12 @@
   "mangosteen-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/mangosteen-nitrogen-deficiency.webp",
    "thumb": "/images/site/deficiencies/mangosteen-nitrogen-deficiency-480.webp",
-   "alt": "Cacao seedlings in pots with yellowing leaves (nitrogen shortage), some with brown leaf edges (potassium) (stand in: this is cacao, the closest crop with a photo), shown on another crop as a stand in for mangosteen",
-   "credit": "Scot Nelson, CC0 1.0, via Flickr",
-   "page": "https://www.flickr.com/photos/62295966@N07/34522950110/",
-   "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/4274/34522950110_00c14fa01f_o.jpg",
-   "standin": true,
-   "shows": "cacao"
+   "alt": "Two mangosteen leaves side by side: a dark green control leaf and a lighter, yellowish green leaf from a plant short of nitrogen",
+   "credit": "Viégas et al. 2018, CC BY 4.0, via American Journal of Plant Sciences (SCIRP)",
+   "page": "https://www.scirp.org/journal/paperinformation?paperid=83889",
+   "license": "CC BY 4.0",
+   "big": "https://content.scirp.org/pdf/ajps_2018041915291125.pdf (Figure 1, page 8)",
+   "standin": false
   },
   "mangosteen-potassium-deficiency": {
    "src": "/images/site/deficiencies/mangosteen-potassium-deficiency.webp",
@@ -2628,13 +2603,12 @@
   "pechay-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/pechay-phosphorus-deficiency.webp",
    "thumb": "/images/site/deficiencies/pechay-phosphorus-deficiency-480.webp",
-   "alt": "Lettuce plants whose older leaves take on a dull purple red tint from phosphorus shortage (stand in: this is lettuce, the closest crop with a photo), shown on another crop as a stand in for pechay",
-   "credit": "Scot Nelson, CC0 1.0, via Flickr",
-   "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
-   "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true,
-   "shows": "lettuce"
+   "alt": "Two potted bok choy plants: the one with full phosphorus is large and leafy, the one with low phosphorus is tiny and stunted",
+   "credit": "Suraby et al. 2023, CC BY 4.0, via Frontiers in Microbiology",
+   "page": "https://doi.org/10.3389/fmicb.2023.1285574",
+   "license": "CC BY 4.0",
+   "big": "https://www.frontiersin.org/files/Articles/1285574/fmicb-14-1285574-HTML/image_m/fmicb-14-1285574-g006.jpg",
+   "standin": false
   },
   "pechay-potassium-deficiency": {
    "src": "/images/site/deficiencies/pechay-potassium-deficiency.webp",
@@ -2985,13 +2959,12 @@
   "rice-sulfur-deficiency": {
    "src": "/images/site/deficiencies/rice-sulfur-deficiency.webp",
    "thumb": "/images/site/deficiencies/rice-sulfur-deficiency-480.webp",
-   "alt": "Young corn plant with pale yellow leaves all over, newest leaves palest, from sulfur shortage (small credit line in corner) (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for rice",
-   "credit": "Soil Science, CC BY 2.0, via Flickr",
-   "page": "https://www.flickr.com/photos/22503286@N06/5087811468/",
-   "license": "CC BY 2.0",
-   "big": "https://live.staticflickr.com/4152/5087811468_a2d25977a2_o.jpg",
-   "standin": true,
-   "shows": "corn_yellow"
+   "alt": "Four groups of young rice plants in nutrient solution; the third group, grown without sulfur, is paler and thinner than the well fed plants on the left",
+   "credit": "Réthoré et al. 2020, CC BY 4.0, via MDPI (International Journal of Molecular Sciences)",
+   "page": "https://doi.org/10.3390/ijms21103677",
+   "license": "CC BY 4.0",
+   "big": "https://pub.mdpi-res.com/ijms/ijms-21-03677/article_deploy/html/images/ijms-21-03677-g006.png",
+   "standin": false
   },
   "rice-magnesium-deficiency": {
    "src": "/images/site/deficiencies/rice-magnesium-deficiency.webp",
@@ -3016,13 +2989,12 @@
   "rice-iron-deficiency": {
    "src": "/images/site/deficiencies/rice-iron-deficiency.webp",
    "thumb": "/images/site/deficiencies/rice-iron-deficiency-480.webp",
-   "alt": "Sugarcane leaves striped pale yellow to white between green veins from iron shortage (stand in: this is sugarcane, the closest crop with a photo), shown on another crop as a stand in for rice",
-   "credit": "Amityadav8, CC BY SA 3.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:Amit_000_P_010_-_Copy.jpg",
-   "license": "CC BY SA 3.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Amit_000_P_010_-_Copy.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "sugarcane"
+   "alt": "Young rice plants in nutrient solution: the three on the left given iron stay green and tall, the three on the right grown without iron are short with yellow leaves",
+   "credit": "Tran, Kim and Jung 2023, CC BY 4.0, via Frontiers in Plant Science",
+   "page": "https://doi.org/10.3389/fpls.2023.1098808",
+   "license": "CC BY 4.0",
+   "big": "https://www.frontiersin.org/files/Articles/1098808/fpls-14-1098808-HTML/image_m/fpls-14-1098808-g002.jpg",
+   "standin": false
   },
   "rubber-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/rubber-nitrogen-deficiency.webp",
@@ -3170,13 +3142,12 @@
   "sorghum-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/sorghum-phosphorus-deficiency.webp",
    "thumb": "/images/site/deficiencies/sorghum-phosphorus-deficiency-480.webp",
-   "alt": "Young corn seedling with deep purple leaves from phosphorus shortage (stand in: this is corn, yellow or field, the closest crop with a photo), shown on another crop as a stand in for sorghum",
-   "credit": "Mary Ann Hansen, Virginia Polytechnic Institute and State University, CC BY 3.0 US, via ipmimages.org",
-   "page": "https://www.ipmimages.org/browse/image/5332037",
-   "license": "CC BY 3.0 US",
-   "big": "https://bugwoodcloud.org/images/3072x2048/5332037.jpg",
-   "standin": true,
-   "shows": "corn_yellow"
+   "alt": "Potted sorghum plants of two lines: on the right, grown with low phosphorus, they are smaller with narrower leaves than the full fed plants on the left",
+   "credit": "Liu et al. 2023, CC BY 4.0, via aBIOTECH",
+   "page": "https://doi.org/10.1007/s42994-023-00112-w",
+   "license": "CC BY 4.0",
+   "big": "https://media.springernature.com/full/springer-static/image/art%3A10.1007%2Fs42994-023-00112-w/MediaObjects/42994_2023_112_Fig8_HTML.png",
+   "standin": false
   },
   "sorghum-potassium-deficiency": {
    "src": "/images/site/deficiencies/sorghum-potassium-deficiency.webp",
@@ -3508,13 +3479,12 @@
   "sweetpotato-potassium-deficiency": {
    "src": "/images/site/deficiencies/sweetpotato-potassium-deficiency.webp",
    "thumb": "/images/site/deficiencies/sweetpotato-potassium-deficiency-480.webp",
-   "alt": "Potato leaves with brown, scorched, curled edges from potassium shortage (stand in: this is potato, the closest crop with a photo), shown on another crop as a stand in for sweet potato",
-   "credit": "Simranpreetsidhu, CC BY SA 4.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:Potassium_deficiency_in_potatoes.jpg",
-   "license": "CC BY SA 4.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/5/57/Potassium_deficiency_in_potatoes.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "potato"
+   "alt": "Sweet potato cuttings grown without potassium, with older leaves turning yellow and brown at the edges, beside green plants given potassium",
+   "credit": "Jin et al. 2024, CC BY 4.0, via BMC Genomics",
+   "page": "https://doi.org/10.1186/s12864-023-09939-5",
+   "license": "CC BY 4.0",
+   "big": "https://media.springernature.com/full/springer-static/image/art%3A10.1186%2Fs12864-023-09939-5/MediaObjects/12864_2023_9939_Fig1_HTML.png",
+   "standin": false
   },
   "sweetpotato-magnesium-deficiency": {
    "src": "/images/site/deficiencies/sweetpotato-magnesium-deficiency.webp",
@@ -3687,13 +3657,12 @@
   "tomato-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/tomato-phosphorus-deficiency.webp",
    "thumb": "/images/site/deficiencies/tomato-phosphorus-deficiency-480.webp",
-   "alt": "Lettuce plants whose older leaves take on a dull purple red tint from phosphorus shortage (stand in: this is lettuce, the closest crop with a photo), shown on another crop as a stand in for tomato",
-   "credit": "Scot Nelson, CC0 1.0, via Flickr",
-   "page": "https://www.flickr.com/photos/62295966@N07/8472048168/",
-   "license": "CC0 1.0",
-   "big": "https://live.staticflickr.com/8112/8472048168_c210624590_o.jpg",
-   "standin": true,
-   "shows": "lettuce"
+   "alt": "Three young tomato plants on black: a tall green control, a paler plant without iron, and on the right a tiny dark purplish plant grown without phosphorus",
+   "credit": "Trevisan et al. 2024, CC BY 4.0, via BMC Plant Biology",
+   "page": "https://doi.org/10.1186/s12870-024-05120-6",
+   "license": "CC BY 4.0",
+   "big": "https://media.springernature.com/full/springer-static/image/art%3A10.1186%2Fs12870-024-05120-6/MediaObjects/12870_2024_5120_Fig1_HTML.png",
+   "standin": false
   },
   "turmeric-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/turmeric-nitrogen-deficiency.webp",
@@ -3785,13 +3754,12 @@
   "upo-potassium-deficiency": {
    "src": "/images/site/deficiencies/upo-potassium-deficiency.webp",
    "thumb": "/images/site/deficiencies/upo-potassium-deficiency-480.webp",
-   "alt": "Tomato leaf yellow and brown along the edges from potassium shortage (stand in: this is tomato, the closest crop with a photo), shown on another crop as a stand in for bottle gourd",
-   "credit": "Goldlocki, CC BY SA 3.0, via Wikimedia Commons",
-   "page": "https://commons.wikimedia.org/wiki/File:Tomate_Blatt_Kalimangel.jpg",
-   "license": "CC BY SA 3.0",
-   "big": "https://upload.wikimedia.org/wikipedia/commons/8/88/Tomate_Blatt_Kalimangel.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-   "standin": true,
-   "shows": "tomato"
+   "alt": "Underside of a bottle gourd leaf, pale yellow green with small brown spots along the edge, from potassium shortage",
+   "credit": "Orka et al. (OLID I), CC BY 4.0, via Zenodo",
+   "page": "https://zenodo.org/records/8105154",
+   "license": "CC BY 4.0",
+   "big": "https://zenodo.org/records/8105154/files/bottle_gourd__part_3.zip (zip member bottle_gourd__K/bottle_gourd__K (5).JPG)",
+   "standin": false
   },
   "upo-magnesium-deficiency": {
    "src": "/images/site/deficiencies/upo-magnesium-deficiency.webp",
@@ -3904,13 +3872,12 @@
   "corn-sweet-calcium-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-calcium-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-sweet-calcium-deficiency-480.webp",
-   "alt": "Field maize whorl whose newest leaves have torn, ragged brown edges and cling together from calcium shortage, shown on another crop as a stand in for corn",
-   "credit": "Devechio et al., Journal of Agricultural Science 2022, CC BY 4.0, via CCSE",
-   "page": "https://ccsenet.org/journal/index.php/jas/article/view/0/46773",
+   "alt": "Maize seedlings in tubes; those on the right have newest leaves that stay stuck, curl and die back at the tips, a calcium shortage sign",
+   "credit": "Wang et al. 2020, CC BY 4.0, via G3 Genes Genomes Genetics",
+   "page": "https://doi.org/10.1534/g3.120.401069",
    "license": "CC BY 4.0",
-   "big": "https://ccsenet.org/journal/index.php/jas/article/download/0/0/46773/49985 (Figure 4b, page 186)",
-   "standin": true,
-   "shows": "corn_yellow"
+   "big": "https://cdn.ncbi.nlm.nih.gov/pmc/blobs/9e7d/7263677/344a0ecb78d4/1963f2.jpg",
+   "standin": false
   },
   "mangosteen-phosphorus-deficiency": {
    "src": "/images/site/deficiencies/mangosteen-phosphorus-deficiency.webp",
@@ -3935,24 +3902,22 @@
   "corn-sweet-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/corn-sweet-nitrogen-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-sweet-nitrogen-deficiency-480.webp",
-   "alt": "Field maize leaf yellowing in a broad band along the midrib while the edges stay green, from nitrogen shortage, shown on another crop as a stand in for corn",
-   "credit": "Vishnu Khade, Maize Nutrient Deficiency Dataset, CC BY 4.0, via Mendeley Data",
+   "alt": "Close view of a maize leaf turning yellow from the tip and edge inward, from nitrogen shortage",
+   "credit": "Vishnu Khade, CC BY 4.0, via Mendeley Data",
    "page": "https://data.mendeley.com/datasets/34gb2gr7p2/1",
    "license": "CC BY 4.0",
-   "big": "https://data.mendeley.com/public-files/datasets/34gb2gr7p2/files/94f8cc04-d2ee-4cf4-86b2-9b0ad631ec5a/file_downloaded#Maize Nutrient Deficiency Dataset/Nitrogen/2 (75).jpeg",
-   "standin": true,
-   "shows": "corn_yellow"
+   "big": "https://data.mendeley.com/public-api/zip/34gb2gr7p2/download/1 (zip member Maize Nutrient Deficiency Dataset/Nitrogen/2 (22).jpeg)",
+   "standin": false
   },
   "corn-glutinous-nitrogen-deficiency": {
    "src": "/images/site/deficiencies/corn-glutinous-nitrogen-deficiency.webp",
    "thumb": "/images/site/deficiencies/corn-glutinous-nitrogen-deficiency-480.webp",
-   "alt": "Field maize leaf yellowing in a broad band along the midrib while the edges stay green, from nitrogen shortage, shown on another crop as a stand in for corn",
-   "credit": "Vishnu Khade, Maize Nutrient Deficiency Dataset, CC BY 4.0, via Mendeley Data",
+   "alt": "Maize leaf with a yellow band spreading along its edges and tip, from nitrogen shortage",
+   "credit": "Vishnu Khade, CC BY 4.0, via Mendeley Data",
    "page": "https://data.mendeley.com/datasets/34gb2gr7p2/1",
    "license": "CC BY 4.0",
-   "big": "https://data.mendeley.com/public-files/datasets/34gb2gr7p2/files/242f870e-d6f0-41e1-bee5-98287a03112a/file_downloaded#Maize Nutrient Deficiency Dataset/Nitrogen/2 (32).jpeg",
-   "standin": true,
-   "shows": "corn_yellow"
+   "big": "https://data.mendeley.com/public-api/zip/34gb2gr7p2/download/1 (zip member Maize Nutrient Deficiency Dataset/Nitrogen/2 (61).jpeg)",
+   "standin": false
   },
   "bellpepper-iron-deficiency": {
    "src": "/images/site/deficiencies/bellpepper-iron-deficiency.webp",
@@ -4101,13 +4066,12 @@
   "pomelo-boron-deficiency": {
    "src": "/images/site/deficiencies/pomelo-boron-deficiency.webp",
    "thumb": "/images/site/deficiencies/pomelo-boron-deficiency-480.webp",
-   "alt": "Ponkan mandarin fruits (a pomelo relative) small, hard and lumpy from boron shortage, shown on another crop as a stand in for pomelo",
-   "credit": "Yang et al., Plants (MDPI) 2021, CC BY 4.0, via the publisher",
+   "alt": "Pomelo seedling shoot whose young leaves are pale yellow green after weeks without boron",
+   "credit": "Yang et al. 2021, CC BY 4.0, via MDPI (Plants)",
    "page": "https://doi.org/10.3390/plants11010040",
    "license": "CC BY 4.0",
-   "big": "https://mdpi-res.com/plants/plants-11-00040/article_deploy/html/images/plants-11-00040-g001.png",
-   "standin": true,
-   "shows": "citrus"
+   "big": "https://pub.mdpi-res.com/plants/plants-11-00040/article_deploy/html/images/plants-11-00040-g001.png",
+   "standin": false
   },
   "pechay-boron-deficiency": {
    "src": "/images/site/deficiencies/pechay-boron-deficiency.webp",
@@ -4140,6 +4104,136 @@
    "big": "https://rsdjournal.org/index.php/rsd/article/download/2359/1884",
    "standin": true,
    "shows": "zucchini"
+  },
+  "coffee-calcium-deficiency": {
+   "src": "/images/site/deficiencies/coffee-calcium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/coffee-calcium-deficiency-480.webp",
+   "alt": "Coffee leaf turned pale yellow green with a net of darker green veins and a wavy edge, from calcium shortage",
+   "credit": "Tuesta Monteza, Mejía Cabrera and Arcila Díaz (CoLeaf), CC BY 4.0, via Mendeley Data",
+   "page": "https://data.mendeley.com/datasets/brfgw46wzb/2",
+   "license": "CC BY 4.0",
+   "big": "https://data.mendeley.com/public-files/datasets/brfgw46wzb/files/6bab8e2e-3ccb-4611-9950-1daaed90707a/file_downloaded (zip member calcium-Ca/Ca (100).JPG)",
+   "standin": false
+  },
+  "sweetpotato-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/sweetpotato-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/sweetpotato-nitrogen-deficiency-480.webp",
+   "alt": "Sweet potato vines grown without nitrogen, small and pale, beside a taller, fuller plant given all nutrients",
+   "credit": "Makokha et al. 2018, CC BY 4.0, via Gates Open Research",
+   "page": "https://gatesopenresearch.org/articles/2-59/v1",
+   "license": "CC BY 4.0",
+   "big": "https://gatesopenresearch-files.f1000.com/manuscripts/13971/5a0da653-60ef-431f-8b41-552ad06de7e6_figure1.gif",
+   "standin": false
+  },
+  "sweetpotato-phosphorus-deficiency": {
+   "src": "/images/site/deficiencies/sweetpotato-phosphorus-deficiency.webp",
+   "thumb": "/images/site/deficiencies/sweetpotato-phosphorus-deficiency-480.webp",
+   "alt": "Sweet potato seedlings grown short of phosphorus on the right, smaller with yellowing older leaves and fewer roots than the well fed plants on the left",
+   "credit": "Li et al. 2025, CC BY 4.0, via MDPI (International Journal of Molecular Sciences)",
+   "page": "https://doi.org/10.3390/ijms26062681",
+   "license": "CC BY 4.0",
+   "big": "https://pub.mdpi-res.com/ijms/ijms-26-02681/article_deploy/html/images/ijms-26-02681-g006.png",
+   "standin": false
+  },
+  "peanut-calcium-deficiency": {
+   "src": "/images/site/deficiencies/peanut-calcium-deficiency.webp",
+   "thumb": "/images/site/deficiencies/peanut-calcium-deficiency-480.webp",
+   "alt": "Peanut pods and opened shells: on the left, from calcium short soil, pods are darker and smaller with poorly filled kernels; on the right, full pods",
+   "credit": "Tang et al. 2023, CC BY 4.0, via BMC Genomics",
+   "page": "https://doi.org/10.1186/s12864-023-09436-9",
+   "license": "CC BY 4.0",
+   "big": "https://media.springernature.com/full/springer-static/image/art%3A10.1186%2Fs12864-023-09436-9/MediaObjects/12864_2023_9436_Fig1_HTML.png",
+   "standin": false
+  },
+  "tomato-iron-deficiency": {
+   "src": "/images/site/deficiencies/tomato-iron-deficiency.webp",
+   "thumb": "/images/site/deficiencies/tomato-iron-deficiency-480.webp",
+   "alt": "Two young tomato plants seen from above: the top one with iron is dark green, the bottom one without iron has bright yellow new leaves with green veins",
+   "credit": "Wei et al. 2024, CC BY 4.0, via MDPI (International Journal of Molecular Sciences)",
+   "page": "https://doi.org/10.3390/ijms252312980",
+   "license": "CC BY 4.0",
+   "big": "https://pub.mdpi-res.com/ijms/ijms-25-12980/article_deploy/html/images/ijms-25-12980-g004.png",
+   "standin": false
+  },
+  "tomato-sulfur-deficiency": {
+   "src": "/images/site/deficiencies/tomato-sulfur-deficiency.webp",
+   "thumb": "/images/site/deficiencies/tomato-sulfur-deficiency-480.webp",
+   "alt": "Two tomato leaves side by side: the left one with enough sulfur is dark green, the right one from low sulfur is smaller and pale yellow green",
+   "credit": "Hasan et al. 2018, CC BY 4.0, via Scientific Reports",
+   "page": "https://doi.org/10.1038/s41598-018-28561-0",
+   "license": "CC BY 4.0",
+   "big": "https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-018-28561-0/MediaObjects/41598_2018_28561_Fig1_HTML.jpg",
+   "standin": false
+  },
+  "cassava-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/cassava-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/cassava-nitrogen-deficiency-480.webp",
+   "alt": "Two young cassava plants with their roots: the one on the right, grown with little nitrogen, is smaller with fewer, smaller leaves",
+   "credit": "Wang et al. 2024, CC BY 4.0, via Frontiers in Plant Science",
+   "page": "https://doi.org/10.3389/fpls.2024.1488281",
+   "license": "CC BY 4.0",
+   "big": "https://www.frontiersin.org/files/Articles/1488281/fpls-15-1488281-HTML/image_m/fpls-15-1488281-g001.jpg",
+   "standin": false
+  },
+  "potato-phosphorus-deficiency": {
+   "src": "/images/site/deficiencies/potato-phosphorus-deficiency.webp",
+   "thumb": "/images/site/deficiencies/potato-phosphorus-deficiency-480.webp",
+   "alt": "Row of potted potato plants; the one on the far left, grown with no phosphorus, is tiny and stunted beside larger plants given phosphorus",
+   "credit": "Chea et al. 2021, CC BY 4.0, via MDPI (International Journal of Molecular Sciences)",
+   "page": "https://doi.org/10.3390/ijms22105162",
+   "license": "CC BY 4.0",
+   "big": "https://pub.mdpi-res.com/ijms/ijms-22-05162/article_deploy/html/images/ijms-22-05162-g001.png",
+   "standin": false
+  },
+  "tomato-zinc-deficiency": {
+   "src": "/images/site/deficiencies/tomato-zinc-deficiency.webp",
+   "thumb": "/images/site/deficiencies/tomato-zinc-deficiency-480.webp",
+   "alt": "Two tomato seedlings on pink paper: the left one with zinc has open flat leaves, the right one without zinc is short with small leaves curled tightly downward",
+   "credit": "Kabir et al. 2021, CC BY 4.0, via Scientific Reports",
+   "page": "https://doi.org/10.1038/s41598-021-85649-w",
+   "license": "CC BY 4.0",
+   "big": "https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fs41598-021-85649-w/MediaObjects/41598_2021_85649_Fig1_HTML.png",
+   "standin": false
+  },
+  "pomelo-phosphorus-deficiency": {
+   "src": "/images/site/deficiencies/pomelo-phosphorus-deficiency.webp",
+   "thumb": "/images/site/deficiencies/pomelo-phosphorus-deficiency-480.webp",
+   "alt": "Two young pomelo seedlings on red cloth: the one grown short of phosphorus on the right has fewer, paler leaves than the control on the left",
+   "credit": "Meng et al. 2021, CC BY 4.0, via PLOS ONE",
+   "page": "https://doi.org/10.1371/journal.pone.0246944",
+   "license": "CC BY 4.0",
+   "big": "https://journals.plos.org/plosone/article/figure/image?size=original&id=10.1371/journal.pone.0246944.g001",
+   "standin": false
+  },
+  "sorghum-nitrogen-deficiency": {
+   "src": "/images/site/deficiencies/sorghum-nitrogen-deficiency.webp",
+   "thumb": "/images/site/deficiencies/sorghum-nitrogen-deficiency-480.webp",
+   "alt": "Potted sorghum plants of two lines; those on the right, grown with low nitrogen, are small and pale with yellowing lower leaves beside the full fed plants on the left",
+   "credit": "Liu et al. 2023, CC BY 4.0, via aBIOTECH",
+   "page": "https://doi.org/10.1007/s42994-023-00112-w",
+   "license": "CC BY 4.0",
+   "big": "https://media.springernature.com/full/springer-static/image/art%3A10.1007%2Fs42994-023-00112-w/MediaObjects/42994_2023_112_Fig8_HTML.png",
+   "standin": false
+  },
+  "broccoli-sulfur-deficiency": {
+   "src": "/images/site/deficiencies/broccoli-sulfur-deficiency.webp",
+   "thumb": "/images/site/deficiencies/broccoli-sulfur-deficiency-480.webp",
+   "alt": "Broccoli plants grown without sulfur, with pale young leaves and small new leaves cupped and wavy at the edges",
+   "credit": "de Almeida et al. 2020, CC BY 4.0, via MDPI (Agronomy)",
+   "page": "https://doi.org/10.3390/agronomy10101572",
+   "license": "CC BY 4.0",
+   "big": "https://pub.mdpi-res.com/agronomy/agronomy-10-01572/article_deploy/html/images/agronomy-10-01572-g002.png",
+   "standin": false
+  },
+  "abaca-phosphorus-deficiency": {
+   "src": "/images/site/deficiencies/abaca-phosphorus-deficiency.webp",
+   "thumb": "/images/site/deficiencies/abaca-phosphorus-deficiency-480.webp",
+   "alt": "Young abaca plant grown without phosphorus, with narrow new leaves and older leaves showing dull, dark blotches",
+   "credit": "Rosit et al. 2025, CC BY 4.0, via IJMABER",
+   "page": "https://ijmaberjournal.org/index.php/ijmaber/article/view/2611",
+   "license": "CC BY 4.0",
+   "big": "https://ijmaberjournal.org/index.php/ijmaber/article/download/2611/1498 (PDF, Figure 2, page 4)",
+   "standin": false
   }
  },
  "general": {
