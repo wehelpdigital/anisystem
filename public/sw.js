@@ -8,13 +8,15 @@
  * the background.
  */
 const OFFLINE_URL = '/offline.html';
+// The installed app's first screen (manifest start_url, 2026-10-28): kept, so it paints at once, offline too.
+const LAUNCH_URL = '/launch.html';
 // Bumped with the rebrand: the old cache holds the old icon, and a
-// service worker that keeps its key goes on serving it.
-const CACHE = 'anee-shell-v2';
+// service worker that keeps its key goes on serving it. v3 keeps the launch page.
+const CACHE = 'anee-shell-v3';
 
 self.addEventListener('install', (event) => {
     event.waitUntil(
-        caches.open(CACHE).then((c) => c.addAll([OFFLINE_URL, '/images/pwa/icon-192.png'])).catch(() => {})
+        caches.open(CACHE).then((c) => c.addAll([OFFLINE_URL, LAUNCH_URL, '/images/pwa/icon-192.png'])).catch(() => {})
     );
     self.skipWaiting();
 });
@@ -105,6 +107,19 @@ self.addEventListener('fetch', (event) => {
     const req = event.request;
     if (req.method !== 'GET') return;
     const sameOrigin = new URL(req.url).origin === self.location.origin;
+
+    /* The launch page: the kept copy at once, refreshed behind it for the next launch. It is only a picture and a
+       redirect to /app, so a copy one deploy old does no harm, and waiting on the network for it would be the very
+       blank screen it is there to hide. */
+    if (req.mode === 'navigate' && sameOrigin && new URL(req.url).pathname === LAUNCH_URL) {
+        const fresh = fetch(LAUNCH_URL, { cache: 'no-cache' }).then(async (res) => {
+            if (res.ok) await (await caches.open(CACHE)).put(LAUNCH_URL, res.clone());
+            return res;
+        });
+        event.waitUntil(fresh.catch(() => {}));
+        event.respondWith(caches.match(LAUNCH_URL, { cacheName: CACHE }).then((hit) => hit || fresh).catch(() => fresh));
+        return;
+    }
 
     if (req.mode === 'navigate') {
         event.respondWith((async () => {

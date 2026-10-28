@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#2B3A1C">
+    <meta name="robots" content="noindex">
+    <title>anee.io</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=anee">
+    <!--
+        The installed app's first screen (2026-10-28, the owner: "when opening the pwa installation the initial loading
+        screen looks bad. really bad can you make it look better and animated with loader animation?").
+
+        The manifest starts the app here (start_url), not on /app. The phone's own splash (the manifest's green and the
+        icon) hands over to this page, which paints at once (static, and the service worker keeps a copy) on the same
+        green with the same mark in the same place, then comes alive while /app is fetched. The browser keeps this
+        page on screen until the app's first paint, so the wait is never a white page.
+
+        Plain HTML and inline CSS on purpose: nothing to load, no web fonts, no app.js. The service worker serves its
+        kept copy and refreshes it behind (sw.js, LAUNCH_URL); change this file and the next launch shows the change.
+        ?still=1 draws the first frame only (the iPhone startup images are shot from it); ?stay=1 stays, to look at it.
+    -->
+    <style>
+        :root { --ease: cubic-bezier(.22,1,.36,1); --green: #2B3A1C; --gold: #F5C518; --leaf: #87B84C; }
+        * { box-sizing: border-box; }
+        html, body { height: 100%; margin: 0; }
+        body {
+            position: relative; overflow: hidden; background: var(--green); color: #eef4e6;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Nunito Sans', sans-serif;
+            -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; user-select: none;
+        }
+        /* The light of the morning, rising behind the mark; it fades in so the hand over from the phone's flat green
+           splash is seamless. */
+        .sky { position: absolute; inset: 0; opacity: 0; animation: skyIn 1.1s var(--ease) .1s forwards;
+            background: radial-gradient(120% 70% at 50% 46%, #3d5526 0%, #2f421f 38%, #23311a 70%, #1a2412 100%); }
+        .sun { position: absolute; left: 50%; top: 46%; width: 34rem; height: 34rem; margin: -17rem 0 0 -17rem; border-radius: 50%; opacity: 0;
+            background: radial-gradient(circle, rgb(245 197 24 / .22) 0%, rgb(245 197 24 / .08) 34%, transparent 66%);
+            animation: skyIn 1.4s var(--ease) .25s forwards, sunPulse 4.6s ease-in-out 1.6s infinite; }
+        .stage { position: absolute; inset: 0; display: grid; place-items: center; padding: env(safe-area-inset-top) 1rem env(safe-area-inset-bottom); }
+        /* The mark sits at the very middle, where the phone's splash drew the icon. */
+        .mark-box { position: relative; width: 13.5rem; height: 13.5rem; display: grid; place-items: center; }
+        .mark { position: relative; z-index: 2; width: 8.4rem; height: auto; overflow: visible; animation: breathe 3.2s ease-in-out .9s infinite; }
+        .mark .l, .mark .r { transform-box: view-box; transform-origin: 32px 48.6px; }
+        .mark .l { animation: swayL 3.2s ease-in-out .9s infinite; }
+        .mark .r { animation: swayR 3.2s ease-in-out .9s infinite; }
+        .mark .gloss { transform: translateX(-70px); animation: gloss 2.8s var(--ease) 1.1s infinite; }
+        /* The loader: two arcs orbiting the mark, gold into leaf green, one each way. */
+        .ring { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; opacity: 0; transform: scale(.86);
+            animation: ringIn .7s var(--ease) .35s forwards; filter: drop-shadow(0 0 10px rgb(245 197 24 / .35)); }
+        .ring .track { fill: none; stroke: rgb(255 255 255 / .07); stroke-width: 3; }
+        .ring .a, .ring .b { fill: none; stroke-linecap: round; transform-origin: 50% 50%; transform-box: view-box; }
+        .ring .a { stroke: url(#arc); stroke-width: 4; stroke-dasharray: 96 300; animation: spin 1.25s linear infinite; }
+        .ring .b { stroke: rgb(135 184 76 / .55); stroke-width: 2; stroke-dasharray: 40 340; animation: spin 2.1s linear infinite reverse; }
+        /* Pollen, drifting up through the light. */
+        .pollen { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+        .pollen i { position: absolute; left: 50%; top: 58%; width: var(--s); height: var(--s); border-radius: 50%; opacity: 0;
+            background: var(--c); box-shadow: 0 0 8px var(--c); animation: rise var(--d) ease-in var(--w) infinite; }
+        .words { position: absolute; left: 0; right: 0; top: calc(50% + 7.6rem); text-align: center; }
+        .brand { margin: 0; font-size: 1.85rem; font-weight: 800; letter-spacing: .01em; color: #fff; opacity: 0; transform: translateY(10px);
+            animation: up .7s var(--ease) .5s forwards; }
+        .brand span { color: var(--gold); }
+        .tag { margin: .2rem 0 0; font-size: .82rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: #b9c9a4; opacity: 0;
+            animation: up .7s var(--ease) .65s forwards; }
+        .say { position: absolute; left: 0; right: 0; bottom: calc(2.6rem + env(safe-area-inset-bottom)); height: 1.3rem; text-align: center;
+            font-size: .9rem; font-weight: 600; color: #d6e3c6; opacity: 0; animation: up .6s var(--ease) .9s forwards; }
+        .say b { position: absolute; left: 0; right: 0; font-weight: 600; transition: opacity .35s var(--ease), transform .35s var(--ease); }
+        .say b.out { opacity: 0; transform: translateY(-8px); }
+        .say b.in { opacity: 0; transform: translateY(8px); }
+        .say .dots i { display: inline-block; width: .3rem; height: .3rem; margin-left: .18rem; border-radius: 50%; background: currentColor; vertical-align: .1rem;
+            animation: dot 1.2s ease-in-out infinite; }
+        .say .dots i:nth-child(2) { animation-delay: .15s; } .say .dots i:nth-child(3) { animation-delay: .3s; }
+        /* A thin bar at the foot, a gold light running along it. */
+        .bar { position: absolute; left: 50%; bottom: calc(1.5rem + env(safe-area-inset-bottom)); width: min(11rem, 46vw); height: 4px; margin-left: min(-5.5rem, -23vw);
+            border-radius: 999px; overflow: hidden; background: rgb(255 255 255 / .1); opacity: 0; animation: up .6s var(--ease) 1s forwards; }
+        .bar i { position: absolute; top: 0; bottom: 0; width: 45%; border-radius: inherit; background: linear-gradient(90deg, transparent, var(--gold), #c8e07a, transparent);
+            animation: run 1.3s var(--ease) infinite; }
+
+        @keyframes skyIn { to { opacity: 1; } }
+        @keyframes sunPulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: .75; } }
+        @keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.045); } }
+        @keyframes swayL { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-3.5deg); } }
+        @keyframes swayR { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(3.5deg); } }
+        @keyframes gloss { 0% { transform: translateX(-70px); } 55%, 100% { transform: translateX(80px); } }
+        @keyframes ringIn { to { opacity: 1; transform: scale(1); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes rise { 0% { opacity: 0; transform: translate(var(--x), 0) scale(.6); } 15% { opacity: .9; } 100% { opacity: 0; transform: translate(calc(var(--x) * 1.6), -15rem) scale(1); } }
+        @keyframes up { to { opacity: 1; transform: none; } }
+        @keyframes dot { 0%, 80%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+        @keyframes run { 0% { left: -45%; } 100% { left: 100%; } }
+
+        /* Still: no motion asked for (the phone's setting or anee.io's own), or the startup image being shot. */
+        html.still *, html.still *::before, html.still *::after { animation: none !important; transition: none !important; }
+        html.still .sky, html.still .brand, html.still .tag, html.still .say, html.still .bar { opacity: 1; transform: none; }
+        html.still .ring { opacity: 1; transform: none; }
+        html.still .sun { opacity: 1; }
+        html.still .pollen, html.still .bar i { display: none; }
+        /* The startup image is the first frame exactly: the flat green and the mark, as the phone's own splash draws it. */
+        html.shot .ring, html.shot .say, html.shot .bar, html.shot .sun, html.shot .sky, html.shot .words { display: none; }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+            .sky, .sun, .brand, .tag, .say, .bar, .ring { opacity: 1; transform: none; }
+            .pollen, .bar i { display: none; }
+        }
+        @media (max-height: 560px) { .words { top: calc(50% + 6.4rem); } .say { bottom: calc(2.2rem + env(safe-area-inset-bottom)); } }
+    </style>
+</head>
+<body>
+    <div class="sky" aria-hidden="true"></div>
+    <div class="sun" aria-hidden="true"></div>
+    <div class="stage">
+        <div class="mark-box">
+            <div class="pollen" aria-hidden="true">
+                <i style="--s:5px;--c:#F5C518;--x:-62px;--d:4.2s;--w:1.2s"></i>
+                <i style="--s:4px;--c:#c8e07a;--x:48px;--d:3.6s;--w:1.6s"></i>
+                <i style="--s:3px;--c:#F5C518;--x:-20px;--d:4.8s;--w:2.1s"></i>
+                <i style="--s:6px;--c:#87B84C;--x:78px;--d:5.2s;--w:1.4s"></i>
+                <i style="--s:3px;--c:#fff3c4;--x:-90px;--d:4.4s;--w:2.6s"></i>
+                <i style="--s:4px;--c:#F5C518;--x:18px;--d:3.9s;--w:3s"></i>
+                <i style="--s:5px;--c:#c8e07a;--x:-44px;--d:5s;--w:3.4s"></i>
+                <i style="--s:3px;--c:#fff3c4;--x:96px;--d:4.6s;--w:2.3s"></i>
+            </div>
+            <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+                <defs>
+                    <linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stop-color="#F5C518"/>
+                        <stop offset="1" stop-color="#87B84C"/>
+                    </linearGradient>
+                </defs>
+                <circle class="track" cx="100" cy="100" r="92"/>
+                <circle class="a" cx="100" cy="100" r="92"/>
+                <circle class="b" cx="100" cy="100" r="84"/>
+            </svg>
+            <!-- The mark, as favicon.svg draws it: two leaves meeting at a seam, the seam the ground's own colour. -->
+            <svg class="mark" viewBox="0 10 64 42" role="img" aria-label="anee.io">
+                <defs>
+                    <clipPath id="leaves">
+                        <path d="M31.93 48.6 A23.41 23.41 0 0 0 3 19.4 A28.79 28.79 0 0 0 31.93 48.6 Z"/>
+                        <path d="M32.07 48.6 A23.41 23.41 0 0 1 61 19.4 A28.79 28.79 0 0 1 32.07 48.6 Z"/>
+                    </clipPath>
+                    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0" stop-color="#fff" stop-opacity="0"/>
+                        <stop offset=".5" stop-color="#fff" stop-opacity=".38"/>
+                        <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                    </linearGradient>
+                </defs>
+                <g stroke="#2B3A1C" stroke-width="1.8" stroke-linejoin="round">
+                    <path class="l" d="M31.93 48.6 A23.41 23.41 0 0 0 3 19.4 A28.79 28.79 0 0 0 31.93 48.6 Z" fill="#E8BE1C"/>
+                    <path class="r" d="M32.07 48.6 A23.41 23.41 0 0 1 61 19.4 A28.79 28.79 0 0 1 32.07 48.6 Z" fill="#87B84C"/>
+                </g>
+                <g clip-path="url(#leaves)"><g transform="skewX(-18)"><rect class="gloss" x="0" y="10" width="22" height="42" fill="url(#shine)"/></g></g>
+            </svg>
+        </div>
+    </div>
+    <div class="words">
+        <p class="brand">anee<span>.io</span></p>
+        <p class="tag">Smart Farm App</p>
+    </div>
+    <div class="say" aria-live="polite"><b id="say">Opening your farm<span class="dots"><i></i><i></i><i></i></span></b></div>
+    <div class="bar" aria-hidden="true"><i></i></div>
+    <script>
+        (() => {
+            const root = document.documentElement;
+            const q = new URLSearchParams(location.search);
+            let still = false;
+            try { still = localStorage.getItem('sm-a11y-motion') === '1'; } catch (_) {}
+            if (q.get('still') === '1') { root.classList.add('still', 'shot'); return; }
+            if (still) root.classList.add('still');
+
+            // What Anee is doing while the app comes, a line at a time.
+            const lines = ['Opening your farm', 'Checking the weather', 'Getting today’s tasks ready', 'Waking up Anee'];
+            const say = document.getElementById('say');
+            let n = 0;
+            if (!still) setInterval(() => {
+                n = (n + 1) % lines.length;
+                say.classList.add('out');
+                setTimeout(() => {
+                    say.firstChild.nodeValue = lines[n];
+                    say.classList.remove('out'); say.classList.add('in');
+                    requestAnimationFrame(() => requestAnimationFrame(() => say.classList.remove('in')));
+                }, 360);
+            }, 1700);
+
+            // Where to go: /app, or a page of the app named in ?to= (same site only).
+            const to = q.get('to') || '';
+            const target = /^\/(?!\/)/.test(to) ? to : '/app';
+            const go = () => location.replace(target);
+            // After the first frame is on screen: the browser keeps this page up until the app paints.
+            if (q.get('stay') !== '1') requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(go, 30)));
+            // Back here from the app's history (a kept page): straight on again.
+            addEventListener('pageshow', (e) => { if (e.persisted) go(); });
+        })();
+    </script>
+</body>
+</html>
