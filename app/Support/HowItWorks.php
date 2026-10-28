@@ -33,6 +33,11 @@ namespace App\Support;
  * the LCC Checker and the farm news while the crop grows, the Nutrient
  * Deficiency Finder and the Compatibility Checker beside the other field
  * helpers when something looks wrong. Still eight steps.
+ *
+ * 2026-10-28 (the owner: "update /how-it-works to show all the new features"): the Trash joins the day by day
+ * tools, the planting window ranks the weeks by the harvest price too, the Crop Protocol plans several lots and
+ * their water, workers keep half days, and Anee Auto says its new way: the planting week, the varieties ranked,
+ * a goal you can afford, then every task.
  */
 class HowItWorks
 {
@@ -202,8 +207,8 @@ class HowItWorks
                         ['Place, size, soil and water for each lot', 'Read by every analysis, never asked twice', 'A reminder to check it every six months'],
                         null, 'farmlots.index'),
                     self::item('when', 'When to Plant Analysis', 'The best planting window for your town', 'appointment.png', true,
-                        "Anee reads twenty years of your town's weather, the outlook for the coming months and how your crop grows, then names the window that gives it the best start and the safest harvest.",
-                        ['A best window and a second choice', 'The risk in each month, said plainly', 'Saved, so you can come back to it'],
+                        "Anee reads twenty years of your town's weather, the outlook for the coming months and how your crop grows, then names the window that gives it the best start and the safest harvest, and the weeks whose harvest sells best.",
+                        ['A best window and a second choice', 'The weeks ranked for the crop and for the price at harvest', 'The risk in each month, said plainly'],
                         'when-to-plant-analysis', 'wtp.page'),
                     self::item('what', 'What to Plant Analysis', 'The crop that fits your land this season', 'plant.png', true,
                         'Not sure what to grow? Anee weighs your climate, the forecast, your soil and your water, and ranks the crops that should do best on your land this season.',
@@ -219,8 +224,8 @@ class HowItWorks
                         ['Days to harvest, yield and resistance', 'Rice, corn, vegetables, root crops and fruit trees', 'Filters for what your farm needs'],
                         null, 'fh.page:varieties', $ph ? '/rice-varieties' : null),
                     self::item('cropProtocol', 'Crop Protocol Analysis', 'Anee writes a protocol for your variety', 'icons/biostimulant.png', true,
-                        'Pick your crop and variety, and Anee writes the season for your place by growth stage: the bags of fertilizer and when, the sprays, the water and what to watch for.',
-                        ['Stage by stage, from land prep to harvest', 'Fertilizer, sprays and water on their days', 'Checked against your weather, soil and water'],
+                        'Pick your lots, the crop and the variety, and Anee writes the season for your place by growth stage: the bags of fertilizer and when, the sprays, the water each lot needs and what to watch for.',
+                        ['Stage by stage, from land prep to harvest', 'Several lots in one plan, each on its own day', 'The water each lot needs, week by week'],
                         null, 'proto.page'),
                     self::item('satellite', 'Satellite Analysis', 'Your field, read from space', 'icons/satellite.svg', true,
                         'Draw your field on the map and Anee reads the newest Sentinel 2 picture and Sentinel 1 radar, which sees through typhoon clouds, then weighs the weather, ENSO and the soil of your area.',
@@ -309,7 +314,7 @@ class HowItWorks
                     // The tools the count left out until 2026-10-13 (the owner: "are you sure there's only 45?").
                     self::item('globalWorkers', 'Global Workers', 'Your crew in one list, for every season', 'united.png', false,
                         'Add each worker once, with their pay, skills and the weekdays they do not work. Put them on any season or land prep plan in a tap, and each season keeps its own record of their days and pay.',
-                        ['One roster for every season', 'Skills and days off kept with each person', 'Changes reach every open season'],
+                        ['One roster for every season', 'Days off and half days kept with each person', 'Changes reach every open season'],
                         null, 'workers.global'),
                     self::item('access', 'Team logins', 'Your team sees what you allow', 'friends.png', false,
                         'Give a worker or a partner their own login, and decide module by module what they may see and what they may change.',
@@ -389,6 +394,11 @@ class HowItWorks
                         'Offline mode is always on: keep ticking tasks and writing notes where there is no signal. anee.io keeps your changes on the phone and sends them once the signal comes back.',
                         ['Always on, every plan', 'Your recent seasons stay open', 'Changes wait, then sync'],
                         null, null),
+                    // The Trash (2026-10-23): nothing deleted is lost for a month.
+                    self::item('trash', 'Trash', 'Nothing deleted is lost for 30 days', 'icons/trash.svg', false,
+                        'Deleted a task, a note, a season or a report by mistake? It waits in the Trash for 30 days. Put it back in a tap, with everything that came with it, or let it go for good.',
+                        ['Every delete waits 30 days', 'Put back with everything it held', 'Empty it yourself when you are sure'],
+                        null, 'trash.page'),
                     self::item('tip', "Anee's tip of the day", 'One useful thing to do today', 'idea.png', true,
                         'Each day the dashboard gives you one tip for the stage your crop is in, from what anee.io knows about each crop and stage. Tap it to ask Anee more.',
                         ['Read on your dashboard each morning', 'Made for your crop and its stage', 'Ask her more with one tap'],
@@ -536,14 +546,14 @@ class HowItWorks
                 'word' => 'Auto',
                 'when' => 'Or let Anee do it all',
                 'title' => 'Anee Auto',
-                'lede' => 'Rather not plan it all yourself? Tell Anee about your farm once. She analyzes everything, plans the whole season, tells you what to do each day, and moves the work herself when the rain comes or a worker cannot. You just follow.',
+                'lede' => 'Rather not plan it all yourself? Tell Anee about your farm once. She reads the best week to plant, ranks the varieties for your lot, balances the fertilizer to the goal you can afford, writes the whole season, tells you what to do each day, and moves the work herself when the rain comes or a worker cannot. You just follow.',
                 'say' => null,
                 'face' => 'wink',
                 'pattern' => 'auto',
                 'glyph' => 'M12 3l1.8 4.9L19 9.7l-5.2 1.8L12 16.4l-1.8-4.9L5 9.7l5.2-1.8L12 3zm6 11l.9 2.3 2.3.9-2.3.9L18 20.4l-.9-2.3-2.3-.9 2.3-.9L18 14z',
                 'items' => [
                     self::item('auto', 'Anee Auto', 'Anee plans the season, you just follow', 'anee/avatar-160.jpg', true,
-                        'Answer a few questions once: your lots, the crop and variety, your soil, your water, your fertilizer and your workers. Anee looks up your variety, reads the forecast and the season ahead, and writes every task from land preparation to harvest. Then she keeps it on track every day.',
+                        'Answer a few questions once: your lots and crop, your soil, your water and your workers. Anee reads the best week to plant, ranks the varieties for your lot, sets the fertilizer to the goal you can afford and writes every task from land preparation to harvest. Then she keeps it on track every day.',
                         ["Today's work every morning, by email too, for you and each worker", "Can't today? She moves it to the best day near it", 'Send a photo, a video or a voice note and she adjusts the plan'],
                         null, 'sm.index'),
                 ],

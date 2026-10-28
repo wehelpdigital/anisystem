@@ -81,6 +81,11 @@
     $hwTop = $hwMode === 'site' ? 'h1' : 'h2';
     $hwHead = $hwMode === 'site' ? 'h2' : 'h3';
     $hwWords = fn (string $s) => collect(preg_split('/\s+/u', trim($s)))->map(fn ($w, $k) => '<span class="hw-w" style="--k:' . $k . '">' . e($w) . '</span>')->implode(' ');
+    // Up top, how many tools there are and how many are free (2026-10-28, the owner: "mention the total number of tools
+    // that anee.io has up top"), counted from the list itself, as the dashboard's tour counts them.
+    $hwAll = collect($hwStages)->flatMap(fn ($s) => array_filter($s['items']));
+    $hwFirstPlan = array_key_first(array_filter(config('tiers'), fn ($t, $k) => $k !== 'admin', ARRAY_FILTER_USE_BOTH));
+    $hwTally = ['tools' => $hwAll->count(), 'free' => $hwAll->filter(fn ($it) => ($it['plan']['tier'] ?? null) === $hwFirstPlan)->count(), 'anee' => $hwAll->filter(fn ($it) => $it['anee'])->count()];
 @endphp
 
 @once
@@ -112,6 +117,18 @@
     .hw-h1 em { font-style: normal; color: var(--acc); }
     .hw-lede { margin: 1.1rem auto 0; max-width: 40rem; font-size: 1.04rem; line-height: 1.65; color: var(--mute); }
     .hw-btns { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+    /* The tally up top: how many tools, steps, free ones and Anee's own, counted up as the page opens. */
+    .hw-tally { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; max-width: 40rem; margin: 1.3rem auto 0; }
+    @media (max-width: 560px) { .hw-tally { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 22rem; } }
+    .hw-tally > span { display: grid; justify-items: center; gap: .15rem; padding: .7rem .5rem; border-radius: 1rem; background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .09);
+        animation: hwTally .6s var(--ease) both; }
+    .hw-tally > span:nth-child(2) { animation-delay: .08s; } .hw-tally > span:nth-child(3) { animation-delay: .16s; } .hw-tally > span:nth-child(4) { animation-delay: .24s; }
+    @keyframes hwTally { from { opacity: 0; transform: translateY(10px) scale(.96); } }
+    .hw-tally b { font-family: var(--font-heading); font-size: clamp(1.6rem, 4.5vw, 2.1rem); font-weight: 800; line-height: 1; color: #fff; font-variant-numeric: tabular-nums; }
+    .hw-tally small { font-size: .72rem; font-weight: 700; line-height: 1.3; text-align: center; color: var(--mute); }
+    .hw-tally > span.is-gold { background: linear-gradient(160deg, rgb(245 197 24 / .16), rgb(245 197 24 / .05)); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45); }
+    .hw-tally > span.is-gold b { color: var(--acc); }
+    @media (prefers-reduced-motion: reduce) { .hw-tally > span { animation: none; } }
     .hw-ghost { display: inline-flex; align-items: center; gap: .45rem; padding: .78rem 1.25rem; border-radius: .9rem; font-weight: 800; color: #fff;
         border: 1.5px solid rgb(255 255 255 / .3); background: rgb(255 255 255 / .04); transition: background .28s var(--ease), border-color .28s var(--ease); }
     .hw-ghost:hover { background: rgb(255 255 255 / .1); border-color: rgb(255 255 255 / .5); }
@@ -1032,7 +1049,13 @@
         <div class="hw-copy">
             <p class="hw-kick">How it works</p>
             <{{ $hwTop }} class="hw-h1">From the first plan to the last sack, <em>Anee is with you</em></{{ $hwTop }}>
-            <p class="hw-lede">anee.io follows your season the way a farm lives it: plan, build the plan, plant, grow, protect, harvest, then look back. Every step has its tools, and Anee, your smart farm technician, works beside you at each one.</p>
+            <div class="hw-tally">
+                <span class="is-gold"><b data-hw-count="{{ $hwTally['tools'] }}">{{ $hwTally['tools'] }}</b><small>tools in one app</small></span>
+                <span><b data-hw-count="{{ count($hwStages) }}">{{ count($hwStages) }}</b><small>steps, one season</small></span>
+                <span><b data-hw-count="{{ $hwTally['free'] }}">{{ $hwTally['free'] }}</b><small>free on every plan</small></span>
+                <span><b data-hw-count="{{ $hwTally['anee'] }}">{{ $hwTally['anee'] }}</b><small>run by Anee herself</small></span>
+            </div>
+            <p class="hw-lede">{{ $hwTally['tools'] }} tools that follow your season the way a farm lives it: plan, build the plan, plant, grow, protect, harvest, then look back. Every step has its tools, and Anee, your smart farm technician, works beside you at each one.</p>
             <div class="hw-btns">
                 @if ($hwMode === 'site')
                     <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free</a>
@@ -1349,6 +1372,9 @@
             {{-- After setting up: a phone on the activities board. After the
                  count: a phone asking Anee about a crop, before problems. --}}
             @if ($st['key'] === 'auto' && $n === 0)
+                @if ($hwMode === 'site')
+                    @include('public.how.auto-band')
+                @endif
                 <p class="hw-or"><span>Or do it yourself, step by step</span></p>
             @elseif ($st['key'] === 'plant')
                 @include('public.how.board-band')
