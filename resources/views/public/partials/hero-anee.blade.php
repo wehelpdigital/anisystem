@@ -1,6 +1,6 @@
 {{-- The homepage hero's picture (2026-10-29, the owner: "changing animations (different animation per phase) about the
      benefits like higher yield, pest protection, complete nutrition, anti lodging"). The featured picture is a field of
-     ripe golden palay, sharp, with extra contrast and vibrance, in a round gold framed window the size of the
+     ripe golden palay, sharp, graded fresh and healthy (a little vibrance, a little light; the owner found strong contrast too much), in a round gold framed window the size of the
      animations' own circles (the shield wraps just outside its ring) that slowly breathes, with light sweeping across it and
      grain dust drifting up (the owner, later the same day: "remove the video of anee and just make the image of rice
      sharp and make it the main featured image"). Over it one benefit at a time plays its own animation, and its card
@@ -113,9 +113,9 @@
         {{-- Complete nutrition: each nutrient flies in, fills its own part of the ring, then feeds her. --}}
         <div class="hb-ph" data-ph="nutri" aria-hidden="true">
             <svg class="hb-nring" viewBox="0 0 100 100">
-                <circle class="t" cx="50" cy="50" r="26"/>
+                <circle class="t" cx="50" cy="50" r="31.5"/>
                 @foreach ($hbNut as $i => [$n, $c])
-                    <circle class="s" cx="50" cy="50" r="26" pathLength="100" transform="rotate(-90 50 50)" style="stroke: {{ $c }}; stroke-dashoffset: {{ 4.75 - $i * 12.5 }}; --k: {{ $i }}"/>
+                    <circle class="s" cx="50" cy="50" r="31.5" pathLength="100" transform="rotate(-90 50 50)" style="stroke: {{ $c }}; stroke-dashoffset: {{ 4.75 - $i * 12.5 }}; --k: {{ $i }}"/>
                 @endforeach
             </svg>
             @foreach ($hbNut as $i => [$n, $c])
@@ -132,7 +132,9 @@
         </div>
 
         {{-- Anti lodging: a severe wind (the owner: no palay drawings, no check, "make the windy more severe"): streaks of
-             every length and speed, gusts sweeping across, leaves torn past, and Anee unmoved in the middle. --}}
+             every length and speed, gusts sweeping across, leaves torn past. The field holds firm (the owner: "some
+             animation to signify that it is strong during harsh wind"): a steady ring round the photo glows, and on the
+             windward side each gust breaks on it in ripples that spread and fade while the photo stays still and bright. --}}
         <div class="hb-ph" data-ph="lodge" aria-hidden="true">
             <span class="hb-gloom"></span>
             @foreach ($hbGust as [$y, $w, $h, $d, $k])
@@ -143,6 +145,12 @@
                 <path d="M-10 52C20 40 38 64 66 52S100 44 115 56" pathLength="100"/>
                 <path d="M-10 76C18 68 42 88 70 76S102 70 115 80" pathLength="100"/>
                 <path d="M-10 40C22 30 44 52 72 40S104 34 115 44" pathLength="100"/>
+            </svg>
+            <svg class="hb-brace" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="30" pathLength="100"/>
+                <path class="h" d="M27.1 69.8A30 30 0 0 1 27.1 30.2"/>
+                <path class="h" d="M27.1 69.8A30 30 0 0 1 27.1 30.2"/>
+                <path class="h" d="M27.1 69.8A30 30 0 0 1 27.1 30.2"/>
             </svg>
             @foreach ($hbLeaves as [$y, $d, $k, $sz])
                 <span class="hb-leaf" style="--y: {{ $y }}%; --d: {{ $d }}s; --k: {{ $k }}s; font-size: {{ $sz }}rem">🍃</span>
@@ -200,7 +208,7 @@
     .hb-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 62% 55%; animation: hbBreathe 22s ease-in-out infinite alternate; }
     @keyframes hbBreathe { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.08) translate(-2%, -1.5%); } }
     /* A soft edge inside the frame, for depth; the middle stays bright and sharp. */
-    .hb-photo::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 22px rgb(0 0 0 / .4); }
+    .hb-photo::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 20px rgb(0 0 0 / .28); }
     .hb-sun { position: absolute; inset: 0; mix-blend-mode: screen;
         background: radial-gradient(circle at 82% 12%, rgb(255 236 170 / .55), rgb(255 214 120 / .18) 26%, rgb(255 214 120 / 0) 50%); animation: hbSunGlow 5s ease-in-out infinite; }
     @keyframes hbSunGlow { 50% { opacity: .55; } }
@@ -291,16 +299,16 @@
     .hb-ph.is-play .hb-nring .s { animation: hbSeg .55s cubic-bezier(.22,1,.36,1) calc(.8s + var(--k) * .12s) both; }
     @keyframes hbSeg { from { stroke-dasharray: 0 100; } }
     .hb-feed { position: absolute; left: 50%; top: 50%; width: .5rem; height: .5rem; margin: -.25rem 0 0 -.25rem; border-radius: 999px; opacity: 0;
-        background: var(--c); box-shadow: 0 0 10px var(--c); transform: rotate(var(--a)) translateY(-31cqw); }
+        background: var(--c); box-shadow: 0 0 10px var(--c); transform: rotate(var(--a)) translateY(-35cqw); }
     .hb-ph.is-play .hb-feed { animation: hbFeed 2.2s ease-in calc(1.8s + var(--k) * .17s) infinite; }
-    @keyframes hbFeed { 0% { opacity: 0; transform: rotate(var(--a)) translateY(-31cqw); } 8% { opacity: 1; } 45%, 100% { opacity: 0; transform: rotate(var(--a)) translateY(-19cqw) scale(.4); } }
+    @keyframes hbFeed { 0% { opacity: 0; transform: rotate(var(--a)) translateY(-35cqw); } 8% { opacity: 1; } 45%, 100% { opacity: 0; transform: rotate(var(--a)) translateY(-22cqw) scale(.4); } }
     /* Each nutrient a flat, see through orb in its own color: a tinted glass disc with a bright edge, a dashed ring with a
        dot turning round it, and a gentle float. */
     .hb-nut { position: absolute; left: 50%; top: 50%; width: 2.6rem; height: 2.6rem; margin: -1.3rem 0 0 -1.3rem; display: grid; place-items: center; border-radius: 999px;
         font-size: .88rem; font-weight: 900; color: #fff; text-shadow: 0 1px 3px rgb(0 0 0 / .35);
         background: color-mix(in srgb, var(--c) 42%, transparent); border: 1.5px solid color-mix(in srgb, var(--c) 70%, #fff);
         backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); box-shadow: 0 0 16px color-mix(in srgb, var(--c) 45%, transparent);
-        transform: rotate(var(--a)) translateY(-35cqw) rotate(calc(var(--a) * -1)); }
+        transform: rotate(var(--a)) translateY(-39.5cqw) rotate(calc(var(--a) * -1)); }
     .hb-nut::before { content: ''; position: absolute; inset: -7px; border-radius: 999px; border: 1px dashed color-mix(in srgb, var(--c) 70%, #fff); opacity: .75;
         background: radial-gradient(circle at 50% 0, color-mix(in srgb, var(--c) 60%, #fff) 0 2.5px, transparent 3px); }
     .hb-ph.is-play .hb-nut { animation: hbIn .7s cubic-bezier(.22,1,.36,1) calc(.15s + var(--k) * .12s) both, hbFloat 2.6s ease-in-out calc(1s + var(--k) * .2s) infinite; }
@@ -312,7 +320,7 @@
     .hb-micro { position: absolute; inset: 0; }
     .hb-ph.is-play .hb-micro { animation: hbSpin 38s linear infinite; }
     .hb-mic { position: absolute; left: 50%; top: 50%; width: 1.7rem; height: 1.7rem; margin: -.85rem 0 0 -.85rem;
-        transform: rotate(var(--a)) translateY(-45cqw) rotate(calc(var(--a) * -1)); }
+        transform: rotate(var(--a)) translateY(-47cqw) rotate(calc(var(--a) * -1)); }
     .hb-mic b { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 999px; font-size: .62rem; font-weight: 900; color: #fff;
         background: color-mix(in srgb, var(--c) 40%, transparent); border: 1px solid color-mix(in srgb, var(--c) 70%, #fff);
         backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 0 10px color-mix(in srgb, var(--c) 40%, transparent); }
@@ -321,7 +329,7 @@
     @keyframes hbMicIn { from { opacity: 0; scale: .2; } }
     /* Lodging: a severe wind. The sky darkens, streaks of every length and speed race across, gusts sweep through in
        curves, and leaves are torn past her. */
-    .hb-gloom { position: absolute; inset: -12%; background: radial-gradient(closest-side, rgb(15 23 42 / .55), rgb(15 23 42 / .4) 55%, rgb(15 23 42 / 0)); }
+    .hb-gloom { position: absolute; inset: -12%; background: radial-gradient(closest-side, rgb(15 23 42 / 0) 36%, rgb(15 23 42 / .5) 46%, rgb(15 23 42 / .4) 70%, rgb(15 23 42 / 0)); }
     .hb-ph.is-play .hb-gloom { animation: hbFade .8s ease-out both; }
     .hb-wind { position: absolute; z-index: 3; left: -35%; top: var(--y); width: var(--w); height: var(--h); border-radius: 999px; opacity: 0;
         background: linear-gradient(90deg, transparent, rgb(224 242 254 / .95), transparent); }
@@ -335,6 +343,17 @@
     .hb-ph.is-play .hb-swirl path:nth-child(3) { animation-delay: .6s; }
     .hb-ph.is-play .hb-swirl path:nth-child(4) { animation-delay: .9s; }
     @keyframes hbGust { to { stroke-dashoffset: -104; } }
+    /* The field holds firm: a steady ring that glows with each gust, and the gusts breaking on its windward side. */
+    .hb-brace { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .hb-brace circle { fill: none; stroke: #7dd3fc; stroke-width: 1; opacity: .85; filter: drop-shadow(0 0 3px rgb(125 211 252 / .9)); }
+    .hb-brace .h { fill: none; stroke: #e0f2fe; stroke-width: 1.6; stroke-linecap: round; opacity: 0; transform-box: view-box; transform-origin: 50% 50%;
+        filter: drop-shadow(0 0 4px rgb(125 211 252 / .9)); }
+    .hb-ph.is-play .hb-brace circle { animation: hbDraw 1s cubic-bezier(.45,0,.25,1) both, hbBrace 1.2s ease-in-out 1s infinite; stroke-dasharray: 100; }
+    .hb-ph.is-play .hb-brace .h { animation: hbHold 1.2s ease-out 1s infinite; }
+    .hb-ph.is-play .hb-brace .h:nth-of-type(2) { animation-delay: 1.4s; }
+    .hb-ph.is-play .hb-brace .h:nth-of-type(3) { animation-delay: 1.8s; }
+    @keyframes hbBrace { 0%, 100% { stroke-width: 1; opacity: .7; } 20% { stroke-width: 2.2; opacity: 1; } }
+    @keyframes hbHold { 0% { opacity: 0; transform: scale(1); } 15% { opacity: 1; } 100% { opacity: 0; transform: scale(1.22) translateX(-3%); } }
     .hb-leaf { position: absolute; z-index: 4; left: -12%; top: var(--y); line-height: 1; opacity: 0; }
     .hb-ph.is-play .hb-leaf { animation: hbLeaf var(--d) linear var(--k) infinite; }
     @keyframes hbLeaf { 0% { opacity: 0; transform: translate(0, 0) rotate(0); } 10% { opacity: 1; } 50% { transform: translate(60cqw, -6cqw) rotate(300deg); }
