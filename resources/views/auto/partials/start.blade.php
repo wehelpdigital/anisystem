@@ -80,7 +80,7 @@
                 </div>
             </div>
             <div class="aus-pane" id="ausPaneConfirm" hidden>
-                <div class="aus-price"><b id="ausTotal">1,000 credits</b><span id="ausEach">1,000 credits per lot, for the whole season</span></div>
+                <div class="aus-price"><b id="ausTotal">{{ number_format(\App\Support\AiPrices::of('auto')) }} credits</b><span id="ausEach">{{ number_format(\App\Support\AiPrices::of('auto')) }} credits per lot, for the whole season</span></div>
                 <label class="aus-final"><input type="checkbox" id="ausAgree"><span>I understand the credits are taken now and <b>cannot be returned</b>, even if I stop. Anee keeps everything I type, so I can finish setting it up any time.</span></label>
                 <p class="aus-bal" id="ausBal"></p>
                 <p class="aus-why" id="ausWhy" hidden></p>
@@ -108,7 +108,7 @@
         $('ausMinus').disabled = n <= 1; $('ausPlus').disabled = n >= Math.min(20, cap);
         $('ausCapSay').hidden = !(Q && Q.lotCap != null && n >= Q.lotCap);
         if (Q && Q.lotCap != null) $('ausCapSay').textContent = 'Your plan allows up to ' + Q.lotCap + ' lot' + (Q.lotCap === 1 ? '' : 's') + ' in a season.';
-        const per = Q ? Q.perLot : 1000, total = per * n;
+        const per = Q ? Q.perLot : {{ (int) \App\Support\AiPrices::of('auto') }}, total = per * n;
         $('ausTotal').textContent = fmt(total) + ' credits';
         $('ausEach').textContent = fmt(per) + ' credits per lot, for the whole season';
         const short = Q && !Q.unlimited && Q.balance < total;

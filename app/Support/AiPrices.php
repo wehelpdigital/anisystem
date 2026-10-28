@@ -47,8 +47,10 @@ final class AiPrices
         'npk' => 80,
         'npkplan' => 25,
         'npkproto' => 20,
-        // 2026-10-12: Anee Auto, per lot, for the whole season.
-        'auto' => 1000,
+        // 2026-10-12: Anee Auto, per lot, for the whole season. 1,200 since 2026-10-28 (was 1,000): the season now
+        // writes its plan again until approved and includes its final report, about P207 a lot at Gemini's rates,
+        // so 1,000 had fallen to 4.2x; 1,200 holds 5x for one lot and 5.7x for ten (AiPricing, kind 'auto').
+        'auto' => 1200,
         // Satellite Weather, a week of the page (App\Support\SkyPass keeps it above cost).
         'skypass' => 50,
         // 2026-10-14: the LCC Checker, Anee reading leaf photos against the leaf color chart.
