@@ -244,9 +244,16 @@
                 <span class="wa-q">Kailan ko lalagyan ulit ng abono ang palay ko?<small>When do I put fertilizer on my palay again?</small></span>
             </div>
             <div class="wa-chats">
+                <span class="wa-vsb" aria-hidden="true">VS</span>
                 <div class="wa-chat is-plain reveal" style="--reveal-delay:.06s">
                     <p class="wa-chat-who"><span class="wa-chat-dot" aria-hidden="true"></span>A general AI chat app</p>
                     <p class="wa-chat-a">For rice, the second fertilizer is usually put in at active tillering, about 20 to 30 days after transplanting. The right time depends on your variety, your soil and the weather, so check with your local agriculturist.</p>
+                    <div class="wa-read is-miss">
+                        <span class="wa-read-k">What it could not read</span>
+                        @foreach (['Your crop\'s day count', 'The forecast for your farm', 'Your area\'s soil', 'Your season plan'] as $i => $r)
+                            <span class="wa-read-chip" style="--i: {{ $i }}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" aria-hidden="true"><path stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></svg>{{ $r }}</span>
+                        @endforeach
+                    </div>
                     <p class="wa-chat-verdict">Correct, but general. You still have to work out your own date.</p>
                 </div>
                 <div class="wa-chat is-anee reveal" style="--reveal-delay:.14s">
@@ -258,6 +265,7 @@
                             <span class="wa-read-chip" style="--i: {{ $i }}">{!! $tick !!}{{ $r }}</span>
                         @endforeach
                     </div>
+                    <p class="wa-chat-win">Your date, your field: Wednesday morning, before the rain.</p>
                 </div>
             </div>
         </div>
@@ -306,20 +314,34 @@
 
     {{-- ================= WHERE SHE STOPS ================= --}}
     <section class="hp-sec bg-white">
-        <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center reveal">
-            <p class="hp-kick">Honest limits</p>
-            <h2 class="hp-h2">Where Anee Stops <em>and You Decide.</em></h2>
-            <p class="hp-p">
-                Anee tells you when she is not sure, and she shows what she read to reach her answer. She does not replace a
-                laboratory soil test, and every pesticide she names comes with the reminder to follow its label and FPA
-                registration. Our guide on <a href="{{ url('/blog/ai-farm-advice-accuracy') }}" class="wa-link">how accurate AI farm advice is</a>
-                explains when to trust an answer and when to ask a technician.
-            </p>
-            <p class="hp-p">
-                General chat apps are still handy for writing a letter or explaining a word. For decisions on your own field, use
-                the one that reads your field. See the <a href="{{ route('pricing') }}" class="wa-link">plans that include Anee</a>
-                or follow the whole season on <a href="{{ route('how') }}" class="wa-link">How It Works</a>.
-            </p>
+        {{-- Honest limits, as four cards (2026-10-28, the owner: "make this page look better"). --}}
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="hp-head reveal">
+                <p class="hp-kick">Honest limits</p>
+                <h2 class="hp-h2">Where Anee Stops <em>and You Decide.</em></h2>
+                <p class="hp-p">She is a smart farm technician, not a fortune teller. Here is what she does when she is unsure, and what stays yours.</p>
+            </div>
+            <div class="wa-limits">
+                @foreach ([
+                    ['M8.2 9a3.8 3.8 0 117.3 1.4c-.6 1.4-2.3 2-3 3.1-.2.3-.3.7-.3 1.2M12 18h.01', 'She says when she is not sure', 'Every answer shows how sure she is and what she read to reach it, so you can check her reasons yourself.'],
+                    ['M9 3v6.5L4.6 17a2 2 0 001.7 3h11.4a2 2 0 001.7-3L15 9.5V3M8 3h8M7.5 14h9', 'Not a soil laboratory', 'She reads your answers and your area\'s usual soil. A laboratory soil test is still the surest, and she tells you when one is worth it.'],
+                    ['M9 12l2 2 4-4M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z', 'The label comes first', 'Every pesticide she names comes with the reminder to follow its label and its FPA registration.'],
+                    ['M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5', 'You make the call', 'She advises and you decide. In Anee Auto you can change any task she plans, any day.'],
+                ] as $i => [$d, $t, $w])
+                    <div class="wa-limit reveal" style="--reveal-delay: {{ .06 + $i * .08 }}s">
+                        <span class="wa-limit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="{{ $d }}"/></svg></span>
+                        <b>{{ $t }}</b><p>{{ $w }}</p>
+                    </div>
+                @endforeach
+            </div>
+            <div class="wa-limit-foot reveal">
+                <p>General chat apps are still handy for writing a letter or explaining a word. For decisions on your own field, use the one that reads your field.</p>
+                <div class="wa-limit-links">
+                    <a href="{{ url('/blog/ai-farm-advice-accuracy') }}">How accurate is AI farm advice? {!! $arrow !!}</a>
+                    <a href="{{ route('pricing') }}">Plans that include Anee {!! $arrow !!}</a>
+                    <a href="{{ route('how') }}">The whole season, step by step {!! $arrow !!}</a>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -493,6 +515,38 @@
     html.js .wa-chat.is-anee.reveal .wa-read-chip { opacity: 0; transform: translateY(6px); }
     html.js .wa-chat.is-anee.reveal.is-visible .wa-read-chip { animation: waChip .45s var(--hp-ease) calc(.5s + var(--i) * .18s) forwards; }
     @keyframes waChip { to { opacity: 1; transform: none; } }
+    /* What the general app could not read: the same four, crossed out; and the VS between the two answers. */
+    .wa-chats { position: relative; }
+    .wa-vsb { display: none; }
+    @media (min-width: 900px) {
+        .wa-vsb { position: absolute; left: 50%; top: 50%; z-index: 2; display: flex; align-items: center; justify-content: center; width: 3.2rem; height: 3.2rem; margin: -1.6rem 0 0 -1.6rem; padding: 0; border-radius: 999px; text-align: center; line-height: 1; letter-spacing: 0;
+            font-family: var(--font-heading); font-size: .95rem; font-weight: 800; color: #2b2100; background: var(--hp-sun); box-shadow: 0 0 0 6px #fff, 0 14px 28px -12px rgb(0 0 0 / .35); }
+    }
+    .wa-read.is-miss { border-top-color: #e5d5c8; }
+    .wa-read.is-miss .wa-read-k { color: #9a3412; }
+    .wa-read.is-miss .wa-read-chip { color: #6b7280; background: #eceee9; text-decoration: line-through; text-decoration-color: rgb(154 52 18 / .5); }
+    .wa-read.is-miss .wa-read-chip svg { background: #c2410c; }
+    html.js .wa-chat.is-plain.reveal .wa-read-chip { opacity: 0; transform: translateY(6px); }
+    html.js .wa-chat.is-plain.reveal.is-visible .wa-read-chip { animation: waChip .45s var(--hp-ease) calc(.4s + var(--i) * .14s) forwards; }
+    .wa-chat-win { margin-top: 1rem; padding: .6rem .8rem; border-radius: .9rem; font-size: .86rem; font-weight: 800; color: #2d5016; background: #eaf4dd; }
+    /* Honest limits: four cards. */
+    .wa-limits { display: grid; gap: .9rem; margin-top: 2.2rem; }
+    @media (min-width: 640px) { .wa-limits { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) { .wa-limits { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .wa-limit { display: grid; align-content: start; gap: .45rem; padding: 1.3rem 1.2rem; border-radius: 1.3rem; background: #fff; border: 1px solid #e6eedc;
+        box-shadow: 0 18px 36px -30px rgb(47 82 25 / .55); transition: transform .3s var(--hp-ease), box-shadow .3s var(--hp-ease), border-color .3s var(--hp-ease); }
+    .wa-limit:hover { transform: translateY(-3px); border-color: #c3dca5; box-shadow: 0 24px 44px -30px rgb(47 82 25 / .7); }
+    .wa-limit-ico { display: grid; place-items: center; width: 2.8rem; height: 2.8rem; border-radius: .9rem; color: var(--hp-green); background: #eaf4dd; }
+    .wa-limit-ico svg { width: 1.4rem; height: 1.4rem; }
+    .wa-limit b { margin-top: .3rem; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: var(--hp-ink); }
+    .wa-limit p { font-size: .9rem; line-height: 1.6; color: #4b5563; }
+    .wa-limit-foot { margin-top: 1.6rem; display: grid; gap: .9rem; justify-items: center; text-align: center; }
+    .wa-limit-foot > p { max-width: 40rem; font-size: .95rem; line-height: 1.6; color: #4b5563; }
+    .wa-limit-links { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; }
+    .wa-limit-links a { display: inline-flex; align-items: center; gap: .35rem; padding: .55rem .95rem; border-radius: 999px; font-size: .86rem; font-weight: 800; color: var(--hp-deep);
+        background: #f3f8ec; border: 1px solid #d6e7c0; transition: background-color .28s var(--hp-ease), border-color .28s var(--hp-ease); }
+    .wa-limit-links a:hover { background: #e7f2d9; border-color: #b8d699; }
+    .wa-limit-links svg { width: 1rem; height: 1rem; }
 
     /* ---- why it matters: the dark band ---- */
     .wa-matters { position: relative; overflow: hidden;
@@ -546,7 +600,8 @@
     @media (prefers-reduced-motion: reduce) {
         .wa-hero-bg, .wa-float, .wa-hub-face::before, .wa-hub-face::after, .wa-final-face, .wa-wires path, .wa-qa[open] .wa-qa-a { animation: none !important; }
         .wa-float { opacity: 1; }
-        html.js .wa-chat.is-anee.reveal .wa-read-chip { opacity: 1; transform: none; animation: none !important; }
+        html.js .wa-chat.is-anee.reveal .wa-read-chip, html.js .wa-chat.is-plain.reveal .wa-read-chip { opacity: 1; transform: none; animation: none !important; }
+        .wa-limit, .wa-limit-links a { transition: none !important; }
         .wa-shelf, .wa-pillar, .wa-qa-plus, .wa-qa-plus::after, .wa-link, .wa-textlink svg, .wa-crumbs a { transition: none !important; }
     }
 </style>

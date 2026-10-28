@@ -938,6 +938,26 @@
     .hw-end .hw-h2 { margin-top: .4rem; }
     .hw-end > p:not(.hw-step) { margin-top: .6rem; max-width: 38rem; color: var(--mute); line-height: 1.65; }
     .hw-end .hw-btns { justify-content: flex-start; }
+    /* Season after season: three cards joined by a moving line. */
+    .hw-cycle { display: grid; gap: .5rem; margin: 1.6rem 0 0; max-width: 60rem; }
+    @media (min-width: 900px) { .hw-cycle { grid-template-columns: minmax(0, 1fr) 2.4rem minmax(0, 1fr) 2.4rem minmax(0, 1fr); align-items: center; gap: .4rem; } }
+    .hw-cy { display: grid; justify-items: start; gap: .35rem; padding: 1.1rem 1.1rem 1.15rem; border-radius: 1.2rem; text-align: left; background: rgb(255 255 255 / .05);
+        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .09); opacity: 0; transform: translateY(14px); transition: opacity .6s var(--ease), transform .6s var(--ease), box-shadow .3s var(--ease);
+        transition-delay: calc(var(--k) * .15s), calc(var(--k) * .15s), 0s; }
+    .hw-end.is-in .hw-cy { opacity: 1; transform: none; }
+    .hw-cy:hover { box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45); }
+    .hw-cy-ico { display: grid; place-items: center; width: 2.8rem; height: 2.8rem; border-radius: .9rem; background: #f4f8ee; }
+    .hw-cy-ico img { width: 1.9rem; height: 1.9rem; object-fit: contain; }
+    .hw-cy-ico.is-face { padding: 0; overflow: hidden; border-radius: 999px; } .hw-cy-ico.is-face img { width: 100%; height: 100%; }
+    .hw-cy b { margin-top: .2rem; font-size: 1rem; font-weight: 800; color: #fff; }
+    .hw-cy > span:last-child { font-size: .86rem; line-height: 1.55; color: var(--mute); }
+    .hw-cy-to { position: relative; display: block; height: 2rem; }
+    .hw-cy-to::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: repeating-linear-gradient(180deg, var(--acc) 0 5px, transparent 5px 10px); background-size: 2px 20px; animation: hwCyFlowY 1.2s linear infinite; opacity: .7; }
+    @media (min-width: 900px) { .hw-cy-to { height: 2px; } .hw-cy-to::before { left: 0; right: 0; top: 0; bottom: auto; width: auto; height: 2px; margin: 0; background: repeating-linear-gradient(90deg, var(--acc) 0 5px, transparent 5px 10px); background-size: 20px 2px; animation-name: hwCyFlowX; } }
+    .hw-cy-to i { display: none; }
+    @keyframes hwCyFlowY { to { background-position: 0 20px; } }
+    @keyframes hwCyFlowX { to { background-position: 20px 0; } }
+    @media (prefers-reduced-motion: reduce) { .hw-cy { opacity: 1; transform: none; transition: none; } .hw-cy-to::before { animation: none; } }
 
     @media (min-width: 1024px) {
         .hw-stage { grid-template-columns: minmax(0, 1fr) 12rem minmax(0, 1fr); column-gap: 1.5rem; row-gap: 1.15rem; padding: 4.5rem 0 4.5rem; }
@@ -973,6 +993,7 @@
         .hw-num { width: 2.1rem; height: 2.1rem; font-size: .95rem; right: .1rem; top: .1rem; }
         .hw-end { padding: 3rem 0 0; text-align: center; }
         .hw-end > p:not(.hw-step) { margin-left: auto; margin-right: auto; }
+        .hw-end .hw-cycle { margin-left: auto; margin-right: auto; }
         .hw-end .hw-step { justify-content: center; }
         .hw-end .hw-btns { justify-content: center; }
         .hw-loop { position: relative; left: auto; top: auto; margin: 0 auto 1rem; width: 4rem; height: 4rem; }
@@ -1024,6 +1045,7 @@
         .hw-end { padding: 2.4rem 0 0; text-align: center; }
         .hw-loop { position: relative; left: auto; top: auto; width: 3.4rem; height: 3.4rem; margin: 0 auto 1rem; }
         .hw-end .hw-step, .hw-end .hw-btns { justify-content: center; }
+        .hw-end .hw-cycle { margin-left: auto; margin-right: auto; }
         .hw-end > p:not(.hw-step) { margin-left: auto; margin-right: auto; }
     }
     @media (min-width: 560px) and (max-width: 1023.98px) { .hw-field { --cols: 4; } }
@@ -1269,6 +1291,21 @@
             <p class="hw-step">And then <span>season after season</span></p>
             <{{ $hwHead }} class="hw-h2">The next season starts smarter</{{ $hwHead }}>
             <p>Your best lot becomes next season's protocol, Compare Reports shows what changed, and Anee reads it all with you. Every season you record makes the next one easier to plan.</p>
+            {{-- The loop of a season into the next, as three cards (2026-10-28, the owner: "make ... the lower parts of
+                 /how-it-works look better"). --}}
+            <div class="hw-cycle">
+                @foreach ([
+                    ['icons/checklist.png', 'Your best lot, as a recipe', 'View as Protocol writes what worked, step by step, ready for the next season.'],
+                    ['icons/ab-testing.png', 'What changed, side by side', 'Compare Reports sets this season against the last, and Anee explains why the numbers moved.'],
+                    ['anee/avatar-160.jpg', 'A plan that starts ahead', 'Anee reads every record you kept, so the next plan starts from your own numbers, not from zero.'],
+                ] as $i => [$icon, $t, $w])
+                    <div class="hw-cy" style="--k: {{ $i }}">
+                        <span class="hw-cy-ico{{ str_starts_with($icon, 'anee/') ? ' is-face' : '' }}"><img src="{{ asset('images/' . $icon) }}" alt="" loading="lazy" width="44" height="44"></span>
+                        <b>{{ $t }}</b><span>{{ $w }}</span>
+                    </div>
+                    @if ($i < 2)<span class="hw-cy-to" aria-hidden="true"><i></i></span>@endif
+                @endforeach
+            </div>
             <div class="hw-btns">
                 <button type="button" class="hw-ghost" data-hw-go="{{ $hwStages[0]['key'] }}">Back to step 1
                     <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true" style="transform: rotate(180deg)"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m0 0l-6-6m6 6l6-6"/></svg>
@@ -1974,6 +2011,10 @@
         stages.forEach(field);
         rail(root, scroller, stages);
         if (still()) stages.forEach((st) => st.classList.add('is-in'));
+        // Season after season's three cards rise in once they are seen.
+        const end = root.querySelector('.hw-end');
+        if (end && (still() || !('IntersectionObserver' in window))) end.classList.add('is-in');
+        else if (end) new IntersectionObserver((list, o) => list.forEach((en) => { if (en.isIntersecting) { end.classList.add('is-in'); o.disconnect(); } }), { threshold: 0.15 }).observe(end);
 
         root.addEventListener('click', (e) => {
             const go = e.target.closest('[data-hw-go]');
