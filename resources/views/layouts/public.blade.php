@@ -15,6 +15,19 @@
          refused by hand, and touch-action drops the browser's double-tap
          zoom while leaving pan and element-level pinch alone. --}}
     <style>html { touch-action: manipulation; }</style>
+    {{-- A thin line between the items of every stacked list of points on the public pages (2026-10-29, the owner: "add a
+         thin line in between the items ... throughout the public site"). The line takes the text's own colour, faint, so
+         it suits a light card and a dark band alike. Cards and chips in a row are left alone. --}}
+    <style>
+        :is(.avn-way ul, .pr-list, .hw-gets, .sp-cta-list, .hwi-pts, .hp-info-g, .fx-list, .hwx-col ul, .lp-pain, .fz-helps ul, .fz-modal-help ul,
+            .hp-info-help ul, .sp-body ul.sp-list, .sp-body ol.sp-list, .fs-list) > li + li,
+        .hw-helps-i + .hw-helps-i, .lp-sheet-help div + div, .avn-sheet-help div + div {
+            border-top: 1px solid color-mix(in srgb, currentColor 14%, transparent) !important; padding-top: .5rem !important; }
+        /* Lists whose bullet is drawn at the top of the item keep it beside the words. */
+        .fs-list > li + li::before { top: calc(.62em + .5rem) !important; }
+        .hw-helps-i + .hw-helps-i::before, .hp-info-help li + li::before { top: 1rem !important; }
+        .lp-sheet-help div + div::before { top: .85rem !important; }
+    </style>
     <script>
         document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
         document.addEventListener('gesturechange', function (e) { e.preventDefault(); });
