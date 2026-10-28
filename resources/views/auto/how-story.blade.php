@@ -71,7 +71,9 @@
     .acs-lot path { fill: rgb(168 204 126 / .12); stroke: var(--leaf); stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; }
     .stm-scene.is-in .acs-lot path { animation: acsDraw 1.6s .3s var(--e) forwards; }
     @keyframes acsDraw { to { stroke-dashoffset: 0; } }
-    .acs-lot span { position: absolute; padding: .15rem .5rem; border-radius: 999px; font-size: .64rem; font-weight: 800; color: #1d330d; background: var(--leaf); opacity: 0; transform: scale(.6); }
+    .acs-lot span { position: absolute; translate: -50% -50%; white-space: nowrap; padding: .15rem .5rem; border-radius: 999px; font-size: .64rem; font-weight: 800; color: #1d330d; background: var(--leaf);
+        box-shadow: 0 4px 10px -4px rgb(0 0 0 / .6); opacity: 0; transform: scale(.6); }
+    .acs-lot span.is-farm { padding: .22rem .65rem; font-size: .7rem; background: var(--gold); box-shadow: 0 0 0 3px rgb(245 197 24 / .25), 0 0 18px rgb(245 197 24 / .45); }
     .stm-scene.is-in .acs-lot span { animation: acsPop .45s var(--e) forwards; animation-delay: calc(1.3s + var(--k) * .22s); }
     /* a month of tasks filling in */
     .acs-cal { display: grid; grid-template-columns: repeat(7, 1.15rem); gap: .3rem; }
@@ -218,10 +220,11 @@
                     <span class="acs-n">1</span>
                     <div class="acs-art" aria-hidden="true"><div class="acs-lot">
                         <svg viewBox="0 0 200 116"><path pathLength="1" d="M28 18 L150 8 L182 70 L120 106 L22 92 Z"/></svg>
-                        <span style="left: 6%; top: 8%; --k: 0">🟤 Soil</span><span style="right: 2%; top: 30%; --k: 1">💧 Water</span><span style="left: 28%; bottom: 4%; --k: 2">👷 Crew</span><span style="left: 36%; top: 38%; --k: 3">🌾 Variety</span>
+                        {{-- Each fact on a corner of the lot, the farm in the middle (2026-10-28, the owner). The corners are the path's points. --}}
+                        <span style="left: 14%; top: 15.5%; --k: 0">🟤 Soil</span><span style="left: 75%; top: 6.9%; --k: 1">🌾 Variety</span><span style="left: 91%; top: 60.3%; --k: 2">💧 Water</span><span style="left: 60%; top: 91.4%; --k: 3">👷 Crew</span><span style="left: 11%; top: 79.3%; --k: 4">🌦️ Weather</span><span class="is-farm" style="left: 50%; top: 50%; --k: 5">🏡 Your farm</span>
                     </div></div>
                     <b>Tell her once</b>
-                    <p>Your lots, the crop and variety, the soil, the water, your fertilizer and your workers.</p>
+                    <p>Your lots, the crop and variety, the soil, the water, your fertilizer and your workers. The weather she reads herself.</p>
                 </div>
                 <div class="acs-card acs-step" data-in style="--d: 260ms">
                     <span class="acs-n">2</span>
