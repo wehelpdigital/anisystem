@@ -521,6 +521,14 @@ class WhenToPlantController extends Controller
      * month a planting that week is harvested (the forecast there, else the usual month against its year), and
      * the crop's best and glut months. Worked out on read from the price shelf (App\Support\MarketBook), so
      * reports written before it get it too. Left as it came where the crop has no prices.
+     *
+     * A second ranking with the price (2026-10-28, the owner: "have 2 types of recommendation or ranking, one is
+     * if we consider the price forecast upon harvest, and the other is the one we have now"): Anee's scores judge
+     * the growing alone; here each week and month also gets priceScore, its score times what its harvest brings
+     * against the year's usual (the middle of the twelve months' harvests; for a crop that keeps, the best sale
+     * within its storage months less the keeping cost), so a week that grows as well but sells higher moves up.
+     * A week Anee scores under 50 never moves above one it scores 50 or more: no price buys a real risk.
+     * priceRanks = the weeks' order with the price (indexes into weekRanks).
      */
     public static function withMarket(array $report, array $p): array
     {
@@ -542,14 +550,94 @@ class WhenToPlantController extends Controller
                 $first ??= $m;
                 $report['weekRanks'][$i]['market'] = ['month' => $m['month'], 'year' => $h->year, 'p' => $m['p'], 'lo' => $m['lo'], 'hi' => $m['hi'], 'index' => round($m['index'], 3),
                     'forecast' => $m['forecast'], 'unit' => $m['unit']];
+                if ($v = self::valueOn((string) ($p['crop'] ?? ''), (string) ($p['location'] ?? ''), $h)) {
+                    $report['weekRanks'][$i]['market'] += $v;
+                }
             }
             if ($first) {
                 $report['market'] = ['item' => $first['item'], 'place' => $first['place'], 'best' => $first['best'], 'worst' => $first['worst'], 'latest' => $first['latest'],
                     'store' => $first['store'], 'unit' => $first['unit'], 'url' => \Illuminate\Support\Facades\Route::has('market.page') ? route('market.page', ['crop' => \App\Support\MarketBook::cropOf((string) ($p['crop'] ?? ''))]) : null];
+                $report = self::priceRanks($report, $p, $days);
             }
         } catch (\Throwable $e) {
             report($e);
         }
+
+        return $report;
+    }
+
+    /**
+     * What a harvest on that day brings a kilo: the months' values (MarketBook::harvestValue) blended by how far
+     * the day sits from the middle of its month toward the next or the last, so two weeks that harvest in the same
+     * month still differ as the price climbs or falls through it. The sale month and the wait are the month's own.
+     */
+    private static function valueOn(string $crop, string $where, \Illuminate\Support\Carbon $h): ?array
+    {
+        $m = $h->year * 12 + $h->month - 1;
+        $v = \App\Support\MarketBook::harvestValue($crop, $where, $m);
+        if (! $v) {
+            return null;
+        }
+        $f = ($h->day - 15) / 30;
+        $w = \App\Support\MarketBook::harvestValue($crop, $where, $f >= 0 ? $m + 1 : $m - 1);
+        $net = $w ? $v['net'] * (1 - abs($f)) + $w['net'] * abs($f) : $v['net'];
+
+        return ['net' => round($net, 2), 'wait' => $v['wait'], 'sellYm' => $v['sellYm'], 'sellP' => round($v['sellP'], 2)];
+    }
+
+    /** The second ranking, with the price at harvest (see withMarket). */
+    private static function priceRanks(array $report, array $p, int $days): array
+    {
+        $vals = [];
+        foreach ((array) ($report['monthScores'] ?? []) as $j => $ms) {
+            if (! is_array($ms) || empty($ms['month']) || empty($ms['year'])) {
+                continue;
+            }
+            $h = \Illuminate\Support\Carbon::create((int) $ms['year'], (int) $ms['month'], 15)->addDays($days);
+            $v = \App\Support\MarketBook::harvestValue((string) ($p['crop'] ?? ''), (string) ($p['location'] ?? ''), $h->year * 12 + $h->month - 1);
+            if (! $v) {
+                continue;
+            }
+            $report['monthScores'][$j]['market'] = ['month' => $h->month, 'year' => $h->year, 'p' => round($v['p'], 2), 'net' => round($v['net'], 2), 'wait' => $v['wait'], 'sellYm' => $v['sellYm']];
+            $vals[] = $v['net'];
+        }
+        if (! $vals) {
+            foreach ($report['weekRanks'] as $w) {
+                if (isset($w['market']['net'])) {
+                    $vals[] = (float) $w['market']['net'];
+                }
+            }
+        }
+        sort($vals);
+        $n = count($vals);
+        $base = $n ? ($n % 2 ? $vals[intdiv($n, 2)] : ($vals[$n / 2 - 1] + $vals[$n / 2]) / 2) : 0;
+        if ($base <= 0) {
+            return $report;
+        }
+        $score = fn (array $x, float $net) => (int) max(0, min(100, round((float) ($x['score'] ?? 0) * $net / $base)));
+        foreach ($report['monthScores'] as $j => $ms) {
+            if (isset($ms['market']['net'])) {
+                $report['monthScores'][$j]['market']['rel'] = round($ms['market']['net'] / $base, 3);
+                $report['monthScores'][$j]['priceScore'] = $score($ms, (float) $ms['market']['net']);
+            }
+        }
+        $order = [];
+        foreach ($report['weekRanks'] as $i => $w) {
+            if (! is_array($w) || ! isset($w['market']['net'])) {
+                continue;
+            }
+            $report['weekRanks'][$i]['market']['rel'] = round($w['market']['net'] / $base, 3);
+            $report['weekRanks'][$i]['priceScore'] = $score($w, (float) $w['market']['net']);
+            $order[] = $i;
+        }
+        usort($order, function ($a, $b) use ($report) {
+            $x = $report['weekRanks'][$a];
+            $y = $report['weekRanks'][$b];
+
+            return [(float) ($y['score'] ?? 0) >= 50, $y['priceScore'], (float) ($y['score'] ?? 0)] <=> [(float) ($x['score'] ?? 0) >= 50, $x['priceScore'], (float) ($x['score'] ?? 0)];
+        });
+        $report['priceRanks'] = $order;
+        $report['market']['base'] = round($base, 2);
 
         return $report;
     }
@@ -1043,7 +1131,7 @@ GROUND RULES
 - Reason only from established knowledge: {$climateRule}, {$ensoRule}, soil-water behaviour implied by the reported problems, the soil condition given, and the crop calendar arithmetic above.
 - The soil condition moves the window too: a correction that must go on before planting (lime for acidic soil, gypsum and leaching for sodic, a salt flush for saline) pushes the earliest good week back by its lead time, and weather that worsens the condition at emergence (salts peaking in the driest weeks, a sodic soil crusting under heavy rain, an acid sulfate soil flushing acid with the first rains after a dry spell) lowers those weeks' scores. Say this in the week reasons and the threats where it applies. If the soil condition is not known, add a soil test to dataGaps.
 - Weigh the WHOLE crop cycle, not just the planting day: a planting month is only as good as the weather the crop meets at its sensitive stages (flowering, grain fill, harvest) in the months after it.
-- The market at harvest, when it is given above, comes AFTER the weather and the crop's safety: between weeks of like risk, prefer the one whose harvest lands in a better price month, and say so in that week's factors.market (e.g. "harvest lands in March, usually 4% above its year"). Never trade a real weather risk for a better price. A crop sold fresh cannot wait for a better month, so its harvest month matters more; a crop that keeps can be stored and sold later, so say that instead. Mention a recent import or policy event only when it bears on the harvest months.
+- The market at harvest, when it is given above: the scores, the ranks and the month scores judge the GROWING alone (the weather, the crop's safety, the field). The app ranks the same weeks a second time with the price at harvest, so never raise or lower a score for the price. Still say in each week's factors.market how its harvest month sells (e.g. "harvest lands in March, usually 4% above its year"). A crop sold fresh cannot wait for a better month, so its harvest month matters more; a crop that keeps can be stored and sold later, so say that instead. Mention a recent import or policy event only when it bears on the harvest months.
 - Where the given facts cannot answer something (exact distance to river or sea, microclimate, irrigation reliability), name it in dataGaps instead of guessing.
 - Be scientific and neutral: no product recommendations, no marketing tone, no bias toward any input or brand.
 - Write the summary and the "why" in plain words a farmer reads easily. Plain text only: no emoji shortcodes (nothing like :anee-…:), no markdown. Ranges are written with "to", never a dash ("Nov 9 to 15, 2027").

@@ -208,6 +208,43 @@
     .wtp-wk-c { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
     .wtp-wk-c span { font-size: .68rem; font-weight: 700; padding: .16rem .5rem; border-radius: 999px; background: #eef4e6; color: #3d5226; }
     .wtp-wk-w { margin-top: .35rem; font-size: .74rem !important; color: #92400e !important; }
+    /* TWO WAYS TO RANK (2026-10-28): for the crop alone, or with the price at harvest. */
+    .wtp-rk2 { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: .25rem; margin: 0 0 .65rem; border-radius: 999px; background: #eef4e6; border: 1px solid #dbe8cc; }
+    .wtp-rk2 button { position: relative; z-index: 1; min-width: 0; padding: .45rem .5rem; border-radius: 999px; font-size: .78rem; font-weight: 800; line-height: 1.25; color: #4d6338;
+        transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .wtp-rk2 button[aria-selected="true"] { color: #fff; }
+    .wtp-rk2 > i { position: absolute; z-index: 0; top: .25rem; bottom: .25rem; left: .25rem; width: calc(50% - .25rem); border-radius: 999px; background: #4a7c2a;
+        box-shadow: 0 4px 12px -6px rgba(45,80,22,.6); transition: transform .32s cubic-bezier(.22,1,.36,1), background-color .32s cubic-bezier(.22,1,.36,1); }
+    .wtp-rk2.is-price > i { transform: translateX(100%); background: #b7791f; }
+    .wtp-rk2-say { margin: 0 0 .7rem; padding: .6rem .75rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5; color: #3d5226; background: #f6faf1; border: 1px solid #e0ebd3; animation: wtpRk2 .32s cubic-bezier(.22,1,.36,1) both; }
+    .wtp-rk2-say b { color: #1f3a10; }
+    .wtp-rk2-say.is-price { color: #6b4a12; background: #fdf7ea; border-color: #f1dfb6; }
+    .wtp-rk2-say.is-price b { color: #4a3208; }
+    .wtp-wks[hidden] { display: none; }
+    .wtp-wks.is-in { animation: wtpRk2 .32s cubic-bezier(.22,1,.36,1) both; }
+    .wtp-wk.is-price.is-top { border-color: #e2b45c; background: linear-gradient(135deg, #fdf8ec, #f8edd2); }
+    .wtp-wk.is-price.is-top .wtp-wk-n { background: #b7791f; }
+    .wtp-wk.is-price .wtp-wk-bar i { background: linear-gradient(90deg, #f0c060, #b7791f); }
+    .wtp-wk-h small.is-price { color: #8a5a10; }
+    .wtp-wk-pr { display: flex; flex-wrap: wrap; gap: .3rem .8rem; margin-top: .1rem; font-size: .74rem; color: var(--color-gray-600); }
+    .wtp-wk-pr b { color: var(--color-gray-800); font-weight: 800; }
+    .wtp-wk-pr .is-up { color: #3d6823; font-weight: 800; } .wtp-wk-pr .is-down { color: #b45309; font-weight: 800; }
+    .wtp-mbar { transition: transform .6s cubic-bezier(.22,1,.36,1), height .45s cubic-bezier(.22,1,.36,1), background-color .3s cubic-bezier(.22,1,.36,1); }
+    .wtp-months.is-price .wtp-mbar.is-best { background: #b7791f; }
+    .wtp-rk2 + .wtp-months { margin-top: .9rem; }
+    @keyframes wtpRk2 { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .wtp-rk2 > i, .wtp-rk2 button, .wtp-mbar { transition: none !important; } .wtp-rk2-say, .wtp-wks.is-in { animation: none !important; } }
+    html.dark .wtp-rk2 { background: #18220f; border-color: #2b3a1c; }
+    html.dark .wtp-rk2 button { color: #a5c97e; }
+    html.dark .wtp-rk2 button[aria-selected="true"] { color: #fff; }
+    html.dark .wtp-rk2-say { background: #151b12; border-color: #2b3a1c; color: #b9c6ad; }
+    html.dark .wtp-rk2-say b { color: #e8efe1; }
+    html.dark .wtp-rk2-say.is-price { background: #221a0c; border-color: #4a3812; color: #e6cf9e; }
+    html.dark .wtp-rk2-say.is-price b { color: #f6e2b6; }
+    html.dark .wtp-wk.is-price.is-top { background: linear-gradient(135deg, #2a200e, #20190b); border-color: #6b4f1a; }
+    html.dark .wtp-wk-h small.is-price { color: #f0c060; }
+    html.dark .wtp-wk-pr { color: #b9c6ad; } html.dark .wtp-wk-pr b { color: #dfe9d4; }
+    html.dark .wtp-wk-pr .is-up { color: #a5c97e; } html.dark .wtp-wk-pr .is-down { color: #f0c060; }
     html.dark .wtp-wk { background: #151b12; border-color: #2b3a1c; }
     html.dark .wtp-wk.is-top { background: linear-gradient(135deg, #1c2a14, #172013); border-color: #3f5a2a; }
     html.dark .wtp-wk-n { background: #22301a; color: #cfe6b8; }
@@ -1495,10 +1532,57 @@
                 <p class="wtp-mnote" style="margin-top:.2rem">It usually sells best in <b>${esc(MK.best.map((m) => MKM[m - 1]).join(', '))}</b> and lowest in <b>${esc(MK.worst.map((m) => MKM[m - 1]).join(', '))}</b>, when everyone harvests. ${esc(MK.store ? 'It keeps about ' + MK.store + ' months, so it can wait for a better month after harvest.' : 'It is sold fresh, so the harvest month sets the price.')} Each week above shows the price expected in its harvest month.</p>
                 ${MK.url ? `<p class="wtp-mnote"><a href="${esc(MK.url)}" style="font-weight:800;text-decoration:underline">See the full price forecast</a></p>` : ''}
             </div>` : '';
+        /* Two ways to rank (2026-10-28, the owner): Anee's order judges the growing alone; the second weighs each
+           week's harvest price against the year's usual too (WhenToPlantController::priceRanks). */
+        const PR = Array.isArray(r.priceRanks) ? r.priceRanks.filter((k) => weeks[k] && weeks[k].priceScore !== undefined) : [];
+        const TWO = PR.length > 0;
+        const pct = (rel) => { const d = Math.round((Number(rel) - 1) * 100); return d === 0 ? 'at a usual month's price' : (d > 0 ? d + '% above' : Math.abs(d) + '% below') + ' a usual harvest month'; };
+        const ymWords = (ym) => { const [y, m] = String(ym || '').split('-').map(Number); return y && m ? MKM[m - 1] + ' ' + y : ''; };
+        const unitOf = (m) => (m && m.unit === 'kg' ? '/kg' : '');
+        const priceRow = (w) => {
+            const m = w.market || {};
+            const rel = Number(m.rel) || 1, cls = rel >= 1.005 ? 'is-up' : (rel <= 0.995 ? 'is-down' : '');
+            return `<div class="wtp-wk-pr"><span>🌦️ For the crop: <b>${esc(w.score ?? '')}/100</b></span><span>💰 Sells <span class="${cls}">${esc(pct(rel))}</span>${m.p ? ', about ' + esc(peso2(m.p)) + unitOf(m) + ' in ' + esc(MKM[(m.month || 1) - 1] + ' ' + (m.year || '')) : ''}</span>${m.wait ? `<span>📦 Keep it until ${esc(ymWords(m.sellYm))}: about ${esc(peso2(m.sellP))}${unitOf(m)}, after the keeping losses</span>` : ''}</div>`;
+        };
+        const priceWeeks = TWO ? PR.map((k, i) => { const w = weeks[k]; return `
+                        <div class="wtp-wk is-price${i === 0 ? ' is-top' : ''}">
+                            <span class="wtp-wk-n">${i + 1}</span>
+                            <div class="wtp-wk-b">
+                                <div class="wtp-wk-h"><b>${esc(w.label || '')}</b><small class="is-price">${i === 0 ? 'Best with the price · ' : ''}${esc(w.priceScore)}/100</small></div>
+                                <div class="wtp-wk-bar"><i style="--w:${Math.max(0, Math.min(100, Number(w.priceScore) || 0)) / 100}"></i></div>
+                                ${priceRow(w)}
+                                <p style="margin-top:.35rem">${esc(sweep(w.why))}</p>
+                                ${w.watch ? `<p class="wtp-wk-w">👁 ${esc(sweep(w.watch))}</p>` : ''}
+                            </div>
+                        </div>`; }).join('') : '';
+        // The month that wins with the price, from the twelve (it may sit outside the weeks Anee ranked).
+        const priceMonth = (() => { const ms = scores.filter((x) => x.priceScore !== undefined); if (!ms.length) return null; return ms.reduce((a, b) => ((b.score >= 50) > (a.score >= 50) || ((b.score >= 50) === (a.score >= 50) && b.priceScore > a.priceScore)) ? b : a); })();
+        const cropMonth = scores.length ? scores.reduce((a, b) => (b.score > a.score ? b : a)) : null;
+        const sayCrop = TWO ? (() => {
+            const a = weeks[0], b = weeks[PR[0]];
+            return PR[0] === 0
+                ? `Both ways agree: <b>${esc(a.label || '')}</b> grows best and its harvest sells ${esc(pct((a.market || {}).rel))}.`
+                : `For the crop alone, <b>${esc(a.label || '')}</b> comes first. Counting the price at harvest, <b>${esc(b.label || '')}</b> does: it grows nearly as well and sells ${esc(pct((b.market || {}).rel))}.`;
+        })() : '';
+        const sayPrice = TWO ? (() => {
+            const b = weeks[PR[0]];
+            const mm = priceMonth && cropMonth && (priceMonth.month !== cropMonth.month || priceMonth.year !== cropMonth.year) && priceMonth.market
+                ? ` Over the whole year, planting in <b>${esc(MONTHS[priceMonth.month - 1] + ' ' + priceMonth.year)}</b> pays best: harvest in ${esc(MKM[priceMonth.market.month - 1] + ' ' + priceMonth.market.year)}, ${esc(pct(priceMonth.market.rel))}${priceMonth.score < 60 ? ', though the weather then is riskier' : ''}.` : '';
+            return `Each week's score times what its harvest brings against a usual harvest month. A week Anee scores under 50 never moves above a safer one: no price is worth a real weather risk. With the price, <b>${esc(b.label || '')}</b> comes first.${mm}`;
+        })() : '';
+        const rankSwitch = TWO ? `
+                <div class="wtp-rk2" role="tablist" aria-label="How the weeks are ranked">
+                    <i aria-hidden="true"></i>
+                    <button type="button" role="tab" aria-selected="true" data-rankby="crop">🌦️ For the crop</button>
+                    <button type="button" role="tab" aria-selected="false" data-rankby="price">💰 With the harvest price</button>
+                </div>` : '';
         const weeksCard = weeks.length ? `
             <div class="wtp-card">
-                <h3>The best weeks to plant, ranked <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">Each week scored on rain, storms, El Niño or La Niña, your field and your crop</small></h3>
-                <div class="wtp-wks">
+                <h3>The best weeks to plant, ranked <small style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">${TWO ? 'Two ways: for the crop alone (rain, storms, El Niño or La Niña, your field), or with the price its harvest fetches too' : 'Each week scored on rain, storms, El Niño or La Niña, your field and your crop'}</small></h3>
+                ${rankSwitch}
+                ${TWO ? `<p class="wtp-rk2-say" data-rank-say>${sayCrop}</p>` : ''}
+                ${TWO ? `<div class="wtp-wks" data-rank="price" hidden>${priceWeeks}</div>` : ''}
+                <div class="wtp-wks" data-rank="crop">
                     ${weeks.map((w, i) => `
                         <div class="wtp-wk${i === 0 ? ' is-top' : ''}">
                             <span class="wtp-wk-n">${esc(w.rank || i + 1)}</span>
@@ -1574,13 +1658,15 @@
             ${windowsCard}
 
             <div class="wtp-card">
-                <h3>Planting score by month</h3>
+                <h3>Planting score by month${TWO ? ' <small data-month-say style="display:block;font-size:.72rem;font-weight:500;color:var(--color-gray-500);margin-top:.1rem">For the crop alone</small>' : ''}</h3>
+                ${TWO ? rankSwitch : ''}
                 <div class="wtp-months">
                     ${scores.map((s) => {
                         // The window is deep green; outside it, 60 and up is still green, 25–59 amber, under 25 red.
                         const cls = bestMonths.has(s.month) ? 'is-best' : (s.score >= 60 ? 'is-good' : (s.score >= 25 ? 'is-poor' : 'is-bad'));
+                        const mk = s.market ? ' · with the price ' + s.priceScore + ', harvest in ' + MKM[s.market.month - 1] + ' ' + pct(s.market.rel) : '';
                         return `<div class="wtp-mcol">
-                            <div class="wtp-mbar ${cls}" style="height:${Math.max(4, s.score)}%" title="${esc(s.note || '')}"></div>
+                            <div class="wtp-mbar ${cls}" style="height:${Math.max(4, s.score)}%" data-best="${bestMonths.has(s.month) ? 1 : 0}" data-s="${Number(s.score) || 0}" data-ps="${s.priceScore !== undefined ? Number(s.priceScore) : ''}" title="${esc((s.note || '') + mk)}"></div>
                             <span class="wtp-mlbl${mine(s) ? ' is-mine' : ''}">${MONTHS[(s.month || 1) - 1]}${s.year && crossesYear ? `<i>${esc(String(s.year).slice(-2))}</i>` : ''}</span>
                         </div>`;
                     }).join('')}
@@ -1648,6 +1734,26 @@
             </div>`;
 
         host.hidden = false;
+        // The two ways to rank: every switch on the report moves together (the weeks, their line, the month bars).
+        const setRank = (by) => {
+            host.querySelectorAll('.wtp-rk2').forEach((sw) => {
+                sw.classList.toggle('is-price', by === 'price');
+                sw.querySelectorAll('[data-rankby]').forEach((b) => b.setAttribute('aria-selected', b.dataset.rankby === by ? 'true' : 'false'));
+            });
+            host.querySelectorAll('.wtp-wks[data-rank]').forEach((l) => { const on = l.dataset.rank === by; if (on && l.hidden) { l.classList.remove('is-in'); void l.offsetWidth; l.classList.add('is-in'); } l.hidden = !on; });
+            const say = host.querySelector('[data-rank-say]');
+            if (say) { say.innerHTML = by === 'price' ? sayPrice : sayCrop; say.classList.toggle('is-price', by === 'price'); say.style.animation = 'none'; void say.offsetWidth; say.style.animation = ''; }
+            const ms = host.querySelector('[data-month-say]');
+            if (ms) ms.textContent = by === 'price' ? 'With the price at harvest: each month\'s score times what its harvest brings' : 'For the crop alone';
+            host.querySelectorAll('.wtp-months').forEach((m) => m.classList.toggle('is-price', by === 'price'));
+            host.querySelectorAll('.wtp-mbar[data-s]').forEach((b) => {
+                const v = by === 'price' && b.dataset.ps !== '' ? Number(b.dataset.ps) : Number(b.dataset.s);
+                b.style.height = Math.max(4, v) + '%';
+                b.classList.remove('is-best', 'is-good', 'is-poor', 'is-bad');
+                b.classList.add(b.dataset.best === '1' ? 'is-best' : (v >= 60 ? 'is-good' : (v >= 25 ? 'is-poor' : 'is-bad')));
+            });
+        };
+        host.querySelectorAll('[data-rankby]').forEach((b) => b.addEventListener('click', () => setRank(b.dataset.rankby)));
         if (!quiet) {
             requestAnimationFrame(() => requestAnimationFrame(() => host.classList.add('is-drawn')));
             host.scrollIntoView({ behavior: 'smooth', block: 'start' });

@@ -780,6 +780,32 @@ final class MarketBook
     }
 
     /**
+     * What a harvest in that month brings a kilo (2026-10-28, When to Plant's second ranking): the price then and,
+     * for a crop that keeps, the best month to sell within its storage months less what keeping costs (sellPlan's
+     * net). Null without prices.
+     *
+     * @return array{p: float, net: float, wait: int, sellYm: string, sellP: float, unit: string}|null
+     */
+    public static function harvestValue(?string $crop, ?string $where, int $harvestIdx): ?array
+    {
+        $item = self::mainItem($crop);
+        if (! $item || ! self::ready()) {
+            return null;
+        }
+        $o = self::outlook($item, self::provinceKey($where));
+        if (! $o || ! $o['seasonal']) {
+            return null;
+        }
+        $plan = self::sellPlan($o, $harvestIdx);
+        if (! $plan) {
+            return null;
+        }
+
+        return ['p' => (float) $plan['harvest']['p'], 'net' => (float) $plan['best']['net'], 'wait' => (int) $plan['best']['wait'], 'sellYm' => (string) $plan['best']['ym'],
+            'sellP' => (float) $plan['best']['p'], 'unit' => (string) $o['item']['unit']];
+    }
+
+    /**
      * The market in a few lines for a prompt: the crop's farmgate price lately, its months, where the forecast
      * goes, how dear it is among crops, and the latest import and policy events. $harvests = month indexes the
      * analysis is weighing (each said with its price). $forecast = false keeps to what has been (the chat, whose
