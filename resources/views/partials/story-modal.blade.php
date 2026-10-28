@@ -78,9 +78,19 @@
     .stm-dots button:hover span, .stm-dots button:focus-visible span { opacity: 1; }
 
     /* A scene: a screen of the story. */
-    .stm-scene { position: relative; min-height: calc(100dvh - 3.6rem); display: grid; align-content: center; padding: 2.6rem 1rem; }
+    /* A scene is as tall as what it holds on a phone and a tablet (2026-10-28, the owner: "in mobile sections has like
+       really huge spacing from each other"); a whole screen from 1024 px, where it sits in the middle of it. */
+    .stm-scene { position: relative; display: grid; align-content: center; padding: 2.4rem 1rem; }
     @media (min-width: 640px) { .stm-scene { padding: 3rem 1.6rem; } }
-    @media (min-width: 1024px) { .stm-scene { padding: 3.5rem 4rem; } }
+    @media (min-width: 1024px) { .stm-scene { min-height: calc(100dvh - 3.6rem); padding: 3.5rem 4rem; } }
+    /* Between two scenes, a thin line of light that draws itself out from the middle, a spark at its centre. */
+    .stm-scene + .stm-scene::before { content: ''; position: absolute; top: 0; left: 50%; width: min(72%, 30rem); height: 1px; transform: translateX(-50%) scaleX(0);
+        background: linear-gradient(90deg, transparent, rgb(168 204 126 / .65) 25%, rgb(245 197 24 / .85) 50%, rgb(168 204 126 / .65) 75%, transparent); transition: transform 1.2s cubic-bezier(.22,1,.36,1); }
+    .stm-scene + .stm-scene::after { content: ''; position: absolute; top: -3px; left: 50%; width: 7px; height: 7px; margin-left: -3.5px; border-radius: 999px; background: #f5c518;
+        box-shadow: 0 0 10px 2px rgb(245 197 24 / .7); opacity: 0; transition: opacity .5s .5s; }
+    .stm-scene.is-in + .stm-scene::before, .stm-scene + .stm-scene.is-in::before { transform: translateX(-50%) scaleX(1); }
+    .stm-scene.is-in + .stm-scene::after, .stm-scene + .stm-scene.is-in::after { opacity: 1; animation: stmSpark 2.6s ease-in-out 1.2s infinite; }
+    @keyframes stmSpark { 50% { transform: scale(1.6); opacity: .55; } }
     .stm-wrap { width: 100%; max-width: 68rem; margin: 0 auto; }
     .stm-kick { display: inline-flex; align-items: center; gap: .45rem; font-size: .7rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
     .stm-h { margin-top: .45rem; font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.55rem, 4.6vw, 2.6rem); line-height: 1.24; letter-spacing: -.01em; color: #fff; }
@@ -102,7 +112,8 @@
 
     @media (prefers-reduced-motion: reduce) {
         .stm-bg i, .stm-load-face, .stm-load-face::before, .stm-load-face::after, .stm-next svg { animation: none !important; }
-        .stm [data-in], .stm [data-bar], .stm-host, .stm-load, .stm-prog i { transition: none !important; }
+        .stm [data-in], .stm [data-bar], .stm-host, .stm-load, .stm-prog i, .stm-scene::before, .stm-scene::after { transition: none !important; animation: none !important; }
+        .stm-scene + .stm-scene::before { transform: translateX(-50%) scaleX(1); } .stm-scene + .stm-scene::after { opacity: 1; }
         .stm [data-in] { opacity: 1; transform: none; }
         .stm [data-bar] { transform: scaleX(var(--v, 1)); }
         .stm-body { scroll-behavior: auto; }
