@@ -19,7 +19,8 @@
        card.set(answers, from)  card.clear()  card.refresh()
        aneeFieldCard.legacy(answers)  -> Promise of FieldProfile::legacy()'s map
        aneeFieldCard.hint(el, on)     the "Filled in from your field" line on a step
-       aneeFieldCard.said(pairs)      the saved answers as chips, for a report
+       aneeFieldCard.said(pairs)      the saved answers as chips, for a short summary
+       aneeFieldCard.list(pairs)      the saved answers as rows, each with what it means, for a report
      The JS legacy() mirrors App\Support\FieldProfile::legacy(): change both together. --}}
 @include('partials.field-profile')
 @once
@@ -97,9 +98,32 @@
     /* The answers on a report. */
     .fpc-said { display: flex; flex-wrap: wrap; gap: .35rem; }
 
+    /* The answers as rows on a report, each with what it means (2026-10-28), a thin line between them. */
+    .fpl { list-style: none; margin: 0; padding: 0; }
+    .fpl-r { display: flex; align-items: flex-start; gap: .65rem; padding: .62rem 0; animation: fplIn .32s cubic-bezier(.22,1,.36,1) both; }
+    .fpl-r + .fpl-r, .fpl-more .fpl-r:first-child { border-top: 1px solid #e6ede0; }
+    .fpl-i { flex: none; width: 2rem; height: 2rem; border-radius: .7rem; display: grid; place-items: center; font-size: 1rem; line-height: 1; background: #f1f7ea; border: 1px solid #dfeccf; }
+    .fpl-b { flex: 1; min-width: 0; display: grid; gap: .12rem; }
+    .fpl-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: .05rem .55rem; }
+    .fpl-k { font-size: .66rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: #6b7a5e; }
+    .fpl-v { font-size: .86rem; font-weight: 800; line-height: 1.35; color: #14210c; overflow-wrap: anywhere; }
+    .fpl-m { margin: 0; font-size: .78rem; line-height: 1.5; color: #556348; }
+    .fpl-m + .fpl-m { margin-top: .1rem; }
+    .fpl-m b { font-weight: 800; color: #2d4419; }
+    .fpl-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .32s cubic-bezier(.22,1,.36,1); }
+    .fpl-more > ul { min-height: 0; overflow: hidden; }
+    .fpl-w.is-open .fpl-more { grid-template-rows: 1fr; }
+    .fpl-btn { display: inline-flex; align-items: center; gap: .35rem; margin-top: .35rem; padding: .35rem .75rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
+        color: #2d5016; background: #fff; border: 1px solid #cfe3b8; cursor: pointer; transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .fpl-btn:hover { background: #f1f7ea; }
+    .fpl-btn svg { width: .8rem; height: .8rem; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .fpl-w.is-open .fpl-btn svg { transform: rotate(180deg); }
+    @keyframes fplIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
     @media (prefers-reduced-motion: reduce) {
         .fpc-t, .fpc-t > span, .fpc-t > i, .fpc-sum, .fpc-go, .fpc-x, .fpc-s, .fpc-s > span, .fpc-more { transition: none !important; }
-        .fpc-p, .fpc-s, .fpc-note, .fpc-hint { animation: none !important; }
+        .fpc-p, .fpc-s, .fpc-note, .fpc-hint, .fpl-r { animation: none !important; }
+        .fpl-more, .fpl-btn, .fpl-btn svg { transition: none !important; }
     }
 
     html.dark .fpc { background: linear-gradient(160deg, #151c11, #18220f); border-color: #2b3a1c; }
@@ -113,6 +137,14 @@
     html.dark .fpc-more { color: #a5c97e; border-color: #3d5a24; }
     html.dark .fpc-more:hover { background: #10150c; }
     html.dark .fpc-x { background: #10150c; border-color: #2b3a1c; color: #c9d6bc; }
+    html.dark .fpl-r + .fpl-r, html.dark .fpl-more .fpl-r:first-child { border-top-color: #263420; }
+    html.dark .fpl-i { background: #18220f; border-color: #2b3a1c; }
+    html.dark .fpl-k { color: #93a684; }
+    html.dark .fpl-v { color: #e8efe1; }
+    html.dark .fpl-m { color: #b5c4a7; }
+    html.dark .fpl-m b { color: #d6e6c4; }
+    html.dark .fpl-btn { background: #10150c; border-color: #3d5a24; color: #a5c97e; }
+    html.dark .fpl-btn:hover { background: #18220f; }
     html.dark .fpc-x:hover { background: #2a1414; border-color: #4c1d1d; color: #fca5a5; }
     html.dark .fpc-saved { border-color: #2b3a1c; }
     html.dark .fpc-saved > p { color: #93a684; }
@@ -429,7 +461,57 @@
     /* The saved answers (FieldProfile::pairs) as chips, for a report. */
     const said = (list) => (Array.isArray(list) && list.length) ? '<div class="fpc-said">' + list.map((p, i) => chip([p[0], p[1]], i)).join('') + '</div>' : '';
 
-    window.aneeFieldCard = { mount, legacy, legacyOf, hint, said, pairs };
+    /* What a row of FieldProfile::pairs means: the picked answers' lines (FieldProfile::MEANS, found by
+       their labels, so an older saved report reads too), else the question's own why. */
+    function meaning(p) {
+        const F = FP() || {}, Q = F.questions || {}, M = F.means || {};
+        const k = String(p[0] || ''), v = String(p[1] || '');
+        if (k === 'Known pH') {
+            const ph = parseFloat(v);
+            return { icon: '🧪', lines: [isNaN(ph) ? '' : ph < 5.5 ? 'Acidic: lime about a month before planting helps the crop use its fertilizer.'
+                : ph > 7.5 ? 'Alkaline: zinc and iron get locked up, so micronutrients help.' : 'A good range for most crops.'].filter(Boolean) };
+        }
+        if (/^(Older soil test|Soil test)/.test(k)) return { icon: '🧪', lines: ['Measured, so Anee counts the fertilizer from these numbers instead of guessing.'] };
+        const key = Object.keys(Q).find((x) => Q[x].short === k);
+        if (!key) return { icon: '🌱', lines: [] };
+        const q = Q[key], m = M[key] || {}, icon = (F.icons || {})[q.page] || '🌱';
+        if (m._) return { icon, lines: [m._] };
+        const hay = ', ' + v + ', ';
+        const picked = Object.keys(q.o || {}).filter((o) => q.o[o] && q.o[o][0] && hay.includes(', ' + q.o[o][0] + ', ') && m[o]);
+        if (!picked.length) return { icon, lines: q.why ? [q.why] : [] };
+        if (picked.length === 1) return { icon, lines: [m[picked[0]]] };
+        return { icon, lines: picked.map((o) => [q.o[o][0], m[o]]) };
+    }
+    const DOWN = '<svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
+    /* The saved answers (FieldProfile::pairs) as rows, each with what it means, for a report (2026-10-28, the
+       owner: "instead of tags, make it a list or items separated by a thin line ... and each has an explanation").
+       The first `shown` rows are open, the rest fold behind a button. */
+    function list(pairs, opts) {
+        if (!Array.isArray(pairs) || !pairs.length) return '';
+        const shown = (opts && opts.shown) || 8;
+        const row = (p, i) => {
+            const m = meaning(p);
+            const lines = m.lines.map((l) => Array.isArray(l) ? '<p class="fpl-m"><b>' + esc(l[0]) + ':</b> ' + esc(/^Anee/.test(l[1]) ? l[1] : l[1].charAt(0).toLowerCase() + l[1].slice(1)) + '</p>' : '<p class="fpl-m">' + esc(l) + '</p>').join('');
+            return '<li class="fpl-r" style="animation-delay:' + Math.min(i, 10) * 30 + 'ms"><span class="fpl-i" aria-hidden="true">' + m.icon + '</span>'
+                + '<div class="fpl-b"><div class="fpl-h"><span class="fpl-k">' + esc(p[0]) + '</span><span class="fpl-v">' + esc(p[1]) + '</span></div>' + lines + '</div></li>';
+        };
+        const head = pairs.slice(0, shown), rest = pairs.slice(shown);
+        return '<div class="fpl-w"><ul class="fpl">' + head.map(row).join('') + '</ul>'
+            + (rest.length ? '<div class="fpl-more"><ul class="fpl">' + rest.map((p, i) => row(p, i)).join('') + '</ul></div>'
+                + '<button type="button" class="fpl-btn" data-fpl-more aria-expanded="false"><span>Show the other ' + rest.length + ' answer' + (rest.length === 1 ? '' : 's') + '</span>' + DOWN + '</button>' : '')
+            + '</div>';
+    }
+    document.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-fpl-more]');
+        if (!b) return;
+        const box = b.closest('.fpl-w'), open = !box.classList.contains('is-open');
+        box.classList.toggle('is-open', open);
+        b.setAttribute('aria-expanded', open ? 'true' : 'false');
+        const n = box.querySelectorAll('.fpl-more .fpl-r').length;
+        b.querySelector('span').textContent = open ? 'Show fewer' : 'Show the other ' + n + ' answer' + (n === 1 ? '' : 's');
+    });
+
+    window.aneeFieldCard = { mount, legacy, legacyOf, hint, said, list, pairs };
 })();
 </script>
 @endpush

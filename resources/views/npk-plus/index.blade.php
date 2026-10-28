@@ -3206,7 +3206,7 @@
     });
     const showReport = (rep, params) => {
         const a = (rep || {}).anee || {};
-        const field = params && (params.fieldProfileSaid || []).length && window.aneeFieldCard ? '<div class="np-card"><h3>Your field in detail</h3>' + window.aneeFieldCard.said(params.fieldProfileSaid) + '</div>' : '';
+        const field = params && (params.fieldProfileSaid || []).length && window.aneeFieldCard ? '<div class="np-card"><h3>Your field in detail</h3>' + window.aneeFieldCard.list(params.fieldProfileSaid) + '</div>' : '';
         const v = String(a.verdict || '').toLowerCase().replace(/\s+/g, '-');
         const sec = (t, inner) => inner ? '<div class="np-card"><h3>' + esc(t) + '</h3><div class="np-rlist">' + inner + '</div></div>' : '';
         $('npRep').hidden = false;

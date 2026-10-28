@@ -1231,7 +1231,7 @@
         try { const r = await window.api(D.urls.save, { method: 'POST', body: p }); SAVED = null; return (r.data && r.data.row) || null; } catch (_) { return null; }
     }
 
-    window.aneeFieldProfile = { mount, open, ask, save, groups: G, questions: Q, count, words, pagesFor, tests: TESTS, shape, shown: shownQ };
+    window.aneeFieldProfile = { mount, open, ask, save, groups: G, questions: Q, means: D.bank.means || {}, icons: PAGE_ICON, count, words, pagesFor, tests: TESTS, shape, shown: shownQ };
 })();
 </script>
 @endpush

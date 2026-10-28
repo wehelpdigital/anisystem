@@ -229,6 +229,223 @@ final class FieldProfile
     ];
 
     /**
+     * What each answer means for the farm, one plain line, for the reports that list a lot's answers
+     * (2026-10-28, the owner: "instead of tags, make it a list ... each has an explanation"). Keyed like
+     * QUESTIONS: question => answer => line; '_' is the line for a question whose answers are not options
+     * (the troubles, the pump's months). A question or answer with no line falls back to the question's why.
+     */
+    public const MEANS = [
+        'texture' => [
+            'sandy' => 'Water runs through fast, so the crop needs watering more often and fertilizer in smaller, more frequent doses.',
+            'loam' => 'The easiest soil to farm: it holds water and plant food well and lets the extra drain away.',
+            'silt' => 'It holds water well but crusts after hard rain, so young seedlings can struggle to come up.',
+            'clay' => 'It holds water and plant food for long but drains slowly, so a run of wet weeks can drown upland crops.',
+            'heavy_clay' => 'Very slow to drain and hard to work once dry. It suits paddy rice better than most upland crops.',
+        ],
+        'color' => [
+            'dark' => 'Dark topsoil is usually rich in organic matter and plant food.',
+            'brown' => 'A common, healthy topsoil that drains fairly well.',
+            'red' => 'Usually drains well but tends to be acidic and short of phosphorus, so lime and phosphorus may be needed.',
+            'gray' => 'Gray soil has stayed wet for long, so drainage and planting around the heavy rains matter more here.',
+            'pale' => 'Pale soil is often worn out and low in organic matter. Compost or manure helps it hold water and food.',
+        ],
+        'organic' => [
+            'low' => 'It holds less water and plant food, so straw, compost or manure help, and the fertilizer is split into more doses.',
+            'medium' => 'Enough to hold water and plant food fairly well.',
+            'high' => 'It holds water and plant food well and feeds the crop slowly through the season.',
+        ],
+        'rocks' => [
+            'none' => 'Nothing slows the plow or the machines.',
+            'some' => 'Pick out the big ones before plowing to spare the tools.',
+            'many' => 'Clearing the stones adds days to land preparation and can keep machines out.',
+        ],
+        'hardpan' => [
+            'yes' => 'Good for holding water in a paddy, but it stops the roots of upland crops unless deep plowing breaks it.',
+            'no' => 'Roots can go deep and water soaks down freely.',
+        ],
+        'depth' => [
+            'shallow' => 'Little room for roots and water, so the crop dries out sooner in a dry spell.',
+            'medium' => 'Deep enough for most field crops and vegetables.',
+            'deep' => 'Room for deep roots and a good store of water.',
+        ],
+        'signs' => [
+            'rust' => 'Water sits in the soil for long, so drain it well before an upland crop goes in.',
+            'sheen' => 'Iron may build up and burn young rice, so drain the field now and then.',
+            'smell' => 'The soil stays wet and airless. Better drainage lets the roots breathe.',
+            'none' => 'No sign that water sits in the soil too long.',
+        ],
+        'water' => [
+            'irrigation' => 'Canal water lets the crop go in during the dry months, when the release schedule allows.',
+            'pump' => 'You water on your own schedule, as long as the pump holds up in the dry months.',
+            'river' => 'A natural source that helps in the dry months, though it can run low.',
+            'reservoir' => 'Stored rain that can carry a crop through a short dry spell.',
+            'rainfed' => 'The crop lives on the rain, so the planting date follows the start of the rains.',
+        ],
+        'pumpYear' => [
+            'always' => 'Water is sure all year, so a dry season planting is safe.',
+            'badYears' => 'In an El Niño year a dry season crop can run short of water.',
+            'everyYear' => 'A dry season crop runs short most years. Plant earlier, or pick a crop that needs less water.',
+            'unsure' => 'Anee counts the pump as only partly sure in the dry months.',
+        ],
+        'pumpStops' => [
+            '_' => 'In these months the crop lives mostly on the rain, so the planting is timed to miss its thirstiest weeks there.',
+        ],
+        'waterLook' => [
+            'clear' => 'Good water for any crop.',
+            'muddy' => 'It leaves silt that slowly builds up the field and can bury small seedlings.',
+            'gray' => 'Fine silt or ash settles on the field and can seal the surface.',
+            'milky' => 'Fine clay in it can seal the surface. Let it settle first when you can.',
+            'green' => 'Algae means warm water rich in plant food. It can choke small seedlings.',
+            'salty' => 'Salt stunts young plants, so salt tolerant varieties and flushing the field help.',
+            'smelly' => 'Dirty water can harm young plants and the people working in it.',
+            'unsure' => 'Anee does not count the look of the water.',
+        ],
+        'drainage' => [
+            'fast' => 'It dries quickly: upland crops like it, but the water runs short sooner.',
+            'day' => 'It drains well enough for most crops.',
+            'slow' => 'Wet spots after rain can drown the seed. Plant on beds, or after a dry spell.',
+            'stands' => 'Water stays for days, so upland crops need raised beds and drains. Paddy rice suits it.',
+        ],
+        'flooding' => [
+            'never' => 'No flood to plan around.',
+            'sometimes' => 'A strong typhoon can put the crop under water, so a harvest before the peak typhoon months is safer.',
+            'often' => 'Time the season so the crop is harvested before the floods, or grow a variety that takes them.',
+        ],
+        'salt' => [
+            'none' => 'No salt to plan around.',
+            'crust' => 'Salt rises in the dry months, so a wet season planting is safer.',
+            'sea' => 'Sea water stunts most crops. Salt tolerant varieties, and planting when the tides are low, help.',
+            'tips' => 'The last crop showed salt damage. Flush the field and pick a salt tolerant variety.',
+            'sodic' => 'Sodium seals the soil so water sits on top. Gypsum helps open it.',
+        ],
+        'acidity' => [
+            'untested' => 'A soil test would say whether lime is needed.',
+            'none' => 'No lime needed for the pH.',
+            'mild' => 'Most crops are fine. Lime helps the ones that dislike acidic soil.',
+            'strong' => 'Lime about a month before planting, or the crop cannot use its fertilizer well.',
+            'sulfate' => 'Keep it wet so no more acid forms, and lime it. Drying it out makes it worse.',
+            'alkaline' => 'Zinc and iron get locked up, so micronutrients and ammonium sulfate in place of urea help.',
+        ],
+        'lastLimed' => [
+            'never' => 'If the soil is acidic, it likely needs lime.',
+            'under_year' => 'The lime is still working. No more this season.',
+            '1to3y' => 'The lime may still work. A soil test says whether more is needed.',
+            'over3y' => 'The lime has likely worn off. Test, or lime again if the soil is acidic.',
+        ],
+        'slope' => [
+            'flat' => 'Easy to work and to water evenly.',
+            'gentle' => 'Plant across the slope so the rain does not carry the soil away.',
+            'steep' => 'Plant across the slope and keep the soil covered through the heavy rains.',
+            'terraced' => 'Keep the terrace walls strong: each step drains into the next.',
+        ],
+        'elevation' => [
+            'lowland' => 'Warm all year, so crops grow at their usual pace.',
+            'upland' => 'It drains well and dries sooner, so the crop leans on the rains.',
+            'highland' => 'Cooler, so crops take longer to mature and some suit it better than others.',
+        ],
+        'sun' => [
+            'full' => 'The crop gets all the light it needs.',
+            'part' => 'Shade slows growth and keeps the leaves wet longer, so diseases spread more.',
+            'shade' => 'Most field crops yield poorly here. Leafy greens cope better.',
+        ],
+        'hazards' => [
+            'river' => 'Keep the harvest away from the weeks the river usually rises.',
+            'wind' => 'Tall crops can fall over in strong winds, so a harvest before the typhoon peak is safer.',
+            'erosion' => 'Keep the soil covered and plant across the slope.',
+            'none' => 'No other field problems to plan around.',
+        ],
+        'prevCrop' => [
+            'rice_straw' => 'Straw plowed in early gives plant food back, but it can carry rice pests over.',
+            'rice_no_straw' => 'Less to clear, but burning or taking the straw takes potassium away.',
+            'corn' => 'Corn stalks are slow to break down and can carry stem borers over.',
+            'legume' => 'Beans leave some nitrogen behind for the next crop.',
+            'vegetable' => 'Vegetables often leave fertilizer behind, and their pests and diseases too.',
+            'fallow' => 'The weeds have gone to seed, so clear them well before planting.',
+            'new_land' => 'New land is cleared and roughly plowed first, so land preparation takes longer.',
+        ],
+        'harvested' => [
+            'under2w' => 'Too soon for rice after rice: about 30 days with no rice lets the pests starve.',
+            '2to4w' => 'Nearly rested. A little more time cuts the pests carried over.',
+            '1to3m' => 'The field has rested long enough.',
+            'over3m' => 'A long rest. The weeds may have grown back.',
+            'not_yet' => 'The last crop still stands, so the new one waits for its harvest.',
+        ],
+        'stubble' => [
+            'none' => 'A clean field, ready to prepare.',
+            'stubble' => 'Plow it under early so it breaks down before planting.',
+            'ratoon' => 'Stray rice keeps the pests alive. Plow it under before the new crop.',
+        ],
+        'lastPlowed' => [
+            'under3m' => 'The soil is still loose, so fewer passes are needed.',
+            '3to12m' => 'The usual passes will do.',
+            'over_year' => 'The ground has hardened and needs extra passes.',
+            'never' => 'Hard ground: clear it and plow it roughly first.',
+        ],
+        'newLand' => [
+            'no' => 'The regular land preparation will do.',
+            'idle' => 'Clear the growth and plow roughly first, before the regular work.',
+        ],
+        'cropLook' => [
+            'green' => 'The soil fed the last crop well.',
+            'pale' => 'Nitrogen likely ran short.',
+            'purple' => 'Phosphorus likely ran short.',
+            'edges' => 'Potassium likely ran short.',
+            'zinc' => 'Zinc likely ran short, so zinc at planting helps.',
+            'patchy' => 'The soil or the water differs across the lot. The poor spots are worth a closer look.',
+        ],
+        'yieldLast' => [
+            'better' => 'The soil is likely in good shape.',
+            'better_care' => 'The care made the difference, so the soil is not counted as richer.',
+            'same' => 'The lot yields like its neighbors.',
+            'worse' => 'Something holds the lot back, often plant food or water, and it is worth finding.',
+        ],
+        'fertUse' => [
+            'none' => 'The soil is likely worn down, so the crop needs the full dose.',
+            'organic' => 'Good for the soil, but the crop likely needs more nitrogen, phosphorus and potassium than manure gives.',
+            'light' => 'The soil may be a little short, so the crop needs the full dose.',
+            'usual' => 'The soil has been kept up, so the usual dose works.',
+            'heavy' => 'Phosphorus may have built up, so less of it may be needed.',
+        ],
+        'cropsYear' => [
+            'one' => 'The soil rests between crops.',
+            'two' => 'Zinc and sulfur run short sooner, so the plan feeds them.',
+            'three' => 'Zinc and sulfur run short sooner and pests carry over. Rest or rotate when you can.',
+        ],
+        'zincGiven' => [
+            'recent' => 'Zinc keeps working for two or three crops, so less is needed.',
+            'longer' => 'The zinc has likely worn off.',
+            'never' => 'Zinc may be short, more so on wet or alkaline soil.',
+        ],
+        'weeds' => [
+            'few' => 'A clean field: the usual weeding will do.',
+            'many' => 'Plan a stale seedbed or an early weeding pass.',
+            'tough' => 'Kill them before planting: they regrow from the roots.',
+            'sedges' => 'Sedges crowd the crop early, so weed in the first weeks.',
+            'weedy_rice' => 'Weedy rice spreads by seed. Clean seed and a stale seedbed keep it down.',
+        ],
+        'level' => [
+            'level' => 'The water spreads evenly.',
+            'some' => 'A little leveling saves water and seedlings.',
+            'uneven' => 'Level it before planting, or the seedlings in the low spots drown.',
+        ],
+        'wild' => [
+            'ferns' => 'A sign of acidic soil.',
+            'cogon' => 'A sign of acidic, worn out soil.',
+            'makahiya' => 'A sign of poor or packed soil.',
+            'paragis' => 'A sign of packed, trampled soil.',
+            'moss' => 'The surface stays wet and drains poorly.',
+            'rushes' => 'The soil stays waterlogged.',
+            'saltplants' => 'A sign of salty soil.',
+            'lush' => 'A sign of fertile soil.',
+            'bare' => 'Salt, strong acidity, a hard layer or very poor soil in those spots.',
+            'none' => 'The wild plants show nothing to worry about.',
+        ],
+        'outbreaks' => [
+            '_' => 'They can stay in the soil and the stubble, so the clean up before planting and the variety picked aim at them.',
+        ],
+    ];
+
+    /**
      * The other troubles of a last season, beside the catalogue's pests and
      * diseases: key => [label, line, icon, kind, only]. `kind` is how the rules
      * read it (a rat is a Rodent wherever it comes from); `only`: null for
@@ -291,7 +508,7 @@ final class FieldProfile
     /** What the page needs to draw the questions: the groups and the questions (for a crop, or all with their scope). */
     public static function forPayload(?string $crop = null): array
     {
-        return ['groups' => self::GROUPS, 'questions' => self::questions($crop)];
+        return ['groups' => self::GROUPS, 'questions' => self::questions($crop), 'means' => self::MEANS];
     }
 
     /**

@@ -4084,7 +4084,7 @@
             ${(p.fieldProfileSaid || []).length && window.aneeFieldCard ? `
             <div class="wtp-card">
                 <h3>🌾 Your field in detail</h3>
-                ${window.aneeFieldCard.said(p.fieldProfileSaid)}
+                ${window.aneeFieldCard.list(p.fieldProfileSaid)}
             </div>` : ''}
 
             <div class="wtp-card">
