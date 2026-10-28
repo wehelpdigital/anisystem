@@ -174,11 +174,54 @@ final class ProtocolCare
      *
      * @return array{0:array, 1:?array, 2:list<string>} threats, weeds, notes for the prompt and the report
      */
-    public static function forTraits(string $crop, array $threats, ?array $weeds, array $traits, string $variety = ''): array
+    public static function forTraits(string $crop, array $threats, ?array $weeds, array $traits, string $variety = '', ?array $shield = null): array
     {
         $notes = [];
         $corn = str_starts_with($crop, 'corn');
-        if ($corn && $traits['bt']) {
+        $who = $variety !== '' ? $variety : 'The seed';
+        if ($shield) {
+            // What the seed makes needless (a strong Bt protein, a resistant rating) leaves the spray lists; what it only
+            // slows stays, said lighter; what it is weak against is named first (2026-10-28, VarietyShield).
+            $gone = [];
+            foreach (['pests', 'diseases'] as $k) {
+                $gone = array_merge($gone, array_values(array_filter($threats[$k] ?? [], fn ($t) => isset($shield['skip'][$t['slug']]))));
+                $threats[$k] = array_values(array_filter($threats[$k] ?? [], fn ($t) => ! isset($shield['skip'][$t['slug']])));
+            }
+            $bt = array_filter($gone, fn ($t) => ($shield['skip'][$t['slug']] ?? '') === 'bt');
+            $rated = array_filter($gone, fn ($t) => ($shield['skip'][$t['slug']] ?? '') === 'rating');
+            if ($bt) {
+                $notes[] = $who . ' carries Bt protection (' . $shield['bt']['label'] . ') that guards it against ' . self::andList(array_map(fn ($t) => preg_replace('/\basian\b/', 'Asian', mb_strtolower($t['name'])), $bt))
+                    . ' the whole season, so no calendar sprays are planned for them. Scout every week anyway and spray only past the threshold: caterpillars can learn to beat the trait.';
+            }
+            if ($rated) {
+                $notes[] = $who . ' is rated resistant to ' . self::andList(array_map(fn ($t) => mb_strtolower($t['name']), $rated)) . ', so no preventive sprays are planned for ' . (count($rated) > 1 ? 'them' : 'it') . '. Treat only if it shows past the threshold.';
+            }
+            $light = ['bt' => [], 'rating' => []];
+            foreach (['pests', 'diseases'] as $k) {
+                foreach ($threats[$k] ?? [] as $t) {
+                    if (isset($shield['lighter'][$t['slug']])) {
+                        $light[$shield['lighter'][$t['slug']]][] = mb_strtolower($t['name']);
+                    }
+                }
+            }
+            if ($light['bt']) {
+                $notes[] = 'The Bt protein in ' . $who . ' only slows ' . self::andList($light['bt']) . ': scout twice a week in their risky weeks and spray at the threshold, never on a calendar.';
+            }
+            if ($light['rating']) {
+                $notes[] = $who . ' is rated moderately resistant or tolerant to ' . self::andList($light['rating']) . ': fewer sprays, scout before spraying and never on a calendar.';
+            }
+            $weakNames = [];
+            foreach (['pests', 'diseases'] as $k) {
+                foreach ($threats[$k] ?? [] as $t) {
+                    if (isset($shield['weak'][$t['slug']])) {
+                        $weakNames[] = mb_strtolower($t['name']);
+                    }
+                }
+            }
+            if ($weakNames) {
+                $notes[] = $who . ' is rated susceptible to ' . self::andList($weakNames) . ': watch these first and protect early where they are common.';
+            }
+        } elseif ($corn && $traits['bt']) {
             $gone = array_values(array_filter($threats['pests'] ?? [], fn ($t) => in_array($t['slug'], self::BT_PESTS, true)));
             $threats['pests'] = array_values(array_filter($threats['pests'] ?? [], fn ($t) => ! in_array($t['slug'], self::BT_PESTS, true)));
             if ($gone) {

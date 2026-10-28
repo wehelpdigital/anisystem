@@ -136,7 +136,7 @@ class VarietyBook
             return self::$rowCache[$id];
         }
         if ($book[0] === 'rice') {
-            return self::$rowCache[$id] = self::withTrials(array_map(fn ($v) => self::fromRice($v), RiceVarieties::all()), 'rice');
+            return self::$rowCache[$id] = array_map(fn ($r) => $r + ['book' => 'rice'], self::withTrials(array_map(fn ($v) => self::fromRice($v), RiceVarieties::all()), 'rice'));
         }
         $rows = self::withTrials(array_map(fn ($v) => self::fromCrop($v), CropVarieties::forCrop($book[1])), $book[1]);
         if ($book[1] === 'corn' && $book[2]) {
@@ -152,7 +152,8 @@ class VarietyBook
             }));
         }
 
-        return self::$rowCache[$id] = $rows;
+        // Each row knows its crop (VarietyShield reads the crop's own pests and diseases).
+        return self::$rowCache[$id] = array_map(fn ($r) => $r + ['book' => $book[1] === 'corn' ? 'corn_' . ($book[2] ?: 'yellow') : $book[1]], $rows);
     }
 
     /** Forget the rows read this request (tests, measurements). */
@@ -691,6 +692,14 @@ class VarietyBook
             // What its registration papers say, in short (2026-10-18); never where it came from.
             if (($tw = self::trialWords($r)) !== '') {
                 $bits[] = $tw;
+            }
+            // What its own seed guards it from, and what that changes in the spraying (2026-10-28, VarietyShield).
+            try {
+                if (($sh = VarietyShield::of($r, $r['book'] ?? null))['say'] !== '') {
+                    $bits[] = 'protection: ' . $sh['say'];
+                }
+            } catch (\Throwable $e) {
+                report($e);
             }
 
             return '- ' . $r['name'] . ' [' . implode('; ', $bits) . ']';

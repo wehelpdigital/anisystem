@@ -1268,8 +1268,10 @@ class CropProtocolController extends Controller
                 $ctx['weeds'][$c['key']] = ProtocolCare::weeds($c['crop'], $c['method'], $ctx['frames'][$c['lots'][0]]['harvest']);
                 // The seed's own traits (2026-10-21, the owner): a Bt corn needs no caterpillar program, a tolerant one takes glyphosate.
                 $tr = ProtocolCare::traits($ctx['records'][$c['lots'][0]] ?? null, (string) ($c['variety'] ?? ''));
-                [$ctx['threats'][$c['key']], $ctx['weeds'][$c['key']], $tnotes] = ProtocolCare::forTraits($c['crop'], $ctx['threats'][$c['key']], $ctx['weeds'][$c['key']], $tr, (string) ($c['variety'] ?? ''));
-                $ctx['traits'][$c['key']] = $tr + ['notes' => $tnotes];
+                // And what the seed resists by its ratings, with each Bt protein's own reach (2026-10-28, VarietyShield).
+                $shield = \App\Support\VarietyShield::for($c['crop'], (string) ($c['variety'] ?? ''), $ctx['records'][$c['lots'][0]] ?? null);
+                [$ctx['threats'][$c['key']], $ctx['weeds'][$c['key']], $tnotes] = ProtocolCare::forTraits($c['crop'], $ctx['threats'][$c['key']], $ctx['weeds'][$c['key']], $tr, (string) ($c['variety'] ?? ''), $shield);
+                $ctx['traits'][$c['key']] = $tr + ['notes' => $tnotes, 'shield' => array_intersect_key($shield, array_flip(['skip', 'lighter', 'weak', 'say']))];
             } catch (\Throwable $e) {
                 report($e);
                 $ctx['threats'][$c['key']] = ['pests' => [], 'diseases' => []];
