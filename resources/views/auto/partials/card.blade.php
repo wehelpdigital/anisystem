@@ -1,10 +1,11 @@
 {{-- Anee Auto on the dashboard (2026-10-14, the owner: "really simple and
-     expandable"): one line of what she does and the start button, folded;
-     open, her morning plays in a phone and the price shows. Folded by
-     default, remembered per farm. The start button needs
-     auto.partials.start on the page. --}}
+     expandable"). Since 2026-10-28 (the owner: "we don't want the how it works
+     when it expands, its too long ... show a modal box, a full screen modal
+     explaining in an animated way what is anee auto"): one line of what she
+     does, the start button, and How it works, which opens the story
+     (auto.how-story) full screen in partials/story-modal's shell. The start
+     button needs auto.partials.start on the page. --}}
 @php
-    $acPrice = \App\Support\AiPrices::of('auto');
     $acFace = \App\Support\AneeEmoji::url('salute');
     $acWave = \App\Support\AneeEmoji::url('wave');
 @endphp
@@ -39,36 +40,9 @@
     .ac-more { display: inline-flex; align-items: center; gap: .3rem; padding: .62rem .9rem; border-radius: 999px; font-size: .82rem; font-weight: 800; color: #eaf3df;
         background: rgb(255 255 255 / .1); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .16); transition: background-color .28s cubic-bezier(.22,1,.36,1); }
     .ac-more:hover { background: rgb(255 255 255 / .16); }
-    .ac-more svg { width: .95rem; height: .95rem; transition: transform .34s cubic-bezier(.22,1,.36,1); }
-    .ac.is-open .ac-more svg { transform: rotate(180deg); }
-    .ac-fold { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.22,1,.36,1); }
-    .ac.is-open .ac-fold { grid-template-rows: 1fr; }
-    .ac-fold > div { min-height: 0; overflow: hidden; }
-    .ac-in { display: grid; gap: 1rem; padding: 0 1rem 1.1rem 1.05rem; opacity: 0; transform: translateY(8px); transition: opacity .35s ease, transform .45s cubic-bezier(.22,1,.36,1); }
-    .ac.is-open .ac-in { opacity: 1; transform: none; }
-    @container (min-width: 620px) { .ac-in { grid-template-columns: minmax(0, 1fr) 16rem; align-items: center; } }
-    .ac-c { container-type: inline-size; }
-    .ac-steps { display: grid; gap: .5rem; counter-reset: ac; }
-    .ac-step { display: flex; gap: .6rem; align-items: flex-start; font-size: .84rem; line-height: 1.45; color: #e8f1de; }
-    .ac-step::before { counter-increment: ac; content: counter(ac); flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; display: grid; place-items: center;
-        font-size: .72rem; font-weight: 900; color: #1d330d; background: #f5c518; }
-    .ac-price { font-size: .78rem; color: #cfe3b9; } .ac-price b { color: #fff; }
-    .ac-worth { grid-column: 1 / -1; padding-top: .9rem; border-top: 1px solid rgb(255 255 255 / .12); }
-    /* Her morning, in a phone */
-    .ac-phone { margin: 0 auto; width: min(100%, 16rem); padding: .55rem; border-radius: 1.7rem; background: #0b1406; border: 1px solid rgb(255 255 255 / .12); box-shadow: 0 24px 50px -28px rgb(0 0 0 / .8); }
-    .ac-screen { border-radius: 1.25rem; padding: .6rem .5rem; background: #f6f9f1; display: grid; gap: .4rem; min-height: 15.5rem; align-content: start; }
-    .ac-b { display: flex; gap: .35rem; align-items: flex-end; opacity: 0; transform: translateY(8px) scale(.97); }
-    .ac.is-open .ac-b { animation: acPop .45s cubic-bezier(.22,1,.36,1) forwards; animation-delay: calc(var(--d) * .9s + .35s); }
-    @keyframes acPop { to { opacity: 1; transform: none; } }
-    .ac-b img { flex: none; width: 1.45rem; height: 1.45rem; border-radius: 999px; background: #e4efd4; }
-    .ac-b div { padding: .4rem .55rem; border-radius: .85rem .85rem .85rem .25rem; background: #fff; border: 1px solid #e3eadb; font-size: .68rem; line-height: 1.4; color: #1f2a17; }
-    .ac-b.is-me { justify-content: flex-end; } .ac-b.is-me div { background: #e7f2da; border-color: #cfe3b8; border-radius: .85rem .85rem .25rem .85rem; }
-    .ac-t { display: flex; gap: .35rem; align-items: center; padding: .32rem .45rem; border-radius: .6rem; background: #f3f8ec; font-size: .64rem; font-weight: 700; color: #1f2a17; margin-top: .22rem; }
-    .ac-t em { margin-left: auto; font-style: normal; font-size: .58rem; font-weight: 800; color: #8a5a00; background: #fff4d6; padding: 0 .35rem; border-radius: 999px; }
+    .ac-more svg { width: .95rem; height: .95rem; }
     @media (prefers-reduced-motion: reduce) {
         .ac::before, .ac::after, .ac-face, .ac-go::after { animation: none; }
-        .ac-fold, .ac-in, .ac-more svg { transition: none; }
-        .ac.is-open .ac-b { animation: none; opacity: 1; transform: none; }
     }
 </style>
 @endonce
@@ -85,50 +59,44 @@
     <div class="ac-acts">
         <button type="button" class="ac-go" data-auto-start>Start Anee Auto
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg></button>
-        <button type="button" class="ac-more" data-ac-more aria-expanded="false" aria-controls="acFold">How it works
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+        <button type="button" class="ac-more" data-ac-more aria-haspopup="dialog" aria-controls="acStory">How it works
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 001.5.86l10.5-6.5a1 1 0 000-1.72L9.5 4.64A1 1 0 008 5.5z"/></svg></button>
     </div>
-    <div class="ac-fold" id="acFold"><div>
-        <div class="ac-in">
-            <div>
-                <div class="ac-steps">
-                    <div class="ac-step">Tell her about your lots, soil and water once.</div>
-                    <div class="ac-step">She writes the whole season from your own plan.</div>
-                    <div class="ac-step">Every morning she says what to do today, moved around the rain and your workers.</div>
-                </div>
-                <p class="ac-price mt-3"><b>{{ number_format($acPrice) }} credits per lot</b>, for the whole season.</p>
-            </div>
-            <div class="ac-phone" aria-hidden="true">
-                <div class="ac-screen">
-                    <div class="ac-b" style="--d:0"><img src="{{ $acWave }}" alt=""><div>Magandang umaga! Rain this afternoon, so we fertilize Lot 1 this morning.</div></div>
-                    <div class="ac-b" style="--d:1"><img src="{{ $acFace }}" alt=""><div><b>Today</b>
-                        <div class="ac-t">🧪 Second fertilizer, Lot 1<em>Now</em></div>
-                        <div class="ac-t">💧 Keep 3 cm of water</div></div></div>
-                    <div class="ac-b is-me" style="--d:2"><div>No workers tomorrow 🙅</div></div>
-                    <div class="ac-b" style="--d:3"><img src="{{ $acFace }}" alt=""><div>Moved to Thursday, the next dry morning. 👍</div></div>
-                </div>
-            </div>
-            {{-- Why the price is worth it (2026-10-15, the owner), the whole width under the steps and the phone. --}}
-            <div class="ac-worth">@include('auto.partials.worth')</div>
-        </div>
-    </div></div>
 </section>
 </div>
+@include('partials.story-modal')
+@push('sheets')
+<div class="stm" id="acStory" role="dialog" aria-modal="true" aria-labelledby="acStoryT" data-url="{{ route('auto.how') }}" hidden>
+    <div class="stm-bg" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="stm-bar">
+        <img src="{{ $acFace }}" alt="">
+        <div class="min-w-0"><b id="acStoryT">Anee Auto</b><small>How it works</small></div>
+        <button type="button" class="stm-x" aria-label="Close"><svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <span class="stm-prog" aria-hidden="true"><i></i></span>
+    </div>
+    <div class="stm-body" tabindex="-1">
+        <div class="stm-load" role="status"><span class="stm-load-face"><img src="{{ $acWave }}" alt=""></span><b data-wait="Anee is getting ready to show you">Anee is getting ready to show you</b></div>
+        <div class="stm-host"></div>
+    </div>
+    <nav class="stm-dots" aria-label="Parts of the story"></nav>
+</div>
+@endpush
+@push('scripts')
 <script>
 (() => {
-    /* Folded by default; the choice is kept per farm. */
     const card = document.getElementById('aneeAutoCard');
-    const btn = card?.querySelector('[data-ac-more]');
-    if (!card || !btn) return;
-    const KEY = 'acOpen:' + @json(\App\Support\WorkerContext::effectiveOwnerId());
-    const set = (open) => { card.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); };
-    try { set(localStorage.getItem(KEY) === '1'); } catch (_) { set(false); }
-    btn.addEventListener('click', () => {
-        const open = !card.classList.contains('is-open');
-        // Replay her morning each time it opens.
-        if (open) card.querySelectorAll('.ac-b').forEach((b) => { b.style.animation = 'none'; void b.offsetWidth; b.style.animation = ''; });
-        set(open);
-        try { localStorage.setItem(KEY, open ? '1' : '0'); } catch (_) {}
-    });
+    const btn = card?.querySelector('[data-ac-more]'), box = document.getElementById('acStory');
+    if (!card || !btn || !box) return;
+    // Once the story is drawn: the worth cards rise when their part comes in, and Start closes the story first.
+    const init = (b) => {
+        b.addEventListener('stm:scene', (e) => e.detail.querySelectorAll('[data-aw]').forEach((w) => w.classList.add('is-shown')));
+        b.addEventListener('click', (e) => {
+            if (!e.target.closest('[data-acs-start]')) return;
+            b.addEventListener('stm:closed', () => card.querySelector('[data-auto-start]')?.click(), { once: true });
+            window.aneeStory.close(b);
+        });
+    };
+    btn.addEventListener('click', () => window.aneeStory.open(box, btn, init));
 })();
 </script>
+@endpush

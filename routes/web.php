@@ -620,6 +620,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/app/draw', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'page'])->name('draw.page');
     // The dashboard's two explainers (2026-10-28), fetched the first time each opens (partials/story-modal).
     Route::get('/app/how-tour', fn () => view('app.how-tour'))->name('how.tour');
+    Route::get('/app/auto/how', fn () => view('auto.how-story'))->name('auto.how');
     // Anee Auto (2026-10-12): Anee plans the season and keeps planning it.
     Route::get('/app/auto', [App\Http\Controllers\AneeAutoController::class, 'index'])->name('auto.index');
     Route::get('/app/auto/quote', [App\Http\Controllers\AneeAutoController::class, 'quote'])->name('auto.quote');
