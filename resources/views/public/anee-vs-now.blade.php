@@ -149,11 +149,11 @@
 
     // A morning in the season: the farmer alone, and with Anee Auto.
     $morning = [
-        ['5:30', 'You look at the sky and guess whether it will rain today.', 'Today\'s work is already on your phone, read against the forecast, and in each worker\'s email.'],
-        ['7:00', 'A worker cannot come. The weeding waits, and nobody knows until when.', 'You tap Can\'t today. Anee moves the weeding to the best day near it and tells the crew.'],
-        ['10:00', 'Odd spots on the leaves. You post a photo in a group and wait.', 'You send the photo to Anee. She reads it, gives one answer, and fits the fix into the plan.'],
-        ['2:00 PM', 'The rain comes an hour after the spray. The money washes off with it.', 'The spray was moved to this morning, so it had dried before the rain.'],
-        ['7:00 PM', 'You try to remember what you spent today, and on whom.', 'The day\'s work and costs are already counted, lot by lot.'],
+        ['5:30', 'AM', '🌅', 'You look at the sky and guess whether it will rain today.', 'Today\'s work is already on your phone, read against the forecast, and in each worker\'s email.'],
+        ['7:00', 'AM', '☀️', 'A worker cannot come. The weeding waits, and nobody knows until when.', 'You tap Can\'t today. Anee moves the weeding to the best day near it and tells the crew.'],
+        ['10:00', 'AM', '🌤️', 'Odd spots on the leaves. You post a photo in a group and wait.', 'You send the photo to Anee. She reads it, gives one answer, and fits the fix into the plan.'],
+        ['2:00', 'PM', '🌦️', 'The rain comes an hour after the spray. The money washes off with it.', 'The spray was moved to this morning, so it had dried before the rain.'],
+        ['7:00', 'PM', '🌙', 'You try to remember what you spent today, and on whom.', 'The day\'s work and costs are already counted, lot by lot.'],
     ];
 
     $faqs = [
@@ -370,20 +370,29 @@
     /* ---- a morning with Anee Auto ---- */
     .avn-morning-sec { color: #fff; background: radial-gradient(50rem 26rem at 10% 0%, #2c4f17, transparent 60%), #0f170a; }
     .avn-day { position: relative; display: grid; gap: .8rem; margin-top: 2rem; }
-    .avn-day::before { content: ''; position: absolute; left: 1.55rem; top: 1rem; bottom: 1rem; width: 2px; background: rgb(255 255 255 / .12); }
-    .avn-hour { position: relative; display: grid; grid-template-columns: 3.2rem minmax(0, 1fr); gap: .85rem; align-items: start; }
-    .avn-hour-t { position: relative; z-index: 1; display: grid; place-items: center; width: 3.1rem; height: 3.1rem; border-radius: 999px; font-size: .74rem; font-weight: 900; line-height: 1.1; text-align: center;
-        color: #14210c; background: #fff; transition: background-color .32s var(--hp-ease); }
-    .avn[data-side="anee"] .avn-hour-t { background: var(--hp-sun); }
+    /* The day's line: a soft gradient, the times as pills on it (the sky, the hour, AM or PM), always inside their column. */
+    .avn-day::before { content: ''; position: absolute; left: 1.75rem; top: 1.5rem; bottom: 1.5rem; width: 2px; margin-left: -1px; border-radius: 999px;
+        background: linear-gradient(180deg, rgb(253 230 138 / .55), rgb(255 255 255 / .14) 45%, rgb(129 140 248 / .45)); }
+    .avn-hour { position: relative; display: grid; grid-template-columns: 3.5rem minmax(0, 1fr); gap: .8rem; align-items: stretch; }
+    .avn-hour-t { position: relative; z-index: 1; align-self: center; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .05rem;
+        width: 3.5rem; padding: .45rem 0 .5rem; border-radius: 1.1rem; text-align: center; color: #14210c; background: #fff;
+        box-shadow: 0 0 0 4px #0f170a, 0 10px 22px -12px rgb(0 0 0 / .8); transition: background-color .32s var(--hp-ease), box-shadow .32s var(--hp-ease); }
+    .avn-hour-t i { font-style: normal; font-size: .95rem; line-height: 1.1; }
+    .avn-hour-t b { font-size: .88rem; font-weight: 900; line-height: 1.1; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+    .avn-hour-t small { font-size: .58rem; font-weight: 900; letter-spacing: .1em; color: #6b7280; }
+    .avn[data-side="anee"] .avn-hour-t { background: var(--hp-sun); box-shadow: 0 0 0 4px #0f170a, 0 0 22px -4px rgb(245 197 24 / .6); }
+    .avn[data-side="anee"] .avn-hour-t small { color: #5b4300; }
     .avn-hour-c { display: grid; }
-    .avn-hour-c p { grid-area: 1 / 1; padding: .85rem 1rem; border-radius: 1.1rem; font-size: .93rem; line-height: 1.5; transition: opacity .38s var(--hp-ease), transform .38s var(--hp-ease); }
+    .avn-hour-c p { grid-area: 1 / 1; display: flex; flex-direction: column; justify-content: center; padding: .8rem 1rem; border-radius: 1.1rem; font-size: .93rem; line-height: 1.5;
+        transition: opacity .38s var(--hp-ease), transform .38s var(--hp-ease); }
     .avn-hour-c .is-now { color: #fee2e2; background: rgb(180 35 24 / .2); border: 1px solid rgb(248 113 113 / .3); }
     .avn-hour-c .is-anee { color: #ecfccb; background: rgb(132 204 22 / .14); border: 1px solid rgb(163 230 53 / .35); }
     .avn-hour-c p b { display: block; margin-bottom: .15rem; font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
     .avn[data-side="now"] .avn-hour-c .is-anee, .avn[data-side="anee"] .avn-hour-c .is-now { opacity: 0; transform: translateY(8px); pointer-events: none; }
     @media (min-width: 900px) {
-        .avn-day::before { left: 50%; margin-left: -1px; }
-        .avn-hour { grid-template-columns: minmax(0, 1fr) 3.2rem minmax(0, 1fr); }
+        .avn-day::before { left: 50%; }
+        .avn-hour { grid-template-columns: minmax(0, 1fr) 3.5rem minmax(0, 1fr); gap: 1rem; }
+        .avn-hour-c .is-now { align-items: flex-end; }
         .avn-hour-c { display: contents; }
         .avn-hour-c p { grid-area: auto; }
         .avn-hour-c .is-now { grid-column: 1; grid-row: 1; text-align: right; }
@@ -626,7 +635,11 @@
                     <span class="avn-meter-bar" aria-hidden="true"><b data-pb></b></span>
                 </div>
             </div>
-            <p class="avn-fine reveal">Credits come with {{ $aneePlan ? $aneePlan['name'] : 'the paid plans' }} and every plan above it@if (collect($plans)->contains(fn ($p) => $p['credits'] > 0)); {{ collect($plans)->filter(fn ($p) => $p['credits'] > 0)->map(fn ($p) => $p['name'] . ' adds ' . $p['credits'])->implode(' and ') }} every month@endif. A deep analysis, like When to Plant or a Crop Protocol, shows its own price before it runs.</p>
+            @php
+                // Which plans add credits every month (a Blade @if glued to a word is not read as one, so the sentence is built here).
+                $creditAdds = collect($plans)->filter(fn ($p) => $p['credits'] > 0)->map(fn ($p) => $p['name'] . ' adds ' . $p['credits'])->implode(' and ');
+            @endphp
+            <p class="avn-fine reveal">Credits come with {{ $aneePlan ? $aneePlan['name'] : 'the paid plans' }} and every plan above it{{ $creditAdds !== '' ? '; ' . $creditAdds . ' every month' : '' }}. A deep analysis, like When to Plant or a Crop Protocol, shows its own price before it runs.</p>
         </div>
     </section>
     @endif
@@ -646,9 +659,9 @@
                 </div>
             </div>
             <div class="avn-day">
-                @foreach ($morning as $mi => [$at, $alone, $auto])
+                @foreach ($morning as $mi => [$at, $ampm, $sky, $alone, $auto])
                     <div class="avn-hour reveal" style="--reveal-delay: {{ $mi * 0.05 }}s">
-                        <span class="avn-hour-t">{{ $at }}</span>
+                        <span class="avn-hour-t"><i aria-hidden="true">{{ $sky }}</i><b>{{ $at }}</b><small>{{ $ampm }}</small></span>
                         <div class="avn-hour-c">
                             <p class="is-now"><b>Now</b>{{ $alone }}</p>
                             <p class="is-anee"><b>With Anee Auto</b>{{ $auto }}</p>

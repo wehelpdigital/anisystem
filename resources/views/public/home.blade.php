@@ -2044,15 +2044,9 @@
     .hp-h1 { margin-top: 1.4rem; font-family: var(--font-heading); font-weight: 800; letter-spacing: -.02em; line-height: 1.02;
         font-size: clamp(2.6rem, 7vw, 4.6rem); text-wrap: balance; }
     .hp-lede { margin-top: 1.9rem; max-width: 36rem; font-size: clamp(1.02rem, 1.7vw, 1.18rem); line-height: 1.7; color: #dde6d4; }
-    /* How many tools, marked: white and bold on a soft gold glow, a gold marker drawn under it once the lede is in. */
-    .hp-lede-tools { font-weight: 800; color: #fff; padding: 0 .14em; border-radius: .25em; -webkit-box-decoration-break: clone; box-decoration-break: clone;
-        text-shadow: 0 1px 10px rgb(245 197 24 / .35);
-        background: linear-gradient(transparent 66%, #f5c518 66%, #f5c518 90%, transparent 90%) no-repeat 0 0 / 100% 100%; }
-    .hp-lede-tools span { font-size: 1.08em; }
-    @media (prefers-reduced-motion: no-preference) {
-        .hp-lede-tools { background-size: 0% 100%; animation: hpToolsMark 1.1s var(--hp-ease) .9s forwards; }
-        @keyframes hpToolsMark { to { background-size: 100% 100%; } }
-    }
+    /* How many tools: white and bold, the count in gold (no underline since 2026-10-29, the owner). */
+    .hp-lede-tools { font-weight: 800; color: #fff; text-shadow: 0 1px 12px rgb(245 197 24 / .3); }
+    .hp-lede-tools span { font-size: 1.08em; color: #f5c518; }
     .hp-hero-acts { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .8rem; }
     .hp-trust { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; font-size: .9rem; font-weight: 700; color: #e6eddd; }
     .hp-trust li { display: inline-flex; align-items: center; gap: .4rem; }
@@ -3989,18 +3983,15 @@
         .hp-prec-rows { margin-top: 3rem; }
 
         /* Meet Anee: what she reads, two to a row, names only; her phone a little smaller,
-           and her hello a small picture on its bottom corner (2026-10-28, the owner: low and to
-           the right), over the frame and the send button, clear of the chat. */
+           and no hello film over it (2026-10-29, the owner: "in mobile, remove the floating video"). */
         .hp-anee-reads { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; }
         .hp-anee-reads li { padding: .5rem .55rem; gap: .5rem; }
         .hp-anee-reads small { display: none; }
         .hp-anee-reads b { font-size: .8rem; }
         .hp-anee-ri { width: 1.9rem; height: 1.9rem; border-radius: .6rem; }
         .hp-anee-ri svg { width: 1rem; height: 1rem; }
-        .hp-anee-phone { width: min(17rem, 76vw); margin-top: 0; margin-bottom: 3.2rem; }
-        .hp-anee-film { --rot: 4deg; top: auto; bottom: -2.6rem; left: auto; right: -1.6rem; width: 9.5rem; margin: 0; border-radius: .8rem; }
-        .hp-anee-film-play { padding: .4rem .45rem; }
-        .hp-anee-film-play span { width: 2rem; height: 2rem; }
+        .hp-anee-phone { width: min(17rem, 76vw); margin-top: 0; margin-bottom: 0; }
+        .hp-anee-film { display: none; }
 
         /* The topic chips: twelve, then the rest on a tap. */
         .hp-topics:not(.is-all) .hp-topic:nth-child(n+13) { display: none; }
