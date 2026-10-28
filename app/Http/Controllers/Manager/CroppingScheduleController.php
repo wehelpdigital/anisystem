@@ -133,14 +133,35 @@ class CroppingScheduleController extends Controller
                 if (! $age || ! $crop) {
                     continue;
                 }
-                $stage = \App\Support\CropStages::stageFor($crop, $lot->stageDay($age), $age['counter']);
-                // How far this lot is through its crop's whole calendar —
-                // the stages it has finished, plus its way through this one.
+                // The lot's own days to maturity, as Growth Stages reads them (the two pages agree).
+                $maturity = $lot->maturityDays();
+                $stage = \App\Support\CropStages::stageFor($crop, $lot->stageDay($age), $age['counter'], $maturity);
+                // How far this lot is through its crop's whole calendar — the stages it has finished, plus its way
+                // through this one. The last stage has no end, so it held at 88% however long past the harvest a lot
+                // stood (2026-10-28, the owner: "the das is way past the harvest date ... but it still says 88% ...
+                // make the progress bar red and 100%"): an annual crop with a sowing day and days to maturity is read
+                // against its harvest day, as the harvest module reads it (sowing plus the days to maturity), and a
+                // lot harvested is whole.
                 $through = null;
+                $late = null;
+                $harvestIn = null;
+                $harvested = $lot->harvestedAt ? \Illuminate\Support\Carbon::parse($lot->harvestedAt) : null;
+                $sown = $dayZeroEff[$lot->id] ?? null;
                 if ($stage && ! empty($stage['count'])) {
                     $through = (int) round(100 * min(1, max(0,
                         ($stage['index'] + ($stage['progress'] ?? 0)) / $stage['count']
                     )));
+                }
+                if ($harvested) {
+                    $through = 100;
+                } elseif ($maturity && $sown && ($age['unit'] ?? 'day') === 'day') {
+                    $grown = (int) $sown->copy()->startOfDay()->diffInDays($today, false) + (int) ($lot->growthShiftDays ?? 0);
+                    $through = (int) round(100 * min(1, max(0, $grown / $maturity)));
+                    if ($grown > $maturity) {
+                        $late = $grown - $maturity;
+                    } elseif (empty($stage['next'])) {
+                        $harvestIn = $maturity - $grown;
+                    }
                 }
                 $readings[] = [
                     'day' => $age['day'],
@@ -151,6 +172,10 @@ class CroppingScheduleController extends Controller
                     'through' => $through,
                     'next' => $stage['next']['label'] ?? null,
                     'nextIn' => $stage['next']['inDays'] ?? null,
+                    // Past its harvest day by this many days (the bar turns red), or harvested.
+                    'late' => $late,
+                    'harvestIn' => $harvestIn,
+                    'harvested' => $harvested?->format('M j'),
                 ];
             }
             // The one furthest through its season leads, because that is the

@@ -21,7 +21,17 @@
     .ac::after { content: ''; position: absolute; z-index: -1; left: -3rem; top: -3rem; width: 11rem; height: 11rem; border-radius: 999px;
         background: radial-gradient(circle, rgb(245 197 24 / .35), transparent 65%); animation: acGlow 5s ease-in-out infinite; }
     @keyframes acGlow { 50% { transform: scale(1.18); opacity: .7; } }
-    .ac-top { display: flex; align-items: center; gap: .9rem; padding: 1rem 1rem 1rem 1.05rem; }
+    .ac-top { display: flex; align-items: center; gap: .9rem; padding: 1rem 3.2rem 1rem 1.05rem; }
+    /* Preview, a small play button in the corner (2026-10-28, the owner): Anee Auto's tutorial video, as the tools' Preview plays theirs. */
+    .ac-prev { position: absolute; right: .8rem; top: .8rem; z-index: 2; width: 2.2rem; height: 2.2rem; border-radius: 999px; display: grid; place-items: center; color: #3b2f00;
+        background: #f5c518; box-shadow: 0 0 0 0 rgb(245 197 24 / .55), 0 6px 14px -6px rgb(0 0 0 / .6); animation: acPrevRing 2.4s ease-out infinite; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .ac-prev:hover { transform: scale(1.08); }
+    .ac-prev:active { transform: scale(.94); }
+    .ac-prev:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+    .ac-prev svg { width: .85rem; height: .85rem; margin-left: 2px; }
+    .ac-prev small { position: absolute; right: calc(100% + .35rem); top: 50%; translate: 0 -50%; padding: .12rem .45rem; border-radius: 999px; white-space: nowrap; font-size: .62rem; font-weight: 800;
+        color: #eaf3df; background: rgb(0 0 0 / .3); }
+    @keyframes acPrevRing { 0% { box-shadow: 0 0 0 0 rgb(245 197 24 / .55), 0 6px 14px -6px rgb(0 0 0 / .6); } 70%, 100% { box-shadow: 0 0 0 10px rgb(245 197 24 / 0), 0 6px 14px -6px rgb(0 0 0 / .6); } }
     .ac-face { position: relative; flex: none; width: 3.4rem; height: 3.4rem; border-radius: 999px; padding: .2rem; background: rgb(255 255 255 / .14);
         box-shadow: inset 0 0 0 1px rgb(255 255 255 / .18); animation: acBob 3.8s ease-in-out infinite; }
     .ac-face img { width: 100%; height: 100%; object-fit: contain; }
@@ -42,12 +52,13 @@
     .ac-more:hover { background: rgb(255 255 255 / .16); }
     .ac-more svg { width: .95rem; height: .95rem; }
     @media (prefers-reduced-motion: reduce) {
-        .ac::before, .ac::after, .ac-face, .ac-go::after { animation: none; }
+        .ac::before, .ac::after, .ac-face, .ac-go::after, .ac-prev { animation: none; }
     }
 </style>
 @endonce
 <div class="ac-c">
 <section class="ac" id="aneeAutoCard" aria-labelledby="acTitle">
+    <button type="button" class="ac-prev" data-tut-preview="analysis.anee-auto" aria-label="Preview: a video on how Anee Auto works" title="Preview"><small>Preview</small><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></button>
     <div class="ac-top">
         <span class="ac-face"><img src="{{ $acFace }}" alt=""></span>
         <div class="ac-txt">
@@ -81,10 +92,13 @@
     <nav class="stm-dots" aria-label="Parts of the story"></nav>
 </div>
 @endpush
+@include('partials.tutorial-offer', ['keys' => ['analysis.anee-auto'], 'auto' => null])
 @push('scripts')
 <script>
 (() => {
     const card = document.getElementById('aneeAutoCard');
+    // The corner's Preview plays the tutorial video (the dashboard's tools catch it first when they are on the page).
+    card?.querySelector('.ac-prev')?.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); window.aneeTutorial && window.aneeTutorial.preview('analysis.anee-auto'); });
     const btn = card?.querySelector('[data-ac-more]'), box = document.getElementById('acStory');
     if (!card || !btn || !box) return;
     // Once the story is drawn: the worth cards rise when their part comes in, and Start closes the story first.

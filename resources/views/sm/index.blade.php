@@ -420,6 +420,11 @@
             background-size: 220% 100%;
             animation: gradSweep 9s ease-in-out infinite alternate; }
         @media (prefers-reduced-motion: reduce) { .se-lotbar span { animation: none; } }
+        /* Past its harvest day: the bar full and red, the words saying by how much (2026-10-28). Harvested: full and gold. */
+        .se-lotbar.is-late span { background: linear-gradient(90deg, #f08a7e, #c2453d); animation: none; }
+        .se-lotbar.is-done span { background: linear-gradient(90deg, #f5c518, #e0a94a); animation: none; }
+        .se-lotfoot.is-late, .se-lotfoot.is-late b { color: #c2453d; font-weight: 800; }
+        html.dark .se-lotfoot.is-late, html.dark .se-lotfoot.is-late b { color: #f19b93; }
         .se-lotfoot { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem;
             margin-top: .2rem; font-size: .66rem; color: var(--color-gray-400); }
         .se-lotfoot span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -902,9 +907,16 @@
                                                 <span class="se-read-lot truncate">{{ $r['icon'] }} {{ $r['lot'] }}</span>
                                             </div>
                                             @if ($r['through'] !== null)
-                                                <div class="se-lotbar"><span style="width: {{ $r['through'] }}%"></span></div>
-                                                <div class="se-lotfoot">
-                                                    <span>@if ($r['next']) {{ $r['next'] }} in {{ $r['nextIn'] }} {{ \Illuminate\Support\Str::plural('day', (int) $r['nextIn']) }} @else The harvest window @endif</span>
+                                                @php $lateBy = $r['late'] ?? null; @endphp
+                                                <div class="se-lotbar{{ $lateBy ? ' is-late' : (! empty($r['harvested']) ? ' is-done' : '') }}"><span style="width: {{ $r['through'] }}%"></span></div>
+                                                <div class="se-lotfoot{{ $lateBy ? ' is-late' : '' }}">
+                                                    <span>
+                                                        @if (! empty($r['harvested'])) Harvested {{ $r['harvested'] }}
+                                                        @elseif ($lateBy) Harvest was due {{ $lateBy }} {{ \Illuminate\Support\Str::plural('day', (int) $lateBy) }} ago
+                                                        @elseif ($r['next']) {{ $r['next'] }} in {{ $r['nextIn'] }} {{ \Illuminate\Support\Str::plural('day', (int) $r['nextIn']) }}
+                                                        @elseif (($r['harvestIn'] ?? null) !== null) Harvest in {{ $r['harvestIn'] }} {{ \Illuminate\Support\Str::plural('day', (int) $r['harvestIn']) }}
+                                                        @else The harvest window @endif
+                                                    </span>
                                                     <b>{{ $r['through'] }}%</b>
                                                 </div>
                                             @endif
