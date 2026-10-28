@@ -41,6 +41,8 @@
     $hwEnd = $hwStart->copy()->addDays($hwB['length']);
     $hwPct = (int) round($hwB['day'] / $hwB['length'] * 100);
     $hwPrio = ['high' => '#f46a6a', 'medium' => '#f1b44c', 'low' => '#94a3b8'];
+    // The activities board's days (the board band's phone; set here since the top's phone went, 2026-10-28).
+    $hwDays = [$hwToday->copy()->subDay(), $hwToday, $hwToday->copy()->addDay(), $hwToday->copy()->addDays(3)];
     // A one-path icon, drawn like the app's.
     $hwI = fn (string $d, $w = 2) => '<svg fill="none" stroke="currentColor" stroke-width="' . $w . '" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="' . $d . '"/></svg>';
     $hwBellD = 'M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 00-4-5.7V5a2 2 0 10-4 0v.3A6 6 0 006 11v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9';
@@ -53,6 +55,10 @@
         ['Shop', '<path stroke-linecap="round" stroke-linejoin="round" d="M4 9l1.5-5h13L20 9M4 9h16M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9M9 20v-6h6v6"/>'],
     ];
     $hwNav = fn (int $on) => '<div class="hwr-nav">' . collect($hwTabs)->map(fn ($t, $k) => '<span' . ($k === $on ? ' class="on"' : '') . '><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">' . $t[1] . '</svg>' . $t[0] . '</span>')->implode('') . '</div>';
+    // A day's header, left open for what follows it (today's weather).
+    $hwDay = fn ($d, $n) => '<div class="hwa-h">' . $hwI('M9 5l7 7-7 7', 2.6) . '<span class="dw">' . strtoupper($d->format('D')) . '</span><b>' . $d->format('M j, y') . '</b>'
+        . '<span class="dd">' . $hwI('M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16', 2.4) . '</span><span class="ct">' . $n . '</span><span class="pl">' . $hwI('M12 5v14M5 12h14', 2.2) . '</span>'
+        . '<svg class="kb" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>';
     $hwPh = \App\Support\Region::ph();
     $hwLink = function (array $it) use ($hwMode, $hwPh) {
         // Inside the app a tool opens itself; a public page (the guides, the
@@ -102,7 +108,58 @@
     .hw *, .hw *::before, .hw *::after { box-sizing: border-box; }
     .hw img { max-width: none; }
 
-    /* ---------- the top: Anee on the phone ---------- */
+    /* ---------- the top: the season wheel (2026-10-28) ---------- */
+    .hw-hero.is-wheel { padding-bottom: 1.5rem; }
+    @media (min-width: 1024px) {
+        .hw-hero.is-wheel { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr); gap: 3rem; align-items: center; max-width: 80rem; margin: 0 auto; padding: 4rem var(--pad) 2rem; text-align: left; }
+        .hw-hero.is-wheel .hw-h1, .hw-hero.is-wheel .hw-lede, .hw-hero.is-wheel .hw-tally { margin-left: 0; margin-right: 0; }
+        .hw-hero.is-wheel .hw-btns { justify-content: flex-start; }
+    }
+    .hw-wheel { position: relative; width: min(100% - 4.5rem, 30rem); aspect-ratio: 1; margin: 3.6rem auto 2.6rem; }
+    @media (min-width: 1024px) { .hw-wheel { margin: 3rem auto; } }
+    .hw-wh-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .hw-wh-track { fill: none; stroke: rgb(168 204 126 / .22); stroke-width: 2; stroke-dasharray: 2 7; }
+    .hw-wh-arc { fill: none; stroke: url(#hwWhG); stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transform: rotate(-90deg); transform-origin: 200px 200px;
+        animation: hwWhDraw 2.2s var(--ease) .3s forwards; filter: drop-shadow(0 0 6px rgb(245 197 24 / .45)); }
+    @keyframes hwWhDraw { to { stroke-dashoffset: 0; } }
+    .hw-wh-orbit { transform-origin: 200px 200px; opacity: 0; animation: hwWhIn .5s 2.4s forwards, hwWhSpin var(--spin) linear 2.4s infinite; }
+    .hw-wh-orbit circle { fill: #f5c518; } .hw-wh-orbit .halo { fill: rgb(245 197 24 / .25); }
+    @keyframes hwWhSpin { to { transform: rotate(360deg); } }
+    @keyframes hwWhIn { to { opacity: 1; } }
+    /* Anee Auto in the middle: her face, two rings breathing out. */
+    .hw-wh-core { position: absolute; left: 50%; top: 50%; width: 46%; aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 999px; display: grid; place-content: center; justify-items: center; gap: .1rem;
+        text-align: center; color: #fff; background: radial-gradient(circle at 50% 35%, #2c4a1a, #13230c 70%); box-shadow: 0 0 0 2px rgb(245 197 24 / .7), 0 0 50px 6px rgb(168 204 126 / .25);
+        transition: transform .35s var(--ease), box-shadow .35s var(--ease); animation: hwWhPop .7s var(--ease) .2s both; }
+    button.hw-wh-core { cursor: pointer; }
+    button.hw-wh-core:hover { transform: translate(-50%, -50%) scale(1.04); box-shadow: 0 0 0 3px #f5c518, 0 0 60px 10px rgb(245 197 24 / .3); }
+    .hw-wh-core img { width: 46%; height: auto; }
+    .hw-wh-core b { margin-top: .2rem; font-family: var(--font-heading); font-size: clamp(.95rem, 3.4vw, 1.25rem); font-weight: 800; line-height: 1.1; color: var(--acc); }
+    .hw-wh-core small { max-width: 11rem; font-size: clamp(.58rem, 2vw, .72rem); font-weight: 700; line-height: 1.3; color: var(--mute); }
+    .hw-wh-core > i { position: absolute; inset: 0; border-radius: inherit; border: 2px solid rgb(245 197 24 / .5); animation: hwWhBreath 3.2s ease-out 1s infinite; pointer-events: none; }
+    .hw-wh-core > i + i { animation-delay: 2.6s; }
+    @keyframes hwWhBreath { from { transform: scale(1); opacity: .9; } to { transform: scale(1.35); opacity: 0; } }
+    @keyframes hwWhPop { from { opacity: 0; transform: translate(-50%, -50%) scale(.7); } }
+    /* A step on the wheel: its mark and number, its name and its tools outside the ring; lit as the light passes. */
+    .hw-wh-node { position: absolute; left: var(--x); top: var(--y); width: clamp(2.6rem, 11vw, 3.6rem); aspect-ratio: 1; transform: translate(-50%, -50%); border-radius: 999px; cursor: pointer;
+        animation: hwWhNode .55s var(--ease) both; animation-delay: calc(.5s + var(--k) * .22s); }
+    @keyframes hwWhNode { from { opacity: 0; transform: translate(-50%, -50%) scale(.4); } }
+    .hw-wh-dot { position: absolute; inset: 0; border-radius: inherit; display: grid; place-items: center; color: var(--leaf); background: #13230c; box-shadow: 0 0 0 2px rgb(168 204 126 / .55);
+        transition: transform .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease); animation: hwWhLit var(--spin) linear infinite; animation-delay: calc(2.4s + var(--t)); }
+    .hw-wh-dot svg { width: 48%; height: 48%; }
+    .hw-wh-dot em { position: absolute; right: -.3rem; top: -.3rem; min-width: 1.15rem; height: 1.15rem; padding: 0 .2rem; border-radius: 999px; display: grid; place-items: center; font-style: normal; font-size: .62rem; font-weight: 900; color: #2b2100; background: var(--acc); }
+    @keyframes hwWhLit { 0% { color: #2b2100; background: #f5c518; box-shadow: 0 0 0 3px #f5c518, 0 0 26px 6px rgb(245 197 24 / .55); transform: scale(1.12); } 12% { color: #2b2100; background: #f5c518; box-shadow: 0 0 0 3px #f5c518, 0 0 20px 4px rgb(245 197 24 / .35); transform: scale(1.05); } 22%, 100% { color: var(--leaf); background: #13230c; box-shadow: 0 0 0 2px rgb(168 204 126 / .55); transform: none; } }
+    .hw-wh-node { transition: transform .3s var(--ease); } .hw-wh-node:hover, .hw-wh-node:focus-visible { transform: translate(-50%, -50%) scale(1.1); }
+    .hw-wh-node:hover .hw-wh-l b, .hw-wh-node:focus-visible .hw-wh-l b { color: var(--acc); }
+    .hw-wh-l { position: absolute; left: 50%; top: 50%; display: grid; justify-items: center; width: 6rem; text-align: center; pointer-events: none;
+        transform: translate(calc(-50% + var(--lx) * clamp(3.1rem, 13vw, 4.4rem)), calc(-50% + var(--ly) * clamp(2.6rem, 11vw, 3.6rem))); }
+    .hw-wh-l b { font-size: clamp(.72rem, 2.6vw, .9rem); font-weight: 800; color: #fff; }
+    .hw-wh-l small { font-size: clamp(.58rem, 2vw, .68rem); font-weight: 700; color: var(--soft); }
+    @media (prefers-reduced-motion: reduce) {
+        .hw-wh-arc { animation: none; stroke-dashoffset: 0; } .hw-wh-orbit { animation: none; opacity: 0; }
+        .hw-wh-core, .hw-wh-core > i, .hw-wh-node, .hw-wh-dot { animation: none !important; }
+    }
+
+    /* ---------- the top: Anee on the phone (before 2026-10-28; its film still drives the bands' phones) ---------- */
     .hw-hero { position: relative; isolation: isolate; padding: 3.2rem var(--pad) 0; text-align: center;
         background: radial-gradient(60rem 32rem at 50% -8%, rgb(134 181 86 / .3), transparent 64%), linear-gradient(180deg, #14250d 0%, #0d1609 100%); }
     .hw-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
@@ -1045,7 +1102,7 @@
 
 <div class="hw" data-hw data-hw-mode="{{ $hwMode }}">
     {{-- The top: Anee on the phone, the start of every step below. --}}
-    <section class="hw-hero">
+    <section class="hw-hero is-wheel">
         <div class="hw-copy">
             <p class="hw-kick">How it works</p>
             <{{ $hwTop }} class="hw-h1">From the first plan to the last sack, <em>Anee is with you</em></{{ $hwTop }}>
@@ -1065,235 +1122,41 @@
                 </button>
             </div>
         </div>
-        <div class="hw-show" aria-hidden="true">
-            <svg class="hw-show-svg"></svg>
-            @foreach ($hwPings as $k => [$emo, $t, $s])
-                <div class="hw-ping" style="--k: {{ $k }}"><div class="hw-ping-in"><span>{{ $emo }}</span><div><b>{{ $t }}</b><small>{{ $s }}</small></div></div></div>
+        {{-- The season as a wheel (2026-10-28, the owner: "make the top part where there's an initial phone animation
+             better? you can remove the phone and change that part entirely"): the steps by hand around it, each with its
+             tools, a light that goes round the season and wakes each step in turn, and Anee Auto in the middle, the way
+             to have all of them done. Any step takes you to it. --}}
+        @php
+            $hwRing = collect($hwStages)->reject(fn ($s) => $s['key'] === 'auto')->values();
+            $hwRingN = max(1, $hwRing->count());
+            $hwNum = fn ($key) => collect($hwStages)->search(fn ($s) => $s['key'] === $key) + 1;
+            $hwSpin = 14;
+        @endphp
+        <div class="hw-wheel" data-hw-source style="--spin: {{ $hwSpin }}s">
+            <svg class="hw-wh-svg" viewBox="0 0 400 400" aria-hidden="true">
+                <defs><linearGradient id="hwWhG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a8cc7e"/><stop offset="1" stop-color="#f5c518"/></linearGradient></defs>
+                <circle class="hw-wh-track" cx="200" cy="200" r="160"/>
+                <circle class="hw-wh-arc" cx="200" cy="200" r="160" pathLength="1"/>
+                <g class="hw-wh-orbit"><circle class="halo" cx="200" cy="40" r="15"/><circle cx="200" cy="40" r="6.5"/></g>
+            </svg>
+            @if ($hwMode === 'site' && collect($hwStages)->contains('key', 'auto'))
+                <button type="button" class="hw-wh-core" data-hw-go="auto">
+                    <i aria-hidden="true"></i><i aria-hidden="true"></i>
+                    <img src="{{ asset('images/anee/emoji/salute.png') }}" alt="" width="96" height="96">
+                    <b>Anee Auto</b><small>Step {{ $hwNum('auto') }}: she runs all {{ $hwRing->count() }}</small>
+                </button>
+            @else
+                <span class="hw-wh-core is-plain"><i aria-hidden="true"></i><img src="{{ asset('images/anee/emoji/salute.png') }}" alt="" width="96" height="96"><b>Anee</b><small>at every step</small></span>
+            @endif
+            @foreach ($hwRing as $i => $st)
+                @php $hwA = deg2rad(-90 + $i * 360 / $hwRingN); @endphp
+                <button type="button" class="hw-wh-node" data-hw-go="{{ $st['key'] }}" aria-label="Step {{ $hwNum($st['key']) }}, {{ $st['title'] }}: {{ count(array_filter($st['items'])) }} tools"
+                    style="--x: {{ round(50 + 40 * cos($hwA), 3) }}%; --y: {{ round(50 + 40 * sin($hwA), 3) }}%; --lx: {{ round(cos($hwA), 3) }}; --ly: {{ round(sin($hwA), 3) }}; --k: {{ $i }}; --t: {{ round($i * $hwSpin / $hwRingN, 2) }}s">
+                    <span class="hw-wh-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ $st['glyph'] }}"/></svg><em>{{ $hwNum($st['key']) }}</em></span>
+                    <span class="hw-wh-l"><b>{{ $st['word'] }}</b><small>{{ count(array_filter($st['items'])) }} tools</small></span>
+                </button>
             @endforeach
-            <div class="hw-phone">
-                <div class="hw-scr"><div class="hwr">
-                    {{-- Scene one: the login page. --}}
-                    <div class="hw-scene s-login is-on">
-                        <div class="hwr-pub"><img src="{{ asset('images/logo.png') }}?v=anee2" alt=""><span class="hwr-burger"><i></i><i></i><i></i></span></div>
-                        <div class="hwr-login">
-                            <div class="hwr-h">Welcome back</div>
-                            <p>Log in to manage your farm.</p>
-                            <div class="hwr-card">
-                                <div class="hwr-lab">Email address</div>
-                                <span class="hwr-in" data-f="email"><span class="ph">you@example.com</span><span class="v"></span><em></em></span>
-                                <div class="hwr-lab">Password <a>Forgot password?</a></div>
-                                <span class="hwr-in" data-f="pass"><span class="ph">••••••••</span><span class="v"></span><em></em></span>
-                                <span class="hwr-keep"><i>✓</i>Keep me logged in</span>
-                                <span class="hwr-btn"><i></i><b>Log In</b></span>
-                            </div>
-                            <p class="hwr-sign">No account yet? <b>Sign up free</b></p>
-                        </div>
-                    </div>
-                    {{-- Scene two: the dashboard. --}}
-                    <div class="hw-scene s-dash">
-                        <div class="hwr-top">
-                            <img src="{{ asset('images/logo-mark.png') }}?v=anee2" alt="">
-                            <div><b>Dashboard</b><small>Your farm in one view</small></div>
-                            <span class="r">
-                                <span class="hwr-help">?</span>
-                                <span class="hwr-bell"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 00-4-5.7V5a2 2 0 10-4 0v.3A6 6 0 006 11v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg><em>1</em></span>
-                                <span class="hwr-av">{{ $hwPhone['initials'] }}</span>
-                            </span>
-                        </div>
-                        <div class="hwr-view"><div class="hwr-list">
-                            <section class="hwr-hero" data-s="hero" style="--n: 0">
-                                <span class="hwr-sky"><svg viewBox="0 0 56 56" aria-hidden="true"><defs><linearGradient id="hwSkyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0ff"/><stop offset="1" stop-color="#fff3c4"/></linearGradient></defs><rect width="56" height="56" fill="url(#hwSkyG)"/><g class="hw-sun"><circle cx="28" cy="30" r="9" fill="#fbbf24"/><g stroke="#fbbf24" stroke-width="2.4" stroke-linecap="round"><path d="M28 14v4M28 42v4M12 30h4M40 30h4M17 19l3 3M36 38l3 3M17 41l3-3M36 22l3-3"/></g></g><path d="M0 44c10-6 22-7 32-3s18 3 24 0v15H0z" fill="#86b556"/><path d="M0 48c12-3 24-3 34 0s16 2 22 0v8H0z" fill="#6b9f3d"/></svg></span>
-                                <div><b>{{ $hwPhone['hello'] }}, {{ $hwPhone['name'] }}</b><p>Today is {{ now(config('app.timezone'))->format('F jS, Y') }}. You have 1 active cropping schedule.</p></div>
-                                <div class="hwr-chips"><span class="rank">🌱 Lv 3 · New Member</span><span>{{ $hwPhone['daysLeft'] }} days left</span></div>
-                            </section>
-                            <div class="hwr-stats" style="--n: 1">
-                                <div class="lead"><b>1</b><i>Schedule</i></div>
-                                <div><b class="w">{{ $hwPhone['plan'] }}</b><i>Active plan</i></div>
-                                <div><b>{{ $hwPhone['daysLeft'] }}</b><i>Days left</i></div>
-                            </div>
-                            <section class="hwr-tip" data-s="tip" data-ping="2" style="--n: 2">
-                                <div class="h"><span><img src="{{ asset('images/idea.png') }}" alt=""></span><div><small>Tip of the day</small><b>{{ $hwPhone['tipTitle'] }}</b></div></div>
-                                <p>{{ $hwPhone['tip'] }}</p>
-                            </section>
-                            <div class="hwr-h" style="--n: 3"><span>📅 My Cropping Schedules</span><a>View all</a></div>
-                            <section class="hwr-sched" data-s="tasks" data-ping="0" style="--n: 4">
-                                <div class="hwr-cover"><span>{{ $hwPhone['crops'] }}</span><b>{{ $hwPhone['season'] }}</b><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg></div>
-                                <div class="hwr-sb">
-                                    <div class="hwr-day">
-                                        <div class="hwr-dh">
-                                            <span class="hwr-when"><b>Today</b><i>{{ now(config('app.timezone'))->format('M j') }}</i></span>
-                                            <span class="hwr-dt"><b>{{ count($hwPhone['tasks']) }} tasks</b><i>due today</i></span>
-                                        </div>
-                                        <div class="hwr-rail"><div class="hwr-track">
-                                            @foreach ($hwPhone['tasks'] as [$ty, $pr, $tn, $tl, $tw, $th])
-                                                <div class="hwr-task" style="--p: {{ ['high' => '#f46a6a', 'medium' => '#f1b44c', 'low' => '#94a3b8'][$pr] }}">
-                                                    <span class="t"><span class="ty">{{ $ty }}</span><span class="ok">Done</span><span class="pr">{{ ucfirst($pr) }}</span></span>
-                                                    <span class="n">{{ $tn }}</span>
-                                                    <span class="f">
-                                                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>{{ $tl }}</span>
-                                                        <span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>{{ $tw }}</span>
-                                                        @if ($th)<span><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>{{ $th }}</span>@endif
-                                                    </span>
-                                                </div>
-                                            @endforeach
-                                        </div></div>
-                                        <div class="hwr-dots">@foreach ($hwPhone['tasks'] as $t)<i class="{{ $loop->first ? 'on' : '' }}"></i>@endforeach</div>
-                                    </div>
-                                    <div class="hwr-wx" data-s="wx" data-ping="1">
-                                        <div class="pl">📍 <b>{{ $hwPhone['place'] }}</b> · this morning</div>
-                                        <div class="row">@foreach ($hwPhone['days'] as [$dn, $de, $dh, $dl])<span>{{ $dn }}<em>{{ $de }}</em><b>{{ $dh }}°</b>{{ $dl }}°</span>@endforeach</div>
-                                        <div class="ad">🌧️ {{ $hwPhone['advice'] }}</div>
-                                    </div>
-                                    <span class="hwr-open">Open schedule</span>
-                                </div>
-                            </section>
-                            <div class="hwr-h" style="--n: 5"><span>📰 News Feed</span><a>See more</a></div>
-                            @php [$pn, $pi, $phue, $pt, $ptext, $plikes, $pcom] = $hwPhone['post']; @endphp
-                            <section class="hwr-post" data-s="post" data-ping="3" style="--n: 6">
-                                <div class="who"><i style="--h: {{ $phue }}">{{ $pi }}</i><div><b>{{ $pn }}</b><small>{{ $pt }} · near you</small></div></div>
-                                <p>{{ $ptext }}</p>
-                                <div class="pic" style="background-image: url('{{ asset('images/site/corn-rows.jpg') }}')"></div>
-                                <div class="re"><span>👍 {{ $plikes }}</span><span>💬 {{ $pcom }}</span><span>↗ Share</span></div>
-                            </section>
-                        </div></div>
-                        {!! $hwNav(0) !!}
-                    </div>
-                    {{-- Scene three: Cropping Schedules, the season list. --}}
-                    <div class="hw-scene s-list">
-                        <div class="hwr-top">
-                            <img src="{{ asset('images/logo-mark.png') }}?v=anee2" alt="">
-                            <div><b>Cropping Schedules</b><small>Plan and manage your seasons</small></div>
-                            {!! $hwTopR !!}
-                        </div>
-                        <div class="hwr-view"><div class="hwr-list">
-                            <section class="hwl-hero" style="--n: 0">
-                                <div class="hwl-left">
-                                    <span class="hwl-ico"><svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 19v-3.5m0 0c0-1.6 1.1-2.7 2.7-2.7 0 1.6-1.1 2.7-2.7 2.7zm0 0c0-1.3-.9-2.2-2.2-2.2 0 1.3.9 2.2 2.2 2.2z"/></svg></span>
-                                    <div class="hwl-say"><b>Here are your cropping schedules for today</b><p>{{ $hwToday->format('l, F j') }}: <strong>{{ count($hwPhone['tasks']) }} activities</strong> on the board today, 1 season running.</p></div>
-                                </div>
-                                <div class="hwl-stats"><div class="on"><b>{{ count($hwPhone['tasks']) }}</b><i>Today</i></div><div><b>{{ $hwB['lots'] }}</b><i>Lots</i></div><div><b>{{ $hwB['workers'] }}</b><i>Workers</i></div></div>
-                            </section>
-                            <span class="hwl-add" style="--n: 1">{!! $hwI('M12 5v14M5 12h14', 2.6) !!}Add New Cropping Schedule</span>
-                            <span class="hwl-search" style="--n: 2"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-4-4"/></svg>Search schedules</span>
-                            <div class="hwl-pills" style="--n: 3"><span>{!! $hwI('M4 6h16M7 12h10M10 18h4') !!}Filter</span><span>Collapse all</span></div>
-                            <section class="hwl-card" data-s="season" style="--n: 4">
-                                <div class="hwl-cover">
-                                    <span>{{ $hwPhone['crops'] }}</span><b>{{ $hwPhone['season'] }}</b>
-                                    <i><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 00-2-2H6a2 2 0 00-2 2v8a2 2 0 002 2h2"/></svg></i>
-                                    <i>{!! $hwI('M4 7h16M10 11v6M14 11v6M5 7l1 12a2 2 0 002 2h8a2 2 0 002-2l1-12M9 7V4h6v3') !!}</i>
-                                    <i>{!! $hwI('M6 9l6 6 6-6', 2.4) !!}</i>
-                                </div>
-                                <div class="hwl-body">
-                                    <p class="d">{{ $hwB['desc'] }}</p>
-                                    <p class="s">Day {{ $hwB['day'] }} · {{ $hwB['stage'] }}</p>
-                                    <span class="hwl-bar"><i style="width: {{ $hwPct }}%"></i></span>
-                                    <span class="hwl-dates"><span>{{ $hwStart->format('M j') }} to {{ $hwEnd->format('M j, Y') }}</span><b>{{ $hwPct }}%</b></span>
-                                    <span class="hwl-meta">
-                                        <span>{!! $hwI('M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2') !!}{{ $hwB['lots'] }} lots</span>
-                                        <span>{!! $hwI('M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z') !!}{{ $hwB['workers'] }} workers</span>
-                                        <span>{!! $hwI('M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01', 2.2) !!}{{ $hwB['activities'] }} activities</span>
-                                    </span>
-                                    <span class="hwl-made"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path stroke-linecap="round" d="M8 3v4M16 3v4M3 10h18"/></svg>Created {{ $hwStart->copy()->subDays(6)->format('M j, Y') }}</span>
-                                    <span class="hwl-open">Open</span>
-                                </div>
-                            </section>
-                        </div></div>
-                        {!! $hwNav(1) !!}
-                    </div>
-                    {{-- Scene four: the season's modules. --}}
-                    <div class="hw-scene s-hub">
-                        <div class="hwr-top">
-                            <span class="hwr-back">{!! $hwI('M15 19l-7-7 7-7', 2.4) !!}</span>
-                            <div><b>{{ $hwPhone['season'] }}</b><small>Schedule modules</small></div>
-                            {!! $hwTopR !!}
-                        </div>
-                        <div class="hwr-view"><div class="hwr-list">
-                            <section class="hwh-card" style="--n: 0">
-                                <div class="hwh-in">
-                                    <div class="hwh-row"><b class="t">{{ $hwPhone['season'] }}</b><span class="pen">{!! $hwI('M15.2 5.2l3.6 3.6M4 20l1-4.6L16.4 4a1.5 1.5 0 012.1 0l1.5 1.5a1.5 1.5 0 010 2.1L8.6 19 4 20z') !!}</span><span class="st">Generated</span></div>
-                                    <p class="d">{{ $hwB['desc'] }}</p>
-                                    <div class="hwh-chips">
-                                        <span>{{ $hwPhone['crops'] }} {{ $hwB['crop'] }}</span><span>📐 {{ $hwB['lots'] }} lots</span><span>👷 {{ $hwB['workers'] }} workers</span>
-                                        <span>🗓️ {{ $hwB['counter'] }} counting</span><span>🌱 Started {{ $hwStart->format('M j, Y') }}</span>
-                                    </div>
-                                </div>
-                                <div class="hwh-foot"><span class="a">Archive this Schedule</span><span class="c">Close this season</span></div>
-                            </section>
-                            <section class="hwr-tip" style="--n: 1">
-                                <div class="h"><span><img src="{{ asset('images/idea.png') }}" alt=""></span><div><small>Tip of the day</small><b>{{ $hwPhone['tipTitle'] }}</b></div></div>
-                                <p>{{ $hwPhone['tip'] }}</p>
-                                <p class="ask">Ask Anee about this ›</p>
-                            </section>
-                            @foreach ([
-                                ['acts', '#4a7c2a', 'thunder.png', 'Activities', 'Your day by day plan, goals and milestones.'],
-                                [null, '#d97706', 'camera.png', 'Quick Capture', 'Take a photo and save it fast.'],
-                                [null, '#b91c1c', 'video-camera-b.png', 'Quick Record', 'Record a short video.'],
-                                [null, '#b91c1c', 'voice-recorder.png', 'Quick Voice', 'Speak and it saves as a note.'],
-                            ] as $k => [$cs, $ca, $ci, $ct, $cx])
-                                <section class="hwh-cta" @if ($cs) data-s="{{ $cs }}" @endif style="--n: {{ $k + 2 }}; --a: {{ $ca }}">
-                                    <span class="chip"><img data-src="{{ asset('images/' . $ci) }}" alt=""></span>
-                                    <span class="tx"><b>{{ $ct }}@if ($cs)<em>{{ $hwB['activities'] }}</em>@endif</b><small>{{ $cx }}</small></span>
-                                    {!! $hwI('M9 5l7 7-7 7', 2.5) !!}
-                                </section>
-                            @endforeach
-                            <div class="hwh-grid" style="--n: 6">
-                                @foreach ([['Settings', 'gear.png', null], ['Lots', 'treasure-map.png', $hwB['lots']], ['Workers', 'tractor.png', $hwB['workers']], ['Inventory', 'sack.png', null],
-                                    ['Documentation', 'document.png', null], ['Observations', 'pencil.png', null], ['Tags', 'label.png', null], ['Notes', 'sticky-note.png', null],
-                                    ['Weather', 'weather.png', null], ['Growth Stages', 'plant.png', null], ['Gallery', 'gallery.png', null], ['Chat Anee', null, null],
-                                    ['Collab Room', 'united.png', null], ['Reports', 'pie-chart.png', null]] as [$ml, $mi, $mc])
-                                    <span><i>@if ($mi)<img data-src="{{ asset('images/' . $mi) }}" alt="">@else<img class="face" src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">@endif</i><b>{{ $ml }}</b>@if ($mc)<em>{{ $mc }}</em>@endif</span>
-                                @endforeach
-                            </div>
-                        </div></div>
-                        {!! $hwNav(1) !!}
-                    </div>
-                    {{-- Scene five: the activities board, today's three tasks. --}}
-                    @php
-                        $hwDays = [$hwToday->copy()->subDay(), $hwToday, $hwToday->copy()->addDay(), $hwToday->copy()->addDays(3)];
-                        // A day's header, left open for what follows it (today's weather).
-                        $hwDay = fn ($d, $n) => '<div class="hwa-h">' . $hwI('M9 5l7 7-7 7', 2.6) . '<span class="dw">' . strtoupper($d->format('D')) . '</span><b>' . $d->format('M j, y') . '</b>'
-                            . '<span class="dd">' . $hwI('M8 7l-4 4 4 4M16 7l4 4-4 4M4 11h16', 2.4) . '</span><span class="ct">' . $n . '</span><span class="pl">' . $hwI('M12 5v14M5 12h14', 2.2) . '</span>'
-                            . '<svg class="kb" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>';
-                    @endphp
-                    <div class="hw-scene s-acts">
-                        <div class="hwr-top">
-                            <span class="hwr-back">{!! $hwI('M15 19l-7-7 7-7', 2.4) !!}</span>
-                            <div><b>Activities</b><small>{{ $hwPhone['season'] }}</small></div>
-                            {!! $hwTopR !!}
-                        </div>
-                        @include('public.how.act-tools')
-                        <div class="hwr-view"><div class="hwr-list">
-                            <div class="hwa-ver" style="--n: 0">
-                                <span class="sel">{!! $hwI('M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5') !!}Original{!! $hwI('M6 9l6 6 6-6', 2.4) !!}</span>
-                                <span>{!! $hwI('M12 4v11m0 0l-4-4m4 4l4-4M5 20h14') !!}</span>
-                                <span class="add">{!! $hwI('M12 5v14M5 12h14', 2.6) !!}</span>
-                                <span class="ai"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt=""></span>
-                            </div>
-                            {{-- Yesterday: one task, done. --}}
-                            <div class="hwa-g" style="--n: 1; --c: #4a90e2">{!! $hwDay($hwDays[0], 1) !!}</div></div>
-                            {{-- Today: the dashboard's three tasks. --}}
-                            <div class="hwa-g is-today" style="--n: 2; --c: #3fb468">
-                                {!! $hwDay($hwDays[1], count($hwPhone['tasks'])) !!}<i class="br"></i><span class="wx">⛅ <i>{{ $hwPhone['place'] }}</i> <b>{{ $hwPhone['days'][0][2] }}°</b></span></div>
-                                <div class="hwa-b"><div><div class="hwa-in">
-                                    @foreach ($hwPhone['tasks'] as $k => $task)
-                                        @include('public.how.act-card', ['task' => $task, 'k' => $k])
-                                    @endforeach
-                                </div></div></div>
-                            </div>
-                            {{-- Tomorrow: nothing on it yet. --}}
-                            <div class="hwa-rest" style="--n: 3">
-                                {!! $hwI('M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z') !!}
-                                <div><b>{{ $hwDays[2]->format('l, F j, Y') }}</b><small>No activities scheduled</small></div>
-                                <span>+ Add</span>
-                            </div>
-                            <div class="hwa-g" style="--n: 4; --c: #f5a623">{!! $hwDay($hwDays[3], 2) !!}</div></div>
-                        </div></div>
-                    </div>
-                    <span class="hw-tap"></span>
-                </div></div>
-            </div>
         </div>
-        <p class="sr-only">A phone shows someone logging in to anee.io, then the dashboard as it looks inside the app: the morning greeting, the tip of the day, today's activities on a season with the weather for the farm, and a post in the news feed. Then it opens the Schedules tab: the season's card, the season's modules (Activities, Quick Capture, Lots, Workers, Inventory, Reports and more) and its activities board, where today's three tasks are opened and two are ticked done.</p>
     </section>
 
     <div class="hw-steps">
@@ -2058,7 +1921,8 @@
     function rail(root, scroller, stages) {
         const steps = root.querySelector('.hw-steps'), railEl = root.querySelector('.hw-rail');
         const fill = root.querySelector('.hw-rail-fill'), tip = root.querySelector('.hw-rail-tip'), loop = root.querySelector('.hw-loop');
-        const drop = root.querySelector('.hw-drop svg'), ph = root.querySelector('.hw-phone'), show = root.querySelector('.hw-show');
+        // The line drops from the top's picture (the season wheel since 2026-10-28; the phone before it) into the rail.
+        const drop = root.querySelector('.hw-drop svg'), ph = root.querySelector('[data-hw-source]') || root.querySelector('.hw-phone'), show = root.querySelector('.hw-show') || ph;
         let len = 0, hubs = [];
         const update = () => {
             const top = railEl.getBoundingClientRect().top;
