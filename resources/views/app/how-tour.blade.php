@@ -72,7 +72,7 @@
     $htDoors = array_values(array_filter([
         isset($htTools['globalLots']) ? ['globalLots', '📍', 'Add your first lot', 'Its place, soil and water, once. Every analysis reads it.'] : null,
         isset($htTools['when']) ? ['when', '🗓️', 'Find your best planting week', 'Twenty years of your town\'s weather, read for your crop.'] : null,
-        isset($htTools['auto']) ? ['auto', '🤖', 'Let Anee run the season', 'She plans it, then tells you each morning what to do.'] : null,
+        isset($htTools['auto']) ? ['auto', 'anee', 'Let Anee run the season', 'She plans it, then tells you each morning what to do.'] : null,
     ]));
     $htGlyph = fn (string $d, $w = 2) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' . $w . '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' . $d . '"/></svg>';
 @endphp
@@ -237,6 +237,9 @@
         box-shadow: inset 0 0 0 1px rgb(255 255 255 / .09); transition: transform .3s var(--e), box-shadow .3s var(--e), background-color .3s var(--e); }
     .hwt-door:hover { transform: translateY(-3px); background: rgb(255 255 255 / .08); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .55), 0 20px 40px -24px rgb(0 0 0 / .9); }
     .hwt-door > i { font-style: normal; font-size: 1.8rem; }
+    .hwt-door > i.is-face { display: block; width: 3.4rem; height: 3.4rem; margin: -.3rem 0 0 -.25rem; }
+    .hwt-door > i.is-face img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 6px 10px rgb(0 0 0 / .35)); transform-origin: 50% 90%; transition: transform .28s var(--e); }
+    .hwt-door:hover > i.is-face img { transform: rotate(-6deg) scale(1.06); }
     .hwt-door b { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: #fff; }
     .hwt-door span { font-size: .84rem; line-height: 1.5; color: var(--mute); }
     .hwt-door em { margin-top: .4rem; display: inline-flex; align-items: center; gap: .35rem; font-style: normal; font-size: .82rem; font-weight: 800; color: var(--gold); }
@@ -403,7 +406,8 @@
                     @php $t = $htTools[$key]; @endphp
                     @if ($t['href'])
                         <a class="hwt-door{{ $key === 'auto' ? ' is-gold' : '' }}" href="{{ $key === 'auto' ? route('auto.index') : $t['href'] }}" @if ($key === 'auto') data-hwt-auto @endif data-in style="--d: {{ 160 + $i * 120 }}ms">
-                            <i>{{ $emo }}</i><b>{{ $title }}</b><span>{{ $line }}</span>
+                            {{-- Anee Auto's door wears Anee herself (2026-10-28, the owner: "change the robot icon to anee's icon"). --}}
+                            @if ($emo === 'anee')<i class="is-face"><img src="{{ $htFace('salute') }}" alt="" width="56" height="56" loading="lazy"></i>@else<i>{{ $emo }}</i>@endif<b>{{ $title }}</b><span>{{ $line }}</span>
                             <em>{{ $key === 'auto' ? 'See Anee Auto' : $t['go'] }} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg></em>
                         </a>
                     @endif
