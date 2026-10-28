@@ -602,7 +602,7 @@
     {{-- ================= Where most farmers get answers today (2026-10-28) =================
          The real Facebook post, its twenty comments and seven causes: why advice from strangers fails, then one line on
          what Anee does instead. Its button signs up with the ad's tags; nothing on it leads off the page. --}}
-    @include('public.partials.social-guess', ['sgSignup' => $signup, 'sgAsk' => false, 'sgLean' => true, 'sgLine' => $lp['says']['social'] ?? ''])
+    @include('public.partials.social-guess', ['sgSignup' => $signup, 'sgAsk' => false, 'sgLine' => $lp['says']['social'] ?? ''])
 
     {{-- ================= The answer: precision agriculture, then how it works ================= --}}
     <section class="py-16 sm:py-24">

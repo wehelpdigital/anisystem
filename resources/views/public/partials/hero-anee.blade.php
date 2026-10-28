@@ -155,9 +155,18 @@
             </div>
         </div>
 
+        {{-- Anee herself, as a short silent film (2026-10-29, the owner's: she smiles, winks, gets an idea under a
+             lightbulb and points), cut square for the circle (public/videos/site/anee-idea.mp4, from y 350 of the 1280
+             by 2274 original so the bulb shows at the top and her chin at the bottom). It plays while the hero is on
+             screen; when motion is not welcome only its first frame shows. --}}
+        @php
+            $hbFilm = fn (string $f) => asset('videos/site/' . $f) . (is_file(public_path('videos/site/' . $f)) ? '?v=' . filemtime(public_path('videos/site/' . $f)) : '');
+        @endphp
         <div class="hb-core">
             <span class="hb-halo" aria-hidden="true"></span>
-            <img src="{{ asset('images/anee/avatar-512.jpg') }}" alt="" width="256" height="256">
+            <video class="hb-anee" muted loop playsinline preload="auto" poster="{{ $hbFilm('anee-idea.webp') }}" width="480" height="480" aria-hidden="true">
+                <source src="{{ $hbFilm('anee-idea.mp4') }}" type="video/mp4">
+            </video>
         </div>
     </div>
     <div class="hb-cards">
@@ -202,7 +211,7 @@
     .hb-core { position: absolute; left: 50%; top: 50%; z-index: 5; width: 36%; aspect-ratio: 1; transform: translate(-50%, -50%); }
     .hb-halo { position: absolute; inset: -12%; border-radius: 999px; opacity: .8; filter: blur(10px); animation: hbSpin 6s linear infinite;
         background: conic-gradient(from 0deg, rgb(245 197 24 / 0), rgb(245 197 24 / .75), rgb(163 230 53 / .55), rgb(245 197 24 / 0) 70%); }
-    .hb-core img { position: relative; display: block; width: 100%; height: 100%; border-radius: 999px; object-fit: cover; background: #1a2c12;
+    .hb-core .hb-anee { position: relative; display: block; width: 100%; height: 100%; border-radius: 999px; object-fit: cover; background: #a9c79a;
         box-shadow: 0 0 0 4px #fff, 0 0 0 8px #f5c518, 0 30px 60px -20px rgb(0 0 0 / .8); }
     /* A benefit's layer: seen while its turn lasts. Each element rests in its finished state; .is-play runs it in. */
     .hb-ph { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; pointer-events: none; }
@@ -454,7 +463,13 @@
     const step = () => { if (!live) return; show(n); n = (n + 1) % phases.length; timer = setTimeout(step, STAY); };
     if (calm) { show(0); return; }
     show(0);
-    const run = (on) => { if (on === live) return; live = on; clearTimeout(timer); if (on) step(); };
+    // Anee's film plays along with the benefits, and rests with them.
+    const film = hb.querySelector('.hb-anee');
+    const run = (on) => {
+        if (on === live) return;
+        live = on; clearTimeout(timer);
+        if (on) { step(); film && film.play().catch(() => {}); } else if (film) film.pause();
+    };
     if ('IntersectionObserver' in window) new IntersectionObserver((es) => es.forEach((e) => run(e.isIntersecting)), { threshold: .2 }).observe(hb);
     else run(true);
 })();

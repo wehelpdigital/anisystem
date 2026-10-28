@@ -10,12 +10,10 @@
      Counted from the screenshots: 20 comments; rice bug 7 (dangaw, atangya, alitangya, ricebag), stem borer 3, too much
      nitrogen 2, neck rot, whitefly, black bug, a dry and acidic field 1 each; 4 said to spray, none asked a question.
      On the ads landing page too (2026-10-28), with $sgSignup (its signup link, carrying the ad's tags), $sgAsk false (no
-     way off the page) and $sgLean (what Anee does instead in one line, the page's next sections say the rest), and
-     $sgLine, a line from Anee above the heading. --}}
+     way off the page), and $sgLine, a line from Anee above the heading. --}}
 @php
     $sgSignup = $sgSignup ?? route('signup');
     $sgAsk = $sgAsk ?? true;
-    $sgLean = $sgLean ?? false;
     $sgGuesses = [
         ['🪲', 'Rice bug', 'dangaw, atangya', 7],
         ['🐛', 'Stem borer', '"white heads"', 3],
@@ -86,24 +84,10 @@
             </div>
         </div>
 
-        {{-- What Anee does instead. --}}
-        <div class="sg-anee" data-sg>
-            <div class="sg-anee-h">
-                <img src="{{ asset('images/anee/emoji/thinking.png') }}" alt="" width="64" height="64" loading="lazy">
-                <p class="sg-k">What Anee does instead</p>
-            </div>
-            @unless ($sgLean)
-            <ol class="sg-steps">
-                <li><b>She studies the photo closely</b><span>The grains, the neck of the panicle, the color of the leaves.</span></li>
-                <li><b>She reads your lot</b><span>Its stage, the weather of the last weeks, the fertilizer and the sprays it already had.</span></li>
-                <li><b>She asks for the one sign that decides it</b><span>A white head that slides out with a hole at its base is a stem borer. Brown spots on empty grains mean a rice bug. A dark rot at the neck is neck rot, a matter for a fungicide.</span></li>
-                <li><b>One answer, with what to do</b><span>What to put on now, how much, when, and how to stop it next season.</span></li>
-            </ol>
-            @endunless
-            <div class="sg-cta">
-                <a href="{{ $sgSignup }}" class="btn btn-accent btn-lg">Start free, ask with a photo</a>
-                @if ($sgAsk)<a href="{{ url('/ask-anee') }}" class="sg-ghost">Or ask her one question now</a>@endif
-            </div>
+        {{-- The What Anee does instead card is gone (2026-10-29, the owner); its two buttons stay, on their own. --}}
+        <div class="sg-cta is-solo" data-sg>
+            <a href="{{ $sgSignup }}" class="btn btn-accent btn-lg">Start free, ask with a photo</a>
+            @if ($sgAsk)<a href="{{ url('/ask-anee') }}" class="sg-ghost">Or ask her one question now</a>@endif
         </div>
         <p class="sg-fine">A real screenshot from a public Facebook group, shared to show how many answers from strangers can pull a farmer in different directions. Every name and face is blurred. Everyone in it was trying to help.</p>
     </div>
@@ -184,17 +168,8 @@
     @keyframes sgBlink { 50% { transform: scale(1.12); } }
 
     /* What Anee does instead. */
-    .sg-anee { margin-top: 1.4rem; padding: 1.3rem; border-radius: 1.4rem; background: linear-gradient(160deg, #f3f8ec, #fff); box-shadow: inset 0 0 0 1px #d9e8c6; }
-    .sg-anee-h { display: flex; gap: .9rem; align-items: center; }
-    .sg-anee-h img { flex: none; width: 3.6rem; height: 3.6rem; }
-    .sg-anee-h .sg-k { font-size: .82rem; color: #3f6b1f; }
-    .sg-steps { display: grid; gap: .7rem; margin: 1.1rem 0 0; padding: 0; list-style: none; counter-reset: sg; }
-    @media (min-width: 900px) { .sg-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .9rem; } }
-    .sg-steps li { position: relative; display: grid; align-content: start; gap: .25rem; padding: .9rem .9rem .9rem 3rem; border-radius: 1rem; background: #fff; box-shadow: 0 0 0 1px #e3ecd8; counter-increment: sg; }
-    .sg-steps li::before { content: counter(sg); position: absolute; left: .8rem; top: .85rem; width: 1.6rem; height: 1.6rem; border-radius: 999px; display: grid; place-items: center; font-size: .8rem; font-weight: 900; color: #2b2100; background: #f5c518; }
-    .sg-steps b { font-size: .9rem; font-weight: 800; color: #1f2937; }
-    .sg-steps span { font-size: .82rem; line-height: 1.5; color: #4b5563; }
     .sg-cta { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.2rem; }
+    .sg-cta.is-solo { justify-content: center; margin-top: 2.2rem; }
     @media (max-width: 520px) { .sg-cta > * { flex: 1 1 100%; text-align: center; justify-content: center; } }
     .sg-ghost { display: inline-flex; align-items: center; padding: .78rem 1.25rem; border-radius: .9rem; font-weight: 800; color: #2d5016; border: 1.5px solid #b6cf9a; background: #fff; transition: background-color .28s var(--e), border-color .28s var(--e); }
     .sg-ghost:hover { background: #f3f8ec; border-color: #8fbf68; }
