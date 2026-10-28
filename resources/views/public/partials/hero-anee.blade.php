@@ -1,6 +1,7 @@
 {{-- The homepage hero's picture (2026-10-29, the owner: "changing animations (different animation per phase) about the
      benefits like higher yield, pest protection, complete nutrition, anti lodging"). The featured picture is a field of
-     ripe golden palay, sharp, in a round gold framed window that slowly breathes, with light sweeping across it and
+     ripe golden palay, sharp, with extra contrast and vibrance, in a round gold framed window the size of the
+     animations' own circles (the shield wraps just outside its ring) that slowly breathes, with light sweeping across it and
      grain dust drifting up (the owner, later the same day: "remove the video of anee and just make the image of rice
      sharp and make it the main featured image"). Over it one benefit at a time plays its own animation, and its card
      names it underneath:
@@ -59,7 +60,7 @@
              grain dust drifts up through it; a gold halo turns behind the frame. --}}
         <span class="hb-photo-halo" aria-hidden="true"></span>
         <span class="hb-photo" aria-hidden="true">
-            <img src="{{ asset('images/site/photos/golden-palay-1080.webp') }}" srcset="{{ asset('images/site/photos/golden-palay-1080.webp') }} 1080w, {{ asset('images/site/photos/golden-palay.webp') }} 1620w" sizes="(min-width: 640px) 52rem, 39rem" alt="" width="1620" height="912" decoding="async" fetchpriority="high">
+            <img src="{{ asset('images/site/photos/golden-palay-1080.webp') }}" srcset="{{ asset('images/site/photos/golden-palay-1080.webp') }} 1080w, {{ asset('images/site/photos/golden-palay.webp') }} 1620w" sizes="(min-width: 640px) 30rem, 23rem" alt="" width="1620" height="912" decoding="async" fetchpriority="high">
             <span class="hb-sun"></span>
             <span class="hb-glint"></span>
             @for ($i = 0; $i < 14; $i++)
@@ -67,7 +68,6 @@
             @endfor
         </span>
         <span class="hb-orbit" aria-hidden="true"></span>
-        <span class="hb-orbit is-in" aria-hidden="true"></span>
 
         {{-- Higher yield: two piles of sacks; the usual way stops, Anee's keeps going and is not done yet. --}}
         <div class="hb-ph" data-ph="yield" aria-hidden="true">
@@ -193,14 +193,14 @@
     .hb { position: relative; z-index: 1; width: min(100%, 31rem); transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s cubic-bezier(.22,1,.36,1); }
     .hb-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
     .hb-stage { position: relative; aspect-ratio: 1; container-type: inline-size; }
-    .hb-photo-halo { position: absolute; inset: 1%; border-radius: 999px; opacity: .85; filter: blur(16px); animation: hbSpin 9s linear infinite;
+    .hb-photo-halo { position: absolute; inset: 18%; border-radius: 999px; opacity: .85; filter: blur(16px); animation: hbSpin 9s linear infinite;
         background: conic-gradient(from 0deg, rgb(245 197 24 / 0), rgb(245 197 24 / .8), rgb(163 230 53 / .5), rgb(245 197 24 / 0) 70%); }
-    .hb-photo { position: absolute; inset: 4%; border-radius: 999px; overflow: hidden; pointer-events: none; isolation: isolate; background: #2b2410;
-        box-shadow: 0 0 0 4px rgb(255 255 255 / .92), 0 0 0 8px #f5c518, 0 0 50px rgb(245 197 24 / .35), 0 40px 80px -30px rgb(0 0 0 / .85); }
+    .hb-photo { position: absolute; inset: 22.5%; border-radius: 999px; overflow: hidden; pointer-events: none; isolation: isolate; background: #2b2410;
+        box-shadow: 0 0 0 3px rgb(255 255 255 / .92), 0 0 0 6px #f5c518, 0 0 40px rgb(245 197 24 / .4), 0 30px 60px -24px rgb(0 0 0 / .85); }
     .hb-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 62% 55%; animation: hbBreathe 22s ease-in-out infinite alternate; }
     @keyframes hbBreathe { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.08) translate(-2%, -1.5%); } }
     /* A soft edge inside the frame, for depth; the middle stays bright and sharp. */
-    .hb-photo::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 36px rgb(0 0 0 / .45); }
+    .hb-photo::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 22px rgb(0 0 0 / .4); }
     .hb-sun { position: absolute; inset: 0; mix-blend-mode: screen;
         background: radial-gradient(circle at 82% 12%, rgb(255 236 170 / .55), rgb(255 214 120 / .18) 26%, rgb(255 214 120 / 0) 50%); animation: hbSunGlow 5s ease-in-out infinite; }
     @keyframes hbSunGlow { 50% { opacity: .55; } }
@@ -209,10 +209,9 @@
     @keyframes hbGlint { 0% { transform: translateX(-120%) skewX(-18deg); } 45%, 100% { transform: translateX(400%) skewX(-18deg); } }
     .hb-dust { position: absolute; bottom: -4%; left: var(--x); width: var(--s); height: var(--s); border-radius: 999px; opacity: 0;
         background: #fff3c4; box-shadow: 0 0 6px rgb(255 228 140 / .9); animation: hbDust var(--d) linear var(--k) infinite; }
-    @keyframes hbDust { 0% { opacity: 0; transform: translate(0, 0); } 15% { opacity: .9; } 50% { transform: translate(10px, -50cqw); }
-        85% { opacity: .7; } 100% { opacity: 0; transform: translate(-6px, -95cqw); } }
+    @keyframes hbDust { 0% { opacity: 0; transform: translate(0, 0); } 15% { opacity: .9; } 50% { transform: translate(8px, -28cqw); }
+        85% { opacity: .7; } 100% { opacity: 0; transform: translate(-5px, -56cqw); } }
     .hb-orbit { position: absolute; inset: 9%; border-radius: 999px; border: 1px dashed rgb(255 255 255 / .2); animation: hbSpin 70s linear infinite; }
-    .hb-orbit.is-in { inset: 24%; border: 1px solid rgb(168 204 126 / .18); animation-direction: reverse; animation-duration: 50s; }
     @keyframes hbSpin { to { transform: rotate(360deg); } }
     /* A benefit's layer: seen while its turn lasts. Each element rests in its finished state; .is-play runs it in. */
     .hb-ph { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; pointer-events: none; }
