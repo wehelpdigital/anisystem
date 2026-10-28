@@ -1,15 +1,18 @@
-{{-- The homepage hero's picture (2026-10-29, the owner: Anee "like it is now but there's changing animations (different
-     animation per phase) about the benefits like higher yield, pest protection, complete nutrition, anti lodging"). Anee
-     stays in the middle; around her one benefit at a time plays its own animation, and its card names it under her:
+{{-- The homepage hero's picture (2026-10-29, the owner: "changing animations (different animation per phase) about the
+     benefits like higher yield, pest protection, complete nutrition, anti lodging"). The featured picture is a field of
+     ripe golden palay, sharp, in a round gold framed window that slowly breathes, with light sweeping across it and
+     grain dust drifting up (the owner, later the same day: "remove the video of anee and just make the image of rice
+     sharp and make it the main featured image"). Over it one benefit at a time plays its own animation, and its card
+     names it underneath:
        yield      two piles of rice sacks, lying down, stack up one by one: the usual way stops, Anee's goes higher
                   with an arrow up and a faded sack on top, the pile not yet done; no tag above them. No tonnage or cavans anywhere in
                   the hero (the owner: specific yield numbers set the wrong expectations)
-       pests      a shield draws itself round her and the pests that fly at it bounce off
+       pests      a shield draws itself over the field and the pests that fly at it bounce off
        nutrition  eight nutrients, flat see through orbs each in its own color, fly in; each fills its own part of
-                  the ring round her, then floats, a dashed ring with a dot turning round it, and sends its drop in to her;
+                  the ring round the middle, then floats, a dashed ring with a dot turning round it, and sends its drop inward;
                   the smaller micronutrients circle further out (the card says all macro and micro, never a count)
-       lodging    a severe wind: streaks of every length and speed, gusts sweeping across, leaves torn past her, the
-                  sky darkened, and Anee unmoved in the middle
+       lodging    a severe wind: streaks of every length and speed, gusts sweeping across, leaves torn past, the
+                  sky darkened
        timing     a sky split in two: the sun's rays on one side, strong rain and lightning on the other
      Each card (the owner: the titles were "too simple") carries the benefit's name, a heading, a line, a number and a
      bar that fills while its turn lasts, in the benefit's own color. Played only while on screen; the first benefit at
@@ -48,13 +51,21 @@
         $hbRain[] = [42 + ($i * 37) % 59, 6 + ($i * 7) % 6, 1.2 + ($i % 3) * .4, round(.38 + (($i * 13) % 30) / 100, 2), round((($i * 17) % 70) / 100, 2)];
     }
 @endphp
-<div class="hb" data-hb role="img" aria-label="Anee, your smart farm technician, and what she brings: higher yield, pest and disease protection, complete nutrition, anti lodging and weather smart timing">
+<div class="hb" data-hb role="img" aria-label="A field of ripe golden palay, and what Anee, your smart farm technician, brings to it: higher yield, pest and disease protection, complete nutrition, anti lodging and weather smart timing">
     <svg class="hb-defs" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="hbSack" viewBox="0 0 64 28"><path d="M5 7Q3 2 8 3Q32 0 56 3Q61 2 59 7Q62 14 59 21Q61 26 56 25Q32 28 8 25Q3 26 5 21Q2 14 5 7Z" style="fill: var(--skb); stroke: var(--sko, none); stroke-width: 1; stroke-dasharray: 3 2"/><path d="M8 5Q32 2 56 5Q57.5 8.5 55 10.5Q32 8 9 10.5Q6.5 8.5 8 5Z" fill="#fff" style="opacity: var(--skh, .34)"/><path d="M6.5 20Q32 24.5 57.5 20Q58.5 23.5 55 24.3Q32 27 9 24.3Q5.5 23.5 6.5 20Z" fill="#000" style="opacity: var(--sks, .16)"/><path d="M9 12.6H50M9 15.4H50" stroke="#fff" stroke-width=".5" style="stroke-opacity: var(--skw, .14)"/><path d="M18 9.4H43M18 18.6H43" stroke-width="1.3" style="stroke: var(--skp, transparent)"/><ellipse cx="30.5" cy="14" rx="6.5" ry="3" style="fill: var(--skp, transparent)"/><path d="M51.5 4Q53.6 14 51.5 24" fill="none" stroke="#000" stroke-width=".9" stroke-dasharray="1.6 1.3" style="stroke-opacity: var(--skm, .35)"/></symbol></svg>
     <div class="hb-stage">
-        {{-- A field of ripe palay behind her (2026-10-29, the owner: "aside from anee's photo maybe we can add this photo as
-             well ... you can mask this photo"): a round window with soft edges, slowly drifting, darker in the middle so
-             her ring stands out. --}}
-        <span class="hb-photo" aria-hidden="true"><img src="{{ asset('images/site/photos/golden-palay.webp') }}" srcset="{{ asset('images/site/photos/golden-palay-640.webp') }} 640w, {{ asset('images/site/photos/golden-palay.webp') }} 1080w" sizes="(min-width: 640px) 31rem, 23rem" alt="" width="1080" height="608" decoding="async"></span>
+        {{-- The featured picture: ripe golden palay, sharp (a 1620 wide copy for sharp screens), in a gold framed round
+             window. It breathes slowly, a band of light sweeps across now and then, warm sun glows at its top corner and
+             grain dust drifts up through it; a gold halo turns behind the frame. --}}
+        <span class="hb-photo-halo" aria-hidden="true"></span>
+        <span class="hb-photo" aria-hidden="true">
+            <img src="{{ asset('images/site/photos/golden-palay-1080.webp') }}" srcset="{{ asset('images/site/photos/golden-palay-1080.webp') }} 1080w, {{ asset('images/site/photos/golden-palay.webp') }} 1620w" sizes="(min-width: 640px) 52rem, 39rem" alt="" width="1620" height="912" decoding="async" fetchpriority="high">
+            <span class="hb-sun"></span>
+            <span class="hb-glint"></span>
+            @for ($i = 0; $i < 14; $i++)
+                <i class="hb-dust" style="--x: {{ 8 + ($i * 41) % 84 }}%; --s: {{ 3 + $i % 3 }}px; --d: {{ 6 + ($i * 7) % 6 }}s; --k: {{ round((($i * 13) % 60) / 10, 1) }}s"></i>
+            @endfor
+        </span>
         <span class="hb-orbit" aria-hidden="true"></span>
         <span class="hb-orbit is-in" aria-hidden="true"></span>
 
@@ -154,22 +165,6 @@
             </div>
         </div>
 
-        {{-- Anee herself, as a short silent film (2026-10-29, the owner's: she smiles, winks, gets an idea under a
-             lightbulb and points), the whole tall frame (public/videos/site/anee-idea.mp4, 540 by 960) set in the circle
-             at four fifths of its width so all of her head, the bulb and her shoulders show (the owner: the square cut
-             was "too zoomed in"); its sides fade into a circle painted the film's own sage green. It plays while the hero
-             is on screen; when motion is not welcome only its first frame shows. --}}
-        @php
-            $hbFilm = fn (string $f) => asset('videos/site/' . $f) . (is_file(public_path('videos/site/' . $f)) ? '?v=' . filemtime(public_path('videos/site/' . $f)) : '');
-        @endphp
-        <div class="hb-core">
-            <span class="hb-halo" aria-hidden="true"></span>
-            <span class="hb-face">
-                <video class="hb-anee" muted loop playsinline preload="auto" poster="{{ $hbFilm('anee-idea.webp') }}" width="540" height="960" aria-hidden="true">
-                    <source src="{{ $hbFilm('anee-idea.mp4') }}" type="video/mp4">
-                </video>
-            </span>
-        </div>
     </div>
     <div class="hb-cards">
         @foreach ($hbPhases as $i => $p)
@@ -198,26 +193,27 @@
     .hb { position: relative; z-index: 1; width: min(100%, 31rem); transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .5s cubic-bezier(.22,1,.36,1); }
     .hb-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
     .hb-stage { position: relative; aspect-ratio: 1; container-type: inline-size; }
-    .hb-stage::before { content: ''; position: absolute; inset: 3%; border-radius: 999px; pointer-events: none;
-        background: radial-gradient(closest-side, rgb(8 16 6 / .62), rgb(8 16 6 / .38) 70%, rgb(8 16 6 / 0)); }
-    .hb-photo { position: absolute; inset: 4%; border-radius: 999px; overflow: hidden; pointer-events: none;
-        -webkit-mask: radial-gradient(closest-side, #000 70%, rgb(0 0 0 / .6) 86%, transparent 100%); mask: radial-gradient(closest-side, #000 70%, rgb(0 0 0 / .6) 86%, transparent 100%); }
-    .hb-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 60% 58%; transform: scale(1.12); animation: hbDrift 26s ease-in-out infinite alternate; }
-    @keyframes hbDrift { from { transform: scale(1.12) translate(2%, 1%); } to { transform: scale(1.24) translate(-3%, -2%); } }
-    .hb-photo::after { content: ''; position: absolute; inset: 0;
-        background: radial-gradient(closest-side, rgb(6 12 4 / .78) 0 33%, rgb(6 12 4 / .36) 62%, rgb(6 12 4 / .5) 100%); }
+    .hb-photo-halo { position: absolute; inset: 1%; border-radius: 999px; opacity: .85; filter: blur(16px); animation: hbSpin 9s linear infinite;
+        background: conic-gradient(from 0deg, rgb(245 197 24 / 0), rgb(245 197 24 / .8), rgb(163 230 53 / .5), rgb(245 197 24 / 0) 70%); }
+    .hb-photo { position: absolute; inset: 4%; border-radius: 999px; overflow: hidden; pointer-events: none; isolation: isolate; background: #2b2410;
+        box-shadow: 0 0 0 4px rgb(255 255 255 / .92), 0 0 0 8px #f5c518, 0 0 50px rgb(245 197 24 / .35), 0 40px 80px -30px rgb(0 0 0 / .85); }
+    .hb-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 62% 55%; animation: hbBreathe 22s ease-in-out infinite alternate; }
+    @keyframes hbBreathe { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.08) translate(-2%, -1.5%); } }
+    /* A soft edge inside the frame, for depth; the middle stays bright and sharp. */
+    .hb-photo::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 36px rgb(0 0 0 / .45); }
+    .hb-sun { position: absolute; inset: 0; mix-blend-mode: screen;
+        background: radial-gradient(circle at 82% 12%, rgb(255 236 170 / .55), rgb(255 214 120 / .18) 26%, rgb(255 214 120 / 0) 50%); animation: hbSunGlow 5s ease-in-out infinite; }
+    @keyframes hbSunGlow { 50% { opacity: .55; } }
+    .hb-glint { position: absolute; top: -20%; bottom: -20%; left: 0; width: 34%; mix-blend-mode: soft-light; transform: translateX(-120%) skewX(-18deg);
+        background: linear-gradient(90deg, rgb(255 255 255 / 0), rgb(255 255 255 / .75), rgb(255 255 255 / 0)); animation: hbGlint 7s ease-in-out 1.5s infinite; }
+    @keyframes hbGlint { 0% { transform: translateX(-120%) skewX(-18deg); } 45%, 100% { transform: translateX(400%) skewX(-18deg); } }
+    .hb-dust { position: absolute; bottom: -4%; left: var(--x); width: var(--s); height: var(--s); border-radius: 999px; opacity: 0;
+        background: #fff3c4; box-shadow: 0 0 6px rgb(255 228 140 / .9); animation: hbDust var(--d) linear var(--k) infinite; }
+    @keyframes hbDust { 0% { opacity: 0; transform: translate(0, 0); } 15% { opacity: .9; } 50% { transform: translate(10px, -50cqw); }
+        85% { opacity: .7; } 100% { opacity: 0; transform: translate(-6px, -95cqw); } }
     .hb-orbit { position: absolute; inset: 9%; border-radius: 999px; border: 1px dashed rgb(255 255 255 / .2); animation: hbSpin 70s linear infinite; }
     .hb-orbit.is-in { inset: 24%; border: 1px solid rgb(168 204 126 / .18); animation-direction: reverse; animation-duration: 50s; }
     @keyframes hbSpin { to { transform: rotate(360deg); } }
-    /* Anee, always in the middle. */
-    .hb-core { position: absolute; left: 50%; top: 50%; z-index: 5; width: 36%; aspect-ratio: 1; transform: translate(-50%, -50%); }
-    .hb-halo { position: absolute; inset: -12%; border-radius: 999px; opacity: .8; filter: blur(10px); animation: hbSpin 6s linear infinite;
-        background: conic-gradient(from 0deg, rgb(245 197 24 / 0), rgb(245 197 24 / .75), rgb(163 230 53 / .55), rgb(245 197 24 / 0) 70%); }
-    .hb-face { position: relative; display: block; width: 100%; height: 100%; border-radius: 999px; overflow: hidden; isolation: isolate;
-        background: radial-gradient(70% 60% at 50% 55%, #adc89e, #97bb88);
-        box-shadow: 0 0 0 4px #fff, 0 0 0 8px #f5c518, 0 30px 60px -20px rgb(0 0 0 / .8); }
-    .hb-face .hb-anee { position: absolute; left: 10%; top: -17.5%; width: 80%; height: auto; aspect-ratio: 540 / 960; display: block;
-        -webkit-mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
     /* A benefit's layer: seen while its turn lasts. Each element rests in its finished state; .is-play runs it in. */
     .hb-ph { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; pointer-events: none; }
     .hb-ph.is-on { opacity: 1; }
@@ -259,6 +255,8 @@
     @keyframes hbPulse { 50% { filter: drop-shadow(0 0 10px rgb(52 211 153 / .9)); } }
     .hb-bug { position: absolute; left: 50%; top: 50%; width: 2.2rem; height: 2.2rem; margin: -1.1rem 0 0 -1.1rem; display: grid; place-items: center; font-size: 1.5rem; opacity: 0;
         transform: rotate(var(--a)) translateY(-44cqw) rotate(calc(var(--a) * -1)); }
+    /* Over the bright photo each pest sits on a dark disc, so it reads. */
+    .hb-bug::before { content: ''; position: absolute; inset: -6%; z-index: -1; border-radius: 999px; background: rgb(12 18 8 / .62); box-shadow: 0 0 0 1.5px rgb(248 113 113 / .7); }
     .hb-bug i { position: absolute; inset: -20%; border-radius: 999px; border: 2px solid #34d399; opacity: 0; }
     .hb-ph.is-play .hb-bug { animation: hbBug 2s cubic-bezier(.45,0,.25,1) calc(1.1s + var(--k) * .28s) both; }
     .hb-ph.is-play .hb-bug i { animation: hbHit .5s ease-out calc(1.95s + var(--k) * .28s) both; }
@@ -431,7 +429,7 @@
         .hb-card-s { max-width: 4.6rem; padding-left: .65rem; } .hb-card-s b { font-size: 1.2rem; } .hb-card-s b.is-word { font-size: .98rem; } .hb-card-s i, .hb-card-s small { font-size: .5rem; letter-spacing: .03em; }
     }
     @media (prefers-reduced-motion: reduce) {
-        .hb, .hb-photo img, .hb-orbit, .hb-halo, .hb-ph, .hb-ph *, .hb-card, .hb-card * { animation: none !important; transition: none !important; }
+        .hb, .hb-photo img, .hb-photo-halo, .hb-sun, .hb-glint, .hb-dust, .hb-orbit, .hb-ph, .hb-ph *, .hb-card, .hb-card * { animation: none !important; transition: none !important; }
         .hb-card-bar { display: none; }
     }
 </style>
@@ -463,13 +461,7 @@
     const step = () => { if (!live) return; show(n); n = (n + 1) % phases.length; timer = setTimeout(step, STAY); };
     if (calm) { show(0); return; }
     show(0);
-    // Anee's film plays along with the benefits, and rests with them.
-    const film = hb.querySelector('.hb-anee');
-    const run = (on) => {
-        if (on === live) return;
-        live = on; clearTimeout(timer);
-        if (on) { step(); film && film.play().catch(() => {}); } else if (film) film.pause();
-    };
+    const run = (on) => { if (on === live) return; live = on; clearTimeout(timer); if (on) step(); };
     if ('IntersectionObserver' in window) new IntersectionObserver((es) => es.forEach((e) => run(e.isIntersecting)), { threshold: .2 }).observe(hb);
     else run(true);
 })();
