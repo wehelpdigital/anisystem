@@ -87,6 +87,16 @@ class AneeAutoController extends Controller
     private const SEASON_ASKS = 150;
     private const SEASON_OBSERVES = 45;
     private const READINGS = 3;
+    /** How many times Anee may rank one lot's varieties while the season is set up. */
+    private const RANKS = 3;
+    /**
+     * The wizard's pages, in order, since 2026-10-28 (the owner: "the analysis about the variety and time to plant
+     * should happen before the planting day and the variety selection ... page by page"): the planting window, the day,
+     * the varieties weighed, Anee's ranking and the pick come before the workers. A season set up on the ten pages
+     * before is moved to its page in these (OLD_STEPS: the old page => the new one).
+     */
+    public const STEPS = ['season', 'lots', 'when', 'day', 'varieties', 'ranking', 'variety', 'workers', 'soil', 'water', 'troubles', 'reading', 'fertilizer', 'protocol', 'agreement'];
+    private const OLD_STEPS = [0 => 0, 1 => 1, 2 => 7, 3 => 8, 4 => 9, 5 => 10, 6 => 11, 7 => 12, 8 => 13, 9 => 14];
     /** A season's calendar is long: one call may write for five minutes, so a job is dead only after eight quiet ones. */
     private const JOB_STALE = 480;
 
@@ -292,6 +302,12 @@ class AneeAutoController extends Controller
         $auto = $this->auto($id);
         $schedule = $this->schedule($auto);
         if ($auto->status === AsAutoSeason::SETTING_UP) {
+            // A season begun on the old ten pages keeps its place on the new ones.
+            $a = (array) $auto->answers;
+            if ((int) ($a['stepsV'] ?? 1) < 2) {
+                $auto->update(['step' => self::OLD_STEPS[min(9, (int) $auto->step)] ?? 0, 'answers' => ['stepsV' => 2] + $a]);
+            }
+
             return view('auto.wizard', ['auto' => $auto, 'schedule' => $schedule, 'boot' => $this->wizardState($auto, $schedule)]);
         }
 
@@ -332,7 +348,7 @@ class AneeAutoController extends Controller
             $schedule->forceFill(['aneeAuto' => 1])->save();
             \App\Models\AsScheduleActivityVersion::create(['croppingScheduleId' => $schedule->id, 'versionName' => 'Original', 'isOriginal' => 1, 'isActive' => 1, 'versionOrder' => 0, 'deleteStatus' => 1]);
             $auto = AsAutoSeason::create(['userId' => Auth::id(), 'croppingScheduleId' => $schedule->id, 'status' => AsAutoSeason::SETTING_UP, 'step' => 0,
-                'lotsPaid' => $lots, 'creditsCharged' => $price, 'answers' => ['tags' => []], 'deleteStatus' => 1]);
+                'lotsPaid' => $lots, 'creditsCharged' => $price, 'answers' => ['tags' => [], 'stepsV' => 2], 'deleteStatus' => 1]);
             for ($i = 1; $i <= $lots; $i++) {
                 $lot = AsScheduleLot::create(['croppingScheduleId' => $schedule->id, 'lotName' => 'Lot ' . $i, 'lotSizeUnit' => 'hectare', 'deleteStatus' => 1]);
                 AsAutoLot::create(['autoId' => $auto->id, 'lotId' => $lot->id]);
@@ -365,6 +381,9 @@ class AneeAutoController extends Controller
             'balance' => round($this->credits->balance($this->payer()->id), 2), 'unlimited' => $this->credits->unlimited((int) $this->payer()->id),
             'title' => $schedule->title, 'description' => $schedule->description, 'answers' => $auto->answers ?: new \stdClass,
             'analysis' => $auto->analysis, 'analysisRuns' => (int) $auto->analysisRuns, 'readingsLeft' => max(0, self::READINGS - (int) $auto->analysisRuns),
+            // Anee's ranking of the varieties, lot by lot, and what each of the four priorities is called.
+            'ranks' => (object) $this->ranksOf($auto), 'ranksMax' => self::RANKS,
+            'priorities' => collect(VarietyAnalysisController::PRIORITIES)->map(fn ($x, $k) => ['key' => $k, 'label' => $x['label'], 'icon' => $x['icon'], 'sub' => $x['sub']])->values(),
             'job' => $auto->job ? ['kind' => $auto->job] + (array) $auto->jobState : null,
             'lots' => $als->map(function ($al) use ($lots) {
                 $l = $lots->get($al->lotId);
@@ -890,6 +909,200 @@ class AneeAutoController extends Controller
         return ['need' => $need, 'why' => $why];
     }
 
+    /**
+     * Anee ranks the varieties of each lot (2026-10-28, the owner: "then next page is variety analysis, then put the
+     * varieties as well you think you will plant. then anee analyzes it when you click continue to provide you the
+     * variety ranking (similar to the variety ranking use the same process), as well as the date to plant as per the
+     * previous"). Variety Research's own brief and document (VarietyAnalysisController::rankFor) for the lot's place,
+     * its planting month and season, its ground as its field profile tells it, the varieties the farmer named and what
+     * matters most to them. Each ranking is kept in the farmer's Variety Ranking list too. Lots planted alike share one
+     * run; a lot whose case has not changed keeps its ranking. Part of Anee Auto: nothing is charged.
+     */
+    public function varietyRank(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        if ($why = $this->refusal()) {
+            return $this->json(false, $why, [], 403);
+        }
+        $v = Validator::make($request->all(), ['varieties' => 'nullable|array', 'varieties.*' => 'nullable|array|max:8', 'varieties.*.*' => 'nullable|string|max:60',
+            'first' => 'nullable|in:' . implode(',', array_keys(VarietyAnalysisController::PRIORITIES))]);
+        if ($v->fails()) {
+            return $this->json(false, 'Name up to eight varieties a lot, each in a few words.', [], 422);
+        }
+        $a = (array) $auto->answers;
+        $mine = AsAutoLot::where('autoId', $auto->id)->pluck('lotId')->map(fn ($x) => (string) $x)->all();
+        $ask = (array) ($a['varietyAsk'] ?? []);
+        foreach ((array) $request->input('varieties', []) as $lotId => $names) {
+            if (in_array((string) $lotId, $mine, true)) {
+                $ask[(string) $lotId] = collect((array) $names)->map(fn ($n) => mb_substr(trim((string) $n), 0, 60))->filter()->unique(fn ($n) => mb_strtolower($n))->values()->take(8)->all();
+            }
+        }
+        $a['varietyAsk'] = array_intersect_key($ask, array_flip($mine));
+        if ($request->filled('first')) {
+            $a['varietyFirst'] = (string) $request->input('first');
+        }
+        $auto->update(['answers' => $a]);
+        $auto = $auto->fresh();
+
+        $todo = $this->rankTodo($auto);
+        if (! $todo) {
+            return $this->json(true, 'Ready.', ['status' => 'ready', 'ranks' => (object) $this->ranksOf($auto)]);
+        }
+        if ($this->running($auto)) {
+            return $this->json(true, 'Already working on it.', ['pending' => true]);
+        }
+        foreach ($todo as $lotId => $case) {
+            if ((int) (((array) ($a['rankRuns'] ?? []))[(string) $lotId] ?? 0) >= self::RANKS) {
+                return $this->json(false, 'Anee has ranked the varieties of ' . ($case['p']['lotName'] ?: 'this lot') . ' ' . self::RANKS . ' times already. Choose from her last ranking.', [], 429);
+            }
+        }
+
+        return $this->runInBackground($auto, 'varieties', fn () => $this->runRanks($auto->fresh()));
+    }
+
+    /**
+     * The lots whose ranking is missing or no longer fits (a new month, other varieties, another place): lotId => the
+     * case ['p' => Variety Research's params, 'key' => what makes it the same case].
+     */
+    private function rankTodo(AsAutoSeason $auto): array
+    {
+        $a = (array) $auto->answers;
+        $kept = (array) ($a['varietyRank'] ?? []);
+        $out = [];
+        foreach (AsAutoLot::where('autoId', $auto->id)->orderBy('id')->get() as $al) {
+            $lot = AsScheduleLot::find($al->lotId);
+            if (! $lot || ! ($p = $this->rankCase($auto, $al, $lot))) {
+                continue;
+            }
+            $key = md5(json_encode([$p['crop'], $p['location'], $p['month'], $p['varieties'], $p['priorities'], $p['soil'], $p['problems'], $p['elevation'], $p['fieldProfile']]));
+            if ((($kept[(string) $lot->id] ?? [])['key'] ?? null) !== $key) {
+                $out[(int) $lot->id] = ['p' => $p, 'key' => $key];
+            }
+        }
+
+        return $out;
+    }
+
+    /**
+     * One lot as Variety Research asks it (VarietyAnalysisController::params): the place, the month planted and its
+     * season, the ground from the lot's own answers (its farm lot's, else the season's), the troubles it had, the
+     * varieties named and what matters most. Null for a lot with no crop, a tree crop, or no place yet.
+     */
+    private function rankCase(AsAutoSeason $auto, AsAutoLot $al, AsScheduleLot $lot): ?array
+    {
+        if (! $lot->crop || ! isset(CropCatalog::CROPS[$lot->crop]) || ! $al->method || $al->method === 'tree') {
+            return null;
+        }
+        $location = trim(implode(', ', array_filter([$lot->locTown ? preg_replace('/\s*\(Capital\)\s*$/i', '', $lot->locTown) : null, $lot->locProvince])));
+        if ($location === '' && $lot->pinLat) {
+            $location = sprintf('%.4f, %.4f', (float) $lot->pinLat, (float) $lot->pinLng);
+        }
+        if ($location === '') {
+            return null;
+        }
+        $a = (array) $auto->answers;
+        $fp = (array) ($a['fieldProfile'] ?? []);
+        $farm = collect((array) ($a['farmLots'] ?? []))->firstWhere('lotId', (int) $lot->id);
+        if ($farm && ($row = \App\Support\FarmLots::one((int) $auto->userId, (int) $farm['farmLotId'])) && ! empty($row['answers'])) {
+            $fp = (array) $row['answers'];
+        }
+        $legacy = $fp ? FieldProfile::legacy($fp) : [];
+        $month = ($al->fieldDate ?: now('Asia/Manila')->addMonth())->format('Y-m');
+        [$season, $year] = VarietyAnalysisController::seasonOfMonth($month, array_keys(\App\Support\Region::as('PH', fn () => \App\Support\Region::seasons())));
+        // The season's own troubles, once answered, in Variety Research's words.
+        $said = array_map(fn ($k) => ['flood' => 'floods', 'salt' => 'salinity', 'insects' => 'pests', 'diseases' => 'disease', 'waterlog' => 'drainage'][$k] ?? $k, (array) ($a['problems'] ?? []));
+        $problems = array_values(array_intersect(array_keys(VarietyAnalysisController::PROBLEMS), array_unique(array_merge((array) ($legacy['problemsVariety'] ?? []), $said))));
+        $first = (string) ($a['varietyFirst'] ?? 'yield');
+        $order = array_keys(VarietyAnalysisController::PRIORITIES);
+        $priorities = array_values(array_unique(array_merge(in_array($first, $order, true) ? [$first] : [], $order)));
+        $ways = AutoBook::methods($lot->crop);
+
+        return [
+            'location' => $location, 'country' => 'PH', 'month' => $month, 'year' => (int) $year, 'season' => (string) $season,
+            'soil' => array_key_exists($legacy['soil'] ?? '', VarietyAnalysisController::SOILS) ? $legacy['soil'] : 'unsure',
+            'elevation' => array_key_exists((string) ($legacy['elevation'] ?? ''), VarietyAnalysisController::ELEVATIONS) ? $legacy['elevation'] : null,
+            'crop' => (string) $lot->crop,
+            'varieties' => array_values((array) (((array) ($a['varietyAsk'] ?? []))[(string) $lot->id] ?? [])),
+            'priorities' => $priorities, 'problems' => $problems,
+            'notes' => mb_substr(trim('An Anee Auto season: ' . trim(preg_replace('/\s*\([^)]*\)/', '', mb_strtolower((string) ($ways[$al->method] ?? $al->method)))) . ($al->fieldDate ? ' on ' . $al->fieldDate->format('F j, Y') : '')
+                . ($lot->lotSize ? ', ' . ($size = rtrim(rtrim(number_format((float) $lot->lotSize, 2), '0'), '.')) . ' ' . ($lot->lotSizeUnit === 'sqm' ? 'square meters' : ($size === '1' ? 'hectare' : 'hectares')) : '') . '.'), 0, 400),
+            'lotId' => null, 'lotName' => mb_substr((string) $lot->lotName, 0, 120) ?: null,
+        ] + FieldProfile::forParams($fp, (string) $lot->crop);
+    }
+
+    /** The ranking job: each case once, kept in the Variety Ranking list and against every lot that shares it. */
+    private function runRanks(AsAutoSeason $auto): void
+    {
+        $settings = AiSetting::current()->forField('PH');
+        $vary = app(VarietyAnalysisController::class);
+        try {
+            $todo = $this->rankTodo($auto);
+            $done = [];
+            foreach ($todo as $lotId => $case) {
+                if (! isset($done[$case['key']])) {
+                    $p = $case['p'];
+                    $this->beat($auto, 'research');
+                    $r = $vary->rankFor($p, $settings, (int) $this->payer()->id, fn ($phase, $try = 1) => $this->beat($auto, (string) $phase, (int) $try), 'auto');
+                    $title = 'Varieties · ' . CropCatalog::label($p['crop']) . ' · ' . VarietyAnalysisController::monthWords($p['month']) . ' planting · ' . ($p['lotName'] ? $p['lotName'] . ', ' : '') . $p['location'];
+                    $rowId = DB::table('as_plant_analyses')->insertGetId([
+                        'userId' => Auth::id(), 'kind' => 'variety', 'title' => mb_substr($title, 0, 190), 'params' => json_encode($p), 'report' => json_encode($r['report']),
+                        'credits' => 0, 'status' => 'ready', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
+                    ]);
+                    AiUsage::record(self::KIND, (int) Auth::id(), (int) $this->payer()->id, $auto->id, $settings, $r['result'], 0);
+                    $done[$case['key']] = $rowId;
+                }
+                // Kept as each lot finishes, so a run stopped halfway keeps what it ranked.
+                $fresh = $auto->fresh();
+                $a = (array) $fresh->answers;
+                $a['varietyRank'] = (array) ($a['varietyRank'] ?? []);
+                $a['varietyRank'][(string) $lotId] = ['id' => $done[$case['key']], 'key' => $case['key'], 'month' => $case['p']['month'], 'at' => now('Asia/Manila')->format('M j, Y g:i A')];
+                $a['rankRuns'] = (array) ($a['rankRuns'] ?? []);
+                $a['rankRuns'][(string) $lotId] = (int) ($a['rankRuns'][(string) $lotId] ?? 0) + 1;
+                $fresh->update(['answers' => $a]);
+            }
+            $n = count($todo);
+            AsAutoEvent::say($auto->id, 'analysis', 'I ranked the varieties for ' . ($n === 1 ? 'your lot' : 'your ' . $n . ' lots') . '. Pick the one you will plant.', ['kind' => 'varieties']);
+            $this->finishJob($auto);
+        } catch (\Throwable $e) {
+            report($e);
+            $this->finishJob($auto, mb_substr($e->getMessage(), 0, 300));
+        }
+    }
+
+    /**
+     * Each lot's ranking as the wizard shows it: when it was made, for which month, the varieties named, and the report
+     * linked to the records (VarietyAnalysisController::withRecords), lotId => that.
+     */
+    private function ranksOf(AsAutoSeason $auto): array
+    {
+        $kept = (array) (((array) $auto->answers)['varietyRank'] ?? []);
+        $ids = array_values(array_filter(array_map(fn ($x) => (int) ($x['id'] ?? 0), $kept)));
+        if (! $ids) {
+            return [];
+        }
+        $rows = DB::table('as_plant_analyses')->whereIn('id', $ids)->where('kind', 'variety')->where('status', 'ready')->get(['id', 'params', 'report'])->keyBy('id');
+        $out = [];
+        foreach ($kept as $lotId => $k) {
+            $r = $rows->get((int) ($k['id'] ?? 0));
+            if (! $r) {
+                continue;
+            }
+            $p = json_decode((string) $r->params, true) ?: [];
+            $raw = json_decode((string) $r->report, true) ?: [];
+            $report = rescue(fn () => VarietyAnalysisController::withRecords($raw, $p), $raw, false);
+            unset($report['webSources']);
+            $out[(string) $lotId] = ['id' => (int) $r->id, 'key' => $k['key'] ?? null, 'at' => $k['at'] ?? null, 'month' => $p['month'] ?? null,
+                'monthWords' => ! empty($p['month']) ? VarietyAnalysisController::monthWords($p['month']) : null,
+                'season' => ! empty($p['season']) ? \App\Support\Region::seasonTitle($p['season'], (int) ($p['year'] ?? now('Asia/Manila')->year), 'PH') : null,
+                'asked' => array_values((array) ($p['varieties'] ?? [])), 'first' => $p['priorities'][0] ?? 'yield', 'report' => $report];
+        }
+
+        return $out;
+    }
+
     /** The lots' crop problems to offer on the troubles step. */
     public function cropProblems(int $id)
     {
@@ -1059,6 +1272,10 @@ class AneeAutoController extends Controller
             return $this->json(false, $s['error'] ?? 'Anee could not finish. Please try again.', ['status' => 'failed'], 422);
         }
 
+        if ($auto->job === 'varieties') {
+            return $this->json(true, 'Ready.', ['status' => 'ready', 'kind' => $auto->job, 'ranks' => (object) $this->ranksOf($auto)]);
+        }
+
         return $this->json(true, 'Ready.', ['status' => 'ready', 'kind' => $auto->job, 'analysis' => $auto->analysis, 'live' => $auto->status === AsAutoSeason::ACTIVE, 'url' => route('auto.show', $auto->id)]);
     }
 
@@ -1095,7 +1312,7 @@ class AneeAutoController extends Controller
             $data['sources'] = array_slice((array) ($result['sources'] ?? []), 0, 12);
             $data['searched'] = (bool) ($result['searched'] ?? false);
             AiUsage::record(self::KIND, (int) Auth::id(), (int) $this->payer()->id, $auto->id, $settings, $result, 0);
-            $auto->update(['analysis' => $data, 'analysisAt' => now(), 'analysisRuns' => (int) $auto->analysisRuns + 1, 'step' => max((int) $auto->step, 7)]);
+            $auto->update(['analysis' => $data, 'analysisAt' => now(), 'analysisRuns' => (int) $auto->analysisRuns + 1, 'step' => max((int) $auto->step, array_search('fertilizer', self::STEPS, true))]);
             AsAutoEvent::say($auto->id, 'analysis', $data['headline'] ?? 'I read the farm.', ['kind' => 'reading']);
             $this->finishJob($auto);
         } catch (\Throwable $e) {

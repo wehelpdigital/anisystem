@@ -301,32 +301,7 @@ class VarietyAnalysisController extends Controller
             ]);
         };
         try {
-            // Ten ranked, each with the derbies' and the farmers' own harvests (2026-10-17, the owner): a longer answer, longer notes.
-            // The brief is the case's (crop, place, season, soil, troubles, the varieties named): kept for the next farmer of the same case (2026-10-18).
-            $shelf = ['kind' => 'variety', 'scope' => mb_substr(implode(' · ', array_filter([CropCatalog::label($p['crop']), $p['location'], $p['season'], implode(', ', $p['varieties'])])), 0, 250)];
-            $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt, 12000, fn (string $t) => $this->parseReport($t), $beat, 4500, $shelf);
-            $report = $result['data'];
-            if ($report === null) {
-                \Illuminate\Support\Facades\Log::warning('variety-analysis: unparsable answer', [
-                    'head' => mb_substr((string) $result['text'], 0, 400),
-                ]);
-                throw new \RuntimeException($result['error'] ?? 'The analysis could not be read. Nothing was charged. Please try again.');
-            }
-
-            // The ranking honours the farmer's own order, whatever the model
-            // felt: overall = the four scores weighed by that order.
-            // Learn once: the named varieties the research looked up are kept for every module after.
-            if ($unknown = self::toLookUp($p)) {
-                \App\Support\VarietyLearned::harvest((string) $p['crop'], $unknown, (string) ($result['researchText'] ?? ''),
-                    ['via' => 'variety', 'userId' => $payerId, 'searched' => (bool) ($result['searched'] ?? false), 'sources' => (array) ($result['sources'] ?? [])]);
-            }
-            foreach ((array) ($p['varieties'] ?? []) as $v) {
-                \App\Support\VarietyBook::used(\App\Support\VarietyBook::find((string) $p['crop'], (string) $v));
-            }
-            $report = $this->weigh($report, $p['priorities']);
-            $report = self::markNewest($report);
-            $report['webSources'] = $result['sources'];
-            $report['searched'] = (bool) $result['searched'];
+            ['report' => $report, 'result' => $result] = $this->rankFor($p, $settings, $payerId, $beat, 'variety', $prompt);
 
             // The price agreed when the run began.
             $charged = (float) $price;
@@ -352,6 +327,47 @@ class VarietyAnalysisController extends Controller
                 'updated_at' => now(),
             ]);
         }
+    }
+
+    /**
+     * The research and its ranking, for this page and for another module (2026-10-28, Anee Auto's wizard, the owner:
+     * "anee analyzes it when you click continue to provide you the variety ranking (similar to the variety ranking use
+     * the same process)"): the brief searched, the document written, the four scores weighed by the farmer's order, the
+     * newest marked, the varieties looked up kept (learn once). No row and no charge here: the caller keeps and pays.
+     * $p is params()'s shape; the settings are the field's. Throws when the answer cannot be read.
+     *
+     * @return array{report: array, result: array}
+     */
+    public function rankFor(array $p, AiSetting $settings, int $payerId, callable $beat, string $via = 'variety', ?string $prompt = null): array
+    {
+        // Ten ranked, each with the derbies' and the farmers' own harvests (2026-10-17, the owner): a longer answer, longer notes.
+        // The brief is the case's (crop, place, season, soil, troubles, the varieties named): kept for the next farmer of the same case (2026-10-18).
+        $shelf = ['kind' => 'variety', 'scope' => mb_substr(implode(' · ', array_filter([CropCatalog::label($p['crop']), $p['location'], $p['season'], implode(', ', $p['varieties'])])), 0, 250)];
+        $result = $this->ai->researchThenJson($settings, $this->researchPrompt($p), $prompt ?? $this->prompt($p), 12000, fn (string $t) => $this->parseReport($t), $beat, 4500, $shelf);
+        $report = $result['data'];
+        if ($report === null) {
+            \Illuminate\Support\Facades\Log::warning('variety-analysis: unparsable answer', [
+                'via' => $via, 'head' => mb_substr((string) $result['text'], 0, 400),
+            ]);
+            throw new \RuntimeException($result['error'] ?? 'The analysis could not be read. Nothing was charged. Please try again.');
+        }
+
+        // The ranking honours the farmer's own order, whatever the model
+        // felt: overall = the four scores weighed by that order.
+        // Learn once: the named varieties the research looked up are kept for every module after.
+        if ($unknown = self::toLookUp($p)) {
+            \App\Support\VarietyLearned::harvest((string) $p['crop'], $unknown, (string) ($result['researchText'] ?? ''),
+                ['via' => $via, 'userId' => $payerId, 'searched' => (bool) ($result['searched'] ?? false), 'sources' => (array) ($result['sources'] ?? [])]);
+        }
+        foreach ((array) ($p['varieties'] ?? []) as $v) {
+            \App\Support\VarietyBook::used(\App\Support\VarietyBook::find((string) $p['crop'], (string) $v));
+        }
+        $report = $this->weigh($report, $p['priorities']);
+        $report = self::markNewest($report);
+        $report['webSources'] = $result['sources'];
+        $report['searched'] = (bool) $result['searched'];
+
+        return ['report' => $report, 'result' => $result];
     }
 
     /**

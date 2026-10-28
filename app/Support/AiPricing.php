@@ -136,8 +136,10 @@ final class AiPricing
             // 2026-10-28, the season grew: each lot's plan may be written again before it is approved (up to three
             // writes; one more at p90, +13K in and +24K out a lot) and its final season report comes with it
             // (the 'season' kind, +9K in and +6K out a lot). Measured live the same day: one lot's calendar 8.8K in, 9.4K out.
-            'auto' => ['unit' => 'lot', 'free' => 1, 'units' => 1, 'max' => 20, 'perUnitPrice' => true, 'baseIn' => 57000, 'baseOut' => 75000, 'unitIn' => 35000, 'unitOut' => 54000,
-                'search' => 1, 'om' => 10, 'omUnit' => 2, 'maps' => 1, 'mail' => 150, 'useObserve' => 10, 'useAsk' => 30],
+            // Later that day the wizard ranks each lot's varieties by Variety Research's own run before the farmer picks one
+            // ('variety': 12.5K in, 16K out and a search a lot; lots planted alike share one).
+            'auto' => ['unit' => 'lot', 'free' => 1, 'units' => 1, 'max' => 20, 'perUnitPrice' => true, 'baseIn' => 69500, 'baseOut' => 91000, 'unitIn' => 47500, 'unitOut' => 70000,
+                'search' => 2, 'om' => 10, 'omUnit' => 2, 'maps' => 1, 'mail' => 150, 'useObserve' => 10, 'useAsk' => 30],
             'autoObserve' => ['unit' => '', 'baseIn' => 11000, 'baseOut' => 4500],
             'autoAsk' => ['unit' => '', 'baseIn' => 12000, 'baseOut' => 2500],
             // A week of Satellite Weather: per opening a Google map load plus the shared forecast grid and the tiles.
