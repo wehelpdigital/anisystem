@@ -72,6 +72,12 @@ final class VarietyShield
         'purple blotch' => ['purple-blotch'], 'stemphylium' => ['stemphylium-leaf-blight'], 'white rust' => ['white-rust'], 'alternaria' => ['alternaria-leaf-spot', 'purple-blotch'],
         'nematode|meloidogyne' => ['root-knot-nematode'], 'cercospora' => ['cercospora-leaf-spot'], 'rust' => ['bean-rust', 'corn-rust', 'peanut-rust'],
         'leaf blight' => ['carrot-leaf-blight', 'northern-corn-leaf-blight'], 'damping' => ['damping-off'], 'southern blight|sclerotium' => ['southern-blight'],
+        // 2026-10-28, the words the variety research found (database/varieties/variety-shield.json): corn's own ratings
+        // and the insects sellers name. An insect claim only lightens the watch on it (scouted, never skipped).
+        'corn borer' => ['asian-corn-borer'], 'ear rot|gibberella' => ['corn-ear-rot'], 'stalk rot' => ['corn-stalk-rot'], 'twister' => ['onion-twister'],
+        'diamondback' => ['diamondback-moth'], 'leaf ?miner' => ['leafminer', 'groundnut-leafminer'], 'aphid(?![- ]?borne)' => ['aphids', 'cotton-aphid', 'cowpea-aphid', 'green-peach-aphid'],
+        'thrips' => ['thrips'], 'whitefl(?![- ]?borne)' => ['whitefly'], 'fruit and shoot borer' => ['eggplant-fruit-and-shoot-borer'], 'pod borer' => ['legume-pod-borer'],
+        'bean ?fly' => ['bean-fly'], 'broad mite' => ['broad-mite'], 'stink ?bug' => ['green-stink-bug'],
     ];
 
     /** A stress named in a claim, as the shield says it. */
@@ -195,9 +201,15 @@ final class VarietyShield
                 foreach ($cands as $c) {
                     if (($slugs === [] || in_array($c, $slugs, true)) && ! isset($resist[$c]) && ! isset($weak[$c])) {
                         $resist[$c] = ['code' => $code, 'name' => (string) $words];
-                        break 2;
+                        continue 3;
                     }
                 }
+            }
+            // A researched claim the catalogue has no entry for (namamarako virus, squash leaf curl): said, never a
+            // reason to drop a spray. A general one ("diseases (unspecified)") says nothing worth saying, and a seller's
+            // loose words stay unsaid unless they name something the catalogue knows.
+            if (isset($found['resist'][$words]) && ! preg_match('/unspecified|general/i', (string) $words)) {
+                $resist['name:' . $words] ??= ['code' => $code, 'name' => (string) $words];
             }
         }
 

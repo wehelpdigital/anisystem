@@ -1,0 +1,1891 @@
+{
+ "ampalaya|Green Alpha": {
+  "resist": {
+   "cucurbit aphid-borne yellows virus": "IR",
+   "gummy stem blight": "IR",
+   "cercospora leaf spot": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/green-alpha-f1/",
+  "note": "highland, midland and lowland"
+ },
+ "ampalaya|Magnifico": {
+  "resist": {
+   "namamarako virus (maleness)": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/magnifico-f1-hybrid-ampalaya/"
+ },
+ "ampalaya|Poseidon": {
+  "resist": {
+   "namamarako virus (maleness)": "IR"
+  },
+  "tolerates": [
+   "fruit cracking",
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/poseidon-f1-hybrid-ampalaya/"
+ },
+ "ampalaya|Sta. Isabelle": {
+  "resist": {
+   "viruses (unspecified)": "T",
+   "mildew (unspecified)": "T"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/bitter-gourd-1/sta.-isabelle"
+ },
+ "ampalaya|Sta. Lucia": {
+  "resist": {
+   "namamarako virus (maleness)": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/sta-lucia-ampalaya-open-pollinated/"
+ },
+ "ampalaya|Sta. Rita": {
+  "resist": {
+   "foliar diseases (unspecified)": "T",
+   "viruses (unspecified)": "T"
+  },
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/sta-rita/",
+  "note": "claim is general"
+ },
+ "ampalaya|Titan": {
+  "resist": {
+   "diseases (unspecified)": "T"
+  },
+  "tolerates": [
+   "general stress",
+   "fruit cracking"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/titan-f1-hybrid-ampalaya/",
+  "note": "claim is general: tolerates diseases and stresses better than other varieties"
+ },
+ "ampalaya|Trident Improved": {
+  "resist": {
+   "namamarako virus (maleness)": "IR"
+  },
+  "tolerates": [
+   "fruit cracking",
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/trident-improved-f1-hybrid-ampalaya/"
+ },
+ "ampalaya|Verde Buenas": {
+  "resist": {
+   "namamarako virus (maleness)": "T"
+  },
+  "tolerates": [
+   "fruit cracking",
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/bitter-gourd-1/verde-buenas-f1"
+ },
+ "ampalaya|Verde Swerte": {
+  "resist": {
+   "fusarium wilt": "T"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/bitter-gourd-1/verde-swerte-f1"
+ },
+ "bellpepper|California Wonder": {
+  "resist": {
+   "leaf spot": "T",
+   "whitefly": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pepper-bell/california-wonder",
+  "note": "best in the dry season in the lowland, all year in the upland"
+ },
+ "bellpepper|Clarabel": {
+  "resist": {
+   "soil-borne diseases (unspecified)": "IR",
+   "foliar diseases (unspecified)": "IR"
+  },
+  "tolerates": [
+   "heat",
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/clarabel-f1-hybrid-conical-pepper/"
+ },
+ "bellpepper|Coralee": {
+  "resist": {
+   "aphids": "T",
+   "leafminer": "T",
+   "thrips": "T",
+   "broad mites": "T",
+   "bacterial wilt": "T",
+   "anthracnose": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pepper-bell-1/coralee-f1"
+ },
+ "bellpepper|Improved Smooth Cayene": {
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/improved-smooth-cayene/",
+  "note": "seller says it can be planted in the wet and the dry season; no disease claim"
+ },
+ "bellpepper|Kayen Premium Select": {
+  "resist": {
+   "bacterial wilt": "T",
+   "anthracnose": "T",
+   "viruses (unspecified)": "T",
+   "late blight": "T",
+   "leaf spot": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pepper-bell-1/kayen-premium-select"
+ },
+ "bellpepper|Red Crest": {
+  "resist": {
+   "diseases (unspecified)": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/red-crest-f1-hybrid-chinese-pepper/",
+  "note": "claim is general: intermediate resistance to diseases"
+ },
+ "bellpepper|Yellow Star": {
+  "resist": {
+   "potato virus Y": "R"
+  },
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/yellow-star/"
+ },
+ "bellpepper|Yolo Wonder": {
+  "resist": {
+   "mosaic virus": "T"
+  },
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/yolo-wonder/"
+ },
+ "broccoli|Avenger": {
+  "resist": {
+   "black rot": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/avenger-f1-hybrid-broccoli/",
+  "note": "highland"
+ },
+ "broccoli|Green King": {
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Known-You Seed",
+  "url": "https://www.knownyou.com/product-detail/671/"
+ },
+ "broccoli|Marathon": {
+  "tolerates": [
+   "rain"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/marathon-f1-hybrid-broccoli/",
+  "note": "listed for the wet season in the highland; no disease claim"
+ },
+ "cabbage|Gladiator": {
+  "tolerates": [
+   "rain"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/gladiator-f1-hybrid-cabbage/",
+  "note": "listed for the wet season, lowland to highland; no disease claim"
+ },
+ "cabbage|Grand KK Cross": {
+  "resist": {
+   "black rot": "IR"
+  },
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/grand-kk-cross-f1-hybrid-cabbage/"
+ },
+ "cabbage|Green Nova": {
+  "resist": {
+   "diseases (unspecified)": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/green-nova-f1-hybrid-cabbage/",
+  "note": "claim is general"
+ },
+ "cabbage|Rare Ball": {
+  "resist": {
+   "black rot": "T",
+   "black leg": "T"
+  },
+  "tolerates": [
+   "heat",
+   "high humidity",
+   "rain"
+  ],
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/rare-ball-f1/",
+  "note": "seller says it grows well even in the rainy season"
+ },
+ "cabbage|Scorpio": {
+  "tolerates": [
+   "heat",
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/scorpio-f1-hybrid-cabbage/",
+  "note": "heat tolerant, all season in the highland; no disease claim"
+ },
+ "cabbage|Summer Summit": {
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+  "note": "catalogue says suitable for growing in warm weather"
+ },
+ "cabbage|Swerte King": {
+  "resist": {
+   "clubroot": "T",
+   "soft rot": "T"
+  },
+  "tolerates": [
+   "head cracking",
+   "bolting",
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/cabbage-1/swerte-king-f1"
+ },
+ "cabbage|Volcano": {
+  "tolerates": [
+   "heat",
+   "rain"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+  "note": "catalogue says excellent heat and rain tolerance"
+ },
+ "cabbage|Wakamine": {
+  "resist": {
+   "black rot": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/wakamine-f1-hybrid-cabbage/"
+ },
+ "carrot|Firewedge": {
+  "resist": {
+   "leaf blight": "T"
+  },
+  "tolerates": [
+   "bolting"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/carrot-3/firewedge-f1"
+ },
+ "carrot|Fukutomi": {
+  "resist": {
+   "leaf blight": "IR",
+   "alternaria leaf spot": "IR"
+  },
+  "tolerates": [
+   "bolting",
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/fukutomi-f1-hybrid-carrot/",
+  "note": "seller lists blight and Alternaria"
+ },
+ "carrot|Heartland": {
+  "resist": {
+   "leaf blight": "T",
+   "soft rot": "T"
+  },
+  "tolerates": [
+   "rain",
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/carrot-3/heartland-f1",
+  "note": "listed for wet and dry season, all elevations"
+ },
+ "carrot|Kuroda GT": {
+  "resist": {
+   "leaf blight": "IR",
+   "powdery mildew": "IR"
+  },
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/kuroda-gt-carrot/",
+  "note": "performs well under hot climate"
+ },
+ "carrot|Kuroda Max": {
+  "resist": {
+   "diseases (unspecified)": "R"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/kuroda-max-carrot/",
+  "note": "claim is general: preferred by growers for its disease resistance"
+ },
+ "carrot|Marchew": {
+  "resist": {
+   "diseases (unspecified)": "R"
+  },
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+  "note": "claim is general: chosen by growers for its disease resistance"
+ },
+ "carrot|Mindagold": {
+  "resist": {
+   "alternaria leaf blight": "T"
+  },
+  "tolerates": [
+   "bolting"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/carrot-3/mindagold-f1"
+ },
+ "carrot|Nikko Kuroda": {
+  "resist": {
+   "powdery mildew": "T",
+   "leaf blight": "T"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/nikko-kuroda-carrot/",
+  "note": "seller says tolerant of powdery mildew and blight"
+ },
+ "carrot|Richland": {
+  "resist": {
+   "leaf blight": "T",
+   "soft rot": "T"
+  },
+  "tolerates": [
+   "rain"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/carrot-3/richland-f1",
+  "note": "listed for wet and dry season"
+ },
+ "carrot|Sugarland": {
+  "resist": {
+   "pests (unspecified)": "IR",
+   "diseases (unspecified)": "IR"
+  },
+  "tolerates": [
+   "bolting"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/sugarland-f1-hybrid-carrot/",
+  "note": "disease claim is general"
+ },
+ "carrot|Terracotta": {
+  "resist": {
+   "leaf blight": "T"
+  },
+  "tolerates": [
+   "rain"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/carrot-3/terracotta-f1",
+  "note": "seller says highly tolerant to leaf blight; listed for wet and dry season"
+ },
+ "cauliflower|Meigetsu Select": {
+  "tolerates": [
+   "heat",
+   "rain"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/cauliflower-1/meigetsu-select-f1",
+  "note": "seller says tolerant to heat and rain stress"
+ },
+ "cauliflower|Milky Way": {
+  "resist": {
+   "clubroot": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/milky-way-f1-hybrid-cauliflower/"
+ },
+ "cauliflower|Snow Ball": {
+  "resist": {
+   "downy mildew": "R"
+  },
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+ },
+ "cauliflower|Sunrise": {
+  "resist": {
+   "black rot": "IR",
+   "downy mildew": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/sunrise-f1-hybrid-cauliflower-lowland-to-midland/"
+ },
+ "cauliflower|Sunshine": {
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/white-island-f1-hybrid-cauliflower-midland/",
+  "note": "heat tolerant, for low to mid elevation; the Sunshine sheet sits on Allied's White Island page"
+ },
+ "cauliflower|White Flash": {
+  "resist": {
+   "black rot": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/white-flash-f1-hybrid-cauliflower-highland/"
+ },
+ "cauliflower|White Shot": {
+  "resist": {
+   "downy mildew": "IR"
+  },
+  "tolerates": [
+   "heat",
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/white-shot-f1-hybrid-cauliflower-lowland/"
+ },
+ "chili|Amphawa": {
+  "resist": {
+   "anthracnose": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/amphawa-f1/"
+ },
+ "chili|Ascent": {
+  "resist": {
+   "bacterial wilt": "R"
+  },
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/ascent/"
+ },
+ "chili|Bicol Express": {
+  "resist": {
+   "pests (unspecified)": "IR",
+   "diseases (unspecified)": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/bicol-express-panigang-pepper/",
+  "note": "claim is general; dry season, lowland"
+ },
+ "chili|Cindy Gang": {
+  "resist": {
+   "bacterial wilt": "T",
+   "viruses (unspecified)": "T",
+   "leaf spot": "T",
+   "anthracnose": "T",
+   "late blight": "T"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pepper-hot/cindy-gang"
+ },
+ "chili|Cleopatra": {
+  "resist": {
+   "viruses (unspecified)": "R"
+  },
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+  "note": "catalogue says resistant to viruses"
+ },
+ "chili|Cordelia": {
+  "resist": {
+   "aphids": "T",
+   "leafminer": "T",
+   "broad mites": "T",
+   "bacterial wilt": "T",
+   "viruses (unspecified)": "T",
+   "leaf spot": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pepper-hot-1/cordelia-f1"
+ },
+ "chili|Green Dynamite": {
+  "resist": {
+   "anthracnose": "IR",
+   "bacterial leaf spot": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/green-dynamite-f1/"
+ },
+ "chili|Hot Pot 207": {
+  "resist": {
+   "viruses (unspecified)": "T"
+  },
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/hot-pot-207-f1/",
+  "note": "seller says highly tolerant to virus"
+ },
+ "chili|Magnum": {
+  "resist": {
+   "tomato mosaic virus": "T",
+   "bacterial wilt": "T",
+   "leaf spot": "T",
+   "anthracnose": "T",
+   "late blight": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pepper-hot/magnum-f1"
+ },
+ "chili|Panigang King": {
+  "resist": {
+   "pests (unspecified)": "T",
+   "diseases (unspecified)": "T"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/panigang-king-f1-hybrid-panigang-pepper/",
+  "note": "claim is general: good pest and disease resistance rating in season"
+ },
+ "chili|Pimiento": {
+  "resist": {
+   "anthracnose": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/pimiento-f1/"
+ },
+ "chili|Pinatubo": {
+  "tolerates": [
+   "general stress",
+   "all season",
+   "rain"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/pinatubo-f1-hybrid-hot-pepper-for-fresh-or-processing/",
+  "note": "sold as stress tolerant, all season lowland; no disease claim; Harbest catalogue adds: stress tolerant especially in the rainy season"
+ },
+ "chili|Portia Improved": {
+  "resist": {
+   "bacterial wilt": "T",
+   "leaf spot": "T",
+   "anthracnose": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pepper-hot/portia-improved-f1"
+ },
+ "chili|Red Hot": {
+  "resist": {
+   "diseases (unspecified)": "T"
+  },
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+  "note": "claim is general: tolerant to diseases"
+ },
+ "chili|Taiwan Express": {
+  "tolerates": [
+   "heat",
+   "high humidity"
+  ],
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/taiwan-express/"
+ },
+ "chili|Tinghala": {
+  "resist": {
+   "pests (unspecified)": "IR",
+   "foliar diseases (unspecified)": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/tinghala-hot-pepper-open-pollinated/",
+  "note": "claim is general: intermediate resistance to pests and foliar diseases"
+ },
+ "chinesecabbage|Blues": {
+  "resist": {
+   "soft rot": "T",
+   "clubroot": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/chinese-cabbage/blues-f1"
+ },
+ "chinesecabbage|CR Alabama": {
+  "resist": {
+   "clubroot": "IR",
+   "white rust": "IR",
+   "soft rot": "IR",
+   "black rot": "IR"
+  },
+  "tolerates": [
+   "bolting",
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/cr-alabama-f1-hybrid-chinese-cabbage/"
+ },
+ "chinesecabbage|CR Halsema": {
+  "resist": {
+   "black rot": "IR",
+   "soft rot": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/halsema-f1/"
+ },
+ "chinesecabbage|Green Cool": {
+  "resist": {
+   "bacterial soft rot": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/green-cool-f1-hybrid-chinese-cabbage/"
+ },
+ "chinesecabbage|Tropical Delight": {
+  "resist": {
+   "pests (unspecified)": "IR",
+   "diseases (unspecified)": "IR"
+  },
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/tropical-delight-f1-hybrid-chinese-cabbage/",
+  "note": "bred for the lowland or warm areas; disease claim is general"
+ },
+ "corn|30Y80": {
+  "events": [
+   "MON810"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Pioneer Hi-Bred Philippines",
+  "url": "https://www.pioneer.com/home/site/philippines/template.CONTENT/hybrid-corn/guid.A8F7D95C-A274-E006-846F-A6836140DAAC",
+  "note": "Pioneer lists it with YieldGard Corn Borer protection, resistance to stalk and root lodging, for wet and dry seasons except high elevation; Bt only, no herbicide trait named"
+ },
+ "corn|DK 5885 RRC2": {
+  "events": [
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON%20NK603_final.pdf",
+  "note": "RRC2 = Roundup Ready Corn 2 (NK603) named in the registered hybrid name; herbicide tolerant only, no Bt, so it has no built-in insect protection"
+ },
+ "corn|DK 7878RRC2": {
+  "events": [
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON%20NK603_final.pdf",
+  "note": "RRC2 = Roundup Ready Corn 2 (NK603) named in the registered hybrid name; herbicide tolerant only, no Bt, so it has no built-in insect protection"
+ },
+ "corn|DK 818 2 (RRC2)": {
+  "events": [
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON%20NK603_final.pdf",
+  "note": "RRC2 = Roundup Ready Corn 2 (NK603) named in the registered hybrid name; herbicide tolerant only, no Bt, so it has no built-in insect protection"
+ },
+ "corn|DK 818 RRC2/YG": {
+  "events": [
+   "MON810",
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) and RRC2 = Roundup Ready Corn 2 (NK603), both named in the registered hybrid name"
+ },
+ "corn|DK 818 YG": {
+  "events": [
+   "MON810"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) named in the registered hybrid name; no herbicide trait"
+ },
+ "corn|DK 838 YG": {
+  "events": [
+   "MON810"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) named in the registered hybrid name; no herbicide trait"
+ },
+ "corn|DK 868 1 (YG)": {
+  "events": [
+   "MON810"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) named in the registered hybrid name; no herbicide trait"
+ },
+ "corn|DK 878 RRC2": {
+  "events": [
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON%20NK603_final.pdf",
+  "note": "RRC2 = Roundup Ready Corn 2 (NK603) named in the registered hybrid name; herbicide tolerant only, no Bt, so it has no built-in insect protection"
+ },
+ "corn|DK 878 RRC2/YG": {
+  "events": [
+   "MON810",
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) and RRC2 = Roundup Ready Corn 2 (NK603), both named in the registered hybrid name"
+ },
+ "corn|DK 878YG": {
+  "events": [
+   "MON810"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) named in the registered hybrid name; no herbicide trait"
+ },
+ "corn|DK 9051 1 (YG)": {
+  "events": [
+   "MON810"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) named in the registered hybrid name; no herbicide trait"
+ },
+ "corn|DK 9070 RRC2": {
+  "events": [
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON%20NK603_final.pdf",
+  "note": "RRC2 = Roundup Ready Corn 2 (NK603) named in the registered hybrid name; herbicide tolerant only, no Bt, so it has no built-in insect protection"
+ },
+ "corn|DK 909 1 (YG)": {
+  "events": [
+   "MON810"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) named in the registered hybrid name; no herbicide trait"
+ },
+ "corn|DK 9132 RRC2": {
+  "events": [
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON%20NK603_final.pdf",
+  "note": "RRC2 = Roundup Ready Corn 2 (NK603) named in the registered hybrid name; herbicide tolerant only, no Bt, so it has no built-in insect protection"
+ },
+ "corn|DK 9132 RRC2/YG": {
+  "events": [
+   "MON810",
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) and RRC2 = Roundup Ready Corn 2 (NK603), both named in the registered hybrid name"
+ },
+ "corn|DK 9132 YG": {
+  "events": [
+   "MON810"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) named in the registered hybrid name; no herbicide trait"
+ },
+ "corn|DK 9161 1(YG)": {
+  "events": [
+   "MON810"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Monsanto / Bayer (DEKALB)",
+  "url": "https://www.bayer.com/sites/default/files/PS_MON_810_final_0.pdf",
+  "note": "YG = YieldGard Corn Borer (MON810, Cry1Ab) named in the registered hybrid name; no herbicide trait"
+ },
+ "corn|P 3774 YR": {
+  "events": [
+   "MON810",
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Pioneer Hi-Bred Philippines",
+  "url": "https://www.pioneer.com/home/site/philippines/hybrid-corn/biotech-traits/yieldgard-corn-borer/",
+  "note": "YR = YieldGard Corn Borer (MON810) plus Roundup Ready Corn 2 (NK603); listed by Pioneer Philippines as P3774YR for Luzon, Visayas and Mindanao"
+ },
+ "corn|P 3990 YR": {
+  "events": [
+   "MON810",
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Pioneer Hi-Bred Philippines",
+  "url": "https://www.pioneer.com/home/site/philippines/hybrid-corn/biotech-traits/yieldgard-corn-borer/",
+  "note": "YR = YieldGard Corn Borer (MON810) plus Roundup Ready Corn 2 (NK603); Pioneer YR line: YieldGard Corn Borer plus Roundup Ready Corn 2; this hybrid has no product page of its own online"
+ },
+ "corn|P 4097 YR": {
+  "events": [
+   "MON810",
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "resist": {
+   "asiatic corn borer": "R"
+  },
+  "source": "Pioneer Hi-Bred Philippines",
+  "url": "https://www.pioneer.com/home/site/philippines/hybrid-corn/biotech-traits/yieldgard-corn-borer/",
+  "note": "YR = YieldGard Corn Borer (MON810) plus Roundup Ready Corn 2 (NK603); listed by Pioneer Philippines as P4097YR for Luzon and Visayas"
+ },
+ "corn|P3645 YR": {
+  "events": [
+   "MON810",
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate"
+  ],
+  "resist": {
+   "asiatic corn borer": "R",
+   "gray leaf spot": "R",
+   "northern leaf blight": "R",
+   "gibberella ear rot": "R",
+   "southern rust": "R",
+   "fusarium stalk rot": "MR"
+  },
+  "source": "Pioneer Hi-Bred Philippines",
+  "url": "https://www.pioneer.com/CMRoot/International/Philippines/FTT_MAISKAALAMAN_FebruaryArticle.pdf",
+  "note": "Pioneer calls it highly tolerant of Asiatic corn borer and glyphosate ready, for Mindanao high elevation; disease ratings from the same Pioneer column"
+ },
+ "corn|P3660PW": {
+  "events": [
+   "MON89034",
+   "TC1507",
+   "NK603"
+  ],
+  "herbicide": [
+   "glyphosate",
+   "glufosinate"
+  ],
+  "source": "Pioneer (Corteva Agriscience)",
+  "url": "https://www.pioneer.com/ph/mga-produkto-at-solusyon/seeds/P3582PW.html",
+  "note": "PW is Pioneer Philippines' PowerCore line (Cry1A.105, Cry2Ab2, Cry1F against corn borer, fall armyworm and earworm; glyphosate and glufosinate tolerant); its PW siblings P3530PW and P3585PW are filed as MON89034 x TC1507 x NK603"
+ },
+ "cucumber|Amata": {
+  "resist": {
+   "pests (unspecified)": "IR",
+   "diseases (unspecified)": "IR"
+  },
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/amata-f1-hybrid-cucumber/",
+  "note": "disease claim is general"
+ },
+ "cucumber|Bangkok": {
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/bangkok-f1-hybrid-cucumber/",
+  "note": "heat tolerant, high production in the lowland"
+ },
+ "cucumber|Fountain": {
+  "resist": {
+   "papaya ringspot virus W (PRSV-W)": "R"
+  },
+  "tolerates": [
+   "heat",
+   "high humidity"
+  ],
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/cucumber-fountain/",
+  "note": "Harbest catalogue adds: thrives in hot and humid areas"
+ },
+ "cucumber|General Lee": {
+  "resist": {
+   "powdery mildew": "IR",
+   "cucumber mosaic virus": "IR"
+  },
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/general-lee-f1-hybrid-slicer-cucumber/"
+ },
+ "cucumber|Great Wall": {
+  "resist": {
+   "angular leaf spot": "IR",
+   "downy mildew": "IR",
+   "powdery mildew": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/great-wall-f1-hybrid-cucumber/",
+  "note": "listed for the highland"
+ },
+ "cucumber|Green Beauty": {
+  "resist": {
+   "downy mildew": "T",
+   "powdery mildew": "T"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/green-beauty-f1-hybrid-cucumber/"
+ },
+ "cucumber|Lega C": {
+  "resist": {
+   "downy mildew": "R",
+   "geminivirus": "R"
+  },
+  "tolerates": [
+   "rain"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+  "note": "catalogue says strong resistance to downy mildew and geminivirus, for rainy and dry seasons"
+ },
+ "cucumber|MacArthur": {
+  "resist": {
+   "downy mildew": "IR",
+   "powdery mildew": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/mac-arthur-f1-hybrid-cucumber/"
+ },
+ "cucumber|Malvar White": {
+  "resist": {
+   "downy mildew": "IR",
+   "cercospora leaf spot": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/malvar-white-f1-hybrid-cucumber/"
+ },
+ "cucumber|Puccini": {
+  "resist": {
+   "scab (Cladosporium cucumerinum)": "HR",
+   "anthracnose race 1": "IR",
+   "powdery mildew": "IR"
+  },
+  "source": "Rijk Zwaan",
+  "url": "https://us.shop.rijkzwaan.com/gherkin/PUCCINI-RZ-F1-12-102-prdCS10701-ctgCrops.gherkin",
+  "note": "Rijk Zwaan lists HR: Ccu; IR: Co:1/Px on its US product page; parthenocarpic pickling cucumber"
+ },
+ "cucumber|Stonewall": {
+  "resist": {
+   "angular leaf spot": "IR",
+   "anthracnose": "IR",
+   "scab": "IR",
+   "powdery mildew": "IR",
+   "cucumber mosaic virus": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/stonewall-f1-hybrid-cucumber/"
+ },
+ "cucumber|Tasty Bright": {
+  "resist": {
+   "powdery mildew": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/tasty-bright-f1-hybrid-cucumber-2/"
+ },
+ "eggplant|Claveria Long Purple": {
+  "resist": {
+   "bacterial wilt": "T",
+   "phomopsis rot": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/eggplant/claveria-long-purple-f1"
+ },
+ "eggplant|Dumaguete Long Purple": {
+  "resist": {
+   "bacterial wilt": "T"
+  },
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/dumaguete-long-purple/",
+  "note": "seller says high tolerance to bacterial wilt"
+ },
+ "eggplant|Fond May": {
+  "resist": {
+   "bacterial wilt": "MR"
+  },
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/fond-may/"
+ },
+ "eggplant|Long Purple": {
+  "resist": {
+   "bacterial wilt": "IR",
+   "root knot nematode": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/long-purple-eggplant/",
+  "note": "seller says intermediate resistance to bacterial wilt and nematodes; dry season, lowland to midland"
+ },
+ "eggplant|Mucho": {
+  "resist": {
+   "bacterial wilt": "IR"
+  },
+  "source": "East-West Seed",
+  "url": "https://ph.eastwestseed.com/crops/#compare-varieties",
+  "note": "cluster bearing, wide tropical adaptability"
+ },
+ "eggplant|Naimas": {
+  "resist": {
+   "eggplant fruit and shoot borer": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/naimas-f1/",
+  "note": "lowland, all season"
+ },
+ "eggplant|Niagara": {
+  "resist": {
+   "bacterial wilt": "T",
+   "phomopsis rot": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/eggplant-1/niagara-f1"
+ },
+ "eggplant|Purple Beauty": {
+  "tolerates": [
+   "waterlogging"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+ },
+ "eggplant|Purple Duke": {
+  "resist": {
+   "diseases (unspecified)": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/eggplant-1/purple-duke-f1",
+  "note": "claim is general: good tolerance to diseases"
+ },
+ "eggplant|Spitfire": {
+  "tolerates": [
+   "general stress",
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/spitfire-f1-hybrid-eggplant/",
+  "note": "sold as a stress tolerant variety for all seasons in the lowland; no disease claim"
+ },
+ "eggplant|Warhawk": {
+  "resist": {
+   "bacterial wilt": "IR",
+   "phytophthora blight": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/warhawk-f1-hybrid-eggplant/"
+ },
+ "lettuce|Fame": {
+  "resist": {
+   "leaf spot": "T"
+  },
+  "tolerates": [
+   "bolting",
+   "rain"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/lettuce-ice-berg-1/fame",
+  "note": "seller says it tolerates wet growing conditions"
+ },
+ "lettuce|General": {
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+ },
+ "lettuce|Grand Rapid": {
+  "tolerates": [
+   "heat",
+   "tipburn"
+  ],
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/grand-rapids/",
+  "note": "sold as Grand Rapids; grows in highland and lowland; Harbest catalogue adds: resistant to tip burn"
+ },
+ "lettuce|Great Lakes 118": {
+  "resist": {
+   "damping off": "T",
+   "leaf spot": "T"
+  },
+  "tolerates": [
+   "tipburn"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/lettuce-ice-berg/great-lakes"
+ },
+ "lettuce|Green Diamond": {
+  "resist": {
+   "damping off": "T",
+   "leaf spot": "T"
+  },
+  "tolerates": [
+   "tipburn"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/lettuce-ice-berg-1/green-diamond",
+  "note": "adaptable to low and mid elevation"
+ },
+ "lettuce|Green Wave": {
+  "tolerates": [
+   "bolting"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/green-wave-lettuce/"
+ },
+ "lettuce|Lyon": {
+  "resist": {
+   "blight (unspecified)": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/lettuce-romaine/lyon"
+ },
+ "lettuce|Majesta": {
+  "tolerates": [
+   "bolting",
+   "heat",
+   "low light"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/majesta/"
+ },
+ "lettuce|Red Rapid": {
+  "tolerates": [
+   "bolting"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+  "note": "slow bolting"
+ },
+ "lettuce|Red Wave": {
+  "resist": {
+   "bottom rot": "T"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/red-wave-lettuce/",
+  "note": "seller says it has little incidence of bottom rot and can be grown year round"
+ },
+ "lettuce|Wilhemina": {
+  "resist": {
+   "damping off": "T"
+  },
+  "tolerates": [
+   "tipburn",
+   "leaf and stem twisting"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/lettuce-leafy-type/wilhemina"
+ },
+ "melon|Emerald Green": {
+  "resist": {
+   "fusarium wilt (races 0, 2)": "R"
+  },
+  "source": "Known-You Seed",
+  "url": "https://www.knownyou.com/product-detail/544/",
+  "note": "Known-You lists R: FOM (R0 R2)"
+ },
+ "melon|Fantasista": {
+  "resist": {
+   "downy mildew": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/fantasista-f1-hybrid-melon/"
+ },
+ "melon|Jade Lady": {
+  "resist": {
+   "fusarium wilt": "R"
+  },
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/melon-jade-lady/"
+ },
+ "melon|Jill": {
+  "resist": {
+   "fusarium wilt": "R"
+  },
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/melon-jill/"
+ },
+ "melon|Lambkin": {
+  "resist": {
+   "fusarium wilt": "R"
+  },
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/melon-lambkin/"
+ },
+ "melon|Leonor": {
+  "resist": {
+   "downy mildew": "R",
+   "begomovirus": "R"
+  },
+  "source": "East-West Seed",
+  "url": "https://ph.eastwestseed.com/filipino-farmers-look-forward-to-sweet-returns-from-east-west-seeds-new-watermelon-honeydew-varieties/",
+  "note": "East-West says disease resistance against downy mildew and begomovirus; no HR or IR letter given"
+ },
+ "melon|Sheba": {
+  "resist": {
+   "fusarium wilt (races 0, 2)": "R"
+  },
+  "source": "Known-You Seed",
+  "url": "https://www.knownyou.com/product-detail/542/",
+  "note": "Known-You lists R: FOM (R0 R2)"
+ },
+ "okra|Camiling Smooth": {
+  "resist": {
+   "pests (unspecified)": "IR",
+   "diseases (unspecified)": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/camiling-smooth/",
+  "note": "claim is general; dry season, lowland"
+ },
+ "okra|Smooth Green": {
+  "resist": {
+   "foliar diseases (unspecified)": "T",
+   "pests (unspecified)": "T"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/smooth-green/",
+  "note": "claim is general; suitable for year round planting"
+ },
+ "onion|Improved Red Express": {
+  "resist": {
+   "bulb rot": "IR",
+   "purple blotch": "IR",
+   "neck rot": "IR",
+   "onion leaf miner": "IR",
+   "damping off": "IR",
+   "twister disease (twisting)": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/improved-red-express-onion/"
+ },
+ "onion|Red Colorado": {
+  "resist": {
+   "bulb rot": "IR",
+   "purple blotch": "IR",
+   "neck rot": "IR",
+   "onion leaf miner": "IR",
+   "damping off": "IR",
+   "twister disease (twisting)": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/red-colorado-red-onion/"
+ },
+ "onion|Red Dragon": {
+  "resist": {
+   "bulb rot": "T",
+   "purple blotch": "T",
+   "onion leaf miner": "T",
+   "damping off": "T",
+   "twister disease (twisting)": "T",
+   "lis-lis": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/onion-red/red-dragon"
+ },
+ "onion|Red Nirvana": {
+  "resist": {
+   "purple blotch": "IR",
+   "anthracnose": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/red-nirvana/"
+ },
+ "onion|Rio Bravo": {
+  "resist": {
+   "onion leaf miner": "IR",
+   "damping off": "IR",
+   "alternaria blight": "IR",
+   "purple blotch": "IR",
+   "neck rot": "IR",
+   "bulb rot": "IR"
+  },
+  "tolerates": [
+   "bulb splitting"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/rio-bravo-f1-hybrid-yellow-onion/"
+ },
+ "onion|Vidalia": {
+  "resist": {
+   "purple blotch": "IR",
+   "anthracnose": "IR"
+  },
+  "tolerates": [
+   "bulb splitting"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/vidalia/"
+ },
+ "pechay|Genghis Khan": {
+  "resist": {
+   "diamondback moth": "T",
+   "soft rot": "T"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pakchoi/genghis-khan"
+ },
+ "pechay|Joy Choi": {
+  "resist": {
+   "soft rot": "T"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pakchoi/joy-choi"
+ },
+ "pechay|Summer Joy": {
+  "resist": {
+   "diamondback moth": "T",
+   "damping off": "T",
+   "soft rot": "T"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pakchoi/summer-joy-f1"
+ },
+ "radish|Daikon No. 14": {
+  "tolerates": [
+   "bolting"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/daikon-no-14-f1-hybrid-radish/",
+  "note": "very slow bolting; dry season, highland"
+ },
+ "radish|Everest": {
+  "resist": {
+   "diamondback moth": "T",
+   "leafminer": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/radish-1/everest-f1"
+ },
+ "radish|Improved Valiant": {
+  "tolerates": [
+   "lodging",
+   "heat",
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/radish-1/improved-valiant"
+ },
+ "radish|Lily": {
+  "tolerates": [
+   "bolting",
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/lily-f1/",
+  "note": "late bolting"
+ },
+ "radish|Mt. Data": {
+  "resist": {
+   "diamondback moth": "T",
+   "stink bug": "T",
+   "leafminer": "T"
+  },
+  "tolerates": [
+   "lodging"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/radish-1/mt.-data-f1"
+ },
+ "radish|Timbac 55": {
+  "resist": {
+   "pests (unspecified)": "IR",
+   "diseases (unspecified)": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/timbac-55-f1-radish/",
+  "note": "claim is general"
+ },
+ "squash|Carmela": {
+  "resist": {
+   "squash leaf curl virus": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/carmela-f1-hybrid-calabasa/",
+  "note": "also sold as adaptable to various climatic conditions"
+ },
+ "squash|Fairy": {
+  "resist": {
+   "cucumber mosaic virus": "T"
+  },
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Known-You Seed",
+  "url": "https://www.knownyou.com/product-detail/560/",
+  "note": "Harbest catalogue adds: heat tolerant"
+ },
+ "squash|Ivana": {
+  "resist": {
+   "gummy stem blight": "IR",
+   "squash leaf curl virus": "IR",
+   "zucchini yellow mosaic virus": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/ivana-f1/"
+ },
+ "squash|La Vida": {
+  "resist": {
+   "squash mosaic virus": "IR",
+   "cucumber mosaic virus": "IR",
+   "powdery mildew": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/avida-f1-hybrid-calabasa/",
+  "note": "sold by Allied as Avida / La Vida F1"
+ },
+ "squash|Matikas": {
+  "resist": {
+   "viruses (unspecified)": "T"
+  },
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+ },
+ "squash|Neptune SQ3": {
+  "resist": {
+   "cucurbit viruses (unspecified)": "T"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/neptune-sq3-f1-hybrid-calabasa/",
+  "note": "seller says highly tolerant of cucurbit viruses"
+ },
+ "squash|Rajah": {
+  "resist": {
+   "squash leaf curl virus": "IR"
+  },
+  "source": "East-West Seed",
+  "url": "https://ph.eastwestseed.com/crops/#compare-varieties",
+  "note": "East-West lists IR: SLCPV (squash leaf curl Philippines virus)"
+ },
+ "squash|Rosalinda": {
+  "resist": {
+   "squash leaf curl virus": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/carmela-f1-hybrid-calabasa-2/"
+ },
+ "squash|Roxana": {
+  "resist": {
+   "gummy stem blight": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/roxana-f1/"
+ },
+ "squash|Royal Cup": {
+  "resist": {
+   "viruses (unspecified)": "T"
+  },
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/royal-cup/",
+  "note": "seller says high tolerance to virus"
+ },
+ "squash|Saturn SQ4": {
+  "resist": {
+   "cucurbit viruses (unspecified)": "T"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/saturn-sq4-f1-hybrid-calabasa/",
+  "note": "seller says highly tolerant of cucurbit viruses"
+ },
+ "squash|Solo King": {
+  "resist": {
+   "bacterial wilt": "T",
+   "powdery mildew": "T",
+   "viruses (unspecified)": "T"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/squash/solo-king-f1"
+ },
+ "squash|Suprema": {
+  "resist": {
+   "viruses (unspecified)": "T",
+   "fungal diseases (unspecified)": "T"
+  },
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+ },
+ "squash|Suprema Gold": {
+  "resist": {
+   "squash leaf curl virus": "IR"
+  },
+  "source": "East-West Seed",
+  "url": "https://ph.eastwestseed.com/launch-of-suprema-gold/",
+  "note": "IR to squash leaf curl Philippines virus (SLCPV)"
+ },
+ "squash|Tetsukabuto": {
+  "resist": {
+   "soil-borne diseases (unspecified)": "T"
+  },
+  "source": "Known-You Seed",
+  "url": "https://www.knownyou.com/product-detail/702/",
+  "note": "sold as a squash rootstock for watermelon and cucumber; seller says tolerant to soil disease"
+ },
+ "squash|Virna": {
+  "resist": {
+   "fusarium wilt": "T",
+   "viruses (unspecified)": "T"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/squash/virna-f1"
+ },
+ "stringbean|Black Obama": {
+  "resist": {
+   "bean fly": "T",
+   "bean mosaic virus": "T",
+   "bean rust": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pole-sitao-beans-1/black-obama"
+ },
+ "stringbean|Green Pod Kaohsiung": {
+  "tolerates": [
+   "heat",
+   "rain"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+  "note": "catalogue says heat and wet tolerant"
+ },
+ "stringbean|KY Bush": {
+  "resist": {
+   "viruses (unspecified)": "R"
+  },
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+ },
+ "stringbean|Makisig": {
+  "resist": {
+   "cowpea mosaic virus": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf"
+ },
+ "stringbean|Sumilang": {
+  "tolerates": [
+   "drought",
+   "shade"
+  ],
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/sumilang/"
+ },
+ "stringbean|Super Green 53": {
+  "resist": {
+   "pod borer": "T",
+   "bean mosaic virus": "T",
+   "bean rust": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/pole-sitao-beans-1/super-green-53"
+ },
+ "stringbean|Verdana": {
+  "resist": {
+   "bean rust": "IR"
+  },
+  "tolerates": [
+   "all season"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/verdana-yardlong-bean/"
+ },
+ "tomato|Amber": {
+  "resist": {
+   "fusarium wilt": "R",
+   "tomato mosaic virus (ToMV 0, 1, 2)": "R",
+   "bacterial wilt": "R",
+   "tomato leaf curl virus": "MR"
+  },
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/amber/",
+  "note": "Known-You US page: Fusarium wilt R, ToMV-0/1/2 R, bacterial wilt R, ToLCV MR; the global page lists R for TYLCV, kept at MR here to stay on the safe side"
+ },
+ "tomato|Atlas": {
+  "resist": {
+   "tomato yellow leaf curl virus": "IR"
+  },
+  "tolerates": [
+   "rain"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/atlas-f1-hybrid-tomato-off-season-variety/",
+  "note": "off-season hybrid, listed for the wet season in the lowland"
+ },
+ "tomato|Avatar TY": {
+  "resist": {
+   "tomato yellow leaf curl virus": "IR"
+  },
+  "tolerates": [
+   "fruit cracking"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/avatar-ty-f1-hybrid-tomato/",
+  "note": "dry season, midland to highland"
+ },
+ "tomato|Diamante Max": {
+  "tolerates": [
+   "heat"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+  "note": "Harbest catalogue: determinate, firm, tolerant to heat; no disease rating given"
+ },
+ "tomato|Fantastic": {
+  "resist": {
+   "tomato yellow leaf curl virus": "IR",
+   "bacterial wilt": "IR"
+  },
+  "tolerates": [
+   "fruit cracking"
+  ],
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/fantastic-f1-hybrid-tomato-for-fresh-or-processing/",
+  "note": "dry season, lowland"
+ },
+ "tomato|Grace": {
+  "resist": {
+   "fusarium wilt": "R",
+   "tomato mosaic virus (ToMV 0, 1, 2)": "R"
+  },
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/grace/"
+ },
+ "tomato|Kingkong #2": {
+  "resist": {
+   "viruses (unspecified)": "R",
+   "bacterial wilt": "R"
+  },
+  "tolerates": [
+   "fruit cracking"
+  ],
+  "source": "Harbest Agribusiness (seed catalogue)",
+  "url": "https://www.harbest.com.ph/_files/ugd/318971_7b529b827d1f49d594865de7c5bc7210.pdf",
+  "note": "catalogue says resistant to viruses and bacterial wilt, resists cracking"
+ },
+ "tomato|Magilas": {
+  "tolerates": [
+   "drought",
+   "waterlogging",
+   "all season"
+  ],
+  "source": "Pilipinas Kaneko Seeds",
+  "url": "https://pilkanekoseeds.com.ph/product/maguilas/",
+  "note": "sold as Maguilas"
+ },
+ "tomato|Mountain Fresh Plus": {
+  "resist": {
+   "early blight": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/mountain-fresh-plus-f1-hybrid-tomato/",
+  "note": "dry season, lowland to highland"
+ },
+ "tomato|Prima": {
+  "resist": {
+   "bacterial wilt": "T"
+  },
+  "source": "Ramgo Seeds",
+  "url": "https://www.ramgoseeds.com/tomato-1/prima-f1",
+  "note": "dry season, lowland"
+ },
+ "tomato|Season Red": {
+  "resist": {
+   "fusarium wilt": "R",
+   "tomato mosaic virus (ToMV 0)": "MR"
+  },
+  "tolerates": [
+   "heat",
+   "high humidity"
+  ],
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/season-red/",
+  "note": "Harbest catalogue adds: heat and humidity tolerant"
+ },
+ "tomato|Sherry": {
+  "resist": {
+   "fusarium wilt": "R"
+  },
+  "source": "Known-You Seed",
+  "url": "https://knownyouseed.com/product/sherry/"
+ },
+ "watermelon|Black Panther": {
+  "resist": {
+   "gummy stem blight": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/black-panther-f1-hybrid-watermelon/"
+ },
+ "watermelon|Oriental Ball": {
+  "resist": {
+   "gummy stem blight": "IR",
+   "bacterial wilt": "IR",
+   "fusarium wilt": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/oriental-ball-f1-hybrid-watermelon/"
+ },
+ "watermelon|Sugar Baby": {
+  "resist": {
+   "gummy stem blight": "IR"
+  },
+  "source": "Allied Botanical (Condor)",
+  "url": "https://alliedbotanical.com/project/sugar-baby-f1-hybrid-watermelon/",
+  "note": "claim is for the Sugar Baby F1 hybrid Allied sells, not the old open pollinated Sugar Baby"
+ }
+}
