@@ -96,10 +96,13 @@
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
                     @if ($ph)
-                        {{-- "More than 50 tools" (2026-10-19, the owner), counted down to the ten from How It Works' own list. --}}
-                        The farm app for Filipino farmers who grow palay, mais and gulay: more than {{ intdiv(max(10, $tools->count() - 1), 10) * 10 }} tools
-                        to help you farm, from your cropping calendar and every peso to your field from space and Anee, your
-                        smart farm technician, all in one place. Successful businesses run on systems. Smart farmers run on anee.io.
+                        {{-- "More than 50 tools" (2026-10-19, the owner), counted down to the ten from How It Works' own list,
+                             marked so it is seen (2026-10-28, the owner: "make this bold or highlighted ... from the planning
+                             to post harvest analysis ... to the space"). --}}
+                        The farm app for Filipino farmers who grow palay, mais and gulay:
+                        <strong class="hp-lede-tools"><span>more than {{ intdiv(max(10, $tools->count() - 1), 10) * 10 }} tools</span> to help you farm</strong>,
+                        from planning the season to the analysis after the harvest, from the price ahead to your field seen from space,
+                        with Anee, your smart farm technician, all in one place. Successful businesses run on systems. Smart farmers run on anee.io.
                     @else
                         anee.io puts your whole season on your phone: every field counted from its own day zero, every
                         task on its right day, every dollar written down, and Anee, your smart farm technician, ready with
@@ -2041,6 +2044,15 @@
     .hp-h1 { margin-top: 1.4rem; font-family: var(--font-heading); font-weight: 800; letter-spacing: -.02em; line-height: 1.02;
         font-size: clamp(2.6rem, 7vw, 4.6rem); text-wrap: balance; }
     .hp-lede { margin-top: 1.9rem; max-width: 36rem; font-size: clamp(1.02rem, 1.7vw, 1.18rem); line-height: 1.7; color: #dde6d4; }
+    /* How many tools, marked: white and bold on a soft gold glow, a gold marker drawn under it once the lede is in. */
+    .hp-lede-tools { font-weight: 800; color: #fff; padding: 0 .14em; border-radius: .25em; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+        text-shadow: 0 1px 10px rgb(245 197 24 / .35);
+        background: linear-gradient(transparent 66%, #f5c518 66%, #f5c518 90%, transparent 90%) no-repeat 0 0 / 100% 100%; }
+    .hp-lede-tools span { font-size: 1.08em; }
+    @media (prefers-reduced-motion: no-preference) {
+        .hp-lede-tools { background-size: 0% 100%; animation: hpToolsMark 1.1s var(--hp-ease) .9s forwards; }
+        @keyframes hpToolsMark { to { background-size: 100% 100%; } }
+    }
     .hp-hero-acts { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .8rem; }
     .hp-trust { margin-top: 1.4rem; display: flex; flex-wrap: wrap; gap: .5rem 1.2rem; font-size: .9rem; font-weight: 700; color: #e6eddd; }
     .hp-trust li { display: inline-flex; align-items: center; gap: .4rem; }
@@ -2700,15 +2712,20 @@
     @keyframes hpChatIn { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
 
     /* Anee's hello, small and tilted, on the phone's side: only its edge
-       goes over the phone (2026-10-13, the owner). Below 1280 pixels, where
-       there is no room beside it, it sits on the phone's top edge, over the
-       frame only: lower, it covered the clock and the island. */
-    .hp-anee-film { --rot: -3deg; position: absolute; z-index: 3; top: -6.85rem; left: 50%; width: 13rem; margin: 0 0 0 -6.5rem; aspect-ratio: 16 / 9; border-radius: .95rem; overflow: hidden;
+       goes over the phone (2026-10-13, the owner). Since 2026-10-28 (the
+       owner: "move the anee video on the 30% bottom of the phone and move it
+       around 10% to the right") it sits on the phone's lower part, a tenth of
+       the phone further right. Below 1280 pixels, where there is no room
+       beside it, it hangs from the phone's bottom edge, a tenth right of the
+       middle, over the frame only: higher, it would cover Anee's answer. */
+    .hp-anee-film { --rot: -3deg; position: absolute; z-index: 3; top: calc(100% - 1.6rem); left: 60%; width: 13rem; margin: 0 0 0 -6.5rem; aspect-ratio: 16 / 9; border-radius: .95rem; overflow: hidden;
         background: #0d1408; box-shadow: 0 24px 44px -18px rgb(0 0 0 / .85), 0 0 0 3px #f5c518, 0 0 0 7px rgb(245 197 24 / .18);
         transform: rotate(var(--rot)); animation: hpFilmFloat 6s ease-in-out infinite; }
-    @media (max-width: 1279.98px) { .hp-anee-phone { margin-top: 7.4rem; } }
-    /* Wide enough for room beside the phone: on its right side, the words' side kept clear. */
-    @media (min-width: 1280px) { .hp-anee-film { --rot: 5deg; top: 26%; left: calc(100% - 2.5rem); width: 12.75rem; margin: 0; } }
+    @media (max-width: 1279.98px) { .hp-anee-phone { margin-bottom: 6.2rem; } }
+    /* Wide enough for room beside the phone: on its right side, low, the words' side kept clear. */
+    @media (min-width: 1280px) { .hp-anee-film { --rot: 5deg; top: 70%; left: calc(105% - 2.5rem); width: 11.5rem; margin: 0; } }
+    /* The full tenth further right once the screen has room for it beside the phone. */
+    @media (min-width: 1440px) { .hp-anee-film { left: calc(110% - 2.5rem); width: 12.75rem; } }
     .hp-anee-film video { width: 100%; height: 100%; display: block; object-fit: cover; }
     .hp-anee-film-play { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-start; padding: .55rem .6rem; border: 0; cursor: pointer;
         background: linear-gradient(180deg, transparent 45%, rgb(9 14 6 / .6)); transition: background .28s var(--hp-ease); }
@@ -3972,15 +3989,16 @@
         .hp-prec-rows { margin-top: 3rem; }
 
         /* Meet Anee: what she reads, two to a row, names only; her phone a little smaller,
-           and her hello a small picture on its top corner. */
+           and her hello a small picture on its bottom corner (2026-10-28, the owner: low and to
+           the right), over the frame and the send button, clear of the chat. */
         .hp-anee-reads { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; }
         .hp-anee-reads li { padding: .5rem .55rem; gap: .5rem; }
         .hp-anee-reads small { display: none; }
         .hp-anee-reads b { font-size: .8rem; }
         .hp-anee-ri { width: 1.9rem; height: 1.9rem; border-radius: .6rem; }
         .hp-anee-ri svg { width: 1rem; height: 1rem; }
-        .hp-anee-phone { width: min(17rem, 76vw); margin-top: 3.4rem; }
-        .hp-anee-film { --rot: 4deg; top: -2.9rem; left: auto; right: -1.6rem; width: 9.5rem; margin: 0; border-radius: .8rem; }
+        .hp-anee-phone { width: min(17rem, 76vw); margin-top: 0; margin-bottom: 3.2rem; }
+        .hp-anee-film { --rot: 4deg; top: auto; bottom: -2.6rem; left: auto; right: -1.6rem; width: 9.5rem; margin: 0; border-radius: .8rem; }
         .hp-anee-film-play { padding: .4rem .45rem; }
         .hp-anee-film-play span { width: 2rem; height: 2rem; }
 
