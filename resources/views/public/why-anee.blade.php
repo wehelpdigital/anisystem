@@ -196,7 +196,8 @@
             <div class="wa-eng" data-wa-eng>
                 @foreach ($waEngines as $ei => $eng)
                     @if ($ei === 1)
-                        <div class="wa-eng-eq" aria-hidden="true"><b>=</b><span>The same core model</span></div>
+                        {{-- No "same core model" line since 2026-10-29 (the owner): Anee's model is the smarter, highly trained one. --}}
+                        <div class="wa-eng-eq" aria-hidden="true"><b>VS</b></div>
                     @endif
                     <div class="wa-eng-col is-{{ $eng['kind'] }}">
                         <div class="wa-eng-head">
@@ -271,7 +272,7 @@
                             <div class="wa-eng-model is-smart">
                                 <i class="wa-spark is-a" aria-hidden="true">✦</i><i class="wa-spark is-b" aria-hidden="true">✦</i><i class="wa-spark is-c" aria-hidden="true">✦</i>
                                 {!! $waBulbBright !!}
-                                <p><b>A smarter AI model</b><small>The same core, fed your whole farm</small></p>
+                                <p><b>A smarter AI model</b><small>Highly trained, and fed your whole farm</small></p>
                             </div>
                         @else
                             <div class="wa-eng-model">
@@ -662,7 +663,7 @@
     /* The = between the two models. */
     .wa-eng-eq { display: flex; align-items: center; justify-content: center; gap: .45rem; text-align: center;
         font-size: .66rem; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: #6b7280; line-height: 1.3; }
-    .wa-eng-eq b { flex: none; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 999px; font-size: 1.45rem; font-weight: 900;
+    .wa-eng-eq b { flex: none; display: grid; place-items: center; width: 2.6rem; height: 2.6rem; border-radius: 999px; font-size: .9rem; letter-spacing: .02em; font-weight: 900;
         color: var(--hp-ink); background: #fff; border: 2px solid #e3e6df; box-shadow: 0 12px 24px -16px rgb(20 33 12 / .6); }
     .wa-eng-foot { max-width: 46rem; margin: 2.25rem auto 0; text-align: center; }
 
