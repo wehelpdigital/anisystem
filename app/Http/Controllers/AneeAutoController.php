@@ -147,6 +147,104 @@ class AneeAutoController extends Controller
         }
     }
 
+    /** A lot of a running season that has no plan yet: it may still be set up (newLot). */
+    private function lotOpen(AsAutoSeason $auto, int $lotId): bool
+    {
+        return $auto->status === AsAutoSeason::ACTIVE && $lotId > 0 && AsAutoLot::where('autoId', $auto->id)->where('lotId', $lotId)->exists()
+            && ! AsAutoTask::where('autoId', $auto->id)->where('lotId', $lotId)->where('origin', 'plan')->exists();
+    }
+
+    /**
+     * A lot that joins a running season gets its plan (2026-10-28): its fertilizer from its realistic goal when the
+     * farmer gave none (AutoGoal's bags for the lot), its own calendar from Anee, then every lot's work placed again
+     * around the crew and the weather, the tanks checked, and the crew check said in the log.
+     */
+    public function newLot(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        $lotId = (int) $request->input('lotId');
+        if (! $this->lotOpen($auto, $lotId)) {
+            return $this->json(false, 'That lot already has its plan, or is not in this season.', [], 422);
+        }
+        if ($why = $this->refusal()) {
+            return $this->json(false, $why, [], 403);
+        }
+        $al = AsAutoLot::where('autoId', $auto->id)->where('lotId', $lotId)->first();
+        $lot = AsScheduleLot::find($lotId);
+        $miss = ! $lot?->crop ? 'its crop' : (! $al->method ? 'how it goes into the field' : ($al->method !== 'tree' && ! $al->fieldDate ? 'its planting day' : (! $lot->lotSize ? 'its size' : (! $lot->pinLat && ! ($lot->locProvince && $lot->locTown) ? 'its town' : null))));
+        if ($miss) {
+            return $this->json(false, 'Give the lot ' . $miss . ' first.', [], 422);
+        }
+        if ($this->running($auto)) {
+            return $this->json(true, 'Already working on it.', ['pending' => true]);
+        }
+
+        return $this->runInBackground($auto, 'calendar', fn () => $this->runCalendarLot($auto->fresh(), $lotId));
+    }
+
+    private function runCalendarLot(AsAutoSeason $auto, int $lotId): void
+    {
+        $settings = AiSetting::current()->forField('PH');
+        try {
+            $al = AsAutoLot::where('autoId', $auto->id)->where('lotId', $lotId)->firstOrFail();
+            $lot = AsScheduleLot::findOrFail($lotId);
+            if (! $al->fert && ! $al->imbalance) {
+                // No plan of the farmer's: the realistic goal's bags for the lot (AutoGoal::bags), said as a plan.
+                $goal = rescue(fn () => AutoGoal::forLot($auto, $lot, $al, []), null, false);
+                $lv = $goal['levels']['realistic'] ?? (is_array($goal['levels'] ?? null) ? reset($goal['levels']) : null);
+                if ($lv && ! empty($lv['bags'])) {
+                    $al->update(['fert' => ['lines' => array_map(fn ($b) => ['name' => $b['name'], 'grade' => $b['grade'], 'amount' => $b['bagsLot'] ?? $b['kgLot'], 'unit' => $b['bagsLot'] !== null ? 'bags of 50 kg' : 'kg', 'kg' => $b['kgLot']], $lv['bags']),
+                        'needs' => $lv['need'] ?? null, 'goal' => ['tPerHa' => $lv['t'] ?? null], 'from' => 'goal']]);
+                }
+            }
+            $this->beat($auto, 'lot-1');
+            $prompt = $this->brain->calendarPrompt($auto->fresh(), $lotId);
+            $result = $this->ai->askForJson($settings, $prompt, 24000, fn (string $t) => ($d = AutoBrain::parseObject($t, 'tasks')) && is_array($d['tasks']) && count($d['tasks']) >= 5 ? $d : null,
+                ['timeout' => 360, 'onPhase' => fn ($p, $try = 1) => $this->beat($auto, 'lot-1', (int) $try)]);
+            if (! ($result['ok'] ?? false)) {
+                throw new \RuntimeException('The plan for ' . ($lot->lotName ?: 'the lot') . ' could not be written. Nothing is lost; please try again.');
+            }
+            AiUsage::record(self::KIND, (int) Auth::id(), (int) $this->payer()->id, $auto->id, $settings, $result, 0);
+            $p = $result['data'];
+            $this->beat($auto, 'placing');
+            $made = 0;
+            DB::transaction(function () use ($auto, $al, $lot, $p, &$made) {
+                $order = (int) AsAutoTask::where('autoId', $auto->id)->max('sortOrder') + 1;
+                foreach (AutoBrain::taskRows((array) $p['tasks'], $auto->id, (int) $al->lotId, 'plan', $order) as $row) {
+                    AsAutoTask::create($row);
+                    $made++;
+                }
+                if (! empty($p['harvestDay']) && $al->fieldDate) {
+                    $al->update(['harvestDate' => Carbon::parse($al->fieldDate->toDateString())->addDays((int) $p['harvestDay'])->toDateString()]);
+                }
+                if ($al->method !== 'tree' && $al->fieldDate) {
+                    $lot->update(['dayZeroDate' => ($al->method === 'transplanted' && $al->sowDate ? $al->sowDate : $al->fieldDate)->toDateString(),
+                        'transplantDate' => $al->method === 'transplanted' ? $al->fieldDate->toDateString() : null]);
+                }
+                $plan = (array) $auto->plan;
+                $plan['lots'][] = ['lotId' => (int) $al->lotId, 'strategy' => $p['strategy'] ?? null, 'harvestDay' => $p['harvestDay'] ?? null];
+                $plan['safety'] = array_values(array_unique(array_merge((array) ($plan['safety'] ?? []), array_map('strval', (array) ($p['safetyChecks'] ?? [])))));
+                $plan['compatibility'] = array_values(array_unique(array_merge((array) ($plan['compatibility'] ?? []), array_map('strval', (array) ($p['compatibility'] ?? [])))));
+                $auto->update(['plan' => $plan]);
+            });
+            $auto = $auto->fresh();
+            // Every lot's work placed again, the new one with the rest, around the crew and the weather.
+            $this->planner->plan($auto);
+            rescue(fn () => \App\Support\AutoMix::audit($auto), null, true);
+            if (! empty($p['strategy'])) {
+                AsAutoEvent::say($auto->id, 'plan', $p['strategy'], ['tasks' => $made], ['lotId' => (int) $al->lotId]);
+            }
+            $crew = rescue(fn () => \App\Support\AutoCrew::check($auto), null, false);
+            $short = $crew ? array_values(array_filter($crew['peaks'], fn ($x) => ! $x['ok'])) : [];
+            AsAutoEvent::say($auto->id, 'briefing', ($lot->lotName ?: 'The new lot') . ' joined the season :anee-thumbsup: ' . $made . ' tasks, and every lot\'s work is placed again around your crew and the weather.'
+                . ($short ? ' Your crew is short at the busiest times: ' . implode(' ', array_map(fn ($x) => $x['say'], array_slice($short, 0, 2))) : ($crew && $crew['peaks'] ? ' Your crew covers the planting and the harvest of every lot.' : '')), ['kind' => 'welcome']);
+            $this->finishJob($auto);
+        } catch (\Throwable $e) {
+            report($e);
+            $this->finishJob($auto, mb_substr($e->getMessage(), 0, 300));
+        }
+    }
+
     private function lotCap(): ?int
     {
         $cap = Tier::limit('lotsPerSchedule');
@@ -318,7 +416,7 @@ class AneeAutoController extends Controller
     public function saveLot(Request $request, int $id)
     {
         $auto = $this->auto($id);
-        if ($no = $this->setupOnly($auto)) {
+        if (! $this->lotOpen($auto, (int) $request->input('lotId')) && ($no = $this->setupOnly($auto))) {
             return $no;
         }
         $v = Validator::make($request->all(), [
@@ -386,8 +484,11 @@ class AneeAutoController extends Controller
     public function addLot(Request $request, int $id)
     {
         $auto = $this->auto($id);
-        if ($no = $this->setupOnly($auto)) {
-            return $no;
+        // A running season takes a new lot too (2026-10-28, the owner: "if user decided to add more lot, then anee should
+        // auto adjust the schedule and process based on the lots and # of workers"): it is set up on the season page,
+        // gets its own plan, and the work of every lot is placed again around the crew (newLot()).
+        if (! in_array($auto->status, [AsAutoSeason::SETTING_UP, AsAutoSeason::ACTIVE], true)) {
+            return $this->json(false, 'This season has finished.', [], 423);
         }
         $cap = $this->lotCap();
         $have = AsAutoLot::where('autoId', $auto->id)->count();
@@ -412,6 +513,10 @@ class AneeAutoController extends Controller
         });
         if (! $lot) {
             return $this->json(false, 'One more lot takes ' . number_format($price) . ' credits and you have ' . number_format((int) floor($this->credits->balance($payer->id))) . '.', ['outOfCredits' => true], 402);
+        }
+
+        if ($auto->status === AsAutoSeason::ACTIVE) {
+            return $this->json(true, 'Lot added.', ['lotId' => (int) $lot->id, 'name' => $lot->lotName]);
         }
 
         return $this->json(true, 'Lot added.', ['state' => $this->wizardState($auto->fresh(), $schedule)]);
@@ -1299,6 +1404,33 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             'plan' => ['safety' => array_slice((array) ($auto->plan['safety'] ?? []), 0, 12), 'compatibility' => array_slice((array) ($auto->plan['compatibility'] ?? []), 0, 8)],
             'cant' => collect(AutoBook::CANT)->map(fn ($c, $k) => ['key' => $k, 'label' => $c[0], 'emoji' => $c[1]])->values(),
             'people' => $people->map(fn ($p) => ['id' => $p['id'], 'name' => $p['name']])->values(),
+            // A lot added to the running season, still to be set up (2026-10-28), and what one more costs.
+            'pending' => $auto->status === AsAutoSeason::ACTIVE ? AsAutoLot::where('autoId', $auto->id)->get()->filter(fn ($al) => $this->lotOpen($auto, (int) $al->lotId))
+                ->map(fn ($al) => ['id' => (int) $al->lotId, 'name' => (string) (AsScheduleLot::find($al->lotId)?->lotName ?? 'New lot')])->values() : [],
+            'perLot' => AiPrices::of(self::KIND), 'balance' => round($this->credits->balance($this->payer()->id), 2), 'unlimited' => $this->credits->unlimited((int) $this->payer()->id),
+            'canAddLot' => $auto->status === AsAutoSeason::ACTIVE && ($this->lotCap() === null || AsAutoLot::where('autoId', $auto->id)->count() < $this->lotCap()),
+        ]);
+    }
+
+    /** What the season page's lot form needs for a lot that joins the running season (2026-10-28). */
+    public function lotForm(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        $lotId = (int) $request->query('lotId');
+        if (! $this->lotOpen($auto, $lotId)) {
+            return $this->json(false, 'That lot already has its plan.', [], 422);
+        }
+        $lot = AsScheduleLot::find($lotId);
+        $al = AsAutoLot::where('autoId', $auto->id)->where('lotId', $lotId)->first();
+        $first = AsScheduleLot::whereIn('id', AsAutoLot::where('autoId', $auto->id)->where('lotId', '!=', $lotId)->pluck('lotId'))->orderBy('id')->first();
+
+        return $this->json(true, 'ok', [
+            'lot' => ['id' => $lotId, 'name' => $lot->lotName, 'crop' => $lot->crop, 'method' => $al?->method, 'size' => $lot->lotSize !== null ? (float) $lot->lotSize : null, 'unit' => $lot->lotSizeUnit === 'sqm' ? 'sqm' : 'ha',
+                'variety' => $lot->variety, 'fieldDate' => $al?->fieldDate?->toDateString(), 'province' => $lot->locProvince, 'town' => $lot->locTown],
+            'first' => $first ? ['name' => $first->lotName, 'province' => $first->locProvince, 'town' => $first->locTown, 'barangay' => $first->locBarangay,
+                'lat' => $first->pinLat ? (float) $first->pinLat : null, 'lng' => $first->pinLng ? (float) $first->pinLng : null] : null,
+            'crops' => collect(CropCatalog::visible())->map(fn ($c, $k) => ['key' => $k, 'label' => CropCatalog::label($k), 'icon' => $c['icon'] ?? '🌱', 'methods' => AutoBook::methods($k)])->values(),
+            'today' => now('Asia/Manila')->toDateString(), 'latest' => AutoBook::latestDate()->toDateString(),
         ]);
     }
 

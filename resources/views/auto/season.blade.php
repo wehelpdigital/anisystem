@@ -52,6 +52,15 @@
     .ac-hvc { display: flex; align-items: center; gap: .65rem; padding: .7rem .8rem; border-radius: 1rem; animation: acHvIn .45s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i) * 80ms); }
     .ac-hvc.is-due { color: #3b2f00; background: linear-gradient(135deg, #fff6d6, #ffe08a); box-shadow: 0 12px 26px -18px rgb(245 197 24 / .9); }
     .ac-hvc.is-done { color: #eaf3df; background: rgb(255 255 255 / .1); border: 1px solid rgb(255 255 255 / .16); }
+    .ac-hvc.is-new { color: #10202b; background: linear-gradient(135deg, #e0f2fe, #bae6fd); }
+    .ac-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+    .ac-chk { display: flex; align-items: center; gap: .45rem; margin-top: .7rem; font-size: .85rem; font-weight: 700; }
+    .ac-link { margin-left: .5rem; font-size: .8rem; font-weight: 800; color: var(--color-brand-700, #2d5016); text-decoration: underline; }
+    .ac-wins { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .5rem; }
+    .ac-win { display: grid; padding: .45rem .7rem; border-radius: .8rem; text-align: left; background: #f1f7ea; border: 1.5px solid #dfeccf; transition: border-color .28s cubic-bezier(.22,1,.36,1); }
+    .ac-win b { font-size: .85rem; } .ac-win span { font-size: .7rem; color: var(--color-gray-500); }
+    .ac-win.is-on { border-color: #4a7c2a; }
+    html.dark .ac-win { background: #151c11; border-color: #2b3a1c; }
     .ac-hvc > span { flex: none; font-size: 1.5rem; }
     .ac-hvc.is-due > span { animation: acHvBob 1.8s ease-in-out infinite; }
     .ac-hvc > div { flex: 1; min-width: 0; }
@@ -389,6 +398,7 @@
             <button type="button" class="ac-hbtn" id="acLogBtn">📖 Season log</button>
             <button type="button" class="ac-hbtn" id="acSafeBtn">🛡️ Safety</button>
             <a class="ac-hbtn" href="{{ route('sm.hub', ['id' => $schedule->id]) }}">🗂️ The season</a>
+            <button type="button" class="ac-hbtn" id="acAddLot" hidden>➕ Add a lot</button>
         </div>
     </div>
 
@@ -435,6 +445,8 @@
     const U = {
         feed: @json(route('auto.feed', $auto->id)), log: @json(route('auto.log', $auto->id)), observe: @json(route('auto.observe', $auto->id)), ask: @json(route('auto.ask', $auto->id)),
         done: (t) => @json(url('/app/auto/' . $auto->id . '/task')) + '/' + t + '/done', cant: (t) => @json(url('/app/auto/' . $auto->id . '/task')) + '/' + t + '/cant',
+        lotAdd: @json(route('auto.lot.add', $auto->id)), lot: @json(route('auto.lot', $auto->id)), lotForm: @json(route('auto.lotform', $auto->id)), newLot: @json(route('auto.newlot', $auto->id)),
+        window: @json(route('auto.window', $auto->id)), job: @json(route('auto.job', $auto->id)),
     };
     const FACE = @json(\App\Support\AneeEmoji::url('happy'));
     // The harvest record, the same questions the board's Set as harvested asks (App\Support\PostHarvestFields::HARVEST).
@@ -655,6 +667,7 @@
         pick.innerHTML = '<option value="">The whole farm</option>' + F.lots.map((l) => '<option value="' + l.id + '">' + esc(l.name) + '</option>').join('');
         paintHarvest();
         milestones();
+        $('acAddLot').hidden = !F.canAddLot;
     };
     /* ---- the harvest (2026-10-28, the owner: "after the harvest date is complete, have a survey as well (similar to the
        activities module when you set the lot as harvested) asking the details of the harvest and do a final post analysis
@@ -662,7 +675,8 @@
        its final report, which comes with Anee Auto. ---- */
     const paintHarvest = () => {
         const due = F.lots.filter((l) => l.harvestDue), done = F.lots.filter((l) => l.harvestedAt);
-        $('acHarvest').innerHTML = due.map((l, i) => '<div class="ac-hvc is-due" style="--i:' + i + '"><span aria-hidden="true">🧺</span><div><b>Harvest time for ' + esc(l.name) + '</b><small>Planned for ' + esc(l.harvest || 'about now') + '. Record what came off the field and Anee writes the season\'s final report.</small></div><button type="button" class="ac-hvb" data-hv="' + l.id + '">Record the harvest</button></div>').join('')
+        $('acHarvest').innerHTML = (F.pending || []).map((l, i) => '<div class="ac-hvc is-new" style="--i:' + i + '"><span aria-hidden="true">🆕</span><div><b>Set up ' + esc(l.name) + '</b><small>Its crop, its day and its place, then Anee writes its plan and fits its work around your crew and the other lots.</small></div><button type="button" class="ac-hvb" data-newlot="' + l.id + '">Set it up</button></div>').join('')
+            + due.map((l, i) => '<div class="ac-hvc is-due" style="--i:' + i + '"><span aria-hidden="true">🧺</span><div><b>Harvest time for ' + esc(l.name) + '</b><small>Planned for ' + esc(l.harvest || 'about now') + '. Record what came off the field and Anee writes the season\'s final report.</small></div><button type="button" class="ac-hvb" data-hv="' + l.id + '">Record the harvest</button></div>').join('')
             + done.map((l, i) => '<div class="ac-hvc is-done" style="--i:' + (due.length + i) + '"><span aria-hidden="true">✅</span><div><b>' + esc(l.name) + ' harvested ' + esc(l.harvestedAt) + '</b><small>The final report reads the whole season: what was done, what it cost, what it made, and what to do better.</small></div><a class="ac-hvb is-report" href="' + esc(l.reportUrl) + '">📊 Final report</a></div>').join('');
     };
     const hvField = (cat, f) => {
@@ -690,7 +704,81 @@
             } catch (err) { window.toast?.(err.message, 'error'); e.target.disabled = false; e.target.textContent = 'Save the harvest'; }
         });
     });
-    $('acHarvest').addEventListener('click', (e) => { const b = e.target.closest('[data-hv]'); if (b) { const l = F.lots.find((x) => String(x.id) === b.dataset.hv); if (l) harvestModal(l); } });
+    $('acHarvest').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-hv]'); if (b) { const l = F.lots.find((x) => String(x.id) === b.dataset.hv); if (l) harvestModal(l); return; }
+        const n = e.target.closest('[data-newlot]'); if (n) lotModal(Number(n.dataset.newlot));
+    });
+    /* ---- a lot joins the running season (2026-10-28, the owner: "if user decided to add more lot, then anee should auto
+       adjust the schedule and process based on the lots and # of workers. also because of this, anee should also check if
+       the # of workers are enough"). One more lot is charged, set up here, and gets its plan; every lot's work is then
+       placed again around the crew, and the crew check is said in the log. ---- */
+    $('acAddLot').addEventListener('click', () => modal('<h3>➕ Add a lot to this season?</h3><p class="ac-msub">Anee plans it like the others: its crop, its planting day and its fertilizer, then she fits its work around your crew and every other lot, and checks the crew is enough.</p>'
+        + '<p class="ac-msub"><b>' + Number(F.perLot).toLocaleString() + ' credits</b> for the lot\'s whole season, taken now. You have ' + (F.unlimited ? 'unlimited credits' : Number(Math.floor(F.balance)).toLocaleString() + ' credits') + '.</p>'
+        + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Not now</button><button type="button" class="btn btn-primary" id="acALOk">Add the lot</button></div>', (box) => {
+        box.querySelector('#acALOk').addEventListener('click', async (e) => {
+            e.target.disabled = true;
+            try { const r = await window.api(U.lotAdd, { method: 'POST', body: { agree: true } }); closeModal(); await load(true); setTimeout(() => lotModal(r.data.lotId), 350); }
+            catch (err) { window.toast?.(err.message, 'error'); e.target.disabled = false; }
+        });
+    }));
+    const lotModal = async (lotId) => {
+        let D;
+        try { D = (await window.api(U.lotForm + '?lotId=' + lotId)).data; } catch (err) { return window.toast?.(err.message, 'error'); }
+        const L = D.lot, cropRow = (k) => D.crops.find((c) => c.key === k);
+        const methods = (k) => Object.entries((cropRow(k) || {}).methods || {});
+        modal('<h3>🆕 ' + esc(L.name) + '</h3><p class="ac-msub">What Anee needs to plan it. Its fertilizer comes from its realistic goal; you can tell her yours later.</p>'
+            + '<label class="ac-lab" for="acLName">Name</label><input id="acLName" class="form-input w-full" maxlength="255" value="' + esc(L.name) + '">'
+            + '<label class="ac-lab" for="acLCrop">Crop</label><select id="acLCrop" class="form-select w-full"><option value="">Choose the crop</option>' + D.crops.map((c) => '<option value="' + c.key + '"' + (c.key === L.crop ? ' selected' : '') + '>' + c.icon + ' ' + esc(String(c.label).replace(/ — /g, ', ')) + '</option>').join('') + '</select>'
+            + '<label class="ac-lab" for="acLMethod">How it goes into the field</label><select id="acLMethod" class="form-select w-full"></select>'
+            + '<div class="ac-row2"><div><label class="ac-lab" for="acLSize">Size</label><input id="acLSize" type="number" min="0" step="any" inputmode="decimal" class="form-input w-full" value="' + (L.size ?? '') + '" placeholder="Like 1.5"></div>'
+            + '<div><label class="ac-lab" for="acLUnit">In</label><select id="acLUnit" class="form-select w-full"><option value="ha"' + (L.unit !== 'sqm' ? ' selected' : '') + '>hectares</option><option value="sqm"' + (L.unit === 'sqm' ? ' selected' : '') + '>square meters</option></select></div></div>'
+            + (D.first ? '<label class="ac-chk"><input type="checkbox" id="acLSame" ' + (!L.province ? 'checked' : '') + '> Same place as ' + esc(D.first.name) + (D.first.town ? ' (' + esc(D.first.town) + ')' : '') + '</label>' : '')
+            + '<div id="acLPlace"' + (D.first && !L.province ? ' hidden' : '') + '><div class="ac-row2"><div><label class="ac-lab" for="acLProv">Province</label><input id="acLProv" class="form-input w-full" value="' + esc(L.province || '') + '"></div><div><label class="ac-lab" for="acLTown">Town or city</label><input id="acLTown" class="form-input w-full" value="' + esc(L.town || '') + '"></div></div></div>'
+            + '<label class="ac-lab" for="acLVar">Variety <small class="font-normal text-gray-400">(optional)</small></label><input id="acLVar" class="form-input w-full" maxlength="120" value="' + esc(L.variety || '') + '">'
+            + '<label class="ac-lab" for="acLDate">Planting day</label><input id="acLDate" type="date" class="form-input" min="' + D.today + '" max="' + D.latest + '" value="' + (L.fieldDate || '') + '"> <button type="button" class="ac-link" id="acLBest">📅 See the best weeks</button>'
+            + '<div id="acLWin"></div>'
+            + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Later</button><button type="button" class="btn btn-primary" id="acLGo">Save and write its plan</button></div>', (box) => {
+            const fillMethods = () => { const ms = methods(box.querySelector('#acLCrop').value); box.querySelector('#acLMethod').innerHTML = ms.map(([k, v]) => '<option value="' + k + '"' + (k === L.method ? ' selected' : '') + '>' + esc(v) + '</option>').join(''); };
+            fillMethods();
+            box.querySelector('#acLCrop').addEventListener('change', fillMethods);
+            box.querySelector('#acLSame')?.addEventListener('change', (e) => { box.querySelector('#acLPlace').hidden = e.target.checked; });
+            const body = () => { const same = box.querySelector('#acLSame')?.checked && D.first;
+                return { lotId: L.id, name: box.querySelector('#acLName').value.trim() || L.name, crop: box.querySelector('#acLCrop').value || null, method: box.querySelector('#acLMethod').value || null,
+                    size: box.querySelector('#acLSize').value || null, unit: box.querySelector('#acLUnit').value, variety: box.querySelector('#acLVar').value.trim(), fieldDate: box.querySelector('#acLDate').value || null,
+                    province: same ? D.first.province : (box.querySelector('#acLProv').value.trim() || null), town: same ? D.first.town : (box.querySelector('#acLTown').value.trim() || null),
+                    barangay: same ? D.first.barangay : null, lat: same ? D.first.lat : null, lng: same ? D.first.lng : null }; };
+            const save = () => window.api(U.lot, { method: 'PUT', body: body() });
+            box.querySelector('#acLBest').addEventListener('click', async (e) => {
+                const out = box.querySelector('#acLWin'); e.target.disabled = true; out.innerHTML = '<p class="ac-msub">Anee is reading twenty years of this field\'s weather…</p>';
+                try {
+                    const b = body(); if (!b.crop || !b.method) throw new Error('Choose the crop first.');
+                    await window.api(U.lot, { method: 'PUT', body: Object.assign({}, b, { fieldDate: null }) });
+                    const w = ((await window.api(U.window + '?lotId=' + L.id)).data || {}).window;
+                    if (!w) throw new Error('This place has no weather record yet: pick the day you know works.');
+                    out.innerHTML = '<div class="ac-wins">' + w.best.map((i) => { const x = w.weeks[i]; return '<button type="button" class="ac-win" data-day="' + x.date + '"><b>' + esc(new Date(x.date + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' })) + '</b><span>' + x.score + '/100 · harvest ' + esc(new Date(x.harvest + 'T00:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' })) + '</span></button>'; }).join('') + '</div>';
+                    out.querySelectorAll('[data-day]').forEach((d) => d.addEventListener('click', () => { box.querySelector('#acLDate').value = d.dataset.day < D.today ? D.today : d.dataset.day; out.querySelectorAll('[data-day]').forEach((x) => x.classList.toggle('is-on', x === d)); }));
+                } catch (err) { out.innerHTML = '<p class="ac-msub">' + esc(err.message) + '</p>'; }
+                e.target.disabled = false;
+            });
+            box.querySelector('#acLGo').addEventListener('click', async (e) => {
+                e.target.disabled = true; e.target.textContent = 'Saving…';
+                try {
+                    await save();
+                    e.target.textContent = 'Anee is writing its plan…';
+                    const r = await window.api(U.newLot, { method: 'POST', body: { lotId: L.id } });
+                    for (let i = 0; i < 160; i++) {
+                        const st = (await window.api(U.job)).data || {};
+                        if (st.status === 'ready' || st.status === 'done' || (!st.pending && st.status !== 'pending')) break;
+                        if (st.status === 'failed') throw new Error(st.error || 'The plan could not be written. Please try again.');
+                        await new Promise((res) => setTimeout(res, 3500));
+                    }
+                    closeModal();
+                    celebrate('🆕 ' + (body().name) + ' joined the season!', 'Its work is placed with the other lots, around your crew.');
+                    setTimeout(() => load(true), 600);
+                } catch (err) { window.toast?.(err.message, 'error'); e.target.disabled = false; e.target.textContent = 'Save and write its plan'; }
+            });
+        });
+    };
 
     /* ---- milestones (2026-10-28, the owner: "make sure that it is interactive enough like using anee emojis, have
        animations, milestone animations"): a quarter, half and three quarters of the season's tasks done, every task of

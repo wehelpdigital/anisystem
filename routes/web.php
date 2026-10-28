@@ -641,6 +641,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/app/auto/{id}/generate', [App\Http\Controllers\AneeAutoController::class, 'generate'])->whereNumber('id')->name('auto.generate');
     Route::get('/app/auto/{id}/protocol', [App\Http\Controllers\AneeAutoController::class, 'protocol'])->whereNumber('id')->name('auto.protocol');
     Route::post('/app/auto/{id}/approve', [App\Http\Controllers\AneeAutoController::class, 'approve'])->whereNumber('id')->middleware('throttle:10,1')->name('auto.approve');
+    Route::post('/app/auto/{id}/new-lot', [App\Http\Controllers\AneeAutoController::class, 'newLot'])->whereNumber('id')->middleware('throttle:10,1')->name('auto.newlot');
+    Route::get('/app/auto/{id}/lot-form', [App\Http\Controllers\AneeAutoController::class, 'lotForm'])->whereNumber('id')->name('auto.lotform');
     Route::get('/app/auto/{id}/job', [App\Http\Controllers\AneeAutoController::class, 'job'])->whereNumber('id')->name('auto.job');
     Route::put('/app/auto/{id}/fert', [App\Http\Controllers\AneeAutoController::class, 'saveFert'])->whereNumber('id')->name('auto.fert');
     Route::put('/app/auto/{id}/imbalance', [App\Http\Controllers\AneeAutoController::class, 'saveImbalance'])->whereNumber('id')->name('auto.imbalance');
