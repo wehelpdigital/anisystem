@@ -229,6 +229,9 @@
         </div>
     </section>
 
+    {{-- ================= A REAL POST: TWENTY COMMENTS, SEVEN ANSWERS (2026-10-28, the owner) ================= --}}
+    @include('public.partials.social-guess')
+
     {{-- ================= ONE QUESTION, TWO ANSWERS ================= --}}
     <section class="hp-sec bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
