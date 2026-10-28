@@ -35,6 +35,12 @@
             <p class="hp-p">A farmer posted this photo in a Facebook group of farmers and asked: <b>"Bakit po kaya nagkaganito ang palay ko?"</b> Why did my palay turn out like this? Everyone meant well. Look at what came back.</p>
         </header>
 
+        {{-- The point, said plainly, right after the question (2026-10-29, the owner: move it after the farmer's post). --}}
+        <div class="sg-verdict is-top" data-sg>
+            <span class="sg-v-i" aria-hidden="true">⚠️</span>
+            <p><b>This is a classic example of why we do not recommend solutions from social media.</b> Twenty kind people gave seven different answers, and the farmer still does not know which one is right. Following the wrong one costs money, and it can cost the whole harvest.</p>
+        </div>
+
         <div class="sg-grid">
             {{-- The post and its comments, as they are, every name and face blurred. --}}
             <figure class="sg-phone" data-sg style="--d: 120ms">
@@ -80,17 +86,11 @@
             </div>
         </div>
 
-        {{-- The point, said plainly. --}}
-        <div class="sg-verdict" data-sg>
-            <span class="sg-v-i" aria-hidden="true">⚠️</span>
-            <p><b>This is a classic example of why we do not recommend solutions from social media.</b> Twenty kind people gave seven different answers, and the farmer still does not know which one is right. Following the wrong one costs money, and it can cost the whole harvest.</p>
-        </div>
-
         {{-- What Anee does instead. --}}
         <div class="sg-anee" data-sg>
             <div class="sg-anee-h">
                 <img src="{{ asset('images/anee/emoji/thinking.png') }}" alt="" width="64" height="64" loading="lazy">
-                <div><p class="sg-k">What Anee does instead</p><h3>She looks for the sign that tells them apart, then gives one answer.</h3></div>
+                <p class="sg-k">What Anee does instead</p>
             </div>
             @unless ($sgLean)
             <ol class="sg-steps">
@@ -176,6 +176,7 @@
 
     /* The point. */
     .sg-verdict { display: flex; gap: .9rem; align-items: flex-start; margin-top: 2.4rem; padding: 1.2rem 1.3rem; border-radius: 1.3rem; color: #fff; background: linear-gradient(135deg, #b91c1c, #7f1d1d); box-shadow: 0 24px 50px -26px rgb(127 29 29 / .8); }
+    .sg-verdict.is-top { max-width: 46rem; margin: 1.6rem auto 0; }
     .sg-v-i { flex: none; font-size: 1.8rem; line-height: 1; }
     .sg-verdict p { margin: 0; font-size: 1rem; line-height: 1.6; color: #fee2e2; }
     .sg-verdict b { color: #fff; }
@@ -186,8 +187,7 @@
     .sg-anee { margin-top: 1.4rem; padding: 1.3rem; border-radius: 1.4rem; background: linear-gradient(160deg, #f3f8ec, #fff); box-shadow: inset 0 0 0 1px #d9e8c6; }
     .sg-anee-h { display: flex; gap: .9rem; align-items: center; }
     .sg-anee-h img { flex: none; width: 3.6rem; height: 3.6rem; }
-    .sg-anee-h .sg-k { color: #3f6b1f; }
-    .sg-anee-h h3 { margin-top: .2rem; font-family: var(--font-heading); font-size: clamp(1.1rem, 2.6vw, 1.4rem); font-weight: 800; line-height: 1.3; color: #1f2937; }
+    .sg-anee-h .sg-k { font-size: .82rem; color: #3f6b1f; }
     .sg-steps { display: grid; gap: .7rem; margin: 1.1rem 0 0; padding: 0; list-style: none; counter-reset: sg; }
     @media (min-width: 900px) { .sg-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .9rem; } }
     .sg-steps li { position: relative; display: grid; align-content: start; gap: .25rem; padding: .9rem .9rem .9rem 3rem; border-radius: 1rem; background: #fff; box-shadow: 0 0 0 1px #e3ecd8; counter-increment: sg; }

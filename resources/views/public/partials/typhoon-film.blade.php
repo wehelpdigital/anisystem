@@ -38,7 +38,7 @@
                         <span class="tf-ybar" aria-hidden="true"><i style="--a: {{ round(60 / 160 * 100, 1) }}%; --b: {{ round(115 / 160 * 100, 1) }}%"></i></span>
                     </div>
                     <div class="tf-yrow is-anee">
-                        <p><span><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40">This farm, with Anee</span><b><span data-tf-n="140">140</span> cavans</b></p>
+                        <p><span><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40">This farm, with Anee</span><b><span data-tf-n="140">140</span> cavans<svg class="tf-ok" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" pathLength="1"/><path d="M7 12.5l3.3 3.3L17 9" pathLength="1"/></svg></b></p>
                         <span class="tf-ybar" aria-hidden="true"><i style="--a: 0%; --b: {{ round(140 / 160 * 100, 1) }}%"></i></span>
                     </div>
                     <p class="tf-ynote">Cavans of 60 kg, fresh weight: 140 cavans is about 8.4 tons from one hectare, up to 80 cavans more than a farm at the low end, in the same hard season.</p>
@@ -111,7 +111,20 @@
     .tf-ybar { position: relative; display: block; height: .7rem; margin-top: .4rem; border-radius: 999px; background: rgb(255 255 255 / .08); overflow: hidden; }
     .tf-yrow.is-anee .tf-ybar { height: .95rem; }
     .tf-ybar i { position: absolute; top: 0; bottom: 0; left: var(--a); width: 0; border-radius: 999px; transition: width 1.3s cubic-bezier(.22,1,.36,1); }
-    .tf-yrow.is-them .tf-ybar i { background: repeating-linear-gradient(135deg, #9ca3af 0 6px, #7b8491 6px 12px); }
+    .tf-yrow.is-them .tf-ybar i { background: repeating-linear-gradient(135deg, #ef4444 0 6px, #c81e1e 6px 12px); box-shadow: 0 0 14px rgb(239 68 68 / .45); }
+    /* The 140 cavans' check: once the bar has filled and the count is done, its circle draws, the check draws, it pops,
+       then glows on and off. */
+    .tf-yrow.is-anee p b { display: inline-flex; align-items: center; gap: .45rem; }
+    .tf-ok { flex: none; width: 1.35em; height: 1.35em; overflow: visible; }
+    .tf-ok circle { fill: rgb(163 230 53 / 0); stroke: #a3e635; stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1;
+        transition: stroke-dashoffset .5s cubic-bezier(.45,0,.25,1) 1.5s, fill .4s ease 1.9s; }
+    .tf-ok path { fill: none; stroke: #a3e635; stroke-width: 2.8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1;
+        transition: stroke-dashoffset .35s cubic-bezier(.45,0,.25,1) 1.95s; }
+    .tf-yield.is-in .tf-ok circle { stroke-dashoffset: 0; fill: rgb(163 230 53 / .18); }
+    .tf-yield.is-in .tf-ok path { stroke-dashoffset: 0; }
+    .tf-yield.is-in .tf-ok { animation: tfOkPop .45s cubic-bezier(.34,1.56,.64,1) 2.25s, tfOkGlow 2.2s ease-in-out 2.8s infinite; }
+    @keyframes tfOkPop { 50% { scale: 1.3; } }
+    @keyframes tfOkGlow { 50% { filter: drop-shadow(0 0 7px rgb(163 230 53 / .95)); } }
     .tf-yrow.is-anee .tf-ybar i { background: linear-gradient(90deg, #a3e635, #f5c518); box-shadow: 0 0 16px rgb(245 197 24 / .55); transition-delay: .35s; }
     .tf-yield.is-in .tf-ybar i { width: calc(var(--b) - var(--a)); }
     .tf-ynote { margin-top: .7rem; font-size: .76rem; line-height: 1.5; color: #9fb09a; }
@@ -162,7 +175,8 @@
     @media (prefers-reduced-motion: reduce) {
         .tf-wind, .tf-rec i { animation: none; }
         .tf-seen li, .tf-dots button { transition: none !important; }
-        .tf-ybar i { transition: none; }
+        .tf-ybar i, .tf-ok circle, .tf-ok path { transition: none; }
+        .tf-yield.is-in .tf-ok { animation: none; }
     }
 </style>
 @endpush
