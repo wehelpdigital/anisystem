@@ -129,6 +129,152 @@
     .acs-note b { display: block; margin-top: .2rem; font-size: .76rem; }
     .acs-note div { margin-top: .25rem; font-size: .66rem; line-height: 1.45; color: #4b5563; }
 
+    /* ===== 2026-10-28, the owner's second pass on the story: every step card moves on its own loop. ===== */
+    /* The yellow numbers ripple like the shop's Coming soon. */
+    .acs-n { box-shadow: 0 0 0 0 rgb(245 197 24 / .55); }
+    .stm-scene.is-in .acs-n { animation: acsNRing 2.2s ease-out infinite; }
+    @keyframes acsNRing { 0% { box-shadow: 0 0 0 0 rgb(245 197 24 / .6); } 70%, 100% { box-shadow: 0 0 0 12px rgb(245 197 24 / 0); } }
+    /* 1. Tell her once: the answers fill in, each ticked, then the promise is stamped. */
+    .acs-once { --cy: 8s; position: relative; width: min(100%, 14rem); display: grid; gap: .26rem; }
+    .acs-once-r { display: grid; grid-template-columns: 4.3rem minmax(0, 1fr) 1.1rem; gap: .4rem; align-items: center; padding: .28rem .45rem; border-radius: .6rem; font-size: .66rem;
+        background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); opacity: 0; }
+    .acs-once-r span { font-weight: 800; color: var(--mute); white-space: nowrap; }
+    .acs-once-r b { font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; clip-path: inset(0 100% 0 0); }
+    .acs-once-r i { width: 1.05rem; height: 1.05rem; border-radius: 999px; display: grid; place-items: center; font-style: normal; font-size: .58rem; font-weight: 900; color: #1d330d; background: var(--leaf); opacity: 0; }
+    .stm-scene.is-in .acs-once-r { animation: acsOnceR var(--cy) var(--e) infinite; animation-delay: calc(var(--k) * .55s); }
+    .stm-scene.is-in .acs-once-r b { animation: acsOnceT var(--cy) var(--e) infinite; animation-delay: calc(var(--k) * .55s); }
+    .stm-scene.is-in .acs-once-r i { animation: acsOnceC var(--cy) var(--e) infinite; animation-delay: calc(var(--k) * .55s); }
+    @keyframes acsOnceR { 0% { opacity: 0; transform: translateY(6px); } 5%, 84% { opacity: 1; transform: none; } 92%, 100% { opacity: 0; } }
+    @keyframes acsOnceT { 0%, 5% { clip-path: inset(0 100% 0 0); } 14%, 100% { clip-path: inset(0 0 0 0); } }
+    @keyframes acsOnceC { 0%, 14% { opacity: 0; transform: scale(.4); } 18%, 84% { opacity: 1; transform: none; } 92%, 100% { opacity: 0; } }
+    .acs-once-stamp { position: absolute; z-index: 2; left: 50%; top: 50%; margin: -.75rem 0 0 -6.2rem; width: 12.4rem; text-align: center; padding: .3rem .65rem; border-radius: 999px; white-space: nowrap; font-size: .64rem; font-weight: 900; color: #1d330d; background: var(--gold);
+        box-shadow: 0 0 0 0 rgb(245 197 24 / .5); opacity: 0; transform: scale(.6) rotate(-4deg); }
+    .stm-scene.is-in .acs-once-stamp { animation: acsOnceS var(--cy) var(--e) infinite; }
+    @keyframes acsOnceS { 0%, 42% { opacity: 0; transform: scale(.6) rotate(-4deg); } 47% { opacity: 1; transform: scale(1.08) rotate(-2deg); box-shadow: 0 0 0 0 rgb(245 197 24 / .6); }
+        52%, 84% { opacity: 1; transform: scale(1) rotate(-2deg); box-shadow: 0 0 0 10px rgb(245 197 24 / 0); } 92%, 100% { opacity: 0; transform: scale(1) rotate(-2deg); } }
+    /* 2. A goal for any budget: the budget slides, Anee's plan follows it. */
+    .acs-bud { --cy: 9s; position: relative; width: min(100%, 16.5rem); display: grid; gap: .55rem; }
+    .acs-bud-t { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding: .2rem; border-radius: 999px; background: rgb(255 255 255 / .07); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); }
+    .acs-bud-t span { position: relative; z-index: 1; padding: .22rem 0; text-align: center; font-size: .6rem; font-weight: 900; color: var(--mute); }
+    .acs-bud-t i { position: absolute; top: .2rem; bottom: .2rem; left: .2rem; width: calc((100% - .4rem) / 3); border-radius: 999px; background: var(--gold); box-shadow: 0 6px 14px -6px rgb(245 197 24 / .8); }
+    .stm-scene.is-in .acs-bud-t i { animation: acsBudK var(--cy) var(--e) infinite; }
+    @keyframes acsBudK { 0%, 28% { transform: translateX(0); } 34%, 61% { transform: translateX(100%); } 67%, 94% { transform: translateX(200%); } 100% { transform: translateX(0); } }
+    .stm-scene.is-in .acs-bud-t span:nth-of-type(1) { animation: acsBud1 var(--cy) infinite; }
+    .stm-scene.is-in .acs-bud-t span:nth-of-type(2) { animation: acsBud2 var(--cy) infinite; }
+    .stm-scene.is-in .acs-bud-t span:nth-of-type(3) { animation: acsBud3 var(--cy) infinite; }
+    @keyframes acsBud1 { 0%, 28%, 100% { color: #2b2100; } 32%, 96% { color: var(--mute); } }
+    @keyframes acsBud2 { 0%, 31% { color: var(--mute); } 34%, 61% { color: #2b2100; } 64%, 100% { color: var(--mute); } }
+    @keyframes acsBud3 { 0%, 64% { color: var(--mute); } 67%, 94% { color: #2b2100; } 97%, 100% { color: var(--mute); } }
+    .acs-bud-o { position: relative; display: grid; }
+    .acs-bud-o > div { grid-area: 1 / 1; display: grid; gap: .25rem; padding: .45rem .55rem; border-radius: .7rem; background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); opacity: 0; }
+    .acs-bud-o b { font-size: .72rem; font-weight: 800; color: #fff; }
+    .acs-bud-o small { font-size: .6rem; line-height: 1.35; color: var(--mute); }
+    .acs-bud-o u { display: flex; align-items: center; gap: .35rem; text-decoration: none; font-size: .62rem; font-weight: 800; color: var(--gold); }
+    .acs-bud-o u i { flex: 1; height: .4rem; border-radius: 999px; background: rgb(255 255 255 / .08); overflow: hidden; }
+    .acs-bud-o u i::before { content: ''; display: block; height: 100%; width: var(--v); border-radius: inherit; background: linear-gradient(90deg, #a8cc7e, #f5c518); }
+    .stm-scene.is-in .acs-bud-o > div:nth-child(1) { animation: acsBudA var(--cy) var(--e) infinite; }
+    .stm-scene.is-in .acs-bud-o > div:nth-child(2) { animation: acsBudB var(--cy) var(--e) infinite; }
+    .stm-scene.is-in .acs-bud-o > div:nth-child(3) { animation: acsBudC var(--cy) var(--e) infinite; }
+    @keyframes acsBudA { 0%, 28% { opacity: 1; transform: none; } 32%, 96% { opacity: 0; transform: translateY(-4px); } 100% { opacity: 1; transform: none; } }
+    @keyframes acsBudB { 0%, 31% { opacity: 0; transform: translateY(6px); } 35%, 61% { opacity: 1; transform: none; } 65%, 100% { opacity: 0; transform: translateY(-4px); } }
+    @keyframes acsBudC { 0%, 64% { opacity: 0; transform: translateY(6px); } 68%, 94% { opacity: 1; transform: none; } 98%, 100% { opacity: 0; transform: translateY(-4px); } }
+    /* 3. The protocol, written again and again: what she weighs flies in, the lines write, the stamp lands. */
+    .acs-proto { --cy: 8s; }
+    .stm-scene.is-in .acs-proto-in span { animation: acsProtoIn2 var(--cy) var(--e) infinite; animation-delay: calc(var(--k) * .15s); }
+    @keyframes acsProtoIn2 { 0% { opacity: 0; transform: translateX(-14px); } 8%, 28% { opacity: 1; transform: none; } 38%, 100% { opacity: .3; transform: translateX(12px) scale(.92); } }
+    .stm-scene.is-in .acs-proto-doc { animation: acsProtoDoc var(--cy) var(--e) infinite; }
+    @keyframes acsProtoDoc { 0%, 18% { opacity: 0; transform: translateY(8px); } 24%, 92% { opacity: 1; transform: none; } 98%, 100% { opacity: 0; transform: translateY(8px); } }
+    .stm-scene.is-in .acs-proto-doc span { animation: acsProtoLine var(--cy) var(--e) infinite; animation-delay: calc(var(--k) * .35s); }
+    @keyframes acsProtoLine { 0%, 28% { clip-path: inset(0 100% 0 0); } 36%, 92% { clip-path: inset(0 0 0 0); } 98%, 100% { clip-path: inset(0 100% 0 0); } }
+    .acs-proto-ok { position: absolute; right: -.4rem; bottom: -.5rem; padding: .16rem .5rem; border-radius: 999px; white-space: nowrap; font-size: .56rem; font-weight: 900; color: #1d330d; background: var(--gold);
+        opacity: 0; transform: scale(.6) rotate(-6deg); box-shadow: 0 8px 16px -8px rgb(0 0 0 / .8); }
+    .stm-scene.is-in .acs-proto-ok { animation: acsProtoOk var(--cy) var(--e) infinite; }
+    @keyframes acsProtoOk { 0%, 64% { opacity: 0; transform: scale(.6) rotate(-6deg); } 69% { opacity: 1; transform: scale(1.1) rotate(-4deg); } 73%, 92% { opacity: 1; transform: scale(1) rotate(-4deg); } 98%, 100% { opacity: 0; } }
+    /* 5. Every morning: the message arrives at 5:30, its tasks get done one by one. */
+    .acs-morn { --cy: 9s; position: relative; width: min(100%, 15.5rem); }
+    .acs-morn-n { padding: .55rem .65rem; border-radius: .9rem; background: #f6f9f1; color: #1f2a17; box-shadow: 0 14px 30px -16px rgb(0 0 0 / .9); opacity: 0; transform: translateY(-14px); }
+    .stm-scene.is-in .acs-morn-n { animation: acsMornN var(--cy) var(--e) infinite; }
+    @keyframes acsMornN { 0% { opacity: 0; transform: translateY(-14px); } 7%, 92% { opacity: 1; transform: none; } 98%, 100% { opacity: 0; transform: translateY(-8px); } }
+    .acs-morn-n small { display: flex; align-items: center; gap: .35rem; font-size: .6rem; font-weight: 800; color: #4a7c2a; }
+    .acs-morn-n small img { width: 1rem; height: 1rem; border-radius: 999px; }
+    .acs-morn-n > b { display: block; margin-top: .15rem; font-size: .74rem; }
+    .acs-morn-n ul { margin: .3rem 0 0; padding: 0; list-style: none; display: grid; gap: .2rem; }
+    .acs-morn-n li { display: flex; align-items: center; gap: .35rem; font-size: .62rem; font-weight: 700; color: #374151; opacity: 0; }
+    .acs-morn-n li i { flex: none; width: .85rem; height: .85rem; border-radius: .25rem; display: grid; place-items: center; font-style: normal; font-size: .5rem; color: transparent; box-shadow: inset 0 0 0 1.5px #9ca3af; }
+    .stm-scene.is-in .acs-morn-n li { animation: acsMornL var(--cy) var(--e) infinite; animation-delay: calc(var(--k) * .3s); }
+    .stm-scene.is-in .acs-morn-n li i { animation: acsMornC var(--cy) var(--e) infinite; animation-delay: calc(var(--k) * .9s); }
+    @keyframes acsMornL { 0%, 9% { opacity: 0; transform: translateX(-6px); } 14%, 92% { opacity: 1; transform: none; } 98%, 100% { opacity: 0; } }
+    @keyframes acsMornC { 0%, 34% { color: transparent; background: transparent; box-shadow: inset 0 0 0 1.5px #9ca3af; } 38%, 92% { color: #fff; background: #4a7c2a; box-shadow: none; } 98%, 100% { color: transparent; background: transparent; } }
+    .acs-morn-done { position: absolute; right: -.3rem; top: -.55rem; padding: .14rem .5rem; border-radius: 999px; white-space: nowrap; font-size: .58rem; font-weight: 900; color: #1d330d; background: var(--gold); opacity: 0; transform: scale(.6); }
+    .stm-scene.is-in .acs-morn-done { animation: acsMornD var(--cy) var(--e) infinite; }
+    @keyframes acsMornD { 0%, 66% { opacity: 0; transform: scale(.6); } 71%, 92% { opacity: 1; transform: none; } 98%, 100% { opacity: 0; } }
+    /* Every morning before you wake up: her check, item by item, then the plan it makes. */
+    .acs-chk { --cy: 12s; margin-top: 1.6rem; padding: 1rem; }
+    .acs-chk-top { display: flex; align-items: center; gap: .7rem; }
+    .acs-chk-top img { flex: none; width: 2.6rem; height: 2.6rem; }
+    .acs-chk-top b { display: block; font-size: .92rem; font-weight: 800; color: #fff; }
+    .acs-chk-top small { position: relative; display: block; height: 1.1rem; font-size: .72rem; font-weight: 800; color: var(--mute); }
+    .acs-chk-top small span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+    .acs-chk-top small span + span { opacity: 0; color: var(--gold); }
+    .stm-scene.is-in .acs-chk-top small span:first-child { animation: acsChkA var(--cy) infinite; }
+    .stm-scene.is-in .acs-chk-top small span + span { animation: acsChkB var(--cy) infinite; }
+    @keyframes acsChkA { 0%, 74% { opacity: 1; } 77%, 97% { opacity: 0; } 100% { opacity: 1; } }
+    @keyframes acsChkB { 0%, 74% { opacity: 0; } 77%, 96% { opacity: 1; } 100% { opacity: 0; } }
+    .acs-chk-bar { position: relative; height: .35rem; margin-top: .7rem; border-radius: 999px; background: rgb(255 255 255 / .08); overflow: hidden; }
+    .acs-chk-bar i { position: absolute; inset: 0 auto 0 0; width: 100%; border-radius: inherit; background: linear-gradient(90deg, #a8cc7e, #f5c518); transform-origin: left; transform: scaleX(0); }
+    .stm-scene.is-in .acs-chk-bar i { animation: acsChkBar var(--cy) linear infinite; }
+    @keyframes acsChkBar { 0%, 4% { transform: scaleX(0); } 76%, 96% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+    .acs-chk-list { display: grid; gap: .35rem; margin-top: .8rem; }
+    @media (min-width: 760px) { .acs-chk-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .acs-chk-r { display: grid; grid-template-columns: 1.9rem minmax(0, 1fr) 1.2rem; gap: .55rem; align-items: center; padding: .45rem .55rem; border-radius: .8rem; background: rgb(255 255 255 / .05);
+        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08); opacity: .4; }
+    .acs-chk-r > span { font-size: 1.1rem; text-align: center; }
+    .acs-chk-r b { display: block; font-size: .78rem; font-weight: 800; color: #fff; }
+    .acs-chk-r small { position: relative; display: block; height: 1.05rem; font-size: .68rem; color: var(--mute); }
+    .acs-chk-r small em { position: absolute; left: 0; top: 0; font-style: normal; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+    .acs-chk-r small em.found { color: var(--gold); font-weight: 800; opacity: 0; }
+    .acs-chk-r .st { position: relative; width: 1.2rem; height: 1.2rem; }
+    .acs-chk-r .st i, .acs-chk-r .st u { position: absolute; inset: 0; border-radius: 999px; opacity: 0; }
+    .acs-chk-r .st i { border: 2px solid rgb(245 197 24 / .35); border-top-color: var(--gold); animation: acsSpin .8s linear infinite; }
+    .acs-chk-r .st u { display: grid; place-items: center; text-decoration: none; font-size: .62rem; font-weight: 900; color: #1d330d; background: var(--leaf); }
+    .acs-chk-plan { margin-top: .9rem; opacity: 0; transform: translateY(10px); }
+    .stm-scene.is-in .acs-chk-plan { animation: acsChkPlan var(--cy) var(--e) infinite; }
+    @keyframes acsChkPlan { 0%, 76% { opacity: 0; transform: translateY(10px); } 80%, 96% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+    .acs-chk-plan .acs-out { width: 100%; max-width: 26rem; margin: 0 auto; }
+    /* The season at a glance: why the day is the day. */
+    .acs-g-why { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .9rem; }
+    .acs-g-why span { padding: .22rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 700; color: var(--ink); background: rgb(255 255 255 / .07); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); }
+    /* Why it is worth it: the same hectare, without Anee and with her. */
+    .acs-vs { display: grid; gap: .9rem; margin-bottom: 1.4rem; }
+    .acs-vs-h { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: #fff; }
+    .acs-vs-h small { display: block; margin-top: .15rem; font-family: inherit; font-size: .78rem; font-weight: 700; color: var(--mute); }
+    .acs-vs-cols { display: grid; gap: .8rem; }
+    @media (min-width: 760px) { .acs-vs-cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+    .acs-vs-c { padding: 1rem; border-radius: 1.2rem; background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .09); }
+    .acs-vs-c.is-with { background: linear-gradient(160deg, rgb(245 197 24 / .14), rgb(168 204 126 / .08)); box-shadow: inset 0 0 0 1.5px rgb(245 197 24 / .5); }
+    .acs-vs-c h4 { display: flex; align-items: center; gap: .45rem; font-size: .92rem; font-weight: 800; color: #fff; }
+    .acs-vs-c h4 img { width: 1.6rem; height: 1.6rem; }
+    .acs-vs-c h4 small { margin-left: auto; padding: .1rem .5rem; border-radius: 999px; font-size: .62rem; font-weight: 900; color: #1d330d; background: var(--gold); white-space: nowrap; }
+    .acs-vs-bar { display: flex; height: 1.6rem; margin-top: .8rem; border-radius: .55rem; overflow: hidden; background: rgb(255 255 255 / .06); }
+    .acs-vs-bar i { display: grid; place-items: center; flex: none; width: calc(var(--w) * 100%); font-style: normal; font-size: .6rem; font-weight: 900; color: #1d330d; transform-origin: left; transform: scaleX(0);
+        transition: transform .7s var(--e) calc(.4s + var(--k) * .45s); }
+    .stm-scene.is-in .acs-vs-bar i { transform: none; }
+    .acs-vs-bar i.keep { background: #8fc96a; }
+    .acs-vs-bar i.lost { color: #fff; background: repeating-linear-gradient(135deg, #c2453d 0 6px, #a3362f 6px 12px); }
+    .acs-vs-bar i.gain { background: linear-gradient(90deg, #f5c518, #fde68a); }
+    .acs-vs-rows { display: grid; gap: .3rem; margin-top: .7rem; }
+    .acs-vs-rows div { display: flex; align-items: center; gap: .5rem; font-size: .76rem; line-height: 1.35; color: var(--ink); opacity: 0; transform: translateX(-6px); transition: opacity .45s var(--e) calc(.6s + var(--k) * .45s), transform .45s var(--e) calc(.6s + var(--k) * .45s); }
+    .stm-scene.is-in .acs-vs-rows div { opacity: 1; transform: none; }
+    .acs-vs-rows div b { margin-left: auto; white-space: nowrap; font-weight: 900; }
+    .acs-vs-c:not(.is-with) .acs-vs-rows b { color: #f19b93; } .acs-vs-c.is-with .acs-vs-rows b { color: var(--gold); }
+    .acs-vs-tot { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; margin-top: .8rem; padding-top: .7rem; border-top: 1px solid rgb(255 255 255 / .1); }
+    .acs-vs-tot span { font-size: .74rem; font-weight: 800; color: var(--mute); }
+    .acs-vs-tot b { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
+    .acs-vs-c.is-with .acs-vs-tot b { color: var(--gold); }
+    .acs-vs-net { display: flex; align-items: center; gap: .8rem; padding: .9rem 1rem; border-radius: 1.1rem; background: rgb(245 197 24 / .12); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45); }
+    .acs-vs-net img { flex: none; width: 2.8rem; height: 2.8rem; }
+    .acs-vs-net p { font-size: .86rem; line-height: 1.5; color: var(--ink); }
+    .acs-vs-net p b { font-family: var(--font-heading); font-size: 1.05rem; color: var(--gold); font-variant-numeric: tabular-nums; }
     /* ---------- 2b. when to plant (2026-10-28, the owner: "add a section about the when to plant analysis ... historical
        data and analysis to provide forecast of the safest less risky as well as its effects in the soil type, irrigation,
        and the forecast of enso, and the pricing forecast as well based in our historical database of prices per crop").
@@ -275,8 +421,8 @@
     .acs-ty-face img.done { opacity: 0; }
     .stm-scene.is-in .acs-ty-face img.think { animation: acsTyA var(--cy) infinite; }
     .stm-scene.is-in .acs-ty-face img.done { animation: acsTyB var(--cy) infinite; }
-    .acs-ty-say { position: relative; flex: 1; min-width: 0; min-height: 5.4rem; }
-    .acs-ty-say > div { position: absolute; inset: 0 0 auto; }
+    .acs-ty-say { position: relative; flex: 1; min-width: 0; display: grid; }
+    .acs-ty-say > div { grid-area: 1 / 1; }
     .acs-ty-say b { display: block; font-size: .88rem; line-height: 1.4; color: #fff; }
     .acs-ty-say p { margin-top: .25rem; font-size: .8rem; line-height: 1.5; color: var(--ink); }
     .acs-ty-say .done { opacity: 0; }
@@ -306,24 +452,30 @@
     .acs-ask-steps span:nth-child(3), .acs-ask-steps span:nth-child(3) i { animation-delay: calc(var(--cy) * -.45) !important; }
     @keyframes acsAskStep { 0%, 24% { color: #fff; background: rgb(245 197 24 / .16); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .55); } 28%, 100% { color: var(--mute); background: rgb(255 255 255 / .06); box-shadow: none; } }
     @keyframes acsAskStepI { 0%, 24% { color: #1d330d; background: var(--gold); } 28%, 100% { color: var(--mute); background: rgb(255 255 255 / .1); } }
-    .acs-ask-body { display: grid; gap: 1rem; margin-top: .9rem; align-items: center; }
+    .acs-ask { contain: layout paint; }
+    .acs-ask-body { display: grid; gap: 1rem; margin-top: 1.7rem; align-items: center; }
     @media (min-width: 760px) { .acs-ask-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.4rem; } }
     /* The photo, a print in a white frame, with its question. */
     .acs-ask-pic { position: relative; justify-self: center; width: min(100%, 22rem); opacity: 0; }
     .stm-scene.is-in .acs-ask-pic { animation: acsAskPic var(--cy) var(--e) infinite; }
     @keyframes acsAskPic { 0% { opacity: 0; transform: translateY(16px) rotate(-7deg); } 6%, 93% { opacity: 1; transform: rotate(-2deg); } 99%, 100% { opacity: 0; transform: rotate(-2deg); } }
     .acs-ask-frame { position: relative; padding: .4rem .4rem 1.3rem; border-radius: .7rem; background: #f7f8f3; box-shadow: 0 18px 36px -18px rgb(0 0 0 / .95); }
-    .acs-ask-frame svg { display: block; width: 100%; height: auto; border-radius: .4rem; }
+    .acs-ask-frame > img { display: block; width: 100%; height: auto; aspect-ratio: 640 / 426; object-fit: cover; border-radius: .4rem; }
+    .acs-ask-focus { position: absolute; left: 30%; top: 30%; width: 42%; height: 34%; border-radius: .4rem; opacity: 0;
+        background: linear-gradient(var(--gold), var(--gold)) top left / 14px 3px no-repeat, linear-gradient(var(--gold), var(--gold)) top left / 3px 14px no-repeat,
+            linear-gradient(var(--gold), var(--gold)) top right / 14px 3px no-repeat, linear-gradient(var(--gold), var(--gold)) top right / 3px 14px no-repeat,
+            linear-gradient(var(--gold), var(--gold)) bottom left / 14px 3px no-repeat, linear-gradient(var(--gold), var(--gold)) bottom left / 3px 14px no-repeat,
+            linear-gradient(var(--gold), var(--gold)) bottom right / 14px 3px no-repeat, linear-gradient(var(--gold), var(--gold)) bottom right / 3px 14px no-repeat; }
+    .stm-scene.is-in .acs-ask-focus { animation: acsAskFocus var(--cy) var(--e) infinite; }
+    @keyframes acsAskFocus { 0%, 36% { opacity: 0; transform: scale(1.5); } 41%, 54% { opacity: 1; transform: scale(1); } 58%, 100% { opacity: 0; transform: scale(1); } }
     .acs-ask-frame small { position: absolute; left: .6rem; bottom: .3rem; font-size: .6rem; font-weight: 800; color: #6b7280; }
     .acs-ask-flash { position: absolute; inset: 0; border-radius: .7rem; background: #fff; opacity: 0; pointer-events: none; }
     .stm-scene.is-in .acs-ask-flash { animation: acsAskFlash var(--cy) infinite; }
     @keyframes acsAskFlash { 0%, 5% { opacity: 0; } 7% { opacity: .9; } 13%, 100% { opacity: 0; } }
-    .acs-ask-scan { position: absolute; left: .4rem; right: .4rem; top: .4rem; height: 3px; border-radius: 999px; background: var(--gold); box-shadow: 0 0 14px 4px rgb(245 197 24 / .55); opacity: 0; }
+    .acs-ask-scan { position: absolute; left: .4rem; right: .4rem; top: .4rem; height: 3px; will-change: transform; border-radius: 999px; background: var(--gold); box-shadow: 0 0 14px 4px rgb(245 197 24 / .55); opacity: 0; }
     .stm-scene.is-in .acs-ask-scan { animation: acsAskScan var(--cy) linear infinite; }
-    @keyframes acsAskScan { 0%, 26% { opacity: 0; top: .4rem; } 28% { opacity: 1; top: .4rem; } 40% { top: calc(100% - 1.5rem); } 52% { opacity: 1; top: .4rem; } 54%, 100% { opacity: 0; top: .4rem; } }
-    .acs-ask-frame .ring { fill: none; stroke: var(--gold); stroke-width: 2.5; opacity: 0; transform-box: fill-box; transform-origin: center; }
-    .stm-scene.is-in .acs-ask-frame .ring { animation: acsAskRing var(--cy) infinite; animation-delay: calc(var(--k) * .25s); }
-    @keyframes acsAskRing { 0%, 32% { opacity: 0; transform: scale(1.6); } 36%, 54% { opacity: 1; transform: scale(1); } 58%, 100% { opacity: 0; transform: scale(1); } }
+    @keyframes acsAskScan { 0%, 26% { opacity: 0; transform: translateY(0); } 28% { opacity: 1; transform: translateY(0); } 40% { transform: translateY(var(--sh, 12rem)); } 52% { opacity: 1; transform: translateY(0); } 54%, 100% { opacity: 0; transform: translateY(0); } }
+
     .acs-ask-q { position: absolute; right: -.4rem; top: -.9rem; max-width: 70%; padding: .4rem .65rem; border-radius: .9rem .9rem .2rem .9rem; font-size: .72rem; font-weight: 700; line-height: 1.35; color: #1f2a17; background: #e3f1d2;
         box-shadow: 0 10px 20px -10px rgb(0 0 0 / .8); opacity: 0; }
     .stm-scene.is-in .acs-ask-q { animation: acsAskQ var(--cy) var(--e) infinite; }
@@ -333,9 +485,8 @@
     .acs-ask-face { position: relative; flex: none; width: 2.6rem; height: 2.6rem; }
     .acs-ask-face img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; }
     .acs-ask-face img.p1 { opacity: 1; }
-    .acs-ask-say { position: relative; flex: 1; min-width: 0; min-height: 7.4rem; }
-    @media (min-width: 760px) { .acs-ask-say { min-height: 9.6rem; } }
-    .acs-ask-say > div { position: absolute; inset: 0 0 auto; opacity: 0; }
+    .acs-ask-say { position: relative; flex: 1; min-width: 0; display: grid; }
+    .acs-ask-say > div { grid-area: 1 / 1; opacity: 0; }
     .acs-ask-say b { display: block; font-size: .9rem; line-height: 1.4; color: #fff; }
     .acs-ask-say p { margin-top: .3rem; font-size: .8rem; line-height: 1.5; color: var(--ink); }
     .acs-ask-say ul { margin: .35rem 0 0; padding: 0; list-style: none; display: grid; gap: .2rem; font-size: .78rem; line-height: 1.45; color: var(--ink); }
@@ -447,6 +598,11 @@
         .acs-ty-say .think, .acs-ty-face img.think, .acs-ty-wind { display: none; }
         .acs-ty-d.is-best { background: rgb(245 197 24 / .14); box-shadow: inset 0 0 0 2px var(--gold); }
         .acs-ask *, .acs-ask-anee * { animation: none !important; }
+        .acs-n, .acs-once *, .acs-bud *, .acs-proto *, .acs-morn *, .acs-chk * { animation: none !important; }
+        .acs-once-r, .acs-once-r i, .acs-once-stamp, .acs-proto-doc, .acs-proto-ok, .acs-morn-n, .acs-morn-n li, .acs-morn-done, .acs-chk-r, .acs-chk-plan, .acs-chk-r small em.found, .acs-chk-r .st u { opacity: 1; transform: none; }
+        .acs-once-r b, .acs-proto-doc span { clip-path: none; } .acs-chk-r small em:not(.found), .acs-chk-r .st i { display: none; } .acs-chk-bar i { transform: none; }
+        .acs-bud-o > div:not(:nth-child(2)) { display: none; } .acs-bud-o > div:nth-child(2) { opacity: 1; } .acs-bud-t i { transform: translateX(100%); }
+        .acs-vs-bar i, .acs-vs-rows div { transform: none; opacity: 1; transition: none; }
         .acs-wtp *, .acs-wtp-why span { animation: none !important; transition: none !important; }
         .acs-lb * { animation: none !important; }
         .acs-lb-staves i.zn, .acs-lb-staves i.s { height: 96%; } .acs-lb-water { height: 92%; } .acs-lb-say span.c { opacity: 1; }
@@ -496,28 +652,29 @@
             <div class="acs-steps">
                 <div class="acs-card acs-step" data-in style="--d: 160ms">
                     <span class="acs-n">1</span>
-                    <div class="acs-art" aria-hidden="true"><div class="acs-lot">
-                        <svg viewBox="0 0 200 116"><path pathLength="1" d="M28 18 L150 8 L182 70 L120 106 L22 92 Z"/></svg>
-                        {{-- Each fact on a corner of the lot, the farm in the middle (2026-10-28, the owner). The corners are the path's points. --}}
-                        <span style="left: 14%; top: 15.5%; --k: 0">🟤 Soil</span><span style="left: 75%; top: 6.9%; --k: 1">🌾 Variety</span><span style="left: 91%; top: 60.3%; --k: 2">💧 Water</span><span style="left: 60%; top: 91.4%; --k: 3">👷 Crew</span><span style="left: 11%; top: 79.3%; --k: 4">🌦️ Weather</span><span class="is-farm" style="left: 50%; top: 50%; --k: 5">🏡 Your farm</span>
+                    {{-- The answers fill in and are ticked, then the promise is stamped (2026-10-28, again the owner). --}}
+                    <div class="acs-art" aria-hidden="true"><div class="acs-once">
+                        @foreach ([['🌾 Crop', 'Palay, inbred'], ['🟤 Soil', 'Clay loam'], ['💧 Water', 'Irrigated'], ['👷 Crew', '3 workers']] as $k => [$q, $ans])
+                            <div class="acs-once-r" style="--k: {{ $k }}"><span>{{ $q }}</span><b>{{ $ans }}</b><i>✓</i></div>
+                        @endforeach
+                        <span class="acs-once-stamp">✓ Told once, kept all season</span>
                     </div></div>
-                    <b>Tell her once</b>
-                    <p>Your lots, the crop and variety, the soil, the water, your fertilizer and your workers. The weather she reads herself.</p>
+                    <b>Tell her once, she remembers</b>
+                    <p>A few taps about your lots, crop, soil, water, budget and workers. She keeps it and reads it every day after, so you never repeat yourself. The weather she reads herself.</p>
                 </div>
                 <div class="acs-card acs-step" data-in style="--d: 220ms">
                     <span class="acs-n">2</span>
-                    {{-- Three goals against a budget: the one that fits is picked, the one over it dims. --}}
-                    <div class="acs-art" aria-hidden="true"><div class="acs-goal">
-                        <span class="acs-goal-b">💰 Your budget <b>₱20,000</b></span>
-                        @foreach ([['Traditional', 4, '₱8k', ''], ['Realistic', 6.5, '₱17k', 'pick'], ['High potential', 8.5, '₱28k', 'over']] as $k => [$gn, $gt, $gc, $gw])
-                            <div class="acs-goal-r{{ $gw ? ' is-' . $gw : '' }}" style="--k: {{ $k }}; --v: {{ $gt / 8.5 }}">
-                                <span>{{ $gn }}</span><i><u></u></i><b>{{ $gt }} t</b><small>{{ $gc }}</small>
-                                @if ($gw === 'pick')<em class="ok">✓</em>@elseif ($gw === 'over')<em class="no">Over budget</em>@endif
-                            </div>
-                        @endforeach
+                    {{-- No amount, only how much there is to spend: the budget slides, and Anee's plan follows it (2026-10-28, the owner). --}}
+                    <div class="acs-art" aria-hidden="true"><div class="acs-bud">
+                        <div class="acs-bud-t"><i></i><span>Low budget</span><span>Middle</span><span>Full budget</span></div>
+                        <div class="acs-bud-o">
+                            <div><b>🌱 Keep it lean</b><small>Basal and one top dress, sprays only if needed</small><u><i style="--v: 55%"></i>about 4.8 t</u></div>
+                            <div><b>🌾 Realistic</b><small>Three splits, weekly scouting, sprays when needed</small><u><i style="--v: 76%"></i>about 6.5 t</u></div>
+                            <div><b>🚀 High potential</b><small>Four splits, micronutrients, full protection</small><u><i style="--v: 96%"></i>about 8 t</u></div>
+                        </div>
                     </div></div>
                     <b>Pick a goal you can afford</b>
-                    <p>She shows what is realistic, what is safe and what is possible for your money, with the fertilizer each one takes. You choose.</p>
+                    <p>Low budget, middle or full: say what you can spend. Anee adapts and builds the best protocol for it, with the yield it can reach and the fertilizer it takes.</p>
                 </div>
                 <div class="acs-card acs-step" data-in style="--d: 280ms">
                     <span class="acs-n">3</span>
@@ -527,6 +684,7 @@
                         <div class="acs-proto-doc">
                             <small>📋 Your protocol</small>
                             @foreach (['🧪 Day 0 · 4 bags complete', '🧪 Day 14 · 1.5 bags urea', '🛡️ Day 30 · spray if needed', '🧺 Day 110 · harvest'] as $k => $l)<span style="--k: {{ $k }}"><i>✓</i>{{ $l }}</span>@endforeach
+                            <em class="acs-proto-ok">✓ Ready for you</em>
                         </div>
                     </div></div>
                     <b>She builds your whole protocol</b>
@@ -560,7 +718,15 @@
                 </div>
                 <div class="acs-card acs-step" data-in style="--d: 400ms">
                     <span class="acs-n">5</span>
-                    <div class="acs-art" aria-hidden="true"><div class="acs-note"><small><img src="{{ $asFace('salute') }}" alt="">Anee · 5:30 AM</small><b>Today: 2 tasks on 2 lots</b><div>Lot 1: second fertilizer before the rain. Lot 2: check for stem borers.</div></div></div>
+                    {{-- The morning message arrives, its work gets done one by one (2026-10-28, again the owner). --}}
+                    <div class="acs-art" aria-hidden="true"><div class="acs-morn">
+                        <div class="acs-morn-n">
+                            <small><img src="{{ $asFace('salute') }}" alt="">Anee · 5:30 AM</small>
+                            <b>Today: 3 tasks on 2 lots</b>
+                            <ul>@foreach (['🧪 Lot 1: fertilize before the rain', '🔍 Lot 2: check for stem borers', '💧 Lot 1: let the water in'] as $k => $t)<li style="--k: {{ $k }}"><i>✓</i>{{ $t }}</li>@endforeach</ul>
+                        </div>
+                        <span class="acs-morn-done">🎉 All done today</span>
+                    </div></div>
                     <b>Every morning, today's work</b>
                     <p>In the app and by email, for you and for each worker. Tell her what happened and she adjusts.</p>
                 </div>
@@ -675,36 +841,16 @@
             <div class="acs-card acs-ask" data-in style="--d: 200ms">
                 <div class="acs-ask-steps" aria-hidden="true"><span><i>1</i>Show her</span><span><i>2</i>She looks</span><span><i>3</i>She answers</span></div>
                 <div class="acs-ask-body">
-                    <div class="acs-ask-pic" role="img" aria-label="An example: a photo of a rice leaf with diamond shaped spots, gray in the middle with brown edges.">
+                    <div class="acs-ask-pic" role="img" aria-label="An example: a photo of a rice leaf with a spindle shaped spot, gray in the middle with a brown border.">
                         <div class="acs-ask-frame">
-                            {{-- A drawn photo, not a screen of the app: a rice leaf across a blurred field, with blast spots. --}}
-                            <svg viewBox="0 0 320 190" aria-hidden="true">
-                                <defs>
-                                    <linearGradient id="acsAskSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fb36a"/><stop offset=".55" stop-color="#4d7a2c"/><stop offset="1" stop-color="#2f5219"/></linearGradient>
-                                    <linearGradient id="acsAskLeaf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9ccc5a"/><stop offset=".5" stop-color="#76a83c"/><stop offset="1" stop-color="#5a8f2a"/></linearGradient>
-                                    <filter id="acsAskBlur"><feGaussianBlur stdDeviation="6"/></filter>
-                                </defs>
-                                <rect width="320" height="190" fill="url(#acsAskSky)"/>
-                                <g filter="url(#acsAskBlur)" opacity=".55" stroke="#2d5016" stroke-width="7" stroke-linecap="round">
-                                    <path d="M20 190 L60 40"/><path d="M70 190 L95 60"/><path d="M250 190 L290 50"/><path d="M290 190 L300 90"/><path d="M200 190 L230 80"/>
-                                </g>
-                                <path d="M-10 168 C 70 120, 170 70, 330 26 L 332 44 C 180 88, 80 140, -6 186 Z" fill="url(#acsAskLeaf)"/>
-                                <path d="M-8 177 C 80 128, 175 82, 331 35" fill="none" stroke="#c9e79a" stroke-width="1.6" opacity=".75"/>
-                                <g>
-                                    @foreach ([[66, 146, -28], [128, 114, -24], [182, 90, -21], [236, 70, -18], [282, 55, -17]] as $k => [$cx, $cy, $rot])
-                                        <g transform="rotate({{ $rot }} {{ $cx }} {{ $cy }})">
-                                            <ellipse cx="{{ $cx }}" cy="{{ $cy }}" rx="{{ $k % 2 ? 13 : 16 }}" ry="5.2" fill="#7a4a24"/>
-                                            <ellipse cx="{{ $cx }}" cy="{{ $cy }}" rx="{{ $k % 2 ? 8 : 10 }}" ry="2.6" fill="#d9d6cc"/>
-                                        </g>
-                                        <circle class="ring" style="--k: {{ $k }}" cx="{{ $cx }}" cy="{{ $cy }}" r="17"/>
-                                    @endforeach
-                                </g>
-                            </svg>
-                            <small>📷 From Lot 1</small>
+                            {{-- A real photo from the disease finder (2026-10-28, the owner: "use a real photo in the sample"): rice blast, public domain. --}}
+                            <img src="{{ asset('images/site/diseases/rice-blast.webp') }}" alt="" width="640" height="426" loading="lazy" decoding="async">
+                            <span class="acs-ask-focus"></span>
+                            <small>📷 From Lot 1 · photo: public domain</small>
                             <span class="acs-ask-scan"></span>
                             <span class="acs-ask-flash"></span>
                         </div>
-                        <span class="acs-ask-q">What are these spots on my palay?</span>
+                        <span class="acs-ask-q">What is this spot on my palay?</span>
                     </div>
                     <div class="acs-ask-anee">
                         <span class="acs-ask-face"><img class="p1" src="{{ $asFace('wave') }}" alt=""><img class="p2" src="{{ $asFace('thinking') }}" alt=""><img class="p3" src="{{ $asFace('thumbsup') }}" alt=""></span>
@@ -713,7 +859,7 @@
                             <div class="p2">
                                 <b>Anee is looking<span class="acs-ty-dots" aria-hidden="true"><i></i><i></i><i></i></span></b>
                                 <div class="acs-ask-why">
-                                    <span style="--k: 0">🔍 Diamond shaped spots</span><span style="--k: 1">⚪ Gray centers, brown edges</span>
+                                    <span style="--k: 0">🔍 Spindle shaped spot</span><span style="--k: 1">⚪ Gray centers, brown edges</span>
                                     <span style="--k: 2">🌫️ Humid nights this week</span><span style="--k: 3">🌾 Lot 1 is tillering</span>
                                 </div>
                             </div>
@@ -734,19 +880,43 @@
         <div class="stm-wrap">
             <span class="stm-kick" data-in>Every morning, before you wake up</span>
             <h2 class="stm-h2" data-in style="--d: 80ms">She weighs everything a good farm technician would, for every lot.</h2>
-            <div class="acs-orbit">
-                <div class="acs-ins">
-                    @foreach ($asInputs as $i => [$emo, $t, $l])
-                        <div class="acs-in" data-in style="--d: {{ 140 + $i * 70 }}ms"><span>{{ $emo }}</span><div><b>{{ $t }}</b><small>{{ $l }}</small></div></div>
+            <p class="stm-p" data-in style="--d: 140ms">While you sleep, Anee goes through your farm the way a good technician would: the weather, every lot's stage, your crew, the shed, your reports, the pests near you and the prices. Then she writes today's plan.</p>
+            @php
+                // What she checks, and what she finds this morning (an example).
+                $asChecks = [['🌦️', 'The forecast', 'Rain, wind and heat for your farm', 'Rain after 2 PM'], ['🌱', 'Each lot\'s stage', 'Counted from the day it was planted', 'Lot 1 is tillering'],
+                    ['👷', 'Your crew', 'Who works when, half days too', 'Juan is off today'], ['📦', 'The shed', 'What is in stock, what to buy', '2 bags of urea left'],
+                    ['📸', 'Your reports', 'Photos, notes and voice notes', 'Your photo: no pests'], ['🐛', 'Pests near you', 'What the season and the area bring', 'Stem borers nearby'],
+                    ['💰', 'Prices', 'When it pays to sell', 'Palay price steady']];
+            @endphp
+            <style>
+                @foreach ($asChecks as $k => $c)
+                    @php $t0 = 6 + $k * 10; $t1 = $t0 + 7; @endphp
+                    .stm-scene.is-in .acs-chk-r.r{{ $k }} { animation: acsChkR{{ $k }} var(--cy) infinite; }
+                    .stm-scene.is-in .acs-chk-r.r{{ $k }} .st i { animation: acsSpin .8s linear infinite, acsChkS{{ $k }} var(--cy) infinite; }
+                    .stm-scene.is-in .acs-chk-r.r{{ $k }} .st u, .stm-scene.is-in .acs-chk-r.r{{ $k }} small em.found { animation: acsChkO{{ $k }} var(--cy) infinite; }
+                    .stm-scene.is-in .acs-chk-r.r{{ $k }} small em:not(.found) { animation: acsChkL{{ $k }} var(--cy) infinite; }
+                    @keyframes acsChkR{{ $k }} { 0%, {{ $t0 - 1 }}% { opacity: .4; } {{ $t0 }}%, 96% { opacity: 1; } 100% { opacity: .4; } }
+                    @keyframes acsChkS{{ $k }} { 0%, {{ $t0 - 1 }}% { opacity: 0; } {{ $t0 }}%, {{ $t1 }}% { opacity: 1; } {{ $t1 + 1 }}%, 100% { opacity: 0; } }
+                    @keyframes acsChkO{{ $k }} { 0%, {{ $t1 }}% { opacity: 0; transform: scale(.6); } {{ $t1 + 2 }}%, 96% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+                    @keyframes acsChkL{{ $k }} { 0%, {{ $t1 }}% { opacity: 1; } {{ $t1 + 2 }}%, 96% { opacity: 0; } 100% { opacity: 1; } }
+                @endforeach
+            </style>
+            <div class="acs-card acs-chk" data-in style="--d: 200ms" role="img" aria-label="An example morning: Anee checks the forecast, each lot's stage, the crew, the shed, the reports, the pests near the farm and the prices, then writes three tasks for today.">
+                <div class="acs-chk-top"><img src="{{ $asFace('thinking') }}" alt=""><div><b>Anee's morning check</b><small><span>Checking your farm, from 4:00 AM</span><span>✓ Done at 5:30 AM</span></small></div></div>
+                <div class="acs-chk-bar"><i></i></div>
+                <div class="acs-chk-list">
+                    @foreach ($asChecks as $k => [$emo, $t, $l, $f])
+                        <div class="acs-chk-r r{{ $k }}"><span>{{ $emo }}</span><div><b>{{ $t }}</b><small><em>{{ $l }}</em><em class="found">{{ $f }}</em></small></div><span class="st"><i></i><u>✓</u></span></div>
                     @endforeach
                 </div>
-                <div class="acs-mid" data-in style="--d: 600ms" aria-hidden="true"><img src="{{ $asFace('thinking') }}" alt=""></div>
-                <div class="acs-out" data-in style="--d: 760ms">
-                    <small><img src="{{ $asFace('salute') }}" alt="" style="width:1.1rem;height:1.1rem">This morning's plan</small>
-                    <b>3 tasks, in the right order</b>
-                    <div class="acs-t">🧪 Lot 1: fertilize before 10 AM<em>Rain later</em></div>
-                    <div class="acs-t">🔍 Lot 2: check for stem borers</div>
-                    <div class="acs-t">🛒 Buy 2 bags of urea for Friday</div>
+                <div class="acs-chk-plan">
+                    <div class="acs-out">
+                        <small><img src="{{ $asFace('salute') }}" alt="" style="width:1.1rem;height:1.1rem">This morning's plan</small>
+                        <b>3 tasks, in the right order</b>
+                        <div class="acs-t">🧪 Lot 1: fertilize before 10 AM<em>Rain after 2 PM</em></div>
+                        <div class="acs-t">🔍 Lot 2: check for stem borers<em>Seen nearby</em></div>
+                        <div class="acs-t">🛒 Buy 2 bags of urea for Friday</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -756,7 +926,7 @@
     <section class="stm-scene" data-title="The season">
         <div class="stm-wrap">
             <span class="stm-kick" data-in>Your season at a glance</span>
-            <h2 class="stm-h2" data-in style="--d: 80ms">Every task on its day, timed to the crop's stage.</h2>
+            <h2 class="stm-h2" data-in style="--d: 80ms">Every task on its day: at the crop's stage, and when it works best for the least money.</h2>
             <div class="acs-card acs-gantt" data-in style="--d: 160ms" role="img" aria-label="An example rice season of 110 days: the growth stages, the fertilizer at planting, early tillering, panicle and booting, the checks every two weeks, the water and the harvest on day 110.">
                 <div class="acs-g-body">
                     <div class="acs-g-row"><span><i>🌱</i><b>Stages</b></span><div class="acs-g-track">
@@ -807,6 +977,7 @@
                     </div>
                 @endforeach
             </div>
+            <div class="acs-g-why" data-in style="--d: 220ms"><span>🎯 Fertilizer when the crop takes it up best</span><span>🌧️ Never just before rain that washes it away</span><span>🧪 Two sprays in one trip when they mix</span><span>💰 Only what the crop is short of</span></div>
             <p class="stm-fine" data-in style="--d: 260ms">An example rice season. Yours is written for your crop, your variety, your lots and your weather, and changes as the season does.</p>
         </div>
     </section>
@@ -814,6 +985,38 @@
     {{-- 6. Why it is worth it --}}
     <section class="stm-scene" data-title="Worth it">
         <div class="stm-wrap" data-in style="container-type: inline-size">
+            {{-- The same hectare, without Anee and with her (2026-10-28, the owner: "create an animated comparison ... spending 1500
+                 per lot for anee to manage your crop ... gives you this increase in potential yield, protection from disaster, etc.
+                 and potential added income ... what you do now without anee ... all the lost yield and disasters and lost income"). --}}
+            <div class="acs-vs">
+                <p class="stm-kick">Worth it?</p>
+                <h3 class="acs-vs-h">The same hectare of palay, two ways<small>An example, at ₱20 a kilo. A field that could give about 5.5 tons.</small></h3>
+                <div class="acs-vs-cols">
+                    <div class="acs-vs-c">
+                        <h4>😟 What you do now, without Anee</h4>
+                        <div class="acs-vs-bar"><i class="keep" style="--w: .673; --k: 0">3.7 t</i><i class="lost" style="--w: .109; --k: 1"></i><i class="lost" style="--w: .127; --k: 2"></i><i class="lost" style="--w: .091; --k: 3"></i></div>
+                        <div class="acs-vs-rows">
+                            <div style="--k: 1">⏰ Fertilizer late or at the wrong stage<b>−0.6 t</b></div>
+                            <div style="--k: 2">🐛 A pest seen too late<b>−0.7 t</b></div>
+                            <div style="--k: 3">🌀 A typhoon week with no plan<b>−0.5 t</b></div>
+                            <div style="--k: 4">🌧️ Sprays and fertilizer washed away<b>−₱2,500</b></div>
+                        </div>
+                        <div class="acs-vs-tot"><span>Harvest worth</span><b>₱<span data-count="71500">0</span></b></div>
+                    </div>
+                    <div class="acs-vs-c is-with">
+                        <h4><img src="{{ $asFace('thumbsup') }}" alt="">With Anee Auto<small>{{ number_format($asPrice) }} credits a lot</small></h4>
+                        <div class="acs-vs-bar"><i class="keep" style="--w: .673; --k: 0">3.7 t</i><i class="gain" style="--w: .109; --k: 1"></i><i class="gain" style="--w: .127; --k: 2"></i><i class="gain" style="--w: .091; --k: 3"></i></div>
+                        <div class="acs-vs-rows">
+                            <div style="--k: 1">🎯 Fertilizer on time, by stage<b>+0.6 t</b></div>
+                            <div style="--k: 2">🔍 Weekly scouting, an early spray<b>+0.7 t</b></div>
+                            <div style="--k: 3">🌀 Work moved around the storm<b>+0.5 t</b></div>
+                            <div style="--k: 4">💰 Nothing sprayed into the rain<b>+₱2,500</b></div>
+                        </div>
+                        <div class="acs-vs-tot"><span>Harvest worth</span><b>₱<span data-count="110000">0</span></b></div>
+                    </div>
+                </div>
+                <div class="acs-vs-net"><img src="{{ $asFace('cheer') }}" alt=""><p>That is about <b>₱<span data-count="38500">0</span></b> more from one hectare, for {{ number_format($asPrice) }} credits. <span class="text-xs opacity-80">An example, not a promise: your season depends on your field, the weather and the work done.</span></p></div>
+            </div>
             @include('auto.partials.worth')
         </div>
     </section>
