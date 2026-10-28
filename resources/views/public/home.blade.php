@@ -2685,9 +2685,10 @@
         transform: rotate(var(--rot)); animation: hpFilmFloat 6s ease-in-out infinite; }
     @media (max-width: 1279.98px) { .hp-anee-phone { margin-bottom: 6.2rem; } }
     /* Wide enough for room beside the phone: on its right side, low, the words' side kept clear. */
-    @media (min-width: 1280px) { .hp-anee-film { --rot: 5deg; top: 70%; left: calc(105% - 2.5rem); width: 11.5rem; margin: 0; } }
+    /* (2026-10-29, the owner: on the desktop, about 5% further left than it was.) */
+    @media (min-width: 1280px) { .hp-anee-film { --rot: 5deg; top: 70%; left: calc(100% - 2.5rem); width: 11.5rem; margin: 0; } }
     /* The full tenth further right once the screen has room for it beside the phone. */
-    @media (min-width: 1440px) { .hp-anee-film { left: calc(110% - 2.5rem); width: 12.75rem; } }
+    @media (min-width: 1440px) { .hp-anee-film { left: calc(105% - 2.5rem); width: 12.75rem; } }
     .hp-anee-film video { width: 100%; height: 100%; display: block; object-fit: cover; }
     .hp-anee-film-play { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: flex-start; padding: .55rem .6rem; border: 0; cursor: pointer;
         background: linear-gradient(180deg, transparent 45%, rgb(9 14 6 / .6)); transition: background .28s var(--hp-ease); }

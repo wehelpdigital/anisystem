@@ -155,17 +155,20 @@
         </div>
 
         {{-- Anee herself, as a short silent film (2026-10-29, the owner's: she smiles, winks, gets an idea under a
-             lightbulb and points), cut square for the circle (public/videos/site/anee-idea.mp4, from y 350 of the 1280
-             by 2274 original so the bulb shows at the top and her chin at the bottom). It plays while the hero is on
-             screen; when motion is not welcome only its first frame shows. --}}
+             lightbulb and points), the whole tall frame (public/videos/site/anee-idea.mp4, 540 by 960) set in the circle
+             at four fifths of its width so all of her head, the bulb and her shoulders show (the owner: the square cut
+             was "too zoomed in"); its sides fade into a circle painted the film's own sage green. It plays while the hero
+             is on screen; when motion is not welcome only its first frame shows. --}}
         @php
             $hbFilm = fn (string $f) => asset('videos/site/' . $f) . (is_file(public_path('videos/site/' . $f)) ? '?v=' . filemtime(public_path('videos/site/' . $f)) : '');
         @endphp
         <div class="hb-core">
             <span class="hb-halo" aria-hidden="true"></span>
-            <video class="hb-anee" muted loop playsinline preload="auto" poster="{{ $hbFilm('anee-idea.webp') }}" width="480" height="480" aria-hidden="true">
-                <source src="{{ $hbFilm('anee-idea.mp4') }}" type="video/mp4">
-            </video>
+            <span class="hb-face">
+                <video class="hb-anee" muted loop playsinline preload="auto" poster="{{ $hbFilm('anee-idea.webp') }}" width="540" height="960" aria-hidden="true">
+                    <source src="{{ $hbFilm('anee-idea.mp4') }}" type="video/mp4">
+                </video>
+            </span>
         </div>
     </div>
     <div class="hb-cards">
@@ -210,8 +213,11 @@
     .hb-core { position: absolute; left: 50%; top: 50%; z-index: 5; width: 36%; aspect-ratio: 1; transform: translate(-50%, -50%); }
     .hb-halo { position: absolute; inset: -12%; border-radius: 999px; opacity: .8; filter: blur(10px); animation: hbSpin 6s linear infinite;
         background: conic-gradient(from 0deg, rgb(245 197 24 / 0), rgb(245 197 24 / .75), rgb(163 230 53 / .55), rgb(245 197 24 / 0) 70%); }
-    .hb-core .hb-anee { position: relative; display: block; width: 100%; height: 100%; border-radius: 999px; object-fit: cover; background: #a9c79a;
+    .hb-face { position: relative; display: block; width: 100%; height: 100%; border-radius: 999px; overflow: hidden; isolation: isolate;
+        background: radial-gradient(70% 60% at 50% 55%, #adc89e, #97bb88);
         box-shadow: 0 0 0 4px #fff, 0 0 0 8px #f5c518, 0 30px 60px -20px rgb(0 0 0 / .8); }
+    .hb-face .hb-anee { position: absolute; left: 10%; top: -17.5%; width: 80%; height: auto; aspect-ratio: 540 / 960; display: block;
+        -webkit-mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
     /* A benefit's layer: seen while its turn lasts. Each element rests in its finished state; .is-play runs it in. */
     .hb-ph { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; pointer-events: none; }
     .hb-ph.is-on { opacity: 1; }
