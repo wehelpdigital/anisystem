@@ -156,6 +156,13 @@
         letter-spacing: .05em; text-transform: uppercase; color: #5b4300; background: #fde68a; }
     .fz-short { font-size: .86rem; font-weight: 700; color: #2f5219; }
     .fz-what { font-size: .84rem; line-height: 1.55; color: #4b5563; }
+    .fz-helps { margin-top: .5rem; border-radius: .8rem; background: #fffbea; box-shadow: inset 0 0 0 1px #f3e2a6; }
+    .fz-helps summary { cursor: pointer; padding: .5rem .7rem; font-size: .76rem; font-weight: 800; color: #8a6400; list-style: none; }
+    .fz-helps summary::-webkit-details-marker { display: none; }
+    .fz-helps summary::after { content: '+'; float: right; font-weight: 900; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .fz-helps[open] summary::after { transform: rotate(45deg); }
+    .fz-helps ul { display: grid; gap: .3rem; margin: 0; padding: 0 .7rem .65rem 1.6rem; font-size: .78rem; line-height: 1.45; color: #4b5563; }
+    .fz-helps b { color: #1f2937; }
     /* The plan a tool comes with, its dot in the plan's colour (2026-10-18). */
     .fz-plan { display: flex; align-items: flex-start; gap: .45rem; font-size: .76rem; font-weight: 800; line-height: 1.35; color: #2f5219; }
     .fz-plan i { flex: none; width: .55rem; height: .55rem; margin-top: .28rem; border-radius: 999px; background: #86b556; box-shadow: 0 0 0 3px rgb(134 181 86 / .2); }
@@ -346,6 +353,9 @@
                                     <h4>{{ $it['name'] }}@if ($it['anee'])<i class="fz-anee">Anee</i>@endif</h4>
                                     <p class="fz-short">{{ $it['short'] }}</p>
                                     <p class="fz-what">{{ $it['what'] }}</p>
+                                    @if (! empty($it['helps']))
+                                        <details class="fz-helps"><summary>How it helps you and your farm</summary><ul>@foreach ($it['helps'] as $h)<li>{!! \App\Support\HowItWorks::helpHtml($h) !!}</li>@endforeach</ul></details>
+                                    @endif
                                     {{-- The plan it comes with, read off config/tiers.php (2026-10-18). --}}
                                     <p class="fz-plan is-{{ $it['plan']['tier'] }}"><i aria-hidden="true"></i><span>{{ $it['plan']['says'] }}@if ($it['plan']['more'])<small>{{ $it['plan']['more'] }}</small>@endif</span></p>
                                     @if ($it['key'] === 'auto')

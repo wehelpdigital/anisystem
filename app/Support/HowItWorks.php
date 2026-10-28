@@ -577,6 +577,7 @@ class HowItWorks
                 }
                 $it['video'] = self::video($it['key']);
                 $it['plan'] = self::planOf($it['key']);
+                $it['helps'] = self::helps($it['key']);
             }
             unset($it);
         }
@@ -740,6 +741,62 @@ class HowItWorks
             asset('images/site/app/how/' . $key . '.webp') . $v,
             is_file($small) ? asset('images/site/app/how/' . $key . '-480.webp') . $v . ' 480w, ' . asset('images/site/app/how/' . $key . '.webp') . $v . ' 540w' : null,
         ];
+    }
+
+    /**
+     * How a tool helps the farmer and the farm, four points (2026-10-28, the owner: "in all pages explaining each
+     * feature, also add a section ... about how it helps you and your farm"). A tool with its own feature page says it
+     * there (the page's "How ... helps you and your farm" list, read by helps()); these are the tools with no page.
+     * A point opens with its lead in **bold**.
+     */
+    private const HELPS = [
+        'globalLots' => ['**Answer once.** Each field\'s place, size, soil and water are asked one time, and every analysis reads them.', '**Advice that fits each field.** Anee reads the lot itself, so a sandy lot and a clay lot get different advice.', '**Records that stay true.** A reminder every six months keeps the answers current.', '**Every field in one list.** All your lots, mapped and measured, in one place.'],
+        'varietyFinder' => ['**Know a variety before you buy seed.** Days to harvest, yield and what it resists, side by side.', '**Filter by what your farm needs.** Short duration, drought or flood tolerance, resistance to the pests you have.', '**Fewer wrong seed choices.** A seed that does not fit your season can cost a whole harvest.', '**One finder for your crops.** Rice, corn, vegetables, root crops and fruit trees.'],
+        'seedCount' => ['**Buy the right amount of seed.** The seeds or kilos your spacing needs, for a hectare or your lot.', '**A full stand at harvest.** Germination and thinning are counted, so the field is not thin.', '**No crowding.** A warning when the spacing is too tight to carry a good yield.', '**Start from what you have.** Put in your seeds and see the spacing they fill.'],
+        'howToPlant' => ['**Learn the proven way.** How farmers here plant each crop, step by step, with the days.', '**See what to change for more yield.** Where better practice adds to the harvest.', '**Start your own plan fast.** Send it to the Protocol Builder in one tap.', '**Every crop in one place.** Field crops, vegetables and fruit trees.'],
+        'globalWorkers' => ['**One crew list for every season.** Add a worker once and put them on any season in a tap.', '**Pay that adds up.** Rates, whole days and half days follow each worker.', '**Plan around days off.** Who can come, and when, is known before the work is given out.', '**Logins from the same list.** Give a worker their own login from here.'],
+        'share' => ['**Everyone knows the plan.** Share the season, a day or a task as a link anyone can open.', '**No login needed.** A buyer, a cofarmer or a worker opens it on any phone.', '**Tomorrow\'s work, sent tonight.** Email today\'s or tomorrow\'s plan to your workers.', '**Fewer calls and texts.** The plan answers what people would phone you about.'],
+        'cash' => ['**Money ready before the work.** See the cash a day or a stretch of days will need.', '**No surprises on payday.** Wages, materials and stock to buy, line by line.', '**Plan your withdrawals.** Know how much to bring to the field, and when.', '**Spending you can follow.** Each line comes from the plan and the people on it.'],
+        'daycount' => ['**The right gap between sprays.** See the days between two applications in a tap.', '**The crop\'s age on any day.** Each lot\'s day count at both ends.', '**Plan the harvest.** Count the days left before harvest from any task.', '**No calendar math.** Days and weeks, counted for you.'],
+        'tags' => ['**Find anything in one tap.** A tag brings up every task, note, photo and contact that wears it.', '**Your own words.** Name things the way you think of them: Buyer, Irrigation, Lot 2.', '**A thread across seasons.** Everything about a buyer or a problem, together.', '**A cleaner board.** Filter the board by a tag to see only what matters now.'],
+        'trash' => ['**Mistakes are not final.** Anything deleted waits 30 days.', '**Put it back whole.** A season or task comes back with what it held.', '**Peace of mind for the team.** A worker\'s slip can be undone.', '**Empty it when you are sure.** Clear it yourself, or let it clear after 30 days.'],
+        'news' => ['**Know what moves your prices.** Imports, programs and weather news, gathered every few days.', '**What it means for your farm.** Each story ends with what to do about it.', '**In Taglish and in English.** Read it the way you like.', '**Less time searching.** The farm news of the week in one place.'],
+        'diseaseFinder' => ['**Name the disease before you spray.** Match the signs on your crop to the diseases that fit.', '**What to do first.** The steps before any spray, so no treatment is wasted.', '**Spray what works.** Active ingredients by group, with products sold here.', '**Keep it from coming back.** Prevention for the next season.'],
+        'weedHelper' => ['**Weed control for your crop\'s age.** What works now, not what worked last month.', '**The right herbicide, or none.** Active ingredients by group, or hand weeding when no spray fits.', '**Safe for the crop.** The advice fits the crop\'s age, so the herbicide does not hurt it.', '**Fewer weeds next time.** Prevention steps for the next season.'],
+        'compat' => ['**Mix sprays without damage.** See which products go on together and which do not.', '**One trip instead of two.** Products that mix go in one tank, saving labor and fuel.', '**Pour in the right order.** The mixing order and a jar test keep the tank from clumping.', '**The right strength.** How strong the spray is for your crop and its age.'],
+        'bilad' => ['**Sell the better way.** See if selling wet or drying first leaves you more money.', '**Every cost counted.** The harvester\'s share, the drying and the weight it takes out.', '**Know your break even.** The dry price where drying starts to pay.', '**An answer in minutes.** Put in your sacks and prices and see.'],
+        'hatian' => ['**A fair share, counted right.** The farm manager\'s share from the whole harvest, as agreed.', '**Fewer disputes.** Everyone sees how the share was counted.', '**Home food set aside.** Your family\'s sacks come out of your own share.', '**Paid in sacks or in money.** Both ways, at your price.'],
+        'market' => ['**Sell in the best months.** See when your crop sells highest and when prices fall.', '**Plant for a better price.** Time the harvest away from the glut months.', '**Know if storing pays.** See if keeping the harvest a while adds to the price.', '**Understand the swings.** The imports and bans that moved the price, explained.'],
+        'auto' => ['**No more figuring out what to do each day.** Anee plans the season and tells you every morning.', '**The analyses done for you.** Planting date, variety ranking and fertilizer, worked out for your field.', '**A plan that keeps up with the weather.** Rain or a typhoon? She moves the work to the best day.', '**More from each hectare.** Every bag and spray at its moment, with fewer losses.'],
+    ];
+
+    /** How a tool helps the farmer and the farm: its feature page's own points, else HELPS. */
+    public static function helps(string $key): array
+    {
+        static $read = [];
+        if (array_key_exists($key, $read)) {
+            return $read[$key];
+        }
+        $out = self::HELPS[$key] ?? [];
+        $slug = self::PAGES[$key] ?? null;
+        $file = $slug ? database_path('site-pages/features/' . $slug . '.json') : null;
+        if ($file && is_file($file)) {
+            $blocks = (array) ((json_decode((string) file_get_contents($file), true) ?: [])['blocks'] ?? []);
+            foreach ($blocks as $i => $b) {
+                if (($b['type'] ?? '') === 'heading' && str_contains((string) ($b['text'] ?? ''), 'helps you and your farm') && (($blocks[$i + 1]['type'] ?? '') === 'list')) {
+                    $out = array_values((array) $blocks[$i + 1]['items']);
+                    break;
+                }
+            }
+        }
+
+        return $read[$key] = $out;
+    }
+
+    /** A help point as HTML: escaped, its **lead** in bold. */
+    public static function helpHtml(string $s): string
+    {
+        return preg_replace('/\*\*(.+?)\*\*/', '<b>$1</b>', e($s));
     }
 
     /** The crop tables' words, said without dashes, the way the site writes. */

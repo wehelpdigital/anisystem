@@ -35,7 +35,7 @@
             }
             $shot = HowItWorks::shot($it['key']);
             $link = $htLink($it);
-            $htTools[$it['key']] = ['name' => $it['name'], 'short' => $it['short'], 'what' => HowItWorks::plain($it['what']), 'gets' => array_map([HowItWorks::class, 'plain'], $it['gets']),
+            $htTools[$it['key']] = ['name' => $it['name'], 'short' => $it['short'], 'what' => HowItWorks::plain($it['what']), 'gets' => array_map([HowItWorks::class, 'plain'], $it['gets']), 'helps' => array_map([HowItWorks::class, 'helpHtml'], $it['helps'] ?? []),
                 'anee' => (bool) $it['anee'], 'icon' => asset('images/' . $it['icon']), 'shot' => $shot[0] ?? null, 'plan' => $it['plan']['says'] ?? '', 'more' => $it['plan']['more'] ?? null,
                 'href' => $link[0] ?? null, 'go' => $link[1] ?? null, 'step' => $si];
             $htPlans[$it['plan']['tier'] ?? 'libre'] = ($htPlans[$it['plan']['tier'] ?? 'libre'] ?? 0) + 1;
@@ -188,6 +188,11 @@
     .hwt-sh-h small { display: block; margin-top: .1rem; font-size: .76rem; font-weight: 700; color: var(--leaf); }
     .hwt-sh-p { margin-top: .8rem; font-size: .9rem; line-height: 1.6; color: var(--ink); }
     .hwt-sh-g { display: grid; gap: .4rem; margin-top: .8rem; }
+    .hwt-sh-help { display: grid; gap: .35rem; margin-top: .9rem; padding: .75rem .85rem; border-radius: 1rem; background: rgb(245 197 24 / .08); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .3); }
+    .hwt-sh-help > b { font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+    .hwt-sh-help div { position: relative; padding-left: .9rem; font-size: .82rem; line-height: 1.45; color: var(--mute); }
+    .hwt-sh-help div::before { content: ''; position: absolute; left: 0; top: .5rem; width: .38rem; height: .38rem; border-radius: 999px; background: var(--gold); }
+    .hwt-sh-help div b { color: #fff; }
     .hwt-sh-g div { display: flex; gap: .5rem; align-items: flex-start; font-size: .84rem; line-height: 1.45; color: var(--mute); }
     .hwt-sh-g div::before { content: '✓'; flex: none; width: 1.2rem; height: 1.2rem; border-radius: 999px; display: grid; place-items: center; font-size: .7rem; font-weight: 900; color: #1d330d; background: var(--leaf); }
     .hwt-sh-plan { margin-top: .9rem; font-size: .76rem; font-weight: 700; color: var(--mute); }

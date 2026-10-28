@@ -766,6 +766,11 @@
     .hw-item.is-open .hw-more-in { opacity: 1; transform: none; transition-delay: .06s; }
     .hw-more-in p { font-size: .87rem; line-height: 1.6; color: #d9e5cd; }
     .hw-gets { margin-top: .65rem; display: grid; gap: .35rem; }
+    .hw-helps { display: grid; gap: .35rem; margin-top: .8rem; padding: .7rem .8rem; border-radius: .9rem; background: rgb(245 197 24 / .08); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .3); }
+    .hw-helps-h { font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--acc); }
+    .hw-helps-i { position: relative; padding-left: .9rem; font-size: .8rem; line-height: 1.45; color: var(--mute); }
+    .hw-helps-i::before { content: ''; position: absolute; left: 0; top: .5rem; width: .38rem; height: .38rem; border-radius: 999px; background: var(--acc); }
+    .hw-helps-i b { color: var(--ink); }
     .hw-gets li { display: flex; gap: .5rem; font-size: .83rem; line-height: 1.45; color: var(--ink); }
     .hw-gets svg { flex: none; width: 1rem; height: 1rem; margin-top: .12rem; color: var(--leaf); }
     /* The plan a tool comes with, its dot in the plan's colour (2026-10-18). */
@@ -1230,6 +1235,10 @@
                                             <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $g }}</li>
                                         @endforeach
                                     </ul>
+                                    {{-- How it helps (2026-10-28, the owner): the tool's feature page's own points. A div, so the film window's p rule leaves it be. --}}
+                                    @if (! empty($it['helps']))
+                                        <div class="hw-helps"><div class="hw-helps-h">How it helps you and your farm</div>@foreach ($it['helps'] as $h)<div class="hw-helps-i">{!! \App\Support\HowItWorks::helpHtml($h) !!}</div>@endforeach</div>
+                                    @endif
                                     {{-- The plan it comes with, read off config/tiers.php (2026-10-18). A div, so the
                                          film modal's paragraph rule leaves it be. --}}
                                     <div class="hw-plan is-{{ $it['plan']['tier'] }}"><i aria-hidden="true"></i><span>{{ $it['plan']['says'] }}@if ($it['plan']['more'])<small>{{ $it['plan']['more'] }}</small>@endif</span></div>

@@ -41,7 +41,7 @@
                         <span class="sg-fade" aria-hidden="true"></span>
                     </div>
                 </div>
-                <figcaption><span aria-hidden="true">📸</span> A real screenshot from a Facebook group. Names and faces are blurred.</figcaption>
+                <figcaption>A real screenshot from a Facebook group. Names and faces are blurred.</figcaption>
             </figure>
 
             {{-- What the comments said, counted. --}}
@@ -61,13 +61,14 @@
                     <span><b>4</b> said spray now</span>
                     <span class="is-red"><b>0</b> asked a question</span>
                 </div>
+                {{-- Why following them can end badly: three cards, each a way the harvest is lost (2026-10-28, the owner: "make it look better"). --}}
                 <div class="sg-risk" data-sg style="--d: 1450ms">
-                    <p class="sg-k">Why that can end in disaster</p>
-                    <ul>
-                        <li><span>💸</span>Spray for a pest that is not there, and the money is gone while the real cause keeps going.</li>
-                        <li><span>🍄</span>Neck rot is a disease: no insecticide touches it. A rice bug and a stem borer each need their own timing.</li>
-                        <li><span>🕷️</span>Spraying just in case kills the spiders and wasps that eat the pests, and the next attack hits harder.</li>
-                    </ul>
+                    <p class="sg-risk-h"><span aria-hidden="true">⚠️</span>Why that can end in disaster</p>
+                    <div class="sg-risk-g">
+                        <div class="sg-rk" style="--k: 0"><span class="sg-rk-i" aria-hidden="true">💸</span><div><b>Money sprayed away</b><p>Spray for a pest that is not there and the money is gone, while the real cause keeps eating the crop.</p></div></div>
+                        <div class="sg-rk" style="--k: 1"><span class="sg-rk-i" aria-hidden="true">🍄</span><div><b>The wrong medicine</b><p>Neck rot is a disease: no insecticide touches it. A rice bug and a stem borer each need their own timing.</p></div></div>
+                        <div class="sg-rk" style="--k: 2"><span class="sg-rk-i" aria-hidden="true">🕷️</span><div><b>The field's friends killed</b><p>Spraying just in case kills the spiders and wasps that eat the pests, so the next attack hits harder.</p></div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -146,10 +147,23 @@
     .sg-tally span { display: grid; gap: .1rem; justify-items: center; padding: .7rem .4rem; border-radius: 1rem; text-align: center; font-size: .72rem; font-weight: 700; color: #6b7280; background: #fff; box-shadow: 0 0 0 1px #f1e6dc; }
     .sg-tally b { font-family: var(--font-heading); font-size: 1.6rem; line-height: 1; color: #1f2937; }
     .sg-tally .is-red b { color: #dc2626; }
-    .sg-risk { margin-top: 1.2rem; padding: 1rem; border-radius: 1.2rem; background: #fef2f2; box-shadow: inset 0 0 0 1px #fecaca; }
-    .sg-risk ul { display: grid; gap: .55rem; margin: .6rem 0 0; padding: 0; list-style: none; }
-    .sg-risk li { display: flex; gap: .55rem; font-size: .88rem; line-height: 1.5; color: #7f1d1d; }
-    .sg-risk li span { flex: none; }
+    /* Why it can end in disaster: three cards, a red edge, each rising in turn. */
+    .sg-risk { margin-top: 1.4rem; }
+    .sg-risk-h { display: flex; align-items: center; gap: .5rem; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #991b1b; }
+    .sg-risk-h span { display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: .7rem; font-size: 1rem; background: #fee2e2; }
+    .sg-risk-g { display: grid; gap: .55rem; margin-top: .75rem; }
+    .sg-rk { position: relative; display: flex; gap: .8rem; align-items: flex-start; padding: .85rem .95rem .85rem 1.1rem; border-radius: 1rem; overflow: hidden;
+        background: linear-gradient(110deg, #fff5f5, #fff 70%); box-shadow: 0 1px 0 rgb(0 0 0 / .03), 0 0 0 1px #fde0e0, 0 14px 28px -24px rgb(153 27 27 / .55);
+        transition: transform .3s var(--e), box-shadow .3s var(--e); }
+    .sg-rk::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: linear-gradient(180deg, #f87171, #b91c1c); }
+    .sg-rk:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgb(0 0 0 / .03), 0 0 0 1px #fca5a5, 0 18px 32px -22px rgb(153 27 27 / .6); }
+    .sg-rk-i { flex: none; width: 2.6rem; height: 2.6rem; border-radius: 999px; display: grid; place-items: center; font-size: 1.3rem; background: #fee2e2; box-shadow: inset 0 0 0 1px #fecaca; }
+    .sg-rk b { display: block; font-size: .95rem; font-weight: 800; color: #7f1d1d; }
+    .sg-rk p { margin: .2rem 0 0; font-size: .84rem; line-height: 1.5; color: #57534e; }
+    .sg.is-in .sg-rk { animation: sgRk .55s var(--e) both; animation-delay: calc(1.55s + var(--k) * .15s); }
+    @keyframes sgRk { from { opacity: 0; transform: translateX(-14px); } }
+    .sg.is-live .sg-rk-i { animation: sgRkPulse 3s ease-in-out infinite; animation-delay: calc(var(--k) * .5s); }
+    @keyframes sgRkPulse { 50% { transform: scale(1.08); box-shadow: inset 0 0 0 1px #fecaca, 0 0 0 6px rgb(254 202 202 / .45); } }
 
     /* The point. */
     .sg-verdict { display: flex; gap: .9rem; align-items: flex-start; margin-top: 2.4rem; padding: 1.2rem 1.3rem; border-radius: 1.3rem; color: #fff; background: linear-gradient(135deg, #b91c1c, #7f1d1d); box-shadow: 0 24px 50px -26px rgb(127 29 29 / .8); }
@@ -178,7 +192,7 @@
     .sg-fine { margin: 1rem auto 0; max-width: 46rem; text-align: center; font-size: .74rem; line-height: 1.5; color: #9ca3af; }
     @media (prefers-reduced-motion: reduce) {
         .sg [data-sg] { opacity: 1; transform: none; transition: none; }
-        .sg .sg-roll, .sg .sg-guesses li, .sg .sg-v-i { animation: none !important; }
+        .sg .sg-roll, .sg .sg-guesses li, .sg .sg-v-i, .sg .sg-rk, .sg .sg-rk-i { animation: none !important; }
         .sg-g-bar { transform: none; transition: none; }
         .sg-comments { height: auto; max-height: 30rem; overflow-y: auto; }
     }
