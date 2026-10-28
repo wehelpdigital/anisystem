@@ -27,7 +27,7 @@
                 </div>
                 <figure class="ff-inset">
                     <img src="{{ asset('images/site/photos/lodged-palay-600.webp') }}" alt="A palay field lodged flat before harvest" width="600" height="450" loading="lazy">
-                    <figcaption><b>Traditional farming without Anee</b>Lodged flat before harvest</figcaption>
+                    <figcaption><b>Traditional Farming</b>Lodged flat before harvest</figcaption>
                 </figure>
             </div>
             <div class="ff-copy reveal" style="--reveal-delay: .1s">
