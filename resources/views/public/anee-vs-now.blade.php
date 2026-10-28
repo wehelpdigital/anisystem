@@ -356,12 +356,19 @@
     .avn-gain-row.is-get p span { color: #fff; }
     .avn-gain-row.is-get p b { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--hp-sun); }
     .avn-gain-t { position: relative; display: block; height: .7rem; margin-top: .35rem; border-radius: 999px; background: rgb(255 255 255 / .07); overflow: hidden; }
-    .avn-gain-row.is-get .avn-gain-t { height: 1rem; }
+    .avn-gain-row.is-get .avn-gain-t { height: 1.5rem; }
+    .avn-gain-row.is-get p span strong { color: var(--hp-sun); font-weight: 900; }
+    .avn-gain-t.is-harvest { display: flex; gap: 2px; background: rgb(255 255 255 / .05); }
+    .avn-gain-t.is-harvest i { position: relative; display: grid; place-items: center; height: 100%; min-width: 0; }
+    .avn-gain-t.is-harvest i.is-keep { background: #8fc96a; border-radius: 999px 0 0 999px; }
+    .avn-gain-t.is-harvest i.is-more { transition-delay: 1s; border-radius: 0 999px 999px 0; }
+    .avn-gain-t.is-harvest em { font-style: normal; font-size: .7rem; font-weight: 900; color: #14210c; white-space: nowrap; }
+    .avn-gain-sub { margin-top: .4rem; font-size: .78rem !important; font-weight: 600 !important; color: rgb(255 255 255 / .65) !important; }
     .avn-gain-t i { position: absolute; top: 0; bottom: 0; left: 0; width: 0; border-radius: 999px; transition: width 1.2s var(--hp-ease); }
     .avn-gain-row.is-spend i { background: linear-gradient(90deg, #a3e635, #4d7c0f); min-width: 4px; }
-    .avn-gain-row.is-get i { transition-delay: .25s; background: linear-gradient(90deg, #fde68a, #f5c518 60%, #e6ad12);
+    .avn-gain-row.is-get i.is-more { background: linear-gradient(90deg, #fde68a, #f5c518 60%, #e6ad12);
         box-shadow: 0 0 16px rgb(245 197 24 / .6); }
-    .avn-gain-row.is-get i::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / .55) 50%, transparent 65%) no-repeat;
+    .avn-gain-row.is-get i.is-more::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / .55) 50%, transparent 65%) no-repeat;
         background-size: 40% 100%; animation: avnGainShine 2.6s ease-in-out infinite; }
     @keyframes avnGainShine { from { background-position: -60% 0; } to { background-position: 160% 0; } }
     .avn-gain-sum { display: flex; align-items: center; gap: .9rem; margin-top: 1rem; }
@@ -473,7 +480,7 @@
         .avn-job-in, .avn-face, .avn-switch::before, .avn-switch button, .avn-dock, .avn-bar-t i, .avn-bar-t b,
         .avn-meter-bar b, .avn-hour-c p, .avn-hour-t, .avn-qa .a, .avn-qa button svg, .avn-chip, .avn-pack, .avn-tool, .avn-turn, .avn-ba-tag, .avn-ba-say { transition: none !important; }
         .avn-ba.is-hint .avn-ba-knob { animation: none; }
-        .avn-gain-t i { transition: none !important; } .avn-gain-row.is-get i::after { animation: none; }
+        .avn-gain-t i { transition: none !important; } .avn-gain-row.is-get i.is-more::after { animation: none; }
         /* No turning over: the side shown simply changes. */
         .avn-face.is-anee, .avn-job.is-anee .avn-job-in { transform: none; }
         .avn-job:not(.is-anee) .avn-face.is-anee, .avn-job.is-anee .avn-face.is-now { visibility: hidden; }
@@ -636,7 +643,8 @@
                     </div>
                     <div class="avn-gain-row is-get">
                         <p><span data-g-tons></span><b data-g-get></b></p>
-                        <span class="avn-gain-t" aria-hidden="true"><i></i></span>
+                        <span class="avn-gain-t is-harvest" aria-hidden="true"><i class="is-keep"><em data-g-keep></em></i><i class="is-more"><em data-g-more></em></i></span>
+                        <p class="avn-gain-sub" data-g-sub></p>
                     </div>
                     <div class="avn-gain-sum">
                         <big data-g-times>0×</big>
@@ -647,7 +655,7 @@
                     <big data-times>0×</big>
                     <p data-verdict></p>
                 </div>
-                <p class="avn-note">The losses are the "up to" ranges from published Philippine rice loss estimates, on a hectare grossing {{ $money(60000) }} to {{ $money(100000) }} a season; the lighter part of each bar is the top of its range. They overlap, so they are not added up. Your farm's numbers differ, which is the point. The gain is an example, not a promise: a hectare that could give about {{ $gainPotential }} tons, about {{ $gainKeep }} the usual way, so up to {{ $gainPerSeason }} tons more a season with every step on time, at {{ $money($gainKilo) }} a kilo and two seasons a year. Anee's credits are an estimate for one lot and two seasons a year: When to Plant, Variety Ranking and a Crop Protocol each season, and about two questions a week, half with a photo ({{ number_format($yearCredits) }} credits); every question and analysis shows its price before it runs.</p>
+                <p class="avn-note">The losses are the "up to" ranges from published Philippine rice loss estimates, on a hectare grossing {{ $money(60000) }} to {{ $money(100000) }} a season; the lighter part of each bar is the top of its range. They overlap, so they are not added up. Your farm's numbers differ, which is the point. The gain is an example, not a promise: a hectare that could give about {{ $gainPotential }} tons a season, about {{ $gainKeep }} the usual way, so up to {{ $gainPerSeason }} tons more with every step on time, at {{ $money($gainKilo) }} a kilo, counted for one season. Anee's credits are an estimate for one lot and two seasons a year: When to Plant, Variety Ranking and a Crop Protocol each season, and about two questions a week, half with a photo ({{ number_format($yearCredits) }} credits); every question and analysis shows its price before it runs.</p>
             </div>
         </div>
     </section>
@@ -914,7 +922,7 @@
     // ---- The bars: what guessing can take from your hectares, beside a year of a plan. ----
     const PLANS = @json($planJs);
     const YEAR_CREDITS = {{ $yearCredits }};
-    const GAIN = { perSeason: {{ $gainPerSeason }}, kilo: {{ $gainKilo }}, seasons: 2 };
+    const GAIN = { potential: {{ $gainPotential }}, keep: {{ $gainKeep }}, perSeason: {{ $gainPerSeason }}, kilo: {{ $gainKilo }} };
     const leaks = document.getElementById('avnLeaks');
     if (leaks && PLANS.length) {
         const ha = document.getElementById('avnHa');
@@ -944,19 +952,25 @@
                     ? ' + about <b>' + fmt(p.creditCost) + '</b> for Anee\'s credits (about ' + n(p.buy) + ' credits' + (p.included ? ' beyond the ' + n(p.included) + ' the plan brings' : '') + ')'
                     : '. The ' + n(p.included) + ' credits it brings a year cover the estimate of ' + n(YEAR_CREDITS)) + '.';
             pr.querySelector('b').style.width = (shown ? Math.max(.6, year / top * 100) : 0) + '%';
-            // What it can give back: up to the example's tons a season, for two seasons, on these hectares.
+            // What it can give back: one season's harvest, about 5.4 t a hectare the usual way and up to 8 t with Anee.
             const gb = document.getElementById('avnGain');
             if (gb) {
-                const tons = GAIN.perSeason * GAIN.seasons * h, get = tons * 1000 * GAIN.kilo, ratio = get / year;
+                const t1 = (v) => (Math.round(v * 10) / 10).toLocaleString('en-PH');
+                const keep = GAIN.keep * h, full = GAIN.potential * h, more = GAIN.perSeason * h;
+                const get = more * 1000 * GAIN.kilo, ratio = get / year;
                 const ha2 = (h % 1 ? h.toFixed(1) : h) + ' ha';
                 gb.querySelector('[data-g-spend]').textContent = fmt(year);
-                gb.querySelector('[data-g-tons]').textContent = 'What you could gain in a year: up to ' + (tons % 1 ? tons.toFixed(1) : tons) + ' t more palay';
-                count(gb.querySelector('[data-g-get]'), shown ? get : 0, (v) => fmt(v));
+                gb.querySelector('[data-g-tons]').innerHTML = 'Your harvest, one season: up to <strong>' + t1(full) + ' t</strong> instead of about ' + t1(keep) + ' t';
+                count(gb.querySelector('[data-g-get]'), shown ? get : 0, (v) => '+' + fmt(v));
+                gb.querySelector('[data-g-keep]').textContent = t1(keep) + ' t';
+                gb.querySelector('[data-g-more]').textContent = '+' + t1(more) + ' t';
+                gb.querySelector('[data-g-sub]').textContent = 'That is ' + t1(more) + ' t more palay on your ' + ha2 + ', worth about ' + fmt(get) + ' at ' + fmt(GAIN.kilo) + ' a kilo.';
                 gb.querySelector('.is-spend i').style.width = (shown ? Math.max(1.2, year / get * 100) : 0) + '%';
-                gb.querySelector('.is-get i').style.width = (shown ? 100 : 0) + '%';
+                gb.querySelector('.is-keep').style.width = (shown ? GAIN.keep / GAIN.potential * 100 : 0) + '%';
+                gb.querySelector('.is-more').style.width = (shown ? GAIN.perSeason / GAIN.potential * 100 : 0) + '%';
                 count(gb.querySelector('[data-g-times]'), shown ? ratio : 0, (v) => 'up to ' + Math.round(v) + '×');
-                gb.querySelector('[data-g-say]').innerHTML = 'On your ' + ha2 + ', every <b>' + fmt(1) + '</b> spent on <b>' + p.name + '</b> and Anee could come back as up to <b>'
-                    + fmt(ratio) + '</b> of extra harvest. It is not only cheap: it is <b>more palay</b>, up to ' + GAIN.perSeason + ' t a hectare each season.';
+                gb.querySelector('[data-g-say]').innerHTML = 'On your ' + ha2 + ', one season\'s extra harvest alone could be worth up to <b>' + Math.round(ratio) + ' times</b> a whole year of <b>'
+                    + p.name + '</b> and Anee\'s credits. It is not only cheap: it is <b>more palay</b>, a harvest of up to ' + GAIN.potential + ' t a hectare.';
             }
             const least = Math.min(...rows.map((r) => Number(r.dataset.n))) * 600 * h;
             const times = least / year;
