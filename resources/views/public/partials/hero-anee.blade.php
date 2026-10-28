@@ -19,7 +19,15 @@
      bar that fills while its turn lasts, in the benefit's own color. Played only while on screen; the first benefit at
      rest when motion is not welcome (every element's resting style is its finished state, the animations only bring it
      there). The circle leans toward the pointer (the hero's data-tilt). The drawings (the sack, the rice plant) are
-     symbols drawn once, at the top. --}}
+     symbols drawn once, at the top.
+
+     Beside it, where the screen has room (wide screens, and tablets held upright), a phone floats with the real Anee
+     chat playing on it (public/videos/site/anee-chat-mini.mp4, a small cut of videos/how/hero-chat.mp4), and a gold
+     line runs from the phone into the picture, light flowing along it and pinging where it lands (2026-10-29, the
+     owner: "a floating phone with a screenshot recording of anee then has an animated line going to the circle"). The
+     line lands on the picture's edge between the left nutrient orbs; the script lays it from the boxes and again
+     whenever the hero changes size. On phones and on the narrow two column layout there is no room beside the circle,
+     so the phone and the line stay hidden. --}}
 @php
     // Each benefit's card: its color, its name, a heading (the <em> part in color), a line, and a number.
     $hbPhases = [
@@ -67,6 +75,14 @@
                 <i class="hb-dust" style="--x: {{ 8 + ($i * 41) % 84 }}%; --s: {{ 3 + $i % 3 }}px; --d: {{ 6 + ($i * 7) % 6 }}s; --k: {{ round((($i * 13) % 60) / 10, 1) }}s"></i>
             @endfor
         </span>
+        <svg class="hb-link" aria-hidden="true">
+            <path class="hb-link-glow"/>
+            <path class="hb-link-line" id="hbLinkPath"/>
+            <circle class="hb-link-dot" r="3.4"><animateMotion dur="2.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".45 0 .55 1"><mpath href="#hbLinkPath"/></animateMotion></circle>
+            <circle class="hb-link-dot" r="2.4"><animateMotion dur="2.4s" begin="1.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".45 0 .55 1"><mpath href="#hbLinkPath"/></animateMotion></circle>
+            <circle class="hb-link-end" r="4.5"/>
+            <circle class="hb-link-ping" r="4.5"/>
+        </svg>
         <span class="hb-orbit" aria-hidden="true"></span>
 
         {{-- Higher yield: two piles of sacks; the usual way stops, Anee's keeps going and is not done yet. --}}
@@ -174,6 +190,14 @@
         </div>
 
     </div>
+    <figure class="hb-phone" aria-hidden="true">
+        <span class="hb-phone-scr">
+            <video muted loop playsinline preload="none" poster="{{ asset('videos/site/anee-chat-mini.webp') }}?v={{ @filemtime(public_path('videos/site/anee-chat-mini.webp')) }}" width="300" height="650">
+                <source src="{{ asset('videos/site/anee-chat-mini.mp4') }}?v={{ @filemtime(public_path('videos/site/anee-chat-mini.mp4')) }}" type="video/mp4">
+            </video>
+        </span>
+        <figcaption><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40">Anee in the app</figcaption>
+    </figure>
     <div class="hb-cards">
         @foreach ($hbPhases as $i => $p)
             <div class="hb-card {{ $i === 0 ? 'is-on' : '' }}" data-card="{{ $p['k'] }}" style="--c: {{ $p['c'] }}; --cg: {{ $p['g'] }}">
@@ -221,6 +245,31 @@
         85% { opacity: .7; } 100% { opacity: 0; transform: translate(-5px, -56cqw); } }
     .hb-orbit { position: absolute; inset: 9%; border-radius: 999px; border: 1px dashed rgb(255 255 255 / .2); animation: hbSpin 70s linear infinite; }
     @keyframes hbSpin { to { transform: rotate(360deg); } }
+    /* The phone with Anee's chat, beside the stage, and the gold line from it into the picture. Hidden where there is no
+       room beside the circle. */
+    .hb-phone { display: none; position: absolute; z-index: 7; left: -6rem; top: 17%; width: 6.6rem; margin: 0; animation: hbPhoneIn .9s cubic-bezier(.22,1,.36,1) .5s both; }
+    .hb-phone-scr { display: block; position: relative; aspect-ratio: 300 / 650; padding: .3rem; border-radius: 1.45rem; rotate: -6deg;
+        background: linear-gradient(155deg, #2a3820, #0b1207 60%); animation: hbPhoneBob 6s ease-in-out 1.4s infinite;
+        box-shadow: 0 0 0 1px rgb(255 255 255 / .12) inset, 0 0 0 2px rgb(245 197 24 / .55), 0 0 30px rgb(245 197 24 / .25), 0 34px 60px -24px rgb(0 0 0 / .9); }
+    .hb-phone-scr::before { content: ''; position: absolute; z-index: 1; left: 50%; top: .55rem; width: 1.6rem; height: .3rem; border-radius: 999px; transform: translateX(-50%); background: #0b1207; }
+    .hb-phone video { display: block; width: 100%; height: 100%; border-radius: 1.2rem; object-fit: cover; background: #eef2ea; }
+    .hb-phone figcaption { position: absolute; left: 50%; bottom: -1.5rem; width: max-content; display: inline-flex; align-items: center; gap: .35rem; padding: .28rem .7rem .28rem .3rem; border-radius: 999px;
+        white-space: nowrap; font-size: .72rem; font-weight: 900; color: #14210c; background: #f5c518; transform: translateX(-50%); box-shadow: 0 10px 22px -10px rgb(0 0 0 / .7); }
+    .hb-phone figcaption img { width: 1.25rem; height: 1.25rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px #fff; }
+    @keyframes hbPhoneIn { from { opacity: 0; transform: translateX(-1.5rem) scale(.92); } }
+    @keyframes hbPhoneBob { 50% { translate: 0 -8px; } }
+    .hb-link { display: none; position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+    .hb-link-glow { fill: none; stroke: rgb(245 197 24 / .25); stroke-width: 7; stroke-linecap: round; filter: blur(3px); }
+    .hb-link-line { fill: none; stroke: #f5c518; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 2 7; animation: hbFlow 1s linear infinite; }
+    @keyframes hbFlow { to { stroke-dashoffset: -9; } }
+    .hb-link-dot { fill: #fff6c2; filter: drop-shadow(0 0 4px #f5c518) drop-shadow(0 0 8px rgb(245 197 24 / .8)); }
+    .hb-link-end { fill: #f5c518; stroke: #fff; stroke-width: 1.5; }
+    .hb-link-ping { fill: none; stroke: #f5c518; stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: hbPing 2.4s ease-out infinite; }
+    @keyframes hbPing { 0% { opacity: .9; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(3.4); } }
+    @media (min-width: 1280px), (min-width: 800px) and (max-width: 1023.98px) {
+        .hb-phone { display: block; }
+        .hb-link { display: block; }
+    }
     /* A benefit's layer: seen while its turn lasts. Each element rests in its finished state; .is-play runs it in. */
     .hb-ph { position: absolute; inset: 0; opacity: 0; transition: opacity .45s ease; pointer-events: none; }
     .hb-ph.is-on { opacity: 1; }
@@ -448,8 +497,9 @@
         .hb-card-s { max-width: 4.6rem; padding-left: .65rem; } .hb-card-s b { font-size: 1.2rem; } .hb-card-s b.is-word { font-size: .98rem; } .hb-card-s i, .hb-card-s small { font-size: .5rem; letter-spacing: .03em; }
     }
     @media (prefers-reduced-motion: reduce) {
-        .hb, .hb-photo img, .hb-photo-halo, .hb-sun, .hb-glint, .hb-dust, .hb-orbit, .hb-ph, .hb-ph *, .hb-card, .hb-card * { animation: none !important; transition: none !important; }
+        .hb, .hb-photo img, .hb-photo-halo, .hb-sun, .hb-glint, .hb-dust, .hb-orbit, .hb-phone, .hb-phone-scr, .hb-link-line, .hb-link-ping, .hb-ph, .hb-ph *, .hb-card, .hb-card * { animation: none !important; transition: none !important; }
         .hb-card-bar { display: none; }
+        .hb-link-dot { display: none; }
     }
 </style>
 @endpush
@@ -478,9 +528,32 @@
         if (!calm) { p.classList.add('is-play'); count(p); }
     };
     const step = () => { if (!live) return; show(n); n = (n + 1) % phases.length; timer = setTimeout(step, STAY); };
+    // The line from the phone into the picture: from just inside the phone's right edge (the phone hides its start) to
+    // the picture's edge, up and to the left of its middle, between the nutrient orbs. Laid out from the boxes, which the
+    // hero's lean does not change, and again whenever the hero changes size.
+    const phone = hb.querySelector('.hb-phone'), link = hb.querySelector('.hb-link'), photo = hb.querySelector('.hb-photo');
+    const lay = () => {
+        if (!phone || !link || !photo || !phone.offsetWidth) return;
+        const W = link.clientWidth, H = link.clientHeight;
+        const x0 = phone.offsetLeft + phone.offsetWidth - 14, y0 = phone.offsetTop + phone.offsetHeight * .42;
+        const r = photo.offsetWidth / 2, cx = photo.offsetLeft + r, cy = photo.offsetTop + r, a = 292.5 * Math.PI / 180;
+        const x1 = cx + r * Math.sin(a), y1 = cy - r * Math.cos(a);
+        const f = (v) => v.toFixed(1);
+        const d = `M${f(x0)} ${f(y0)}C${f(x0 + (x1 - x0) * .45)} ${f(y0 - 26)} ${f(x1 - (x1 - x0) * .35)} ${f(y1 + 18)} ${f(x1)} ${f(y1)}`;
+        link.setAttribute('viewBox', `0 0 ${W} ${H}`);
+        link.querySelectorAll('path').forEach((el) => el.setAttribute('d', d));
+        link.querySelectorAll('.hb-link-end, .hb-link-ping').forEach((el) => { el.setAttribute('cx', f(x1)); el.setAttribute('cy', f(y1)); });
+    };
+    lay();
+    if ('ResizeObserver' in window) new ResizeObserver(lay).observe(hb); else addEventListener('resize', lay);
+    const film = phone && phone.querySelector('video');
     if (calm) { show(0); return; }
     show(0);
-    const run = (on) => { if (on === live) return; live = on; clearTimeout(timer); if (on) step(); };
+    const run = (on) => {
+        if (on === live) return;
+        live = on; clearTimeout(timer);
+        if (on) { step(); if (film && phone.offsetWidth) film.play().catch(() => {}); } else if (film) film.pause();
+    };
     if ('IntersectionObserver' in window) new IntersectionObserver((es) => es.forEach((e) => run(e.isIntersecting)), { threshold: .2 }).observe(hb);
     else run(true);
 })();
