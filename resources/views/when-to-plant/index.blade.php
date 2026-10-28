@@ -1536,7 +1536,7 @@
            week's harvest price against the year's usual too (WhenToPlantController::priceRanks). */
         const PR = Array.isArray(r.priceRanks) ? r.priceRanks.filter((k) => weeks[k] && weeks[k].priceScore !== undefined) : [];
         const TWO = PR.length > 0;
-        const pct = (rel) => { const d = Math.round((Number(rel) - 1) * 100); return d === 0 ? 'at a usual month's price' : (d > 0 ? d + '% above' : Math.abs(d) + '% below') + ' a usual harvest month'; };
+        const pct = (rel) => { const d = Math.round((Number(rel) - 1) * 100); return d === 0 ? 'at the price of a usual month' : (d > 0 ? d + '% above' : Math.abs(d) + '% below') + ' a usual harvest month'; };
         const ymWords = (ym) => { const [y, m] = String(ym || '').split('-').map(Number); return y && m ? MKM[m - 1] + ' ' + y : ''; };
         const unitOf = (m) => (m && m.unit === 'kg' ? '/kg' : '');
         const priceRow = (w) => {
