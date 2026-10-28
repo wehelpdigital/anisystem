@@ -188,7 +188,7 @@
       "items": [
         {
           "q": "Can AI replace my agricultural technician?",
-          "a": "No. AI farm advice is a quick first opinion at any hour. Field visits, soil tests and lab tests still need people, like your municipal agriculturist."
+          "a": "Not for field visits, soil tests and lab tests, which still need people like your municipal agriculturist. For the everyday questions, though, Anee answers at any hour from your own farm's data, so you are never left guessing while you wait for the next visit."
         },
         {
           "q": "Why does AI give different answers to the same question?",

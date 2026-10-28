@@ -168,7 +168,7 @@
         ['Do I have to pay every month?', 'Nothing renews by itself. You pay for a month or a year at a time, and if you stop, your seasons and records stay safe and readable on Libre.'],
         ['Do credits expire?', 'No. Credits stay on your account until you spend them, across seasons. Every question and analysis shows its price in credits before it runs.'],
         ['How much is Anee Auto?', 'Anee Auto is priced per lot for the whole season, and the app shows the price before you start. Its credits cover Anee\'s planning, her daily readings and your questions all season.'],
-        ['Will it really increase my harvest?', 'No app can promise a number, because the weather and the market decide part of it. What anee.io takes away is the loss that comes from guessing: late, early or wrong applications and costs nobody tracked.'],
+        ['Will it really increase my harvest?', 'No app can promise an exact number, because the weather and the market decide part of every harvest. But Anee is as accurate as farm advice gets: before she answers she weighs your lot and its soil, your variety and its stage, the forecast, the El Niño or La Niña outlook and twenty years of your town\'s weather, so there is no guessing game. Knowing exactly when to apply, what to use, which variety to plant and the best date to plant improves your farming from the very first season, and it stops the losses that guessing brings.'],
     ];
 
     $title = 'Anee vs Now: Your Farm Today and Your Farm With anee.io';
