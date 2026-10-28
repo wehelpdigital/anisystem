@@ -5,8 +5,8 @@
      grain dust drifting up (the owner, later the same day: "remove the video of anee and just make the image of rice
      sharp and make it the main featured image"). Over it one benefit at a time plays its own animation, and its card
      names it underneath:
-       yield      two piles of rice sacks, lying down, stack up one by one: the usual way stops, Anee's goes higher
-                  with an arrow up and a faded sack on top, the pile not yet done; no tag above them. No tonnage or cavans anywhere in
+       yield      two piles of rice sacks, lying down, stack up one by one: the usual way stops, Anee's goes more than
+                  twice as high (the owner: "add more sacks going up to show the huge difference") with an arrow up and a faded sack on top, the pile not yet done; no tag above them. No tonnage or cavans anywhere in
                   the hero (the owner: specific yield numbers set the wrong expectations)
        pests      a shield draws itself over the field and the pests that fly at it bounce off
        nutrition  eight nutrients, flat see through orbs each in its own color, fly in; each fills its own part of
@@ -80,7 +80,7 @@
             <div class="hb-pile is-anee">
                 <span class="hb-pile-up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span>
                 <span class="hb-sacks">
-                    @for ($i = 0; $i < 9; $i++)<svg class="hb-sack{{ $i === 6 || $i === 7 ? ' is-more' : '' }}{{ $i === 8 ? ' is-ghost' : '' }}" viewBox="0 0 64 28" style="--k: {{ $i }}"><use href="#hbSack"/></svg>@endfor
+                    @for ($i = 0; $i < 14; $i++)<svg class="hb-sack{{ $i >= 10 && $i < 13 ? ' is-more' : '' }}{{ $i === 13 ? ' is-ghost' : '' }}" viewBox="0 0 64 28" style="--k: {{ $i }}"><use href="#hbSack"/></svg>@endfor
                 </span>
                 <small>With Anee</small>
             </div>
@@ -228,17 +228,17 @@
     /* Yield: two piles of rice sacks lying down, either side of her, the same width and the same distance from her. The
        usual way stops at about 5.4 t; Anee's goes on to 8, its last two the brightest, and a faded sack on top says the
        pile is not done. */
-    .hb-pile { position: absolute; z-index: 4; bottom: 12cqw; display: grid; grid-template-columns: 16cqw; justify-items: center; gap: 1.4cqw; }
+    .hb-pile { position: absolute; z-index: 4; bottom: 4cqw; display: grid; grid-template-columns: 14cqw; justify-items: center; gap: 1.2cqw; }
     .hb-pile.is-them { left: 5cqw; }
     .hb-pile.is-anee { right: 5cqw; }
     .hb-pile-up { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 999px; color: #14210c; background: #f5c518;
         box-shadow: 0 0 0 5px rgb(245 197 24 / .25), 0 0 22px rgb(245 197 24 / .6); }
     .hb-pile-up svg { width: 1.3rem; height: 1.3rem; }
-    .hb-ph.is-play .hb-pile-up { animation: hbPopN .5s cubic-bezier(.22,1,.36,1) 1.9s both, hbUp 1.1s ease-in-out 2.5s infinite; }
+    .hb-ph.is-play .hb-pile-up { animation: hbPopN .5s cubic-bezier(.22,1,.36,1) 2.4s both, hbUp 1.1s ease-in-out 3s infinite; }
     @keyframes hbUp { 50% { transform: translateY(-5px); } }
     .hb-sacks { display: flex; flex-direction: column-reverse; align-items: center; width: 100%; }
     .hb-sack { display: block; width: 100%; height: auto; aspect-ratio: 64 / 28; overflow: visible; --skb: #e4e0d2; --skp: #9aa88c; filter: drop-shadow(0 2px 2px rgb(0 0 0 / .4)); }
-    .hb-sack + .hb-sack { margin-bottom: -1.7cqw; }
+    .hb-sack + .hb-sack { margin-bottom: -1.5cqw; }
     .hb-sack:nth-child(4n + 2) { translate: .8cqw 0; }
     .hb-sack:nth-child(4n) { translate: -.7cqw 0; }
     .hb-sack.is-part { width: 58%; }
@@ -246,7 +246,8 @@
     .hb-pile.is-anee .hb-sack.is-more { --skb: #f8d54e; filter: drop-shadow(0 0 7px rgb(245 197 24 / .75)); }
     .hb-pile.is-anee .hb-sack.is-ghost { --skb: rgb(245 197 24 / .26); --sko: #fde68a; --skp: transparent; --skh: 0; --sks: 0; --skw: 0; --skm: 0; filter: drop-shadow(0 0 6px rgb(245 197 24 / .5)); }
     .hb-ph.is-play .hb-sack { animation: hbSack .45s cubic-bezier(.34,1.56,.64,1) calc(.3s + var(--k) * .2s) both; }
-    .hb-ph.is-play .hb-sack.is-ghost { animation: hbSack .45s cubic-bezier(.34,1.56,.64,1) 1.9s both, hbGhost 1.4s ease-in-out 2.4s infinite; }
+    .hb-ph.is-play .hb-pile.is-anee .hb-sack { animation-delay: calc(.3s + var(--k) * .15s); }
+    .hb-ph.is-play .hb-pile.is-anee .hb-sack.is-ghost { animation: hbSack .45s cubic-bezier(.34,1.56,.64,1) 2.25s both, hbGhost 1.4s ease-in-out 2.75s infinite; }
     @keyframes hbSack { from { opacity: 0; transform: translateY(-7cqw) scale(.8); } }
     @keyframes hbGhost { 50% { opacity: .4; } }
     .hb-pile small { padding: .22rem .6rem; border-radius: 999px; white-space: nowrap; font-size: .72rem; font-weight: 800; color: #fff; background: rgb(10 14 7 / .72); }
