@@ -177,6 +177,8 @@
             }
             return $out;
         };
+        // Anee's model: a brain with a spark, for the smarter side.
+        $waBrain = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 4.5a2.5 2.5 0 00-4.9.7A3 3 0 003 10a3 3 0 00.8 4.9A2.8 2.8 0 008 18.5a2.5 2.5 0 004 1V5.3a2.5 2.5 0 00-2.5-.8z"/><path d="M12 5.3a2.5 2.5 0 014.4-.8 2.5 2.5 0 013 .7A3 3 0 0121 10a3 3 0 01-.8 4.9 2.8 2.8 0 01-4.2 3.6 2.5 2.5 0 01-4 1"/><path d="M8 9.5h2M14 12.5h2M8 14h1.5"/><path d="M19.5 1.8l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" fill="currentColor"/></svg>';
         $waChip = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2.5"/><path stroke-linecap="round" d="M9.5 2.8v2.4M14.5 2.8v2.4M9.5 18.8v2.4M14.5 18.8v2.4M2.8 9.5h2.4M2.8 14.5h2.4M18.8 9.5h2.4M18.8 14.5h2.4"/><path stroke-linecap="round" stroke-linejoin="round" d="M10 12.5l1.5 1.5 2.5-3"/></svg>';
     @endphp
     <section class="hp-sec bg-white wa-diff-sec">
@@ -194,7 +196,7 @@
             <div class="wa-eng" data-wa-eng>
                 @foreach ($waEngines as $ei => $eng)
                     @if ($ei === 1)
-                        <div class="wa-eng-eq" aria-hidden="true"><b>=</b><span>The same kind of model</span></div>
+                        <div class="wa-eng-eq" aria-hidden="true"><b>=</b><span>The same core model</span></div>
                     @endif
                     <div class="wa-eng-col is-{{ $eng['kind'] }}">
                         <div class="wa-eng-head">
@@ -222,21 +224,61 @@
                             @endif
                         </ul>
                         </div>
-                        <svg class="wa-eng-fun" viewBox="0 0 300 76" aria-hidden="true">
-                            @foreach ($waFunnel(count($eng['in'])) as $fi => $d)
-                                <path class="base" d="{{ $d }}" pathLength="100"/>
-                            @endforeach
-                            @if ($eng['thin'])
-                                <path class="thin" d="M288 2C288 30 236 34 212 46" pathLength="100"/>
-                            @endif
-                            @foreach ($waFunnel(count($eng['in'])) as $fi => $d)
-                                <path class="flow {{ $fi % 3 === 1 ? 'is-gold' : '' }}" d="{{ $d }}" pathLength="100" style="animation-delay: -{{ $fi * 0.23 }}s"/>
-                            @endforeach
-                        </svg>
-                        <div class="wa-eng-model">
-                            {!! $waChip !!}
-                            <p><b>A language model</b><small>The same kind on both sides</small></p>
-                        </div>
+                        @if ($eng['kind'] === 'anee')
+                            {{-- Anee's side (2026-10-28, the owner: "make the lines animated and better looking ... to signify that it
+                                 is smarter"): glowing gradient lines, a light running down each one into the model, the point where
+                                 they meet pulsing. Played by SMIL, paused off screen (the script below). --}}
+                            <svg class="wa-eng-fun is-smart" viewBox="0 0 300 80" aria-hidden="true" data-wa-smart>
+                                <defs>
+                                    <linearGradient id="waLineA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bef264"/><stop offset=".55" stop-color="#4a7c2a"/><stop offset="1" stop-color="#f5c518"/></linearGradient>
+                                    <radialGradient id="waSparkA"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#fde68a"/><stop offset="1" stop-color="#f5c518" stop-opacity="0"/></radialGradient>
+                                    <filter id="waGlowA" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="2.4"/></filter>
+                                </defs>
+                                <g class="glow" filter="url(#waGlowA)">
+                                    @foreach ($waFunnel(count($eng['in'])) as $d)<path d="{{ $d }}"/>@endforeach
+                                </g>
+                                @foreach ($waFunnel(count($eng['in'])) as $d)
+                                    <path class="base" d="{{ $d }}" pathLength="100"/>
+                                @endforeach
+                                <g class="comets">
+                                    @foreach ($waFunnel(count($eng['in'])) as $fi => $d)
+                                        @foreach ([0, 0.8] as $lag)
+                                            <g>
+                                                <circle r="7" fill="url(#waSparkA)" opacity=".85"/>
+                                                <circle r="2.1" fill="#fff"/>
+                                                <animateMotion dur="1.6s" begin="-{{ round($fi * 0.19 + $lag, 2) }}s" repeatCount="indefinite" path="{{ $d }}" calcMode="spline" keyTimes="0;1" keyPoints="0;1" keySplines=".5 0 .7 1"/>
+                                            </g>
+                                        @endforeach
+                                    @endforeach
+                                </g>
+                                <circle class="hub-glow" cx="150" cy="74" r="9" fill="url(#waSparkA)"><animate attributeName="r" values="7;13;7" dur="1.6s" repeatCount="indefinite"/><animate attributeName="opacity" values=".9;.35;.9" dur="1.6s" repeatCount="indefinite"/></circle>
+                                <circle cx="150" cy="74" r="3" fill="#fff"/>
+                            </svg>
+                        @else
+                            <svg class="wa-eng-fun" viewBox="0 0 300 76" aria-hidden="true">
+                                @foreach ($waFunnel(count($eng['in'])) as $fi => $d)
+                                    <path class="base" d="{{ $d }}" pathLength="100"/>
+                                @endforeach
+                                @if ($eng['thin'])
+                                    <path class="thin" d="M288 2C288 30 236 34 212 46" pathLength="100"/>
+                                @endif
+                                @foreach ($waFunnel(count($eng['in'])) as $fi => $d)
+                                    <path class="flow" d="{{ $d }}" pathLength="100" style="animation-delay: -{{ $fi * 0.9 }}s"/>
+                                @endforeach
+                            </svg>
+                        @endif
+                        @if ($eng['kind'] === 'anee')
+                            <div class="wa-eng-model is-smart">
+                                <i class="wa-spark is-a" aria-hidden="true">✦</i><i class="wa-spark is-b" aria-hidden="true">✦</i><i class="wa-spark is-c" aria-hidden="true">✦</i>
+                                {!! $waBrain !!}
+                                <p><b>A smarter AI model</b><small>The same core, fed your whole farm</small></p>
+                            </div>
+                        @else
+                            <div class="wa-eng-model">
+                                {!! $waChip !!}
+                                <p><b>A language model</b><small>Knows farming in general</small></p>
+                            </div>
+                        @endif
                         <div class="wa-eng-out">
                             @if ($eng['kind'] === 'anee')
                                 <img src="{{ $face }}" alt="" width="80" height="80">
@@ -549,30 +591,59 @@
     .wa-eng-fun .base { stroke: #dfe3d9; stroke-width: 2; }
     .is-anee .wa-eng-fun .base { stroke: #c6e0a9; }
     .wa-eng-fun .thin { stroke: #fb923c; stroke-width: 2; stroke-dasharray: 3 4; }
-    .wa-eng-fun .flow { stroke-width: 3.4; stroke-dasharray: 2 12; animation: waFlow 1s linear infinite; }
-    .is-plain .wa-eng-fun .flow { stroke: #a3a8a0; stroke-dasharray: 2 34; animation: waFlowSlow 3s linear infinite; }
-    .is-anee .wa-eng-fun .flow { stroke: #4a7c2a; }
-    .is-anee .wa-eng-fun .flow.is-gold { stroke: #e3b30b; }
-    @keyframes waFlow { to { stroke-dashoffset: -14; } }
-    @keyframes waFlowSlow { to { stroke-dashoffset: -36; } }
-    /* The model: one and the same chip on both sides. */
+    /* A general app: a few grey dots crawling down. (Its own keyframe names: the shelves' wires further down already
+       use waFlow and waRing, and a later @keyframes of the same name wins.) */
+    .wa-eng-fun .flow { stroke: #a3a8a0; stroke-width: 3.4; stroke-dasharray: 2 34; animation: waEngSlow 3.4s linear infinite; }
+    @keyframes waEngSlow { to { stroke-dashoffset: -36; } }
+    /* Anee: glowing lines, a light running down each one, the meeting point pulsing. */
+    .wa-eng-fun.is-smart { max-width: 23rem; }
+    .wa-eng-fun.is-smart .glow path { fill: none; stroke: url(#waLineA); stroke-width: 5; stroke-linecap: round; opacity: .45; }
+    .wa-eng-fun.is-smart .base { stroke: url(#waLineA); stroke-width: 2.4; }
+    .wa-eng-fun.is-smart .comets, .wa-eng-fun.is-smart .hub-glow { mix-blend-mode: normal; }
+    /* The model: the same core on both sides; Anee's runs smarter, and shows it. */
     .wa-eng-model { position: relative; align-self: center; justify-self: center; display: inline-flex; align-items: center; gap: .6rem; margin: .1rem auto 0;
         padding: .6rem 1.05rem .6rem .6rem; border-radius: 1.05rem; color: #fff; background: linear-gradient(135deg, #2b4419, #14210c);
         box-shadow: 0 18px 32px -18px rgb(20 33 12 / .85); }
     .wa-eng-model svg { flex: none; width: 2rem; height: 2rem; padding: .3rem; border-radius: .65rem; color: var(--hp-sun); background: rgb(255 255 255 / .12); }
     .wa-eng-model b { display: block; font-size: .92rem; font-weight: 800; line-height: 1.2; }
     .wa-eng-model small { display: block; font-size: .7rem; font-weight: 700; color: #b9caa8; }
-    .is-anee .wa-eng-model::after { content: ''; position: absolute; inset: -5px; border-radius: 1.3rem; border: 2px solid rgb(245 197 24 / .75); opacity: 0;
-        animation: waRing 1.8s ease-out infinite; pointer-events: none; }
-    @keyframes waRing { 0% { opacity: .9; transform: scale(.97); } 100% { opacity: 0; transform: scale(1.1); } }
+    @property --waAng { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+    .wa-eng-model.is-smart { padding: .7rem 1.15rem .7rem .7rem; border: 2px solid transparent;
+        background: linear-gradient(135deg, #2f5219, #14210c) padding-box, conic-gradient(from var(--waAng), #f5c518, #bef264, #22c55e, #4a7c2a, #f5c518) border-box;
+        box-shadow: 0 0 0 4px rgb(245 197 24 / .12), 0 22px 40px -18px rgb(47 82 25 / .9), 0 0 34px -6px rgb(190 242 100 / .45);
+        animation: waEngSpin 3.2s linear infinite; }
+    @keyframes waEngSpin { to { --waAng: 360deg; } }
+    .wa-eng-model.is-smart svg { width: 2.3rem; height: 2.3rem; color: #fde68a; background: radial-gradient(circle at 50% 40%, rgb(245 197 24 / .35), rgb(255 255 255 / .08)); }
+    .wa-eng-model.is-smart b { font-size: 1rem; background: linear-gradient(90deg, #fff 0%, #fde68a 45%, #fff 60%, #fff 100%) 0 0 / 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+        animation: waEngShine 2.8s ease-in-out infinite; }
+    @keyframes waEngShine { 0% { background-position: 110% 0; } 100% { background-position: -110% 0; } }
+    .wa-eng-model.is-smart small { color: #d9f99d; }
+    /* The ring that pulses out as each light arrives. */
+    .wa-eng-model.is-smart::after { content: ''; position: absolute; inset: -6px; border-radius: 1.35rem; border: 2px solid rgb(245 197 24 / .75); opacity: 0;
+        animation: waEngRing 1.6s ease-out infinite; pointer-events: none; }
+    @keyframes waEngRing { 0% { opacity: .9; transform: scale(.97); } 100% { opacity: 0; transform: scale(1.12); } }
+    /* Three sparks that twinkle around it. */
+    .wa-spark { position: absolute; z-index: 1; font-style: normal; line-height: 1; color: #f5c518; text-shadow: 0 0 10px rgb(245 197 24 / .9); pointer-events: none;
+        animation: waEngTwinkle 2.4s ease-in-out infinite; }
+    .wa-spark.is-a { top: -.7rem; left: .6rem; font-size: .9rem; }
+    .wa-spark.is-b { top: -.45rem; right: -.4rem; font-size: .7rem; animation-delay: -.8s; }
+    .wa-spark.is-c { bottom: -.6rem; right: 1.6rem; font-size: .8rem; animation-delay: -1.6s; }
+    @keyframes waEngTwinkle { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0deg); } 50% { opacity: 1; transform: scale(1.15) rotate(90deg); } }
+    /* Anee's inputs light up one after another, as each is read. */
+    .is-anee .wa-eng-in li { animation: waEngLit 3.5s ease-in-out infinite; animation-delay: calc(var(--i) * .5s); }
+    @keyframes waEngLit { 0%, 70%, 100% { box-shadow: 0 6px 14px -12px rgb(47 82 25 / .7); } 82% { box-shadow: 0 0 0 3px rgb(190 242 100 / .45), 0 6px 18px -6px rgb(74 124 42 / .6); } }
     /* The answer, dripping out of the model. */
     .wa-eng-out { position: relative; align-self: start; display: flex; align-items: center; gap: .65rem; margin-top: 1.75rem; padding: .8rem 1rem; border-radius: 1.15rem; }
     .wa-eng-out::before { content: ''; position: absolute; left: 50%; top: -1.75rem; width: 2px; height: 1.75rem; margin-left: -1px;
-        background: repeating-linear-gradient(180deg, currentColor 0 3px, transparent 3px 8px); opacity: .55; animation: waDrip .7s linear infinite; }
-    @keyframes waDrip { to { background-position: 0 8px; } }
+        background: repeating-linear-gradient(180deg, currentColor 0 3px, transparent 3px 8px); opacity: .55; animation: waEngDrip 1.4s linear infinite; }
+    @keyframes waEngDrip { to { background-position: 0 8px; } }
+    /* Anee's answer: a bright beam, a light running down it. */
+    .is-anee .wa-eng-out::before { width: 3px; margin-left: -1.5px; opacity: 1; border-radius: 999px;
+        background: linear-gradient(180deg, transparent, #fff 45%, #f5c518 55%, transparent) 0 -120% / 100% 55% no-repeat, linear-gradient(180deg, #bef264, #4a7c2a);
+        box-shadow: 0 0 10px rgb(190 242 100 / .7); animation: waEngBeam 1.1s linear infinite; }
+    @keyframes waEngBeam { to { background-position: 0 220%, 0 0; } }
     .is-plain .wa-eng-out { color: #6b7280; background: #fff; border: 1px solid #e3e6df; }
     .is-anee .wa-eng-out { color: #fff; background: linear-gradient(135deg, #3d6823, #24400f); box-shadow: 0 22px 40px -24px rgb(36 64 15 / .9); }
-    .is-anee .wa-eng-out::before { color: #4a7c2a; opacity: .8; }
     .wa-eng-out img { flex: none; width: 2.1rem; height: 2.1rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px var(--hp-sun); }
     .wa-eng-out b { display: block; font-size: .95rem; font-weight: 800; color: var(--hp-ink); line-height: 1.25; }
     .is-anee .wa-eng-out b { color: #fff; }
@@ -591,7 +662,7 @@
         .wa-eng-col.is-anee { transition-delay: .12s; }
         .wa-eng-in li { transition: opacity .45s var(--hp-ease) calc(.35s + var(--i) * 85ms), transform .45s var(--hp-ease) calc(.35s + var(--i) * 85ms); }
         .wa-eng-fun .base { stroke-dasharray: 100; transition: stroke-dashoffset 1s var(--hp-ease) .9s; }
-        .wa-eng-fun .thin, .wa-eng-fun .flow { transition: opacity .5s ease 1.6s; }
+        .wa-eng-fun .thin, .wa-eng-fun .flow, .wa-eng-fun .comets, .wa-eng-fun .hub-glow, .wa-eng-fun .glow { transition: opacity .6s ease 1.6s; }
         .wa-eng-model { transition: opacity .5s var(--hp-ease) 1.45s, transform .5s var(--hp-ease) 1.45s; }
         .wa-eng-eq b, .wa-eng-eq span { transition: opacity .5s var(--hp-ease) 1.7s, transform .5s var(--hp-ease) 1.7s; }
         .wa-eng-out { transition: opacity .55s var(--hp-ease) 2.1s, transform .55s var(--hp-ease) 2.1s; }
@@ -601,15 +672,19 @@
         .wa-eng-ghosts { transition: opacity .8s ease .25s; }
         html.js .wa-eng:not(.is-in) .wa-eng-ghosts { opacity: 0; }
         html.js .wa-eng:not(.is-in) .wa-eng-fun .base { stroke-dashoffset: 100; }
-        html.js .wa-eng:not(.is-in) .wa-eng-fun .thin, html.js .wa-eng:not(.is-in) .wa-eng-fun .flow { opacity: 0; }
+        html.js .wa-eng:not(.is-in) .wa-eng-fun .thin, html.js .wa-eng:not(.is-in) .wa-eng-fun .flow, html.js .wa-eng:not(.is-in) .wa-eng-fun .comets,
+        html.js .wa-eng:not(.is-in) .wa-eng-fun .hub-glow, html.js .wa-eng:not(.is-in) .wa-eng-fun .glow { opacity: 0; }
         html.js .wa-eng:not(.is-in) .wa-eng-model { opacity: 0; transform: scale(.85); }
         html.js .wa-eng:not(.is-in) .wa-eng-eq b, html.js .wa-eng:not(.is-in) .wa-eng-eq span { opacity: 0; transform: scale(.6); }
         html.js .wa-eng:not(.is-in) .wa-eng-out { opacity: 0; transform: translateY(12px) scale(.96); }
-        .wa-eng:not(.is-live) .wa-eng-fun .flow, .wa-eng:not(.is-live) .wa-eng-model::after, .wa-eng:not(.is-live) .wa-eng-out::before { animation-play-state: paused; }
+        .wa-eng:not(.is-live) .wa-eng-fun .flow, .wa-eng:not(.is-live) .wa-eng-model::after, .wa-eng:not(.is-live) .wa-eng-out::before,
+        .wa-eng:not(.is-live) .wa-eng-model.is-smart, .wa-eng:not(.is-live) .wa-eng-model.is-smart b, .wa-eng:not(.is-live) .wa-spark,
+        .wa-eng:not(.is-live) .is-anee .wa-eng-in li { animation-play-state: paused; }
     }
     @media (prefers-reduced-motion: reduce) {
-        .wa-eng-fun .flow { display: none; }
-        .wa-eng-model::after, .wa-eng-out::before { animation: none !important; }
+        .wa-eng-fun .flow, .wa-eng-fun .comets, .wa-spark { display: none; }
+        .wa-eng-model::after, .wa-eng-out::before, .wa-eng-model.is-smart, .wa-eng-model.is-smart b, .is-anee .wa-eng-in li { animation: none !important; }
+        .wa-eng-model.is-smart b { color: #fff; background: none; }
     }
 
     /* ---- what she reads: eight shelves wired into Anee ---- */
@@ -771,9 +846,13 @@
     const eng = document.querySelector('[data-wa-eng]');
     if (!eng) return;
     if (!('IntersectionObserver' in window)) { eng.classList.add('is-in', 'is-live'); return; }
+    const smart = eng.querySelector('[data-wa-smart]');
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (smart && smart.pauseAnimations) smart.pauseAnimations();
     new IntersectionObserver((es) => es.forEach((e) => {
         if (e.isIntersecting) eng.classList.add('is-in');
         eng.classList.toggle('is-live', e.isIntersecting);
+        if (smart && smart.pauseAnimations && !calm) { if (e.isIntersecting) smart.unpauseAnimations(); else smart.pauseAnimations(); }
     }), { rootMargin: '0px 0px -12% 0px' }).observe(eng);
 })();
 </script>
