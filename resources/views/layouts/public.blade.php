@@ -455,6 +455,9 @@
         $footLinks = \App\Support\Region::ph() ? \App\Support\SitePages::footerLinks() : [];
         $footCols = array_filter([['crops', 'Crop guides', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z'], ['pests', 'Crop pests', 'M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z'], ['weeds', 'Weeds and grasses', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z'], ['blog', 'Latest in Agriculture', 'M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z']], fn ($c) => ! empty($footLinks[$c[0]]));
     @endphp
+    {{-- A page that sets @section('slimFooter') (the ads landing page, 2026-10-28) goes without the band of site links
+         and the newsrooms: a page built for one sign up keeps its exits to the legal links. --}}
+    @sectionMissing('slimFooter')
     <section class="pf" aria-label="Site links">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-14">
             <div class="pf-grid {{ $footCols ? 'has-guides' : '' }}">
@@ -488,6 +491,7 @@
             </div>
         </div>
     </section>
+    @endif
 
     <footer class="bg-gray-900 text-gray-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid gap-8 items-start fo-grid">
@@ -566,7 +570,7 @@
                         <li>Philippines</li>
                     </ul>
                 </div>
-                @if (\App\Support\Region::ph())
+                @if (\App\Support\Region::ph() && ! View::hasSection('slimFooter'))
                     {{-- No agency or research institute listed as what anee.io reads (the owner, 2026-10-17). --}}
                     <div>
                         <h2 class="fo-h">Our news sources</h2>

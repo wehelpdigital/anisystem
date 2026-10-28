@@ -46,6 +46,8 @@
 @section('meta_description', strip_tags($lp['meta']['description'] !== '' ? $lp['meta']['description'] : $lp['hero']['sub']))
 {{-- No top bar here: every way out of the offer is a signup lost. --}}
 @section('noHeader', '1')
+{{-- Nor the footer's band of site links (2026-10-28): the legal links stay. --}}
+@section('slimFooter', '1')
 
 @push('head')
 @include('partials.ad-tags')
@@ -180,6 +182,8 @@
         .lp-copy.is-right { text-align: right; }
         .lp-copy.is-right .lp-sub, .lp-copy.is-right .lp-form { margin-left: auto; }
         .lp-copy.is-right .lp-note { justify-content: flex-end; }
+        .lp-copy.is-right .lp-hello .as-say { margin-left: auto; flex-direction: row-reverse; }
+        .lp-copy.is-right .lp-hello .as-bubble { border-radius: 1.1rem 1.1rem .3rem 1.1rem; }
     }
     .lp-note span { display: inline-flex; align-items: center; gap: .35rem; }
     .lp-note svg { width: 1rem; height: 1rem; color: #4a7c2a; }
@@ -455,6 +459,7 @@
                     <span class="lp-kicker"><i aria-hidden="true"></i>{{ $lp['hero']['kicker'] }}</span>
                     <h1 class="lp-h1 mt-5 {{ mb_strlen($lp['hero']['headline']) > 70 ? 'is-long' : '' }}">{!! $mark($lp['hero']['headline']) !!}</h1>
                     <p class="lp-sub mt-5 max-w-xl">{{ $lp['hero']['sub'] }}</p>
+                    <div class="lp-hello mt-6">@include('public.partials.anee-says', ['say' => $lp['says']['hero'] ?? '', 'tone' => 'light', 'align' => 'left'])</div>
                     <form class="lp-form mt-7" action="{{ route('signup') }}" method="get" id="lpHeroForm">
                         @foreach ($keep as $k => $v)<input type="hidden" name="{{ $k }}" value="{{ $v }}">@endforeach
                         <input type="email" name="email" required autocomplete="email" inputmode="email" placeholder="Your email address" aria-label="Your email address">
@@ -512,6 +517,7 @@
     <section class="lp-problems">
         @if (trim($lp['problem']['sectionTitle'] ?? '') !== '')
             <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 text-center reveal">
+                <div class="mb-6">@include('public.partials.anee-says', ['say' => $lp['says']['problem'] ?? '', 'tone' => 'light', 'align' => 'center'])</div>
                 @if (trim($lp['problem']['sectionKicker'] ?? '') !== '')<span class="fx-kicker">{{ $lp['problem']['sectionKicker'] }}</span>@endif
                 <h2 class="lp-problems-h">{{ $lp['problem']['sectionTitle'] }}</h2>
                 @if (trim($lp['problem']['sectionSub'] ?? '') !== '')<p class="lp-problems-sub">{{ $lp['problem']['sectionSub'] }}</p>@endif
@@ -561,6 +567,7 @@
         <section class="lp-losses" id="lpLosses">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
                 <div class="max-w-2xl mx-auto text-center reveal">
+                    <div class="mb-6">@include('public.partials.anee-says', ['say' => $lp['says']['losses'] ?? '', 'tone' => 'dark', 'align' => 'center'])</div>
                     <h2 class="font-heading font-extrabold text-2xl sm:text-4xl text-balance">{{ $lp['losses']['headline'] }}</h2>
                     @if (trim($lp['losses']['sub'] ?? '') !== '')<p class="lp-losses-sub">{{ $lp['losses']['sub'] }}</p>@endif
                 </div>
@@ -595,12 +602,13 @@
     {{-- ================= Where most farmers get answers today (2026-10-28) =================
          The real Facebook post, its twenty comments and seven causes: why advice from strangers fails, then one line on
          what Anee does instead. Its button signs up with the ad's tags; nothing on it leads off the page. --}}
-    @include('public.partials.social-guess', ['sgSignup' => $signup, 'sgAsk' => false, 'sgLean' => true])
+    @include('public.partials.social-guess', ['sgSignup' => $signup, 'sgAsk' => false, 'sgLean' => true, 'sgLine' => $lp['says']['social'] ?? ''])
 
     {{-- ================= The answer: precision agriculture, then how it works ================= --}}
     <section class="py-16 sm:py-24">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center reveal">
+                <div class="mb-6">@include('public.partials.anee-says', ['say' => $lp['says']['precision'] ?? '', 'tone' => 'light', 'align' => 'center'])</div>
                 <span class="fx-kicker">{{ $lp['precision']['kicker'] }}</span>
                 <h2 class="fx-h mx-auto max-w-3xl text-balance">{{ $lp['precision']['headline'] }}</h2>
                 @if (trim($lp['precision']['sub']) !== '')<p class="fx-p mx-auto max-w-2xl">{{ $lp['precision']['sub'] }}</p>@endif
@@ -638,7 +646,7 @@
          The homepage's own section, in the site's dress, with the words the
          mother app keeps for it. --}}
     @if (! empty($lp['auto']['headline']))
-        @include('public.partials.anee-auto-section', ['signup' => $signup, 'aaLook' => 'site', 'aaText' => $lp['auto']])
+        @include('public.partials.anee-auto-section', ['signup' => $signup, 'aaLook' => 'site', 'aaText' => $lp['auto'], 'aaLine' => $lp['says']['auto'] ?? ''])
     @endif
 
     {{-- ================= Try it: a season in ten seconds (2026-10-07) =================
@@ -649,6 +657,7 @@
     <section class="lp-demo" id="lpDemo">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
             <div class="text-center reveal">
+                <div class="mb-6">@include('public.partials.anee-says', ['say' => $lp['says']['demo'] ?? '', 'tone' => 'light', 'align' => 'center'])</div>
                 <span class="fx-kicker">{{ $lp['demo']['kicker'] }}</span>
                 <h2 class="fx-h mx-auto max-w-3xl text-balance">{!! $mark($lp['demo']['headline']) !!}</h2>
                 @if (trim($lp['demo']['sub']) !== '')<p class="fx-p mx-auto max-w-2xl">{{ $lp['demo']['sub'] }}</p>@endif
@@ -681,6 +690,7 @@
     <section class="lp-space">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
             <div class="text-center reveal">
+                <div class="mb-6">@include('public.partials.anee-says', ['say' => $lp['says']['space'] ?? '', 'tone' => 'dark', 'align' => 'center'])</div>
                 <span class="lp-space-kick">{{ $lp['space']['kicker'] }}</span>
                 <h2 class="lp-space-h text-balance">{!! $mark($lp['space']['headline']) !!}</h2>
                 @if (trim($lp['space']['sub']) !== '')<p class="lp-space-p">{{ $lp['space']['sub'] }}</p>@endif
@@ -719,6 +729,7 @@
     <section class="pt-14 pb-16 sm:pt-20 sm:pb-24">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="text-center reveal">
+                <div class="mb-6">@include('public.partials.anee-says', ['say' => $lp['says']['more'] ?? '', 'tone' => 'light', 'align' => 'center'])</div>
                 <h2 class="fx-h lp-more-h mx-auto max-w-3xl text-balance">{!! $mark($lp['more']['headline']) !!}</h2>
                 @if (trim($lp['more']['sub'] ?? '') !== '')<p class="fx-p mx-auto max-w-2xl">{{ $lp['more']['sub'] }}</p>@endif
             </div>
@@ -821,6 +832,7 @@
     {{-- ================= 6. FAQ ================= --}}
     <section class="py-16 sm:py-24">
         <div class="max-w-3xl mx-auto px-4 sm:px-6">
+            <div class="mb-6 reveal">@include('public.partials.anee-says', ['say' => $lp['says']['faq'] ?? '', 'tone' => 'light', 'align' => 'center'])</div>
             <h2 class="fx-h text-center reveal">{{ $lp['faq']['headline'] }}</h2>
             <div class="lp-faq mt-8" id="lpFaq">
                 @foreach ($lp['faq']['items'] as $i => $qa)
@@ -840,6 +852,7 @@
     <section class="lp-closer" id="lpCloser">
         <img class="bg" src="{{ \App\Support\LandingPage::imageUrl($lp['closer']['image'], 'lp/palay-phone.webp') }}" alt="" width="1400" height="1046" loading="lazy">
         <div class="max-w-3xl mx-auto px-4 sm:px-6 py-20 sm:py-28 text-center">
+            <div class="mb-6 reveal">@include('public.partials.anee-says', ['say' => $lp['says']['closer'] ?? '', 'tone' => 'dark', 'align' => 'center'])</div>
             <h2 class="font-heading font-extrabold text-3xl sm:text-5xl leading-tight text-balance reveal">{!! $mark($lp['closer']['headline']) !!}</h2>
             <p class="mt-4 text-base sm:text-lg text-gray-200 reveal">{{ $lp['closer']['sub'] }}</p>
             <form class="lp-form mt-8 reveal" action="{{ route('signup') }}" method="get">

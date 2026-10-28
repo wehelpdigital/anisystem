@@ -10,7 +10,8 @@
      Counted from the screenshots: 20 comments; rice bug 7 (dangaw, atangya, alitangya, ricebag), stem borer 3, too much
      nitrogen 2, neck rot, whitefly, black bug, a dry and acidic field 1 each; 4 said to spray, none asked a question.
      On the ads landing page too (2026-10-28), with $sgSignup (its signup link, carrying the ad's tags), $sgAsk false (no
-     way off the page) and $sgLean (what Anee does instead in one line, the page's next sections say the rest). --}}
+     way off the page) and $sgLean (what Anee does instead in one line, the page's next sections say the rest), and
+     $sgLine, a line from Anee above the heading. --}}
 @php
     $sgSignup = $sgSignup ?? route('signup');
     $sgAsk = $sgAsk ?? true;
@@ -28,6 +29,7 @@
 <section class="sg" id="social-advice" aria-labelledby="sg-h">
     <div class="sg-in">
         <header class="sg-head" data-sg>
+            @if (! empty($sgLine))<div class="mb-5">@include('public.partials.anee-says', ['say' => $sgLine])</div>@endif
             <p class="hp-kick is-red">A real post from a Facebook group</p>
             <h2 class="hp-h2" id="sg-h">One photo. Twenty comments. <em>Seven different answers.</em></h2>
             <p class="hp-p">A farmer posted this photo in a Facebook group of farmers and asked: <b>"Bakit po kaya nagkaganito ang palay ko?"</b> Why did my palay turn out like this? Everyone meant well. Look at what came back.</p>

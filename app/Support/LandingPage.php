@@ -56,14 +56,14 @@ class LandingPage
         // The browser tab and the link preview; a blank description is the hero's sub.
         'meta' => [
             'title' => 'Start Precision Farming on Your Phone, Free',
-            'description' => 'Precision agriculture on your phone: the right spray, fertilizer and water on the right day, planned around your weather. Less waste, more harvest, higher income.',
+            'description' => 'Know the right spray, fertilizer and water for each day, planned around your own field\'s weather. Waste less, lose less and harvest more. Free to start.',
         ],
         'hero' => [
-            'kicker' => 'Precision agriculture for {farmers}',
-            'headline' => '*Increase your yield*, even with unpredictable weather and costly fertilizer and fuel.',
-            'sub' => 'The right spray, fertilizer and water on the right day, planned around your field\'s weather, with Anee, your smart farm technician, a tap away. Less waste, fewer losses, a bigger harvest.',
+            'kicker' => 'Made for {farmers}',
+            'headline' => '*Increase your yield*, even when the weather turns on you and fertilizer and fuel keep going up.',
+            'sub' => 'Know the right spray, fertilizer and water for each day, planned around your own field\'s weather. Waste less, lose less, and harvest more.',
             'cta' => 'Create my free account',
-            'note' => 'No credit card. Free forever on Libre. Works on any phone.',
+            'note' => 'Takes 2 minutes. No credit card. Free forever on Libre.',
             // Where the hero's words sit beside the phone on a wide screen: left
             // or right (against the phone). On a phone they always read left.
             'align' => 'right',
@@ -81,17 +81,17 @@ class LandingPage
             // The centered title over all three problem rows (weather, fuel,
             // fertilizer): the small green line, the title and the line under it
             // (the owner, 2026-09-30).
-            'sectionKicker' => 'The current reality',
+            'sectionKicker' => 'Sound familiar?',
             'sectionTitle' => 'Filipino Farmers Are Slowly Becoming Bankrupt',
-            'sectionSub' => 'Everything costs more every season, the weather no longer keeps its calendar, and help comes late. Too many farmers end the season with a loan they cannot pay.',
+            'sectionSub' => 'Everything costs more every season. The weather no longer keeps its calendar. And when something goes wrong, help comes late. Too many farmers end the season with a loan they can\'t pay.',
             'kicker' => 'The weather changed',
-            'headline' => 'Unpredictable weather that brings pests, diseases, and lodging',
+            'headline' => 'Weather you can\'t count on, and the pests, diseases and lodging it brings',
             // An uploaded photo in place of the paddies under a grey sky (blank: that one).
             'image' => '',
             'bullets' => [
-                'Rain the day after you spray washes the chemical, and the money, off the field.',
-                'Warm, wet weeks bring blast, sheath blight and bacterial leaf blight faster than you can react.',
-                'A long dry spell, then the first heavy rains, and the armyworms arrive all at once.',
+                'You spray, and it rains the next day. The chemical, and your money, wash away.',
+                'Warm, wet weeks bring blast, sheath blight and leaf blight before you can act.',
+                'A long dry spell, then heavy rain, and the armyworms come all at once.',
             ],
             // What anee.io does about it (a green tick each), under the costs' label.
             // One short line each, about 36 characters: they never wrap.
@@ -100,12 +100,12 @@ class LandingPage
                 'Ask Anee what stops the pest',
                 'Anee reads a sick leaf from a photo',
             ],
-            'solutionKicker' => 'How it works',
-            'solutionHeadline' => 'Start in two minutes, in three steps',
+            'solutionKicker' => 'Getting started is easy',
+            'solutionHeadline' => 'Three steps. Two minutes.',
             'steps' => [
-                ['title' => 'Add your lot and your crop', 'text' => 'Pick from {crops} crops and set the sowing or transplant date. Two minutes.'],
-                ['title' => 'Follow the plan, day by day', 'text' => 'Every task on its day, with the stage it falls in and the weather for your field.'],
-                ['title' => 'Record it, and see what paid', 'text' => 'Tick the work done; the costs, the harvest and the profit add up by themselves.'],
+                ['title' => 'Add your lot and your crop', 'text' => 'Pick from {crops} crops and set the day you plant. That\'s it.'],
+                ['title' => 'Follow the plan, day by day', 'text' => 'Every task on its day, with your crop\'s stage and your field\'s weather.'],
+                ['title' => 'Tick it done, and see what paid', 'text' => 'Tick the work done. The costs, the harvest and the profit add up on their own.'],
             ],
         ],
         // The two costs that keep climbing, one row each after the weather:
@@ -116,7 +116,7 @@ class LandingPage
                 [
                     'kicker' => 'Fuel keeps going up',
                     'headline' => 'Every trip to the field burns more money than last season',
-                    'text' => 'The hand tractor, the water pump, the sprayer and the ride to town all run on fuel, and fuel keeps getting dearer. A job done twice, or on the wrong day, burns it twice.',
+                    'text' => 'The hand tractor, the pump, the sprayer and the ride to town all run on fuel, and fuel keeps going up. A job done twice, or on the wrong day, burns it twice.',
                     'fixes' => [
                         'Each job on the right day, done once',
                         'Water only where the crop needs it',
@@ -127,7 +127,7 @@ class LandingPage
                 [
                     'kicker' => 'Fertilizer keeps going up',
                     'headline' => 'A sack costs more every season. Make every sack count.',
-                    'text' => 'Urea and complete fertilizer cost more each planting. Put on at the wrong stage, a sack is paid for in full and only partly taken up by the crop.',
+                    'text' => 'Urea and complete cost more each planting. Put on at the wrong stage, you pay for the whole sack, but the crop takes only part of it.',
                     'fixes' => [
                         'Apply at the stage it is taken up',
                         'Exact rates per lot, from your stock',
@@ -143,29 +143,29 @@ class LandingPage
         // hectare in pesos (shown on the Philippine page; the other page shows
         // the percentage of a hectare's gross instead).
         'losses' => [
-            'headline' => 'What might be happening to your farm now',
-            'sub' => 'Deciding without accuracy, and without a solution you can be sure of, costs you your yield security.',
+            'headline' => 'Here\'s what guessing can cost you',
+            'sub' => 'When you can\'t be sure, you guess. And every guess has a price. This is the most each one can take from one hectare.',
             'items' => [
-                ['n' => 40, 'title' => 'Yield lost to pests and diseases', 'text' => 'When the intervention comes late, or never comes at all.', 'peso' => '₱24,000 to ₱40,000', 'image' => 'palay-heads', 'upload' => ''],
-                ['n' => 30, 'title' => 'Wasted on the wrong solution', 'text' => 'A misread problem means the wrong product, at full price, while the real problem keeps eating.', 'peso' => '₱18,000 to ₱30,000', 'image' => 'sacks', 'upload' => ''],
-                ['n' => 30, 'title' => 'Yield lost to trying myths that are not true', 'text' => 'Hearsay remedies and beliefs about lucky timing, passed around as fact, and tested on a whole field before anyone checked.', 'peso' => '₱18,000 to ₱30,000', 'image' => 'palay-phone', 'upload' => ''],
-                ['n' => 30, 'title' => 'Profit lost to untracked spending', 'text' => 'Costs remembered instead of recorded leak all season, and only show themselves at settling time.', 'peso' => '₱18,000 to ₱30,000', 'image' => 'sacks-shed', 'upload' => ''],
-                ['n' => 25, 'title' => 'Yield lost to mistimed fertilizer', 'text' => 'The right sack on the wrong week feeds the field a fraction of what it paid for.', 'peso' => '₱15,000 to ₱25,000', 'image' => 'transplant', 'upload' => ''],
+                ['n' => 40, 'title' => 'Yield lost to pests and diseases', 'text' => 'When the fix comes late, or never comes at all.', 'peso' => '₱24,000 to ₱40,000', 'image' => 'palay-heads', 'upload' => ''],
+                ['n' => 30, 'title' => 'Wasted on the wrong solution', 'text' => 'The wrong product, at full price, while the real problem keeps eating.', 'peso' => '₱18,000 to ₱30,000', 'image' => 'sacks', 'upload' => ''],
+                ['n' => 30, 'title' => 'Yield lost to trying myths that are not true', 'text' => 'Old beliefs and hearsay, tried on a whole field before anyone checked.', 'peso' => '₱18,000 to ₱30,000', 'image' => 'palay-phone', 'upload' => ''],
+                ['n' => 30, 'title' => 'Profit lost to untracked spending', 'text' => 'Costs you remember instead of write down add up all season, and only show at the end.', 'peso' => '₱18,000 to ₱30,000', 'image' => 'sacks-shed', 'upload' => ''],
+                ['n' => 25, 'title' => 'Yield lost to mistimed fertilizer', 'text' => 'The right sack in the wrong week feeds the crop only part of what you paid for.', 'peso' => '₱15,000 to ₱25,000', 'image' => 'transplant', 'upload' => ''],
                 ['n' => 25, 'title' => 'Yield lost to water at the wrong time', 'text' => 'Dry at flowering, flooded at ripening: the stage the water missed never comes back.', 'peso' => '₱15,000 to ₱25,000', 'image' => 'storm-paddies', 'upload' => ''],
-                ['n' => 20, 'title' => 'Yield lost to delayed decisions', 'text' => 'Waiting days for someone else\'s answer, the technician\'s next visit or a reply that never comes, while the problem keeps growing.', 'peso' => '₱12,000 to ₱20,000', 'image' => 'farmer-hijab', 'upload' => ''],
-                ['n' => 20, 'title' => 'Yield lost to planting outside the window', 'text' => 'A season started on habit instead of the climate\'s actual calendar pays for it at harvest.', 'peso' => '₱12,000 to ₱20,000', 'image' => 'hero-planting', 'upload' => ''],
+                ['n' => 20, 'title' => 'Yield lost to delayed decisions', 'text' => 'Days waiting for an answer, or for the technician\'s next visit, while the problem keeps growing.', 'peso' => '₱12,000 to ₱20,000', 'image' => 'farmer-hijab', 'upload' => ''],
+                ['n' => 20, 'title' => 'Yield lost to planting outside the window', 'text' => 'Planting by habit instead of by the weather shows at harvest.', 'peso' => '₱12,000 to ₱20,000', 'image' => 'hero-planting', 'upload' => ''],
             ],
             'note' => 'Percentage ranges drawn from published {cropResearch} loss estimates{pesoBasis}. Your farm\'s exact numbers vary, which is the point.',
         ],
         // The answer, in the four words precision agriculture is built on.
         'precision' => [
-            'kicker' => 'The answer: precision agriculture',
+            'kicker' => 'So what\'s the fix?',
             'headline' => 'The right input, the right amount, at the right time, in the right place',
-            'sub' => 'It is how the biggest farms protect their yield and cut their costs. anee.io brings it to yours, with no sensors, no drones and no big budget: just your phone.',
+            'sub' => 'That\'s all precision farming is. Big farms do it with sensors and drones. You can do it with your phone.',
             'items' => [
-                ['icon' => '⏱️', 'title' => 'The right time', 'text' => 'Each task lands on its day by DAS or DAT and the growth stage, never too early, never too late, and never into the rain.'],
-                ['icon' => '⚖️', 'title' => 'The right amount', 'text' => 'Materials and rates set per activity and per lot, drawn from your inventory, so you buy and apply only what the field needs.'],
-                ['icon' => '🧪', 'title' => 'The right input', 'text' => 'Anee reads a photo of the leaf or the pest and says what it is and what works, before you pay for the wrong product.'],
+                ['icon' => '⏱️', 'title' => 'The right time', 'text' => 'Each task lands on its day, counted from planting and the crop\'s stage. Never too early, never too late, never into the rain.'],
+                ['icon' => '⚖️', 'title' => 'The right amount', 'text' => 'The rate for each task and each lot, taken from what\'s in your shed, so you buy and use only what the field needs.'],
+                ['icon' => '🧪', 'title' => 'The right input', 'text' => 'Send Anee a photo of the leaf or the pest. She tells you what it is and what works, before you pay for the wrong product.'],
                 ['icon' => '📍', 'title' => 'The right place', 'text' => 'Every lot keeps its own plan, its own forecast and its own map, with pins where the trouble is.'],
             ],
         ],
@@ -173,9 +173,9 @@ class LandingPage
         // homepage's section (public.partials.anee-auto-section), its five
         // steps and its phone; these are the words around them. No price.
         'auto' => [
-            'kicker' => 'The easiest way to farm with precision',
+            'kicker' => 'The easiest way of all',
             'headline' => 'Rather not plan it all yourself? *Just follow Anee.*',
-            'sub' => 'Answer a few questions about your farm once. Anee plans the whole season, tells you what to do each day, and moves the work herself when the rain comes or a worker cannot.',
+            'sub' => 'Answer a few questions about your farm once. Anee plans the whole season, tells you what to do each day, and moves the work herself when it rains or a worker can\'t come.',
             'cta' => 'Let Anee plan my season',
         ],
         // Try it (2026-10-07): the visitor picks a crop and a planting day
@@ -184,7 +184,7 @@ class LandingPage
         'demo' => [
             'kicker' => 'Try it now',
             'headline' => 'Your season, *planned in ten seconds*',
-            'sub' => 'Pick your crop and the day you plant. This is a sample of the calendar anee.io builds for every lot: each task on its own day, counted from planting.',
+            'sub' => 'Pick your crop and the day you plant. Here\'s a sample of the calendar anee.io builds for every lot, each task on its own day.',
             'cta' => 'Get my full season plan free',
             'note' => 'A sample from common practice. Your own plan follows your variety, your field and your weather, and moves when they do.',
         ],
@@ -194,7 +194,7 @@ class LandingPage
         'space' => [
             'kicker' => 'New this season',
             'headline' => 'Plant at the right time. *Sell at the right price.*',
-            'sub' => 'The newest tools follow your crop all the way to the money: the best weeks to plant, a plan for every lot, your field seen from space, the price ahead, whether to dry before you sell, and a fair share for your farm manager.',
+            'sub' => 'The newest tools follow your crop all the way to the money: when to plant, a plan for every lot, your field from space, the price ahead, whether to dry before you sell, and a fair share for your farm manager.',
             'items' => [
                 ['title' => 'Market Price Forecast', 'text' => 'The months your crop sells highest and the low season to stay away from, read from its farmgate prices of the last years.', 'image' => 'market'],
                 ['title' => 'Benta o Bilad Calculator', 'text' => 'Sell it wet, or dry it first? Put in your sacks and the prices and see which way leaves more money in your hand.', 'image' => 'bilad'],
@@ -210,9 +210,25 @@ class LandingPage
         // the app does not have, or miss a new one (2026-10-13).
         'more' => [
             'headline' => '{tools} tools for your whole season, *in one app*',
-            'sub' => 'One app instead of a notebook, a calculator, a group chat and a guess. {freeTools} of them are free forever on Libre; the rest come with the paid plans. Tap any tool to see how it helps.',
+            'sub' => 'No more notebook, calculator, group chat and guessing. {freeTools} of them are free forever on Libre. Tap any tool to see how it helps.',
             // An uploaded phone screenshot in place of the season's modules (blank: those).
             'image' => '',
+        ],
+        // Anee's lines (2026-10-28, the owner: "landing pages should be somewhat conversational right?"): a speech
+        // bubble with her face opens each section, so the page reads like a talk with her. Short, plain words; a blank
+        // line is not drawn. Wrap words in *stars* to color them.
+        'says' => [
+            'hero' => 'Hi, I\'m Anee, your smart farm technician! Tell me about your farm once, and I\'ll tell you *what to do each day*.',
+            'problem' => 'Let me ask you something. Does any of this sound like *your last season*?',
+            'losses' => 'This part hurts, I know. But it helps to *see where the money goes*.',
+            'social' => 'And when something goes wrong, where do you ask? *This happened in a real farmers\' group.*',
+            'precision' => 'Here\'s the good news: you don\'t need to guess. *You need the right day.*',
+            'auto' => 'Too busy to plan it all? *Leave it to me.* You just follow.',
+            'demo' => 'Want to see it for yourself? *Try it now*, no sign up needed.',
+            'space' => 'I keep learning. *These came out this season.*',
+            'more' => 'Everything is in one app. *Tap any tool* and I\'ll tell you what it does.',
+            'faq' => 'Still thinking it over? That\'s fine. *Here\'s what farmers ask me most.*',
+            'closer' => 'I\'m ready when you are. *Let\'s make this season your best.*',
         ],
         'testimonials' => [
             'headline' => 'Farmers who plan with anee.io',
@@ -222,7 +238,7 @@ class LandingPage
             'items' => [],
         ],
         'faq' => [
-            'headline' => 'Questions before you start',
+            'headline' => 'You might be wondering',
             'items' => [
                 ['q' => 'Is it really free?', 'a' => 'Yes. Libre is free forever, with {freeTools} of the {tools} tools: one active season on one lot, the season board, growth stages, notes and photos, weather for today and tomorrow, the Market Price Forecast, Benta o Bilad and the Hatian Calculator among them. A few ads keep it free.'],
                 ['q' => 'Who is Anee?', 'a' => 'Anee is the smart farm technician inside anee.io. Send her a photo or ask in Tagalog, Bisaya, Ilocano, Taglish or English, and she answers in seconds, knowing your lot, its stage, your weather and what you already applied. She comes with Libre + Anee, from {libreAnee} a month, and with every paid plan.'],
@@ -241,7 +257,7 @@ class LandingPage
             ],
         ],
         'closer' => [
-            'headline' => 'Make this your *most precise season* yet.',
+            'headline' => 'Ready to stop guessing? *Let\'s plan your season.*',
             'sub' => 'Set up your first lot in two minutes. anee.io keeps the days, the weather and the money, so you can keep your eyes on the harvest.',
             'cta' => 'Create my free account',
             'risk' => 'Free forever on Libre · No credit card · Upgrade only when you want',

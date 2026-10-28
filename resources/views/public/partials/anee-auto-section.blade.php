@@ -10,7 +10,8 @@
      The ads landing page (/start, 2026-10-13) shows it too: there it passes
      $aaLook 'site' (the site's heading classes, which /start dresses) and
      $aaText, the mother app's words for the kicker, headline (*stars* mark
-     the green words), sub and button; any left blank keep these. --}}
+     the green words), sub and button; any left blank keep these. $aaLine, when given, is a line from Anee
+     (public.partials.anee-says) above the heading (2026-10-28, the conversational /start). --}}
 @php
     $aaE = fn (string $n) => \App\Support\AneeEmoji::url($n);
     $aaSite = ($aaLook ?? 'home') === 'site';
@@ -27,6 +28,7 @@
     <svg class="hp-auto-web" data-auto-net data-inputs='@json($aaInputs)' aria-hidden="true"></svg>
     <div class="max-w-6xl mx-auto px-4 sm:px-6">
         <div class="hp-head reveal">
+            @if (! empty($aaLine))<div class="mb-5">@include('public.partials.anee-says', ['say' => $aaLine])</div>@endif
             <p class="{{ $aaSite ? 'fx-kicker' : 'hp-kick' }}">{{ $aaSay('kicker', 'The Easiest Way to Precision Farming') }}</p>
             <h2 class="{{ $aaSite ? 'fx-h' : 'hp-h2' }}" id="hpAutoH">{!! \App\Support\LandingPage::marked($aaSay('headline', 'Do Not Want Farming to Get Complicated? *Just Follow Anee.*')) !!}</h2>
             <p class="{{ $aaSite ? 'fx-p' : 'hp-p' }}">{{ $aaSay('sub', 'Building schedules, running analyses, checking the weather every morning, timing the fertilizer: not everyone has the time for it, and nobody should have to guess. With Anee Auto you answer a few questions about your farm once. Anee works out the whole season, tells you what to do each day, and changes the plan herself when the rain comes or a worker cannot.') }}</p>
