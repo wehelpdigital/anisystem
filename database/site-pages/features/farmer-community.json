@@ -79,6 +79,21 @@
       "text": "Before you post a question, you can also ask [Anee, the smart farm technician](/features/ai-agricultural-technician). Then bring her answer to the community and hear what farmers near you have seen."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the farmer community helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Learn from growers like you.** See what worked for other farmers on the same crops and seasons.",
+        "**Early warnings.** A pest or disease seen in a nearby town reaches you before it reaches your field.",
+        "**Help that goes both ways.** Share what you know and climb the ladder as others learn from you.",
+        "**One place for your farm and your circle.** Messages and rooms sit inside the same app as your season, so nothing is lost between apps."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Join the farmer community",
       "text": "Sign up free and meet growers who plant what you plant.",

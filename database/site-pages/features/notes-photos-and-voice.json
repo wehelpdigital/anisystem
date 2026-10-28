@@ -84,6 +84,21 @@
       "text": "Say or write the lot name at the start, like 'Lot 2, may nakita akong daga'. Months later, a search for that lot finds every note about it."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How notes from the field helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Capture it the moment you see it.** A photo, a video or a voice note takes seconds, even with muddy hands.",
+        "**Nothing forgotten.** What you saw on a lot is kept with the season, ready when you plan the next step.",
+        "**Better answers from Anee.** Notes and photos give her more to read, so her advice fits what is really happening.",
+        "**Find it later.** Tags and the gallery bring back a note or photo without scrolling."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Start your farm notebook",
       "text": "Sign up free. Farm notes, photos, voice notes, drawings and tags are all on the free Libre plan.",

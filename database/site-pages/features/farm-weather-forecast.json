@@ -99,6 +99,21 @@
       "text": "On the free Libre and Libre plus Anee plans you see today and tomorrow, and the other days stay locked. Solo Farmer and Farm Owner open all six days, the hours and the weather right now."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the farm weather forecast helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Sprays and fertilizer not washed away.** Rain on a spray day shows up beside the task, so you move it before the money is lost.",
+        "**Plan the week around the sky.** The forecast for each lot sits next to the plan, so the work lands on the right days.",
+        "**Weather for the field, not the city.** Each lot reads the forecast where it really is.",
+        "**Learn from past seasons.** Look back at the weather the season ran under, so you understand the harvest you got."
+      ]
+    },
+    {
       "type": "cta",
       "title": "See the sky over your own lots",
       "text": "Sign up free, give each lot its town, and the forecast shows up on your board.",

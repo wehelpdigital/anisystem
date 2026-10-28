@@ -107,6 +107,21 @@
       "text": "Each research you run stays on the Saved tab, where you can rename it, describe it, tag it and search it. Tap Attach to Anee to ask her more, for example how the top pick handles a late typhoon. That chat works like any talk with [Anee, the smart farm technician](/features/ai-agricultural-technician).\n\nNot sure of the crop yet? Start with the [What to Plant Analysis](/features/what-to-plant-analysis). Once you have the variety, the [Crop Protocol Analysis](/features/crop-protocol-analysis) writes a season plan for it. Then, when you plant, set it as the variety of your [lot](/features/farm-lots).\n\nVariety Ranking runs on credits and comes with Libre plus Anee, Solo Farmer and Farm Owner. The price shows before you press Run, and a failed run costs nothing."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How Variety Ranking helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Choose seed with facts.** Varieties compared for your area: yield, maturity, resistance and real harvests.",
+        "**Avoid a costly wrong choice.** A variety that fails your season costs a whole harvest, so the ranking shows its weak points first.",
+        "**Seed that fits your troubles.** Protection against the pests and stresses of your field counts in the ranking.",
+        "**Keep the research.** Saved rankings help when you buy seed again next season."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Compare varieties before you buy seed",
       "text": "Sign up free, add Anee, and run your first Variety Ranking for your own field.",

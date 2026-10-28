@@ -111,6 +111,21 @@
       "text": "Satellite Analysis comes with Libre plus Anee, Solo Farmer and Farm Owner. Each run uses credits, and the page shows the price and your balance first. The charge comes only when the report is ready. If neither satellite has passed over your field lately, the run stops and you pay nothing."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How satellite crop monitoring helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**See the whole field at once.** Weak spots show up from above, even on a big farm.",
+        "**Find problems you cannot see from the dike.** The field read in parts points to where to walk and check.",
+        "**Works through typhoon clouds.** Radar sees the field when the clouds hide it.",
+        "**Know what to do next.** Anee adds the threats and the next steps to the picture."
+      ]
+    },
+    {
       "type": "cta",
       "title": "See your field from space",
       "text": "Sign up free, add Anee, and draw your first field for a satellite reading.",

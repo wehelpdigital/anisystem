@@ -116,6 +116,21 @@
       "text": "Every comparison lands on the Saved tab, newest first. Search it by name, rename it and add a note on what you wanted to learn. If you delete a comparison, the two reports stay where they were.\n\nCompare Reports comes with the Solo Farmer and Farm Owner plans. On Farm Owner, a worker with view access to Reports can read the farm's comparisons, while edit access lets them make new ones. For the whole family of reports, start with [farm reports](/features/farm-reports)."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How Compare Reports helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**See what really changed.** Two seasons side by side, line by line, so you know where the money and the yield moved.",
+        "**Keep what worked.** The comparison shows which change paid off, so you repeat it on purpose next season.",
+        "**Catch the costs that crept up.** A labor or input line that grew season after season stands out at once.",
+        "**Anee explains the difference.** She says why the numbers moved, in plain words you can act on."
+      ]
+    },
+    {
       "type": "cta",
       "title": "See which season did better",
       "text": "Sign up free and save a report each season. Then compare them on the Solo Farmer or Farm Owner plan.",

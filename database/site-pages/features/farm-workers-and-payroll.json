@@ -104,6 +104,21 @@
       ]
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How workers and payroll helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Pay day without the headache.** Attendance, half days and rates add up the payroll for you.",
+        "**Labor cost you can trust.** The cost is counted from who worked on each task, so the season's real labor cost is clear.",
+        "**The right hands on the right job.** Assign workers to tasks and everyone knows their work for the day.",
+        "**Fewer disputes.** A record of who came, on which day and for which task settles questions fairly."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Put your crew on the board",
       "text": "Sign up free, then add workers on the Solo Farmer plan, or give them logins on Farm Owner.",

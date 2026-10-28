@@ -96,6 +96,21 @@
       "text": "Use [farm notes](/features/notes-photos-and-voice) for what happened, day by day. Use Documentation for what you will read again: the plan, the rules and the papers. Harvest numbers go in your [harvest records](/features/harvest-records)."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How farm documentation helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Everything about the season in one place.** The protocol you followed, the rules of the farm and the receipts sit together.",
+        "**Answers for next year.** What was done and why is written down, so you do not depend on memory.",
+        "**Easier handovers.** A new manager or worker reads how the farm runs instead of learning it by mistakes.",
+        "**Proof when you need it.** Files and notes kept with the season help with buyers, lenders and programs that ask for records."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Keep this season's papers in one place",
       "text": "Sign up free. Documentation text is on every plan, and file attachments come with Solo Farmer and Farm Owner.",

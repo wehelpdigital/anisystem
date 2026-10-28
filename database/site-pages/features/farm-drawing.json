@@ -86,6 +86,21 @@
       "text": "Draw the plan while changes are still free. Mark the seedbed, the order of planting and who takes each lot. Then put the work on the [cropping calendar](/features/cropping-calendar), lot by lot, so the dates match the picture."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How farm drawing helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Everyone sees the same plan.** A drawing of the field shows where the seedbed, the canal or the next planting goes, with no room for guessing.",
+        "**Fewer mistakes in the field.** Workers follow a picture more easily than a long message.",
+        "**Plan changes in minutes.** Draw over a photo of the field and share it, instead of walking everyone to the spot.",
+        "**Kept for every season.** Drawings stay in the gallery, so last season's layout is there to start from."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Sketch your farm plan free",
       "text": "Draw comes with every plan, including the free Libre plan. Sign up and make your first farm drawing today.",

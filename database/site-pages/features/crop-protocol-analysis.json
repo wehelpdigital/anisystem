@@ -105,6 +105,21 @@
       "text": "Each protocol stays on the Saved tab, with a name, description and tags you can search. Tap Attach to Anee to ask her about any stage. The totals give the bags for the whole field, amounts only, so you can price them with your dealer.\n\nBefore this tool, pick the crop with the [What to Plant Analysis](/features/what-to-plant-analysis) and the seed with [Variety Ranking](/features/variety-research). The Crop Protocol Analysis runs on credits with Libre plus Anee, Solo Farmer or Farm Owner."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the crop protocol analysis helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**A whole season planned in one sitting.** Fertilizer, sprays and water by growth stage, written for your place and variety.",
+        "**Fertilizer that pays for itself.** Each bag goes in at the stage the crop needs it, so less is wasted and the harvest it can feed is clear.",
+        "**Fewer surprises mid season.** The threats of your season and your field are named with what to watch for and when.",
+        "**A plan you can run.** Send it to your board or your Protocol Builder and the season starts from a plan, not from memory."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Get a season plan for your variety",
       "text": "Sign up free, add Anee, and let her write your first crop protocol by growth stage.",

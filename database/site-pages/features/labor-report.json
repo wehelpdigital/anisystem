@@ -134,6 +134,21 @@
       "text": "If someone did not work an activity, take them off it on the board, and the report follows. Keep each worker's rate current too, so the total matches what you paid. For the full picture of the season, see [farm reports](/features/farm-reports)."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the labor report helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**See where the labor money goes.** Worker days and cost for the season, laid out by task and by month.",
+        "**Plan the busy weeks.** Knowing your busiest stretches helps you line up workers before they are needed.",
+        "**Spot work that costs too much.** A task that takes more days than it should stands out, so you can change how it is done.",
+        "**Fair records for your workers.** Each worker at their own rate, counted from the days they really worked."
+      ]
+    },
+    {
       "type": "cta",
       "title": "See what your season paid its workers",
       "text": "Sign up free. The labor report is on every plan, and the Workers module comes with Solo Farmer and Farm Owner.",

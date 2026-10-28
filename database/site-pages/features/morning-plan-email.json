@@ -119,6 +119,21 @@
       "text": "Need the crew to know about Thursday tonight? Open that day's menu on the board and tap Email this date. Pick who gets it from the season's workers and send it right away, with a short note of your own if you like."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the morning plan email helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Everyone starts on the same page.** The day's work reaches you and your team at 6 AM, with no calls to make.",
+        "**Nothing to remember to send.** It goes out by itself every morning.",
+        "**Fewer mistakes in the field.** Workers read which lot and which task, not a rushed message the night before.",
+        "**No login needed.** Workers read it in their email, even without the app."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Start every day on the same page",
       "text": "Sign up free and build your season on the board. Add workers on Solo Farmer or Farm Owner, then switch on the morning email.",

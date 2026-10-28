@@ -80,6 +80,21 @@
       "text": "Open all three from the tools on your dashboard, with a switch at the top to jump between them. Each opens on the crop of your newest season. They come with Libre plus Anee and every plan above it.\n\nStill not sure? Take a clear photo and send it to [Anee, your smart farm technician](/features/ai-agricultural-technician), on a plan with Anee. She reads it with your crop, its age and the weather, then tells you what it most likely is and what to check next, in Tagalog or English. For the bigger picture, read our guide to [integrated pest management](/pests/integrated-pest-management)."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the finders helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Know the pest before you spray.** Pick the crop and the damage, and the finder names what fits.",
+        "**Spray what works.** Active ingredients by group, with products sold here, so you buy what controls the problem.",
+        "**Less resistance and less waste.** Knowing the group helps you rotate and avoid sprays that stop working.",
+        "**Weeds handled at the right age.** The weed helper fits the advice to your crop's age."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Find the problem before you spray",
       "text": "Sign up, add your season, and keep the Pest Finder, Disease Finder and Weed Control Helper one tap away inside anee.io.",

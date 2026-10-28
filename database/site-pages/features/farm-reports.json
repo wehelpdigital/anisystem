@@ -103,6 +103,21 @@
       "text": "A report is as good as the board behind it. Tick tasks done on the day, log purchases when they arrive and enter every harvest, and the numbers will match your wallet."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How farm reports helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Know if the season paid.** Labor, expenses and profit are counted from your own records, not guessed.",
+        "**See the yield the fair way.** Yield per hectare lets you compare lots and seasons of different sizes.",
+        "**Learn what to change.** Anee's season report and the comparisons point to the steps that cost you most.",
+        "**Records that open doors.** Clear reports help with loans, insurance and talks with buyers or partners."
+      ]
+    },
+    {
       "type": "cta",
       "title": "See your season in numbers",
       "text": "Sign up free and start keeping the records your farm reports will read.",

@@ -90,6 +90,21 @@
       "text": "Port a protocol from the [Protocol Builder](/features/protocol-builder) into a new season. You name the lots and give each its start date as you go. Every task then lands on each lot's own count."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How farm lots helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Each field run on its own timing.** Lots sown a week apart keep their own day count, so each gets its fertilizer at the right age.",
+        "**Answer once, use everywhere.** A lot's place, size, soil and water are read by every analysis, so you are not asked again and again.",
+        "**Clear numbers per field.** Yield, cost and profit can be seen lot by lot, so you know which field earns and which one needs work.",
+        "**Two crops, one season.** Different crops on different lots stay organized on the same board."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Set up your first lot free",
       "text": "Sign up free, start a cropping schedule and add your first lot. Libre includes one lot per season.",

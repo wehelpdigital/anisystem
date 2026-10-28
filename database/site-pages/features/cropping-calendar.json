@@ -119,6 +119,21 @@
       "text": "Write your protocol once in the [Protocol Builder](/features/protocol-builder), then import it as a new cropping schedule. Every task lands on its day count for each lot, and [growth stages and weather](/features/growth-stages-and-weather) read from the same day zero."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the cropping calendar helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Every task on the right day.** Each lot counts from its own day zero, so fertilizer and sprays land at the right age of the crop.",
+        "**Nothing forgotten.** The whole season sits on one board, so the next job is always in front of you and your workers.",
+        "**Room for the weather.** When rain or a holiday moves the work, drag the task and the season stays in order.",
+        "**A record that builds itself.** What was done, when and by whom becomes next season's starting plan and this season's reports."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Plan your next season on one board",
       "text": "Sign up free and build your first cropping schedule. The free Libre plan includes the Activities board for one season.",

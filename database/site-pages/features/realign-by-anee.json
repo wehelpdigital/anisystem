@@ -124,6 +124,21 @@
       "text": "Realign by Anee comes with every plan that has Anee: Libre plus Anee, Solo Farmer and Farm Owner. On the free Libre plan the button shows with a lock. A realign costs 30 credits, one price for any season, and the sheet shows the price and your balance first. Nothing comes off your balance until her answer lands on the lot. If the run fails, you pay nothing.\n\nA lot needs a crop and a day zero before she can read it. On a team farm, the credits come from the farm owner's balance. Realign is one of the jobs of [Anee, the smart farm technician](/features/ai-agricultural-technician), so you can open her reading in the chat and ask about it."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How Realign by Anee helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Work at the crop's real age.** When a lot runs ahead or behind, its stage count is moved to match the field.",
+        "**Fertilizer and sprays at the right time.** The real stage keeps the next applications on time.",
+        "**No need to redo the calendar.** Your dates stay as they are. Only the stage count moves.",
+        "**The reasons, written down.** Anee says why she moved it, so you can check it in the field."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Read where your crop really stands",
       "text": "Sign up free, set up a lot with its crop and day zero, then add Anee with Libre plus Anee or any paid plan.",

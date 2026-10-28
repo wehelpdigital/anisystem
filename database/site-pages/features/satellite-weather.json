@@ -93,6 +93,21 @@
       "text": "Satellite Weather comes with Libre plus Anee and every plan above it, and it is locked on Libre. The map, the typhoon tracker, the rain tracks and the 10 day forecast open with a week pass: 50 credits for seven days. Anee's reading of the sky is priced on its own, on the same plans, and charges only when the reading is ready. Your past readings stay on the page, so you can open last week's again."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How Satellite Weather helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**See the storm coming.** Clouds, rain and typhoon tracks over your farm, with the distance from your field.",
+        "**Protect the crop and the work.** Move a spray, harvest early or secure the farm before the storm.",
+        "**Plan the next days.** Fast forward the forecast to see when the rain will pass.",
+        "**Ask what it means.** Anee says what the storm may do to your crop at its stage."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Watch the sky over your own farm",
       "text": "Sign up and choose Libre plus Anee or a bigger plan. A week of the typhoon tracker and the forecast is 50 credits.",

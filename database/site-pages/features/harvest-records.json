@@ -105,6 +105,21 @@
       "text": "Write the observation while the sacks are still in front of you, and snap a photo of the weighing. A number noted that day beats one you try to recall six months later. The [farm reports](/features/farm-reports) can only add up what you wrote down."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How harvest records helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Know what you really harvested.** Yield, moisture and weight per lot, written down while you still remember.",
+        "**Sell with numbers in hand.** The price and the buyer of each sale help you get a better deal next time.",
+        "**Plan from facts, not memory.** Next season's targets start from your real yields.",
+        "**Reports that fill themselves.** Your harvest feeds the profit report and Anee's season report."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Start your harvest records free",
       "text": "Observations are on every plan, including the free Libre plan. Sign up and record your next harvest lot by lot.",

@@ -116,6 +116,21 @@
       "text": "Analyze So Far sits with the full report shelf, so it comes with Solo Farmer and Farm Owner. One report costs 50 credits. The page shows the price and your balance first, and nothing comes off until you press Run. Solo Farmer adds 30 credits at each renewal and Farm Owner adds 100, and credit packs cover the rest.\n\nEvery report lands on the Saved tab, newest first. Rename it, add a description and open it again any time. Tap Ask Anee about it and the chat opens with the report attached. Then ask what a risk means for Lot 2. It is the same chat as [Anee, the smart farm technician](/features/ai-agricultural-technician), with your report already in her hands."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How Analyze So Far helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**A checkup while there is still time.** Halfway through, a problem can still be fixed. At harvest it can only be counted.",
+        "**The risks ahead, in order.** Anee says what the coming weeks may bring and what to do first, so the next spray or fertilizer goes where it counts.",
+        "**A fair idea of the harvest.** The likely harvest window and yield help you line up the harvester, the dryer and the buyer early.",
+        "**No extra typing.** It reads the board, the notes and the weather you already keep, so the checkup costs you minutes, not a day of paperwork."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Check your season while there is time",
       "text": "Analyze So Far comes with Solo Farmer and Farm Owner. Compare the plans and pick the one that fits your farm.",

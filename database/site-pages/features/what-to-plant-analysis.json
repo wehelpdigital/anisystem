@@ -107,6 +107,21 @@
       "text": "Every finished analysis stays on the Saved tab. Rename it, add a description and tags, and search for it later. Tap Attach to Anee to open a chat with the analysis attached, then ask her about the second pick or a crop she left out. That chat works like any talk with [Anee, the smart farm technician](/features/ai-agricultural-technician).\n\nNext, compare seed with [Variety Ranking](/features/variety-research), and let the [Crop Protocol Analysis](/features/crop-protocol-analysis) write a season plan for that variety. When you plant, add a [lot](/features/farm-lots) for the crop, and the [cropping calendar](/features/cropping-calendar) dates every task from its day zero.\n\nThe analysis runs on credits, and the price shows before you press Run. It comes with Libre plus Anee, Solo Farmer and Farm Owner, while the free Libre plan has no Anee."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the What to Plant Analysis helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Plant what fits your land.** Crops ranked for your soil, water, season and market.",
+        "**Less risk of a failed crop.** Weather risks at harvest are shown for each crop.",
+        "**Find a better earning crop.** Surprise picks show crops that fit but few plant nearby.",
+        "**Know what each crop asks of you.** Water, work and money for each choice."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Find the crop that fits your land",
       "text": "Sign up free, add Anee, and run your first What to Plant Analysis for your own field.",

@@ -102,6 +102,21 @@
       "text": "The growth stage you read offline follows any reading from [Realign by Anee](/features/realign-by-anee), so a lot that runs late shows its real stage out there too. Back in signal, the dashboard greets you with [Anee's tip of the day](/features/farm-tip-of-the-day). For the full picture of photos, clips and voice on the farm, see [notes, photos and voice](/features/notes-photos-and-voice)."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How offline mode helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Work at the far lot with no signal.** Tick tasks and write notes where there is no signal.",
+        "**Nothing lost.** Your changes wait on the phone and sync when the signal returns.",
+        "**No waiting for a connection.** The work gets recorded when it happens, not hours later.",
+        "**Records you can trust.** The board stays complete even on days spent far from the town."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Take the farm where the signal is not",
       "text": "Start free on Libre, offline mode included, and move to a bigger plan when you need workers and the full weather.",

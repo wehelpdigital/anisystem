@@ -106,6 +106,21 @@
       "text": "A plan agreed on the whiteboard or in chat still belongs on the season's plan. Before you leave the room, put the task on the [cropping calendar](/features/cropping-calendar). Then it shows on the board for everyone, and in the [morning plan email](/features/morning-plan-email) if you send one."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the Collab Room helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**One place for the whole team.** The chat, the whiteboard, the plan and the map of the season sit together, so nobody works from an old message.",
+        "**Show the problem instead of describing it.** A photo or a drawing on a photo makes the instruction clear the first time.",
+        "**Decisions with everyone in the room.** Ask Anee together and the whole team hears the same answer.",
+        "**Less time on the phone.** Calls and cameras live in the room, and what was decided stays written down for the ones who were not there."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Open a room for your crew",
       "text": "The Collab Room comes with the Farm Owner plan, along with worker logins and the logs diary.",

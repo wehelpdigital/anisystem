@@ -72,6 +72,21 @@
       "text": "Pick next Monday's date on Growth Stages, read each lot's to do list and watch list, then check the forecast. Move any spray that lands on a rainy day before the week starts."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How growth stages and weather helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Know what each lot needs today.** The stage of every lot, with what to do and what to watch, for any date you pick.",
+        "**Work at the right age of the crop.** Fertilizer, water and scouting follow the stage, so they do the most good.",
+        "**Weather beside the stage.** You see if the coming days suit the work the stage calls for.",
+        "**Catch a lot running behind.** A lot that drifts from its usual stages is easy to spot and fix."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Know where every lot stands",
       "text": "Sign up free. Growth stages and the weather for today and tomorrow are on the free Libre plan.",

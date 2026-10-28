@@ -97,6 +97,21 @@
       "text": "The review comes with Libre plus Anee, Solo Farmer and Farm Owner. Its sheet shows the price and your balance, and no credits come off until you tap Analyze it. Removing a review from the tab does not return its credits. The Protocol Builder itself is free on every plan."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the protocol review helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Catch mistakes before they cost you.** Anee checks the plan for gaps, wrong timings and risky rates.",
+        "**A second pair of eyes.** A technician's look at your plan, without waiting for a visit.",
+        "**Learn why.** Each point says what to change and why, so your next protocol is better.",
+        "**Keep it with the plan.** The review stays on the Analyses tab beside the protocol."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Let Anee check your plan",
       "text": "Write your protocol free in the Protocol Builder, then add Anee for a review before you plant.",

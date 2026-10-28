@@ -121,6 +121,21 @@
       "text": "Months later you may forget a name but still remember the place. Fill in the province and town, and a search for the town brings the person back. Notes from the call itself belong in your [farm notes](/features/notes-photos-and-voice)."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the farm contact list helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Find the right number fast.** Buyers, traders, drivers and workers are a search away, with notes on each.",
+        "**Better prices at harvest.** Call two or three buyers from the list before you sell, instead of taking the first offer.",
+        "**Keep your network across seasons.** The list is yours, so a good harvester or supplier is never lost with an old phone.",
+        "**Less time chasing people.** Tags like Buyer or Harvester bring up the right people in a tap."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Build your farm contact list",
       "text": "Sign up free and save the numbers your season depends on. The Contact List is on every plan.",

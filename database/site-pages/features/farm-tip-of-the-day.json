@@ -89,6 +89,21 @@
       "text": "The tip gives you one line. For the full lists of what to do now and what to watch for at each lot's stage, open Growth Stages and pick today's date."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the tip of the day helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**One useful thing to do today.** The tip fits your crop's stage, so it is something you can act on now.",
+        "**Learn a little every day.** Small lessons add up over a season, without a long course or a seminar.",
+        "**Catch a problem before it grows.** Tips about what to watch for at each stage help you look at the right thing at the right time.",
+        "**More when you want it.** Tap the tip to ask Anee more, with your own farm in mind."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Get a tip for your own crop",
       "text": "Sign up free, add a lot with its crop and day zero, and tomorrow's tip starts reading your field.",

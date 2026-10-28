@@ -98,6 +98,21 @@
       "text": "A good palay price today does not always mean a good season. A lot can give 100 cavans and still lose money if the fertilizer, the hired harvester and the labor ate it first. Another lot with fewer cavans can earn more because it cost less.\n\nThat is why the profit report keeps the lot cards side by side. When one lot keeps winning, look at what you did there with [View as Protocol](/features/view-as-protocol), then do it again on the others."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the profit report helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Know if the season paid.** Harvest sales against every cost give the real profit, not a guess.",
+        "**Price your harvest well.** Seeing your cost per kilo helps you know the lowest price you can take.",
+        "**Find what eats the profit.** The costs laid out show where to save next season.",
+        "**Track it season after season.** Compare profits to see if your changes are paying off."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Know what your harvest really earned",
       "text": "Sign up free and keep your season on the board. Then open the profit report on the Solo Farmer or Farm Owner plan.",

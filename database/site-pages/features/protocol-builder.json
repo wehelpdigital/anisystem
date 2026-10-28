@@ -89,6 +89,21 @@
       "text": "Keep your best protocol and port it again next season. Each lot keeps its own day zero, so the same plan fits a lot planted two weeks later. Once it runs, [growth stages and weather](/features/growth-stages-and-weather) show how each lot is keeping up."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the Protocol Builder helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Plan the season before day zero.** Every task on its day count, written once and reused.",
+        "**Fewer mistakes.** Warnings flag what is missing or out of place while you write.",
+        "**A protocol that grows with you.** Versions for the wet and dry seasons keep what you learn.",
+        "**Start a season in a tap.** Import the protocol as a cropping schedule and the season is planned."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Write your next season today",
       "text": "The Protocol Builder is on every plan, including the free Libre plan. Sign up and start writing.",

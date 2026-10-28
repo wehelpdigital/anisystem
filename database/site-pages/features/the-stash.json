@@ -86,6 +86,21 @@
       "text": "The Stash comes with every anee.io account, Libre included. Reading costs no credits."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the Stash helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Good reading in your pocket.** Partners' magazines and guides open right in the app.",
+        "**Learn from other farmers.** Stories of varieties, methods and the people who made them work.",
+        "**Find a topic fast.** Search by year, title or subject.",
+        "**Free to read.** No extra app and nothing to pay."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Open the Stash",
       "text": "Sign up free and read every PhilRice Magazine issue on your phone.",

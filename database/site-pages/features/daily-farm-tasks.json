@@ -112,6 +112,21 @@
       "text": "A tick on the day beats ten from memory on Saturday. Tick each task as the crew finishes it, and your [farm reports](/features/farm-reports) match what really happened."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the daily board helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Start each day knowing what to do.** Today's work for every lot is on one screen.",
+        "**Less checking on the workers.** Ticks, names and photos show what was done without a trip to the field.",
+        "**Records without extra work.** Each tick feeds the labor, the stock and the reports, so you never type the season twice.",
+        "**Problems seen early.** A photo or a voice note on a task flags trouble the day it shows, not at harvest."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Put today's work on one board",
       "text": "Sign up free. The Libre plan includes the Activities board for one season, with photos and voice notes.",

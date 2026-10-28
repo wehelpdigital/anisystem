@@ -103,6 +103,21 @@
       "text": "A good farm inventory also helps before the season. Work out the bags your lots need with our guide to [fertilizer calculation](/blog/fertilizer-calculation), compare that with what is on the shelf, and buy only the difference."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the farm inventory helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Know what is in the shed without counting.** On hand is the sum of every move, so the number is always current.",
+        "**Buy the right amount.** The plan's needs set against your stock show what is left to buy, so money is not tied up in extra bags.",
+        "**Less loss and fewer arguments.** Every move has a name and a day, so a missing sack can be traced.",
+        "**Costs that reach your reports.** What the shed gives out becomes the season's expenses, with nothing typed twice."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Know what is in your shed",
       "text": "Sign up free, then open the farm inventory on the Solo Farmer or Farm Owner plan.",

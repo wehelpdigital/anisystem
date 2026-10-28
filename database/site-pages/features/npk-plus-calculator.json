@@ -108,6 +108,21 @@
       "text": "The calculator comes with Libre plus Anee, Solo Farmer and Farm Owner, and it uses no credits. On the free Libre plan it is locked, while the nutrient totals on the Activities board and in the Protocol Builder still show on every plan. Anee's readings come with Libre plus Anee and up, and each one shows its price before you start."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How NPK Plus helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Buy the bags your crop needs.** The calculator sets your plan against the crop's need, so you see what is short and what is too much.",
+        "**No hidden shortage.** Secondary nutrients and micronutrients are counted too, so a missing one does not cap the harvest.",
+        "**Know the harvest your fertilizer can feed.** The plan shows the yield it can carry, so you can decide if it is worth more.",
+        "**One plan for the whole season.** Use it on the board and in the Protocol Builder."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Check your fertilizer plan before you buy",
       "text": "Sign up, choose Libre plus Anee or a bigger plan, and run NPK Plus as many times as you like.",

@@ -85,6 +85,21 @@
    "text": "When you know what to apply, the [NPK Plus Calculator](/features/npk-plus-calculator) checks your whole fertilizer plan. Then the cropping calendar dates each application, so nothing is forgotten."
   },
   {
+   "type": "heading",
+   "level": 2,
+   "text": "How the nutrient deficiency finder helps you and your farm"
+  },
+  {
+   "type": "list",
+   "ordered": false,
+   "items": [
+    "**Name the missing nutrient.** From the leaves you see to the nutrient the crop lacks, with photos to compare.",
+    "**Buy the right fertilizer.** It lists products sold here that supply the nutrient, so you do not buy a bag that does not fix it.",
+    "**Save the yield early.** Catching a shortage while the crop can still recover protects the harvest.",
+    "**Be sure before you spend.** It tells you how to confirm the shortage before you buy."
+   ]
+  },
+  {
    "type": "cta",
    "title": "Find the missing nutrient before you buy",
    "text": "Sign up, add your season, and keep the nutrient deficiency finder one tap away.\nEvery crop of Philippine farms, with photos\nFertilizers registered with the FPA, sold here\nAnee reads a photo of the leaf",

@@ -117,6 +117,21 @@
       "text": "A photo called IMG 2041 tells you nothing next year. So give each picture a title with the lot and what it shows, like 'Lot 2, tillering, day 30'. Later, search finds it by those words. For the story behind the photo, write [farm notes](/features/notes-photos-and-voice)."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the farm photo gallery helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**See how the crop changed.** Photos by date show the season's progress, so you spot what went wrong and when.",
+        "**Proof for buyers and programs.** A clean album of the crop and the harvest helps when someone asks how it was grown.",
+        "**Find any picture fast.** Albums and tags bring up the right photo without scrolling a whole phone.",
+        "**Pictures that work again.** A saved photo can go on a task or a record without taking it twice."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Start your season's gallery",
       "text": "Sign up free. The gallery, albums and the Global Gallery are on every plan.",

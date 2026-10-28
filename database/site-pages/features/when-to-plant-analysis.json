@@ -88,6 +88,21 @@
       "text": "Anee runs all four analyses on credits, and each one shows its price and your balance before you start. They come with the Libre plus Anee, Solo Farmer and Farm Owner plans. Every result stays on its shelf, where you can search it and open it again."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the When to Plant Analysis helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Plant in the safest window.** Twenty years of your town's weather point to the weeks that give the best start and the safest harvest.",
+        "**Dodge storms and dry spells.** The risks of each month are said plainly, so the harvest does not meet a typhoon.",
+        "**Sell at a better price.** The weeks whose harvest sells best are shown beside the safest ones.",
+        "**Plan the whole season from the right day.** Land preparation and the calendar follow from the date you choose."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Find your planting window",
       "text": "Sign up free, add Anee, and run your first When to Plant Analysis for your own town.",

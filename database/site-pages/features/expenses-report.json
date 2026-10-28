@@ -121,6 +121,21 @@
       "text": "The expenses report comes with the Solo Farmer and Farm Owner plans. The free Libre plan has the labor report. On Farm Owner, a worker with view access to Reports can read the saved reports, while edit access lets them make new ones."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the expenses report helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Know where every peso went.** Materials, services and labor, grouped so the big costs stand out.",
+        "**Cut what does not pay.** With the costs laid out, you see which input to buy less of next season.",
+        "**Ready for a loan or a partner.** A clean report of the season's cost helps when you talk to a lender, an insurer or a co owner.",
+        "**No receipts to add up.** It is built from the board and the shed, so the numbers are there when the season ends."
+      ]
+    },
+    {
       "type": "cta",
       "title": "See where your season's money went",
       "text": "Create a free account and keep your season on the board. Open the expenses report when you move to Solo Farmer or Farm Owner.",

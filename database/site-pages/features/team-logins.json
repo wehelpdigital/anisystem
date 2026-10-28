@@ -109,6 +109,21 @@
       "text": "Each season keeps a logs diary under Settings. It lists what was done, whose hand did it and when, and you can narrow it to one person. So when a date moved and nobody remembers why, the diary answers.\n\nWorker logins and the logs diary come with the Farm Owner plan. See [farm workers and payroll](/features/farm-workers-and-payroll) for the roster, rates and payroll days that come before them."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How team logins helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Your team helps without seeing everything.** Each person opens only the modules you allow.",
+        "**Less work for you.** Workers tick their own tasks and add their own notes.",
+        "**Trust with a record.** A diary shows who changed what and when.",
+        "**One login for each person.** No shared passwords, and a login you can switch off at any time."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Give your crew their own logins",
       "text": "Team logins come with the Farm Owner plan, along with the Collab Room and the logs diary. Compare the plans and pick the one that fits your farm.",

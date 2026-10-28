@@ -105,6 +105,21 @@
       "text": "Automatic stock deduction tells you what is left, and the plan tells you what is still to come. Put the two together before you drive to the agri supply. First, work out the bags each lot needs with our guide to [fertilizer calculation](/blog/fertilizer-calculation). Then subtract what the shed already holds, say 6 bags of [14 14 14 fertilizer](/blog/complete-fertilizer-14-14-14) left from basal. A fertilizer computation done this way stops the extra sack that sits in the bodega until next season.\n\nThe inventory comes with the Solo Farmer and Farm Owner plans. On Farm Owner, each worker's [team login](/features/team-logins) can view the shed or edit it, as you choose. The full shed, with its units and moves, is on the [farm inventory and expenses](/features/farm-inventory-and-expenses) page."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How automatic stock deduction helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**No more counting sacks by memory.** The shed updates when the task is ticked, so what the app says is what you have.",
+        "**Fewer trips to the store in a rush.** A task warns you before the stock runs short, while there is still time to buy.",
+        "**Costs that add themselves up.** What the shed gives out flows into the expenses report, so the season's cost is ready when you need it.",
+        "**Less loss in the shed.** Every move carries a name and a day, so a missing bag is easy to trace."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Let the shed count itself",
       "text": "Sign up free, then open the inventory on the Solo Farmer or Farm Owner plan.",

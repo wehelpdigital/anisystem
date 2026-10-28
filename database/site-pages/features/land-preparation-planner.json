@@ -101,6 +101,21 @@
       "text": "Every plan is saved on its own, so you can rename it and open it again from the field. Send it to the [Protocol Builder](/features/protocol-builder), into a protocol you have or a new one. The same planting day starts your [cropping calendar](/features/cropping-calendar)."
     },
     {
+      "type": "heading",
+      "level": 2,
+      "text": "How the land preparation planner helps you and your farm"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Fields ready on time.** Every step is dated back from planting day, so the field is ready when the seed is.",
+        "**No double booked crew or machine.** The plan spreads the work across your lots, workers and machines.",
+        "**Costs known before you start.** What land preparation will cost is clear before the first pass.",
+        "**A better start for the crop.** Proper resting, plowing and leveling mean fewer weeds and an even stand."
+      ]
+    },
+    {
       "type": "cta",
       "title": "Plan your next land preparation",
       "text": "The planner comes with Libre plus Anee and every plan above it. Each plan uses Anee credits.",
