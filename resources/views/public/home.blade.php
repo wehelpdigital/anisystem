@@ -37,25 +37,6 @@
         $v = $HW::video($key);
         return $v ? ['key' => $key, 'src' => $v[0], 'poster' => $v[1], 'name' => $name ?? ($tools[$key]['name'] ?? '')] : null;
     };
-    // The hero phone, in turn: ask Anee, draw the farm on a map, move a job
-    // to another day and tick it done, then answer in a discussion. Short
-    // cuts made for this spot (the full films play in How It Works).
-    // The hero phone's reel (2026-10-13, the owner: "smoother, and present
-    // better things"): the strongest tools, one crossfading into the next.
-    // Each plays only its best seconds, from and to: the question going in
-    // and Anee's answer, the job moved and ticked done, the radar moving,
-    // the field measured. The films' openings are mostly a screen loading.
-    $heroFilms = collect([
-        ['hero-chat', 'Ask Anee, even with a photo', 9, 19.5],
-        ['auto', 'Anee Auto plans your season', 0, 8.5],
-        // The films re-recorded on 2026-10-28 (the app as it is now) rest, glide down the page and rest: their middle plays.
-        ['board', 'Your tasks, day by day', 0.6, 7.4],
-        ['skyWeather', 'Rain and typhoons over your farm', 3.5, 12.5],
-        ['pestFinder', 'Find the pest, and what to spray', 0.6, 7.4],
-        ['npk', 'Every nutrient in your fertilizer', 0.6, 7.4],
-        ['profit', 'Your profit, lot by lot', 0.6, 7.4],
-        ['hero-maps', 'Measure your field on a map', 11, 18.4],
-    ])->map(fn ($f) => ($film = $filmOf($f[0], $f[1])) ? $film + ['from' => $f[2], 'to' => $f[3]] : null)->filter()->values();
     $aneePrice = $R::priceTag($R::tierPrice('libreAnee', 'month'));
     $face = asset('images/anee/avatar-160.jpg');
     $faceLg = asset('images/anee/avatar-512.jpg');
@@ -126,30 +107,8 @@
 
             <div class="hp-hero-stage animate-fade-up" style="animation-delay:.15s" data-tilt>
                 <div class="hp-stage-ring" aria-hidden="true"></div>
-                <div class="hp-phone is-hero">
-                    <div class="hp-phone-scr">
-                        @if ($heroFilms->isNotEmpty())
-                            {{-- Two players, one showing and one loading the next, so a
-                                 change is a crossfade, never a blank screen. --}}
-                            <video class="hp-film hp-reel is-on" data-hero-film data-films="{{ json_encode($heroFilms) }}" muted playsinline preload="auto"
-                                   poster="{{ $heroFilms[0]['poster'] }}" src="{{ $heroFilms[0]['src'] }}#t={{ $heroFilms[0]['from'] }}" aria-label="The anee.io app on a phone"></video>
-                            <video class="hp-film hp-reel" data-hero-film muted playsinline preload="auto" aria-hidden="true"></video>
-                        @endif
-                    </div>
-                    <span class="hp-film-tag" data-hero-tag>{{ $heroFilms[0]['name'] ?? 'anee.io' }}</span>
-                </div>
-                <div class="hp-float f1" aria-hidden="true">
-                    <span class="hp-float-ico is-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg></span>
-                    <span><b>Today, DAT 21</b><small>Top dress urea on Lot 2</small></span>
-                </div>
-                <div class="hp-float f2" aria-hidden="true">
-                    <span class="hp-float-ico is-sky"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg></span>
-                    <span><b>Rain after 3 PM</b><small>Spray in the morning</small></span>
-                </div>
-                <div class="hp-float f3" aria-hidden="true">
-                    <img src="{{ $face }}" alt="" class="hp-face is-lg">
-                    <span><b>Anee</b><small>This looks like sheath blight. Here is what to do.</small></span>
-                </div>
+                {{-- A season growing with Anee (2026-10-29, the owner: the phone film here repeated the many phone films below). --}}
+                @include('public.partials.hero-season')
             </div>
         </div>
 
@@ -4126,59 +4085,7 @@
         }
     }
 
-    /* The hero reel: each film plays its best seconds (from, to), then the
-       next, already loaded and waiting at its own first frame in the second
-       player, fades in over it. The story bars fill frame by frame, not in
-       timeupdate's quarter second steps. Only while on screen. */
-    const reel = [...document.querySelectorAll('[data-hero-film]')];
-    if (reel.length === 2) {
-        const films = JSON.parse(reel[0].dataset.films || '[]');
-        const tag = document.querySelector('[data-hero-tag]');
-        const bars = [...document.querySelectorAll('.hp-reel-bars i')];
-        let cur = 0, n = 0, live = false, busy = false, raf = 0;
-        // (No story bars now; bars is empty and fill() does nothing.)
-        // A film shorter than its window (or a server that cannot seek) still ends cleanly.
-        const from = (f) => Number(f.from) || 0;
-        const to = (f, v) => Math.min(Number(f.to) || 8.5, v.duration || Infinity);
-        const load = (v, f) => { v.poster = f.poster || ''; v.src = f.src + '#t=' + from(f); v.load(); };
-        const fill = (i, k) => { const b = bars[i] && bars[i].firstChild; if (b) b.style.transform = 'scaleX(' + Math.max(0, Math.min(1, k)).toFixed(4) + ')'; };
-        const paint = () => bars.forEach((b, i) => { b.classList.toggle('is-done', i < n); fill(i, i < n ? 1 : 0); });
-        const next = () => {
-            if (busy || films.length < 2) return;
-            busy = true;
-            const out = reel[cur], inn = reel[1 - cur];
-            n = (n + 1) % films.length;
-            if (Math.abs(inn.currentTime - from(films[n])) > .3) inn.currentTime = from(films[n]);
-            if (live) play(inn);
-            inn.classList.add('is-on'); out.classList.remove('is-on');
-            inn.removeAttribute('aria-hidden'); out.setAttribute('aria-hidden', 'true');
-            if (tag) { tag.classList.add('is-swapping'); setTimeout(() => { tag.textContent = films[n].name; tag.classList.remove('is-swapping'); }, 300); }
-            paint();
-            setTimeout(() => { out.pause(); load(out, films[(n + 1) % films.length]); cur = 1 - cur; busy = false; }, 800);
-        };
-        const tick = () => {
-            raf = 0;
-            if (!live) return;
-            const v = reel[cur], f = films[n];
-            if (!busy && f) {
-                const a = from(f), b = to(f, v);
-                fill(n, (v.currentTime - a) / Math.max(.5, b - a));
-                if (v.currentTime >= b - .05) next();
-            }
-            raf = requestAnimationFrame(tick);
-        };
-        reel.forEach((v) => v.addEventListener('ended', () => { if (v === reel[cur]) next(); }));
-        if (films[1]) load(reel[1], films[1]);
-        paint();
-        seen(reel[0].closest('.hp-phone'), (on) => {
-            live = on;
-            reel.forEach((v) => { v.dataset.live = on ? '1' : '0'; });
-            if (on) { play(reel[cur]); if (!raf && !reduce) raf = requestAnimationFrame(tick); }
-            else { reel.forEach((v) => v.pause()); if (raf) { cancelAnimationFrame(raf); raf = 0; } }
-        }, { threshold: 0.2 });
-    }
-
-    /* The phone leans toward the pointer, a little. */
+    /* The season card leans toward the pointer, a little. */
     const stage = document.querySelector('[data-tilt]');
     if (stage && fine && !reduce) {
         stage.addEventListener('pointermove', (e) => {
