@@ -243,6 +243,12 @@
     .fz-modal-words h3 { margin-top: .3rem; font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #14210c; }
     .fz-modal-words p#fzModalWhat { margin-top: .6rem; color: #4b5563; line-height: 1.65; }
     .fz-modal-nav { margin-top: 1.2rem; display: flex; align-items: center; gap: .6rem; }
+    .fz-modal-help { margin-top: .9rem; padding: .8rem .9rem; border-radius: 1rem; background: #fffbea; box-shadow: inset 0 0 0 1px #f3e2a6; }
+    .fz-modal-help > b { display: block; font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #8a6400; }
+    .fz-modal-help ul { display: grid; gap: .35rem; margin: .5rem 0 0; padding: 0; list-style: none; }
+    .fz-modal-help li { position: relative; padding-left: .95rem; font-size: .84rem; line-height: 1.5; color: #4b5563; }
+    .fz-modal-help li::before { content: ''; position: absolute; left: 0; top: .55rem; width: .4rem; height: .4rem; border-radius: 999px; background: #f5c518; }
+    .fz-modal-help b b, .fz-modal-help li b { color: #1f2937; }
     .fz-modal-nav button { width: 2.5rem; height: 2.5rem; border-radius: 999px; display: grid; place-items: center; border: 1px solid #e1ead6; background: #fff; color: #2f5219;
         transition: background-color .28s cubic-bezier(.22,1,.36,1); }
     .fz-modal-nav button:hover { background: #f1f7ea; }
@@ -354,7 +360,7 @@
                                     <p class="fz-short">{{ $it['short'] }}</p>
                                     <p class="fz-what">{{ $it['what'] }}</p>
                                     @if (! empty($it['helps']))
-                                        <details class="fz-helps"><summary>How it helps you and your farm</summary><ul>@foreach ($it['helps'] as $h)<li>{!! \App\Support\HowItWorks::helpHtml($h) !!}</li>@endforeach</ul></details>
+                                        <details class="fz-helps"><summary>How it helps your crops and your farm</summary><ul>@foreach ($it['helps'] as $h)<li>{!! \App\Support\HowItWorks::helpHtml($h) !!}</li>@endforeach</ul></details>
                                     @endif
                                     {{-- The plan it comes with, read off config/tiers.php (2026-10-18). --}}
                                     <p class="fz-plan is-{{ $it['plan']['tier'] }}"><i aria-hidden="true"></i><span>{{ $it['plan']['says'] }}@if ($it['plan']['more'])<small>{{ $it['plan']['more'] }}</small>@endif</span></p>
@@ -388,6 +394,8 @@
                 <p class="fz-modal-step" id="fzModalStep"></p>
                 <h3 id="fzModalName"></h3>
                 <p id="fzModalWhat"></p>
+                {{-- How it helps (2026-10-28, the owner: "when you click it and a modal shows explaining it. it should also explain how it helps your crops and your farm"). --}}
+                <div class="fz-modal-help" id="fzModalHelp" hidden><b>How it helps your crops and your farm</b><ul></ul></div>
                 <div class="fz-modal-nav">
                     <button type="button" data-step-film="-1" aria-label="The tool before"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M15 6l-6 6 6 6"/></svg></button>
                     <a href="#" id="fzModalGuide" class="fz-go">Read the guide</a>
@@ -459,6 +467,9 @@
         const b = shots[at], card = b.closest('.fz-tool'), step = b.closest('.fz-step');
         document.getElementById('fzModalName').textContent = card.querySelector('h4').childNodes[0].textContent.trim();
         document.getElementById('fzModalWhat').textContent = card.querySelector('.fz-what').textContent;
+        const helps = card.querySelector('.fz-helps ul'), help = document.getElementById('fzModalHelp');
+        help.hidden = !helps;
+        help.querySelector('ul').innerHTML = helps ? helps.innerHTML : '';
         document.getElementById('fzModalStep').textContent = 'Step ' + step.querySelector('.fz-step-n').textContent + ' · ' + step.querySelector('.fz-step-h').textContent;
         const g = card.querySelector('.fz-go'), guide = document.getElementById('fzModalGuide');
         guide.hidden = !g; if (g) guide.href = g.href;

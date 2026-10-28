@@ -561,7 +561,7 @@
                                             </ul>
                                             {{-- How it helps (2026-10-28, the owner): the tool's feature page's own points. --}}
                                             @if (! empty($it['helps']))
-                                                <div class="hp-info-help"><p>How it helps you and your farm</p><ul>@foreach ($it['helps'] as $h)<li>{!! $HW::helpHtml($h) !!}</li>@endforeach</ul></div>
+                                                <div class="hp-info-help"><p>How it helps your crops and your farm</p><ul>@foreach ($it['helps'] as $h)<li>{!! $HW::helpHtml($h) !!}</li>@endforeach</ul></div>
                                             @endif
                                             {{-- The plan it comes with, read off config/tiers.php (HowItWorks::planOf, 2026-10-18). --}}
                                             <p class="hp-info-plan is-{{ $it['plan']['tier'] }}"><i aria-hidden="true"></i><span>{{ $it['plan']['says'] }}@if ($it['plan']['more'])<small>{{ $it['plan']['more'] }}</small>@endif</span></p>

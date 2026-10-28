@@ -1237,7 +1237,7 @@
                                     </ul>
                                     {{-- How it helps (2026-10-28, the owner): the tool's feature page's own points. A div, so the film window's p rule leaves it be. --}}
                                     @if (! empty($it['helps']))
-                                        <div class="hw-helps"><div class="hw-helps-h">How it helps you and your farm</div>@foreach ($it['helps'] as $h)<div class="hw-helps-i">{!! \App\Support\HowItWorks::helpHtml($h) !!}</div>@endforeach</div>
+                                        <div class="hw-helps"><div class="hw-helps-h">How it helps your crops and your farm</div>@foreach ($it['helps'] as $h)<div class="hw-helps-i">{!! \App\Support\HowItWorks::helpHtml($h) !!}</div>@endforeach</div>
                                     @endif
                                     {{-- The plan it comes with, read off config/tiers.php (2026-10-18). A div, so the
                                          film modal's paragraph rule leaves it be. --}}

@@ -200,7 +200,7 @@
                 + `<p class="hwt-sh-p">${esc(t.what)}</p>`
                 + (t.gets && t.gets.length ? `<div class="hwt-sh-g">${t.gets.map((g) => `<div>${esc(g)}</div>`).join('')}</div>` : '')
                 // How it helps (2026-10-28): already HTML from the server (HowItWorks::helpHtml escapes, then bolds the lead).
-                + (t.helps && t.helps.length ? `<div class="hwt-sh-help"><b>How it helps you and your farm</b>${t.helps.map((h) => `<div>${h}</div>`).join('')}</div>` : '')
+                + (t.helps && t.helps.length ? `<div class="hwt-sh-help"><b>How it helps your crops and your farm</b>${t.helps.map((h) => `<div>${h}</div>`).join('')}</div>` : '')
                 + `<p class="hwt-sh-plan">${esc(t.plan)}${t.more ? '. ' + esc(t.more) : ''}</p>`
                 + (t.href ? `<a class="hwt-sh-go" href="${esc(t.href)}">${esc(t.go || 'Open it now')} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m-6-6l6 6-6 6"/></svg></a>` : '');
             sheet.querySelector('.hwt-sheet-in').scrollTop = 0;

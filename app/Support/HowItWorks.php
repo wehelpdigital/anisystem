@@ -783,7 +783,7 @@ class HowItWorks
         if ($file && is_file($file)) {
             $blocks = (array) ((json_decode((string) file_get_contents($file), true) ?: [])['blocks'] ?? []);
             foreach ($blocks as $i => $b) {
-                if (($b['type'] ?? '') === 'heading' && str_contains((string) ($b['text'] ?? ''), 'helps you and your farm') && (($blocks[$i + 1]['type'] ?? '') === 'list')) {
+                if (($b['type'] ?? '') === 'heading' && preg_match('/helps (you|your crops) and your farm/', (string) ($b['text'] ?? '')) && (($blocks[$i + 1]['type'] ?? '') === 'list')) {
                     $out = array_values((array) $blocks[$i + 1]['items']);
                     break;
                 }
