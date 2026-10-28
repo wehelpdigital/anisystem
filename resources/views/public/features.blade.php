@@ -31,6 +31,9 @@
     // New this month: on their cards and in the band.
     // (2026-10-18: the tools placed in the season this week.)
     $fNew = ['globalLots', 'varietyFinder', 'landprep', 'lcc', 'news', 'nutrientFinder', 'compat', 'auto'];
+    // Where each card's phone screen rests (percent down the screen, 2026-10-29): a sheet that opens at the bottom of
+    // the screen shows the sheet. On hover, and once as the card comes in, the screen scrolls to the other end.
+    $fFocus = ['cash' => 100, 'daycount' => 100, 'share' => 100, 'access' => 100, 'draw' => 0, 'chat' => 35];
 @endphp
 
 @push('head')
@@ -65,6 +68,8 @@
     .fz-cta { margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: .7rem; }
     .fz-phones { position: relative; height: 31rem; }
     .fz-phones .ph-frame { position: absolute; width: min(240px, 46vw); }
+    /* Every hero screen the same shape (the fresh stills are taller), its top shown. */
+    .fz-phones .ph-frame img { aspect-ratio: 780 / 1520; object-fit: cover; object-position: top; }
     .fz-phones .p1 { left: 50%; top: 0; transform: translateX(-50%); z-index: 3; animation: fzFloat 6s ease-in-out infinite; }
     .fz-phones .p2 { left: 2%; top: 3.5rem; transform: rotate(-8deg); z-index: 2; opacity: .92; animation: fzFloat2 7s ease-in-out infinite; }
     .fz-phones .p3 { right: 2%; top: 3.5rem; transform: rotate(8deg); z-index: 2; opacity: .92; animation: fzFloat3 7.5s ease-in-out infinite; }
@@ -129,12 +134,27 @@
         box-shadow: 0 18px 40px -36px rgb(20 33 12 / .5); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
     .fz-tool:hover { transform: translateY(-4px); border-color: #c9dcb4; box-shadow: 0 28px 50px -32px rgb(20 33 12 / .55); }
     .fz-step.is-auto .fz-tool { border-color: #f0dc95; background: linear-gradient(160deg, #fffaf0, #fff 55%); }
-    .fz-shot { position: relative; display: block; width: 100%; height: 11rem; padding: 0; border: 0; cursor: pointer; overflow: hidden;
-        background: radial-gradient(80% 120% at 50% 110%, #d6e9c2, transparent 70%), linear-gradient(160deg, #f4f9ee, #e7f1dc); }
-    .fz-shot::after { content: ''; position: absolute; inset: auto 0 0; height: 2.4rem; background: linear-gradient(180deg, transparent, #fff); }
-    .fz-shot img { position: absolute; left: 50%; top: 1.1rem; width: 58%; translate: -50% 0; border-radius: 1rem 1rem 0 0; background: #fff;
-        box-shadow: 0 0 0 4px #1d2a15, 0 24px 40px -18px rgb(20 33 12 / .55); transition: transform .5s cubic-bezier(.22,1,.36,1); }
-    .fz-tool:hover .fz-shot img { transform: translateY(-.5rem) rotate(-1.5deg); }
+    /* A tool's screen (2026-10-29, the owner: "screenshots of the /features is bad"): a real phone rising out of a soft
+       stage, big enough to read, its screen scrolling slowly to the other end on hover and once as the card comes in. */
+    .fz-shot { --stage: 15.5rem; position: relative; display: block; width: 100%; height: var(--stage); padding: 0; border: 0; cursor: pointer; overflow: hidden;
+        background: radial-gradient(70% 90% at 50% 105%, #cfe5b6, transparent 70%), radial-gradient(rgb(74 124 42 / .12) 1px, transparent 1.4px) 0 0 / 14px 14px,
+            linear-gradient(165deg, #f6faf1, #e6f1da); border-bottom: 1px solid #e5ebdf; }
+    .fz-step.is-auto .fz-shot { background: radial-gradient(70% 90% at 50% 105%, #fde68a, transparent 70%), radial-gradient(rgb(184 138 0 / .14) 1px, transparent 1.4px) 0 0 / 14px 14px,
+            linear-gradient(165deg, #fffaf0, #fdf2cf); }
+    /* The phone sits right of centre, clear of the tool's icon that rises over the stage's left corner. */
+    .fz-dev { position: absolute; left: 58%; top: 1.25rem; bottom: 0; width: 60%; translate: -50% 0; padding: .55rem .34rem 0; border-radius: 1.7rem 1.7rem 0 0;
+        background: linear-gradient(160deg, #303a26, #0e140a 70%); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08), 0 30px 46px -22px rgb(20 33 12 / .7);
+        transition: transform .5s cubic-bezier(.22,1,.36,1); }
+    .fz-dev::before { content: ''; position: absolute; left: 50%; top: .17rem; width: 2.4rem; height: .26rem; margin-left: -1.2rem; border-radius: 999px; background: #05070a; }
+    .fz-scr { display: block; height: 100%; overflow: hidden; border-radius: 1.3rem 1.3rem 0 0; background: #fff; }
+    .fz-scr img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% var(--fy, 0%); transition: object-position 4.5s cubic-bezier(.45,0,.25,1); }
+    .fz-tool:hover .fz-dev, .fz-shot:focus-visible .fz-dev { transform: translateY(-.45rem); }
+    .fz-tool:hover .fz-scr img, .fz-shot:focus-visible .fz-scr img { object-position: 50% calc(100% - var(--fy, 0%)); }
+    /* Once, as the card comes in: down the screen and back. */
+    @media (prefers-reduced-motion: no-preference) {
+        html.js .fz-tool.reveal.is-visible:not(:hover) .fz-scr img { animation: fzPeek 7s cubic-bezier(.45,0,.25,1) calc(.9s + var(--reveal-delay, 0s)) 1; }
+        @keyframes fzPeek { 0%, 12% { object-position: 50% var(--fy, 0%); } 50%, 62% { object-position: 50% calc(100% - var(--fy, 0%)); } 100% { object-position: 50% var(--fy, 0%); } }
+    }
     .fz-play { position: absolute; z-index: 2; right: .9rem; top: .9rem; width: 2.5rem; height: 2.5rem; border-radius: 999px; display: grid; place-items: center; color: #1a1a1a;
         background: #f5c518; box-shadow: 0 0 0 5px rgb(245 197 24 / .25), 0 10px 20px -10px rgb(0 0 0 / .5); transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .fz-play svg { width: 1rem; height: 1rem; margin-left: 2px; }
@@ -184,9 +204,8 @@
     .fz-step.is-auto .fz-tools { grid-template-columns: minmax(0, 1fr); }
     @media (min-width: 768px) {
         .fz-step.is-auto .fz-tool { flex-direction: row; }
-        .fz-step.is-auto .fz-shot { flex: none; width: 17rem; height: auto; min-height: 19rem; }
-        .fz-step.is-auto .fz-shot::after { inset: 0 0 0 auto; width: 2.4rem; height: auto; background: linear-gradient(90deg, transparent, #fffaf0); }
-        .fz-step.is-auto .fz-shot img { width: 66%; top: 1.4rem; }
+        .fz-step.is-auto .fz-shot { flex: none; width: 18rem; height: auto; min-height: 21rem; border-bottom: 0; border-right: 1px solid #f0dc95; }
+        .fz-step.is-auto .fz-dev { width: 64%; top: 1.6rem; }
         .fz-step.is-auto .fz-tool-body { padding: 1.4rem 1.5rem 1.4rem .4rem; }
         .fz-step.is-auto .fz-ico { margin-top: 0; }
         .fz-step.is-auto .fz-what { font-size: .9rem; }
@@ -200,8 +219,8 @@
         .fz-tools { grid-template-columns: minmax(0, 1fr); gap: .55rem; }
         .fz-tool { flex-direction: row; align-items: center; border-radius: 1.1rem; }
         .fz-tool:hover { transform: none; }
-        .fz-shot { order: 2; flex: none; width: auto; height: auto; padding: 0 .85rem 0 .3rem; background: none; overflow: visible; }
-        .fz-shot img, .fz-shot::after { display: none; }
+        .fz-shot { order: 2; flex: none; width: auto; height: auto; padding: 0 .85rem 0 .3rem; background: none; overflow: visible; border: 0; }
+        .fz-dev { display: none; }
         .fz-play { position: static; width: 2.6rem; height: 2.6rem; box-shadow: 0 0 0 4px rgb(245 197 24 / .22), 0 8px 16px -8px rgb(0 0 0 / .45); }
         .fz-tool-body { order: 1; flex: 1; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .75rem; row-gap: .12rem;
             align-items: center; padding: .8rem .2rem .8rem .8rem; }
@@ -261,7 +280,8 @@
         .fz-orb, .fz-kick i, .fz-h1 em, .fz-phones .ph-frame, .fz-track { animation: none !important; }
         .fz-track { flex-wrap: wrap; width: auto; justify-content: center; }
         .fz-track.rev { display: none; }
-        .fz-tool, .fz-shot img, .fz-modal, .fz-modal-box, .fz-play { transition: none !important; }
+        .fz-tool, .fz-dev, .fz-scr img, .fz-modal, .fz-modal-box, .fz-play { transition: none !important; }
+        .fz-scr img { animation: none !important; }
     }
 </style>
 @endpush
@@ -290,8 +310,9 @@
                 </div>
             </div>
             <div class="fz-phones" aria-hidden="true">
-                <span class="ph-frame p2"><img src="{{ asset('images/site/app/board.png') }}" alt="" loading="lazy" width="780" height="1520"></span>
-                <span class="ph-frame p3"><img src="{{ asset('images/site/app/npk.webp') }}" alt="" loading="lazy" width="780" height="1520"></span>
+                {{-- Fresh screens of the app as it is now (2026-10-29): Anee Auto's morning and the profit report beside Satellite Weather. --}}
+                <span class="ph-frame p2"><img src="{{ \App\Support\HowItWorks::shot('auto')[0] ?? asset('images/site/app/board.png') }}" alt="" loading="lazy" width="540" height="1170"></span>
+                <span class="ph-frame p3"><img src="{{ \App\Support\HowItWorks::shot('profit')[0] ?? asset('images/site/app/npk.webp') }}" alt="" loading="lazy" width="540" height="1170"></span>
                 <span class="ph-frame p1"><img src="{{ asset('images/site/app/sky.webp') }}" alt="" width="780" height="1520"></span>
             </div>
         </div>
@@ -344,13 +365,13 @@
                             <article class="fz-tool reveal {{ $film || $shot ? '' : 'no-film' }} {{ $film ? '' : 'no-play' }}" id="tool-{{ $it['key'] }}" style="--reveal-delay: {{ ($ti % 3) * 0.06 }}s">
                                 @if ($film)
                                     <button type="button" class="fz-shot" data-film="{{ $film[0] }}" data-poster="{{ $film[1] }}" data-key="{{ $it['key'] }}" aria-label="Watch {{ $it['name'] }} at work">
-                                        <img src="{{ $shot[0] ?? $film[1] }}" @if (! empty($shot[1])) srcset="{{ $shot[1] }}" sizes="(min-width: 768px) 9rem, 40vw" @endif alt="{{ $it['name'] }} on a phone" loading="lazy" decoding="async" width="540" height="1170">
+                                        <span class="fz-dev" style="--fy: {{ $fFocus[$it['key']] ?? 0 }}%"><span class="fz-scr"><img src="{{ $shot[0] ?? $film[1] }}" @if (! empty($shot[1])) srcset="{{ $shot[1] }}" sizes="(min-width: 768px) 11rem, 40vw" @endif alt="{{ $it['name'] }} on a phone" loading="lazy" decoding="async" width="540" height="1170"></span></span>
                                         <span class="fz-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
                                     </button>
                                 @elseif ($shot)
                                     {{-- Not filmed yet: its screen as it is, without a play button. --}}
                                     <span class="fz-shot is-still">
-                                        <img src="{{ $shot[0] }}" @if ($shot[1]) srcset="{{ $shot[1] }}" sizes="(min-width: 768px) 9rem, 40vw" @endif alt="{{ $it['name'] }} on a phone" loading="lazy" decoding="async" width="540" height="1170">
+                                        <span class="fz-dev" style="--fy: {{ $fFocus[$it['key']] ?? 0 }}%"><span class="fz-scr"><img src="{{ $shot[0] }}" @if ($shot[1]) srcset="{{ $shot[1] }}" sizes="(min-width: 768px) 11rem, 40vw" @endif alt="{{ $it['name'] }} on a phone" loading="lazy" decoding="async" width="540" height="1170"></span></span>
                                     </span>
                                 @endif
                                 @if (in_array($it['key'], $fNew, true))<span class="fz-new">New</span>@endif
