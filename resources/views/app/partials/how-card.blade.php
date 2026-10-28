@@ -2,7 +2,7 @@
      that card, remove it or make the whole card look better"; "when you click or open it, the page that appears
      reloads twice, please fix. if it needs time to load you can show a loader ... rewrite it entirely").
 
-     A still card: the season's steps on a ring around Anee, the ring turning a little only under the pointer. It
+     A card with Anee in a turning halo, the sun, the rain and the crop circling her (2026-10-28, again the owner). It
      opens the tour (app.how-tour) full screen in partials/story-modal's shell: fetched the first time, Anee's face
      while it loads, drawn once. #how-it-works in the address opens it on arrival. --}}
 @php $hwcStages = \App\Support\HowItWorks::stages(); @endphp
@@ -34,16 +34,45 @@
     .hwc-go svg { width: 1.05rem; height: 1.05rem; }
     .hwc-open:hover .hwc-go { transform: translateY(-2px); box-shadow: 0 16px 28px -14px rgb(245 197 24 / .9); }
     .hwc-open:focus-visible { outline: 2px solid #f5c518; outline-offset: -4px; border-radius: 1.25rem; }
-    /* The ring: still, turning an eighth under the pointer. */
-    .hwc-ring { position: relative; grid-row: span 2; width: 6.2rem; height: 6.2rem; }
-    @media (min-width: 768px) { .hwc-ring { width: 8.4rem; height: 8.4rem; grid-row: span 2; } }
-    .hwc-ring svg { width: 100%; height: 100%; transition: transform .7s cubic-bezier(.22,1,.36,1); }
-    .hwc-open:hover .hwc-ring svg { transform: rotate(45deg); }
-    .hwc-ring svg g g { transition: transform .7s cubic-bezier(.22,1,.36,1); transform-box: fill-box; transform-origin: center; }
-    .hwc-open:hover .hwc-ring svg g g { transform: rotate(-45deg); }
-    .hwc-ring img { position: absolute; left: 50%; top: 50%; width: 42%; height: 42%; transform: translate(-50%, -50%); border-radius: 999px; object-fit: cover;
-        box-shadow: 0 0 0 3px #f5c518, 0 0 24px rgb(245 197 24 / .35); }
-    @media (prefers-reduced-motion: reduce) { .hwc-ring svg, .hwc-ring svg g g, .hwc-go { transition: none; } .hwc-open:hover .hwc-ring svg, .hwc-open:hover .hwc-ring svg g g { transform: none; } }
+    /* Anee in her season (2026-10-28, the owner: "the icons in the circles ... is not centered in the circle ... create
+       a new better animation, no need to indicate the steps really just make it look great animated"): her face in a
+       turning halo of gold and green, the sun, the rain and the crop circling her, ripples and a few sparks. */
+    .hwc-art { --s: 6.6rem; position: relative; grid-row: span 2; width: var(--s); height: var(--s); }
+    @media (min-width: 768px) { .hwc-art { --s: 8.6rem; } }
+    .hwc-art > * { position: absolute; left: 50%; top: 50%; border-radius: 999px; }
+    .hwc-art .glow { width: 120%; height: 120%; margin: -60% 0 0 -60%; background: radial-gradient(circle, rgb(245 197 24 / .28), rgb(168 204 126 / .1) 45%, transparent 68%);
+        animation: hwcGlow 4.2s ease-in-out infinite; }
+    .hwc-art .track { width: 92%; height: 92%; margin: -46% 0 0 -46%; border: 1px dashed rgb(168 204 126 / .32); }
+    .hwc-art .ripple { width: 52%; height: 52%; margin: -26% 0 0 -26%; border: 2px solid rgb(245 197 24 / .5); animation: hwcRipple 3s cubic-bezier(.22,1,.36,1) infinite; }
+    .hwc-art .ripple.r2 { animation-delay: 1.5s; }
+    .hwc-art .halo { width: 56%; height: 56%; margin: -28% 0 0 -28%; background: conic-gradient(from 0deg, #f5c518, #a8cc7e 35%, rgb(168 204 126 / 0) 60%, #f5c518);
+        -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3.5px), #000 calc(100% - 3px)); mask: radial-gradient(farthest-side, transparent calc(100% - 3.5px), #000 calc(100% - 3px));
+        animation: hwcSpin 3.6s linear infinite; }
+    .hwc-art .face { width: 46%; height: 46%; margin: -23% 0 0 -23%; object-fit: cover; box-shadow: 0 0 0 2px #16290e, 0 8px 22px -6px rgb(0 0 0 / .6); animation: hwcBob 3.4s ease-in-out infinite; }
+    /* Three companions on one circle, each a third of the way round, the circle turning; each stays upright. */
+    .hwc-art .orbit { width: 92%; height: 92%; margin: -46% 0 0 -46%; animation: hwcSpin 16s linear infinite; }
+    .hwc-art .orbit i { position: absolute; left: 50%; top: 0; width: 1.65rem; height: 1.65rem; margin: -.825rem 0 0 -.825rem; display: grid; place-items: center; border-radius: 999px;
+        font-style: normal; font-size: .82rem; line-height: 1; background: #1a2c12; box-shadow: 0 0 0 1.5px rgb(168 204 126 / .55), 0 6px 14px -6px rgb(0 0 0 / .7);
+        animation: hwcSpin 16s linear infinite reverse; }
+    @media (min-width: 768px) { .hwc-art .orbit i { width: 2rem; height: 2rem; margin: -1rem 0 0 -1rem; font-size: 1rem; } }
+    .hwc-art .orbit.o2 { transform: rotate(120deg); animation-name: hwcSpin120; }
+    .hwc-art .orbit.o3 { transform: rotate(240deg); animation-name: hwcSpin240; }
+    .hwc-art .orbit.o2 i { animation-name: hwcBack120; } .hwc-art .orbit.o3 i { animation-name: hwcBack240; }
+    .hwc-art .orbit.o1 i { box-shadow: 0 0 0 1.5px #f5c518, 0 0 14px rgb(245 197 24 / .45); }
+    .hwc-art .spark { width: 5px; height: 5px; margin: 0; background: #fff3c4; box-shadow: 0 0 8px #f5c518; animation: hwcTwinkle 2.4s ease-in-out infinite; }
+    .hwc-art .spark.s1 { left: 14%; top: 22%; } .hwc-art .spark.s2 { left: 86%; top: 30%; animation-delay: .8s; } .hwc-art .spark.s3 { left: 74%; top: 88%; animation-delay: 1.6s; width: 4px; height: 4px; }
+    .hwc-open:hover .hwc-art .halo { animation-duration: 1.6s; }
+    @keyframes hwcSpin { to { transform: rotate(360deg); } }
+    @keyframes hwcSpin120 { from { transform: rotate(120deg); } to { transform: rotate(480deg); } }
+    @keyframes hwcSpin240 { from { transform: rotate(240deg); } to { transform: rotate(600deg); } }
+    @keyframes hwcBack120 { from { transform: rotate(-120deg); } to { transform: rotate(-480deg); } }
+    @keyframes hwcBack240 { from { transform: rotate(-240deg); } to { transform: rotate(-600deg); } }
+    @keyframes hwcRipple { from { transform: scale(1); opacity: .9; } to { transform: scale(1.75); opacity: 0; } }
+    @keyframes hwcGlow { 50% { transform: scale(1.08); opacity: .7; } }
+    @keyframes hwcBob { 50% { transform: translateY(-3px); } }
+    @keyframes hwcTwinkle { 0%, 100% { transform: scale(.4); opacity: 0; } 50% { transform: scale(1); opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { .hwc-art *, .hwc-go { animation: none !important; transition: none; } .hwc-art .ripple, .hwc-art .spark { display: none; } }
+    html.sm-still .hwc-art * { animation: none !important; } html.sm-still .hwc-art .ripple, html.sm-still .hwc-art .spark { display: none; }
 </style>
 @endpush
 
@@ -55,20 +84,16 @@
             <span class="hwc-p">{{ \App\Support\HowItWorks::stepWord(true) }} steps, from the first plan to the last sack.</span>
             <span class="hwc-steps" aria-hidden="true">@foreach ($hwcStages as $s)<span>{{ $s['word'] }}</span>@endforeach</span>
         </span>
-        <span class="hwc-ring" aria-hidden="true">
-            <svg viewBox="0 0 120 120">
-                <circle cx="60" cy="60" r="46" fill="none" stroke="rgb(168 204 126 / .3)" stroke-width="1.5" stroke-dasharray="2 4"/>
-                <g>
-                    @foreach ($hwcStages as $k => $s)
-                        @php $a = deg2rad(-90 + $k * 360 / count($hwcStages)); $x = 60 + 46 * cos($a); $y = 60 + 46 * sin($a); @endphp
-                        <g>
-                            <circle cx="{{ round($x, 1) }}" cy="{{ round($y, 1) }}" r="10.5" fill="#1a2c12" stroke="{{ $s['key'] === 'auto' ? '#f5c518' : 'rgb(168 204 126 / .55)' }}" stroke-width="1.3"/>
-                            <g transform="translate({{ round($x - 6.6, 1) }} {{ round($y - 6.6, 1) }}) scale(.55)" fill="none" stroke="{{ $s['key'] === 'auto' ? '#f5c518' : '#a8cc7e' }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $s['glyph'] }}"/></g>
-                        </g>
-                    @endforeach
-                </g>
-            </svg>
-            <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">
+        <span class="hwc-art" aria-hidden="true">
+            <span class="glow"></span>
+            <span class="track"></span>
+            <span class="ripple"></span><span class="ripple r2"></span>
+            <span class="halo"></span>
+            <img class="face" src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">
+            <span class="orbit o1"><i>☀️</i></span>
+            <span class="orbit o2"><i>💧</i></span>
+            <span class="orbit o3"><i>🌾</i></span>
+            <span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span>
         </span>
         <span class="hwc-go">
             <svg fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 001.5.86l10.5-6.5a1 1 0 000-1.72L9.5 4.64A1 1 0 008 5.5z"/></svg>
@@ -107,6 +132,13 @@
         if (sheet) b.appendChild(sheet);
         const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
         const tabs = [...b.querySelectorAll('.hwt-r')], panels = [...b.querySelectorAll('.hwt-panel')];
+        const rail = b.querySelector('.hwt-rail'), railBox = rail?.closest('.hwt-railbox');
+        if (rail && railBox) {
+            const edge = () => railBox.classList.toggle('is-end', rail.scrollLeft + rail.clientWidth >= rail.scrollWidth - 8);
+            rail.addEventListener('scroll', edge, { passive: true });
+            window.addEventListener('resize', edge);
+            edge();
+        }
         const show = (k) => {
             if (!panels[k]) return;
             tabs.forEach((t, i) => t.setAttribute('aria-selected', i === k ? 'true' : 'false'));
@@ -120,8 +152,6 @@
             if (st && !st.disabled) {
                 const k = Number(st.dataset.hwtStep);
                 show(k);
-                // From the buttons under a step, keep its top in view.
-                if (!st.classList.contains('hwt-r')) panels[k].closest('.hwt-steps').scrollIntoView({ block: 'start', behavior: 'smooth' });
                 return;
             }
             const tool = e.target.closest('[data-hwt-tool]');

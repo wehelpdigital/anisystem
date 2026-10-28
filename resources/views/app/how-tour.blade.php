@@ -87,6 +87,9 @@
     .hwt-stat span { display: block; margin-top: .3rem; font-size: .74rem; font-weight: 700; color: var(--mute); }
     .hwt-stat.is-gold b { color: var(--gold); }
     .hwt-ring { position: relative; width: min(100%, 27rem); margin: 0 auto; aspect-ratio: 1; }
+    /* On a phone the step words reach past the circle (Learn, Plant): the ring is drawn smaller so they keep a margin
+       from the screen's edges (2026-10-28, the owner). */
+    @media (max-width: 639.98px) { .hwt-ring { width: min(80%, 21rem); } }
     .hwt-ring svg { width: 100%; height: 100%; overflow: visible; }
     .hwt-ring .rg-track { fill: none; stroke: rgb(255 255 255 / .08); stroke-width: 2; }
     .hwt-ring .rg-arc { fill: none; stroke: url(#hwtArc); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; transform: rotate(-90deg); transform-origin: 200px 200px; }
@@ -113,6 +116,16 @@
     @media (min-width: 1000px) { .hwt-steps { grid-template-columns: 17rem minmax(0, 1fr); align-items: start; gap: 1.6rem; } }
     .hwt-rail { display: flex; gap: .45rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: .2rem .1rem .5rem; margin: 0 -1rem; padding-left: 1rem; padding-right: 1rem; scrollbar-width: none; }
     .hwt-rail::-webkit-scrollbar { display: none; }
+    .hwt-railbox { position: relative; min-width: 0; }
+    .hwt-swipe { position: absolute; right: -1rem; top: 0; bottom: .5rem; width: 4.4rem; display: flex; align-items: center; justify-content: flex-end; padding-right: .55rem;
+        pointer-events: none; color: var(--gold); background: linear-gradient(90deg, rgb(11 20 7 / 0), rgb(11 20 7 / .97) 62%); transition: opacity .28s var(--e); }
+    .hwt-swipe b { display: flex; align-items: center; justify-content: center; width: 2.1rem; height: 2.1rem; padding-left: .35rem; border-radius: 999px;
+        background: rgb(245 197 24 / .14); box-shadow: inset 0 0 0 1.5px rgb(245 197 24 / .55), 0 0 16px rgb(245 197 24 / .25); }
+    .hwt-swipe svg { width: 1.05rem; height: 1.05rem; animation: hwtSwipe 1.3s var(--e) infinite; }
+    .hwt-swipe svg + svg { margin-left: -.6rem; opacity: .55; animation-delay: .14s; }
+    @keyframes hwtSwipe { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+    .hwt-railbox.is-end .hwt-swipe { opacity: 0; }
+    @media (min-width: 1000px) { .hwt-swipe { display: none; } }
     @media (min-width: 1000px) { .hwt-rail { flex-direction: column; overflow: visible; margin: 0; padding: 0; position: sticky; top: 1rem; } }
     .hwt-r { flex: none; scroll-snap-align: start; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .1rem .6rem; align-items: center; min-width: 9.5rem; padding: .6rem .75rem;
         border-radius: 1rem; text-align: left; color: var(--ink); background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .08);
@@ -151,12 +164,6 @@
     .hwt-tags { display: flex; flex-wrap: wrap; gap: .25rem; margin-top: .4rem; }
     .hwt-tags span { padding: .08rem .45rem; border-radius: 999px; font-size: .6rem; font-weight: 800; color: #cfe3b9; background: rgb(168 204 126 / .14); }
     .hwt-tags span.is-anee { color: #1d330d; background: var(--gold); }
-    .hwt-pnav { display: flex; justify-content: space-between; gap: .5rem; margin-top: .9rem; }
-    .hwt-pnav button { display: inline-flex; align-items: center; gap: .35rem; padding: .55rem .9rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--ink);
-        background: rgb(255 255 255 / .07); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); transition: background-color .28s var(--e); }
-    .hwt-pnav button:hover { background: rgb(255 255 255 / .13); }
-    .hwt-pnav button[disabled] { opacity: .35; pointer-events: none; }
-    .hwt-pnav svg { width: .9rem; height: .9rem; }
 
     /* A tool, opened: its screen, what it does, the door. */
     .hwt-sheet { position: absolute; inset: 0; z-index: 8; display: flex; justify-content: flex-end; align-items: flex-end; }
@@ -250,7 +257,7 @@
     @media (prefers-reduced-motion: reduce) {
         .hwt-ring .rg-arc { stroke-dashoffset: 0; animation: none !important; }
         .hwt-ring .rg-node { opacity: 1; transform: none; animation: none !important; }
-        .hwt-ring .rg-orbit, .hwt-ring .rg-me::after, .hwt-ph img, .hwt-flow > i::after { animation: none !important; }
+        .hwt-ring .rg-orbit, .hwt-ring .rg-me::after, .hwt-ph img, .hwt-flow > i::after, .hwt-swipe svg { animation: none !important; }
         .hwt-panel.is-in, .hwt-panel.is-in .hwt-t { animation: none !important; }
         .hwt-day::before { transform: none !important; transition: none !important; }
         .hwt-sheet-in, .hwt-sheet-bg { transition: none !important; }
@@ -300,6 +307,8 @@
             <span class="stm-kick" data-in>{{ HowItWorks::stepWord(true) }} steps, one season</span>
             <h2 class="stm-h2" data-in style="--d: 80ms">Tap a step, then any tool, to see what it does for your farm.</h2>
             <div class="hwt-steps" data-in style="--d: 160ms">
+                {{-- On a phone the steps scroll sideways: arrows at the edge say so until the last one is in view (2026-10-28, the owner). --}}
+                <div class="hwt-railbox">
                 <div class="hwt-rail" role="tablist" aria-label="The steps of a season">
                     @foreach ($htStages as $k => $s)
                         @php $n = count(array_filter($s['items'])); @endphp
@@ -310,6 +319,8 @@
                             <em><span style="--v: {{ round($n / max(1, $htMaxStep), 3) }}"></span>{{ $n }} {{ $n === 1 ? 'tool' : 'tools' }}</em>
                         </button>
                     @endforeach
+                </div>
+                <span class="hwt-swipe" aria-hidden="true"><b><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg></b></span>
                 </div>
                 <div>
                     @foreach ($htStages as $k => $s)
@@ -326,10 +337,6 @@
                                             <span class="hwt-tags">@if ($it['anee'])<span class="is-anee">Anee</span>@endif<span>{{ $it['plan']['name'] ?? '' }}</span></span></span>
                                     </button>
                                 @endforeach
-                            </div>
-                            <div class="hwt-pnav">
-                                <button type="button" data-hwt-step="{{ $k - 1 }}" @if ($k === 0) disabled @endif><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 6l-6 6 6 6"/></svg>{{ $k > 0 ? $htStages[$k - 1]['word'] : 'Back' }}</button>
-                                <button type="button" data-hwt-step="{{ $k + 1 }}" @if ($k === count($htStages) - 1) disabled @endif>{{ $k < count($htStages) - 1 ? $htStages[$k + 1]['word'] : 'Next' }}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 6l6 6-6 6"/></svg></button>
                             </div>
                         </div>
                     @endforeach
@@ -366,7 +373,7 @@
     <section class="stm-scene" data-title="A day">
         <div class="stm-wrap">
             <span class="stm-kick" data-in>A day with anee.io</span>
-            <h2 class="stm-h2" data-in style="--d: 80ms">Less to remember. More time in the field.</h2>
+            <h2 class="stm-h2" data-in style="--d: 80ms">Less to remember, less to worry about. More time in the field with your crop.</h2>
             <div class="hwt-day">
                 @foreach ($htDay as $i => [$emo, $when, $title, $line, $face])
                     <div class="hwt-d" data-in style="--d: {{ 200 + $i * 160 }}ms">

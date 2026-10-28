@@ -27,6 +27,9 @@
     .stm { --e: cubic-bezier(.22,1,.36,1); --ink: #eef4e6; --mute: #b9caa8; --gold: #f5c518; --leaf: #a8cc7e;
         position: fixed; inset: 0; z-index: 270; display: flex; flex-direction: column; color: var(--ink); background: #0b1407; isolation: isolate; }
     .stm[hidden] { display: none; }
+    /* Closing: nothing moves behind the fade, and nothing takes a tap. */
+    .stm.is-closing { pointer-events: none; }
+    .stm.is-closing .stm-bg i, .stm.is-closing .stm-load-face { animation-play-state: paused; }
     .stm *, .stm *::before, .stm *::after { box-sizing: border-box; }
     /* Slow light behind the story. */
     .stm-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
@@ -80,9 +83,9 @@
     @media (min-width: 1024px) { .stm-scene { padding: 3.5rem 4rem; } }
     .stm-wrap { width: 100%; max-width: 68rem; margin: 0 auto; }
     .stm-kick { display: inline-flex; align-items: center; gap: .45rem; font-size: .7rem; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
-    .stm-h { margin-top: .45rem; font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.55rem, 4.6vw, 2.6rem); line-height: 1.12; letter-spacing: -.01em; color: #fff; }
+    .stm-h { margin-top: .45rem; font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.55rem, 4.6vw, 2.6rem); line-height: 1.24; letter-spacing: -.01em; color: #fff; }
     .stm-h em { font-style: normal; color: var(--gold); }
-    .stm-h2 { margin-top: .4rem; font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.3rem, 3.6vw, 2rem); line-height: 1.15; color: #fff; }
+    .stm-h2 { margin-top: .4rem; font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.3rem, 3.6vw, 2rem); line-height: 1.3; color: #fff; }
     .stm-p { margin-top: .7rem; max-width: 40rem; font-size: clamp(.92rem, 2.2vw, 1.05rem); line-height: 1.6; color: var(--mute); }
     .stm-next { display: inline-flex; align-items: center; gap: .45rem; margin-top: 1.4rem; padding: .75rem 1.2rem; border-radius: 999px; font-weight: 800; font-size: .92rem;
         color: #1d330d; background: var(--gold); box-shadow: 0 14px 30px -16px rgb(245 197 24 / .9); transition: transform .28s var(--e); }
@@ -220,7 +223,13 @@
             box.dispatchEvent(new CustomEvent('stm:closed'));
         };
         if (still() || typeof box.animate !== 'function') { done(); return; }
-        box.animate([{ clipPath: 'inset(0px 0px 0px 0px round 0px)' }, { clipPath: fromBox(box.__from) }], { duration: 460, easing: EASE }).onfinish = done;
+        /* A fade and a slight settle (2026-10-28, the owner: "when you close that window, the animation is glitchy").
+           The clip back into the button repainted the whole blurred story every frame, and the frame between its end
+           and the hide showed the story whole again. Opacity and scale run on the compositor; the last frame is held
+           (fill) until the box is hidden. */
+        box.classList.add('is-closing');
+        const a = box.animate([{ opacity: 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(.97)' }], { duration: 300, easing: EASE, fill: 'forwards' });
+        a.onfinish = () => { done(); a.cancel(); box.classList.remove('is-closing'); };
     }
     document.addEventListener('click', (e) => {
         const x = e.target.closest('.stm .stm-x');
