@@ -27,6 +27,9 @@
                 </div>
                 <figure class="ff-inset">
                     <img src="{{ asset('images/site/photos/lodged-palay-600.webp') }}" alt="A palay field lodged flat before harvest" width="600" height="450" loading="lazy">
+                    <button type="button" class="ff-inset-open" data-ff-lodge aria-haspopup="dialog" aria-label="See the lodged field larger">
+                        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
+                    </button>
                     <figcaption><b>Traditional Farming</b>Lodged flat before harvest</figcaption>
                 </figure>
             </div>
@@ -47,6 +50,21 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    {{-- The lodged field, big (2026-10-29, the owner: "an expand button that when clicked shows the lodging in a lightbox").
+         The script moves it to the body, out of the column's fade in transform. --}}
+    <div class="ff-lb" id="ffLodge" role="dialog" aria-modal="true" aria-labelledby="ffLodgeH" hidden>
+        <div class="ff-lb-bg" data-ff-close></div>
+        <figure class="ff-lb-box">
+            <button type="button" class="ff-lb-x" data-ff-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <img src="{{ asset('images/site/photos/lodged-palay-600.webp') }}" srcset="{{ asset('images/site/photos/lodged-palay-600.webp') }} 600w, {{ asset('images/site/photos/lodged-palay.webp') }} 1000w" sizes="(min-width: 900px) 56rem, 100vw" alt="A palay field lodged flat before harvest, the stems fallen into the mud" width="1000" height="750" loading="lazy">
+            <figcaption>
+                <span class="ff-lb-tag">Traditional Farming</span>
+                <b id="ffLodgeH">Lodged flat before harvest</b>
+                <p>When the stems fall, the grain lies in the mud: harder to cut, slower to dry, and much of it lost before it ever reaches the sack.</p>
+            </figcaption>
+        </figure>
     </div>
 </section>
 
@@ -83,6 +101,35 @@
     .ff-inset figcaption { margin-top: .4rem; padding: 0 .3rem; font-size: .72rem; line-height: 1.3; color: #6b7280; }
     .ff-inset figcaption b { display: block; font-size: .78rem; color: #b42318; }
     @keyframes ffBob { 50% { transform: rotate(2deg) translateY(-6px); } }
+    /* Its expand button: the whole photo opens it, the round icon in its corner says so. */
+    .ff-inset-open { position: absolute; left: .35rem; right: .35rem; top: .35rem; aspect-ratio: 4 / 3; display: flex; align-items: flex-start; justify-content: flex-end; padding: .4rem;
+        border-radius: .8rem; cursor: zoom-in; background: transparent; transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .ff-inset-open span { display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 999px; color: #14210c; background: #f5c518;
+        box-shadow: 0 0 0 4px rgb(245 197 24 / .28), 0 8px 16px -6px rgb(0 0 0 / .6); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .ff-inset-open svg { width: .9rem; height: .9rem; }
+    .ff-inset-open:hover { background: rgb(255 255 255 / .1); }
+    .ff-inset-open:hover span, .ff-inset-open:focus-visible span { transform: scale(1.12); }
+    .ff-inset-open:focus-visible { outline: 3px solid #f5c518; outline-offset: 2px; }
+    /* The lightbox. */
+    .ff-lb { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 1rem; }
+    .ff-lb[hidden] { display: none; }
+    .ff-lb-bg { position: absolute; inset: 0; background: rgb(6 10 4 / .84); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0;
+        transition: opacity .3s cubic-bezier(.22,1,.36,1); }
+    .ff-lb-box { position: relative; width: min(56rem, 100%); max-height: calc(100vh - 2rem); margin: 0; overflow: auto; border-radius: 1.6rem; background: #14100d;
+        box-shadow: 0 50px 100px -30px rgb(0 0 0 / .9), inset 0 0 0 1px rgb(248 113 113 / .3); opacity: 0; transform: translateY(18px) scale(.96);
+        transition: opacity .32s cubic-bezier(.22,1,.36,1), transform .32s cubic-bezier(.22,1,.36,1); }
+    .ff-lb.is-on .ff-lb-bg, .ff-lb.is-on .ff-lb-box { opacity: 1; transform: none; }
+    .ff-lb-box img { display: block; width: 100%; max-height: calc(100vh - 12rem); aspect-ratio: 4 / 3; object-fit: contain; background: #000; }
+    .ff-lb-box figcaption { padding: 1rem 1.25rem 1.25rem; color: #fff; }
+    .ff-lb-tag { display: inline-flex; padding: .25rem .65rem; border-radius: 999px; font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase;
+        color: #fff; background: #b42318; }
+    .ff-lb-box b { display: block; margin-top: .5rem; font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; line-height: 1.25; }
+    .ff-lb-box p { margin-top: .3rem; font-size: .9rem; line-height: 1.55; color: #d6d3d1; }
+    .ff-lb-x { position: absolute; z-index: 3; top: .8rem; right: .8rem; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; cursor: pointer;
+        color: #fff; background: rgb(10 14 7 / .7); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .25); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .ff-lb-x:hover { transform: scale(1.08); }
+    .ff-lb-x svg { width: 1.2rem; height: 1.2rem; }
+    html.ff-lock { overflow: hidden; }
     .ff-pts { display: grid; gap: .65rem; margin-top: 1.3rem; padding: 0; list-style: none; }
     .ff-pts li { display: flex; gap: .65rem; align-items: flex-start; padding: .75rem .85rem; border-radius: 1rem; font-size: .93rem; line-height: 1.5; color: #374151; background: #fff;
         box-shadow: 0 0 0 1px #e3ecd9, 0 12px 26px -22px rgb(20 33 12 / .5); }
@@ -96,6 +143,7 @@
     @media (max-width: 520px) { .ff-cap { font-size: .78rem; top: 3.1rem; } .ff-rec { font-size: .66rem; } .ff-inset { width: 42%; } }
     @media (prefers-reduced-motion: reduce) {
         .ff-rec i, .ff-inset { animation: none; }
+        .ff-lb-bg, .ff-lb-box, .ff-inset-open, .ff-inset-open span { transition: none !important; }
         html.js .ff .reveal .ff-pts li { opacity: 1; transform: none; transition: none; }
     }
 </style>
@@ -125,6 +173,25 @@
     });
     document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) v.controls = false; });
     v.addEventListener('webkitendfullscreen', () => { v.controls = false; });
+    // The lodged field, big: the photo's button opens it; the x, the backdrop or Escape closes it. The media column fades
+    // in on a transform, which would hold a fixed box inside it, so the lightbox lives on the body.
+    const lb = document.getElementById('ffLodge'), lbOpen = document.querySelector('[data-ff-lodge]');
+    if (lb && lbOpen) {
+        document.body.appendChild(lb);
+        const shut = () => {
+            if (lb.hidden) return;
+            lb.classList.remove('is-on'); document.documentElement.classList.remove('ff-lock');
+            setTimeout(() => { lb.hidden = true; }, calm ? 0 : 320);
+            lbOpen.focus({ preventScroll: true });
+        };
+        lbOpen.addEventListener('click', () => {
+            lb.hidden = false; document.documentElement.classList.add('ff-lock');
+            requestAnimationFrame(() => requestAnimationFrame(() => lb.classList.add('is-on')));
+            lb.querySelector('.ff-lb-x').focus({ preventScroll: true });
+        });
+        lb.addEventListener('click', (e) => { if (e.target.closest('[data-ff-close]')) shut(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') shut(); });
+    }
 })();
 </script>
 @endpush
