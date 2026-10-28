@@ -67,6 +67,12 @@ class PublicController extends Controller
         return view('public.why-anee');
     }
 
+    /** Anee vs Now (2026-10-28): the farm today beside the farm with Anee, and why a plan, credits or Anee Auto pays. */
+    public function vs()
+    {
+        return view('public.anee-vs-now');
+    }
+
     public function pricing()
     {
         // The same table the in-app gates read — the page can never promise
