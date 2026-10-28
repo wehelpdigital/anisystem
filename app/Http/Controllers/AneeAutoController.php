@@ -137,6 +137,16 @@ class AneeAutoController extends Controller
         return $auto->status !== AsAutoSeason::SETTING_UP ? $this->json(false, 'This season is running. Its answers cannot change now.', [], 423) : null;
     }
 
+    /** An answer changed after the protocol was written: the draft is said to be out of date (2026-10-28). */
+    private function touchDraft(AsAutoSeason $auto): void
+    {
+        $plan = (array) ($auto->fresh()->plan ?? []);
+        if (! empty($plan['draft']) && empty($plan['stale'])) {
+            $plan['stale'] = true;
+            $auto->forceFill(['plan' => $plan])->save();
+        }
+    }
+
     private function lotCap(): ?int
     {
         $cap = Tier::limit('lotsPerSchedule');
@@ -270,6 +280,7 @@ class AneeAutoController extends Controller
                     'pay' => (float) $g->costPerHalfDay > 0 ? round((float) $g->costPerHalfDay * 2, 2) : null])->values() : [],
             'book' => ['signs' => AutoBook::SOIL_SIGNS, 'ph' => AutoBook::PH, 'water' => AutoBook::WATER, 'problems' => AutoBook::PROBLEMS, 'imbalance' => AutoBook::IMBALANCE],
             'optionsBook' => \App\Support\AutoOptions::forPage(),
+            'protocolDraft' => ! empty(($auto->plan ?? [])['draft']), 'protocolStale' => ! empty(($auto->plan ?? [])['stale']), 'protocolRunsLeft' => max(0, self::PROTOCOL_RUNS - (int) (((array) $auto->answers)['protocolRuns'] ?? 0)),
             'options' => \App\Support\AutoOptions::of((array) ($auto->answers ?? [])),
             'crops' => $crops,
             'latest' => AutoBook::latestDate()->toDateString(), 'today' => now('Asia/Manila')->toDateString(),
@@ -363,6 +374,8 @@ class AneeAutoController extends Controller
         if ($request->hasAny(['crop', 'size', 'fieldDate']) && $al->calcId && ($al->wasChanged('fieldDate') || $lot->wasChanged(['crop', 'lotSize']))) {
             $al->update(['fert' => null, 'calcId' => null, 'imbalance' => 0, 'imbalanceReason' => null, 'imbalanceNote' => null]);
         }
+
+        $this->touchDraft($auto);
 
         return $this->json(true, 'Saved.', ['sowDate' => $sow?->toDateString(), 'prepDate' => $prep?->toDateString(), 'method' => $al->method]);
     }
@@ -468,6 +481,8 @@ class AneeAutoController extends Controller
             AsScheduleWorker::active()->where('croppingScheduleId', $schedule->id)->whereNotIn('id', $keep)->update(['deleteStatus' => 0]);
         });
 
+        $this->touchDraft($auto);
+
         return $this->json(true, 'Saved.', ['workers' => $this->wizardState($auto, $schedule)['workers']]);
     }
 
@@ -564,6 +579,9 @@ class AneeAutoController extends Controller
             $a['farmLots'] = array_values($links);
         }
         $auto->update(['answers' => $a, 'step' => max((int) $auto->step, (int) $request->input('step', 0))]);
+        if (array_diff(array_keys($request->all()), ['step'])) {
+            $this->touchDraft($auto);
+        }
 
         return $this->json(true, 'Saved.', ['soilRead' => $a['soilRead'] ?? null]);
     }
@@ -870,6 +888,9 @@ class AneeAutoController extends Controller
         if ($this->running($auto)) {
             return $this->json(true, 'Already working on it.', ['pending' => true]);
         }
+        if ((int) (((array) $auto->answers)['protocolRuns'] ?? 0) >= self::PROTOCOL_RUNS) {
+            return $this->json(false, 'Anee has written this protocol ' . self::PROTOCOL_RUNS . ' times already. Approve it, or tell her what to change once the season runs.', [], 422);
+        }
 
         return $this->runInBackground($auto, 'calendar', fn () => $this->runCalendar($auto->fresh()));
     }
@@ -1025,27 +1046,105 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
                             'transplantDate' => $al->method === 'transplanted' ? $al->fieldDate->toDateString() : null]);
                     }
                 }
-                $auto->update(['status' => AsAutoSeason::ACTIVE, 'generatedAt' => now(), 'plan' => [
+                // A draft (2026-10-28, the owner: "the last page before starting the initial anee auto daily process (phase where
+                // there's no turning back), is a presentation of the generated protocol ... so that user can approve it before
+                // continuing"): the season stays in its setup until the farmer approves it (approve()).
+                $a = (array) $auto->answers;
+                $a['protocolRuns'] = (int) ($a['protocolRuns'] ?? 0) + 1;
+                $auto->update(['generatedAt' => now(), 'answers' => $a, 'plan' => [
+                    'draft' => true,
+                    'made' => $made,
                     'lots' => collect($plans)->map(fn ($p, $lotId) => ['lotId' => $lotId, 'strategy' => $p['strategy'] ?? null, 'harvestDay' => $p['harvestDay'] ?? null])->values()->all(),
                     'safety' => array_values(array_unique(collect($plans)->flatMap(fn ($p) => (array) ($p['safetyChecks'] ?? []))->map(fn ($x) => (string) $x)->all())),
                     'compatibility' => array_values(array_unique(collect($plans)->flatMap(fn ($p) => (array) ($p['compatibility'] ?? []))->map(fn ($x) => (string) $x)->all())),
                 ]]);
-                AsCroppingSchedule::where('id', $auto->croppingScheduleId)->update(['status' => 'generated']);
             });
             $auto = $auto->fresh();
             $this->planner->plan($auto);
-            $names = AsScheduleLot::whereIn('id', array_keys($made))->pluck('lotName', 'id');
-            foreach ((array) ($auto->plan['lots'] ?? []) as $l) {
-                if (! empty($l['strategy'])) {
-                    AsAutoEvent::say($auto->id, 'plan', $l['strategy'], ['tasks' => $made[$l['lotId']] ?? 0], ['lotId' => $l['lotId']]);
-                }
-            }
-            AsAutoEvent::say($auto->id, 'briefing', 'Your season is planned :anee-thumbsup: ' . array_sum($made) . ' tasks across ' . count($made) . ' lot' . (count($made) > 1 ? 's' : '') . '. Each morning I check the weather and your workers and move what needs moving. Just tell me when a day cannot be done.', ['kind' => 'welcome']);
             $this->finishJob($auto);
         } catch (\Throwable $e) {
             report($e);
             $this->finishJob($auto, mb_substr($e->getMessage(), 0, 300));
         }
+    }
+
+    /** How many times a season's protocol may be written in its setup (each one is a long ask). */
+    private const PROTOCOL_RUNS = 3;
+
+    /**
+     * The protocol Anee wrote, for the page that presents it before the farmer approves it (2026-10-28): every lot's
+     * stages with their dates, every task in its stage with what to apply, and the season in numbers for the charts
+     * (the work a week, the fertilizer at each application, the sprays).
+     */
+    public function protocol(int $id)
+    {
+        $auto = $this->auto($id);
+        $als = AsAutoLot::where('autoId', $auto->id)->orderBy('id')->get()->keyBy('lotId');
+        $tasks = AsAutoTask::where('autoId', $auto->id)->where('deleteStatus', 1)->where('origin', 'plan')->orderBy('plannedDate')->orderBy('sortOrder')->get();
+        if ($tasks->isEmpty()) {
+            return $this->json(true, 'ok', ['ready' => false, 'runsLeft' => max(0, self::PROTOCOL_RUNS - (int) (((array) $auto->answers)['protocolRuns'] ?? 0))]);
+        }
+        $lots = [];
+        foreach ($als as $lotId => $al) {
+            $lot = AsScheduleLot::find($lotId);
+            if (! $lot) {
+                continue;
+            }
+            $field = $al->fieldDate ? Carbon::parse($al->fieldDate->toDateString(), 'Asia/Manila') : null;
+            $counter = AutoBook::counterOf((string) $al->method);
+            $stages = $lot->crop && $field ? array_map(fn ($st) => ['day' => (int) $st[0], 'name' => (string) $st[1], 'what' => (string) ($st[2] ?? ''), 'date' => $field->copy()->addDays((int) $st[0])->toDateString()],
+                CropStages::stagesFor($lot->crop, $counter, $lot->maturityDays())) : [];
+            $strategy = collect((array) ($auto->plan['lots'] ?? []))->firstWhere('lotId', $lotId)['strategy'] ?? null;
+            $lots[] = ['id' => (int) $lotId, 'name' => $lot->lotName, 'crop' => $lot->crop ? CropCatalog::label($lot->crop) : '', 'icon' => CropCatalog::CROPS[$lot->crop]['icon'] ?? '🌱',
+                'variety' => $lot->variety, 'counter' => $counter, 'field' => $field?->toDateString(), 'harvest' => $al->harvestDate?->toDateString(), 'stages' => $stages, 'strategy' => $strategy,
+                'areaHa' => $lot->lotSize ? round((float) $lot->lotSize * match ($lot->lotSizeUnit) { 'sqm' => 0.0001, 'acre' => 0.404686, default => 1 }, 3) : null];
+        }
+        $byLot = collect($lots)->keyBy('id');
+        $rows = $tasks->map(function (AsAutoTask $t) use ($byLot) {
+            $l = $byLot->get((int) $t->lotId);
+            $day = $l && $l['field'] && $t->plannedDate ? (int) Carbon::parse($l['field'])->diffInDays(Carbon::parse($t->plannedDate->toDateString()), false) : null;
+            $d = (array) $t->detail;
+
+            return ['id' => (int) $t->id, 'lotId' => (int) $t->lotId, 'kind' => $t->kind, 'label' => AutoBook::KINDS[$t->kind][0] ?? 'Farm work', 'icon' => AutoBook::KINDS[$t->kind][1] ?? '🧑‍🌾',
+                'title' => $t->title, 'summary' => $t->summary, 'why' => $t->why, 'steps' => (array) ($d['steps'] ?? []), 'products' => (array) ($d['products'] ?? []), 'safety' => (array) ($d['safety'] ?? []),
+                'date' => $t->plannedDate?->toDateString(), 'day' => $day, 'critical' => (bool) $t->critical, 'crew' => (int) $t->crew, 'time' => $t->timeOfDay];
+        })->values();
+
+        return $this->json(true, 'ok', ['ready' => true, 'lots' => $lots, 'tasks' => $rows, 'kinds' => array_map(fn ($k) => ['label' => $k[0], 'icon' => $k[1], 'tone' => $k[3]], AutoBook::KINDS),
+            'safety' => (array) ($auto->plan['safety'] ?? []), 'compatibility' => (array) ($auto->plan['compatibility'] ?? []), 'draft' => ! empty($auto->plan['draft']), 'stale' => ! empty($auto->plan['stale']),
+            'runsLeft' => max(0, self::PROTOCOL_RUNS - (int) (((array) $auto->answers)['protocolRuns'] ?? 0)), 'generatedAt' => $auto->generatedAt?->format('M j, g:i A')]);
+    }
+
+    /**
+     * The farmer approves the protocol and the season starts (2026-10-28): from here the setup is closed for good, the
+     * days are placed again from today, and Anee says the plan of each lot in the season's log.
+     */
+    public function approve(int $id)
+    {
+        $auto = $this->auto($id);
+        if ($no = $this->setupOnly($auto)) {
+            return $no;
+        }
+        if (empty($auto->plan['draft']) || ! AsAutoTask::where('autoId', $auto->id)->where('origin', 'plan')->where('deleteStatus', 1)->exists()) {
+            return $this->json(false, 'Let Anee write the protocol first.', [], 422);
+        }
+        $plan = (array) $auto->plan;
+        $made = (array) ($plan['made'] ?? []);
+        unset($plan['draft'], $plan['made']);
+        DB::transaction(function () use ($auto, $plan) {
+            $auto->update(['status' => AsAutoSeason::ACTIVE, 'plan' => $plan]);
+            AsCroppingSchedule::where('id', $auto->croppingScheduleId)->update(['status' => 'generated']);
+        });
+        $auto = $auto->fresh();
+        $this->planner->plan($auto);
+        foreach ((array) ($auto->plan['lots'] ?? []) as $l) {
+            if (! empty($l['strategy'])) {
+                AsAutoEvent::say($auto->id, 'plan', $l['strategy'], ['tasks' => $made[$l['lotId']] ?? 0], ['lotId' => $l['lotId']]);
+            }
+        }
+        AsAutoEvent::say($auto->id, 'briefing', 'Your season is planned :anee-thumbsup: ' . array_sum($made) . ' tasks across ' . count($made) . ' lot' . (count($made) > 1 ? 's' : '') . '. Each morning I check the weather and your workers and move what needs moving. Just tell me when a day cannot be done.', ['kind' => 'welcome']);
+
+        return $this->json(true, 'Anee Auto has started.', ['url' => route('auto.show', $auto->id)]);
     }
 
     /* ------------------------------------------------------- the fertilizer */
@@ -1072,6 +1171,8 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
         $microShort = collect((array) $fert['micros'])->filter(fn ($m) => ($m['state'] ?? '') === 'short' || ($m['state'] ?? '') === 'over')->keys()->all();
         $balanced = ! $short && ! $microShort && ($fert['reach'] === null || (int) $fert['reach'] >= 90);
         $al->update(['calcId' => (int) $calc->id, 'fert' => $fert] + ($balanced ? ['imbalance' => 0, 'imbalanceReason' => null, 'imbalanceNote' => null] : []));
+
+        $this->touchDraft($auto);
 
         return $this->json(true, 'Saved.', ['fert' => $fert, 'balanced' => $balanced, 'off' => array_merge($short, $microShort)]);
     }

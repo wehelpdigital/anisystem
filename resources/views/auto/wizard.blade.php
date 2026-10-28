@@ -57,6 +57,92 @@
     .au-card { border-radius: 1.2rem; background: var(--color-white); border: 1px solid var(--color-gray-200); padding: 1.05rem 1.1rem; margin-bottom: .9rem; }
     .au-note.is-ask { background: #eef2ff; border-color: #c7d2fe; color: #312e81; }
     html.dark .au-note.is-ask { background: #1b1f3a; border-color: #2f3770; color: #c7d2fe; }
+    /* The protocol, presented (2026-10-28). */
+    .au-pr { display: grid; gap: .9rem; margin-top: .9rem; }
+    .au-pr-wait { text-align: center; font-weight: 800; color: var(--color-gray-500); }
+    .au-pr-wait span { display: inline-block; animation: auWinBob 1.2s ease-in-out infinite; }
+    .au-pr-hero { display: flex; gap: .9rem; align-items: center; padding: 1.1rem; border-radius: 1.3rem; color: #eaf3df; background: radial-gradient(120% 160% at 100% 0%, #6aa33a 0%, #2d5016 50%, #10200a 100%); animation: auFade .4s var(--au-ease) both; }
+    .au-pr-hero img { flex: none; width: 4.2rem; height: 4.2rem; border-radius: 1rem; background: #fff; padding: .2rem; animation: auWinBob 3s ease-in-out infinite; }
+    .au-pr-hero > div > span:first-child { font-size: .68rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #f5c518; }
+    .au-pr-hero h3 { margin-top: .15rem; font-family: var(--font-heading); font-size: 1.25rem; font-weight: 800; color: #fff; }
+    .au-pr-hero p { margin-top: .2rem; font-size: .82rem; line-height: 1.5; color: #cfe3b9; }
+    .au-pr-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .6rem; }
+    .au-pr-chips span { padding: .25rem .6rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: #fff; background: rgb(255 255 255 / .14); animation: auFade .35s var(--au-ease) both; animation-delay: calc(var(--k) * 70ms + .2s); }
+    .au-pr-tabs { margin: 0; }
+    .au-pr-strat { display: flex; gap: .6rem; align-items: flex-start; padding: .85rem 1rem; border-radius: 1rem; background: #eaf4fb; border: 1px solid #c6e0f2; color: #1e4b6b; font-size: .86rem; line-height: 1.55; }
+    .au-pr-strat p { margin: 0; }
+    .au-pr-c { margin: 0; }
+    .au-pr-c h4 { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .6rem; margin: 0 0 .7rem; font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-pr-c h4 small { font-size: .74rem; font-weight: 600; color: var(--color-gray-500); }
+    .au-pr-c h5 { margin: .8rem 0 .3rem; font-size: .8rem; font-weight: 800; color: var(--color-gray-700); }
+    .au-pr-c ul { margin: 0; padding-left: 1.1rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); }
+    .au-pr-key { margin: .5rem 0 0; font-size: .72rem; color: var(--color-gray-500); }
+    .au-pr-2 { display: grid; gap: .9rem; }
+    @media (min-width: 900px) { .au-pr-2 { grid-template-columns: 1fr 1fr; } }
+    .au-pg { --lab: 7.5rem; display: grid; }
+    @media (max-width: 560px) { .au-pg { --lab: 2rem; } .au-pg-lab b { display: none; } }
+    .au-pg-row { display: grid; grid-template-columns: var(--lab) minmax(0, 1fr); align-items: center; min-height: 1.9rem; }
+    .au-pg-row + .au-pg-row { border-top: 1px solid var(--color-gray-100); }
+    .au-pg-row.is-axis { border-top: 0; min-height: 1.4rem; }
+    .au-pg-lab { display: flex; align-items: center; gap: .35rem; font-size: .74rem; font-weight: 800; color: var(--color-gray-700); }
+    .au-pg-lab i { font-style: normal; }
+    .au-pg-track { position: relative; height: 1.6rem; }
+    .au-pg-st { position: absolute; top: .15rem; bottom: .15rem; border-radius: .35rem; background: var(--c); font-size: .58rem; font-weight: 800; color: #1f2a17; display: grid; place-items: center; overflow: hidden; white-space: nowrap; transform-origin: left; animation: auCrew .6s var(--au-ease) both; animation-delay: calc(var(--k) * 90ms); }
+    .au-pg-dot { position: absolute; top: 50%; width: .7rem; height: .7rem; margin: -.35rem 0 0 -.35rem; border-radius: 999px; background: #4a7c2a; box-shadow: 0 0 0 2px #fff; animation: auPgPop .35s var(--au-ease) both; animation-delay: calc(.4s + var(--k) * 40ms); }
+    @keyframes auPgPop { from { transform: scale(0); } }
+    .au-pg-dot.is-prep { background: #b45309; } .au-pg-dot.is-plant { background: #65a30d; } .au-pg-dot.is-water { background: #0284c7; } .au-pg-dot.is-fert { background: #d4a106; }
+    .au-pg-dot.is-weeds { background: #16a34a; } .au-pg-dot.is-protect { background: #db2777; } .au-pg-dot.is-scout { background: #7c3aed; } .au-pg-dot.is-harvest { background: #ea580c; }
+    .au-pg-dot.is-crit { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #1f2a17; }
+    .au-pg-tick { position: absolute; top: .2rem; transform: translateX(-50%); font-size: .58rem; font-weight: 800; color: var(--color-gray-500); white-space: nowrap; }
+    .au-pg-tick:first-child { transform: none; }
+    .au-pw { display: flex; align-items: flex-end; gap: 3px; height: 7rem; }
+    .au-pw-c { flex: 1 1 0; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: .2rem; }
+    .au-pw-c i { display: block; width: 100%; height: calc(var(--h) * 85%); min-height: 3px; border-radius: 3px 3px 0 0; background: #8fc96a; transform-origin: bottom; animation: auWinBar .5s var(--au-ease) both; animation-delay: calc(var(--k) * 30ms); }
+    .au-pw-c i.is-peak { background: #d97706; }
+    .au-pw-c span { height: .8rem; font-size: .55rem; font-weight: 800; color: var(--color-gray-500); white-space: nowrap; }
+    .au-pf { display: grid; gap: .45rem; }
+    .au-pf-r { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) 3.4rem; gap: .5rem; align-items: center; animation: auFade .35s var(--au-ease) both; animation-delay: calc(var(--k) * 70ms); }
+    .au-pf-l b { display: block; font-size: .76rem; font-weight: 800; color: var(--color-gray-800); }
+    .au-pf-l small { display: block; font-size: .62rem; color: var(--color-gray-500); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .au-pf-b { display: flex; gap: 2px; height: 1.1rem; }
+    .au-pf-b i { display: block; height: 100%; border-radius: .25rem; background: var(--c); transform-origin: left; animation: auCrew .7s var(--au-ease) both; }
+    .au-pf-v { font-size: .74rem; font-weight: 800; color: var(--color-gray-700); text-align: right; }
+    .au-pf-key { display: flex; flex-wrap: wrap; gap: .3rem .8rem; margin-top: .6rem; font-size: .7rem; color: var(--color-gray-600); }
+    .au-pf-key span { display: inline-flex; align-items: center; gap: .3rem; }
+    .au-pf-key i { width: .7rem; height: .7rem; border-radius: .2rem; background: var(--c); }
+    .au-ps + .au-ps { margin-top: .4rem; }
+    .au-pts { display: grid; gap: .5rem; padding: .3rem 0 .6rem; }
+    .au-pt { padding: .7rem .8rem; border-radius: .9rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .au-pt.is-crit { border-color: #f3d98f; background: #fffbeb; }
+    .au-pt-h { display: flex; gap: .55rem; align-items: flex-start; }
+    .au-pt-i { flex: none; width: 2rem; height: 2rem; border-radius: .65rem; display: grid; place-items: center; font-size: 1rem; background: #fff; border: 1px solid var(--color-gray-200); }
+    .au-pt-h b { display: block; font-size: .86rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-pt-h small { display: block; font-size: .7rem; color: var(--color-gray-500); }
+    .au-pt p { margin: .4rem 0 0; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); }
+    .au-pt-p { display: grid; gap: .3rem; margin-top: .45rem; }
+    .au-pt-p span { padding: .35rem .55rem; border-radius: .6rem; font-size: .72rem; line-height: 1.4; color: var(--color-gray-600); background: #fff; border: 1px solid var(--color-gray-200); }
+    .au-pt-p span b { display: block; font-size: .78rem; color: var(--color-gray-900); }
+    .au-pt-s { margin: .4rem 0 0; padding-left: 1.2rem; list-style: decimal; font-size: .76rem; line-height: 1.5; color: var(--color-gray-600); }
+    .au-pt p.au-pt-y { font-size: .74rem; color: var(--color-gray-500); }
+    .au-pt p.au-pt-sf { font-size: .72rem; color: #92400e; }
+    .au-psp { display: grid; }
+    .au-psp > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: .6rem; padding: .45rem 0; font-size: .8rem; }
+    .au-psp > div + div { border-top: 1px solid var(--color-gray-100); }
+    .au-psp b { font-weight: 800; color: var(--color-gray-800); }
+    .au-psp small { display: block; font-size: .72rem; color: var(--color-gray-500); }
+    .au-pr-go { border-color: #f3d98f; }
+    .au-pr-go .au-lock { margin-top: 0; }
+    .au-pr-ok { display: flex; align-items: center; gap: .55rem; margin-top: .9rem; font-size: .88rem; font-weight: 800; color: var(--color-gray-800); cursor: pointer; }
+    .au-pr-ok input { width: 1.2rem; height: 1.2rem; accent-color: #4a7c2a; }
+    .au-pr-acts { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem; margin-top: .9rem; }
+    .au-big.is-gold { color: #3b2f00; background: #f5c518; box-shadow: 0 12px 26px -14px rgb(245 197 24 / .9); }
+    .au-big[disabled] { opacity: .5; cursor: not-allowed; }
+    html.dark .au-pr-c h4, html.dark .au-pt-h b, html.dark .au-pt-p span b, html.dark .au-psp b, html.dark .au-pr-ok, html.dark .au-pf-l b { color: #eef3e8; }
+    html.dark .au-pr-strat { background: #10202b; border-color: #1f3a4d; color: #9fc3dd; }
+    html.dark .au-pt { background: #151c11; border-color: #232e1b; } html.dark .au-pt.is-crit { background: #2a2210; border-color: #5b4716; }
+    html.dark .au-pt-i, html.dark .au-pt-p span { background: #10150c; border-color: #2b3a1c; } html.dark .au-pt p, html.dark .au-pt-p span, html.dark .au-pr-c ul { color: #b9c6ad; }
+    html.dark .au-pg-row + .au-pg-row, html.dark .au-psp > div + div { border-top-color: #232e1b; } html.dark .au-pg-dot { box-shadow: 0 0 0 2px #161c12; }
+    @media (prefers-reduced-motion: reduce) { .au-pr-hero, .au-pr-hero img, .au-pr-chips span, .au-pg-st, .au-pg-dot, .au-pw-c i, .au-pf-r, .au-pf-b i, .au-pr-wait span { animation: none !important; } }
     /* A worker's pay, and the crew check (2026-10-28). */
     .au-pay { display: grid; gap: .3rem; margin-top: .6rem; }
     .au-pay > span:first-child { font-size: .72rem; font-weight: 800; color: var(--color-gray-500); }
@@ -768,12 +854,14 @@
     {{-- 8. Start --}}
     <section class="au-step" data-step="8">
         <div class="au-card">
-            <h3 class="au-h">Ready when you are</h3>
-            <p class="au-sub">Anee reads everything again and writes the whole season: land preparation, water, every fertilizer at its moment, prevention first, harvest. Then she keeps it on track every day.</p>
+            <h3 class="au-h">Your protocol</h3>
+            <p class="au-sub" id="auStartSub">Anee reads everything again and writes the whole season: land preparation, water, every fertilizer at its moment, the protection you chose, harvest. You read it here and approve it before the season starts.</p>
             <div class="au-review" id="auReview"></div>
-            <div class="au-lock"><span aria-hidden="true">🔒</span><span><b>After this, the answers cannot be changed.</b> Anee plans from them; from then on you steer the season by telling her what happened and what cannot be done.</span></div>
-            <div class="text-center mt-5"><button type="button" class="au-big" id="auGenerate">✨ Start Anee Auto</button></div>
+            <div class="text-center mt-5"><button type="button" class="au-big" id="auGenerate">✨ Write my protocol</button></div>
         </div>
+        {{-- The protocol Anee wrote, presented before the farmer approves it (2026-10-28): the season at a glance, the work
+             a week, the fertilizer at each application, every step with what to apply, the sprays and their safety. --}}
+        <div id="auProto"></div>
     </section>
 
     <div class="au-nav">
@@ -864,6 +952,7 @@
         analyze: @json(route('auto.analyze', $auto->id)), generate: @json(route('auto.generate', $auto->id)), job: () => @json(route('auto.job', $auto->id)), goal: @json(route('auto.goal', $auto->id)),
         fert: @json(route('auto.fert', $auto->id)), imbalance: @json(route('auto.imbalance', $auto->id)), ph: @json(asset('data/ph-locations.json')),
         window: @json(route('auto.window', $auto->id)), varieties: @json(route('auto.varieties', $auto->id)), crew: @json(route('auto.crew', $auto->id)),
+        protocol: @json(route('auto.protocol', $auto->id)), approve: @json(route('auto.approve', $auto->id)),
         npk: @json(route('npk.page')) + '?frame=auto', buy: @json(route('ai.credits') . '?tab=buy'),
     };
     const STEPS = ['Season', 'Lots', 'Workers', 'Soil', 'Water', 'Troubles', 'Reading', 'Fertilizer', 'Start'];
@@ -994,7 +1083,7 @@
         if (n === 5) { paintProblems(); paintFrom(); }
         if (n === 6) paintReading();
         if (n === 7) paintFert();
-        if (n === 8) paintReview();
+        if (n === 8) { paintReview(); paintStart(); }
     };
 
     /* ---- 0. how Anee runs the season (App\Support\AutoOptions, 2026-10-28, the owner: "ask the user if user wants to
@@ -2313,10 +2402,120 @@
         try {
             const r = await window.api(U.generate, { method: 'POST' });
             if (!(r.data && r.data.status === 'ready')) await window.aneeWait.poll({ id: ID, job: U.job, phases, every: 3500, limit: 500 });
-            await window.aneeWait.done({ title: 'Your season is planned!', line: 'I will keep it on track every day.' });
-            location.href = @json(route('auto.show', $auto->id));
+            await window.aneeWait.done({ title: 'Your protocol is written!', line: 'Read it, then approve it to start.' });
+            S.protocolDraft = true; S.protocolStale = false; S.protocolRunsLeft = Math.max(0, (S.protocolRunsLeft || 1) - 1); PROTO = null;
+            paintStart();
+            $('auProto').scrollIntoView({ behavior: still() ? 'auto' : 'smooth', block: 'start' });
         } catch (err) { window.aneeWait.fail(); window.toast?.(err.message, 'error'); }
     });
+
+    /* ---- the protocol, presented before it is approved (2026-10-28, the owner: "the last page before starting the
+       initial anee auto daily process (phase where there's no turning back), is a presentation of the generated protocol
+       (generate it via anee) somewhat similar to how it is presented in the protocol builder but better with explanation,
+       what to apply in each step, so that user can approve it before continuing. make it look great with graphs"). ---- */
+    let PROTO = null, PLOT = null;
+    const GROUPS = [['prep', 'Land preparation', '🚜', ['land_prep']], ['plant', 'Planting', '🌱', ['nursery', 'sowing', 'transplant', 'planting']], ['water', 'Water', '💧', ['irrigation', 'drainage']],
+        ['fert', 'Fertilizer', '🧪', ['fertilizer', 'foliar']], ['weeds', 'Weeds', '🌿', ['herbicide', 'weeding']], ['protect', 'Pests and diseases', '🛡️', ['insecticide', 'fungicide', 'protect']],
+        ['scout', 'Walks', '👀', ['scouting']], ['harvest', 'Harvest', '🧺', ['harvest', 'post_harvest', 'prepare', 'other']]];
+    const groupOf = (k) => (GROUPS.find((g) => g[3].includes(k)) || GROUPS[7])[0];
+    // The kilos a fertilizer line says: bags (50 kg unless it says 25), kilos, grams.
+    const kgOf = (amount) => { const a = String(amount || '').toLowerCase(); let m = a.match(/([\d.]+)\s*(?:bags?|sacks?)/); if (m) return Number(m[1]) * (/25\s*kg/.test(a) ? 25 : 50);
+        m = a.match(/([\d.]+)\s*kg/); if (m) return Number(m[1]); m = a.match(/([\d.]+)\s*g\b/); return m ? Number(m[1]) / 1000 : 0; };
+    const paintStart = async () => {
+        $('auGenerate').closest('.text-center').hidden = !!S.protocolDraft;
+        $('auStartSub').textContent = S.protocolDraft ? 'Anee wrote your season below. Read it, then approve it to start. Something to change first? Go back to that step: she writes it again.' : $('auStartSub').textContent;
+        if (!S.protocolDraft) { $('auProto').innerHTML = ''; return; }
+        if (!PROTO) {
+            $('auProto').innerHTML = '<div class="au-card au-pr-wait"><span aria-hidden="true">📜</span> Opening your protocol…</div>';
+            try { PROTO = (await apiGet(U.protocol)).data; } catch (_) { $('auProto').innerHTML = '<div class="au-card">It did not load. <button type="button" class="au-link" onclick="location.reload()">Try again</button></div>'; return; }
+        }
+        if (!PROTO.ready) { S.protocolDraft = false; return paintStart(); }
+        if (!PLOT || !PROTO.lots.find((l) => l.id === PLOT)) PLOT = PROTO.lots[0] ? PROTO.lots[0].id : null;
+        paintProto();
+    };
+    const paintProto = () => {
+        const P = PROTO, L = P.lots.find((l) => l.id === PLOT) || P.lots[0], T = P.tasks.filter((t) => t.lotId === L.id);
+        const all = P.tasks, sprays = all.filter((t) => ['herbicide', 'insecticide', 'fungicide', 'foliar'].includes(t.kind));
+        const fertT = T.filter((t) => t.kind === 'fertilizer' || t.kind === 'foliar');
+        const harvests = P.lots.map((l) => l.harvest).filter(Boolean).sort();
+        const chips = [['📋', all.length + ' tasks'], ['🧪', all.filter((t) => t.kind === 'fertilizer').length + ' fertilizer days'], ['🛡️', sprays.length + ' sprays'], ['👀', all.filter((t) => t.kind === 'scouting').length + ' field walks'],
+            harvests.length ? ['🧺', 'Harvest from ' + fmtDate(harvests[0])] : null].filter(Boolean);
+        // The season at a glance: the stages as bands, each group of work as a row of dots on its day.
+        const last = Math.max(L.harvest && L.field ? daysFrom(L.field, L.harvest) + 10 : 0, ...T.map((t) => t.day ?? 0), 30);
+        const first = Math.min(-5, ...T.map((t) => t.day ?? 0));
+        const span = last - first, X = (d) => ((d - first) / span * 100).toFixed(2) + '%';
+        const tones = ['#d6ebbf', '#b5d98f', '#8fc96a', '#f0cf5c', '#e0a94a', '#cbb9f0', '#9fd0f5', '#f3c5a6'];
+        const stagesSvg = L.stages.map((st, i) => { const to = (L.stages[i + 1] ? L.stages[i + 1].day : last); return '<span class="au-pg-st" style="left:' + X(st.day) + ';width:calc(' + X(to) + ' - ' + X(st.day) + ');--c:' + tones[i % tones.length] + ';--k:' + i + '" title="' + esc(st.name + ' from ' + fmtDate(st.date)) + '">' + esc(st.name) + '</span>'; }).join('');
+        const rows = GROUPS.map((g) => { const ts = T.filter((t) => groupOf(t.kind) === g[0] && t.day != null); if (!ts.length) return ''; return '<div class="au-pg-row"><span class="au-pg-lab"><i aria-hidden="true">' + g[2] + '</i><b>' + g[1] + '</b></span><div class="au-pg-track">'
+            + ts.map((t, i) => '<span class="au-pg-dot is-' + g[0] + (t.critical ? ' is-crit' : '') + '" style="left:' + X(t.day) + ';--k:' + i + '" title="' + esc((t.date ? fmtDate(t.date) + ': ' : '') + t.title) + '"></span>').join('') + '</div></div>'; }).join('');
+        // The day marks under the chart, never on top of each other (fewer on a phone).
+        const gap = innerWidth < 560 ? 18 : 9;
+        const ticks = [first < 0 ? first : null, 0, ...L.stages.slice(1).map((s2) => s2.day), L.harvest ? daysFrom(L.field, L.harvest) : null].filter((d, i, a) => d != null && a.indexOf(d) === i)
+            .reduce((kept, d) => { const at = (d - first) / span * 100; if (!kept.length || at - (kept[kept.length - 1] - first) / span * 100 >= gap) kept.push(d); return kept; }, []);
+        // The work a week: the crew days of each week, for the lot.
+        const weeks = {}; T.forEach((t) => { if (!t.date) return; const d = new Date(t.date + 'T00:00:00'); const mon = new Date(d); mon.setDate(d.getDate() - ((d.getDay() + 6) % 7)); const k = mon.toISOString().slice(0, 10); weeks[k] = (weeks[k] || 0) + Math.max(1, t.crew || 1); });
+        const wk = Object.entries(weeks).sort(), wMax = Math.max(1, ...wk.map(([, v]) => v));
+        // The fertilizer at each application, in kilos, stacked by product.
+        const PCOL = ['#4a7c2a', '#d97706', '#0284c7', '#7c3aed', '#db2777', '#0f766e'];
+        const prodNames = []; fertT.forEach((t) => t.products.forEach((p) => { if (kgOf(p.amount) > 0 && !prodNames.includes(p.name)) prodNames.push(p.name); }));
+        const fMax = Math.max(1, ...fertT.map((t) => t.products.reduce((a, p) => a + kgOf(p.amount), 0)));
+        const fertBars = fertT.filter((t) => t.products.some((p) => kgOf(p.amount) > 0));
+        // Step by step, by the crop's stage.
+        const stageOf = (d) => { if (d == null) return 'Any time'; if (d < 0) return 'Before planting'; let n = L.stages[0] ? L.stages[0].name : 'Growing'; L.stages.forEach((st) => { if (d >= st.day) n = st.name; }); return n; };
+        const order = ['Before planting', ...L.stages.map((st) => st.name), 'Any time'];
+        const byStage = {}; T.forEach((t) => { const k = stageOf(t.day); (byStage[k] = byStage[k] || []).push(t); });
+        const taskCard = (t) => '<div class="au-pt' + (t.critical ? ' is-crit' : '') + '"><div class="au-pt-h"><span class="au-pt-i" aria-hidden="true">' + t.icon + '</span><div><b>' + esc(t.title) + '</b><small>' + esc((t.date ? fmtDate(t.date) : '') + (t.day != null ? ' · ' + L.counter + ' ' + t.day : '') + (t.crew > 1 ? ' · ' + t.crew + ' people' : '') + (t.critical ? ' · do not be late' : '')) + '</small></div></div>'
+            + (t.summary ? '<p>' + esc(t.summary) + '</p>' : '')
+            + (t.products.length ? '<div class="au-pt-p">' + t.products.map((p) => '<span><b>' + esc(p.name) + '</b>' + esc([p.group, p.rate, p.amount].filter(Boolean).join(' · ')) + '</span>').join('') + '</div>' : '')
+            + (t.steps.length ? '<ol class="au-pt-s">' + t.steps.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ol>' : '')
+            + (t.why ? '<p class="au-pt-y"><b>Why:</b> ' + esc(t.why) + '</p>' : '')
+            + (t.safety.length ? '<p class="au-pt-sf">🦺 ' + esc(t.safety.join(' · ')) + '</p>' : '') + '</div>';
+        $('auProto').innerHTML = '<div class="au-pr">'
+            + '<div class="au-pr-hero"><img src="' + @json(\App\Support\AneeEmoji::url('thumbsup')) + '" alt=""><div><span>Written by Anee' + (P.generatedAt ? ' · ' + esc(P.generatedAt) : '') + '</span><h3>Your season, step by step</h3><p>Read it lot by lot. Approve it and Anee starts running it every morning; until then, nothing is fixed.</p>'
+            + '<div class="au-pr-chips">' + chips.map((c, i) => '<span style="--k:' + i + '">' + c[0] + ' ' + esc(c[1]) + '</span>').join('') + '</div></div></div>'
+            + (P.stale ? '<div class="au-note is-warn"><span>⚠️</span><span><b>You changed an answer after this protocol was written.</b> ' + (S.protocolRunsLeft ? 'Write it again so it follows your answers (' + S.protocolRunsLeft + ' left).' : 'It follows your earlier answers.') + '</span></div>' : '')
+            + (P.lots.length > 1 ? '<div class="au-ltabs au-pr-tabs">' + P.lots.map((l) => '<button type="button" class="au-ltab' + (l.id === L.id ? ' is-on' : '') + '" data-plot="' + l.id + '">' + l.icon + ' ' + esc(l.name) + '</button>').join('') + '</div>' : '')
+            + (L.strategy ? '<div class="au-pr-strat"><span aria-hidden="true">💬</span><p>' + esc(L.strategy) + '</p></div>' : '')
+            + '<div class="au-card au-pr-c"><h4>🗓️ The season at a glance <small>' + esc(L.icon + ' ' + L.crop + (L.variety ? ', ' + L.variety : '')) + (L.field ? ' · ' + esc(fmtDate(L.field)) + (L.harvest ? ' to ' + esc(fmtDate(L.harvest)) : '') : '') + '</small></h4>'
+                + '<div class="au-pg"><div class="au-pg-row is-stages"><span class="au-pg-lab"><i aria-hidden="true">🌾</i><b>Stages</b></span><div class="au-pg-track">' + stagesSvg + '</div></div>' + rows
+                + '<div class="au-pg-row is-axis"><span class="au-pg-lab"></span><div class="au-pg-track">' + ticks.map((d) => '<span class="au-pg-tick" style="left:' + X(d) + '">' + esc(d === 0 ? 'Planting' : (d < 0 ? d + ' days' : L.counter + ' ' + d)) + '</span>').join('') + '</div></div></div>'
+                + '<p class="au-pr-key">Each dot is a task on its day; a ringed dot must not be late.</p></div>'
+            + '<div class="au-pr-2">'
+            + '<div class="au-card au-pr-c"><h4>👷 The work, week by week <small>people a week on ' + esc(L.name) + '</small></h4><div class="au-pw">' + wk.map(([k, v], i) => '<div class="au-pw-c" title="' + esc('Week of ' + fmtDate(k) + ': ' + v + ' people') + '"><i style="--h:' + (v / wMax).toFixed(2) + ';--k:' + i + '"' + (v === wMax ? ' class="is-peak"' : '') + '></i><span>' + (i % 3 === 0 ? esc(fmtDate(k).replace(/^\w+, /, '')) : '') + '</span></div>').join('') + '</div>'
+                + '<p class="au-pr-key">The tallest week is the busiest: plan the help for it.</p></div>'
+            + '<div class="au-card au-pr-c"><h4>🧪 The fertilizer, when and how much <small>kilos for this lot</small></h4>' + (fertBars.length ? '<div class="au-pf">' + fertBars.map((t, i) => { const tot = t.products.reduce((a, p) => a + kgOf(p.amount), 0); return '<div class="au-pf-r" style="--k:' + i + '"><span class="au-pf-l"><b>' + esc(t.date ? fmtDate(t.date).replace(/^\w+, /, '') : '') + '</b><small>' + esc(stageOf(t.day)) + '</small></span><div class="au-pf-b">'
+                    + t.products.filter((p) => kgOf(p.amount) > 0).map((p) => '<i style="width:' + (kgOf(p.amount) / fMax * 100).toFixed(1) + '%;--c:' + PCOL[prodNames.indexOf(p.name) % PCOL.length] + '" title="' + esc(p.name + ': ' + p.amount) + '"></i>').join('') + '</div><span class="au-pf-v">' + Math.round(tot) + ' kg</span></div>'; }).join('') + '</div>'
+                + '<div class="au-pf-key">' + prodNames.map((n, i) => '<span><i style="--c:' + PCOL[i % PCOL.length] + '"></i>' + esc(n) + '</span>').join('') + '</div>' : '<p class="au-pr-key">No granular fertilizer amounts on this lot\'s tasks.</p>') + '</div>'
+            + '</div>'
+            + '<div class="au-card au-pr-c"><h4>📜 Step by step <small>what to do and what to apply, stage by stage</small></h4>'
+            + order.filter((k) => byStage[k]).map((k, i) => '<div class="au-acc au-ps"><button type="button" class="au-acc-h" aria-expanded="' + (i === 0) + '"><span class="au-acc-t"><b>' + esc(k) + '</b><small>' + byStage[k].length + ' task' + (byStage[k].length > 1 ? 's' : '') + (byStage[k][0].date ? ' · from ' + esc(fmtDate(byStage[k][0].date)) : '') + '</small></span>' + CHEV + '</button><div class="au-acc-b"' + (i === 0 ? ' style="grid-template-rows:1fr"' : '') + '><div><div class="au-pts">' + byStage[k].map(taskCard).join('') + '</div></div></div></div>').join('')
+            + '</div>'
+            + (sprays.length || P.safety.length ? '<div class="au-card au-pr-c"><h4>🛡️ The sprays and their safety <small>all lots</small></h4>'
+                + (sprays.length ? '<div class="au-psp">' + sprays.map((t) => '<div><b>' + esc(t.date ? fmtDate(t.date) : '') + '</b><span>' + t.icon + ' ' + esc(t.title) + (t.products.length ? '<small>' + esc(t.products.map((p) => p.name + (p.group ? ' (' + p.group + ')' : '') + (p.rate ? ', ' + p.rate : '')).join('; ')) + '</small>' : '') + '</span></div>').join('') + '</div>' : '')
+                + (P.safety.length ? '<h5>Every time you spray</h5><ul>' + P.safety.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '')
+                + (P.compatibility.length ? '<h5>Never mix</h5><ul>' + P.compatibility.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '') + '</div>' : '')
+            + '<div class="au-card au-pr-go"><div class="au-lock"><span aria-hidden="true">🔒</span><span><b>Approving starts the season, and there is no going back.</b> The answers and the protocol are fixed from then on: Anee runs the season from them, every morning. You steer it by telling her what happened, what you saw and what cannot be done that day.</span></div>'
+                + '<label class="au-pr-ok"><input type="checkbox" id="auProtoOk"> I have read the protocol and I am ready to start</label>'
+                + '<div class="au-pr-acts"><button type="button" class="au-big is-gold" id="auApprove" disabled>✅ Approve and start Anee Auto</button>'
+                + (S.protocolRunsLeft ? '<button type="button" class="au-link" id="auRewrite">Write it again (' + S.protocolRunsLeft + ' left)</button>' : '') + '</div></div>'
+            + '</div>';
+    };
+    $('auProto').addEventListener('click', async (e) => {
+        const t = e.target.closest('[data-plot]'); if (t) { PLOT = Number(t.dataset.plot); paintProto(); return; }
+        const h = e.target.closest('.au-ps .au-acc-h');
+        if (h) { const open = h.getAttribute('aria-expanded') !== 'true'; h.setAttribute('aria-expanded', String(open)); h.nextElementSibling.style.gridTemplateRows = open ? '1fr' : '0fr'; return; }
+        if (e.target.closest('#auRewrite')) { $('auGenerate').click(); return; }
+        if (e.target.closest('#auApprove')) {
+            const b = $('auApprove'); b.disabled = true;
+            try {
+                const r = await put(U.approve, {}, 'POST');
+                window.aneeWait.show({ title: 'Anee Auto is starting!', sub: 'Placing every task around the weather and your workers.', lines: ['Your season is locked in', 'Tomorrow at dawn, your first morning plan'] });
+                await window.aneeWait.done({ title: 'Your season has started! 🎉', line: 'See you tomorrow morning with today\'s work.' });
+                location.href = (r.data && r.data.url) || @json(route('auto.show', $auto->id));
+            } catch (err) { b.disabled = false; }
+        }
+    });
+    $('auProto').addEventListener('change', (e) => { if (e.target.id === 'auProtoOk') $('auApprove').disabled = !e.target.checked; });
 
     /* ---- a modal ---- */
     const modal = (html, onOk, onMount) => {
