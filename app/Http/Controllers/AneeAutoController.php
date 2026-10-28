@@ -1061,6 +1061,8 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             });
             $auto = $auto->fresh();
             $this->planner->plan($auto);
+            // Every tank of the season checked, and sprays of one day that may share one (App\Support\AutoMix).
+            rescue(fn () => \App\Support\AutoMix::audit($auto), null, true);
             $this->finishJob($auto);
         } catch (\Throwable $e) {
             report($e);
@@ -1107,6 +1109,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
 
             return ['id' => (int) $t->id, 'lotId' => (int) $t->lotId, 'kind' => $t->kind, 'label' => AutoBook::KINDS[$t->kind][0] ?? 'Farm work', 'icon' => AutoBook::KINDS[$t->kind][1] ?? '🧑‍🌾',
                 'title' => $t->title, 'summary' => $t->summary, 'why' => $t->why, 'steps' => (array) ($d['steps'] ?? []), 'products' => (array) ($d['products'] ?? []), 'safety' => (array) ($d['safety'] ?? []),
+                'mix' => $d['mix'] ?? null, 'mixWith' => $d['mixWith'] ?? null,
                 'date' => $t->plannedDate?->toDateString(), 'day' => $day, 'critical' => (bool) $t->critical, 'crew' => (int) $t->crew, 'time' => $t->timeOfDay];
         })->values();
 
@@ -1137,6 +1140,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
         });
         $auto = $auto->fresh();
         $this->planner->plan($auto);
+        rescue(fn () => \App\Support\AutoMix::audit($auto), null, true);
         foreach ((array) ($auto->plan['lots'] ?? []) as $l) {
             if (! empty($l['strategy'])) {
                 AsAutoEvent::say($auto->id, 'plan', $l['strategy'], ['tasks' => $made[$l['lotId']] ?? 0], ['lotId' => $l['lotId']]);

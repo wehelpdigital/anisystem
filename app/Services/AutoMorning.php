@@ -45,6 +45,8 @@ class AutoMorning
         $said = $auto->briefDate && $auto->briefDate->isSameDay($today);
         if (! $said) {
             $moved = array_values(array_filter($this->planner->plan($auto), fn ($m) => $m['from'] !== null));
+            // The days moved: the sprays that now share a day are checked for one tank again (App\Support\AutoMix).
+            rescue(fn () => \App\Support\AutoMix::audit($auto), null, true);
             $auto->refresh();
             $this->brief($auto, $today, $moved);
             $auto->forceFill(['briefDate' => $today->toDateString()])->save();

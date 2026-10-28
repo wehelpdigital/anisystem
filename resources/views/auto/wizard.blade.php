@@ -125,6 +125,8 @@
     .au-pt-s { margin: .4rem 0 0; padding-left: 1.2rem; list-style: decimal; font-size: .76rem; line-height: 1.5; color: var(--color-gray-600); }
     .au-pt p.au-pt-y { font-size: .74rem; color: var(--color-gray-500); }
     .au-pt p.au-pt-sf { font-size: .72rem; color: #92400e; }
+    .au-pt p.au-pt-mx { padding: .35rem .55rem; border-radius: .6rem; font-size: .74rem; font-weight: 700; color: #1f5f2a; background: #e9f6ea; }
+    .au-pt p.au-pt-mx.is-care, .au-pt p.au-pt-mx.is-unknown { color: #6b4a00; background: #fff6dd; } .au-pt p.au-pt-mx.is-no { color: #9f1239; background: #ffe4e6; }
     .au-psp { display: grid; }
     .au-psp > div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: .6rem; padding: .45rem 0; font-size: .8rem; }
     .au-psp > div + div { border-top: 1px solid var(--color-gray-100); }
@@ -2469,6 +2471,8 @@
             + (t.products.length ? '<div class="au-pt-p">' + t.products.map((p) => '<span><b>' + esc(p.name) + '</b>' + esc([p.group, p.rate, p.amount].filter(Boolean).join(' · ')) + '</span>').join('') + '</div>' : '')
             + (t.steps.length ? '<ol class="au-pt-s">' + t.steps.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ol>' : '')
             + (t.why ? '<p class="au-pt-y"><b>Why:</b> ' + esc(t.why) + '</p>' : '')
+            + (t.mix ? '<p class="au-pt-mx is-' + esc(t.mix.verdict) + '">🧪 ' + esc(t.mix.say) + '</p>' : '')
+            + (t.mixWith ? '<p class="au-pt-mx is-' + esc(t.mixWith.verdict) + '">🤝 ' + esc(t.mixWith.say) + ' With: ' + esc(t.mixWith.tasks.map((x) => x.title).join(', ')) + '</p>' : '')
             + (t.safety.length ? '<p class="au-pt-sf">🦺 ' + esc(t.safety.join(' · ')) + '</p>' : '') + '</div>';
         $('auProto').innerHTML = '<div class="au-pr">'
             + '<div class="au-pr-hero"><img src="' + @json(\App\Support\AneeEmoji::url('thumbsup')) + '" alt=""><div><span>Written by Anee' + (P.generatedAt ? ' · ' + esc(P.generatedAt) : '') + '</span><h3>Your season, step by step</h3><p>Read it lot by lot. Approve it and Anee starts running it every morning; until then, nothing is fixed.</p>'

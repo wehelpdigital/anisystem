@@ -216,6 +216,10 @@
     .ac-shop { display: flex; gap: .35rem; margin-top: .45rem; }
     html.dark .shop-logo { border-color: transparent; box-shadow: 0 0 0 1px rgb(255 255 255 / .08); }
     .ac-safe { padding: .55rem .7rem; border-radius: .8rem; background: #fff6dd; border: 1px solid #f3d98f; color: #6b4a00; }
+    .ac-mix { margin: .3rem 0; padding: .45rem .65rem; border-radius: .7rem; font-size: .8rem; font-weight: 700; color: #1f5f2a; background: #e9f6ea; }
+    .ac-mix.is-care, .ac-mix.is-unknown { color: #6b4a00; background: #fff6dd; } .ac-mix.is-no { color: #9f1239; background: #ffe4e6; }
+    .ac-mix-o { margin: .2rem 0 .4rem; padding-left: 1.2rem; list-style: decimal; font-size: .76rem; line-height: 1.5; color: var(--color-gray-600); }
+    html.dark .ac-mix { background: #14261a; color: #a7e3b0; } html.dark .ac-mix.is-care, html.dark .ac-mix.is-unknown { background: #2a2210; color: #f3d9a4; } html.dark .ac-mix.is-no { background: #3a1420; color: #fecdd3; }
     .ac-tbtns { display: flex; gap: .45rem; margin-top: .8rem; }
     .ac-tbtns .btn { flex: 1; }
     .ac-done-btn { background: #4a7c2a !important; color: #fff !important; }
@@ -447,6 +451,9 @@
             + (t.why ? '<h5>Why</h5><div class="ac-why">' + esc(t.why) + '</div>' : '')
             + ((d.steps || []).length ? '<h5>How</h5><ol>' + d.steps.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ol>' : '')
             + (prods ? '<h5>What to use</h5>' + prods + ((t.shop || []).length ? '<p class="text-xs text-gray-400 mt-1">' + esc(SHOP_NOTE).replace('FPA registered', 'FPA registered' + tl('fpa-registration')) + '</p>' : '') : '')
+            // The tank, checked by the app (App\Support\AutoMix, 2026-10-28): this spray's products, and sprays of the same day that may share it.
+            + (d.mix ? '<h5>The tank</h5><p class="ac-mix is-' + esc(d.mix.verdict) + '">🧪 ' + esc(d.mix.say) + '</p>' + ((d.mix.order || []).length ? '<ol class="ac-mix-o">' + d.mix.order.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ol>' : '') : '')
+            + (d.mixWith ? '<p class="ac-mix is-' + esc(d.mixWith.verdict) + '">🤝 ' + esc(d.mixWith.say) + ' With: ' + esc((d.mixWith.tasks || []).map((x) => x.title).join(', ')) + '</p>' : '')
             + ((d.safety || []).length ? '<h5>Safety</h5><div class="ac-safe"><ul>' + d.safety.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ul></div>' : '')
             + ((d.bring || []).length ? '<h5>Have ready</h5><ul>' + d.bring.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ul>' : '')
             + (t.moved ? '<p class="text-xs text-gray-400 mt-2">Moved ' + t.moved + ' time' + (t.moved > 1 ? 's' : '') + ' so far.</p>' : '')
