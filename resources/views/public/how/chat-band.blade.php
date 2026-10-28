@@ -3,13 +3,32 @@
      Before Anee answers she works through three steps (the photo, the
      related data, the answer), shown in her bubble and lit in the notes
      beside the phone. Played by chatFilm() in the journey script. --}}
-@php $hc = \App\Support\HowItWorks::chat(); @endphp
+@php
+    $hc = \App\Support\HowItWorks::chat();
+    $hcSite = ($hwMode ?? 'site') === 'site';
+    // What she does, as pills that come in one by one (2026-10-29, the owner: "make this look better").
+    $hcPills = [['📷', 'Reads a photo of the leaf, the pest or the field'], ['🌾', 'Knows your lot, its stage and your weather'],
+        ['🗣️', \App\Support\Region::ph() ? 'Tagalog, Bisaya, Ilocano, Taglish or English' : 'Plain English'], ['⚡', 'Answers in seconds, about 4 credits'],
+        ['🧪', 'Names the active ingredient that works'], ['🌙', 'Any hour, any day']];
+@endphp
 <section class="hw-band" id="hw-ask" aria-labelledby="hw-ask-h">
     <svg class="hw-band-svg" aria-hidden="true"></svg>
     <div class="hw-band-copy">
+        @if ($hcSite)
+            <span class="hw-mod"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" class="is-face" width="40" height="40">Chat with Anee<em>With {{ \App\Support\HowItWorks::planOf('chat')['name'] }}</em></span>
+        @endif
         <p class="hw-step">Any day <span>any question</span></p>
         <{{ $hwHead }} class="hw-h2" id="hw-ask-h">Ask Anee about your crops</{{ $hwHead }}>
         <p class="hw-sub">Snap a photo of what worries you and ask in {{ \App\Support\Region::ph() ? 'Tagalog or English' : 'plain English' }}. Anee studies the photo closely, checks the data related to your farm, then tells you what it is and what to do.</p>
+        @if ($hcSite)
+            <ul class="hw-pills">
+                @foreach ($hcPills as $k => [$e, $t])<li style="--k: {{ $k }}"><i aria-hidden="true">{{ $e }}</i>{{ $t }}</li>@endforeach
+            </ul>
+            <div class="hw-band-cta">
+                <a href="{{ route('ask.page') }}" class="btn btn-accent">Ask Anee a free question</a>
+                <a href="{{ url('/how-it-works/why-anee') }}" class="is-text">Why her answers fit your farm <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+        @endif
     </div>
     <div class="hw-band-phone" aria-hidden="true">
         <div class="hw-phone2"><div class="hw-scr2"><div class="hwr">

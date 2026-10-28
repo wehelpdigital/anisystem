@@ -9,13 +9,33 @@
 @php
     $hb = \App\Support\HowItWorks::board();
     $hbOpen = array_key_first($hb['lots']);
+    // On the site the band features the Activities module (2026-10-29, the owner): its film stays on the board, so its
+    // last note is the days ahead, not Growth Stages.
+    $hbSite = ($hwMode ?? 'site') === 'site';
+    if ($hbSite) {
+        $hb['notes'][3] = ['🗓️', 'See the days ahead', 'Every task on its day, by lot'];
+    }
+    $hbPills = [['📅', 'Every task on its own day'], ['🌱', 'Each lot counted from its planting'], ['🌦️', 'The weather beside every day'],
+        ['👷', 'Workers, materials and costs on each task'], ['📧', "The day's plan by email to your workers"], ['🔁', 'Versions: the plan and your changes']];
 @endphp
 <section class="hw-band is-flip" id="hw-board" aria-labelledby="hw-board-h">
     <svg class="hw-band-svg" aria-hidden="true"></svg>
     <div class="hw-band-copy">
+        @if ($hbSite)
+            <span class="hw-mod"><img src="{{ asset('images/thunder.png') }}" alt="" width="40" height="40">The Activities module<em>{{ \App\Support\HowItWorks::planOf('board')['tier'] === 'libre' ? 'Free on every plan' : 'With ' . \App\Support\HowItWorks::planOf('board')['name'] }}</em></span>
+        @endif
         <p class="hw-step">Every day <span>on the board</span></p>
-        <{{ $hwHead }} class="hw-h2" id="hw-board-h">Work the season on the board</{{ $hwHead }}>
-        <p class="hw-sub">Add a note as you go, drag a task to another day when the weather turns, tick it done, and check the stage each lot is in.</p>
+        <{{ $hwHead }} class="hw-h2" id="hw-board-h">{{ $hbSite ? 'Your season, day by day, on the Activities board' : 'Work the season on the board' }}</{{ $hwHead }}>
+        <p class="hw-sub">@if ($hbSite)Every task of the season sits on its own day, for each lot, counted from the day you planted. Add a note as you go, drag a task to another day when the weather turns, and tick it done: the shed and the costs follow.@else Add a note as you go, drag a task to another day when the weather turns, tick it done, and check the stage each lot is in.@endif</p>
+        @if ($hbSite)
+            <ul class="hw-pills">
+                @foreach ($hbPills as $k => [$e, $t])<li style="--k: {{ $k }}"><i aria-hidden="true">{{ $e }}</i>{{ $t }}</li>@endforeach
+            </ul>
+            <div class="hw-band-cta">
+                <a href="{{ route('signup') }}" class="btn btn-accent">Start free</a>
+                <a href="{{ url('/features/daily-farm-tasks') }}" class="is-text">How the Activities board works <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </div>
+        @endif
     </div>
     <div class="hw-band-phone" aria-hidden="true">
         <div class="hw-phone2"><div class="hw-scr2"><div class="hwr">

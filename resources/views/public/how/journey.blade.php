@@ -914,10 +914,41 @@
     .hwc-row .go.is-press { transform: scale(.88); }
     .hwc-credits { flex: none; padding: 2px 0 12px; text-align: center; font-size: 11px; color: #6b7280; }
     .hwc-credits i { display: inline-block; width: 8px; height: 8px; border-radius: 999px; background: #f5c518; }
+    /* The bands' words (2026-10-29): the module's mark, what it does as pills that come in one by one and glow in turn,
+       and the way in. */
+    .hw-mod { display: inline-flex; align-items: center; gap: .5rem; margin-bottom: .8rem; padding: .3rem .8rem .3rem .3rem; border-radius: 999px; font-size: .78rem; font-weight: 800;
+        color: var(--ink); background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(168 204 126 / .3); }
+    .hw-mod img { width: 1.8rem; height: 1.8rem; padding: .2rem; border-radius: 999px; object-fit: contain; background: #fff; }
+    .hw-mod img.is-face { padding: 0; object-fit: cover; box-shadow: 0 0 0 2px var(--acc); }
+    .hw-mod em { font-style: normal; padding: .1rem .5rem; border-radius: 999px; font-size: .68rem; font-weight: 900; color: #14210c; background: var(--leaf); }
+    .hw-pills { display: flex; flex-wrap: wrap; gap: .45rem; margin: 1.1rem 0 0; padding: 0; list-style: none; }
+    .hw-pills li { display: inline-flex; align-items: center; gap: .4rem; padding: .42rem .8rem .42rem .45rem; border-radius: 999px; font-size: .82rem; font-weight: 700; line-height: 1.25;
+        color: var(--ink); background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); text-align: left; }
+    .hw-pills li i { flex: none; display: grid; place-items: center; width: 1.6rem; height: 1.6rem; border-radius: 999px; font-style: normal; font-size: .85rem; background: rgb(255 255 255 / .08); }
+    .hw.is-ready .hw-band .hw-pills li { opacity: 0; transform: translateY(10px) scale(.94); transition: opacity .5s var(--ease), transform .5s var(--ease); transition-delay: calc(.3s + var(--k) * .09s); }
+    .hw.is-ready .hw-band.is-in .hw-pills li { opacity: 1; transform: none; }
+    .hw-band.is-in .hw-pills li { animation: hwPillGlow 10s ease-in-out infinite; animation-delay: calc(2s + var(--k) * 2s); }
+    @keyframes hwPillGlow { 0%, 14%, 100% { box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); background: rgb(255 255 255 / .05); }
+        4%, 10% { box-shadow: inset 0 0 0 1px rgb(245 197 24 / .7), 0 0 18px -4px rgb(245 197 24 / .5); background: rgb(245 197 24 / .12); } }
+    .hw-band-cta { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-top: 1.3rem; }
+    .hw-band-cta a.is-text { display: inline-flex; align-items: center; gap: .35rem; font-size: .9rem; font-weight: 800; color: var(--acc); }
+    .hw-band-cta a.is-text svg { width: 1rem; height: 1rem; transition: transform .28s var(--ease); }
+    .hw-band-cta a.is-text:hover svg { transform: translateX(3px); }
+    @media (prefers-reduced-motion: reduce) { .hw-band .hw-pills li { opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important; } }
+    /* The notes beside the phone, on the dark page: a dark card that turns white while its part plays. */
+    .hw-note { color: var(--ink); background: rgb(255 255 255 / .06); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12); opacity: 1; transform: none; }
+    .hw-note > span { background: rgb(255 255 255 / .1); }
+    .hw-note small { color: var(--mute); }
+    .hw-note.is-read { background: rgb(168 204 126 / .12); box-shadow: inset 0 0 0 1px rgb(168 204 126 / .4); }
+    .hw-note.is-hot { color: #14210c; background: #fff; transform: scale(1.05); box-shadow: 0 0 0 3px rgb(245 197 24 / .85), 0 22px 44px -22px rgb(0 0 0 / .75); }
+    .hw-note.is-hot > span { background: #fff4c2; }
+    .hw-note.is-hot small { color: #5b6b4c; }
     @media (min-width: 1024px) {
         .hw-band { grid-template-columns: minmax(0, 1fr) 18rem minmax(0, 1fr); column-gap: 2.5rem; align-items: center; padding: 4.5rem 0; }
         .hw-band-copy { grid-column: 1; grid-row: 1; justify-self: end; max-width: 27rem; text-align: right; }
         .hw-band-copy .hw-step { justify-content: flex-end; }
+        .hw-band-copy .hw-pills, .hw-band-copy .hw-band-cta { justify-content: flex-end; }
+        .hw-band.is-flip .hw-band-copy .hw-pills, .hw-band.is-flip .hw-band-copy .hw-band-cta { justify-content: flex-start; }
         .hw-band-phone { grid-column: 2; grid-row: 1; }
         .hw-phone2 { width: 16.5rem; height: 32rem; }
         .hw-band-notes { grid-column: 3; grid-row: 1; justify-self: start; flex-direction: column; align-items: flex-start; gap: 2.2rem; }
@@ -1038,10 +1069,10 @@
         /* The notes stack on the rail here: a note waiting its turn is a
            solid, muted card (not a see through one, which let the rail run
            through its words), and turns white when its part plays. */
-        .hw-note { opacity: 1; background: #c3cbbc; transition: background-color .4s var(--ease), transform .4s var(--ease), box-shadow .4s var(--ease); }
-        .hw-note > * { opacity: .8; transition: opacity .4s var(--ease); }
-        .hw-note.is-read, .hw-note.is-hot { background: #fff; }
-        .hw-note.is-read > *, .hw-note.is-hot > * { opacity: 1; }
+        .hw-note { background: #1a2c12; transition: background-color .4s var(--ease), transform .4s var(--ease), box-shadow .4s var(--ease), color .4s var(--ease); }
+        .hw-note.is-read { background: #22381a; }
+        .hw-note.is-hot { background: #fff; }
+        .hw-band-copy .hw-pills, .hw-band-copy .hw-band-cta { justify-content: center; }
         .hw-end { padding: 2.4rem 0 0; text-align: center; }
         .hw-loop { position: relative; left: auto; top: auto; width: 3.4rem; height: 3.4rem; margin: 0 auto 1rem; }
         .hw-end .hw-step, .hw-end .hw-btns { justify-content: center; }
@@ -1094,8 +1125,6 @@
         .hw-stage.is-deck { grid-template-columns: minmax(0, 1fr) 12rem minmax(0, 1fr); padding: 4rem 0 3.5rem; }
         .hw-stage.is-deck .hw-head { grid-column: 1; grid-row: 1; align-self: center; padding-bottom: 0; }
         .hw-stage.is-deck .hw-hub { position: relative; left: auto; top: auto; grid-column: 2; grid-row: 1; justify-self: center; align-self: center; }
-        .hw-stage.is-deck .hw-stats { grid-column: 3; grid-row: 1; align-self: center; justify-content: flex-start; flex-direction: column; align-items: flex-start; margin: 0; }
-        .hw-stage.is-deck .hw-stats li { font-size: .86rem; }
         /* The panel: over the rail, a slow light along its top edge while the step is on screen. */
         .hw-deck { --c: var(--dc, 4); --g: .8rem; grid-column: 1 / -1; grid-row: 2; margin-top: 1.6rem; padding: 1.1rem; border-radius: 1.7rem;
             background: linear-gradient(170deg, rgb(28 46 19 / .96), rgb(13 22 9 / .97)); box-shadow: inset 0 0 0 1px rgb(168 204 126 / .2), 0 40px 80px -50px rgb(0 0 0 / .95); }
@@ -1292,7 +1321,7 @@
                         <p class="hw-sub">{{ $st['lede'] }}</p>
                         @if (! $hwHinted)
                             @php $hwHinted = true; @endphp
-                            <p class="hw-hint"><i aria-hidden="true"></i>Tap any tool to watch it work in the real app. Anee's face on a tool means she does that one for you.</p>
+                            <p class="hw-hint">Tap any tool to watch it work in the real app. Anee's face on a tool means she does that one for you.</p>
                         @endif
                     </header>
                     <div class="hw-hub" aria-hidden="true">
@@ -1300,11 +1329,6 @@
                         <span class="hw-hub-core"><img src="{{ asset('images/anee/emoji/' . $st['face'] . '.png') }}" alt="" loading="lazy"></span>
                         <span class="hw-num">{{ $n + 1 }}</span>
                     </div>
-                    <ul class="hw-stats">
-                        <li style="--k: 0"><b>{{ count($st['items']) }}</b>{{ count($st['items']) === 1 ? 'tool' : 'tools' }}</li>
-                        @if ($dkFree)<li class="is-free" style="--k: 1"><b>{{ $dkFree }}</b>free on every plan</li>@endif
-                        @if ($dkAnee)<li class="is-anee" style="--k: 2"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt=""><b>{{ $dkAnee }}</b>done by Anee</li>@endif
-                    </ul>
                     <div class="hw-deck" style="--dc: {{ $dkCols }}">
                         @foreach ($st['items'] as $i => $it)
                             @php
@@ -1768,6 +1792,16 @@
                 note(2);
                 await until(); roll(board, today); await sleep(1300);
                 await until(); tapAt(cards[0].querySelector('.ck')); cards[0].classList.add('is-done'); await sleep(1600);
+                // On the site the film stays on the Activities board (2026-10-29, the owner: "feature the activity
+                // module"): the days ahead roll by, each with its tasks, then back to today.
+                if (root.dataset.hwMode === 'site') {
+                    note(3);
+                    const days = [...board.querySelectorAll('.hwa-g')];
+                    await until(); roll(board, days[days.length - 1]); await sleep(2400);
+                    await until(); roll(board, today); await sleep(1800);
+                    note(99); await sleep(1400);
+                    continue;
+                }
                 // Modules, then Growth Stages, read down to the timeline.
                 note(3);
                 await until(); tapAt(board.querySelector('.hwa-tools .m')); await sleep(260);
