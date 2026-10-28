@@ -57,6 +57,8 @@
     /* Anee waits while the story loads. */
     .stm-load { position: absolute; inset: 0; z-index: 3; display: grid; place-content: center; justify-items: center; gap: .9rem; text-align: center; transition: opacity .35s var(--e), visibility .35s; }
     .stm.is-ready .stm-load { opacity: 0; visibility: hidden; }
+    /* Gone, the waiting face stops turning: hidden, its three loops still cost every frame of the scroll. */
+    .stm.is-ready .stm-load-face, .stm.is-ready .stm-load-face::before, .stm.is-ready .stm-load-face::after { animation: none; }
     .stm-load-face { position: relative; width: 5.2rem; height: 5.2rem; border-radius: 999px; padding: .35rem; background: rgb(255 255 255 / .08); animation: stmBob 1.6s ease-in-out infinite; }
     .stm-load-face img { width: 100%; height: 100%; object-fit: contain; }
     .stm-load-face::before, .stm-load-face::after { content: ''; position: absolute; inset: -6px; border-radius: 999px; border: 2px solid rgb(245 197 24 / .55); animation: stmRing 1.6s var(--e) infinite; }
@@ -155,6 +157,8 @@
             dots.innerHTML = scenes.map((s, i) => `<button type="button" data-stm-go="${i}" aria-label="${(s.dataset.title || 'Part ' + (i + 1)).replace(/"/g, '&quot;')}"><span>${(s.dataset.title || '').replace(/</g, '&lt;')}</span></button>`).join('');
             dots.addEventListener('click', (e) => { const b = e.target.closest('[data-stm-go]'); if (b) scenes[Number(b.dataset.stmGo)].scrollIntoView({ block: 'start' }); });
         }
+        // A scene rises in as soon as its top is a little way into the screen (2026-10-28, the owner: "when you scroll
+        // down some elements are not yet loaded and delayed in being shown"): it used to wait until a quarter of it showed.
         const io = new IntersectionObserver((list) => list.forEach((en) => {
             if (!en.isIntersecting) return;
             const s = en.target;
@@ -163,18 +167,42 @@
                 s.querySelectorAll('[data-count]').forEach(count);
                 box.dispatchEvent(new CustomEvent('stm:scene', { detail: s }));
             }
-            if (dots) dots.querySelectorAll('button').forEach((b, i) => b.classList.toggle('is-on', scenes[i] === s));
-        }), { root: body, threshold: 0.28 });
+        }), { root: body, threshold: 0, rootMargin: '0px 0px -8% 0px' });
         scenes.forEach((s) => io.observe(s));
+        // The dot of the part being read.
+        if (dots) {
+            const seen = new IntersectionObserver((list) => list.forEach((en) => {
+                if (en.isIntersecting) dots.querySelectorAll('button').forEach((b, i) => b.classList.toggle('is-on', scenes[i] === en.target));
+            }), { root: body, threshold: 0.28 });
+            scenes.forEach((s) => seen.observe(s));
+        }
         // In view, its loops run; out of view, they pause (any part of it on screen counts). Only the endless ones: an
         // entrance or a count that plays once always plays to its end.
-        const loops = (s) => (s.getAnimations ? s.getAnimations({ subtree: true }) : []).filter((a) => a.effect && a.effect.getTiming().iterations === Infinity);
+        const loops = (el) => (el && el.getAnimations ? el.getAnimations({ subtree: true }) : []).filter((a) => a.effect && a.effect.getTiming().iterations === Infinity);
+        const each = (list, fn) => list.forEach((a) => { try { fn(a); } catch (_) { /* a loop that ended with its class */ } });
+        let scrolling = false, rest = 0;
         const live = new IntersectionObserver((list) => list.forEach((en) => {
             en.target.classList.toggle('is-live', en.isIntersecting);
-            loops(en.target).forEach((a) => { try { if (en.isIntersecting) a.play(); else a.pause(); } catch (_) { /* a loop that ended with its class */ } });
+            // A scene that comes into view mid scroll waits for the scroll to stop before its loops play.
+            each(loops(en.target), (a) => { if (!en.isIntersecting) a.pause(); else if (!scrolling) a.play(); });
         }), { root: body, rootMargin: '80px 0px' });
         scenes.forEach((s) => live.observe(s));
+        /* Scrolling: every loop holds still under the finger and plays on a moment after it stops (2026-10-28, the owner:
+           "the scroll is still glitchy ... can we do a dynamic feature where it pauses animation while scrolling? then
+           plays again after scroll?"). The scenes in view and the light behind them; what plays once is never held. */
+        const bg = box.querySelector('.stm-bg');
+        const hold = (on) => {
+            scrolling = on;
+            box.classList.toggle('is-scrolling', on);
+            const here = scenes.filter((x) => x.classList.contains('is-live'));
+            // The light rests while a sheet is open or the story closes (its own rule): it is left as it is then.
+            const calm = box.classList.contains('is-sheet') || box.classList.contains('is-closing');
+            each([...here.flatMap(loops), ...(calm && !on ? [] : loops(bg))], (a) => (on ? a.pause() : a.play()));
+        };
         body.addEventListener('scroll', () => {
+            if (!scrolling) hold(true);
+            clearTimeout(rest);
+            rest = setTimeout(() => hold(false), 180);
             if (!prog) return;
             const max = body.scrollHeight - body.clientHeight;
             prog.style.setProperty('--p', max > 0 ? Math.min(1, body.scrollTop / max).toFixed(3) : 0);
@@ -197,9 +225,15 @@
             const res = await fetch(box.dataset.url, { headers: { Accept: 'text/html', 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin' });
             if (!res.ok) throw new Error(res.status);
             host.innerHTML = await res.text();
-            // The first screen's pictures decode before the story shows, so nothing pops in after it.
-            const first = [...host.querySelectorAll('.stm-scene:first-child img')];
-            await Promise.race([Promise.all(first.map((i) => (i.decode ? i.decode().catch(() => {}) : null))), new Promise((r) => setTimeout(r, 2500))]);
+            /* Every picture of the story loads and decodes before it shows (2026-10-28, the owner: "add a loader in these
+               pages before making it appear because when you scroll down some elements are not yet loaded"): none waits
+               for its turn on screen, and Anee's line counts them in. Ten seconds at most, then the story shows anyway. */
+            const pics = [...host.querySelectorAll('img')];
+            pics.forEach((i) => { if (i.loading === 'lazy') i.loading = 'eager'; });
+            let got = 0;
+            const said = msg.textContent;
+            const tick = () => { got++; msg.textContent = said + ' · ' + Math.round(100 * got / Math.max(1, pics.length)) + '%'; };
+            await Promise.race([Promise.all(pics.map((i) => (i.decode ? i.decode() : Promise.resolve()).catch(() => {}).then(tick))), new Promise((r) => setTimeout(r, 10000))]);
             wire(box);
             box.dataset.ready = '1';
             if (init) { try { init(box); } catch (e) { console.error(e); } }

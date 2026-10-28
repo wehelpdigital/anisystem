@@ -244,7 +244,10 @@
     .hwt-pl-v { width: 1.1rem; height: 1.1rem; color: var(--mute); transition: transform .3s var(--e), color .3s var(--e); }
     .hwt-plw.is-open .hwt-pl-v { transform: rotate(180deg); color: var(--c); }
     /* A plan opened: its tools, grown open (grid rows, so the height eases with no measuring). */
+    /* Closed, a plan's list is not drawn at all (hidden): a hundred and fifty tools clipped to nothing still cost the scroll
+       its frames. It is shown, then grown open; closed, it folds, then hides. */
     .hwt-plb { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s var(--e); }
+    .hwt-plb[hidden] { display: none; }
     .hwt-plw.is-open .hwt-plb { grid-template-rows: 1fr; }
     .hwt-plb > div { min-height: 0; overflow: hidden; }
     .hwt-plb-in { padding: .1rem .8rem .9rem; }
@@ -431,7 +434,7 @@
                             <b><span data-count="{{ $pl['n'] }}">{{ $pl['n'] }}</span><small>of {{ $htCount }} tools</small></b>
                             <svg class="hwt-pl-v" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                         </button>
-                        <div class="hwt-plb" id="hwtPl{{ $i }}" role="region" aria-label="{{ $pl['name'] }} tools"><div><div class="hwt-plb-in">
+                        <div class="hwt-plb" id="hwtPl{{ $i }}" role="region" aria-label="{{ $pl['name'] }} tools" hidden><div><div class="hwt-plb-in">
                             @foreach (array_reverse(array_slice($htLadder, 0, $i + 1), true) as $j => $from)
                                 @if ($from['keys'])
                                     <p class="hwt-plb-h">{{ $j === $i ? ($i === 0 ? 'Free on every plan' : 'Added with ' . $from['name']) : 'Kept from ' . $from['name'] }} <em>{{ count($from['keys']) }}</em></p>

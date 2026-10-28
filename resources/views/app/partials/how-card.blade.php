@@ -159,8 +159,10 @@
             // A plan opens to its tools, and closes again (several may stand open).
             const plan = e.target.closest('[data-hwt-plan]');
             if (plan) {
-                const w = plan.closest('.hwt-plw'), on = !w.classList.contains('is-open');
-                w.classList.toggle('is-open', on);
+                const w = plan.closest('.hwt-plw'), list = w.querySelector('.hwt-plb'), on = !w.classList.contains('is-open');
+                clearTimeout(w.foldT);
+                if (on) { list.hidden = false; void list.offsetHeight; w.classList.add('is-open'); }
+                else { w.classList.remove('is-open'); w.foldT = setTimeout(() => { list.hidden = true; }, 460); }
                 plan.setAttribute('aria-expanded', String(on));
                 return;
             }
