@@ -12,7 +12,7 @@
         <div class="hp-head reveal">
             <p class="hp-kick">Real photo from the field</p>
             <h2 class="hp-h2" id="saH">Same Age. Same Variety. <em>One Followed Anee.</em></h2>
-            <p class="hp-p">Two plots side by side, the same variety, planted on the same day. The left was farmed the usual way. The right followed Anee's guidance: each bag of fertilizer at the stage the crop could use it, and the water and the sprays on their day.</p>
+            <p class="hp-p">Two plots side by side, the same variety, planted on the same day. The left was farmed the usual way. The right followed Anee's guidance. The difference shows in the color and in how full the plants grew.</p>
         </div>
 
         <figure class="sa-fig" data-sa>

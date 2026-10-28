@@ -582,7 +582,7 @@
                     <span class="avn-ba-tag is-anee"><img src="{{ $face }}" alt="">With Anee</span>
                     {{-- Watch it big (2026-10-29, the owner: "have a button to click and shows a modal to expand it"). --}}
                     <button type="button" class="avn-ba-x" data-film-open aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg><span>Watch the field</span></button>
-                    <span class="avn-ba-say is-now"><b>Lodged.</b> <span class="avn-ba-more">Nitrogen at the wrong time, and the harvest lies flat.</span><span class="avn-ba-short">The harvest lies flat.</span></span>
+                    <span class="avn-ba-say is-now"><b>Lodged.</b> <span class="avn-ba-more">The harvest lies flat in the mud.</span><span class="avn-ba-short">The harvest lies flat.</span></span>
                     <span class="avn-ba-say is-anee"><span class="avn-real"><i aria-hidden="true"></i>Real video of the field</span><span class="avn-ba-more avn-one">Anee supported, standing strong.</span><span class="avn-ba-short">Anee supported crop</span></span>
                     <span class="avn-ba-line" aria-hidden="true"></span>
                     <button type="button" class="avn-ba-knob" role="slider" aria-label="Drag to compare the farm now and with Anee" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
@@ -602,7 +602,7 @@
                         </div>
                         <div class="avn-fm-t">
                             <img src="{{ $face }}" alt="" width="80" height="80">
-                            <div><b id="avnFmH" class="avn-one">Anee supported, standing strong</b><p>Filmed in the field just before harvest: the stems stay upright, because the nitrogen went on at the stages the crop needed it.</p></div>
+                            <div><b id="avnFmH" class="avn-one">Anee supported, standing strong</b><p>Filmed in the field just before harvest. This field followed Anee's guidance through the season: even, healthy, and still standing.</p></div>
                         </div>
                     </div>
                 </div>

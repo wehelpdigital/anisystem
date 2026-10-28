@@ -12,7 +12,7 @@
     // What each moment shows, with when it starts in the loop (the cuts cross at 4.5, 9 and 13.5 seconds).
     $tfSeen = [
         [0, 'Golden from end to end', 'Ripe panicles across the whole field, and every hill still standing.'],
-        [4.75, 'Drained and dry for harvest', 'The water let out on time, the soil cracked dry between the rows.'],
+        [4.75, 'Dry and ready for harvest', 'Firm, dry ground between the rows, ready for the harvester.'],
         [9.25, 'Heavy heads, strong stems', 'The heads bow under the weight of their grain, on stems that did not fall.'],
         [13.75, 'No flattened patches', 'An even field in the middle of typhoon season, ready for the harvester.'],
     ];
@@ -25,7 +25,7 @@
                 <div class="reveal">
                     <p class="hp-kick">Real video from typhoon season</p>
                     <h2 class="hp-h2" id="tfH">Typhoon Season. Days Before Harvest. <em>Still Standing.</em></h2>
-                    <p class="hp-p">Filmed several days before harvest, in the middle of a strong typhoon season. This field followed Anee's guidance: the nitrogen went on in split doses at the stages the crop could use it, so the stems grew strong enough to carry the grain through the winds.</p>
+                    <p class="hp-p">Filmed several days before harvest, in the middle of a strong typhoon season. This field followed Anee's guidance from planting to harvest. When the winds came, it was still standing: golden, even, and heavy with grain.</p>
                 </div>
                 {{-- The harvest that season (2026-10-29, the owner): farms around it 60 to 115 cavans a hectare, this farm 140,
                      cavans of 60 kg, fresh weight. The bars grow and the numbers count up once seen. --}}
