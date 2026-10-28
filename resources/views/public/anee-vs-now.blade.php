@@ -613,6 +613,9 @@
     {{-- ================= SAME AGE, SAME VARIETY (2026-10-29): the owner's two plots ================= --}}
     @include('public.partials.same-age-plots', ['signup' => $signup])
 
+    {{-- ================= TYPHOON SEASON, DAYS BEFORE HARVEST (2026-10-29) ================= --}}
+    @include('public.partials.typhoon-film', ['signup' => $signup])
+
     {{-- ================= THE NINE JOBS ================= --}}
     <section class="hp-sec avn-jobs-sec" id="avn-jobs" data-avn-zone>
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
