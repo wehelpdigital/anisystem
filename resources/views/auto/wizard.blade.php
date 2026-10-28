@@ -55,6 +55,8 @@
     @keyframes auIn { from { opacity: 0; } }
     @keyframes auInBack { from { opacity: 0; } }
     .au-card { border-radius: 1.2rem; background: var(--color-white); border: 1px solid var(--color-gray-200); padding: 1.05rem 1.1rem; margin-bottom: .9rem; }
+    .au-note.is-ask { background: #eef2ff; border-color: #c7d2fe; color: #312e81; }
+    html.dark .au-note.is-ask { background: #1b1f3a; border-color: #2f3770; color: #c7d2fe; }
     /* Anee's picks of variety (2026-10-28). */
     .au-vpk:empty { display: none; }
     .au-vpk { margin-top: .85rem; }
@@ -1239,6 +1241,8 @@
        the three best as cards, the land preparation the farm can do, the harvest day of the day picked. ---- */
     const WIN = {};
     let WMODE = 'crop';
+    // window.api comes with app.js, a module that runs after this script: a read asked while the page boots waits for it.
+    const apiGet = async (url) => { if (!window.api) await new Promise((r) => document.readyState === 'complete' ? setTimeout(r, 300) : window.addEventListener('load', r, { once: true })); return window.api(url); };
     const winKey = (l) => [l.crop, l.method, l.variety || '', l.province || '', l.town || '', l.pin ? l.pin.lat + ',' + l.pin.lng : ''].join('|');
     const winReady = (l) => l.crop && l.method && l.method !== 'tree' && (l.pin || (l.province && l.town) || LINK[l.id]);
     const loadWin = async (l, force) => {
@@ -1248,7 +1252,7 @@
         WIN[l.id] = { key: k, loading: true };
         paintWin(l);
         try {
-            const r = await window.api(U.window + '?lotId=' + l.id);
+            const r = await apiGet(U.window + '?lotId=' + l.id);
             WIN[l.id] = Object.assign({ key: k }, r.data || {});
         } catch (_) { WIN[l.id] = { key: k, failed: true }; }
         paintWin(l); paintLotNotes(l); paintLotState(l);
@@ -1330,7 +1334,7 @@
         if (VPK[l.id] && VPK[l.id].key === k) { paintVpk(l); return; }
         VPK[l.id] = { key: k, loading: true, open: VPK[l.id] ? VPK[l.id].open : false };
         paintVpk(l);
-        try { const r = await window.api(U.varieties + '?lotId=' + l.id); Object.assign(VPK[l.id], r.data || {}, { loading: false }); }
+        try { const r = await apiGet(U.varieties + '?lotId=' + l.id); Object.assign(VPK[l.id], r.data || {}, { loading: false }); }
         catch (_) { Object.assign(VPK[l.id], { loading: false, picks: [] }); }
         paintVpk(l);
     };
@@ -1378,11 +1382,26 @@
         el.textContent = g ? 'Not yet' : 'Ready ✓';
         el.classList.toggle('is-ok', !g);
     };
+    /* A lot Anee knows little about asks for more (2026-10-28, the owner: "if the lot selected has no useful information
+       or feels lacking, ask the user to answer more"): the questions that move the advice most, the ones not answered. */
+    const KEYQ = ['texture', 'organic', 'water', 'drainage', 'flooding', 'salt', 'acidity', 'elevation', 'prevCrop', 'harvested', 'cropLook', 'outbreaks'];
+    const lackingHtml = (l) => {
+        const FP = window.aneeFieldProfile;
+        if (!FP || !LINK[l.id] || !FLROWS) return '';
+        const fv = farmRow(l);
+        if (!fv) return '';
+        const a = fv.answers || {};
+        const miss = KEYQ.filter((k) => FP.questions[k] && !filled(a, k));
+        if (miss.length < 4) return '';
+        return '<div class="au-note is-ask"><span>🙋</span><span><b>Anee knows little about ' + esc(fv.name || 'this lot') + ' yet.</b> ' + (KEYQ.length - miss.length) + ' of the ' + KEYQ.length + ' answers that matter most are in. '
+            + 'Still open: ' + esc(miss.slice(0, 6).map((k) => FP.questions[k].short.toLowerCase()).join(', ')) + (miss.length > 6 ? ' and more' : '') + '. A couple of minutes makes the planting days, the varieties and the plan sharper.'
+            + '<button type="button" class="au-pill" data-act="farmAns" style="margin-top:.5rem">Answer them now</button></span></div>';
+    };
     const paintLotNotes = (l) => {
         const box = lotEl(l.id)?.querySelector('[data-notes]');
         if (!box) return;
         const c = cropOf(l.crop);
-        let html = '';
+        let html = lackingHtml(l);
         if (c && l.fieldDate && l.method !== 'tree') {
             const left = daysFrom(B.today, l.fieldDate), p = c.prep || { min: 14, max: 21 };
             const src = p.source ? ' <a href="' + esc(p.source.url) + '" target="_blank" rel="noopener">' + esc(String(p.source.label).split(' (')[0]) + '</a>' : '';
