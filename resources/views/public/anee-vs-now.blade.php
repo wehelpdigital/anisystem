@@ -115,10 +115,16 @@
             'thinks' => 'Whatever the store has will do.',
             'with' => 'Every registered variety of your crop, ranked by Anee for your area and for what matters most to you: yield, survival or a quick harvest.',
             'says' => 'For your lot, this one ranks first. It stands up to flooding.', 'tools' => ['variety', 'varietyFinder']],
-        ['e' => '🧪', 'job' => 'Feeding the crop', 'now' => 'The same sacks as last season, on the usual days.', 'leak' => $leakBy('fertilizer'), 'cost' => '',
-            'thinks' => 'Same sacks, same days as last year.',
-            'with' => 'NPK Plus counts every nutrient before you buy, and the Crop Protocol puts each sack at the stage the crop takes it up.',
-            'says' => 'Hold the second urea until Thursday. That\'s when the crop takes it up.', 'tools' => ['npk', 'cropProtocol']],
+        // The right fertilizer and how much (2026-10-28, the owner, in place of the hatian: "add something about the
+        // correct fertilizer (npk calculator) and amount to use"); its timing is the next job.
+        ['e' => '🧮', 'job' => 'The right fertilizer, in the right amount', 'now' => 'You buy the sacks the store suggests and spread what feels right.', 'leak' => null, 'cost' => 'Too little starves the crop. Too much wastes money and can make the palay lodge.',
+            'thinks' => 'Three sacks a hectare, like always.',
+            'with' => 'NPK Plus adds up every nutrient in the fertilizers you plan to use, checks it against what your crop needs for the harvest you want, and shows what is short, right or too much before you buy a single sack.',
+            'says' => 'You have enough nitrogen. Add a sack of 0-0-60 for potassium and skip the extra urea.', 'tools' => ['npk']],
+        ['e' => '🧪', 'job' => 'Timing the fertilizer', 'now' => 'The same sacks on the usual days, whatever stage the crop is in.', 'leak' => $leakBy('fertilizer'), 'cost' => '',
+            'thinks' => 'Same days as last year.',
+            'with' => 'The Crop Protocol puts each sack at the stage the crop takes it up, counted from your own planting day.',
+            'says' => 'Hold the second urea until Thursday. That\'s when the crop takes it up.', 'tools' => ['cropProtocol']],
         ['e' => '🐛', 'job' => 'A pest or a disease', 'now' => 'You post a photo in a group and get seven different answers.', 'leak' => $leakBy('wrong solution'), 'cost' => '',
             'thinks' => 'Let me ask the group.',
             'with' => 'Anee reads your photo with your crop\'s stage and weather, asks for the sign that decides it, and names the active ingredient that works.',
@@ -139,10 +145,6 @@
             'thinks' => 'The buyer is here. Let\'s sell.',
             'with' => 'The Market Price Forecast shows the months your crop sells highest, and Benta o Bilad shows whether drying first leaves more money in your hand.',
             'says' => 'Prices usually rise in February. Drying and waiting may pay.', 'tools' => ['market', 'bilad']],
-        ['e' => '🤝', 'job' => 'Sharing with the farm manager', 'now' => 'The hatian is counted by hand, and the numbers get argued every harvest.', 'leak' => null, 'cost' => 'A share counted two ways ends in an argument.',
-            'thinks' => 'Let\'s just count it by hand.',
-            'with' => 'The Hatian Calculator counts the share from the whole harvest the same fair way every time, with your home food set aside.',
-            'says' => 'From 120 sacks: 24 to your manager, 10 for home, 86 for you.', 'tools' => ['hatian']],
     ];
 
     // A morning in the season: the farmer alone, and with Anee Auto.
