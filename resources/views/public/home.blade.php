@@ -107,8 +107,8 @@
 
             <div class="hp-hero-stage animate-fade-up" style="animation-delay:.15s" data-tilt>
                 <div class="hp-stage-ring" aria-hidden="true"></div>
-                {{-- A season growing with Anee (2026-10-29, the owner: the phone film here repeated the many phone films below). --}}
-                @include('public.partials.hero-season')
+                {{-- Anee at the center (2026-10-29, the owner's choice; it replaced the phone film, which repeated the many below). --}}
+                @include('public.partials.hero-anee')
             </div>
         </div>
 
@@ -4085,7 +4085,7 @@
         }
     }
 
-    /* The season card leans toward the pointer, a little. */
+    /* Anee's circle leans toward the pointer, a little. */
     const stage = document.querySelector('[data-tilt]');
     if (stage && fine && !reduce) {
         stage.addEventListener('pointermove', (e) => {
