@@ -2386,6 +2386,11 @@
     .hp-st-pane { grid-area: 1 / 1; opacity: 0; visibility: hidden; transform: translateY(10px);
         transition: opacity .45s var(--hp-ease), transform .45s var(--hp-ease), visibility .45s; }
     .hp-st-pane.is-on { opacity: 1; visibility: visible; transform: none; }
+    /* A hidden step takes no tap, and neither does anything in it (2026-10-28, the owner: "why some features are not
+       clickable like the what to plant analysis?"): its open explanation said visibility visible for itself, so, unseen,
+       it lay over the tools of the step on show and took their taps. */
+    .hp-st-pane:not(.is-on), .hp-st-pane:not(.is-on) * { pointer-events: none !important; }
+    .hp-st-pane:not(.is-on) .hp-info, .hp-st-pane:not(.is-on) .hp-tool { visibility: hidden !important; }
     .hp-st-when { font-size: .74rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-green); }
     .hp-st-h { margin-top: .4rem; font-family: var(--font-heading); font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 800; color: var(--hp-ink); line-height: 1.15; }
     .hp-st-p { margin-top: .7rem; color: #4b5563; line-height: 1.65; }
