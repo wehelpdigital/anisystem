@@ -136,6 +136,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $schedule->command('sky:batch')->cron('2 0,3,6,9,12,15,18,21 * * *')->timezone('UTC')->withoutOverlapping(20)->runInBackground();
         // Anee Auto's morning (2026-10-12): re-plan, brief and mail each running season.
         $schedule->command('auto:daily')->dailyAt('05:00')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
+        // Anee asks a quiet farmer back (2026-10-28): one email and a bell after a few quiet days with work waiting.
+        $schedule->command('auto:remind')->dailyAt('09:30')->timezone('Asia/Manila')->withoutOverlapping(30)->runInBackground();
         // Global Lots (2026-10-16): the bell asks to check a lot whose answers are six months old.
         $schedule->command('lots:remind')->dailyAt('08:30')->timezone('Asia/Manila')->withoutOverlapping(30)->runInBackground();
         // The newsletter (2026-10-17): lists kept in step, timed emails at their

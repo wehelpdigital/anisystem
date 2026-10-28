@@ -190,6 +190,8 @@ class AneeAutoController extends Controller
             return view('auto.wizard', ['auto' => $auto, 'schedule' => $schedule, 'boot' => $this->wizardState($auto, $schedule)]);
         }
 
+        \App\Support\AutoNudge::seen($auto);
+
         return view('auto.season', ['auto' => $auto, 'schedule' => $schedule]);
     }
 
@@ -1202,6 +1204,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
     public function feed(Request $request, int $id)
     {
         $auto = $this->auto($id);
+        \App\Support\AutoNudge::seen($auto);
         // The morning, if the scheduler has not run it yet today (no mail from here).
         if ($auto->status === AsAutoSeason::ACTIVE && ! ($auto->briefDate && $auto->briefDate->isSameDay(now('Asia/Manila'))) && ! $request->query('before')) {
             try {
@@ -1383,6 +1386,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
 
     public function done(Request $request, int $id, int $taskId)
     {
+        rescue(fn () => \App\Support\AutoNudge::seen($this->auto($id)), null, false);
         $auto = $this->auto($id);
         $t = $this->liveTask($auto, $taskId);
         $v = Validator::make($request->all(), ['date' => 'nullable|date', 'note' => 'nullable|string|max:2000', 'workers' => 'nullable|array', 'used' => 'nullable|string|max:400',
@@ -1432,6 +1436,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
 
     public function cant(Request $request, int $id, int $taskId)
     {
+        rescue(fn () => \App\Support\AutoNudge::seen($this->auto($id)), null, false);
         $auto = $this->auto($id);
         $t = $this->liveTask($auto, $taskId);
         $v = Validator::make($request->all(), ['reason' => 'required|in:' . implode(',', array_keys(AutoBook::CANT)), 'note' => 'nullable|string|max:1000', 'days' => 'nullable|integer|min:1|max:30']);
@@ -1472,6 +1477,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
     /** What the farmer saw: pictures, a video's frames, a voice note, words. Anee reads it. */
     public function observe(Request $request, int $id)
     {
+        rescue(fn () => \App\Support\AutoNudge::seen($this->auto($id)), null, false);
         $auto = $this->auto($id);
         abort_unless($auto->status === AsAutoSeason::ACTIVE, 423);
         if ($why = $this->refusal()) {
@@ -1627,6 +1633,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
 
     public function ask(Request $request, int $id)
     {
+        rescue(fn () => \App\Support\AutoNudge::seen($this->auto($id)), null, false);
         $auto = $this->auto($id);
         abort_unless($auto->isLive(), 423);
         if ($why = $this->refusal()) {

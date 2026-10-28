@@ -11,11 +11,11 @@ class AsAutoSeason extends BaseModel
     protected $table = 'as_auto_seasons';
 
     protected $fillable = ['userId', 'croppingScheduleId', 'status', 'step', 'lotsPaid', 'creditsCharged', 'answers', 'analysis', 'analysisAt', 'analysisRuns',
-        'plan', 'generatedAt', 'job', 'jobState', 'jobAt', 'plannedAt', 'briefDate', 'emailDate', 'deleteStatus'];
+        'plan', 'generatedAt', 'job', 'jobState', 'jobAt', 'plannedAt', 'briefDate', 'emailDate', 'seenAt', 'nudgedAt', 'deleteStatus'];
 
     protected $casts = [
         'answers' => 'array', 'analysis' => 'array', 'plan' => 'array', 'jobState' => 'array',
-        'analysisAt' => 'datetime', 'generatedAt' => 'datetime', 'jobAt' => 'datetime', 'plannedAt' => 'datetime',
+        'analysisAt' => 'datetime', 'generatedAt' => 'datetime', 'jobAt' => 'datetime', 'plannedAt' => 'datetime', 'seenAt' => 'datetime', 'nudgedAt' => 'datetime',
         'briefDate' => 'date:Y-m-d', 'emailDate' => 'date:Y-m-d', 'creditsCharged' => 'float', 'lotsPaid' => 'integer', 'step' => 'integer',
     ];
 

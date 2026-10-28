@@ -320,6 +320,26 @@ class AniSystemEmailTemplateSeeder extends Seeder
                 ),
             ],
 
+            /* Anee Auto asks a quiet farmer back (2026-10-28, the owner: "if user is not active in the anee auto, user
+             * should be receiving email asking user reminder (have this email template in the mother app editable)"). */
+            'auto_inactive' => [
+                'name' => 'Anee Auto, a reminder after a few quiet days',
+                'subject' => 'Kumusta ang bukid? {{waiting_count}} tasks are waiting on {{season_title}}',
+                'tags' => '{{recipient_name}}, {{season_title}}, {{days_away}}, {{waiting_count}}, {{tasks_list}}, {{auto_url}}, {{app_name}}',
+                'body' => S::wrap(
+                    self::p('Kumusta, {{recipient_name}}?')
+                    . self::p('Anee has not heard from you on {{season_title}} for {{days_away}} days. The season keeps going, and she plans each morning from what you tell her.')
+                    . self::p('These are waiting:')
+                    . '{{tasks_list}}'
+                    . S::button('Open Anee Auto', '{{auto_url}}', false)
+                    . self::callout('Two taps is enough', 'Done? Tap Done. Could not do it? Tap Can’t today and say why. Anee moves the work to the best day near it and plans around it.')
+                    . S::note('Sent by {{app_name}} because an Anee Auto season of yours has been quiet for a few days.'),
+                    'Anee misses you',
+                    ['face' => 'wave', 'eyebrow' => 'Anee Auto · {{season_title}}', 'preheader' => '{{waiting_count}} tasks are waiting. Tell Anee what was done.',
+                     'why' => 'You are getting this because your Anee Auto season on anee.io has been quiet for a few days.']
+                ),
+            ],
+
             /* ------------------------------------------------------------
              | Plans and payments
              * ---------------------------------------------------------- */

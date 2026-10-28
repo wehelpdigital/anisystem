@@ -920,6 +920,9 @@
              any), the tools, Anee, the wall --}}
         <div class="min-w-0 space-y-5 md:space-y-6">
 
+    {{-- A running Anee Auto season gone quiet asks the farmer back first (2026-10-28). --}}
+    @include('auto.partials.idle-notice')
+
     {{-- What the account holds, as labelled tiles rather than three cards
          each shouting a different size of number.
 
