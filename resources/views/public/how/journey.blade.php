@@ -1300,14 +1300,26 @@
         <div class="hw-drop" aria-hidden="true"><svg></svg></div>
         <div class="hw-rail" aria-hidden="true"><i class="hw-rail-base"></i><i class="hw-rail-fill"></i><i class="hw-rail-tip"></i></div>
 
+        @php $hwHinted = false; @endphp
         @foreach ($hwStages as $n => $st)
+            {{-- On the site Anee Auto is its own flagship band, step 1, not a step with one tool beside Anee's face
+                 (2026-10-28, the owner: "since you already have anee auto presented flagship what's the point of
+                 puttin the #1 anee face and floating anee auto as well as the left text on it?"). --}}
+            @if ($hwMode === 'site' && $st['key'] === 'auto')
+                @include('public.how.auto-band', ['hwN' => $n + 1, 'hwWhen' => $st['when']])
+                @if ($n === 0)
+                    <p class="hw-or"><span>Or do it yourself, step by step</span></p>
+                @endif
+                @continue
+            @endif
             <section class="hw-stage" id="hw-step-{{ $st['key'] }}" data-stage="{{ $st['key'] }}" data-pattern="{{ $st['pattern'] }}" aria-labelledby="hw-h-{{ $st['key'] }}">
                 <svg class="hw-svg" aria-hidden="true"></svg>
                 <header class="hw-head">
                     <p class="hw-step">Step {{ $n + 1 }} <span>{{ $st['when'] }}</span></p>
                     <{{ $hwHead }} class="hw-h2" id="hw-h-{{ $st['key'] }}">{{ $st['title'] }}</{{ $hwHead }}>
                     <p class="hw-sub">{{ $st['lede'] }}</p>
-                    @if ($n === 0)
+                    @if (! $hwHinted)
+                        @php $hwHinted = true; @endphp
                         <p class="hw-hint"><i aria-hidden="true"></i>Tap any tool to watch it work in the real app. Anee's face on a tool means she does that one for you.</p>
                     @endif
                 </header>
@@ -1372,9 +1384,6 @@
             {{-- After setting up: a phone on the activities board. After the
                  count: a phone asking Anee about a crop, before problems. --}}
             @if ($st['key'] === 'auto' && $n === 0)
-                @if ($hwMode === 'site')
-                    @include('public.how.auto-band')
-                @endif
                 <p class="hw-or"><span>Or do it yourself, step by step</span></p>
             @elseif ($st['key'] === 'plant')
                 @include('public.how.board-band')

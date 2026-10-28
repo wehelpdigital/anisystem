@@ -27,9 +27,10 @@
     $axLoss = [['⏰', 'Fertilizer late or at the wrong stage', '0.4'], ['🐛', 'A pest seen too late', '0.4'], ['🌀', 'A typhoon week with no plan', '0.2'], ['🌾', 'Lodging: nitrogen at the wrong time', '0.9']];
     $axGain = [['🎯', 'Fertilizer on time, by stage', '0.4'], ['🔍', 'Weekly scouting, an early spray', '0.4'], ['🌀', 'Work moved around the storm', '0.2'], ['🌾', 'Nitrogen split by stage: the crop stands', '0.9']];
 @endphp
-<section class="hwx" id="hw-auto-more" aria-labelledby="hwx-h">
+<section class="hwx" id="hw-step-auto" aria-labelledby="hwx-h">
     <div class="hwx-glow" aria-hidden="true"></div>
     <header class="hwx-top" data-x>
+        @isset($hwN)<p class="hw-step hwx-step">Step {{ $hwN }} <span>{{ $hwWhen ?? 'The easiest way' }}</span></p>@endisset
         <span class="hwx-badge"><i aria-hidden="true">⭐</i>Our flagship<em>Anee does every step</em></span>
         <h2 class="hwx-h" id="hwx-h">Anee runs your whole season. <em>You just follow.</em></h2>
         <p class="hwx-sub">Every analysis anee.io has, done for your own lots and kept up to date every morning. <b>You will not have to figure out what to do each day:</b> she plans it, tells you and your workers, and moves the work herself when the weather turns.</p>
@@ -128,7 +129,9 @@
     @keyframes hwxGlow { 50% { transform: translate(-3rem, 2rem) scale(1.1); opacity: .7; } }
     .hwx [data-x] { opacity: 0; transform: translateY(16px); transition: opacity .7s var(--ease) var(--d, 0ms), transform .7s var(--ease) var(--d, 0ms); }
     .hwx.is-in [data-x] { opacity: 1; transform: none; }
+    .hwx { scroll-margin-top: 6rem; }
     .hwx-top { text-align: center; max-width: 44rem; margin: 0 auto; }
+    .hwx-step { justify-content: center; margin-bottom: .8rem; }
     .hwx-badge { display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .5rem .35rem .75rem; border-radius: 999px; font-size: .72rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase;
         color: #2b2100; background: linear-gradient(90deg, #f5c518, #ffe27a 50%, #f5c518); background-size: 200% 100%; animation: hwxShine 3.2s linear infinite; box-shadow: 0 10px 24px -12px rgb(245 197 24 / .9); }
     .hwx-badge i { font-style: normal; }
@@ -256,7 +259,7 @@
 (() => {
     // Anee Auto's band shows itself once on screen (is-in) and plays its morning only while seen (is-live). The page's
     // tallies count up the first time they are seen (data-hw-count, the hero's and the band's).
-    const band = document.getElementById('hw-auto-more');
+    const band = document.getElementById('hw-step-auto');
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const count = (el) => {
         if (el.dataset.counted) return;
