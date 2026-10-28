@@ -1781,10 +1781,17 @@
         window.aneeWait.show({ title: 'Anee is ranking the varieties…', sub: 'The same research as Variety Ranking: the newest releases, the trials, the derbies and real harvests near you, weighed for your planting day. A minute or two a lot.',
             stay: 'Stay on this page while she works. Nothing is charged: it is part of Anee Auto.',
             lines: ['Searching the newest releases', 'Reading the trials and the derbies', 'Weighing your planting month', 'Checking each seed against your troubles', 'Ranking them for your lots'] });
-        try {
+        // A run stopped under her (the server restarted mid way) is asked for once more, quietly: the lots she already
+        // ranked are kept, so the second run picks up where the first stopped.
+        const ask = async () => {
             const body = { varieties: Object.fromEntries(plantLots().map((l) => [l.id, askOf(l)])), priorities: S.order };
             const r = await window.api(U.rank, { method: 'POST', body });
-            const d = r.data && r.data.status === 'ready' ? r.data : await window.aneeWait.poll({ id: ID, job: U.job, phases: window.aneeWait.phases.research, every: 3000, limit: 600 });
+            return r.data && r.data.status === 'ready' ? r.data : window.aneeWait.poll({ id: ID, job: U.job, phases: window.aneeWait.phases.research, every: 3000, limit: 600 });
+        };
+        try {
+            let d;
+            try { d = await ask(); }
+            catch (err) { if (!/stopped halfway/i.test(String(err && err.message))) throw err; d = await ask(); }
             S.ranks = (d.ranks && !Array.isArray(d.ranks)) ? d.ranks : {};
             S.answers.varietyOrder = [...S.order];
             await window.aneeWait.done({ title: 'Done!', line: 'Here is how the varieties rank for your lots.' });

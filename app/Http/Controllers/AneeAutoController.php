@@ -99,6 +99,18 @@ class AneeAutoController extends Controller
     private const OLD_STEPS = [0 => 0, 1 => 1, 2 => 7, 3 => 8, 4 => 9, 5 => 10, 6 => 11, 7 => 12, 8 => 13, 9 => 14];
     /** A season's calendar is long: one call may write for five minutes, so a job is dead only after eight quiet ones. */
     private const JOB_STALE = 480;
+    /**
+     * The variety ranking beats at least every few minutes (each streamed piece, each step), so five quiet ones mean its
+     * server was stopped under it, a deploy most often (2026-10-28, the owner: "the ranking process ... is hanging up. i
+     * am stuck at 50%"): the page then asks for it again at once, and the lots already ranked are kept.
+     */
+    private const RANK_STALE = 300;
+
+    /** How long a job may stay quiet before it counts as stopped. */
+    private static function staleAfter(AsAutoSeason $auto): int
+    {
+        return $auto->job === 'varieties' ? self::RANK_STALE : self::JOB_STALE;
+    }
 
     public function __construct(private AiCreditService $credits, private AiClient $ai, private AutoBrain $brain, private AutoPlanner $planner)
     {
@@ -1230,7 +1242,7 @@ class AneeAutoController extends Controller
 
     private function running(AsAutoSeason $auto): bool
     {
-        return $auto->job && ($auto->jobState['status'] ?? '') === 'pending' && $auto->jobAt && $auto->jobAt->gt(now()->subSeconds(self::JOB_STALE));
+        return $auto->job && ($auto->jobState['status'] ?? '') === 'pending' && $auto->jobAt && $auto->jobAt->gt(now()->subSeconds(self::staleAfter($auto)));
     }
 
     private function runInBackground(AsAutoSeason $auto, string $kind, callable $work)
@@ -1265,7 +1277,7 @@ class AneeAutoController extends Controller
         $auto = $this->auto($id);
         $s = (array) $auto->jobState;
         $status = $s['status'] ?? 'none';
-        if ($status === 'pending' && (! $auto->jobAt || $auto->jobAt->lt(now()->subSeconds(self::JOB_STALE)))) {
+        if ($status === 'pending' && (! $auto->jobAt || $auto->jobAt->lt(now()->subSeconds(self::staleAfter($auto))))) {
             $this->finishJob($auto, 'Anee was stopped halfway. Nothing was lost; please try again.');
             $status = 'failed';
             $s['error'] = 'Anee was stopped halfway. Nothing was lost; please try again.';
