@@ -330,8 +330,6 @@
     .au-nav .btn svg { flex: none; width: 1.05rem; height: 1.05rem; }
     .au-nav #auBack { flex: 0 1 auto; }
     .au-nav #auNext { flex: 0 1 auto; margin-left: auto; transition: background-color .28s var(--au-ease), box-shadow .28s var(--au-ease); }
-    .au-nav #auNext.is-read { background: #f5c518; border-color: #f5c518; color: #1f2a17; }
-    .au-nav #auNext.is-read:hover { background: #e9b90c; border-color: #e9b90c; }
     @media (max-width: 639.98px) {
         .au-nav-w { display: none; }
         .au-nav .btn { padding-left: .95rem; padding-right: .95rem; }
@@ -869,7 +867,7 @@
     <div class="au-nav">
         <button type="button" class="btn btn-white" id="auBack">Back</button>
         <small id="auNavSay"></small>
-        <button type="button" class="btn btn-primary" id="auNext">Next</button>
+        <button type="button" class="btn btn-cta" id="auNext">Next</button>
     </div>
 </div>
 
@@ -896,7 +894,7 @@
     </div>
     <div class="sheet-footer">
         <a href="{{ route('workers.global') }}" target="_blank" rel="noopener" class="btn btn-white">Manage your workers</a>
-        <button type="button" class="btn btn-primary" data-sheet-close>Done</button>
+        <button type="button" class="btn btn-cta" data-sheet-close>Done</button>
     </div>
 </div>
 
@@ -912,7 +910,7 @@
     <div class="sheet-footer">
         <button type="button" class="btn btn-white" id="auPinMe">📍 Where I am</button>
         <button type="button" class="btn btn-white" id="auPinClear">Remove</button>
-        <button type="button" class="btn btn-primary" id="auPinSave">Save the pin</button>
+        <button type="button" class="btn btn-cta" id="auPinSave">Save the pin</button>
     </div>
 </div>
 
@@ -1577,7 +1575,7 @@
         if (act === 'pin') openPin(l);
     });
     $('auAddLot').addEventListener('click', () => modal('<h3>Add another lot?</h3><p>Every lot Anee runs is ' + Number(S.perLot).toLocaleString() + ' credits for the season, taken now and not returned. You have ' + (S.unlimited ? 'unlimited credits' : Number(Math.floor(S.balance)).toLocaleString() + ' credits') + '.</p>'
-        + '<div class="au-acts"><button type="button" class="btn btn-white" data-close>Not now</button><button type="button" class="btn btn-primary" data-ok>Add a lot · ' + Number(S.perLot).toLocaleString() + '</button></div>', async (box) => {
+        + '<div class="au-acts"><button type="button" class="btn btn-white" data-close>Not now</button><button type="button" class="btn btn-cta is-go" data-ok>Add a lot · ' + Number(S.perLot).toLocaleString() + '</button></div>', async (box) => {
         try { const r = await put(U.lotAdd, { agree: true }, 'POST'); S.lots = r.data.state.lots; S.balance = r.data.state.balance; S.lotsPaid = r.data.state.lotsPaid; closeModal(); paintLots(); window.toast?.('Lot added.', 'success'); }
         catch (err) { if (err.data && err.data.outOfCredits) box.querySelector('p').innerHTML += ' <a class="underline font-bold" href="' + U.buy + '">Buy credits</a>'; }
     }));
@@ -1688,7 +1686,7 @@
                 + '<label class="au-gw-l">Phone<input type="tel" class="form-input" data-gf="phone" value="' + esc(d.phone || '') + '" maxlength="32" autocomplete="off" placeholder="Optional"></label></div>'
                 + '<div class="au-gw-l"><span>Days they work <small>(tap a day to change it)</small></span>' + WD.html(d.off, d.parts, d.name) + '</div>'
                 + '<p class="au-gw-err" hidden></p>'
-                + '<div class="au-gw-acts"><button type="button" class="btn btn-white btn-sm" data-gcancel>Cancel</button><button type="button" class="btn btn-primary btn-sm" data-gadd>Add to this season</button></div>'
+                + '<div class="au-gw-acts"><button type="button" class="btn btn-white btn-sm" data-gcancel>Cancel</button><button type="button" class="btn btn-cta btn-sm" data-gadd>Add to this season</button></div>'
                 + '</div></div></div>')
             + '</div>';
     };
@@ -2369,7 +2367,7 @@
         modal('<h3>This plan is off balance</h3><p>' + (words ? 'For ' + esc(l.name) + ', ' + esc(words) + ' ' + (off.length > 1 ? 'are' : 'is') + ' not where the crop needs ' + (off.length > 1 ? 'them' : 'it') + '. ' : '') + 'You can go back and add or change a product, or go on with it. If you go on, tell Anee why: she plans around it.</p>'
             + '<div class="dt-rows" id="auImbRows">' + Object.entries(BOOK.imbalance).map(([k, v]) => '<button type="button" class="dt-row" data-r="' + k + '"><span class="dt-row-body"><b>' + esc(v) + '</b></span></button>').join('') + '</div>'
             + '<textarea class="form-textarea w-full mt-3" id="auImbNote" rows="2" maxlength="1000" placeholder="Anything to add (optional)"></textarea>'
-            + '<div class="au-acts"><button type="button" class="btn btn-white" data-fix>Change the plan</button><button type="button" class="btn btn-primary" data-ok disabled>Go on with it</button></div>', async (box) => {
+            + '<div class="au-acts"><button type="button" class="btn btn-white" data-fix>Change the plan</button><button type="button" class="btn btn-cta is-go" data-ok disabled>Go on with it</button></div>', async (box) => {
             const r = box.querySelector('.dt-row.is-on'); if (!r) return;
             try { await put(U.imbalance, { lotId: l.id, reason: r.dataset.r, note: box.querySelector('#auImbNote').value }); l.imbalance = true; l.imbalanceReason = r.dataset.r; closeModal(); paintFert(); } catch (_) {}
         }, (box) => {

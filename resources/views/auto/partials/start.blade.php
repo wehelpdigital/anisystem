@@ -43,10 +43,11 @@
     .aus-final input { margin-top: .2rem; width: 1.1rem; height: 1.1rem; flex: none; accent-color: var(--color-brand-600); }
     .aus-bal { margin-top: .6rem; font-size: .78rem; color: var(--color-gray-500); }
     .aus-bal.is-short { color: #b45309; font-weight: 700; }
-    .aus-nav { display: flex; gap: .5rem; margin-top: 1rem; }
-    .aus-nav .btn { flex: 1; }
-    .aus-go { position: relative; overflow: hidden; }
-    .aus-go::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / .35) 50%, transparent 70%); transform: translateX(-100%); animation: ausShine 2.8s ease-in-out infinite; }
+    /* Two small buttons at the right (2026-10-28, the owner: "the start anee auto buttons does not look good ... just
+       maybe say start and back and the buttons are too big"). */
+    .aus-nav { display: flex; align-items: center; justify-content: flex-end; gap: .45rem; margin-top: 1rem; }
+    .aus-nav .btn { flex: none; min-height: 2.4rem; padding: .45rem 1.05rem; border-radius: .8rem; font-size: .88rem; }
+    .aus-nav .btn-white { box-shadow: none; }
     @keyframes ausShine { 60%, 100% { transform: translateX(100%); } }
     .aus-why { margin-top: .7rem; font-size: .8rem; color: #b45309; font-weight: 700; }
     html.dark .aus-card { background: #161c12; }
@@ -56,7 +57,7 @@
     html.dark .aus-price b { color: #c5e09f; } html.dark .aus-price span { color: #b7c9a3; } html.dark .aus-price small { color: #a9bd94; }
     html.dark .aus-count b { color: #eef3e8; }
     html.dark .aus-count button { background: #1c2616; border-color: #2b3a1c; color: #c5e09f; }
-    @media (prefers-reduced-motion: reduce) { .aus-veil, .aus-card, .aus-pane, .aus-face, .aus-go::after { animation: none; transition: none; } }
+    @media (prefers-reduced-motion: reduce) { .aus-veil, .aus-card, .aus-pane, .aus-face { animation: none; transition: none; } }
 </style>
 <div class="aus-veil" id="ausVeil" hidden role="dialog" aria-modal="true" aria-labelledby="ausTitle">
     <div class="aus-card">
@@ -77,7 +78,7 @@
                 <p class="aus-why" id="ausCapSay" hidden></p>
                 <div class="aus-nav">
                     <button type="button" class="btn btn-white" data-aus-close>Not now</button>
-                    <button type="button" class="btn btn-primary" id="ausNext">Continue</button>
+                    <button type="button" class="btn btn-cta is-go" id="ausNext">Next</button>
                 </div>
             </div>
             <div class="aus-pane" id="ausPaneConfirm" hidden>
@@ -87,7 +88,7 @@
                 <p class="aus-why" id="ausWhy" hidden></p>
                 <div class="aus-nav">
                     <button type="button" class="btn btn-white" id="ausBack">Back</button>
-                    <button type="button" class="btn btn-primary aus-go" id="ausGo" disabled>Start Anee Auto</button>
+                    <button type="button" class="btn btn-cta is-go" id="ausGo" disabled>Start</button>
                 </div>
             </div>
         </div>
@@ -144,7 +145,7 @@
             location.href = r.data.url;
         } catch (err) {
             $('ausWhy').hidden = false; $('ausWhy').textContent = err.message;
-            $('ausGo').textContent = 'Start Anee Auto'; paint();
+            $('ausGo').textContent = 'Start'; paint();
         }
     });
 })();

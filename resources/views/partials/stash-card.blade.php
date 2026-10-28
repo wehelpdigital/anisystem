@@ -41,16 +41,17 @@
 @push('head')
 <style>
     /* ---- The Stash card. House curve; still under reduced motion. ---- */
-    .stc { margin-top: .75rem; border-radius: 1rem; overflow: hidden; border: 1px solid #e9d8a6; background: var(--color-white); }
-    html.dark .stc { border-color: #4a3d16; }
-    .stc-head { display: flex; align-items: center; gap: .7rem; width: 100%; padding: .7rem .8rem; text-align: left; cursor: pointer; color: #3b2f00;
-        background: linear-gradient(120deg, #fde68a, #f5c518 60%, #e0aa2a); transition: filter .28s cubic-bezier(.22,1,.36,1); }
-    .stc-head:hover { filter: brightness(1.04); }
-    .stc-ico { flex: none; width: 2.4rem; height: 2.4rem; border-radius: .7rem; display: grid; place-items: center; background: rgb(59 47 0 / .12); }
+    /* Green (2026-10-28, the owner: "change the stash from yellow to somewhat green"): yellow is for calls to action. */
+    .stc { margin-top: .75rem; border-radius: 1rem; overflow: hidden; border: 1px solid #cfe3b8; background: var(--color-white); }
+    html.dark .stc { border-color: #2b3a1c; }
+    .stc-head { display: flex; align-items: center; gap: .7rem; width: 100%; padding: .7rem .8rem; text-align: left; cursor: pointer; color: #f1f7e9;
+        background: linear-gradient(120deg, #5b8a35, #3f6b24 55%, #2d5016); transition: filter .28s cubic-bezier(.22,1,.36,1); }
+    .stc-head:hover { filter: brightness(1.08); }
+    .stc-ico { flex: none; width: 2.4rem; height: 2.4rem; border-radius: .7rem; display: grid; place-items: center; color: #e8f5d6; background: rgb(255 255 255 / .14); }
     .stc-ico svg { width: 1.3rem; height: 1.3rem; }
     .stc-txt { min-width: 0; flex: 1 1 auto; }
     .stc-txt b { display: block; font-size: .9rem; font-weight: 800; }
-    .stc-txt i { display: block; font-style: normal; font-size: .75rem; color: rgb(59 47 0 / .78); }
+    .stc-txt i { display: block; font-style: normal; font-size: .75rem; color: rgb(241 247 233 / .82); }
     .stc-chev { flex: none; width: 1.1rem; height: 1.1rem; transform: rotate(-90deg); transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .stc.is-open .stc-chev { transform: none; }
     .stc-fold { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .32s cubic-bezier(.22,1,.36,1); }
@@ -68,11 +69,11 @@
     .stc-shelves { margin-top: .55rem; display: grid; gap: .4rem; }
     .stc-shelf { display: flex; align-items: center; gap: .7rem; padding: .55rem .65rem; border-radius: .8rem; text-decoration: none; background: var(--color-white);
         border: 1px solid var(--color-gray-200); transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
-    .stc-shelf:hover { transform: translateX(2px); border-color: #e0aa2a; }
+    .stc-shelf:hover { transform: translateX(2px); border-color: #7fb84e; }
     .stc-shelf > svg { flex: none; width: 1rem; height: 1rem; color: var(--color-gray-400); }
     .stc-books { flex: none; display: flex; align-items: flex-end; gap: 2px; height: 1.6rem; }
     .stc-books i { display: block; width: .42rem; border-radius: 2px; background: #2d5016; }
-    .stc-books i:nth-child(1) { height: 1.3rem; } .stc-books i:nth-child(2) { height: 1.6rem; background: #f5c518; } .stc-books i:nth-child(3) { height: 1.1rem; background: #4a7c2a; transform: rotate(8deg); transform-origin: bottom; }
+    .stc-books i:nth-child(1) { height: 1.3rem; } .stc-books i:nth-child(2) { height: 1.6rem; background: #a8cc7e; } .stc-books i:nth-child(3) { height: 1.1rem; background: #4a7c2a; transform: rotate(8deg); transform-origin: bottom; }
     .stc-s-txt { min-width: 0; flex: 1 1 auto; }
     .stc-s-txt b { display: block; font-size: .86rem; font-weight: 800; color: var(--color-gray-900); }
     .stc-s-txt small { font-size: .72rem; color: var(--color-gray-500); }

@@ -753,7 +753,7 @@
         + '<datalist id="acHvUnits"><option value="kg"><option value="sacks"><option value="cavans"><option value="tons"></datalist>'
         + Object.entries(HV.cats).map(([cat, fs], i) => '<details class="ac-hvs"' + (i === 0 ? ' open' : '') + '><summary>' + HV.names[cat][0] + ' ' + HV.names[cat][1] + (i === 0 ? '' : ' <small>(optional)</small>') + '</summary><div class="ac-hvg">' + fs.map((f) => hvField(cat, f)).join('') + '</div></details>').join('')
         + '<label class="ac-lab" for="acHvNote">Notes <small class="font-normal text-gray-400">(optional)</small></label><textarea id="acHvNote" class="form-textarea w-full" rows="2" maxlength="2000" placeholder="Like: lodged in one corner after the storm"></textarea>'
-        + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Not yet</button><button type="button" class="btn btn-primary" id="acHvOk">Save the harvest</button></div>', (box) => {
+        + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Not yet</button><button type="button" class="btn btn-cta" id="acHvOk">Save the harvest</button></div>', (box) => {
         box.querySelector('#acHvOk').addEventListener('click', async (e) => {
             const answers = {};
             box.querySelectorAll('[data-hvf]').forEach((el) => { const v = el.value.trim(); if (v === '') return; const [cat, key] = el.dataset.hvf.split('.'); (answers[cat] = answers[cat] || {})[key] = v; });
@@ -777,7 +777,7 @@
        placed again around the crew, and the crew check is said in the log. ---- */
     $('acAddLot').addEventListener('click', () => modal('<h3>➕ Add a lot to this season?</h3><p class="ac-msub">Anee plans it like the others: its crop, its planting day and its fertilizer, then she fits its work around your crew and every other lot, and checks the crew is enough.</p>'
         + '<p class="ac-msub"><b>' + Number(F.perLot).toLocaleString() + ' credits</b> for the lot\'s whole season, taken now. You have ' + (F.unlimited ? 'unlimited credits' : Number(Math.floor(F.balance)).toLocaleString() + ' credits') + '.</p>'
-        + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Not now</button><button type="button" class="btn btn-primary" id="acALOk">Add the lot</button></div>', (box) => {
+        + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Not now</button><button type="button" class="btn btn-cta is-go" id="acALOk">Add the lot</button></div>', (box) => {
         box.querySelector('#acALOk').addEventListener('click', async (e) => {
             e.target.disabled = true;
             try { const r = await window.api(U.lotAdd, { method: 'POST', body: { agree: true } }); closeModal(); await load(true); setTimeout(() => lotModal(r.data.lotId), 350); }
@@ -800,7 +800,7 @@
             + '<label class="ac-lab" for="acLVar">Variety <small class="font-normal text-gray-400">(optional)</small></label><input id="acLVar" class="form-input w-full" maxlength="120" value="' + esc(L.variety || '') + '">'
             + '<label class="ac-lab" for="acLDate">Planting day</label><input id="acLDate" type="date" class="form-input" min="' + D.today + '" max="' + D.latest + '" value="' + (L.fieldDate || '') + '"> <button type="button" class="ac-link" id="acLBest">📅 See the best weeks</button>'
             + '<div id="acLWin"></div>'
-            + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Later</button><button type="button" class="btn btn-primary" id="acLGo">Save and write its plan</button></div>', (box) => {
+            + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Later</button><button type="button" class="btn btn-cta is-go" id="acLGo">Save and write its plan</button></div>', (box) => {
             const fillMethods = () => { const ms = methods(box.querySelector('#acLCrop').value); box.querySelector('#acLMethod').innerHTML = ms.map(([k, v]) => '<option value="' + k + '"' + (k === L.method ? ' selected' : '') + '>' + esc(v) + '</option>').join(''); };
             fillMethods();
             box.querySelector('#acLCrop').addEventListener('change', fillMethods);
@@ -939,7 +939,7 @@
         + (F.people.length ? '<span class="ac-lab">Who did it</span><div class="ac-pills" id="acDWho">' + F.people.map((p) => '<button type="button" class="ac-pill" data-w="' + p.id + '" aria-pressed="' + (t.workers || []).includes(p.name) + '">' + esc(p.name) + '</button>').join('') + '</div>' : '')
         + '<label class="ac-lab" for="acDNote">Notes <small class="font-normal text-gray-400">(optional)</small></label><textarea id="acDNote" class="form-textarea w-full" rows="2" maxlength="2000" placeholder="Anything worth remembering"></textarea>'
         + '<label class="ac-lab">A photo <small class="font-normal text-gray-400">(optional)</small></label><input type="file" id="acDPhoto" accept="image/*" capture="environment" class="text-sm">'
-        + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Cancel</button><button type="button" class="btn btn-primary" id="acDOk">Mark done</button></div>', (box) => {
+        + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Cancel</button><button type="button" class="btn btn-cta" id="acDOk">Mark done</button></div>', (box) => {
         box.querySelector('#acDWho')?.addEventListener('click', (e) => { const b = e.target.closest('[data-w]'); if (b) b.setAttribute('aria-pressed', String(b.getAttribute('aria-pressed') !== 'true')); });
         box.querySelector('#acDOk').addEventListener('click', async (e) => {
             const fd = new FormData();
@@ -958,7 +958,7 @@
         + '<div class="ac-reasons" id="acCWhy">' + F.cant.map((c) => '<button type="button" class="ac-reason" data-r="' + c.key + '" aria-pressed="false"><span>' + c.emoji + '</span>' + esc(c.label) + '</button>').join('') + '</div>'
         + '<span class="ac-lab">Not before</span><div class="ac-pills" id="acCDays">' + [[0, 'Anee decides'], [1, 'Tomorrow'], [2, 'In 2 days'], [3, 'In 3 days'], [7, 'Next week']].map(([d, l]) => '<button type="button" class="ac-pill" data-d="' + d + '" aria-pressed="' + (d === 0) + '">' + l + '</button>').join('') + '</div>'
         + '<label class="ac-lab" for="acCNote">Anything to add <small class="font-normal text-gray-400">(optional)</small></label><textarea id="acCNote" class="form-textarea w-full" rows="2" maxlength="1000"></textarea>'
-        + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Cancel</button><button type="button" class="btn btn-primary" id="acCOk" disabled>Move it</button></div>', (box) => {
+        + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Cancel</button><button type="button" class="btn btn-cta is-go" id="acCOk" disabled>Move it</button></div>', (box) => {
         box.querySelector('#acCWhy').addEventListener('click', (e) => { const b = e.target.closest('[data-r]'); if (!b) return; box.querySelectorAll('[data-r]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); box.querySelector('#acCOk').disabled = false; });
         box.querySelector('#acCDays').addEventListener('click', (e) => { const b = e.target.closest('[data-d]'); if (!b) return; box.querySelectorAll('[data-d]').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); });
         box.querySelector('#acCOk').addEventListener('click', async (e) => {
@@ -974,14 +974,14 @@
     $('acSafeBtn').addEventListener('click', () => modal('<h3>🛡️ Safety and mixing</h3><p class="ac-msub">Anee checks every spray against these. Read the product label too: it is the law.</p>'
         + ((F.plan.safety || []).length ? '<div class="ac-safe"><ul>' + F.plan.safety.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ul></div>' : '<p class="text-sm text-gray-500">No safety notes yet.</p>')
         + ((F.plan.compatibility || []).length ? '<span class="ac-lab">Do not mix</span><ul class="text-sm text-gray-700 list-disc ml-5">' + F.plan.compatibility.map((s) => '<li>' + esc(s) + '</li>').join('') + '</ul>' : '')
-        + '<div class="ac-macts"><button type="button" class="btn btn-primary" data-close>Got it</button></div>'));
+        + '<div class="ac-macts"><button type="button" class="btn btn-cta" data-close>Got it</button></div>'));
     $('acLogBtn').addEventListener('click', async () => {
         modal('<h3>📖 Season log</h3><p class="ac-msub">Loading…</p>');
         try {
             const r = await window.api(U.log), L = r.data;
             $('acModalBox').innerHTML = '<h3>📖 Season log</h3><p class="ac-msub">' + L.counts.done + ' tasks done, ' + L.counts.moved + ' moved, ' + L.counts.observations + ' observations. Kept for the post harvest report.</p>'
                 + L.days.map((d) => '<div class="ac-log-day"><h4>' + esc(d.label) + '</h4>' + d.rows.map((x) => '<div class="ac-log-row"><i>' + esc(x.at) + '</i><span>' + (x.role === 'farmer' ? '<b>You</b> ' : '<b>Anee</b> ') + (x.lot ? '(' + esc(x.lot) + ') ' : '') + esc(x.text) + '</span></div>').join('') + '</div>').join('')
-                + '<div class="ac-macts"><button type="button" class="btn btn-primary" data-close>Close</button></div>';
+                + '<div class="ac-macts"><button type="button" class="btn btn-cta" data-close>Close</button></div>';
             $('acModalBox').querySelector('[data-close]').addEventListener('click', closeModal);
         } catch (err) { window.toast?.(err.message, 'error'); }
     });
@@ -1023,20 +1023,20 @@
             + (rows.length ? rows.map(shedRow).join('') : '<p class="text-sm text-gray-500 py-3">Nothing left to buy: the plan names no more products.</p>')
             + (SB.extra.length ? '<p class="ac-sh-sec">Also in your shed</p>' + SB.extra.map((x, i) => '<div class="ac-sh" style="--i:' + (rows.length + i) + '"><div class="ac-sh-h"><span class="ac-sh-ic" aria-hidden="true">' + x.icon + '</span><div class="min-w-0"><b>' + esc(x.name) + '</b><small>' + esc(x.haveSays) + (x.price != null ? ' · ' + peso(x.price) + ' a ' + esc(x.unitSays) : '') + '</small></div></div></div>').join('') : '')
             + '<p class="ac-sh-note">Amounts come from Anee\'s plan for each lot. Prices are yours: the cost to buy is counted at the price you set. The same book shows in the season\'s Inventory.</p>'
-            + '<div class="ac-macts"><button type="button" class="btn btn-primary" data-close>Close</button></div>';
+            + '<div class="ac-macts"><button type="button" class="btn btn-cta" data-close>Close</button></div>';
     };
     const paintShed = () => { const box = $('acModalBox'); box.innerHTML = shedHtml(); box.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeModal)); growBars(box); };
     const shedForm = (r, mode) => {
         if (mode === 'price') {
             return '<div class="ac-sh-form"><label class="ac-lab" for="acShP">Price for one ' + esc(r.unitOne || 'unit') + '</label><input id="acShP" type="number" class="form-input w-full" data-f="price" min="0" step="any" inputmode="decimal" value="' + (r.price ?? '') + '" placeholder="Like 1450">'
-                + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-primary" data-sh-save="price">Save the price</button></div></div>';
+                + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-cta" data-sh-save="price">Save the price</button></div></div>';
         }
         const units = r.kin && r.kin.length ? r.kin : Object.keys(SB.units);
         return '<div class="ac-sh-form"><div class="ac-row2"><div><label class="ac-lab" for="acShQ">How much</label><input id="acShQ" type="number" class="form-input w-full" data-f="qty" min="0" step="any" inputmode="decimal" value="' + (r.buy > 0 ? r.buy : '') + '"></div>'
             + '<div><label class="ac-lab" for="acShU">In</label><select id="acShU" class="form-select w-full" data-f="unit">' + units.map((k) => '<option value="' + esc(k) + '"' + (k === (r.unit || units[0]) ? ' selected' : '') + '>' + esc(SB.units[k] ? SB.units[k][1] : k) + '</option>').join('') + '</select></div></div>'
             + '<label class="ac-lab" for="acShP">Price for one <span data-f="one">' + esc(unitOne(r.unit || units[0])) + '</span> <small class="font-normal text-gray-400">(optional)</small></label><input id="acShP" type="number" class="form-input w-full" data-f="price" min="0" step="any" inputmode="decimal" value="' + (r.price ?? '') + '" placeholder="Like 1450">'
             + '<div class="ac-pills mt-3" data-f="how"><button type="button" class="ac-pill" data-b="1" aria-pressed="true">I bought it</button><button type="button" class="ac-pill" data-b="0" aria-pressed="false">I have it already</button></div>'
-            + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-primary" data-sh-save="add">Save</button></div></div>';
+            + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-cta" data-sh-save="add">Save</button></div></div>';
     };
     const openShed = async () => {
         modal('<h3>📦 Your shed</h3><p class="ac-msub">Reading the plan against your shed…</p>');
@@ -1098,17 +1098,17 @@
         : (mode === 'rate'
             ? '<div class="ac-sh-form"><label class="ac-lab" for="acPyR">Pay for a whole day</label><input id="acPyR" type="number" class="form-input w-full" data-f="dayPay" min="0" step="any" inputmode="decimal" value="' + (w.dayPay ?? '') + '" placeholder="Like 500">'
                 + '<p class="ac-sh-note" style="margin-top:.4rem">Half a day is paid half. Saved on ' + esc(w.name) + '\'s card for every season.</p>'
-                + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-primary" data-pay-save="rate">Save</button></div></div>'
+                + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-cta" data-pay-save="rate">Save</button></div></div>'
             : '<div class="ac-sh-form"><label class="ac-lab" for="acPyA">Amount paid</label><input id="acPyA" type="number" class="form-input w-full" data-f="amount" min="0" step="any" inputmode="decimal" value="' + (w.owed || '') + '">'
                 + '<label class="ac-lab" for="acPyN">Note <small class="font-normal text-gray-400">(optional)</small></label><input id="acPyN" class="form-input w-full" data-f="note" maxlength="300" placeholder="Like: cash, for the week">'
-                + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-primary" data-pay-save="paid">Record the payment</button></div></div>');
+                + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-cta" data-pay-save="paid">Record the payment</button></div></div>');
     const payHtml = () => {
         const T = PB.totals;
         return '<h3>💵 Worker pay</h3><p class="ac-msub">What each worker earned from the tasks marked done with their name, what you paid, and what is owed.</p>'
             + '<div class="ac-sh-tiles">' + tile(peso(T.owed), 'owed now', 0, T.owed > 0) + tile(peso(T.earned), 'earned this season', 1) + tile(peso(T.paid), 'paid so far', 2) + '</div>'
             + (PB.rows.length ? PB.rows.map(payRow).join('') : '<p class="text-sm text-gray-500 py-3">No workers on this season yet. Add them in the season\'s Workers.</p>')
             + '<p class="ac-sh-note">A morning task counts half a day, an afternoon task the other half, a task with no time of day a whole day. Tick who did each task when you mark it done.' + (T.noRate ? ' Set the daily pay of ' + T.noRate + ' worker' + (T.noRate === 1 ? '' : 's') + ' to count what they earned.' : '') + '</p>'
-            + '<div class="ac-macts"><button type="button" class="btn btn-primary" data-close>Close</button></div>';
+            + '<div class="ac-macts"><button type="button" class="btn btn-cta" data-close>Close</button></div>';
     };
     const paintPay = () => { const box = $('acModalBox'); box.innerHTML = payHtml(); box.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeModal)); };
     const openPay = async () => {
@@ -1211,7 +1211,7 @@
         const fin = (v) => { if (!done) { done = true; resolve(v); } };
         modal('<h3>' + (x.what === 'ask' ? '💬' : '👀') + ' This season\'s ' + x.cap + ' ' + (x.what === 'ask' ? 'questions are' : 'readings are') + ' used</h3>'
             + '<p class="ac-msub">' + esc(msg) + ' The credits are taken only when Anee answers.</p>'
-            + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Not now</button><button type="button" class="btn btn-primary" data-pay-ok>' + (x.what === 'ask' ? 'Ask' : 'Send') + ' for ' + x.price + ' credits</button></div>', (box) => {
+            + '<div class="ac-macts"><button type="button" class="btn btn-white" data-close>Not now</button><button type="button" class="btn btn-cta is-go" data-pay-ok>' + (x.what === 'ask' ? 'Ask' : 'Send') + ' for ' + x.price + ' credits</button></div>', (box) => {
             box.querySelector('[data-pay-ok]').addEventListener('click', () => { fin(true); closeModal(); });
             box.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => fin(false)));
         });
