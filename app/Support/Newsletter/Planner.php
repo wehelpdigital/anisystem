@@ -35,6 +35,12 @@ use Illuminate\Support\Facades\Schema;
  * An email that only some of its lists could take today is "partial": its
  * other lists take it on a later day, before anything after it (it keeps its
  * place). News and anything bound to a day expire when the day ends.
+ *
+ * FOUR DAYS A WEEK (2026-10-28, the owner: "to avoid spamming emails in
+ * newsletter, adjust it only into 4 times a week"): the line is dealt only on
+ * the send days (NlSettings::sendDays). On a day between, only an email bound
+ * to that very day goes (a holiday greeting keeps its day); the news of the
+ * days between is gathered into the next send day's news email.
  */
 final class Planner
 {
@@ -91,9 +97,15 @@ final class Planner
         $d = $day->toDateString();
         $emails ??= AsNlEmail::active()->whereIn('status', AsNlEmail::LIVE)->get();
 
-        return $emails->filter(function (AsNlEmail $e) use ($d) {
+        $rest = ! NlSettings::isSendDay($day);
+
+        return $emails->filter(function (AsNlEmail $e) use ($d, $rest) {
             if ($e->isTimed() || ! in_array($e->status, AsNlEmail::LIVE, true)) {
                 return false;
+            }
+            // A day between the send days: only what is bound to this very day.
+            if ($rest) {
+                return $e->priority !== 'news' && $e->sendOn && $e->sendOn->toDateString() === $d;
             }
             if ($e->priority === 'news') {
                 return $e->newsDate && $e->newsDate->toDateString() === $d;
@@ -224,7 +236,7 @@ final class Planner
         for ($i = 0; $i < $days; $i++) {
             $day = $day->copy()->addDay();
             $p = self::plan($day, $emails, $counts);
-            $out[] = ['date' => $day->toDateString(), 'picks' => array_map(fn ($k) => array_intersect_key($k, array_flip(['emailId', 'title', 'priority', 'kind', 'cells', 'send', 'people'])), $p['picks'])];
+            $out[] = ['date' => $day->toDateString(), 'rest' => ! NlSettings::isSendDay($day), 'picks' => array_map(fn ($k) => array_intersect_key($k, array_flip(['emailId', 'title', 'priority', 'kind', 'cells', 'send', 'people'])), $p['picks'])];
             self::apply($emails, $p, $counts);
         }
 
@@ -315,7 +327,11 @@ final class Planner
         if (! $force && $now->lt($send)) {
             return ['status' => 'waiting', 'reason' => 'Before the send time (' . $send->format('g:i A') . ').'];
         }
-        if (! $force && ! self::newsSettled($now)) {
+        // A day between the send days goes quiet, unless an email is bound to it (a holiday greeting).
+        if (! $force && ! NlSettings::isSendDay($now) && self::line($now)->isEmpty()) {
+            return ['status' => 'rest', 'reason' => 'Not a send day. The next one is ' . NlSettings::nextSendDay($now, true)->format('l, M j') . '.'];
+        }
+        if (! $force && NlSettings::isSendDay($now) && ! self::newsSettled($now)) {
             return ['status' => 'waiting', 'reason' => 'Waiting for this morning\'s farm news.'];
         }
 

@@ -1,0 +1,478 @@
+{
+ "heroes": {
+  "HOL01": {
+   "banner": "newyear",
+   "alt": "Manigong Bagong Taon mula kay Anee"
+  },
+  "HOL02": {
+   "banner": "cny",
+   "alt": "Kung Hei Fat Choi mula kay Anee"
+  },
+  "HOL03": {
+   "banner": "valentine",
+   "alt": "Maligayang Araw ng mga Puso mula kay Anee"
+  },
+  "HOL04": {
+   "banner": "kagitingan",
+   "alt": "Araw ng Kagitingan"
+  },
+  "HOL05": {
+   "banner": "holyweek",
+   "alt": "Mahal na Araw: sandaling pahinga"
+  },
+  "HOL06": {
+   "banner": "easter",
+   "alt": "Maligayang Pasko ng Pagkabuhay"
+  },
+  "HOL07": {
+   "banner": "earthday",
+   "alt": "Earth Day: alagaan ang lupa"
+  },
+  "HOL08": {
+   "banner": "labor",
+   "alt": "Araw ng Paggawa"
+  },
+  "HOL09": {
+   "banner": "farmers",
+   "alt": "Buwan ng Magsasaka at Mangingisda"
+  },
+  "HOL10": {
+   "banner": "mothers",
+   "alt": "Maligayang Araw ng mga Ina"
+  },
+  "HOL11": {
+   "banner": "independence",
+   "alt": "Maligayang Araw ng Kalayaan"
+  },
+  "HOL12": {
+   "banner": "fathers",
+   "alt": "Maligayang Araw ng mga Ama"
+  },
+  "HOL13": {
+   "banner": "nutrition",
+   "alt": "Buwan ng Nutrisyon"
+  },
+  "HOL14": {
+   "banner": "eidfitr",
+   "alt": "Eid Mubarak"
+  },
+  "HOL15": {
+   "banner": "eidadha",
+   "alt": "Eid'l Adha Mubarak"
+  },
+  "HOL16": {
+   "banner": "heroes",
+   "alt": "Araw ng mga Bayani"
+  },
+  "HOL17": {
+   "banner": "bermonths",
+   "alt": "Ber months na"
+  },
+  "HOL18": {
+   "banner": "fooday",
+   "alt": "World Food Day"
+  },
+  "HOL19": {
+   "banner": "undas",
+   "alt": "Undas: pag-alala sa mga nauna"
+  },
+  "HOL20": {
+   "banner": "ricemonth",
+   "alt": "Buwan ng Kamalayan sa Bigas"
+  },
+  "HOL21": {
+   "banner": "bonifacio",
+   "alt": "Araw ni Bonifacio"
+  },
+  "HOL22": {
+   "banner": "simbanggabi",
+   "alt": "Simbang Gabi"
+  },
+  "HOL23": {
+   "banner": "nochebuena",
+   "alt": "Noche Buena"
+  },
+  "HOL24": {
+   "banner": "christmas",
+   "alt": "Maligayang Pasko mula kay Anee"
+  },
+  "HOL25": {
+   "banner": "yearend",
+   "alt": "Bago mag Bagong Taon"
+  },
+  "HOL26": {
+   "banner": "nye",
+   "alt": "Bisperas ng Bagong Taon"
+  }
+ },
+ "emails": [
+  {
+   "series": "HOL27",
+   "banner": "immaculate",
+   "alt": "Araw ng Immaculada Concepcion",
+   "sendOn": "2026-12-08",
+   "subject": "Disyembre 8: ang listahang wala sa notebook mo",
+   "preheader": "Isang tahimik na araw. Isang maikling listahan na hindi tungkol sa gastos.",
+   "words": 412,
+   "blocks": [
+    {
+     "id": "p1",
+     "type": "text",
+     "html": "<p>Tahimik ang Disyembre 8 sa maraming baryo.</p><p>Walang pasok ang marami, may misa sa umaga, at sa ilang bayan may prusisyon sa hapon. Kapistahan ito ng Immaculada Concepcion, ang patrona ng Pilipinas.</p><p>Pero alam ko, sa bukid, hindi basta humihinto ang trabaho dahil pula ang petsa sa kalendaryo. May palay na hinihintay matuyo. May punlang kailangang tingnan. May baka na hindi marunong magbakasyon, haha.</p><p>Kaya hindi kita pipiliting magpahinga buong araw. Isang maliit na bagay lang ang hihilingin ko.</p><p>Halimbawa, si Mang Rodel. Sa likod ng lumang notebook niya, nakalista ang lahat: utang sa abono, bayad sa traktora, presyo ng palay noong isang linggo, at kung sino pa ang hindi nakakapagbayad sa kanya. Puro numero. Puro kulang.</p><p>Isang gabi, tinanong siya ng anak niya: \"Tay, may pahina ka ba diyan ng mga bagay na maayos?\"</p><p>Natawa si Mang Rodel. Wala pala.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p2",
+     "type": "text",
+     "html": "<p>Kaya ito ang hamon ko sa'yo ngayong araw.</p><p>Kumuha ka ng isang pahina, kahit sa likod ng resibo. Isulat mo ang tatlong bagay sa bukid ngayong taon na naging maayos. Hindi kailangang malaki.</p><p>Baka hindi binaha ang isa mong pitak kahit malakas ang ulan. Baka may kapitbahay na nagpahiram ng kalabaw nang walang bayad. Baka gumaling ang baboy na akala mo mamamatay na. Baka ang anak mo, natutong magtanim nang tuwid ang hanay.</p><p><b>Ang notebook ng magsasaka ay puno ng kulang. Bihira itong may pahina para sa sapat.</b></p><p>Hindi ito para kalimutan ang utang o ang problema. Nandiyan pa rin sila bukas, alam ko. Pero ang taong nakakakita lang ng kulang, napapagod nang mas maaga. At kailangan ka pa ng bukid mo nang matagal.</p><p>Kapag tapos mo na ang tatlo, basahin mo nang malakas sa pamilya mo sa hapunan. Tingnan mo kung ano ang idadagdag nila. Madalas, may maaalala sila na nakalimutan mo na.</p><p>Balikan natin si Mang Rodel. Ginawa niya ang pahinang iyon, medyo napipilitan pa. Una niyang isinulat: hindi nagkasakit ang kalabaw buong taon. Pangalawa: natapos niya ang pilapil bago ang tag-ulan. Pangatlo, at dito siya natigilan: tumulong ang panganay niya sa anihan nang hindi inuutusan.</p><p>Sabi niya pagkatapos, parang gumaan daw ang notebook. Hindi nabawasan ang utang. Pero naalala niya kung bakit siya nagsasaka pa rin.</p><p>At iyan ang hindi kayang ibigay ng kahit anong numero sa likod ng notebook.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p3",
+     "type": "text",
+     "html": "<p>Isang mapayapang Disyembre 8 sa'yo at sa buong pamilya mo.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "signoff",
+     "type": "text",
+     "html": "<p>Rooting for you,<br><b>Anee</b><br><i>\"may pasasalamat din sa notebook\"</i><br><a href=\"https://anee.io/\">anee.io</a></p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "ps",
+     "type": "text",
+     "html": "<p><b>P.S.</b> Kung gusto mo, i-reply mo sa akin ang isa sa tatlo mong isinulat. Babasahin ko lahat, promise.</p>",
+     "align": "left",
+     "size": "sm"
+    }
+   ]
+  },
+  {
+   "series": "HOL28",
+   "banner": "rizal",
+   "alt": "Araw ni Rizal",
+   "sendOn": "2026-12-30",
+   "subject": "Ang Rizal na hindi itinuro sa'yo: ang Rizal na nagsasaka",
+   "preheader": "Sa Dapitan, nagtanim siya, nag-eksperimento, at nagturo. May aral doon para sa bukid mo.",
+   "words": 470,
+   "blocks": [
+    {
+     "id": "p1",
+     "type": "text",
+     "html": "<p>Kapag narinig mo ang pangalang Rizal, ano ang naiisip mo?</p><p>Noli. Fili. Bagumbayan. Ang rebulto sa plaza na may hawak na libro.</p><p>Pero may isang bahagi ng buhay niya na bihirang ikuwento: ang mga taon niya sa Dapitan.</p><p>Noong ipinatapon siya roon, hindi lang siya nagbasa at nagsulat. Bumili siya ng lupa. Nagtanim siya. Nag-alaga siya ng puno at halaman, at tinuruan ang mga taga roon ng mas mabuting paraan ng pagsasaka. Doktor, manunulat, at oo, magsasaka rin.</p><p>Ngayong Araw ni Rizal, Disyembre 30, gusto kong pag-usapan ang isang ugali niya na pwede mong gayahin kahit wala kang diploma sa Europa.</p><p>Ang ugali ng pag-eeksperimento.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p2",
+     "type": "text",
+     "html": "<p>Si Rizal, hindi siya basta naniniwala. Sinusubukan niya. Inoobserbahan. Itinatala.</p><p>Ngayon, isipin mo ang karaniwang nangyayari sa baryo. May bagong binhi na sabi ng ahente ay mas maganda. May bagong paraan ng pagtatanim na napanood sa video. Tapos ang ginagawa natin? Sinusubok sa buong bukid agad. Kapag pumalpak, buong ani ang tinamaan.</p><p>Halimbawa, si Aling Merly. Gusto niyang subukan ang mas maluwag na pagitan ng tanim. Pero imbes na sa buong isang ektarya, pumili siya ng isang maliit na sulok, isang pitak lang. Doon niya ginawa ang bago. Sa natitira, ang dati niyang paraan.</p><p>Pagdating ng anihan, may sagot na siya. Hindi galing sa kwento ng iba. Galing sa sarili niyang lupa.</p><p><b>Ang pinakamagandang guro ng bukid mo ay ang bukid mo mismo, kung marunong kang magtanong sa kanya nang tama.</b></p><p>Ganito kasimple: isang bagong subok lang bawat season. Sa isang maliit na bahagi lang. Isulat kung ano ang ginawa, kailan, at ano ang nakita mo. Ikumpara sa dati.</p><p>Pagkalipas ng limang season, may limang sagot ka na na hindi kayang ibigay ng kahit sinong ahente.</p><p>Ilang paalala lang para tapat ang subok mo. Isa lang ang babaguhin mo sa isang pagkakataon. Kung binago mo ang binhi at ang pagitan at ang abono nang sabay, hindi mo malalaman kung alin ang tumama. Pumili ng sulok na kahawig ng iba mong bukid, hindi iyong pinakamataba o pinakamababa. At itala ang panahon: ang malakas na ulan, ang tagtuyot, ang peste na dumaan.</p><p>Mukhang abala, alam ko. Pero isipin mo ang kabaligtaran: ang taong sumugal sa buong bukid dahil lang sa kuwento ng iba, at doon lang nalaman na hindi pala bagay sa lupa niya.</p><p>Si Rizal, kahit nasa malayong lugar at walang kalayaan, pinili pa ring mag-aral at mag-eksperimento. Tayo, may bukid tayo sa harap natin araw-araw. Sayang kung hindi natin siya tatanungin.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p3",
+     "type": "text",
+     "html": "<p>Isang makabuluhang Araw ni Rizal sa'yo. Nawa'y maging kasing mausisa tayo niya, sa libro man o sa putikan.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "signoff",
+     "type": "text",
+     "html": "<p>Rooting for you,<br><b>Anee</b><br><i>\"subukan muna sa isang sulok\"</i><br><a href=\"https://anee.io/\">anee.io</a></p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "ps",
+     "type": "text",
+     "html": "<p><b>P.S.</b> Kung gusto mo ng lugar na pagsusulatan ng mga subok mo, may Notes from the field sa anee.io. Kumuha ka ng litrato, sabihin mo kung ano ang sinubok, at nandoon na iyon pagdating ng anihan.</p>",
+     "align": "left",
+     "size": "sm"
+    }
+   ]
+  },
+  {
+   "series": "HOL29",
+   "banner": "sinulog",
+   "alt": "Sinulog at Pista ng Santo Nino",
+   "sendOn": "2027-01-17",
+   "subject": "Pit Señor! Ang sayaw na may hakbang paatras",
+   "preheader": "Dalawang hakbang pasulong, isang paatras. Parang season sa bukid, di ba?",
+   "words": 387,
+   "blocks": [
+    {
+     "id": "p1",
+     "type": "text",
+     "html": "<p>Pit Señor!</p><p>Ngayong ikatlong Linggo ng Enero, punong-puno na naman ng tambol, kulay, at sayaw ang Cebu. Sinulog na, ang pista para sa Santo Niño. Kahit hindi ka taga Cebu, malamang napanood mo na sa TV ang libu-libong sumasayaw sa kalye.</p><p>Napansin mo ba ang hakbang ng sayaw?</p><p>Madalas itong ilarawan na parang agos ng tubig. Dalawang hakbang pasulong, isang hakbang paatras. Paulit-ulit, buong araw. Pero sa dulo ng parada, nakarating pa rin sila. Malayo ang narating.</p><p>Naisip ko, ganyan din ang bukid.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p2",
+     "type": "text",
+     "html": "<p>Halimbawa, si Mang Berto. Maganda ang simula ng season niya. Maaga siyang nakapagtanim, pantay ang tubo ng palay. Dalawang hakbang pasulong.</p><p>Tapos dumating ang malakas na ulan. Nalunod ang isang bahagi. Isang hakbang paatras.</p><p>Nakabawi siya, nag-abono sa tamang oras, gumanda ulit ang tanim. Pasulong ulit. Tapos tumaas ang presyo ng diesel. Paatras na naman.</p><p>Kung titingnan mo lang ang bawat hakbang paatras, aakalain mong walang nangyayari. Na palpak ang lahat. Na wala kang narating.</p><p><b>Pero ang sayaw ay hindi sinusukat sa isang hakbang. Sinusukat ito sa buong parada.</b></p><p>Kaya ngayong araw, may maliit akong hamon. Balikan mo ang nakaraang taon sa bukid. Huwag ang bawat problema. Ang kabuuan.</p><p>Mas marami ka bang alam ngayon kaysa noong isang taon? Mas kilala mo na ba ang lupa mo, kung saan bumabaha, kung saan unang nadidilaw ang dahon? May bago ka bang nasubukan?</p><p>Kung oo kahit sa isa, pasulong ka. Kahit may mga paatras.</p><p>May isa pang bagay sa Sinulog na gusto ko. Walang sumasayaw nang mag-isa. Sabay-sabay ang hakbang, sabay ang tambol, at kapag may natisod, tuloy pa rin ang grupo. Walang humihinto para pagtawanan siya.</p><p>Ganoon din sana tayo sa bukid. Kapag pumalpak ang kapitbahay, hindi iyon ang oras para magkuwento sa tindahan. Iyon ang oras para magtanong kung ano ang nangyari, para hindi rin mangyari sa'yo, at para tulungan siyang bumangon.</p><p>At kapag ikaw naman ang natisod, huwag kang mahiyang magsabi. Mas mabilis bumangon ang may kasabay.</p><p>Kaya ngayong taon, sabay-sabay tayong sumayaw. Dalawang hakbang pasulong, isang paatras, at tuloy ang parada.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p3",
+     "type": "text",
+     "html": "<p>Isang masaya at mapagpalang Sinulog sa'yo, nasaan ka man ngayon. Sayaw lang, kapatid.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "signoff",
+     "type": "text",
+     "html": "<p>Rooting for you,<br><b>Anee</b><br><i>\"pasulong pa rin, kahit may paatras\"</i><br><a href=\"https://anee.io/\">anee.io</a></p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "ps",
+     "type": "text",
+     "html": "<p><b>P.S.</b> Taga Cebu ka ba o nakapunta ka na sa Sinulog? I-reply mo sa akin kung ano ang paborito mong bahagi ng pista. Gusto kong malaman, haha.</p>",
+     "align": "left",
+     "size": "sm"
+    }
+   ]
+  },
+  {
+   "series": "HOL30",
+   "banner": "edsa",
+   "alt": "Lakas ng sama-sama",
+   "sendOn": "2027-02-25",
+   "subject": "Ang lakas ng sama-sama, sa bukid",
+   "preheader": "Ngayong anibersaryo ng EDSA, isang tanong: ano ang kaya ng magkakapitbahay na hindi kaya ng isa?",
+   "words": 417,
+   "blocks": [
+    {
+     "id": "p1",
+     "type": "text",
+     "html": "<p>Ngayong Pebrero 25, anibersaryo ng EDSA.</p><p>Hindi ako magkukuwento ng pulitika. Iba-iba ang tingin ng bawat pamilya diyan, at ayos lang iyon. Pero may isang larawan mula sa araw na iyon na pareho nating naiintindihan: maraming ordinaryong tao, magkakatabi, sama-sama.</p><p>At ang larawang iyan, kilalang-kilala ng magsasaka. Matagal na bago pa ang EDSA.</p><p>Bayanihan ang tawag natin diyan. Ang pagbubuhat ng bahay ng kapitbahay. Ang palusong sa taniman, kung saan nagtutulungan ang buong baryo sa pagtatanim at pag-aani.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p2",
+     "type": "text",
+     "html": "<p>Pero aminin natin. Sa maraming lugar ngayon, kanya-kanya na.</p><p>Kanya-kanyang bili ng abono sa tindahan, kaya kanya-kanyang bayad ng mas mahal. Kanya-kanyang upa ng harvester, kaya kanya-kanyang pila at paghihintay. Kanya-kanyang benta sa ahente, kaya kanya-kanyang tanggap sa presyong ibinigay.</p><p>Halimbawa, ang limang magkakapitbahay sa isang sitio. Dati, tig-isa silang bumibili ng binhi at abono. Isang season, nag-usap sila. Pinagsama nila ang order. Dahil mas malaki ang bili, may bawas sila, at iisang biyahe lang ang hatid.</p><p>Hindi milyon ang natipid. Pero sapat para sa isang sako pa ng bigas sa bawat bahay.</p><p><b>Ang isang magsasaka ay customer. Ang limang magkakasamang magsasaka ay grupo na may boses.</b></p><p>Kaya ito ang maliit kong hamon sa'yo ngayong linggo. Kausapin mo ang isa o dalawang kapitbahay mo sa bukid. Isang tanong lang: may isang bagay ba tayong pwedeng gawin nang sabay ngayong season?</p><p>Pwedeng sabay na pagbili. Pwedeng sabay na pag-upa ng makina. Pwedeng sabay na pagtatanim para sabay rin sa pagkontrol ng peste. Pwedeng pagbabantay ng presyo bago magbenta.</p><p>Maliit na simula. Pero lahat ng malaking sama-sama ay nagsimula sa isang usapan.</p><p>Isang paalala lang para tumagal ang samahan. Linawin ninyo agad ang usapan sa pera. Sino ang hahawak, paano hahatiin, ano ang gagawin kapag may hindi nakabayad. Isulat kahit sa simpleng papel. Maraming magandang samahan sa baryo ang nasira hindi dahil sa masamang tao, kundi dahil sa malabong usapan.</p><p>At magsimula sa maliit. Isang beses na sabay na pagbili muna. Kapag naging maayos, saka dagdagan. Mas madaling magtiwala sa taong nakasama mo na sa maliit na bagay.</p><p>Ang lakas ng sama-sama ay hindi lang para sa malalaking araw sa kasaysayan. Para rin ito sa ordinaryong Martes sa bukid, kapag sabay ninyong hinarap ang mahal na abono.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p3",
+     "type": "text",
+     "html": "<p>Isang mapayapang Pebrero 25 sa'yo at sa buong baryo ninyo.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "signoff",
+     "type": "text",
+     "html": "<p>Rooting for you,<br><b>Anee</b><br><i>\"mas mabilis mag-isa, mas malayo nang sama-sama\"</i><br><a href=\"https://anee.io/\">anee.io</a></p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "ps",
+     "type": "text",
+     "html": "<p><b>P.S.</b> Kung may grupo na kayo ng mga magsasaka sa lugar ninyo, i-reply mo sa akin kung ano ang pinakamalaking natulong nito sa inyo. Gusto kong ikuwento sa iba, kung papayag ka.</p>",
+     "align": "left",
+     "size": "sm"
+    }
+   ]
+  },
+  {
+   "series": "HOL31",
+   "banner": "sanisidro",
+   "alt": "Pista ni San Isidro Labrador at ang Pahiyas",
+   "sendOn": "2027-05-15",
+   "subject": "Ang patron ng magsasaka, at ang anghel na nag-araro",
+   "preheader": "Mayo 15, pista ni San Isidro Labrador. Bakit pasasalamat ang pinakamahalagang bahagi ng ani.",
+   "words": 457,
+   "blocks": [
+    {
+     "id": "p1",
+     "type": "text",
+     "html": "<p>Ngayong Mayo 15, makukulay na naman ang mga bahay sa Lucban.</p><p>Pahiyas ang tawag dito. Ang mga bahay ay binabalot ng kiping, iyong manipis at makukulay na dahon na gawa sa bigas, at sinasabitan ng gulay, prutas, at palay. Pasasalamat ito ng bayan sa ani ng nakaraang taon. May ganito ring pista sa iba pang bayan sa Quezon at sa ibang probinsya.</p><p>Para kanino? Kay San Isidro Labrador. Ang patron ng mga magsasaka.</p><p>May lumang kuwento tungkol sa kanya na gusto kong ikuwento sa'yo.</p><p>Si Isidro raw ay isang simpleng trabahador sa bukid ng isang mayamang may-ari ng lupa. Tuwing umaga, nagdarasal muna siya bago pumunta sa bukid. Nagreklamo ang ibang trabahador sa may-ari: laging huli si Isidro.</p><p>Kaya isang umaga, nagtago ang may-ari para manmanan siya. At ayon sa kuwento, habang nagdarasal si Isidro, may mga anghel daw na nag-aararo ng bukid para sa kanya.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p2",
+     "type": "text",
+     "html": "<p>Totoo man o hindi ang mga anghel, may aral ang kuwento na hindi luma.</p><p>Si Isidro, hindi siya tamad. Nag-araro pa rin siya. Pero hindi niya hinayaan na ang trabaho lang ang maging buhay niya. May oras siya para sa pasasalamat.</p><p>Tayo, ang dami nating binibilang tuwing anihan. Ilang kaban. Ilang kilo. Magkano ang benta. Magkano ang utang na mababayaran. Tama naman iyon, kailangan.</p><p>Pero kailan ka huling nagdiwang ng ani? Hindi bumilang. Nagdiwang.</p><p><b>Ang ani ay hindi lang numero. Bunga ito ng ilang buwang pawis, puyat, at pag-asa.</b></p><p>Kaya ngayong taon, subukan mo ito. Pagkatapos ng susunod mong anihan, gaano man kalaki o kaliit, maghanda ka ng kahit simpleng salu-salo. Kahit kanin at isang ulam lang. Imbitahin mo ang mga tumulong: ang mga nagtanim, ang nag-ani, ang kapitbahay na nagpahiram ng gamit.</p><p>Hindi kailangang magarbo. Ang mahalaga, may sandaling sinasabi mong: salamat, natapos natin ito.</p><p>Napansin ko rin na ang mga baryong may pista ng ani ay madalas may matibay na bayanihan. Hindi siguro nagkataon. Kapag sama-samang nagdiriwang ang mga tao, mas madali rin silang magtulungan pagdating ng susunod na taniman.</p><p>At para sa sarili mo, mahalaga rin ito. Ang taong laging nagbibilang ng kulang ay napapagod. Ang taong marunong ding magdiwang ng natapos ay may lakas pa para sa susunod na season.</p><p>Si San Isidro, ayon sa kuwento, hindi yumaman. Pero naaalala pa rin siya ng mga magsasaka hanggang ngayon, makalipas ang daan-daang taon. Hindi dahil sa laki ng ani niya. Dahil sa paraan niya ng pagtanggap dito.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p3",
+     "type": "text",
+     "html": "<p>Maligayang pista ni San Isidro Labrador sa'yo at sa lahat ng magsasaka. Nawa'y masagana ang ani mo ngayong taon.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "signoff",
+     "type": "text",
+     "html": "<p>Rooting for you,<br><b>Anee</b><br><i>\"ang ani ay ipinagdiriwang, hindi lang binibilang\"</i><br><a href=\"https://anee.io/\">anee.io</a></p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "ps",
+     "type": "text",
+     "html": "<p><b>P.S.</b> Nakapunta ka na ba sa Pahiyas, o may pista ng ani din sa bayan ninyo? I-reply mo sa akin. Gusto kong malaman kung paano kayo nagpapasalamat sa ani diyan.</p>",
+     "align": "left",
+     "size": "sm"
+    }
+   ]
+  },
+  {
+   "series": "HOL32",
+   "banner": "wika",
+   "alt": "Buwan ng Wika",
+   "sendOn": "2027-08-01",
+   "subject": "Isang salita ang rice sa Ingles. Ilan ang sa atin?",
+   "preheader": "Buwan ng Wika na. Ang mga salita natin sa palay ay may lamang kaalaman.",
+   "words": 461,
+   "blocks": [
+    {
+     "id": "p1",
+     "type": "text",
+     "html": "<p>Buwan ng Wika na, kaya maglaro tayo sandali.</p><p>Sa Ingles, isang salita lang: rice. Nasa bukid man, nasa sako, o nasa plato, rice pa rin.</p><p>Sa atin? Bilangin natin.</p><p>Ang nasa bukid pa, may balat pa, palay. Ang binayo o ginilingan na, bigas. Ang naluto na, kanin. Ang dumikit sa ilalim ng kaldero, tutong. Ang natira kagabi, bahaw. Ang ginisa sa bawang kinaumagahan, sinangag. Ang nilaga nang malabnaw, lugaw.</p><p>At hindi pa tayo tapos.</p><p>Ang itinatanim, binhi. Ang maliit na tanim bago ilipat, punla. Ang bunga na nakalaylay, uhay. Ang balat na naiiwan sa gilingan, ipa. Ang pinong pulbos mula sa pagkiskis, darak. Ang naiwang tangkay pagkatapos ng ani, dayami. At siyempre, malagkit, para sa suman at biko.</p><p>Mahigit labinlimang salita. Para sa isang bagay na sa Ingles ay isa lang.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p2",
+     "type": "text",
+     "html": "<p>Bakit ganito?</p><p>Kasi ang wika ay salamin ng buhay ng tao. Kapag mahalaga sa isang bayan ang isang bagay, dumadami ang salita para dito. At ang palay, nasa gitna ng buhay natin sa loob ng daan-daang taon.</p><p><b>Ang bawat salita natin sa palay ay isang maliit na aral na ipinasa ng mga nauna sa atin.</b></p><p>Halimbawa, ang dayami. Kung alam mo ang salita, alam mo rin na hiwalay ito sa ipa at sa darak, at na may sariling gamit ang bawat isa. Pagkain ng hayop. Pantakip sa lupa. Pang-abono kapag ibinalik sa bukid.</p><p>At iba-iba pa ito sa bawat rehiyon. Iba ang tawag sa Ilocos, iba sa Bisaya, iba sa Bikol. Bawat isa may sariling yaman.</p><p>Kaya ito ang hamon ko ngayong Buwan ng Wika. Tanungin mo ang pinakamatandang kakilala mo sa bukid, si lolo, si lola, o ang matandang kapitbahay. Ano ang mga salita nila sa pagsasaka na hindi na ginagamit ngayon? Isulat mo.</p><p>Baka may salita doon para sa isang bagay na hindi mo pa napapansin sa sarili mong bukid.</p><p>Halimbawa, may mga lugar na may sariling salita para sa ulan na dumarating sa tamang oras ng pagtatanim, iba sa ulan na nakakasira. May salita para sa lupang malagkit kapag basa at matigas kapag tuyo. May salita para sa hangin na nagdadala ng peste.</p><p>Ang bawat ganyang salita ay patunay na may nakapansin noon. Isang magsasaka na tumingin nang mabuti, natuto, at ipinasa ang natutunan sa pamamagitan ng isang salita.</p><p>Kapag nawala ang salita, madalas kasama nang nawawala ang kaalaman. Kaya habang nandiyan pa ang mga matatanda sa baryo, magtanong tayo. At ituro natin ang mga salitang iyon sa mga bata, para hindi lang rice ang alam nila.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p3",
+     "type": "text",
+     "html": "<p>Isang makabuluhang Buwan ng Wika sa'yo. Ipagmalaki natin ang salita ng bukid.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "signoff",
+     "type": "text",
+     "html": "<p>Rooting for you,<br><b>Anee</b><br><i>\"nasa wika ang karunungan ng bukid\"</i><br><a href=\"https://anee.io/\">anee.io</a></p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "ps",
+     "type": "text",
+     "html": "<p><b>P.S.</b> Ano ang tawag sa tutong o sa bahaw sa lugar ninyo? I-reply mo sa akin. Gusto kong malaman kung ilan pa ang hindi ko alam, haha.</p>",
+     "align": "left",
+     "size": "sm"
+    }
+   ]
+  },
+  {
+   "series": "HOL33",
+   "banner": "kadayawan",
+   "alt": "Kadayawan: pasasalamat sa ani",
+   "sendOn": "2027-08-20",
+   "subject": "Kadayawan: ang ani na hindi mo binibilang",
+   "preheader": "Pasasalamat sa ani ang Kadayawan ng Davao. May ani ka rin na hindi mo napapansin.",
+   "words": 442,
+   "blocks": [
+    {
+     "id": "p1",
+     "type": "text",
+     "html": "<p>Ngayong linggo, masaya na naman sa Davao.</p><p>Kadayawan na. Galing ang pangalan sa salitang madayaw, na ang ibig sabihin ay maganda o mabuti. Pasasalamat ito sa biyaya ng kalikasan: sa prutas, sa bulaklak, sa ani. Puno ang mga kalye ng durian, mangosteen, pomelo, at mga sayaw ng iba't ibang tribu.</p><p>Ang ganda ng ideya, di ba? Isang buong linggo ng pasasalamat sa ani.</p><p>Kaya gusto kong itanong sa'yo ngayon: alam mo ba ang lahat ng inaani mo?</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p2",
+     "type": "text",
+     "html": "<p>Halimbawa, si Aling Nena. Palay ang pangunahing tanim niya. Kapag tinanong mo kung ano ang ani niya, isa lang ang sagot: ilang kaban ng palay.</p><p>Pero kapag pumunta ka sa kanila, makikita mo ang iba pa. May tanim na kamote sa gilid ng pilapil. May malunggay sa likod ng bahay. Dalawang puno ng saging. Ilang tanim na talong at sitaw sa paso. Mga manok na nangingitlog.</p><p>Hindi niya ito binibilang. Para sa kanya, hindi iyon ani. \"Pang-ulam lang iyan,\" sabi niya.</p><p>Pero isipin mo. Ilang beses sa isang linggo ang hindi na niya kailangang bumili ng gulay? Ilang itlog ang hindi na binili sa tindahan? Kung susumahin sa isang taon, malaki pala.</p><p><b>Ang pera na hindi mo na kailangang gastusin ay kasing totoo ng pera na kinita mo.</b></p><p>Kaya ito ang maliit kong hamon ngayong Kadayawan. Sa susunod na isang linggo, ilista mo ang lahat ng kinain ng pamilya mo na galing sa sarili ninyong tanim o alaga. Gulay, prutas, itlog, kahit isang dakot na dahon ng sili.</p><p>Sa dulo ng linggo, tantiyahin mo kung magkano sana kung binili mo ang lahat ng iyon sa palengke.</p><p>Baka magulat ka. At baka maisip mo na sulit magtanim pa ng kaunti sa bakanteng sulok.</p><p>May isa pang dahilan kung bakit mahalaga ang maliliit na ani. Kapag masama ang season ng pangunahing tanim, binaha man o natuyo, ang mga ito ang sumasalo sa pamilya. Ang kamote sa gilid ng pilapil ay hindi apektado ng presyo ng palay. Ang manok ay nangingitlog pa rin kahit bumagsak ang benta ng mais.</p><p>Para kang may maliit na savings na nakatanim sa lupa.</p><p>Kaya sa Kadayawan, habang nagpapasalamat ang Davao sa malalaking ani ng prutas at bulaklak, magpasalamat din tayo sa maliliit. Ang dakot ng malunggay. Ang isang bungkos ng saging. Ang mga itlog sa umaga. Biyaya rin ang mga iyan.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p3",
+     "type": "text",
+     "html": "<p>Isang masaganang Kadayawan sa'yo, sa Davao man o kahit saan ka man naroon. Madayaw na adlaw!</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "signoff",
+     "type": "text",
+     "html": "<p>Rooting for you,<br><b>Anee</b><br><i>\"bilangin din ang maliliit na ani\"</i><br><a href=\"https://anee.io/\">anee.io</a></p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "ps",
+     "type": "text",
+     "html": "<p><b>P.S.</b> Kung gusto mong subaybayan ang lahat ng ani mo, malaki man o maliit, may Observations sa anee.io. Itala mo lang doon ang bawat ani at sa dulo ng season makikita mo ang kabuuan.</p>",
+     "align": "left",
+     "size": "sm"
+    }
+   ]
+  },
+  {
+   "series": "HOL34",
+   "banner": "teachers",
+   "alt": "Araw ng mga Guro",
+   "sendOn": "2027-10-05",
+   "subject": "Sino ang unang nagturo sa'yong magtanim?",
+   "preheader": "Araw ng mga Guro ngayon. Ang mga guro ng bukid ay hindi laging may pisara.",
+   "words": 417,
+   "blocks": [
+    {
+     "id": "p1",
+     "type": "text",
+     "html": "<p>Araw ng mga Guro ngayon, Oktubre 5.</p><p>Malamang may naaalala kang guro sa elementarya. Iyong mahigpit pero mabait. Iyong nagturo sa'yong magbasa, o nagbigay sa'yo ng tiwala na hindi mo pa noon nakikita sa sarili mo.</p><p>Pero ngayong araw, gusto kong itanong ang ibang klase ng guro.</p><p>Sino ang unang nagturo sa'yong magtanim?</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p2",
+     "type": "text",
+     "html": "<p>Para sa marami, si Tatay o si Nanay. Iyong unang beses na pinahawak ka ng punla at sinabing, \"Ganito, anak, huwag masyadong malalim.\" Iyong nag-ayos ng hanay mo nang hindi ka pinapahiya.</p><p>Para sa iba, isang matandang kapitbahay. Iyong tumingin sa langit at nagsabing uulan bukas, at tama pala. Iyong nagturo kung paano malalaman kung handa na ang lupa sa pamamagitan lang ng paghawak dito.</p><p>Para sa iba pa, isang technician sa munisipyo, isang kasamahan sa samahan, o kahit isang video na pinanood mo nang paulit-ulit.</p><p>At may isa pang guro na madalas nating makalimutan: ang bukid mismo. Ang bawat palpak na season, ang bawat peste na hindi mo inasahan, ang bawat ulan na dumating nang hindi oras. Lahat iyon, nagturo sa'yo.</p><p><b>Walang magsasakang natuto nang mag-isa. Lahat tayo ay may mga gurong walang pisara.</b></p><p>Kaya dalawang bagay ang hamon ko ngayong araw.</p><p>Una, pasalamatan mo ang isa sa mga guro mo sa bukid. Kung nandiyan pa siya, puntahan mo o tawagan. Sabihin mo lang na naaalala mo ang itinuro niya. Maliit na bagay iyon para sa'yo, pero baka iyon ang pinakamagandang marinig niya ngayong linggo.</p><p>Pangalawa, maging guro ka. May batang pamangkin ba, anak, o bagong magsasaka sa lugar ninyo? Isama mo siya sa bukid kahit isang umaga. Ipakita mo ang isang bagay na alam mo. Ganoon din nagsimula ang lahat ng natutunan mo.</p><p>Huwag mong isiping wala kang maituturo. Ang alam mo kung kailan dapat magpatubig, kung paano mo nakikilala ang lupang handa nang araruhin, kung saan dumadaan ang tubig kapag umuulan sa bukid mo, lahat iyan ay kaalaman. Ginto iyan sa batang magsisimula pa lang.</p><p>At sa totoo lang, madalas mas marami ka ring natututunan kapag nagtuturo ka. Ang tanong ng bata na hindi mo masagot ay magpapaisip sa'yo. Baka iyon pa ang magbukas sa'yo ng bagong paraan.</p><p>Ganyan nagpapatuloy ang bukid sa atin. Hindi lang sa lupa. Sa mga taong nagtuturo at natututo.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "p3",
+     "type": "text",
+     "html": "<p>Maligayang Araw ng mga Guro, lalo na sa mga gurong nasa bukid.</p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "signoff",
+     "type": "text",
+     "html": "<p>Rooting for you,<br><b>Anee</b><br><i>\"bawat magsasaka ay may guro, at magiging guro\"</i><br><a href=\"https://anee.io/\">anee.io</a></p>",
+     "align": "left",
+     "size": "md"
+    },
+    {
+     "id": "ps",
+     "type": "text",
+     "html": "<p><b>P.S.</b> I-reply mo sa akin ang pinakamagandang payo na natanggap mo sa bukid, at kung kanino galing. Iipunin ko ang mga ito.</p>",
+     "align": "left",
+     "size": "sm"
+    }
+   ]
+  }
+ ]
+}

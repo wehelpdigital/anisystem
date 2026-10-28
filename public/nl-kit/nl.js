@@ -291,7 +291,7 @@
         }).join('');
 
         const timed = (P.timed || []).map((x) => '<span class="nlk-pill pr-high" title="' + h(x.audienceWords) + '">' + ic('clock') + h(timeWords(x.at.slice(11))) + ' ' + h(dayWords(x.at)) + '</span><button type="button" class="nlk-btn is-sm is-ghost" data-edit="' + x.id + '">' + h(x.title) + (x.status === 'draft' ? ' (draft)' : '') + '</button>').join('');
-        const ahead = (P.ahead || []).map((d) => '<div class="nlk-day"><b>' + h(dayWords(d.date)) + '</b>' + (d.picks.length ? d.picks.map((p) => '<div><span class="nlk-pill pr-' + p.priority + '">' + PRI[p.priority].short + '</span><span title="' + h(p.title) + '">' + h(p.title) + '</span></div>').join('') : '<em>Nothing in line yet</em>') + '</div>').join('');
+        const ahead = (P.ahead || []).map((d) => '<div class="nlk-day"><b>' + h(dayWords(d.date)) + '</b>' + (d.picks.length ? d.picks.map((p) => '<div><span class="nlk-pill pr-' + p.priority + '">' + PRI[p.priority].short + '</span><span title="' + h(p.title) + '">' + h(p.title) + '</span></div>').join('') : (d.rest ? '<em>Not a send day</em>' : '<em>Nothing in line yet</em>')) + '</div>').join('');
         const waiting = (t.waiting || []).length ? '<details class="nlk-waiting"><summary>' + t.waiting.length + ' waiting for another day</summary><ul>' + t.waiting.map((w) => '<li><b>' + h(w.title) + '</b>: ' + h(w.why) + '</li>').join('') + '</ul></details>' : '';
         const errs = run && run.campaigns ? run.campaigns.filter((c) => c.status === 'failed').map((c) => '<div class="nlk-errline">' + h(c.error || 'A campaign failed.') + '</div>').join('') : '';
 
@@ -1480,7 +1480,8 @@
             '<div class="nlk-box"><div class="nlk-line"><div class="nlk-grow"><b style="font-size:15px">Sending</b><br><small class="nlk-hint" style="margin:0">' + (st.enabled ? 'On: the scheduler makes real Acumbamail campaigns at the daily send.' : 'Off: every day is planned and shown, nothing goes to anyone.') + '</small></div><button type="button" class="nlk-switch is-big' + (st.enabled ? ' is-on' : '') + '" data-en></button></div></div>' +
             '<div class="nlk-box"><h4>The daily send</h4><div class="nlk-row2"><label class="nlk-field"><span>Time (Philippine time)</span><input type="time" class="nlk-in" data-s="sendTime" value="' + h(st.sendTime) + '"></label>' +
             '<label class="nlk-field"><span>Today\'s news email</span><span class="nlk-line" style="min-height:40px"><button type="button" class="nlk-switch' + (st.newsAuto ? ' is-on' : '') + '" data-news></button><small>Joins the line by itself</small></span></label></div>' +
-            '<small>The send waits for the morning\'s farm news (written at 7:00 AM) so the news can go the same day.</small></div>' +
+            '<div class="nlk-field" style="margin-top:10px"><span>Send days</span><div class="nlk-line" style="flex-wrap:wrap;gap:6px" data-days>' + ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d, i) => '<button type="button" class="nlk-btn' + ((st.sendDays || []).includes(i + 1) ? ' is-gold' : '') + '" style="min-width:52px;padding:6px 10px" data-day="' + (i + 1) + '" aria-pressed="' + ((st.sendDays || []).includes(i + 1) ? 'true' : 'false') + '">' + d + '</button>').join('') + '</div></div>' +
+            '<small>Only on these days. The farm news of the days between is gathered into the next send, and an email bound to a day (a holiday greeting) still goes on its day. The send waits for the morning\'s farm news (written at 5:00 AM).</small></div>' +
             '<div class="nlk-box"><h4>Who it is from</h4><div class="nlk-row2"><label class="nlk-field"><span>Name</span><input class="nlk-in" data-s="fromName" value="' + h(st.fromName) + '"></label>' +
             '<label class="nlk-field"><span>Email</span><input type="email" class="nlk-in" data-s="fromEmail" value="' + h(st.fromEmail) + '"></label></div><small>The address must be one your Acumbamail account accepts as a sender.</small></div>' +
             '<div class="nlk-box"><h4>Tests</h4><label class="nlk-field"><span>Send tests to</span><input type="email" class="nlk-in" data-s="testTo" value="' + h(st.testTo) + '" placeholder="' + h(C.userEmail || 'you@example.com') + '"></label></div>' +
@@ -1500,6 +1501,15 @@
             st.enabled = on;
         });
         $('[data-news]', L).addEventListener('click', (e) => { e.currentTarget.classList.toggle('is-on'); st.newsAuto = e.currentTarget.classList.contains('is-on'); });
+        $$('[data-day]', L).forEach((b) => b.addEventListener('click', () => {
+            const d = Number(b.dataset.day), on = !b.classList.contains('is-gold');
+            const days = new Set(st.sendDays || []);
+            if (!on && days.size <= 1) { toast('Keep at least one send day.', true); return; }
+            if (on) days.add(d); else days.delete(d);
+            st.sendDays = [...days].sort((a, c) => a - c);
+            b.classList.toggle('is-gold', on);
+            b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        }));
         const save = async () => {
             $$('[data-s]', L).forEach((i) => { st[i.dataset.s] = i.value.trim(); });
             st.lists = {};
