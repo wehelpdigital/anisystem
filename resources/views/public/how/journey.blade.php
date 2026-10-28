@@ -1050,6 +1050,73 @@
     }
     @media (min-width: 560px) and (max-width: 1023.98px) { .hw-field { --cols: 4; } }
 
+    /* ---------- the site's steps as decks (2026-10-29) ----------
+       The words, Anee on the rail and the step's counts in a row; under them a panel of cards, one a tool. The cards
+       rise in one after another when the step is reached; while it is on screen a light passes from card to card. */
+    .hw-stage.is-deck .hw-svg { display: none; }
+    .hw-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: .45rem; margin: .9rem 0 0; padding: 0; list-style: none; }
+    .hw-stats li { display: inline-flex; align-items: center; gap: .35rem; padding: .32rem .75rem .32rem .4rem; border-radius: 999px; font-size: .78rem; font-weight: 700; color: var(--mute);
+        background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1); }
+    .hw-stats li b { display: grid; place-items: center; min-width: 1.5rem; height: 1.5rem; padding: 0 .3rem; border-radius: 999px; font-size: .8rem; font-weight: 900; color: #14210c; background: var(--leaf); }
+    .hw-stats li.is-free b { background: #bef264; }
+    .hw-stats li.is-anee b { background: var(--acc); }
+    .hw-stats li img { width: 1.5rem; height: 1.5rem; margin-right: -.1rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px var(--acc); }
+    .hw.is-ready .hw-stage.is-deck .hw-stats li { opacity: 0; transform: translateY(8px) scale(.9); transition: opacity .5s var(--ease), transform .5s var(--ease); transition-delay: calc(.35s + var(--k) * .1s); }
+    .hw.is-ready .hw-stage.is-deck.is-in .hw-stats li { opacity: 1; transform: none; }
+
+    /* Rows of cards; a short last row sits in the middle. Two to a row on a phone, three on a tablet, the deck's own on a desk. */
+    .hw-deck { --c: 2; --g: .6rem; position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--g); margin-top: 1.3rem; }
+    @media (min-width: 640px) { .hw-deck { --c: 3; } }
+    .hw-stage.is-deck .hw-item { flex: 0 0 calc((100% - (var(--c) - 1) * var(--g)) / var(--c)); width: auto; max-width: none; min-width: 0; }
+    .hw-stage.is-deck .hw-chip { position: relative; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: .45rem; height: 100%; padding: .8rem .8rem .7rem;
+        border-radius: 1.1rem; text-align: left; overflow: hidden; background: linear-gradient(165deg, rgb(255 255 255 / .07), rgb(255 255 255 / .025)); border: 1px solid rgb(255 255 255 / .1);
+        box-shadow: 0 16px 30px -24px rgb(0 0 0 / .9); transition: transform .3s var(--ease), border-color .3s var(--ease), background-color .3s var(--ease), box-shadow .3s var(--ease); }
+    .hw-stage.is-deck .hw-chip:hover { transform: translateY(-3px); border-color: rgb(245 197 24 / .55); background: linear-gradient(165deg, rgb(245 197 24 / .12), rgb(255 255 255 / .03)); }
+    .hw-stage.is-deck .hw-ico { width: 2.5rem; height: 2.5rem; border-radius: .8rem; box-shadow: 0 10px 20px -12px rgb(0 0 0 / .9); transition: transform .4s var(--ease); }
+    .hw-stage.is-deck .hw-ico img { width: 1.55rem; height: 1.55rem; }
+    .hw-stage.is-deck .hw-ico.is-face img { width: 100%; height: 100%; }
+    .hw-stage.is-deck .hw-txt { flex: none; width: 100%; }
+    .hw-stage.is-deck .hw-txt b { font-size: .92rem; font-weight: 800; line-height: 1.25; }
+    .hw-stage.is-deck .hw-txt small { display: block; margin-top: .2rem; font-size: .76rem; line-height: 1.4; color: var(--mute); }
+    .hw-stage.is-deck .hw-by { top: .7rem; right: .7rem; }
+    .hw-dk-foot { display: flex; align-items: center; justify-content: space-between; gap: .4rem; width: 100%; margin-top: auto; padding-top: .35rem; }
+    .hw-dk-plan { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: .14rem .55rem; border-radius: 999px; font-style: normal; font-size: .66rem; font-weight: 900;
+        letter-spacing: .02em; color: #fde68a; background: rgb(245 197 24 / .12); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35); }
+    .hw-dk-plan.is-free { color: #d9f99d; background: rgb(163 230 53 / .1); box-shadow: inset 0 0 0 1px rgb(163 230 53 / .35); }
+    .hw-stage.is-deck .hw-plus { display: block; flex: none; }
+    /* The light that passes from card to card: a gold edge, the icon lifting, a shine running across. */
+    .hw-stage.is-deck .hw-chip::after { content: ''; position: absolute; inset: 0; pointer-events: none; transform: translateX(-130%);
+        background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / .14) 50%, transparent 70%); }
+    .hw-stage.is-deck .hw-item.is-spot .hw-chip { border-color: rgb(245 197 24 / .75); box-shadow: 0 0 0 3px rgb(245 197 24 / .14), 0 18px 34px -20px rgb(245 197 24 / .55); }
+    .hw-stage.is-deck .hw-item.is-spot .hw-chip::after { transform: translateX(130%); transition: transform 1s var(--ease); }
+    .hw-stage.is-deck .hw-item.is-spot .hw-ico { transform: translateY(-2px) scale(1.08) rotate(-4deg); }
+    @media (min-width: 1024px) {
+        .hw-stage.is-deck { grid-template-columns: minmax(0, 1fr) 12rem minmax(0, 1fr); padding: 4rem 0 3.5rem; }
+        .hw-stage.is-deck .hw-head { grid-column: 1; grid-row: 1; align-self: center; padding-bottom: 0; }
+        .hw-stage.is-deck .hw-hub { position: relative; left: auto; top: auto; grid-column: 2; grid-row: 1; justify-self: center; align-self: center; }
+        .hw-stage.is-deck .hw-stats { grid-column: 3; grid-row: 1; align-self: center; justify-content: flex-start; flex-direction: column; align-items: flex-start; margin: 0; }
+        .hw-stage.is-deck .hw-stats li { font-size: .86rem; }
+        /* The panel: over the rail, a slow light along its top edge while the step is on screen. */
+        .hw-deck { --c: var(--dc, 4); --g: .8rem; grid-column: 1 / -1; grid-row: 2; margin-top: 1.6rem; padding: 1.1rem; border-radius: 1.7rem;
+            background: linear-gradient(170deg, rgb(28 46 19 / .96), rgb(13 22 9 / .97)); box-shadow: inset 0 0 0 1px rgb(168 204 126 / .2), 0 40px 80px -50px rgb(0 0 0 / .95); }
+        .hw-deck::before { content: ''; position: absolute; left: 1.5rem; right: 1.5rem; top: -1px; height: 2px; border-radius: 999px; pointer-events: none;
+            background: linear-gradient(90deg, transparent, var(--acc), transparent) no-repeat; background-size: 28% 100%; animation: hwDkSheen 4s linear infinite; }
+        @keyframes hwDkSheen { from { background-position: -40% 0; } to { background-position: 140% 0; } }
+        .hw-stage.is-deck:not(.is-live) .hw-deck::before { animation-play-state: paused; }
+    }
+    @media (max-width: 1023.98px) {
+        .hw-stage.is-deck .hw-chip { flex-direction: column; align-items: flex-start; padding: .75rem .7rem .65rem; text-align: left; }
+        .hw-stage.is-deck .hw-txt b { font-size: .84rem; }
+        .hw-stage.is-deck .hw-txt small { font-size: .72rem; }
+        .hw-stage.is-deck .hw-by { top: .55rem; right: .55rem; }
+        .hw-stage.is-deck .hw-ico { width: 2.3rem; height: 2.3rem; }
+        .hw-stage.is-deck .hw-ico img { width: 1.4rem; height: 1.4rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+        .hw-stage.is-deck .hw-chip, .hw-stage.is-deck .hw-ico, .hw-stage.is-deck .hw-chip::after, .hw-stats li { transition: none !important; }
+        .hw-deck::before { animation: none !important; display: none; }
+    }
+
     /* ---------- a tool, played on a phone ----------
        Tapping a tool opens this: a phone playing a recording of the real app
        in use, beside what the tool does. A sheet from the bottom on a phone,
@@ -1202,6 +1269,82 @@
                 @endif
                 @continue
             @endif
+            @if ($hwMode === 'site')
+                {{-- On the site each step is a deck (2026-10-29, the owner: "the following steps, 2 onwards still look the
+                     same ... change but still looking good and animated ... still mobile compatible"): the words, Anee on
+                     the rail and the step's counts in one row, then every tool as a card in a panel (what it does, the
+                     plan it comes with, Anee's mark), the cards rising in as the step is reached and a light passing from
+                     card to card while it is on screen. The dashboard's tour keeps the burst around Anee. --}}
+                @php
+                    $hwFreeTier = $hwFreeTier ?? array_key_first(array_filter(config('tiers'), fn ($t, $k) => $k !== 'admin', ARRAY_FILTER_USE_BOTH));
+                    $dkFree = count(array_filter($st['items'], fn ($t) => ($t['plan']['tier'] ?? '') === $hwFreeTier));
+                    $dkAnee = count(array_filter($st['items'], fn ($t) => $t['anee']));
+                    // On a desk, the columns that leave the fewest gaps in the last row (four when it is a tie).
+                    $dkN = count($st['items']);
+                    $dkCols = collect([4, 5, 3])->sortBy(fn ($c) => [($c - $dkN % $c) % $c, $c === 4 ? 0 : 1])->first();
+                    $dkCols = min($dkCols, max(1, $dkN));
+                @endphp
+                <section class="hw-stage is-deck" id="hw-step-{{ $st['key'] }}" data-stage="{{ $st['key'] }}" data-pattern="{{ $st['pattern'] }}" aria-labelledby="hw-h-{{ $st['key'] }}">
+                    <svg class="hw-svg" aria-hidden="true"></svg>
+                    <header class="hw-head">
+                        <p class="hw-step">Step {{ $n + 1 }} <span>{{ $st['when'] }}</span></p>
+                        <{{ $hwHead }} class="hw-h2" id="hw-h-{{ $st['key'] }}">{{ $st['title'] }}</{{ $hwHead }}>
+                        <p class="hw-sub">{{ $st['lede'] }}</p>
+                        @if (! $hwHinted)
+                            @php $hwHinted = true; @endphp
+                            <p class="hw-hint"><i aria-hidden="true"></i>Tap any tool to watch it work in the real app. Anee's face on a tool means she does that one for you.</p>
+                        @endif
+                    </header>
+                    <div class="hw-hub" aria-hidden="true">
+                        <i class="hw-ring"></i><i class="hw-ring"></i>
+                        <span class="hw-hub-core"><img src="{{ asset('images/anee/emoji/' . $st['face'] . '.png') }}" alt="" loading="lazy"></span>
+                        <span class="hw-num">{{ $n + 1 }}</span>
+                    </div>
+                    <ul class="hw-stats">
+                        <li style="--k: 0"><b>{{ count($st['items']) }}</b>{{ count($st['items']) === 1 ? 'tool' : 'tools' }}</li>
+                        @if ($dkFree)<li class="is-free" style="--k: 1"><b>{{ $dkFree }}</b>free on every plan</li>@endif
+                        @if ($dkAnee)<li class="is-anee" style="--k: 2"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt=""><b>{{ $dkAnee }}</b>done by Anee</li>@endif
+                    </ul>
+                    <div class="hw-deck" style="--dc: {{ $dkCols }}">
+                        @foreach ($st['items'] as $i => $it)
+                            @php
+                                $link = $hwLink($it);
+                                $uid = 'hw-' . $st['key'] . '-' . $it['key'];
+                                $dkIsFree = ($it['plan']['tier'] ?? '') === $hwFreeTier;
+                            @endphp
+                            <div class="hw-item" style="--i: {{ $i }}" @if ($it['video']) data-video="{{ $it['video'][0] }}" data-poster="{{ $it['video'][1] }}" @endif>
+                                <button type="button" class="hw-chip" id="{{ $uid }}-b" aria-haspopup="dialog">
+                                    <span class="hw-ico {{ str_starts_with($it['icon'], 'anee/') ? 'is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
+                                    <span class="hw-txt"><b>{{ $it['name'] }}</b><small>{{ $it['short'] }}</small></span>
+                                    @if ($it['anee'])<span class="hw-by"><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="">Anee</span>@endif
+                                    <span class="hw-dk-foot">
+                                        <em class="hw-dk-plan {{ $dkIsFree ? 'is-free' : '' }}">{{ $dkIsFree ? 'Free' : $it['plan']['name'] }}</em>
+                                        <i class="hw-plus {{ $it['video'] ? '' : 'is-words' }}" aria-hidden="true"></i>
+                                    </span>
+                                </button>
+                                <div class="hw-more" id="{{ $uid }}" role="region" aria-labelledby="{{ $uid }}-b">
+                                    <div><div class="hw-more-in">
+                                        <p>{{ $it['what'] }}</p>
+                                        <ul class="hw-gets">
+                                            @foreach ($it['gets'] as $g)
+                                                <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>{{ $g }}</li>
+                                            @endforeach
+                                        </ul>
+                                        @if (! empty($it['helps']))
+                                            <div class="hw-helps"><div class="hw-helps-h">How it helps your crops and your farm</div>@foreach ($it['helps'] as $h)<div class="hw-helps-i">{!! \App\Support\HowItWorks::helpHtml($h) !!}</div>@endforeach</div>
+                                        @endif
+                                        <div class="hw-plan is-{{ $it['plan']['tier'] }}"><i aria-hidden="true"></i><span>{{ $it['plan']['says'] }}@if ($it['plan']['more'])<small>{{ $it['plan']['more'] }}</small>@endif</span></div>
+                                        @if ($link)
+                                            <a class="hw-link" href="{{ $link[0] }}">{{ $link[1] }}
+                                                <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+                                        @endif
+                                    </div></div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </section>
+            @else
             <section class="hw-stage" id="hw-step-{{ $st['key'] }}" data-stage="{{ $st['key'] }}" data-pattern="{{ $st['pattern'] }}" aria-labelledby="hw-h-{{ $st['key'] }}">
                 <svg class="hw-svg" aria-hidden="true"></svg>
                 <header class="hw-head">
@@ -1275,6 +1418,7 @@
                 @endforeach
                 </div>
             </section>
+            @endif
             {{-- After setting up: a phone on the activities board. After the
                  count: a phone asking Anee about a crop, before problems. --}}
             @if ($st['key'] === 'auto' && $n === 0)
@@ -1743,7 +1887,30 @@
     }
 
     /* ---- a step's field: the dots, the routes from Anee to each tool ---- */
+    /* ---- a deck (the site's steps): in once reached, then a light passes from card to card while on screen ---- */
+    function deck(st) {
+        const items = [...st.querySelectorAll('.hw-item')];
+        let k = -1, timer = 0, first = true;
+        const clear = () => items.forEach((it) => it.classList.remove('is-spot'));
+        const tick = () => { clear(); k = (k + 1) % items.length; items[k].classList.add('is-spot'); };
+        const run = (on) => {
+            clearInterval(timer); timer = 0;
+            if (on && !still() && items.length) timer = setInterval(tick, 1600); else clear();
+        };
+        st._hwDraw = () => {};
+        new IntersectionObserver((es) => es.forEach((e) => {
+            st.classList.toggle('is-live', e.isIntersecting);
+            if (e.isIntersecting && first) {
+                first = false;
+                st.getBoundingClientRect();
+                requestAnimationFrame(() => st.classList.add('is-in'));
+            }
+            run(e.isIntersecting);
+        }), { threshold: 0.12 }).observe(st);
+    }
+
     function field(st) {
+        if (st.classList.contains('is-deck')) { deck(st); return; }
         const svg = st.querySelector('.hw-svg'), hub = st.querySelector('.hw-hub');
         const gDots = make('g'), gArcs = make('g');
         svg.append(gDots, gArcs);
