@@ -48,11 +48,12 @@
     $heroFilms = collect([
         ['hero-chat', 'Ask Anee, even with a photo', 9, 19.5],
         ['auto', 'Anee Auto plans your season', 0, 8.5],
-        ['hero-board', 'Your tasks, day by day', 4, 15.5],
+        // The films re-recorded on 2026-10-28 (the app as it is now) rest, glide down the page and rest: their middle plays.
+        ['board', 'Your tasks, day by day', 0.6, 7.4],
         ['skyWeather', 'Rain and typhoons over your farm', 3.5, 12.5],
-        ['pestFinder', 'Find the pest, and what to spray', 1, 10],
-        ['npk', 'Every nutrient in your fertilizer', 11.5, 18],
-        ['profit', 'Your profit, lot by lot', 0, 7.5],
+        ['pestFinder', 'Find the pest, and what to spray', 0.6, 7.4],
+        ['npk', 'Every nutrient in your fertilizer', 0.6, 7.4],
+        ['profit', 'Your profit, lot by lot', 0.6, 7.4],
         ['hero-maps', 'Measure your field on a map', 11, 18.4],
     ])->map(fn ($f) => ($film = $filmOf($f[0], $f[1])) ? $film + ['from' => $f[2], 'to' => $f[3]] : null)->filter()->values();
     $aneePrice = $R::priceTag($R::tierPrice('libreAnee', 'month'));
