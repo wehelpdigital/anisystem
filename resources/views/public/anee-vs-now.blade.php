@@ -78,26 +78,71 @@
     }
     $aneePlan = $plans[0] ?? null;
 
+    // Anee's credits for a year, estimated for one lot and two seasons: When to Plant, Variety Ranking and a Crop
+    // Protocol each season (their own list prices), and about two questions a week for a 17 week season, half with a
+    // photo. A plan's monthly credits come off it; the rest is priced at the biggest pack's rate.
+    $kindCredits = ['When to Plant' => 'wtp', 'Variety Ranking' => 'variety', 'a Crop Protocol' => 'protocol'];
+    $seasonCredits = 0;
+    foreach ($kindCredits as $kc) {
+        try {
+            $seasonCredits += (int) \App\Support\AiPricing::credits($kc, []);
+        } catch (\Throwable $e) {
+            $seasonCredits += ['wtp' => 100, 'variety' => 110, 'protocol' => 190][$kc];
+        }
+    }
+    $seasonAsks = 2 * 17;
+    $seasonCredits += intdiv($seasonAsks, 2) * $perAnswer + ($seasonAsks - intdiv($seasonAsks, 2)) * ($perAnswer + $perPhoto);
+    $yearCredits = (int) (ceil($seasonCredits * 2 / 10) * 10);
+    $perCredit = collect($packs)->map(fn ($k) => $k['price'] / max(1, $k['credits']))->min() ?: 0.87;
+    $plans = array_map(function ($p) use ($yearCredits, $perCredit) {
+        $p['buyCredits'] = max(0, $yearCredits - $p['credits'] * 12);
+        $p['creditCost'] = (float) (round($p['buyCredits'] * $perCredit / 10) * 10);
+
+        return $p;
+    }, $plans);
+    $planJs = array_map(fn ($p) => ['name' => $p['name'], 'month' => $p['month'], 'year' => $p['year'], 'included' => $p['credits'] * 12, 'buy' => $p['buyCredits'], 'creditCost' => $p['creditCost']], $plans);
+
     // The nine jobs of a season, now and with Anee.
+    // The nine jobs of a season, now and with Anee (2026-10-28, the owner: "some boxes ... have huge blank spaces ...
+    // put something in there to balance it out"): each side also says it out loud, the farmer's thought on one, Anee's
+    // answer on the other, and every "now" names what it can cost (the site's "up to" figure where there is one).
     $jobs = [
-        ['📅', 'Knowing when to plant', 'You plant when the neighbors do, or on the date that worked last year.', $leakBy('window'),
-            'When to Plant reads twenty years of your town\'s weather and the El Niño or La Niña outlook, then ranks the weeks for the safest start and the best price at harvest.', ['when']],
-        ['🌾', 'Choosing the seed', 'You buy what the store has, on the seller\'s word.', null,
-            'Every registered variety of your crop, ranked by Anee for your area and for what matters most to you: yield, survival or a quick harvest.', ['variety', 'varietyFinder']],
-        ['🧪', 'Feeding the crop', 'The same sacks as last season, on the usual days.', $leakBy('fertilizer'),
-            'NPK Plus counts every nutrient before you buy, and the Crop Protocol puts each sack at the stage the crop takes it up.', ['npk', 'cropProtocol']],
-        ['🐛', 'A pest or a disease', 'You post a photo in a group and get seven different answers.', $leakBy('wrong solution'),
-            'Anee reads your photo with your crop\'s stage and weather, asks for the sign that decides it, and names the active ingredient that works.', ['chat', 'pestFinder']],
-        ['🌧️', 'Rain on spray day', 'You spray and hope the rain holds off. When it does not, you pay for the spray twice.', $leakBy('pests'),
-            'The forecast for your own lot, hour by hour, beside your plan. With Anee Auto the spray moves to a dry morning by itself.', ['weather', 'auto']],
-        ['💧', 'Water at the right stage', 'The field gets water when the canal has it, whatever the crop needs that week.', $leakBy('water'),
-            'The Crop Protocol counts the water each lot needs week by week, so flowering never goes dry and ripening never floods.', ['cropProtocol']],
-        ['📒', 'Knowing where the money went', 'Wages, sacks and sprays live in a notebook and in your memory.', $leakBy('untracked'),
-            'Every wage, sack and spray adds up lot by lot, and the season report shows what each sack of harvest cost to grow.', ['expenses', 'profit']],
-        ['📈', 'Selling the harvest', 'You sell when the buyer comes, at the buyer\'s price.', null,
-            'The Market Price Forecast shows the months your crop sells highest, and Benta o Bilad shows whether drying first leaves more money in your hand.', ['market', 'bilad']],
-        ['🤝', 'Sharing with the farm manager', 'The hatian is counted by hand, and the numbers get argued every harvest.', null,
-            'The Hatian Calculator counts the share from the whole harvest the same fair way every time, with your home food set aside.', ['hatian']],
+        ['e' => '📅', 'job' => 'Knowing when to plant', 'now' => 'You plant when the neighbors do, or on the date that worked last year.', 'leak' => $leakBy('window'), 'cost' => '',
+            'thinks' => 'The neighbors planted already. We should too.',
+            'with' => 'When to Plant reads twenty years of your town\'s weather and the El Niño or La Niña outlook, then ranks the weeks for the safest start and the best price at harvest.',
+            'says' => 'Plant in the second week of next month. It misses the worst of the storms.', 'tools' => ['when']],
+        ['e' => '🌾', 'job' => 'Choosing the seed', 'now' => 'You buy what the store has, on the seller\'s word.', 'leak' => null, 'cost' => 'A seed that doesn\'t fit your season can cost the whole harvest.',
+            'thinks' => 'Whatever the store has will do.',
+            'with' => 'Every registered variety of your crop, ranked by Anee for your area and for what matters most to you: yield, survival or a quick harvest.',
+            'says' => 'For your lot, this one ranks first. It stands up to flooding.', 'tools' => ['variety', 'varietyFinder']],
+        ['e' => '🧪', 'job' => 'Feeding the crop', 'now' => 'The same sacks as last season, on the usual days.', 'leak' => $leakBy('fertilizer'), 'cost' => '',
+            'thinks' => 'Same sacks, same days as last year.',
+            'with' => 'NPK Plus counts every nutrient before you buy, and the Crop Protocol puts each sack at the stage the crop takes it up.',
+            'says' => 'Hold the second urea until Thursday. That\'s when the crop takes it up.', 'tools' => ['npk', 'cropProtocol']],
+        ['e' => '🐛', 'job' => 'A pest or a disease', 'now' => 'You post a photo in a group and get seven different answers.', 'leak' => $leakBy('wrong solution'), 'cost' => '',
+            'thinks' => 'Let me ask the group.',
+            'with' => 'Anee reads your photo with your crop\'s stage and weather, asks for the sign that decides it, and names the active ingredient that works.',
+            'says' => 'Check the base of the stem. A small hole there means stem borer.', 'tools' => ['chat', 'pestFinder']],
+        ['e' => '🌧️', 'job' => 'Rain on spray day', 'now' => 'You spray and hope the rain holds off.', 'leak' => null, 'cost' => 'A spray washed off is paid for twice: the product, the labor and the fuel.',
+            'thinks' => 'It looks clear. Let\'s spray.',
+            'with' => 'The forecast for your own lot, hour by hour, beside your plan. With Anee Auto the spray moves to a dry morning by itself.',
+            'says' => 'Rain comes at 2 PM. Spray before 10 instead.', 'tools' => ['weather', 'auto']],
+        ['e' => '💧', 'job' => 'Water at the right stage', 'now' => 'The field gets water when the canal has it, whatever the crop needs that week.', 'leak' => $leakBy('water'), 'cost' => '',
+            'thinks' => 'The canal has water today, so the field gets it.',
+            'with' => 'The Crop Protocol counts the water each lot needs week by week, so flowering never goes dry and ripening never floods.',
+            'says' => 'Flowering starts next week. Keep 5 cm of water in Lot 2.', 'tools' => ['cropProtocol']],
+        ['e' => '📒', 'job' => 'Knowing where the money went', 'now' => 'Wages, sacks and sprays live in a notebook and in your memory.', 'leak' => $leakBy('untracked'), 'cost' => '',
+            'thinks' => 'I\'ll remember what I spent.',
+            'with' => 'Every wage, sack and spray adds up lot by lot, and the season report shows what each sack of harvest cost to grow.',
+            'says' => 'Lot 2 is costing more than Lot 1. Most of it is labor.', 'tools' => ['expenses', 'profit']],
+        ['e' => '📈', 'job' => 'Selling the harvest', 'now' => 'You sell when the buyer comes, at the buyer\'s price.', 'leak' => null, 'cost' => 'Selling in the glut months takes pesos off every kilo.',
+            'thinks' => 'The buyer is here. Let\'s sell.',
+            'with' => 'The Market Price Forecast shows the months your crop sells highest, and Benta o Bilad shows whether drying first leaves more money in your hand.',
+            'says' => 'Prices usually rise in February. Drying and waiting may pay.', 'tools' => ['market', 'bilad']],
+        ['e' => '🤝', 'job' => 'Sharing with the farm manager', 'now' => 'The hatian is counted by hand, and the numbers get argued every harvest.', 'leak' => null, 'cost' => 'A share counted two ways ends in an argument.',
+            'thinks' => 'Let\'s just count it by hand.',
+            'with' => 'The Hatian Calculator counts the share from the whole harvest the same fair way every time, with your home food set aside.',
+            'says' => 'From 120 sacks: 24 to your manager, 10 for home, 86 for you.', 'tools' => ['hatian']],
     ];
 
     // A morning in the season: the farmer alone, and with Anee Auto.
@@ -218,7 +263,7 @@
     .avn-jobs { display: grid; gap: .9rem; margin-top: 2rem; }
     .avn-job { perspective: 1400px; }
     .avn-job-in { display: grid; transform-style: preserve-3d; transition: transform .6s var(--hp-ease); }
-    .avn-face { grid-area: 1 / 1; display: flex; flex-direction: column; gap: .7rem; padding: 1.1rem 1.1rem 1.15rem; border-radius: 1.3rem; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .avn-face { grid-area: 1 / 1; display: flex; flex-direction: column; justify-content: space-between; gap: .7rem; padding: 1.1rem 1.1rem 1.15rem; border-radius: 1.3rem; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
     .avn-face.is-now { background: var(--now-soft); border: 1px solid var(--now-line); }
     .avn-face.is-anee { transform: rotateY(180deg); background: #fff; border: 1.5px solid var(--anee-line); box-shadow: 0 22px 44px -32px rgb(47 82 25 / .7); }
     .avn-job.is-anee .avn-job-in { transform: rotateY(180deg); }
@@ -229,19 +274,26 @@
     .is-now .avn-job-h small { color: var(--now); }
     .is-anee .avn-job-h small { color: var(--anee); }
     .avn-job-h small svg { width: .85rem; height: .85rem; }
-    .avn-face p { font-size: .93rem; line-height: 1.55; color: #374151; }
-    .is-now p { color: #5b2a20; }
-    /* The way it is done now, said a little larger: on a phone its face is as tall as the answer's. */
-    .avn-face.is-now > p:not(.avn-cost) { font-size: 1.04rem; font-weight: 600; line-height: 1.5; }
+    .avn-face-p { font-size: .93rem; line-height: 1.55; color: #374151; }
+    .is-now .avn-face-p { color: #5b2a20; font-size: .98rem; font-weight: 600; line-height: 1.5; }
+    /* What each side says out loud: the farmer's thought, and Anee's answer, as speech bubbles. */
+    .avn-voice { display: flex; align-items: flex-end; gap: .5rem; }
+    .avn-voice-who { flex: none; display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 999px; font-size: 1.1rem; background: #fff; box-shadow: 0 0 0 1px rgb(0 0 0 / .06); }
+    img.avn-voice-who { object-fit: cover; box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--hp-sun); }
+    .avn-voice q { quotes: '\201C' '\201D'; padding: .55rem .8rem; border-radius: 1rem 1rem 1rem .3rem; font-size: .9rem; font-weight: 700; font-style: italic; line-height: 1.4; }
+    .avn-voice.is-farmer q { color: #7f1d1d; background: #fff; box-shadow: 0 0 0 1px var(--now-line); }
+    .avn-voice.is-anee q { font-style: normal; color: #24400f; background: var(--anee-soft); box-shadow: 0 0 0 1px var(--anee-line); }
+    .avn-cost.is-words { align-items: flex-start; font-weight: 700; line-height: 1.45; }
+    .avn-cost.is-words span { flex: none; }
     .avn-cost { display: flex; align-items: center; gap: .55rem; padding: .5rem .7rem; border-radius: .8rem; font-size: .8rem; font-weight: 800; color: #991b1b; background: #fee2e2; }
     .avn-cost b { flex: none; white-space: nowrap; font-family: var(--font-heading); font-size: 1.05rem; }
-    .avn-tools { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: auto; }
+    .avn-tools { display: flex; flex-wrap: wrap; gap: .4rem; }
     .avn-tool { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .65rem .3rem .3rem; border-radius: 999px; font-size: .76rem; font-weight: 800;
         color: #24400f; background: var(--anee-soft); border: 1px solid var(--anee-line); transition: background-color .28s var(--hp-ease), transform .28s var(--hp-ease); }
     a.avn-tool:hover { background: #e3f0d3; transform: translateY(-1px); }
     .avn-tool img { width: 1.3rem; height: 1.3rem; padding: .12rem; border-radius: 999px; object-fit: contain; background: #fff; }
     .avn-tool img.is-face { padding: 0; object-fit: cover; }
-    .avn-turn { align-self: flex-start; display: inline-flex; align-items: center; gap: .4rem; margin-top: auto; padding: .45rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 900;
+    .avn-turn { align-self: flex-start; display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .8rem; border-radius: 999px; font-size: .8rem; font-weight: 900;
         cursor: pointer; transition: transform .28s var(--hp-ease), background-color .28s var(--hp-ease); }
     .avn-turn svg { width: 1rem; height: 1rem; }
     .is-now .avn-turn { color: #fff; background: var(--anee); box-shadow: 0 10px 20px -12px rgb(47 82 25 / .9); }
@@ -282,6 +334,9 @@
     .avn-bar.is-plan .avn-bar-k span:last-child { color: #bef264; }
     .avn-bar.is-plan .avn-bar-t b { background: linear-gradient(90deg, #a3e635, #4d7c0f); min-width: 4px; }
     .avn-bar.is-plan { margin-top: .5rem; padding-top: .9rem; border-top: 1px dashed rgb(255 255 255 / .18); }
+    .avn-bar.is-plan .avn-bar-k span:first-child { color: #ecfccb; }
+    .avn-bar-parts { font-size: .76rem; line-height: 1.5; color: rgb(255 255 255 / .62); }
+    .avn-bar-parts b { color: #d9f99d; font-weight: 800; }
     .avn-verdict { display: flex; align-items: center; gap: .9rem; margin-top: 1.4rem; padding: 1rem 1.1rem; border-radius: 1.2rem; background: rgb(245 197 24 / .1); border: 1px solid rgb(245 197 24 / .4); }
     .avn-verdict big { flex: none; font-family: var(--font-heading); font-size: clamp(2rem, 6vw, 2.8rem); font-weight: 800; line-height: 1; color: var(--hp-sun); font-variant-numeric: tabular-nums; }
     .avn-verdict p { font-size: .9rem; line-height: 1.5; color: #f3f4f6; }
@@ -446,28 +501,32 @@
                 <p class="avn-score"><span>Jobs done by guessing:</span> <b data-avn-score>{{ count($jobs) }}</b> <span>of {{ count($jobs) }}</span></p>
             </div>
             <div class="avn-jobs">
-                @foreach ($jobs as $ji => [$emo, $job, $now, $leak, $with, $keys])
+                @foreach ($jobs as $ji => $jb)
                     <article class="avn-job reveal" style="--reveal-delay: {{ ($ji % 3) * 0.05 }}s">
                         <div class="avn-job-in">
                             <div class="avn-face is-now">
                                 <div class="avn-job-h">
-                                    <span class="avn-job-e" aria-hidden="true">{{ $emo }}</span>
-                                    <div><b>{{ $job }}</b><small>{!! $cross !!}Now</small></div>
+                                    <span class="avn-job-e" aria-hidden="true">{{ $jb['e'] }}</span>
+                                    <div><b>{{ $jb['job'] }}</b><small>{!! $cross !!}Now</small></div>
                                 </div>
-                                <p>{{ $now }}</p>
-                                @if ($leak)
-                                    <p class="avn-cost"><b>Up to {{ $leak['n'] }}%</b> {{ mb_strtolower($leak['title']) }}</p>
+                                <p class="avn-voice is-farmer"><span class="avn-voice-who" aria-hidden="true">👨‍🌾</span><q>{{ $jb['thinks'] }}</q></p>
+                                <p class="avn-face-p">{{ $jb['now'] }}</p>
+                                @if ($jb['leak'])
+                                    <p class="avn-cost"><b>Up to {{ $jb['leak']['n'] }}%</b> {{ mb_strtolower($jb['leak']['title']) }}</p>
+                                @elseif ($jb['cost'] !== '')
+                                    <p class="avn-cost is-words"><span aria-hidden="true">⚠️</span>{{ $jb['cost'] }}</p>
                                 @endif
                                 <button type="button" class="avn-turn" data-turn>{!! $flip !!}See it with Anee</button>
                             </div>
                             <div class="avn-face is-anee">
                                 <div class="avn-job-h">
-                                    <span class="avn-job-e" aria-hidden="true">{{ $emo }}</span>
-                                    <div><b>{{ $job }}</b><small>{!! $tick !!}With Anee</small></div>
+                                    <span class="avn-job-e" aria-hidden="true">{{ $jb['e'] }}</span>
+                                    <div><b>{{ $jb['job'] }}</b><small>{!! $tick !!}With Anee</small></div>
                                 </div>
-                                <p>{{ $with }}</p>
+                                <p class="avn-voice is-anee"><img src="{{ $face }}" alt="" class="avn-voice-who" width="80" height="80" loading="lazy"><q>{{ $jb['says'] }}</q></p>
+                                <p class="avn-face-p">{{ $jb['with'] }}</p>
                                 <div class="avn-tools">
-                                    @foreach ($keys as $k)
+                                    @foreach ($jb['tools'] as $k)
                                         @php $tl = $toolLink($k); @endphp
                                         @if ($tl)
                                             @if ($tl['href'])
@@ -520,13 +579,14 @@
                     <div class="avn-bar is-plan">
                         <p class="avn-bar-k"><span data-plan-name></span><span data-v></span></p>
                         <span class="avn-bar-t" aria-hidden="true"><b></b></span>
+                        <p class="avn-bar-parts" data-plan-parts></p>
                     </div>
                 </div>
                 <div class="avn-verdict">
                     <big data-times>0×</big>
                     <p data-verdict></p>
                 </div>
-                <p class="avn-note">The losses are the "up to" ranges from published Philippine rice loss estimates, on a hectare grossing {{ $money(60000) }} to {{ $money(100000) }} a season; the lighter part of each bar is the top of its range. They overlap, so they are not added up. Your farm's numbers differ, which is the point.</p>
+                <p class="avn-note">The losses are the "up to" ranges from published Philippine rice loss estimates, on a hectare grossing {{ $money(60000) }} to {{ $money(100000) }} a season; the lighter part of each bar is the top of its range. They overlap, so they are not added up. Your farm's numbers differ, which is the point. Anee's credits are an estimate for one lot and two seasons a year: When to Plant, Variety Ranking and a Crop Protocol each season, and about two questions a week, half with a photo ({{ number_format($yearCredits) }} credits); every question and analysis shows its price before it runs.</p>
             </div>
         </div>
     </section>
@@ -787,7 +847,8 @@
     }
 
     // ---- The bars: what guessing can take from your hectares, beside a year of a plan. ----
-    const PLANS = @json(collect($plans)->map(fn ($p) => ['name' => $p['name'], 'month' => $p['month'], 'year' => $p['year']])->all());
+    const PLANS = @json($planJs);
+    const YEAR_CREDITS = {{ $yearCredits }};
     const leaks = document.getElementById('avnLeaks');
     if (leaks && PLANS.length) {
         const ha = document.getElementById('avnHa');
@@ -805,16 +866,23 @@
                 r.querySelector('[data-v]').textContent = fmt(lo) + ' to ' + fmt(hi);
             });
             const p = PLANS[plan];
-            const year = p.year > 0 ? p.year : p.month * 12;
+            const planYear = p.year > 0 ? p.year : p.month * 12;
+            // The plan for the year, and Anee's credits beyond what the plan brings.
+            const year = planYear + p.creditCost;
             const pr = leaks.querySelector('.avn-bar.is-plan');
-            pr.querySelector('[data-plan-name]').textContent = p.name + ', a whole year';
+            pr.querySelector('[data-plan-name]').textContent = 'The cost of ' + p.name + ' for a whole year, to help prevent all of these';
             pr.querySelector('[data-v]').textContent = fmt(year);
+            const n = (v) => Math.round(v).toLocaleString('en-PH');
+            pr.querySelector('[data-plan-parts]').innerHTML = '<b>' + fmt(planYear) + '</b> for the plan'
+                + (p.buy > 0
+                    ? ' + about <b>' + fmt(p.creditCost) + '</b> for Anee\'s credits (about ' + n(p.buy) + ' credits' + (p.included ? ' beyond the ' + n(p.included) + ' the plan brings' : '') + ')'
+                    : '. The ' + n(p.included) + ' credits it brings a year cover the estimate of ' + n(YEAR_CREDITS)) + '.';
             pr.querySelector('b').style.width = (shown ? Math.max(.6, year / top * 100) : 0) + '%';
             const least = Math.min(...rows.map((r) => Number(r.dataset.n))) * 600 * h;
             const times = least / year;
             count(leaks.querySelector('[data-times]'), shown ? times : 0, (v) => (v >= 10 ? Math.round(v) : v.toFixed(1)) + '×');
             leaks.querySelector('[data-verdict]').innerHTML = 'The <b>smallest</b> of these losses, at the low end, is <b>' + fmt(least) + '</b> on your ' + (h % 1 ? h.toFixed(1) : h)
-                + ' ha. A whole year of <b>' + p.name + '</b> is ' + fmt(year) + '. Head off even that one, once, and the plan has paid for itself <b>' + (times >= 10 ? Math.round(times) : times.toFixed(1)) + ' times</b>.';
+                + ' ha. A whole year of <b>' + p.name + '</b>, with Anee\'s credits, is about ' + fmt(year) + '. Head off even that one, once, and it has paid for itself <b>' + (times >= 10 ? Math.round(times) : times.toFixed(1)) + ' times</b>.';
         };
         ha.addEventListener('input', draw);
         leaks.querySelectorAll('[data-plan]').forEach((b) => b.addEventListener('click', () => {
