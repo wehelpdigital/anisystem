@@ -27,6 +27,20 @@
                     <h2 class="hp-h2" id="tfH">Typhoon Season. Days Before Harvest. <em>Still Standing.</em></h2>
                     <p class="hp-p">Filmed several days before harvest, in the middle of a strong typhoon season. This field followed Anee's guidance: the nitrogen went on in split doses at the stages the crop could use it, so the stems grew strong enough to carry the grain through the winds.</p>
                 </div>
+                {{-- The harvest that season (2026-10-29, the owner): farms around it 60 to 115 cavans a hectare, this farm 140,
+                     cavans of 60 kg, fresh weight. The bars grow and the numbers count up once seen. --}}
+                <div class="tf-yield reveal" data-tf-yield>
+                    <p class="tf-k">The harvest that season, per hectare</p>
+                    <div class="tf-yrow is-them">
+                        <p><span>Most farmers this season</span><b><span data-tf-n="60">60</span> to <span data-tf-n="115">115</span> cavans</b></p>
+                        <span class="tf-ybar" aria-hidden="true"><i style="--a: {{ round(60 / 160 * 100, 1) }}%; --b: {{ round(115 / 160 * 100, 1) }}%"></i></span>
+                    </div>
+                    <div class="tf-yrow is-anee">
+                        <p><span><img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" width="40" height="40">This farm, with Anee</span><b><span data-tf-n="140">140</span> cavans</b></p>
+                        <span class="tf-ybar" aria-hidden="true"><i style="--a: 0%; --b: {{ round(140 / 160 * 100, 1) }}%"></i></span>
+                    </div>
+                    <p class="tf-ynote">Cavans of 60 kg, fresh weight: 140 cavans is about 8.4 tons from one hectare, up to 80 cavans more than a farm at the low end, in the same typhoon season.</p>
+                </div>
                 <p class="tf-k reveal">What you see in the film</p>
                 <ol class="tf-seen" data-tf-list>
                     @foreach ($tfSeen as $k => [$at, $t, $w])
@@ -74,6 +88,22 @@
     @keyframes tfWind { to { transform: translateX(-120px); } }
     .tf-grid { display: grid; gap: 2.4rem; align-items: center; }
     @media (min-width: 960px) { .tf-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 3.5rem; } }
+    /* The harvest that season: the farms around it as a range, this farm as one long gold bar. */
+    .tf-yield { margin-top: 1.6rem; padding: 1rem 1.1rem 1.05rem; border-radius: 1.2rem; background: rgb(255 255 255 / .05); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .35); }
+    .tf-yield .tf-k { margin-top: 0; }
+    .tf-yrow { margin-top: .8rem; }
+    .tf-yrow p { display: flex; justify-content: space-between; align-items: baseline; gap: .8rem; font-size: .88rem; font-weight: 700; color: #c9d6c2; }
+    .tf-yrow p span { display: inline-flex; align-items: center; gap: .4rem; }
+    .tf-yrow p img { width: 1.4rem; height: 1.4rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px #f5c518; }
+    .tf-yrow p b { flex: none; font-variant-numeric: tabular-nums; color: #fff; }
+    .tf-yrow.is-anee p b { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #f5c518; }
+    .tf-ybar { position: relative; display: block; height: .7rem; margin-top: .4rem; border-radius: 999px; background: rgb(255 255 255 / .08); overflow: hidden; }
+    .tf-yrow.is-anee .tf-ybar { height: .95rem; }
+    .tf-ybar i { position: absolute; top: 0; bottom: 0; left: var(--a); width: 0; border-radius: 999px; transition: width 1.3s cubic-bezier(.22,1,.36,1); }
+    .tf-yrow.is-them .tf-ybar i { background: repeating-linear-gradient(135deg, #9ca3af 0 6px, #7b8491 6px 12px); }
+    .tf-yrow.is-anee .tf-ybar i { background: linear-gradient(90deg, #a3e635, #f5c518); box-shadow: 0 0 16px rgb(245 197 24 / .55); transition-delay: .35s; }
+    .tf-yield.is-in .tf-ybar i { width: calc(var(--b) - var(--a)); }
+    .tf-ynote { margin-top: .7rem; font-size: .76rem; line-height: 1.5; color: #9fb09a; }
     .tf-k { margin-top: 1.8rem; font-size: .74rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #9cc0e0; }
     .tf-seen { display: grid; gap: .55rem; margin: .7rem 0 0; padding: 0; list-style: none; }
     .tf-seen li { display: flex; gap: .8rem; align-items: flex-start; padding: .8rem .9rem; border-radius: 1.1rem; background: rgb(255 255 255 / .04);
@@ -113,6 +143,7 @@
     @media (prefers-reduced-motion: reduce) {
         .tf-wind, .tf-rec i { animation: none; }
         .tf-seen li { transition: none; transform: none !important; }
+        .tf-ybar i { transition: none; }
     }
 </style>
 @endpush
@@ -144,6 +175,26 @@
         new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) v.play().catch(() => {}); else if (!document.fullscreenElement) v.pause(); }), { threshold: .3 }).observe(box);
     } else {
         items[0] && items[0].classList.add('is-on');
+    }
+    // The harvest bars grow and the cavans count up, once, when seen.
+    const yb = document.querySelector('[data-tf-yield]');
+    if (yb) {
+        const nums = [...yb.querySelectorAll('[data-tf-n]')];
+        const go = () => {
+            yb.classList.add('is-in');
+            if (calm) return;
+            const t0 = performance.now();
+            const step = (now) => {
+                const k = Math.min(1, (now - t0) / 1300), e = 1 - Math.pow(1 - k, 3);
+                nums.forEach((n) => { n.textContent = Math.round(Number(n.dataset.tfN) * e); });
+                if (k < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+        };
+        if ('IntersectionObserver' in window && !calm) {
+            const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { go(); io.disconnect(); } }, { threshold: .4 });
+            io.observe(yb);
+        } else go();
     }
     // A tap on a moment jumps the film to it.
     items.forEach((li, i) => li.addEventListener('click', () => { try { v.currentTime = starts[i] + .05; } catch (_) {} v.play().catch(() => {}); }));
