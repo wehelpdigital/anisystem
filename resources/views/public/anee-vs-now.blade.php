@@ -602,7 +602,7 @@
                         </div>
                         <div class="avn-fm-t">
                             <img src="{{ $face }}" alt="" width="80" height="80">
-                            <div><b id="avnFmH" class="avn-one">Anee supported, standing strong</b><p>Filmed in the field just before harvest: full panicles on stems that stay upright, because the nitrogen went on at the stages the crop needed it.</p></div>
+                            <div><b id="avnFmH" class="avn-one">Anee supported, standing strong</b><p>Filmed in the field just before harvest: the stems stay upright, because the nitrogen went on at the stages the crop needed it.</p></div>
                         </div>
                     </div>
                 </div>
