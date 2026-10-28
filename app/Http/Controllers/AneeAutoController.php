@@ -266,6 +266,8 @@ class AneeAutoController extends Controller
             'roster' => $canWorkers ? AsGlobalWorker::where('userId', Auth::id())->where('deleteStatus', 1)->orderBy('workerName')->get()
                 ->map(fn ($g) => ['id' => (int) $g->id, 'name' => $g->workerName, 'email' => $g->email, 'phone' => $g->phone, 'off' => $g->offWeekdays ?: [], 'parts' => WorkDays::json($g->dayParts)])->values() : [],
             'book' => ['signs' => AutoBook::SOIL_SIGNS, 'ph' => AutoBook::PH, 'water' => AutoBook::WATER, 'problems' => AutoBook::PROBLEMS, 'imbalance' => AutoBook::IMBALANCE],
+            'optionsBook' => \App\Support\AutoOptions::forPage(),
+            'options' => \App\Support\AutoOptions::of((array) ($auto->answers ?? [])),
             'crops' => $crops,
             'latest' => AutoBook::latestDate()->toDateString(), 'today' => now('Asia/Manila')->toDateString(),
             'mapsKey' => (string) config('services.google_maps.key'),
@@ -519,6 +521,10 @@ class AneeAutoController extends Controller
         }
         if ($request->has('notes')) {
             $a['notes'] = mb_substr(trim((string) $request->input('notes')), 0, 2000) ?: null;
+        }
+        // How the farmer wants the season run (App\Support\AutoOptions, 2026-10-28): the extras, the protection, the machines.
+        if ($request->has('options')) {
+            $a['options'] = \App\Support\AutoOptions::clean((array) $request->input('options', []) + ['set' => true]);
         }
         // The field in detail (App\Support\FieldProfile, 2026-10-15): the farm's
         // soil, water and last season, and the saved profile it started from.

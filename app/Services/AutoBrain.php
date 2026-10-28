@@ -129,6 +129,8 @@ class AutoBrain
 
         return [
             'season' => $s?->title, 'about' => $s?->description, 'today' => now('Asia/Manila')->format('l, F j, Y'),
+            // How the farmer wants it run (AutoOptions, 2026-10-28): the protection approach and what Anee takes on.
+            'howTheFarmerWantsItRun' => \App\Support\AutoOptions::words(\App\Support\AutoOptions::of((array) $a)),
             'lots' => $lots,
             'soil' => [
                 'signsTheFarmerSaw' => array_map(fn ($k) => AutoBook::SOIL_SIGNS[$k][0] ?? $k, (array) ($soil['signs'] ?? [])),
@@ -350,6 +352,7 @@ class AutoBrain
             . "THIS CROP'S WORST PESTS AND DISEASES IN THE PHILIPPINES, with active ingredients:\n" . $problems . "\n\n"
             . ($market !== '' ? "THE MARKET (the app's own farmgate price records at this lot's place; never say where they come from):\n" . $market . "\n" : '')
             . $anchors . "\n\n"
+            . "THE FARMER'S CHOICES (they come first wherever a rule below differs):\n" . \App\Support\AutoOptions::promptRules(\App\Support\AutoOptions::of((array) $auto->answers)) . "\n\n"
             . "RULES:\n"
             . "1. Cover the whole season, in order: land preparation (each pass its own task), seedbed, sowing or transplanting or planting, water management (when to flood, keep moist, drain, last irrigation before harvest; fit it to their water source), every fertilizer application, weed control, scouting walks (about weekly in the critical weeks), prevention, harvest and right after harvest. 30 to 50 tasks; keep each summary to one sentence, each why to two, and at most five steps.\n"
             . "2. FERTILIZER: use ONLY the farmer's own plan (fertilizerPlan.products) and split those exact products and totals across the critical moments (basal, active tillering or early vegetative, panicle or flower initiation, and so on, for this crop). Put the amount in bags or kg FOR THIS LOT'S AREA on each task, so the totals match the plan. If the plan is short of something the reading flagged (micros, sulfur, zinc, calcium), add a foliar or a correction task and say it is a suggestion to buy. Time fertilizer for moist soil and not before heavy rain.\n"

@@ -55,6 +55,48 @@
     @keyframes auIn { from { opacity: 0; } }
     @keyframes auInBack { from { opacity: 0; } }
     .au-card { border-radius: 1.2rem; background: var(--color-white); border: 1px solid var(--color-gray-200); padding: 1.05rem 1.1rem; margin-bottom: .9rem; }
+    /* How Anee runs the season: switches, the machines, the protection (2026-10-28). */
+    .au-sws { display: grid; }
+    .au-sw { display: flex; align-items: center; gap: .75rem; width: 100%; padding: .75rem .1rem; text-align: left; border-radius: .8rem; transition: background-color .28s var(--au-ease); }
+    .au-sw + .au-sw { border-top: 1px solid var(--color-gray-100); }
+    .au-sw:hover { background: var(--color-gray-50); }
+    .au-sw-i { flex: none; width: 2.4rem; height: 2.4rem; border-radius: .8rem; display: grid; place-items: center; font-size: 1.2rem; background: #f1f7ea; transition: transform .28s var(--au-ease), filter .28s var(--au-ease); }
+    .au-sw[aria-checked="false"] .au-sw-i { filter: grayscale(.9); opacity: .7; }
+    .au-sw:active .au-sw-i { transform: scale(.92); }
+    .au-sw-t { flex: 1; min-width: 0; }
+    .au-sw-t b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-sw-t small { display: block; margin-top: .1rem; font-size: .76rem; line-height: 1.45; color: var(--color-gray-500); }
+    .au-sw-k { flex: none; position: relative; width: 2.6rem; height: 1.5rem; border-radius: 999px; background: var(--color-gray-300); transition: background-color .28s var(--au-ease); }
+    .au-sw-k i { position: absolute; top: .15rem; left: .15rem; width: 1.2rem; height: 1.2rem; border-radius: 999px; background: #fff; box-shadow: 0 2px 6px rgb(0 0 0 / .2); transition: transform .28s var(--au-ease); }
+    .au-sw[aria-checked="true"] .au-sw-k { background: var(--color-brand-600); }
+    .au-sw[aria-checked="true"] .au-sw-k i { transform: translateX(1.1rem); }
+    .au-fleet { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .32s var(--au-ease); }
+    .au-fleet.is-on { grid-template-rows: 1fr; }
+    .au-fleet > div { min-height: 0; overflow: hidden; }
+    .au-fleet-in { margin: .2rem 0 .6rem; padding: .8rem; border-radius: 1rem; background: #f6faf1; border: 1px solid #e0ebd3; }
+    .au-mach { display: flex; align-items: center; gap: .6rem; padding: .5rem 0; }
+    .au-mach + .au-mach { border-top: 1px solid #e3ecd8; }
+    .au-mach img { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .7rem; object-fit: cover; background: #fff; }
+    .au-mach > span:nth-child(2) { flex: 1; min-width: 0; font-size: .82rem; font-weight: 800; color: var(--color-gray-800); line-height: 1.3; }
+    .au-mach > span small { display: block; font-size: .7rem; font-weight: 600; color: var(--color-gray-500); }
+    .au-seg { flex: none; display: inline-flex; padding: .15rem; border-radius: 999px; background: #fff; border: 1px solid var(--color-gray-200); }
+    .au-seg button { padding: .3rem .6rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: var(--color-gray-500); transition: background-color .28s var(--au-ease), color .28s var(--au-ease); }
+    .au-seg button[aria-pressed="true"] { background: var(--color-brand-600); color: #fff; }
+    .au-prot { display: grid; gap: .5rem; }
+    @media (min-width: 720px) { .au-prot { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    .au-pc { position: relative; display: grid; gap: .25rem; align-content: start; padding: .8rem .85rem; border-radius: 1rem; text-align: left; border: 1.5px solid var(--color-gray-200); background: var(--color-white);
+        transition: border-color .28s var(--au-ease), background-color .28s var(--au-ease), transform .28s var(--au-ease), box-shadow .28s var(--au-ease); cursor: pointer; }
+    .au-pc:hover { transform: translateY(-2px); }
+    .au-pc[aria-checked="true"] { border-color: var(--color-brand-600); background: #f1f7ea; box-shadow: 0 10px 22px -16px rgb(45 80 22 / .6); }
+    .au-pc > span { font-size: 1.35rem; }
+    .au-pc b { font-size: .88rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-pc small { font-size: .74rem; line-height: 1.45; color: var(--color-gray-500); }
+    .au-pc em { position: absolute; top: .55rem; right: .6rem; padding: .08rem .5rem; border-radius: 999px; font-style: normal; font-size: .62rem; font-weight: 900; color: #3b2f00; background: #f5c518; }
+    html.dark .au-sw + .au-sw { border-top-color: #232e1b; } html.dark .au-sw:hover { background: #1a2114; } html.dark .au-sw-i { background: #1c2616; }
+    html.dark .au-sw-t b, html.dark .au-pc b, html.dark .au-mach > span:nth-child(2) { color: #eef3e8; } html.dark .au-sw-t small, html.dark .au-pc small { color: #9aa88d; }
+    html.dark .au-sw-k { background: #3a4630; } html.dark .au-fleet-in { background: #141a10; border-color: #2b3a1c; } html.dark .au-mach + .au-mach { border-top-color: #232e1b; }
+    html.dark .au-seg { background: #10150c; border-color: #2b3a1c; } html.dark .au-pc { background: #161c12; border-color: #2b3a1c; } html.dark .au-pc[aria-checked="true"] { background: #1c2914; border-color: #6b9f3d; }
+    @media (prefers-reduced-motion: reduce) { .au-sw, .au-sw-i, .au-sw-k, .au-sw-k i, .au-fleet, .au-seg button, .au-pc { transition: none; } }
     .au-h { font-family: var(--font-heading); font-weight: 800; font-size: 1.12rem; color: var(--color-gray-900); }
     .au-sub { margin: .25rem 0 .9rem; font-size: .85rem; line-height: 1.55; color: var(--color-gray-500); }
     .au-lab { display: block; margin: .85rem 0 .35rem; font-size: .78rem; font-weight: 800; color: var(--color-gray-700); }
@@ -504,6 +546,9 @@
             <span class="au-lab">Tags <small>(optional)</small></span>
             <div class="ut-mount" id="auTags"></div>
         </div>
+        {{-- How Anee runs it (App\Support\AutoOptions, 2026-10-28): asked before the lots, so the land preparation the
+             farmer can do is known when the planting day is picked. --}}
+        <div class="au-card" id="auOpts"></div>
     </section>
 
     {{-- 1. The lots --}}
@@ -832,6 +877,50 @@
         if (n === 7) paintFert();
         if (n === 8) paintReview();
     };
+
+    /* ---- 0. how Anee runs the season (App\Support\AutoOptions, 2026-10-28, the owner: "ask the user if user wants to
+       include inventory and price ..., include land prep ..., irrigation schedules ..., and worker payments"; "let the
+       user select" the protection; "mixing sprays that are compatible to save labor"). Saved the moment it changes. ---- */
+    const OB = B.optionsBook;
+    S.options = B.options;
+    const saveOptions = () => put(U.answers, { options: S.options });
+    const fleetOf = (k) => (S.options.fleet || []).find((f) => f.type === k) || null;
+    const paintOptions = () => {
+        const o = S.options;
+        $('auOpts').innerHTML = '<h3 class="au-h">How Anee runs this season</h3><p class="au-sub">Choose what Anee takes on. Whatever you leave off, she still advises on.</p>'
+            + '<div class="au-sws">' + Object.entries(OB.switches).map(([k, w]) => '<button type="button" class="au-sw" role="switch" aria-checked="' + !!o[k] + '" data-opt="' + k + '"><span class="au-sw-i" aria-hidden="true">' + w.icon + '</span>'
+                + '<span class="au-sw-t"><b>' + esc(w.title) + '</b><small>' + esc(o[k] ? w.on : w.off) + '</small></span><span class="au-sw-k" aria-hidden="true"><i></i></span></button>'
+                + (k === 'landPrep' ? '<div class="au-fleet' + (o.landPrep ? ' is-on' : '') + '" id="auFleet"><div><div class="au-fleet-in"><span class="au-lab" style="margin-top:0">What do you have for land preparation?</span>'
+                    + OB.machines.map((m) => { const f = fleetOf(m.key), v = f ? (f.own ? 'own' : 'hire') : 'none';
+                        return '<div class="au-mach">' + (m.photo ? '<img src="' + esc(m.photo) + '" alt="" loading="lazy">' : '<img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=">') + '<span>' + esc(m.name) + (m.local ? '<small>' + esc(m.local) + '</small>' : '') + '</span>'
+                            + '<span class="au-seg" role="group" aria-label="' + esc(m.name) + '">' + [['none', 'No'], ['own', 'Own'], ['hire', 'Hire']].map(([x, t]) => '<button type="button" data-mach="' + m.key + '" data-v="' + x + '" aria-pressed="' + (v === x) + '">' + t + '</button>').join('') + '</span></div>'; }).join('')
+                    + '<span class="au-lab">Can you hire a tractor or an operator when you need one?</span><div class="au-pills">' + Object.entries(OB.hire).map(([x, t]) => '<button type="button" class="au-pill" data-hire="' + x + '" aria-pressed="' + (o.hire === x) + '">' + esc(t) + '</button>').join('') + '</div>'
+                    + '</div></div></div>' : '')).join('') + '</div>'
+            + '<span class="au-lab">How Anee protects the crop</span><div class="au-prot" role="radiogroup" aria-label="How Anee protects the crop">'
+            + Object.entries(OB.protection).map(([k, p]) => '<div class="au-pc" role="radio" tabindex="0" aria-checked="' + (o.protection === k) + '" data-prot="' + k + '">' + (k === 'smart' ? '<em>Recommended</em>' : '') + '<span aria-hidden="true">' + p.icon + '</span><b>' + esc(p.title) + '</b><small>' + esc(p.line) + '</small></div>').join('')
+            + '</div>';
+    };
+    $('auOpts').addEventListener('click', (e) => {
+        const sw = e.target.closest('[data-opt]'), m = e.target.closest('[data-mach]'), h = e.target.closest('[data-hire]'), pc = e.target.closest('[data-prot]');
+        if (sw) {
+            const k = sw.dataset.opt; S.options[k] = !S.options[k];
+            sw.setAttribute('aria-checked', S.options[k] ? 'true' : 'false');
+            sw.querySelector('small').textContent = S.options[k] ? OB.switches[k].on : OB.switches[k].off;
+            if (k === 'landPrep') $('auFleet')?.classList.toggle('is-on', S.options.landPrep);
+            later('options', saveOptions, 400); return;
+        }
+        if (m) {
+            const k = m.dataset.mach, v = m.dataset.v;
+            S.options.fleet = (S.options.fleet || []).filter((f) => f.type !== k);
+            if (v !== 'none') S.options.fleet.push({ type: k, own: v === 'own' ? 1 : 0, hired: v === 'hire' ? 1 : 0 });
+            m.parentElement.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', b === m ? 'true' : 'false'));
+            later('options', saveOptions, 400); return;
+        }
+        if (h) { S.options.hire = h.dataset.hire; h.parentElement.querySelectorAll('[data-hire]').forEach((b) => b.setAttribute('aria-pressed', b === h ? 'true' : 'false')); later('options', saveOptions, 400); return; }
+        if (pc) { S.options.protection = pc.dataset.prot; $('auOpts').querySelectorAll('[data-prot]').forEach((b) => b.setAttribute('aria-checked', b === pc ? 'true' : 'false')); later('options', saveOptions, 300); }
+    });
+    $('auOpts').addEventListener('keydown', (e) => { const pc = e.target.closest('[data-prot]'); if (pc && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); pc.click(); } });
+    paintOptions();
 
     /* ---- 0. the season ---- */
     $('auTitle').value = S.title || ''; $('auDesc').value = S.description || '';
@@ -1908,6 +1997,7 @@
             + (() => { const pk = goalOf(l).pick, lv = pk && ((S.goalOut[l.id] || {}).levels || {})[pk]; return lv ? ' · goal ' + esc(lv.label.toLowerCase()) + ', ' + fmt1(lv.t) + ' t/ha' : ''; })()
             + ' · ' + (l.fert ? (l.imbalance ? 'fertilizer plan kept as is' : 'fertilizer planned') : '<span class="text-amber-700 font-bold">no fertilizer plan yet</span>') + '</span></div>').join('')
             + '<div><b>Workers</b><span>' + (S.crewList.length ? esc(S.crewList.map((w) => w.name).filter(Boolean).join(', ')) : 'The family') + '</span></div>'
+            + '<div><b>How Anee runs it</b><span>' + esc((OB.protection[S.options.protection] || {}).title || '') + ' · ' + esc(Object.entries(OB.switches).filter(([k]) => S.options[k]).map(([, w]) => w.title.toLowerCase()).join(', ') || 'no extras') + '</span></div>'
             + '<div><b>Soil</b><span>' + esc([TEX[sr.texture] || 'not sure'].concat((sr.conditions || []).map((c) => COND[c] || c)).join(', ')) + '</span></div>'
             + '<div><b>Water</b><span>' + esc((BOOK.water[S.answers.water] || ['not said'])[0]) + '</span></div>'
             + (SRC ? '<div><b>From your lot</b><span>' + esc(SRC.name) + ' gave ' + esc(andWords([HID.signs || HID.ph ? 'the soil' : '', HID.water ? 'the water' : '', HID.problems ? 'last season\'s troubles' : ''].filter(Boolean)) || 'its answers') + ' · <button type="button" class="au-link" data-au-editlot>Edit the lot</button></span></div>'
