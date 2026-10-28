@@ -928,7 +928,8 @@ class AneeAutoController extends Controller
             return $this->json(false, $why, [], 403);
         }
         $v = Validator::make($request->all(), ['varieties' => 'nullable|array', 'varieties.*' => 'nullable|array|max:8', 'varieties.*.*' => 'nullable|string|max:60',
-            'first' => 'nullable|in:' . implode(',', array_keys(VarietyAnalysisController::PRIORITIES))]);
+            'first' => 'nullable|in:' . implode(',', array_keys(VarietyAnalysisController::PRIORITIES)),
+            'priorities' => 'nullable|array|size:' . count(VarietyAnalysisController::PRIORITIES), 'priorities.*' => 'string|distinct|in:' . implode(',', array_keys(VarietyAnalysisController::PRIORITIES))]);
         if ($v->fails()) {
             return $this->json(false, 'Name up to eight varieties a lot, each in a few words.', [], 422);
         }
@@ -941,7 +942,11 @@ class AneeAutoController extends Controller
             }
         }
         $a['varietyAsk'] = array_intersect_key($ask, array_flip($mine));
-        if ($request->filled('first')) {
+        // What matters, in the farmer's order (2026-10-28): first counts 40%, then 30, 20, 10.
+        if ($request->filled('priorities')) {
+            $a['varietyOrder'] = array_values((array) $request->input('priorities'));
+            $a['varietyFirst'] = $a['varietyOrder'][0];
+        } elseif ($request->filled('first')) {
             $a['varietyFirst'] = (string) $request->input('first');
         }
         $auto->update(['answers' => $a]);
@@ -1017,7 +1022,8 @@ class AneeAutoController extends Controller
         $problems = array_values(array_intersect(array_keys(VarietyAnalysisController::PROBLEMS), array_unique(array_merge((array) ($legacy['problemsVariety'] ?? []), $said))));
         $first = (string) ($a['varietyFirst'] ?? 'yield');
         $order = array_keys(VarietyAnalysisController::PRIORITIES);
-        $priorities = array_values(array_unique(array_merge(in_array($first, $order, true) ? [$first] : [], $order)));
+        $chosen = array_values(array_intersect((array) ($a['varietyOrder'] ?? []), $order));
+        $priorities = count($chosen) === count($order) ? $chosen : array_values(array_unique(array_merge(in_array($first, $order, true) ? [$first] : [], $order)));
         $ways = AutoBook::methods($lot->crop);
 
         return [
@@ -1097,7 +1103,7 @@ class AneeAutoController extends Controller
             $out[(string) $lotId] = ['id' => (int) $r->id, 'key' => $k['key'] ?? null, 'at' => $k['at'] ?? null, 'month' => $p['month'] ?? null,
                 'monthWords' => ! empty($p['month']) ? VarietyAnalysisController::monthWords($p['month']) : null,
                 'season' => ! empty($p['season']) ? \App\Support\Region::seasonTitle($p['season'], (int) ($p['year'] ?? now('Asia/Manila')->year), 'PH') : null,
-                'asked' => array_values((array) ($p['varieties'] ?? [])), 'first' => $p['priorities'][0] ?? 'yield', 'report' => $report];
+                'asked' => array_values((array) ($p['varieties'] ?? [])), 'first' => $p['priorities'][0] ?? 'yield', 'order' => array_values((array) ($p['priorities'] ?? [])), 'report' => $report];
         }
 
         return $out;

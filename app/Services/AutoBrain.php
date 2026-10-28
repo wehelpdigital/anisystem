@@ -45,6 +45,19 @@ class AutoBrain
     }
 
     /** The season in facts, for every brief. */
+    /** The farmer's order of what matters (yield, protection, survival, quickness), in words; the usual order when not given. */
+    public static function priorities(array $a): array
+    {
+        $all = \App\Http\Controllers\VarietyAnalysisController::PRIORITIES;
+        $order = array_values(array_intersect((array) ($a['varietyOrder'] ?? []), array_keys($all)));
+        if (count($order) !== count($all)) {
+            $first = (string) ($a['varietyFirst'] ?? 'yield');
+            $order = array_values(array_unique(array_merge(isset($all[$first]) ? [$first] : [], array_keys($all))));
+        }
+
+        return array_map(fn ($k) => $all[$k]['label'], $order);
+    }
+
     public function facts(AsAutoSeason $auto, bool $withWeather = true): array
     {
         $s = AsCroppingSchedule::find($auto->croppingScheduleId);
@@ -131,6 +144,9 @@ class AutoBrain
             'season' => $s?->title, 'about' => $s?->description, 'today' => now('Asia/Manila')->format('l, F j, Y'),
             // How the farmer wants it run (AutoOptions, 2026-10-28): the protection approach and what Anee takes on.
             'howTheFarmerWantsItRun' => \App\Support\AutoOptions::words(\App\Support\AutoOptions::of((array) $a)),
+            // What matters to the farmer, in their order (the wizard's varieties page, 2026-10-28): the variety was ranked
+            // by it, and every trade the plan makes leans to the first.
+            'whatMattersMostInOrder' => self::priorities($a),
             'lots' => $lots,
             'soil' => [
                 'signsTheFarmerSaw' => array_map(fn ($k) => AutoBook::SOIL_SIGNS[$k][0] ?? $k, (array) ($soil['signs'] ?? [])),
@@ -353,6 +369,7 @@ class AutoBrain
             . ($market !== '' ? "THE MARKET (the app's own farmgate price records at this lot's place; never say where they come from):\n" . $market . "\n" : '')
             . $anchors . "\n\n"
             . "THE FARMER'S CHOICES (they come first wherever a rule below differs):\n" . \App\Support\AutoOptions::promptRules(\App\Support\AutoOptions::of((array) $auto->answers))
+            . "\n- WHAT MATTERS MOST, IN THE FARMER'S ORDER: " . implode(', ', self::priorities((array) $auto->answers)) . '. Where the plan must trade one for another (an extra protective spray against its cost, a quicker harvest against a bigger one), lean to the first.'
             . (! empty(((array) (((array) $auto->answers)['prepSqueeze'] ?? []))[(string) $lotId]) ? "\n- A SHORTENED LAND PREPARATION: the farmer chose to plant before the usual land preparation fits. Squeeze it into the days left from today: keep the order and the last pass and leveling right before planting, shorten the waiting between passes first, and say in each squeezed task what it costs (weeds that come back, a rougher seedbed)." : '')
             . "\n\n"
             . "RULES:\n"

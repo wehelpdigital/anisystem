@@ -14,6 +14,10 @@
          -> Promise<{ name, record } | null>
             record: { name, alias, type (hybrid|inbred|other), days, daysUnit, avg, top, unit, year, where }
             a typed name comes back with record null, "No variety" as name '', a closed sheet as null.
+       aneeVarietyPick.open({ ..., multi: true, picked: [names], max: 8, suited: false })
+         -> Promise<{ names: [..] }>: several at once (2026-10-28, Anee Auto's varieties). A tap on a variety adds or
+            takes it off, a typed name is added, Done (or closing) gives the list. suited: false leaves out the
+            "Suited to your area" list, so nothing is put forward before the farmer chooses.
        aneeVarietyPick.facts(record) -> "Hybrid · 114 days · released 2019"
        aneeVarietyPick.yieldSay(record) -> "6.4 t/ha at best in trials" --}}
 @once
@@ -113,7 +117,8 @@
     </div>
     <div class="sheet-footer vp-foot">
         <button type="button" class="btn btn-ghost" id="vpClear">No variety</button>
-        <button type="button" class="btn btn-white" data-sheet-close>Close</button>
+        <button type="button" class="btn btn-white" id="vpCloseB" data-sheet-close>Close</button>
+        <button type="button" class="btn btn-cta" id="vpDone" hidden>Done</button>
     </div>
 </div>
 @endpush
@@ -129,7 +134,11 @@
     const fmt = (v) => String(Math.round(Number(v) * 10) / 10);
     const CACHE = {};
     // One open sheet at a time: its options, its rows, its answer.
-    const S = { o: null, key: '', rows: null, suited: [], q: '', type: '', shown: 60, resolve: null, answer: undefined };
+    const S = { o: null, key: '', rows: null, suited: [], q: '', type: '', shown: 60, resolve: null, answer: undefined, multi: false, picked: [] };
+    // A record's name as it is kept: with its trade name when that fits.
+    const nameOf = (r) => r[1] && (r[0] + ' (' + r[1] + ')').length <= 80 ? r[0] + ' (' + r[1] + ')' : r[0];
+    const isPicked = (n) => S.picked.some((x) => norm(x) === norm(n));
+    const doneSay = () => { if (S.multi) $('vpDone').textContent = S.picked.length ? 'Done · ' + S.picked.length + ' chosen' : 'Done'; };
 
     const record = (r) => ({ name: r[0], alias: r[1] || null, type: r[2], days: r[3] || null, daysUnit: r[4] || 'days', avg: r[5] || null, top: r[6] || null, unit: r[7] || 't/ha', year: r[8] || null, where: r[10] || '', learned: !!r[11] });
     const facts = (rec) => !rec ? '' : [rec.type === 'hybrid' ? 'Hybrid' : 'Not hybrid', rec.days ? Math.round(rec.days) + ' ' + (rec.daysUnit || 'days') : '', rec.year ? 'released ' + rec.year : ''].filter(Boolean).join(' · ');
@@ -143,9 +152,10 @@
     }
     function row(r, i, fit) {
         const cur = S.o && S.o.value && S.o.value.record ? S.o.value.record.name : null;
+        const on = S.multi ? isPicked(nameOf(r)) : cur === r[0];
         const y = r[6] || r[5];
         const sub = [r[2] === 'hybrid' ? 'Hybrid' : '', r[3] ? Math.round(r[3]) + ' ' + (r[4] || 'days') : '', r[8] ? 'Released ' + r[8] : '', r[11] ? 'Anee looked it up before' : ''].filter(Boolean).join(' · ');
-        return '<button type="button" class="vp-r' + (fit ? ' is-fit' : '') + '" data-i="' + i + '" aria-pressed="' + (cur === r[0]) + '"><span class="t"><b>' + esc(r[0]) + '</b>' + (r[1] ? '<small>' + esc(r[1]) + '</small>' : '')
+        return '<button type="button" class="vp-r' + (fit ? ' is-fit' : '') + '" data-i="' + i + '" aria-pressed="' + on + '"><span class="t"><b>' + esc(r[0]) + '</b>' + (r[1] ? '<small>' + esc(r[1]) + '</small>' : '')
             + (sub ? '<span>' + esc(sub) + '</span>' : '') + '</span>' + (y ? '<span class="y"><b>' + esc(fmt(y)) + '</b>' + esc(r[7] || 't/ha') + '<br>' + (r[6] ? 'at best' : 'average') + '</span>' : '') + '</button>';
     }
     function paint() {
@@ -160,7 +170,7 @@
         }
         const q = norm(S.q);
         const ok = (r) => (!S.type || (S.type === 'hybrid' ? r[2] === 'hybrid' : r[2] !== 'hybrid')) && (!q || norm(r[0] + ' ' + (r[1] || '') + ' ' + (r[9] || '')).includes(q));
-        const fits = !q && S.suited.length ? S.rows.map((r, i) => [r, i]).filter(([r]) => S.suited.includes(r[0]) && ok(r)) : [];
+        const fits = !q && S.suited.length && S.o.suited !== false ? S.rows.map((r, i) => [r, i]).filter(([r]) => S.suited.includes(r[0]) && ok(r)) : [];
         const fitNames = new Set(fits.map(([r]) => r[0]));
         const hits = S.rows.map((r, i) => [r, i]).filter(([r]) => ok(r) && !fitNames.has(r[0]));
         $('vpN').textContent = (hits.length + fits.length) + ' of ' + S.rows.length + (S.q ? ' match' : ' on record') + (hits.length > S.shown ? ', showing ' + (S.shown + fits.length) : '');
@@ -198,13 +208,16 @@
         o = o || {};
         if (S.resolve) { S.resolve(null); S.resolve = null; }
         S.o = o; S.q = ''; S.type = ''; S.shown = 60; S.answer = undefined;
+        S.multi = !!o.multi; S.picked = S.multi ? [...(o.picked || [])] : [];
+        $('vpDone').hidden = !S.multi; $('vpCloseB').hidden = S.multi;
+        doneSay();
         $('vpTitle').textContent = o.cropLabel ? o.cropLabel + ' variety' : 'Which variety?';
         $('vpQ').value = '';
         $('vpFilt').querySelectorAll('[data-ft]').forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.ft === '')));
         const v = o.value || {};
         $('vpOwnIn').value = v.name && !v.record ? v.name : '';
         $('vpOwnNote').textContent = o.ownNote || 'Not on record, so its facts are looked up from what is published, and the report says plainly if nothing is found.';
-        $('vpClear').hidden = !v.name;
+        $('vpClear').hidden = S.multi || !v.name;
         way(v.name && !v.record ? 'own' : 'rec');
         return new Promise((resolve) => {
             S.resolve = resolve;
@@ -221,7 +234,8 @@
         sheet.dataset.vpBound = '1';
         sheet.addEventListener('sheet:close', () => {
             const r = S.resolve; S.resolve = null;
-            if (r) r(S.answer === undefined ? null : S.answer);
+            // Several at once: closing keeps what was chosen, as Done does.
+            if (r) r(S.answer === undefined ? (S.multi ? { names: [...S.picked] } : null) : S.answer);
         });
         $('vpWays').addEventListener('click', (e) => { const b = e.target.closest('.vp-way'); if (b) way(b.dataset.w); });
         let t = 0;
@@ -240,8 +254,17 @@
             if (!b || !S.rows) return;
             const r = S.rows[Number(b.dataset.i)];
             if (!r) return;
+            if (S.multi) {
+                const n = nameOf(r);
+                if (isPicked(n)) S.picked = S.picked.filter((x) => norm(x) !== norm(n));
+                else if (S.picked.length >= (S.o.max || 8)) { window.toast?.('Up to ' + (S.o.max || 8) + ' varieties.', 'error'); return; }
+                else S.picked.push(n);
+                b.setAttribute('aria-pressed', String(isPicked(n)));
+                doneSay();
+                return;
+            }
             $('vpList').querySelectorAll('.vp-r').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-            const name = r[1] && (r[0] + ' (' + r[1] + ')').length <= 80 ? r[0] + ' (' + r[1] + ')' : r[0];
+            const name = nameOf(r);
             setTimeout(() => finish({ name, record: record(r) }), 160);
         });
         const own = async () => {
@@ -259,11 +282,23 @@
                 $('vpOwnOk').disabled = false;
             }
             if (rec) window.toast?.(rec.learned ? 'Anee looked up ' + rec.name + ' before, so she uses what she found.' : v + ' is on record as ' + rec.name + '.');
+            if (S.multi) {
+                if (!isPicked(v)) {
+                    if (S.picked.length >= (S.o.max || 8)) { window.toast?.('Up to ' + (S.o.max || 8) + ' varieties.', 'error'); return; }
+                    S.picked.push(v);
+                }
+                $('vpOwnIn').value = '';
+                doneSay();
+                window.toast?.(v + ' added.', 'success');
+                way('rec');
+                return;
+            }
             finish({ name: v, record: rec });
         };
         $('vpOwnOk').addEventListener('click', own);
         $('vpOwnIn').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); own(); } });
         $('vpClear').addEventListener('click', () => finish({ name: '', record: null }));
+        $('vpDone').addEventListener('click', () => finish({ names: [...S.picked] }));
     };
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindSheet, { once: true }); else bindSheet();
 

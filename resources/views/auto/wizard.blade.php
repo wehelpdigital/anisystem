@@ -268,18 +268,34 @@
     .au-vchip button { width: 1.35rem; height: 1.35rem; border-radius: 999px; display: grid; place-items: center; font-size: .66rem; color: #2d5016; background: rgb(255 255 255 / .7); transition: background-color .28s var(--au-ease); }
     .au-vchip button:hover { background: #fff; }
     .au-vnone { margin: 0; font-size: .8rem; line-height: 1.45; color: var(--color-gray-500); }
-    .au-vadd { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .65rem; }
-    .au-vtype { display: flex; gap: .4rem; flex: 1 1 14rem; min-width: 0; }
-    .au-vtype input { flex: 1; min-width: 0; }
-    .au-vsug { display: flex; flex-wrap: wrap; gap: .4rem; }
-    .au-vsug .au-pill { animation: auFade .3s var(--au-ease) both; animation-delay: calc(var(--k) * 40ms); }
-    .au-vsug .au-pill small { font-weight: 600; opacity: .7; }
+    .au-pl .au-vchips { margin-top: .6rem; }
+    /* What matters, in order: each row moves up or down, the weight it carries beside it. */
+    .au-order { display: grid; gap: .4rem; margin: .2rem 0 0; padding: 0; list-style: none; }
+    .au-or { display: flex; align-items: center; gap: .6rem; padding: .55rem .6rem; border-radius: .9rem; background: #fff; border: 1px solid #e3ecd8; transition: border-color .28s var(--au-ease), background-color .28s var(--au-ease); }
+    .au-or:first-child { border-color: #9cc97a; background: #f6faf0; }
+    .au-or.is-moved { animation: auOrMove .4s var(--au-ease); }
+    @keyframes auOrMove { 0% { transform: scale(.98); background: #fff8dc; } 100% { transform: none; } }
+    .au-or-n { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 999px; display: grid; place-items: center; font-size: .8rem; font-weight: 900; color: #3d5226; background: #eef4e6; }
+    .au-or:first-child .au-or-n { color: #fff; background: #4a7c2a; }
+    .au-or-t { flex: 1; min-width: 0; display: grid; }
+    .au-or-t b { font-size: .86rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-or-t small { font-size: .7rem; line-height: 1.35; color: var(--color-gray-500); }
+    .au-or em { flex: none; font-style: normal; font-size: .7rem; font-weight: 900; color: #3d5226; }
+    .au-or-b { flex: none; display: flex; gap: .25rem; }
+    .au-or-b button { width: 2rem; height: 2rem; border-radius: .6rem; display: grid; place-items: center; color: #3d5226; background: #eef4e6; transition: background-color .28s var(--au-ease), opacity .28s var(--au-ease); }
+    .au-or-b button:hover:not(:disabled) { background: #dcebc8; }
+    .au-or-b button:disabled { opacity: .3; cursor: default; }
+    .au-or-b svg { width: 1rem; height: 1rem; }
+    html.dark .au-or { background: #10150c; border-color: #2b3a1c; } html.dark .au-or:first-child { background: #1c2914; border-color: #6b9f3d; } html.dark .au-or-t b { color: #eef3e8; }
+    html.dark .au-or-n, html.dark .au-or-b button { background: #1c2616; color: #cfe6b8; } html.dark .au-or em { color: #cfe6b8; }
     /* Anee's ranking: her top pick, the five best as cards with their overall score, the rest folded. */
     .au-rk-top { display: flex; gap: .7rem; align-items: flex-start; padding: .85rem .9rem; border-radius: 1rem; background: linear-gradient(135deg, #fff8dc, #fdf0c2); border: 1px solid #f1d98a; }
     .au-rk-top > span { flex: none; font-size: 1.6rem; line-height: 1; }
     .au-rk-top small { display: block; font-size: .68rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: #8a6400; }
     .au-rk-top b { display: block; margin-top: .1rem; font-size: 1.02rem; font-weight: 800; color: #3d2f00; }
     .au-rk-top p { margin: .25rem 0 0; font-size: .78rem; line-height: 1.5; color: #5c4a10; }
+    .au-rk-by { margin: 0 0 .6rem; font-size: .74rem; line-height: 1.45; color: var(--color-gray-500); }
+    .au-rk-by b { color: #3d5226; } html.dark .au-rk-by b { color: #cfe6b8; }
     .au-rk-lead { margin: .7rem 0 0; font-size: .86rem; font-weight: 700; line-height: 1.45; color: var(--color-gray-800); }
     .au-rk-bar { display: block; height: .38rem; border-radius: 999px; background: #eef4e6; overflow: hidden; }
     .au-rk-bar i { display: block; height: 100%; width: var(--w); border-radius: inherit; background: linear-gradient(90deg, #8fc96a, #4a7c2a); transform-origin: left; animation: auRkBar .8s var(--au-ease) both; animation-delay: calc(.15s + var(--k, 0) * 60ms); }
@@ -313,7 +329,7 @@
     html.dark .au-rk-top { background: linear-gradient(135deg, #2a2410, #231d0b); border-color: #5b4d16; } html.dark .au-rk-top small { color: #f3d27a; } html.dark .au-rk-top b { color: #fff3c4; } html.dark .au-rk-top p { color: #e8d79c; }
     html.dark .au-rk-bar { background: #1c2616; } html.dark .au-rk-sum { color: #c9d6bc; } html.dark .au-vp-c span.is-mine { color: #f3d27a; background: #2a2210; }
     html.dark .au-pk { background: #10150c; border-color: #2b3a1c; } html.dark .au-pk.is-on, html.dark .au-wb.is-on { background: #1c2914; border-color: #6b9f3d; } html.dark .au-pk-dot { border-color: #3f5a2a; }
-    @media (prefers-reduced-motion: reduce) { .au-vchip, .au-vsug .au-pill, .au-rk-bar i, .au-pk { animation: none !important; } .au-pk, .au-pk-dot, .au-pk-dot::after { transition: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .au-vchip, .au-rk-bar i, .au-pk, .au-or { animation: none !important; } .au-pk, .au-pk-dot, .au-pk-dot::after { transition: none !important; } }
     .au-vpk-more { margin: .5rem 0 0; font-size: .76rem; }
     html.dark .au-vpk-h b, html.dark .au-vp-h b { color: #eef3e8; } html.dark .au-vpk-h small { color: #9aa88d; }
     html.dark .au-vpk-line { background: #151c11; border-color: #2b3a1c; color: #b9c6ad; }
@@ -911,9 +927,9 @@
     <section class="au-step" data-step="4">
         <div class="au-card">
             <h3 class="au-h">The varieties you are thinking of</h3>
-            <p class="au-sub">Name the ones you would plant, search the records, or leave it empty. Anee then ranks them against the best released for your place and planting day, the same research as Variety Ranking.</p>
-            <span class="au-lab">What matters most to you?</span>
-            <div class="au-pills" id="auFirst" role="radiogroup" aria-label="What matters most"></div>
+            <p class="au-sub">Choose the ones you would plant, or leave it empty. Anee then ranks them against the best released for your place and planting day, the same research as Variety Ranking.</p>
+            <span class="au-lab">Rank what matters to you <small>(first is what matters most)</small></span>
+            <ol class="au-order" id="auOrder" aria-label="What matters, in order"></ol>
         </div>
         <div id="auVars"></div>
     </section>
@@ -1374,7 +1390,7 @@
     };
     const saveLot = (l, extra = {}) => put(U.lot, Object.assign({ lotId: l.id, name: l.name, size: l.size, unit: l.unit || 'ha', crop: l.crop, variety: l.variety || '', method: l.method,
         fieldDate: l.method === 'tree' ? null : l.fieldDate, treeMonths: l.method === 'tree' ? l.treeMonths : null, province: l.province, town: l.town, barangay: l.barangay,
-        lat: l.pin ? l.pin.lat : null, lng: l.pin ? l.pin.lng : null }, extra)).then((r) => { if (r && r.data) { l.sowDate = r.data.sowDate; l.method = r.data.method || l.method; } paintLotNotes(l); paintLotState(l); goalsSoon(null, 900); if (WIN[l.id] && WIN[l.id].key !== winKey(l)) loadWin(l); if (VPK[l.id] && VPK[l.id].key !== vpkKey(l)) loadVpk(l); return r; });
+        lat: l.pin ? l.pin.lat : null, lng: l.pin ? l.pin.lng : null }, extra)).then((r) => { if (r && r.data) { l.sowDate = r.data.sowDate; l.method = r.data.method || l.method; } paintLotNotes(l); paintLotState(l); goalsSoon(null, 900); if (WIN[l.id] && WIN[l.id].key !== winKey(l)) loadWin(l); return r; });
     const methodsOf = (l) => (cropOf(l.crop) || {}).methods || {};
     /* The farm lot this lot was filled from: the loaded row, or (until the
        farm's lots load) what was copied from it into this lot. */
@@ -1540,8 +1556,8 @@
     const dayLabel = (l) => ({ transplanted: 'Transplanting day (DAT 0)', direct: 'Sowing day in the field (DAS 0)', planted: 'Planting day (DAP 0)' })[l.method] || 'Planting day';
     const paintLots = () => {
         $('auLots').innerHTML = S.lots.map(lotCard).join('');
-        // The planting window and the records' suggestions are fetched now, so the next pages open ready.
-        S.lots.forEach((l) => { paintLacking(l); paintLotState(l); loadWin(l); loadVpk(l); });
+        // The planting window is fetched now, so the next page opens ready.
+        S.lots.forEach((l) => { paintLacking(l); paintLotState(l); loadWin(l); });
         window.smDateTags?.($('auLots'));
         const cap = S.lotCap;
         $('auAddLot').hidden = cap != null && S.lots.length >= cap;
@@ -1657,32 +1673,6 @@
         const l = lotById(e.target.closest('[data-pl]')?.dataset.pl); if (!l) return;
         l.fieldDate = e.target.value; paintLotNotes(l); paintWinPick(l); later('lot' + l.id, () => saveLot(l), 50);
     });
-    /* ---- Anee's picks of variety, before one is chosen (2026-10-28, the owner: "do an analysis first (similar to the
-       variety ranking) so that the user can have an idea for the ranking of what the variety to choose and present it
-       before selecting a variety"). The records that fit the lot, weighed by what each seed guards against. ---- */
-    const VPK = {};
-    const vpkKey = (l) => [l.crop, l.province || '', l.town || '', l.fieldDate ? l.fieldDate.slice(0, 7) : ''].join('|');
-    const loadVpk = async (l) => {
-        if (!l.crop) { const b = document.querySelector('[data-vpk="' + l.id + '"]'); if (b) b.innerHTML = ''; return; }
-        const k = vpkKey(l);
-        if (VPK[l.id] && VPK[l.id].key === k) { paintVpk(l); return; }
-        VPK[l.id] = { key: k, loading: true, open: VPK[l.id] ? VPK[l.id].open : false };
-        paintVpk(l);
-        try { const r = await apiGet(U.varieties + '?lotId=' + l.id); Object.assign(VPK[l.id], r.data || {}, { loading: false }); }
-        catch (_) { Object.assign(VPK[l.id], { loading: false, picks: [] }); }
-        paintVpk(l);
-    };
-    // On the Varieties page: the records' best fits for the lot, a tap to add one to the varieties weighed.
-    const vpkHtml = (l) => {
-        const st = VPK[l.id];
-        if (!l.crop || !st || st.loading) return '';
-        const ask = askOf(l).map((x) => x.toLowerCase());
-        const ps = (st.picks || []).filter((p) => !ask.includes(String(p.name).toLowerCase()));
-        if (!ps.length) return '';
-        return '<span class="au-lab">From the records, a good fit here <small>(tap to add)</small></span><div class="au-vsug">'
-            + ps.map((p, i) => '<button type="button" class="au-pill" data-vadd="' + esc(p.name) + '" style="--k:' + i + '">+ ' + esc(p.name) + (p.alias ? ' <small>' + esc(p.alias) + '</small>' : '') + '</button>').join('') + '</div>';
-    };
-    const paintVpk = (l) => { const b = document.querySelector('[data-vpk="' + l.id + '"]'); if (b) b.innerHTML = vpkHtml(l); };
     const lotEl = (id) => document.querySelector('.au-lot[data-lot="' + id + '"]');
 
     /* ---- 2 to 6: a card a lot on each page (2026-10-28) ---- */
@@ -1724,54 +1714,59 @@
         ls.forEach((l) => { paintLotNotes(l); if (!WIN[l.id]) loadWin(l); });
     };
 
-    // 4. The varieties weighed: named, found in the records, or none (Anee then picks the best ten herself).
+    /* 4. The varieties weighed (2026-10-28, the owner: "have a taglike button to select the varieties you are planning to
+       plant ... when clicked shows a modal box to search and select or add custom ... have multiple selections ... remove
+       the auto saying suited to your area. dont pre-empt it and the ranking will always be based on the main goal of the
+       user"). One tag opens the shared variety sheet for several at once; none chosen, Anee picks the best ten herself. */
     S.vAsk = (S.answers.varietyAsk && !Array.isArray(S.answers.varietyAsk)) ? S.answers.varietyAsk : {};
     const askOf = (l) => (S.vAsk[l.id] = Array.isArray(S.vAsk[l.id]) ? S.vAsk[l.id] : []);
-    S.first = S.answers.varietyFirst || 'yield';
-    const paintFirst = () => {
-        $('auFirst').innerHTML = (B.priorities || []).map((p) => '<button type="button" class="au-pill" role="radio" data-first="' + p.key + '" aria-checked="' + (S.first === p.key) + '" aria-pressed="' + (S.first === p.key) + '" title="' + esc(p.sub) + '">' + p.icon + ' ' + esc(p.label) + '</button>').join('');
+    /* What matters, ranked (the owner, the same day: "make it a rank question like which ranks first - yield, second
+       protection ... and that should also update the analysis on the next steps"): first counts 40%, then 30, 20 and 10
+       in Anee's ranking. Saved with the ranking it asks for. */
+    const PRI = B.priorities || [];
+    const orderOk = (o) => Array.isArray(o) && o.length === PRI.length && PRI.every((p) => o.includes(p.key));
+    S.order = orderOk(S.answers.varietyOrder) ? [...S.answers.varietyOrder]
+        : [S.answers.varietyFirst || 'yield', ...PRI.map((p) => p.key).filter((k) => k !== (S.answers.varietyFirst || 'yield'))];
+    const WEIGHT = ['40%', '30%', '20%', '10%'];
+    const paintOrder = (moved) => {
+        $('auOrder').innerHTML = S.order.map((k, i) => { const p = PRI.find((x) => x.key === k) || { label: k, icon: '', sub: '' };
+            return '<li class="au-or' + (k === moved ? ' is-moved' : '') + '" data-k="' + k + '"><span class="au-or-n">' + (i + 1) + '</span><span class="au-or-t"><b>' + p.icon + ' ' + esc(p.label) + '</b><small>' + esc(p.sub) + '</small></span><em>' + WEIGHT[i] + '</em>'
+                + '<span class="au-or-b"><button type="button" data-up aria-label="Move ' + esc(p.label) + ' up"' + (i === 0 ? ' disabled' : '') + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 15l6-6 6 6"/></svg></button>'
+                + '<button type="button" data-down aria-label="Move ' + esc(p.label) + ' down"' + (i === S.order.length - 1 ? ' disabled' : '') + '><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button></span></li>'; }).join('');
     };
-    $('auFirst').addEventListener('click', (e) => { const b = e.target.closest('[data-first]'); if (b) { S.first = b.dataset.first; paintFirst(); } });
+    $('auOrder').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-up],[data-down]'); if (!b || b.disabled) return;
+        const k = b.closest('[data-k]').dataset.k, i = S.order.indexOf(k), j = i + (b.matches('[data-up]') ? -1 : 1);
+        if (j < 0 || j >= S.order.length) return;
+        [S.order[i], S.order[j]] = [S.order[j], S.order[i]];
+        paintOrder(k);
+    });
     const varsHtml = (l) => {
         const ask = askOf(l);
-        return '<span class="au-lab">The varieties you would plant <small>(optional, up to 8)</small></span>'
+        return '<span class="au-lab">The varieties you plan to plant <small>(optional, up to 8)</small></span>'
+            + '<button type="button" class="au-tag' + (ask.length ? '' : ' is-none') + '" data-vpick><span>🌱 ' + (ask.length ? 'Change or add varieties · ' + ask.length + ' chosen' : 'Choose the varieties you plan to plant') + '</span>' + CHEV + '</button>'
             + '<div class="au-vchips">' + (ask.length ? ask.map((n, i) => '<span class="au-vchip" style="--k:' + i + '">' + esc(n) + '<button type="button" data-vdel="' + i + '" aria-label="Remove ' + esc(n) + '">✕</button></span>').join('')
-                : '<p class="au-vnone">None yet. Leave it empty and Anee picks the best ten for this lot herself.</p>') + '</div>'
-            + (ask.length < 8 ? '<div class="au-vadd"><button type="button" class="au-pill" data-vfind>🔎 Search the records</button><span class="au-vtype"><input type="text" class="form-input" data-vtype maxlength="60" placeholder="Or type a name, as sold" aria-label="A variety, as sold"><button type="button" class="au-pill" data-vtypeadd>Add</button></span></div>' : '')
-            + '<div data-vpk="' + l.id + '">' + vpkHtml(l) + '</div>';
+                : '<p class="au-vnone">None yet. Leave it empty and Anee picks the best ten for this lot herself.</p>') + '</div>';
     };
     const paintVarsLot = (l) => { const b = plEl('auVars', l.id)?.querySelector('.au-lot-b'); if (b) b.innerHTML = varsHtml(l); };
     const paintVars = () => {
-        paintFirst();
+        paintOrder();
         const ls = plantLots();
         $('auVars').innerHTML = ls.length ? ls.map((l, i) => plCard(l, i, varsHtml(l))).join('') : noPlantCard;
-        ls.forEach((l) => loadVpk(l));
-    };
-    const addAsk = (l, name) => {
-        const n = String(name || '').trim().slice(0, 60), ask = askOf(l);
-        if (!n || ask.length >= 8) return;
-        if (!ask.some((x) => x.toLowerCase() === n.toLowerCase())) ask.push(n);
-        paintVarsLot(l);
     };
     $('auVars').addEventListener('click', async (e) => {
         const box = e.target.closest('[data-pl]'); if (!box) return;
         const l = lotById(box.dataset.pl); if (!l) return;
-        const del = e.target.closest('[data-vdel]'), add = e.target.closest('[data-vadd]');
+        const del = e.target.closest('[data-vdel]');
         if (del) { askOf(l).splice(Number(del.dataset.vdel), 1); paintVarsLot(l); return; }
-        if (add) { addAsk(l, add.dataset.vadd); return; }
-        if (e.target.closest('[data-vtypeadd]')) { const inp = box.querySelector('[data-vtype]'); addAsk(l, inp.value); return; }
-        if (e.target.closest('[data-vfind]') && window.aneeVarietyPick) {
+        if (e.target.closest('[data-vpick]') && window.aneeVarietyPick) {
             const c = cropOf(l.crop) || {}, m = l.fieldDate ? Number(String(l.fieldDate).slice(5, 7)) : 0;
             const res = await window.aneeVarietyPick.open({ crop: l.crop || '', cropLabel: String(c.label || '').split(' (')[0].split(' — ')[0],
-                location: [townName(l.town), l.province].filter(Boolean).join(', '), season: m ? (m >= 6 && m <= 10 ? 'wet' : 'dry') : '', value: { name: '', record: null },
+                location: [townName(l.town), l.province].filter(Boolean).join(', '), season: m ? (m >= 6 && m <= 10 ? 'wet' : 'dry') : '',
+                multi: true, picked: askOf(l), max: 8, suited: false,
                 ownNote: 'Not on record, so Anee looks it up when she ranks the varieties, and says plainly if nothing is found.' });
-            if (res && res.name) addAsk(l, res.name);
+            if (res && Array.isArray(res.names)) { S.vAsk[l.id] = res.names.map((n) => String(n).slice(0, 60)).slice(0, 8); paintVarsLot(l); }
         }
-    });
-    $('auVars').addEventListener('keydown', (e) => {
-        if (e.key !== 'Enter' || !e.target.matches('[data-vtype]')) return;
-        e.preventDefault();
-        const l = lotById(e.target.closest('[data-pl]').dataset.pl); if (l) addAsk(l, e.target.value);
     });
 
     // 5. Anee's ranking, Variety Research's own run for each lot (AneeAutoController::varietyRank).
@@ -1779,7 +1774,7 @@
     const NORANK = {};
     const sameNames = (a, b) => JSON.stringify((a || []).map((x) => String(x).toLowerCase())) === JSON.stringify((b || []).map((x) => String(x).toLowerCase()));
     // A lot's ranking still fits: made for the month it is planted, the varieties named now and what matters most.
-    const rankFits = (l) => { const r = S.ranks[l.id]; return !!r && (!l.fieldDate || r.month === l.fieldDate.slice(0, 7)) && sameNames(r.asked, askOf(l)) && (r.first || 'yield') === S.first; };
+    const rankFits = (l) => { const r = S.ranks[l.id]; return !!r && (!l.fieldDate || r.month === l.fieldDate.slice(0, 7)) && sameNames(r.asked, askOf(l)) && JSON.stringify(r.order || [r.first || 'yield']) === JSON.stringify(r.order ? S.order : [S.order[0]]); };
     const ranksFresh = () => plantLots().every((l) => rankFits(l));
     const runRank = async () => {
         await flush();
@@ -1787,11 +1782,11 @@
             stay: 'Stay on this page while she works. Nothing is charged: it is part of Anee Auto.',
             lines: ['Searching the newest releases', 'Reading the trials and the derbies', 'Weighing your planting month', 'Checking each seed against your troubles', 'Ranking them for your lots'] });
         try {
-            const body = { varieties: Object.fromEntries(plantLots().map((l) => [l.id, askOf(l)])), first: S.first };
+            const body = { varieties: Object.fromEntries(plantLots().map((l) => [l.id, askOf(l)])), priorities: S.order };
             const r = await window.api(U.rank, { method: 'POST', body });
             const d = r.data && r.data.status === 'ready' ? r.data : await window.aneeWait.poll({ id: ID, job: U.job, phases: window.aneeWait.phases.research, every: 3000, limit: 600 });
             S.ranks = (d.ranks && !Array.isArray(d.ranks)) ? d.ranks : {};
-            S.answers.varietyFirst = S.first;
+            S.answers.varietyOrder = [...S.order];
             await window.aneeWait.done({ title: 'Done!', line: 'Here is how the varieties rank for your lots.' });
             show(ST.rank);
         } catch (err) { window.aneeWait.fail(); window.toast?.(err.message, 'error'); }
@@ -1819,7 +1814,9 @@
         const tok = String(top.variety || all[0].variety || '').toLowerCase().split(/[\s(]/)[0].replace(/[^a-z0-9]/g, '');
         const lead = R.headline && tok.length >= 3 && String(R.headline).toLowerCase().replace(/[^a-z0-9]/g, '').includes(tok) ? R.headline : '';
         const stale = !rankFits(l);
-        return (stale ? '<div class="au-note is-warn"><span>🔁</span><span>The planting day, the varieties or what matters most changed since this ranking. <button type="button" class="au-link" data-rkagain>Rank again</button></span></div>' : '')
+        // What she weighed it by, in the farmer's own order.
+        const by = (rk.order && rk.order.length ? rk.order : [rk.first || 'yield']).map((k, i) => (i + 1) + ' ' + ((PRI.find((p) => p.key === k) || {}).label || k)).join(' · ');
+        return '<p class="au-rk-by">Ranked by what matters to you: <b>' + esc(by) + '</b></p>' + (stale ? '<div class="au-note is-warn"><span>🔁</span><span>The planting day, the varieties or what matters most changed since this ranking. <button type="button" class="au-link" data-rkagain>Rank again</button></span></div>' : '')
             + '<div class="au-rk-top"><span aria-hidden="true">🏆</span><div><small>Anee\'s top pick for planting in ' + esc(rk.monthWords || '') + '</small><b>' + esc(top.variety || all[0].variety) + '</b>' + (top.why ? '<p>' + esc(top.why) + '</p>' : '') + '</div></div>'
             + (lead ? '<p class="au-rk-lead">' + esc(lead) + '</p>' : '')
             + '<div class="au-vpks">' + shown.map(card).join('') + '</div>'
@@ -2431,7 +2428,7 @@
         const m = l.fieldDate ? Number(String(l.fieldDate).slice(5, 7)) : 0;
         const res = await window.aneeVarietyPick.open({ crop: l.crop || '', cropLabel: String(c.label || '').split(' (')[0].split(' — ')[0],
             location: [townName(l.town), l.province].filter(Boolean).join(', '), season: m ? (m >= 6 && m <= 10 ? 'wet' : 'dry') : '',
-            water: w === 'partial' ? 'limited' : w, value: { name: l.variety || '', record: l.varRecord || null },
+            water: w === 'partial' ? 'limited' : w, value: { name: l.variety || '', record: l.varRecord || null }, suited: false,
             ownNote: 'Not on record, so Anee looks it up when she reads the farm, and says plainly if nothing is found.' });
         if (!res) return;
         l.variety = String(res.name || '').slice(0, 120);
