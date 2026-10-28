@@ -177,9 +177,9 @@
             }
             return $out;
         };
-        // Anee's model: a brain with a spark, for the smarter side.
-        $waBrain = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 4.5a2.5 2.5 0 00-4.9.7A3 3 0 003 10a3 3 0 00.8 4.9A2.8 2.8 0 008 18.5a2.5 2.5 0 004 1V5.3a2.5 2.5 0 00-2.5-.8z"/><path d="M12 5.3a2.5 2.5 0 014.4-.8 2.5 2.5 0 013 .7A3 3 0 0121 10a3 3 0 01-.8 4.9 2.8 2.8 0 01-4.2 3.6 2.5 2.5 0 01-4 1"/><path d="M8 9.5h2M14 12.5h2M8 14h1.5"/><path d="M19.5 1.8l.5 1.3 1.3.5-1.3.5-.5 1.3-.5-1.3-1.3-.5 1.3-.5z" fill="currentColor"/></svg>';
-        $waChip = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2.5"/><path stroke-linecap="round" d="M9.5 2.8v2.4M14.5 2.8v2.4M9.5 18.8v2.4M14.5 18.8v2.4M2.8 9.5h2.4M2.8 14.5h2.4M18.8 9.5h2.4M18.8 14.5h2.4"/><path stroke-linecap="round" stroke-linejoin="round" d="M10 12.5l1.5 1.5 2.5-3"/></svg>';
+        // The model's icon: a bright, lit bulb for Anee (its rays pulse), a dull one for a general app (2026-10-29).
+        $waBulbBright = '<svg class="wa-bulb is-bright" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="rays" stroke-width="1.9"><path d="M16 1.2v2.6M5.4 4.9l1.9 1.9M26.6 4.9l-1.9 1.9M1.6 13.3h2.7M27.7 13.3h2.7M4.6 21.4l2.2-1.3M27.4 21.4l-2.2-1.3"/></g><path class="glass" d="M16 6.5a6.5 6.5 0 00-3.9 11.7c.6.5 1 1.2 1 2V21h5.8v-.8c0-.8.4-1.5 1-2A6.5 6.5 0 0016 6.5z" stroke-width="1.6"/><path class="wire" d="M14 16.2l2 2 2-2" stroke-width="1.5"/><path d="M13.2 24h5.6M14.2 27h3.6" stroke-width="1.8"/></svg>';
+        $waBulbDull = '<svg class="wa-bulb is-dull" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path class="glass" d="M16 6.5a6.5 6.5 0 00-3.9 11.7c.6.5 1 1.2 1 2V21h5.8v-.8c0-.8.4-1.5 1-2A6.5 6.5 0 0016 6.5z" stroke-width="1.6"/><path class="wire" d="M14 16.2l2 2 2-2" stroke-width="1.5"/><path d="M13.2 24h5.6M14.2 27h3.6" stroke-width="1.8"/></svg>';
     @endphp
     <section class="hp-sec bg-white wa-diff-sec">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
@@ -270,12 +270,12 @@
                         @if ($eng['kind'] === 'anee')
                             <div class="wa-eng-model is-smart">
                                 <i class="wa-spark is-a" aria-hidden="true">✦</i><i class="wa-spark is-b" aria-hidden="true">✦</i><i class="wa-spark is-c" aria-hidden="true">✦</i>
-                                {!! $waBrain !!}
+                                {!! $waBulbBright !!}
                                 <p><b>A smarter AI model</b><small>The same core, fed your whole farm</small></p>
                             </div>
                         @else
                             <div class="wa-eng-model">
-                                {!! $waChip !!}
+                                {!! $waBulbDull !!}
                                 <p><b>A language model</b><small>Knows farming in general</small></p>
                             </div>
                         @endif
@@ -613,6 +613,16 @@
         box-shadow: 0 0 0 4px rgb(245 197 24 / .12), 0 22px 40px -18px rgb(47 82 25 / .9), 0 0 34px -6px rgb(190 242 100 / .45);
         animation: waEngSpin 3.2s linear infinite; }
     @keyframes waEngSpin { to { --waAng: 360deg; } }
+    /* The bulbs. A general app's: grey, unlit. Anee's: lit gold, glowing, its rays pulsing. */
+    .wa-eng-model svg.wa-bulb.is-dull { color: #9ca3af; background: rgb(255 255 255 / .06); }
+    .wa-bulb.is-dull .glass { fill: rgb(156 163 175 / .16); }
+    .wa-bulb.is-dull .wire { stroke: #6b7280; }
+    .wa-bulb.is-bright .glass { fill: #f5c518; stroke: #fff3b0; }
+    .wa-bulb.is-bright .wire { stroke: #7a4b00; }
+    .wa-bulb.is-bright .rays { stroke: #fde68a; transform-origin: 16px 13.5px; animation: waEngRays 1.6s ease-in-out infinite; }
+    @keyframes waEngRays { 0%, 100% { opacity: .45; transform: scale(.9); } 50% { opacity: 1; transform: scale(1.06); } }
+    .wa-eng-model.is-smart svg.wa-bulb { padding: .2rem; filter: drop-shadow(0 0 5px rgb(245 197 24 / .85)); animation: waEngBulb 1.6s ease-in-out infinite; }
+    @keyframes waEngBulb { 0%, 100% { filter: drop-shadow(0 0 3px rgb(245 197 24 / .55)); } 50% { filter: drop-shadow(0 0 9px rgb(245 197 24 / .95)); } }
     .wa-eng-model.is-smart svg { width: 2.3rem; height: 2.3rem; color: #fde68a; background: radial-gradient(circle at 50% 40%, rgb(245 197 24 / .35), rgb(255 255 255 / .08)); }
     .wa-eng-model.is-smart b { font-size: 1rem; background: linear-gradient(90deg, #fff 0%, #fde68a 45%, #fff 60%, #fff 100%) 0 0 / 220% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
         animation: waEngShine 2.8s ease-in-out infinite; }
@@ -679,11 +689,12 @@
         html.js .wa-eng:not(.is-in) .wa-eng-out { opacity: 0; transform: translateY(12px) scale(.96); }
         .wa-eng:not(.is-live) .wa-eng-fun .flow, .wa-eng:not(.is-live) .wa-eng-model::after, .wa-eng:not(.is-live) .wa-eng-out::before,
         .wa-eng:not(.is-live) .wa-eng-model.is-smart, .wa-eng:not(.is-live) .wa-eng-model.is-smart b, .wa-eng:not(.is-live) .wa-spark,
+        .wa-eng:not(.is-live) .wa-bulb .rays, .wa-eng:not(.is-live) .wa-eng-model.is-smart svg.wa-bulb,
         .wa-eng:not(.is-live) .is-anee .wa-eng-in li { animation-play-state: paused; }
     }
     @media (prefers-reduced-motion: reduce) {
         .wa-eng-fun .flow, .wa-eng-fun .comets, .wa-spark { display: none; }
-        .wa-eng-model::after, .wa-eng-out::before, .wa-eng-model.is-smart, .wa-eng-model.is-smart b, .is-anee .wa-eng-in li { animation: none !important; }
+        .wa-eng-model::after, .wa-eng-out::before, .wa-eng-model.is-smart, .wa-eng-model.is-smart b, .is-anee .wa-eng-in li, .wa-bulb .rays, .wa-eng-model.is-smart svg.wa-bulb { animation: none !important; }
         .wa-eng-model.is-smart b { color: #fff; background: none; }
     }
 
