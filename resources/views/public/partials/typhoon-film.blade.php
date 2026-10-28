@@ -1,5 +1,6 @@
 {{-- Typhoon season, days before harvest (2026-10-29, the owner: "this one is several days before harvest during strong
-     typhoon season. remove the audio and describe what you see in the video. make the section look good"). Four silent
+     typhoon season. remove the audio and describe what you see in the video. make the section look good"; later: it is the
+     2026 wet season, "where drought and too much water hit the crops"). Four silent
      moments from the owner's own film of an Anee supported field, crossfaded into one 18 second loop; the list beside
      it says what each moment shows and lights up in step with the film. On the homepage and on Anee vs Now. Expects
      $signup. --}}
@@ -23,9 +24,9 @@
         <div class="tf-grid">
             <div class="tf-copy">
                 <div class="reveal">
-                    <p class="hp-kick">Real video from typhoon season</p>
+                    <p class="hp-kick">Real video from the 2026 wet season</p>
                     <h2 class="hp-h2" id="tfH">Typhoon Season. Days Before Harvest. <em>Still Standing.</em></h2>
-                    <p class="hp-p">Filmed several days before harvest, in the middle of a strong typhoon season. This field followed Anee's guidance from planting to harvest. When the winds came, it was still standing: golden, even, and heavy with grain.</p>
+                    <p class="hp-p">Filmed several days before harvest in the 2026 wet season, a hard season when drought and too much water both hit the crops, and strong typhoons came on top. This field followed Anee's guidance from planting to harvest. When the winds came, it was still standing: golden, even, and heavy with grain.</p>
                 </div>
                 {{-- The harvest that season (2026-10-29, the owner): farms around it 60 to 115 cavans a hectare, this farm 140,
                      cavans of 60 kg, fresh weight. The bars grow and the numbers count up once seen. --}}
@@ -62,13 +63,13 @@
             </div>
             <div class="tf-media reveal" style="--reveal-delay: .1s">
                 <div class="tf-frame" data-tf>
-                    <video muted loop playsinline preload="none" poster="{{ $tfFilm('anee-typhoon-palay.webp') }}" aria-label="An Anee supported palay field several days before harvest in typhoon season, golden and still standing">
+                    <video muted loop playsinline preload="none" poster="{{ $tfFilm('anee-typhoon-palay.webp') }}" aria-label="An Anee supported palay field several days before harvest in the 2026 wet season, golden and still standing">
                         <source src="{{ $tfFilm('anee-typhoon-palay.mp4') }}" type="video/mp4">
                     </video>
                     <span class="tf-rec"><i aria-hidden="true"></i>Real video of the field</span>
                     <button type="button" class="tf-full" data-tf-full aria-label="Watch it full screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
                     <div class="tf-chips">
-                        <span><b aria-hidden="true">🌀</b>Strong typhoon season</span>
+                        <span><b aria-hidden="true">🌀</b>2026 wet season</span>
                         <span><b aria-hidden="true">🌾</b>Days before harvest</span>
                     </div>
                     <span class="tf-now" data-tf-now aria-hidden="true"></span>
