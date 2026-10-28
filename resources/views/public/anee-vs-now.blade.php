@@ -100,6 +100,12 @@
 
         return $p;
     }, $plans);
+    // The gain example, the same as How It Works' Anee Auto band (public/how/auto-band): about 8 tons possible, about 5.4
+    // the usual way, so up to 2.6 tons more a season, at 20 pesos a kilo.
+    $gainPotential = 8;
+    $gainKeep = 5.4;
+    $gainPerSeason = 2.6;
+    $gainKilo = 20;
     $planJs = array_map(fn ($p) => ['name' => $p['name'], 'month' => $p['month'], 'year' => $p['year'], 'included' => $p['credits'] * 12, 'buy' => $p['buyCredits'], 'creditCost' => $p['creditCost']], $plans);
 
     // The nine jobs of a season, now and with Anee.
@@ -339,6 +345,30 @@
     .avn-bar.is-plan .avn-bar-k span:first-child { color: #ecfccb; }
     .avn-bar-parts { font-size: .76rem; line-height: 1.5; color: rgb(255 255 255 / .62); }
     .avn-bar-parts b { color: #d9f99d; font-weight: 800; }
+    /* What you spend against what you could gain: a thin green bar against a full gold one, the multiple counting up. */
+    .avn-gain { margin-top: 1.4rem; padding: 1.1rem 1.1rem 1.15rem; border-radius: 1.3rem; background: linear-gradient(160deg, rgb(245 197 24 / .14), rgb(132 204 22 / .06));
+        box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45), 0 0 40px -18px rgb(245 197 24 / .5); }
+    .avn-gain-k { display: flex; align-items: center; gap: .45rem; font-size: .74rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: var(--hp-sun); }
+    .avn-gain-row { margin-top: .85rem; }
+    .avn-gain-row p { display: flex; justify-content: space-between; align-items: baseline; gap: .8rem; font-size: .84rem; font-weight: 700; color: rgb(255 255 255 / .88); }
+    .avn-gain-row p b { flex: none; font-variant-numeric: tabular-nums; }
+    .avn-gain-row.is-spend p b { color: #bef264; }
+    .avn-gain-row.is-get p span { color: #fff; }
+    .avn-gain-row.is-get p b { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--hp-sun); }
+    .avn-gain-t { position: relative; display: block; height: .7rem; margin-top: .35rem; border-radius: 999px; background: rgb(255 255 255 / .07); overflow: hidden; }
+    .avn-gain-row.is-get .avn-gain-t { height: 1rem; }
+    .avn-gain-t i { position: absolute; top: 0; bottom: 0; left: 0; width: 0; border-radius: 999px; transition: width 1.2s var(--hp-ease); }
+    .avn-gain-row.is-spend i { background: linear-gradient(90deg, #a3e635, #4d7c0f); min-width: 4px; }
+    .avn-gain-row.is-get i { transition-delay: .25s; background: linear-gradient(90deg, #fde68a, #f5c518 60%, #e6ad12);
+        box-shadow: 0 0 16px rgb(245 197 24 / .6); }
+    .avn-gain-row.is-get i::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / .55) 50%, transparent 65%) no-repeat;
+        background-size: 40% 100%; animation: avnGainShine 2.6s ease-in-out infinite; }
+    @keyframes avnGainShine { from { background-position: -60% 0; } to { background-position: 160% 0; } }
+    .avn-gain-sum { display: flex; align-items: center; gap: .9rem; margin-top: 1rem; }
+    .avn-gain-sum big { flex: none; font-family: var(--font-heading); font-size: clamp(1.6rem, 5vw, 2.3rem); font-weight: 800; line-height: 1; color: var(--hp-sun); font-variant-numeric: tabular-nums; }
+    .avn-gain-sum p { font-size: .88rem; line-height: 1.5; color: #f3f4f6; }
+    .avn-gain-sum p b { color: #fff; }
+    @media (max-width: 520px) { .avn-gain-sum { flex-direction: column; align-items: flex-start; gap: .5rem; } }
     .avn-verdict { display: flex; align-items: center; gap: .9rem; margin-top: 1.4rem; padding: 1rem 1.1rem; border-radius: 1.2rem; background: rgb(245 197 24 / .1); border: 1px solid rgb(245 197 24 / .4); }
     .avn-verdict big { flex: none; font-family: var(--font-heading); font-size: clamp(2rem, 6vw, 2.8rem); font-weight: 800; line-height: 1; color: var(--hp-sun); font-variant-numeric: tabular-nums; }
     .avn-verdict p { font-size: .9rem; line-height: 1.5; color: #f3f4f6; }
@@ -443,6 +473,7 @@
         .avn-job-in, .avn-face, .avn-switch::before, .avn-switch button, .avn-dock, .avn-bar-t i, .avn-bar-t b,
         .avn-meter-bar b, .avn-hour-c p, .avn-hour-t, .avn-qa .a, .avn-qa button svg, .avn-chip, .avn-pack, .avn-tool, .avn-turn, .avn-ba-tag, .avn-ba-say { transition: none !important; }
         .avn-ba.is-hint .avn-ba-knob { animation: none; }
+        .avn-gain-t i { transition: none !important; } .avn-gain-row.is-get i::after { animation: none; }
         /* No turning over: the side shown simply changes. */
         .avn-face.is-anee, .avn-job.is-anee .avn-job-in { transform: none; }
         .avn-job:not(.is-anee) .avn-face.is-anee, .avn-job.is-anee .avn-face.is-now { visibility: hidden; }
@@ -593,11 +624,30 @@
                         <p class="avn-bar-parts" data-plan-parts></p>
                     </div>
                 </div>
+                {{-- What you spend against what you could gain (2026-10-29, the owner: "add a new section for the potential gain as
+                     well not only the cost ... so that user can see that its not only cheap but farmer can get added yield"). The
+                     gain is How It Works' own example: a hectare that could give about 8 tons, the old way about 5.4, so up to
+                     2.6 tons more a season, at 20 pesos a kilo, two seasons a year. --}}
+                <div class="avn-gain" id="avnGain">
+                    <p class="avn-gain-k"><span aria-hidden="true">🌾</span>And what it can give back</p>
+                    <div class="avn-gain-row is-spend">
+                        <p><span>What you spend in a year</span><b data-g-spend></b></p>
+                        <span class="avn-gain-t" aria-hidden="true"><i></i></span>
+                    </div>
+                    <div class="avn-gain-row is-get">
+                        <p><span data-g-tons></span><b data-g-get></b></p>
+                        <span class="avn-gain-t" aria-hidden="true"><i></i></span>
+                    </div>
+                    <div class="avn-gain-sum">
+                        <big data-g-times>0×</big>
+                        <p data-g-say></p>
+                    </div>
+                </div>
                 <div class="avn-verdict">
                     <big data-times>0×</big>
                     <p data-verdict></p>
                 </div>
-                <p class="avn-note">The losses are the "up to" ranges from published Philippine rice loss estimates, on a hectare grossing {{ $money(60000) }} to {{ $money(100000) }} a season; the lighter part of each bar is the top of its range. They overlap, so they are not added up. Your farm's numbers differ, which is the point. Anee's credits are an estimate for one lot and two seasons a year: When to Plant, Variety Ranking and a Crop Protocol each season, and about two questions a week, half with a photo ({{ number_format($yearCredits) }} credits); every question and analysis shows its price before it runs.</p>
+                <p class="avn-note">The losses are the "up to" ranges from published Philippine rice loss estimates, on a hectare grossing {{ $money(60000) }} to {{ $money(100000) }} a season; the lighter part of each bar is the top of its range. They overlap, so they are not added up. Your farm's numbers differ, which is the point. The gain is an example, not a promise: a hectare that could give about {{ $gainPotential }} tons, about {{ $gainKeep }} the usual way, so up to {{ $gainPerSeason }} tons more a season with every step on time, at {{ $money($gainKilo) }} a kilo and two seasons a year. Anee's credits are an estimate for one lot and two seasons a year: When to Plant, Variety Ranking and a Crop Protocol each season, and about two questions a week, half with a photo ({{ number_format($yearCredits) }} credits); every question and analysis shows its price before it runs.</p>
             </div>
         </div>
     </section>
@@ -864,6 +914,7 @@
     // ---- The bars: what guessing can take from your hectares, beside a year of a plan. ----
     const PLANS = @json($planJs);
     const YEAR_CREDITS = {{ $yearCredits }};
+    const GAIN = { perSeason: {{ $gainPerSeason }}, kilo: {{ $gainKilo }}, seasons: 2 };
     const leaks = document.getElementById('avnLeaks');
     if (leaks && PLANS.length) {
         const ha = document.getElementById('avnHa');
@@ -893,6 +944,20 @@
                     ? ' + about <b>' + fmt(p.creditCost) + '</b> for Anee\'s credits (about ' + n(p.buy) + ' credits' + (p.included ? ' beyond the ' + n(p.included) + ' the plan brings' : '') + ')'
                     : '. The ' + n(p.included) + ' credits it brings a year cover the estimate of ' + n(YEAR_CREDITS)) + '.';
             pr.querySelector('b').style.width = (shown ? Math.max(.6, year / top * 100) : 0) + '%';
+            // What it can give back: up to the example's tons a season, for two seasons, on these hectares.
+            const gb = document.getElementById('avnGain');
+            if (gb) {
+                const tons = GAIN.perSeason * GAIN.seasons * h, get = tons * 1000 * GAIN.kilo, ratio = get / year;
+                const ha2 = (h % 1 ? h.toFixed(1) : h) + ' ha';
+                gb.querySelector('[data-g-spend]').textContent = fmt(year);
+                gb.querySelector('[data-g-tons]').textContent = 'What you could gain in a year: up to ' + (tons % 1 ? tons.toFixed(1) : tons) + ' t more palay';
+                count(gb.querySelector('[data-g-get]'), shown ? get : 0, (v) => fmt(v));
+                gb.querySelector('.is-spend i').style.width = (shown ? Math.max(1.2, year / get * 100) : 0) + '%';
+                gb.querySelector('.is-get i').style.width = (shown ? 100 : 0) + '%';
+                count(gb.querySelector('[data-g-times]'), shown ? ratio : 0, (v) => 'up to ' + Math.round(v) + '×');
+                gb.querySelector('[data-g-say]').innerHTML = 'On your ' + ha2 + ', every <b>' + fmt(1) + '</b> spent on <b>' + p.name + '</b> and Anee could come back as up to <b>'
+                    + fmt(ratio) + '</b> of extra harvest. It is not only cheap: it is <b>more palay</b>, up to ' + GAIN.perSeason + ' t a hectare each season.';
+            }
             const least = Math.min(...rows.map((r) => Number(r.dataset.n))) * 600 * h;
             const times = least / year;
             count(leaks.querySelector('[data-times]'), shown ? times : 0, (v) => (v >= 10 ? Math.round(v) : v.toFixed(1)) + '×');
