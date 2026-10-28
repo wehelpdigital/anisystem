@@ -41,15 +41,24 @@
                     </div>
                     <p class="tf-ynote">Cavans of 60 kg, fresh weight: 140 cavans is about 8.4 tons from one hectare, up to 80 cavans more than a farm at the low end, in the same typhoon season.</p>
                 </div>
-                <p class="tf-k reveal">What you see in the film</p>
-                <ol class="tf-seen" data-tf-list>
-                    @foreach ($tfSeen as $k => [$at, $t, $w])
-                        <li class="reveal" data-at="{{ $at }}" style="--reveal-delay: {{ $k * 0.08 }}s">
-                            <span class="tf-n">{{ $k + 1 }}</span>
-                            <span class="tf-w"><b>{{ $t }}</b>{{ $w }}<i class="tf-bar" aria-hidden="true"><i></i></i></span>
-                        </li>
-                    @endforeach
-                </ol>
+                {{-- One moment at a time, in one place (2026-10-29, the owner: shorter, so the column balances the film):
+                     when a moment's bar fills, the next fades in where it was. The dots say which, and jump the film. --}}
+                <div class="tf-seen-w reveal">
+                    <div class="tf-seen-h">
+                        <p class="tf-k">What you see in the film</p>
+                        <span class="tf-dots" role="group" aria-label="The moments in the film">
+                            @foreach ($tfSeen as $k => $m)<button type="button" data-tf-dot="{{ $k }}" class="{{ $k === 0 ? 'is-on' : '' }}" aria-label="Moment {{ $k + 1 }}: {{ $m[1] }}"></button>@endforeach
+                        </span>
+                    </div>
+                    <ol class="tf-seen" data-tf-list>
+                        @foreach ($tfSeen as $k => [$at, $t, $w])
+                            <li data-at="{{ $at }}" class="{{ $k === 0 ? 'is-on' : '' }}">
+                                <span class="tf-n">{{ $k + 1 }}</span>
+                                <span class="tf-w"><b>{{ $t }}</b>{{ $w }}<i class="tf-bar" aria-hidden="true"><i></i></i></span>
+                            </li>
+                        @endforeach
+                    </ol>
+                </div>
             </div>
             <div class="tf-media reveal" style="--reveal-delay: .1s">
                 <div class="tf-frame" data-tf>
@@ -105,9 +114,18 @@
     .tf-yield.is-in .tf-ybar i { width: calc(var(--b) - var(--a)); }
     .tf-ynote { margin-top: .7rem; font-size: .76rem; line-height: 1.5; color: #9fb09a; }
     .tf-k { margin-top: 1.8rem; font-size: .74rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #9cc0e0; }
-    .tf-seen { display: grid; gap: .55rem; margin: .7rem 0 0; padding: 0; list-style: none; }
-    .tf-seen li { display: flex; gap: .8rem; align-items: flex-start; padding: .8rem .9rem; border-radius: 1.1rem; background: rgb(255 255 255 / .04);
-        box-shadow: inset 0 0 0 1px rgb(255 255 255 / .09); transition: background-color .35s cubic-bezier(.22,1,.36,1), box-shadow .35s cubic-bezier(.22,1,.36,1), transform .35s cubic-bezier(.22,1,.36,1); }
+    .tf-seen-w { margin-top: 1.6rem; }
+    .tf-seen-h { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .tf-seen-h .tf-k { margin: 0; }
+    .tf-dots { display: inline-flex; gap: .4rem; }
+    .tf-dots button { width: .55rem; height: .55rem; padding: 0; border-radius: 999px; cursor: pointer; background: rgb(255 255 255 / .25);
+        transition: width .35s cubic-bezier(.22,1,.36,1), background-color .35s ease; }
+    .tf-dots button.is-on { width: 1.5rem; background: #f5c518; }
+    /* The moments share one place: only the one showing is seen, the next fading in as the last fades out. */
+    .tf-seen { display: grid; margin: .7rem 0 0; padding: 0; list-style: none; }
+    .tf-seen li { grid-area: 1 / 1; display: flex; gap: .8rem; align-items: flex-start; padding: .9rem 1rem; border-radius: 1.1rem; cursor: pointer;
+        background: linear-gradient(100deg, rgb(245 197 24 / .14), rgb(255 255 255 / .04)); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .55), 0 16px 30px -22px rgb(245 197 24 / .5);
+        opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .3s ease, transform .3s ease; }
     .tf-n { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px; font-size: .85rem; font-weight: 900; color: #c8d8e8; background: rgb(255 255 255 / .08);
         transition: background-color .35s ease, color .35s ease; }
     .tf-w { flex: 1; min-width: 0; font-size: .9rem; line-height: 1.5; color: #c9d6c2; }
@@ -115,13 +133,12 @@
     .tf-bar { display: block; height: 3px; margin-top: .55rem; border-radius: 999px; background: rgb(255 255 255 / .08); overflow: hidden; opacity: 0; transition: opacity .3s ease; }
     .tf-bar i { display: block; height: 100%; width: var(--p, 0%); border-radius: inherit; background: linear-gradient(90deg, #f5c518, #a3e635); }
     /* The moment the film is showing. */
-    .tf-seen li.is-on { background: linear-gradient(100deg, rgb(245 197 24 / .14), rgb(255 255 255 / .04)); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .55), 0 16px 30px -22px rgb(245 197 24 / .5);
-        transform: translateX(4px); }
-    .tf-seen li.is-on .tf-n { color: #14210c; background: #f5c518; }
-    .tf-seen li.is-on .tf-bar { opacity: 1; }
+    .tf-seen li.is-on { opacity: 1; transform: none; pointer-events: auto; transition: opacity .55s cubic-bezier(.22,1,.36,1) .2s, transform .55s cubic-bezier(.22,1,.36,1) .2s; }
+    .tf-seen li .tf-n { color: #14210c; background: #f5c518; }
+    .tf-seen li .tf-bar { opacity: 1; }
     /* The film: tall, as it was shot, in a frame with the storm's blue edge. */
     .tf-media { display: flex; justify-content: center; }
-    .tf-frame { position: relative; width: min(100%, 21rem); aspect-ratio: 9 / 16; border-radius: 2rem; overflow: hidden; background: #111;
+    .tf-frame { position: relative; width: min(100%, 23rem); aspect-ratio: 9 / 16; border-radius: 2rem; overflow: hidden; background: #111;
         box-shadow: 0 0 0 1px rgb(148 182 214 / .45), 0 0 0 8px rgb(148 182 214 / .08), 0 50px 90px -40px rgb(0 0 0 / .9), 0 0 70px -20px rgb(56 99 145 / .7); }
     .tf-frame video { display: block; width: 100%; height: 100%; object-fit: cover; }
     .tf-frame::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgb(8 12 6 / .35), transparent 22%, transparent 70%, rgb(8 12 6 / .6)); }
@@ -142,7 +159,7 @@
     @media (max-width: 959.98px) { .tf-media { order: -1; } .tf-frame { width: min(100%, 19rem); } }
     @media (prefers-reduced-motion: reduce) {
         .tf-wind, .tf-rec i { animation: none; }
-        .tf-seen li { transition: none; transform: none !important; }
+        .tf-seen li, .tf-dots button { transition: none !important; }
         .tf-ybar i { transition: none; }
     }
 </style>
@@ -155,6 +172,7 @@
     if (!box) return;
     const v = box.querySelector('video'), now = box.querySelector('[data-tf-now]');
     const items = [...document.querySelectorAll('[data-tf-list] li')];
+    const dots = [...document.querySelectorAll('[data-tf-dot]')];
     const starts = items.map((li) => Number(li.dataset.at));
     const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let last = -1;
@@ -162,7 +180,7 @@
         const t = v.currentTime || 0, d = v.duration || 18.5;
         let k = 0;
         starts.forEach((s, i) => { if (t >= s) k = i; });
-        if (k !== last) { items.forEach((li, i) => li.classList.toggle('is-on', i === k)); last = k; }
+        if (k !== last) { items.forEach((li, i) => li.classList.toggle('is-on', i === k)); dots.forEach((d, i) => d.classList.toggle('is-on', i === k)); last = k; }
         const end = k + 1 < starts.length ? starts[k + 1] : d;
         items[k].querySelector('.tf-bar i').style.setProperty('--p', Math.min(100, (t - starts[k]) / (end - starts[k]) * 100) + '%');
         now.style.setProperty('--p', (t / d * 100) + '%');
@@ -197,7 +215,10 @@
         } else go();
     }
     // A tap on a moment jumps the film to it.
-    items.forEach((li, i) => li.addEventListener('click', () => { try { v.currentTime = starts[i] + .05; } catch (_) {} v.play().catch(() => {}); }));
+    const jump = (i) => { try { v.currentTime = starts[i] + .05; } catch (_) {} v.play().catch(() => {}); paint(); };
+    dots.forEach((d, i) => d.addEventListener('click', () => jump(i)));
+    // A tap on the moment showing goes on to the next one.
+    items.forEach((li, i) => li.addEventListener('click', () => jump((i + 1) % items.length)));
     box.querySelector('[data-tf-full]').addEventListener('click', () => {
         v.controls = true;
         if (v.requestFullscreen) v.requestFullscreen().catch(() => {}); else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
