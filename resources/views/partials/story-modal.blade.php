@@ -105,9 +105,10 @@
     .stm-fine { margin-top: .8rem; font-size: .72rem; line-height: 1.5; color: rgb(185 202 168 / .75); }
 
     /* Scrolling smooth (2026-10-28, the owner: "scrolling down is glitchy like you are scrolling in a gravel sand"): every
-       scene's loops kept painting while the story scrolled, dozens at once. Only a scene in view moves now (is-live,
-       toggled as scenes come and go); the rest wait, paused, and no blur is redrawn under the scroll. */
-    .stm .stm-scene:not(.is-live) *, .stm .stm-scene:not(.is-live) *::before, .stm .stm-scene:not(.is-live) *::after { animation-play-state: paused !important; }
+       scene's loops kept painting while the story scrolled, dozens at once. A scene out of view holds its endless loops
+       now (is-live, wire() below) and no blur is redrawn under the scroll. What plays once is never held: held in a
+       stylesheet, an entrance caught on its way out could stay hidden when its scene came back (the owner, the same day:
+       "when i scroll down and scroll up again some elements do not show up again"). */
 
     /* What rises in: drawn once, shown each time its scene comes in. */
     .stm [data-in] { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--e) var(--d, 0ms), transform .7s var(--e) var(--d, 0ms); }
@@ -165,8 +166,13 @@
             if (dots) dots.querySelectorAll('button').forEach((b, i) => b.classList.toggle('is-on', scenes[i] === s));
         }), { root: body, threshold: 0.28 });
         scenes.forEach((s) => io.observe(s));
-        // In view, its loops run; out of view, they pause (any part of it on screen counts).
-        const live = new IntersectionObserver((list) => list.forEach((en) => en.target.classList.toggle('is-live', en.isIntersecting)), { root: body, rootMargin: '80px 0px' });
+        // In view, its loops run; out of view, they pause (any part of it on screen counts). Only the endless ones: an
+        // entrance or a count that plays once always plays to its end.
+        const loops = (s) => (s.getAnimations ? s.getAnimations({ subtree: true }) : []).filter((a) => a.effect && a.effect.getTiming().iterations === Infinity);
+        const live = new IntersectionObserver((list) => list.forEach((en) => {
+            en.target.classList.toggle('is-live', en.isIntersecting);
+            loops(en.target).forEach((a) => { try { if (en.isIntersecting) a.play(); else a.pause(); } catch (_) { /* a loop that ended with its class */ } });
+        }), { root: body, rootMargin: '80px 0px' });
         scenes.forEach((s) => live.observe(s));
         body.addEventListener('scroll', () => {
             if (!prog) return;
