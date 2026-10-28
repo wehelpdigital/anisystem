@@ -21,7 +21,7 @@ use App\Models\AsSiteSetting;
  * Tokens in any text: {farmers} (the region's word for its farmers),
  * {crops} (how many crops the catalogue keeps for the country), {pay}
  * (how paid plans are paid), {signupWays} (email, and Google when it is on), {libreAnee} and {solo} (their monthly prices),
- * {tools} (how many tools How It Works lists for the country),
+ * {tools} (how many tools How It Works lists for the country), {freeTools} (how many of them every plan has),
  * {cropResearch} and {pesoBasis} (the losses band's source note, by country),
  * so the page cannot drift from the app it sells.
  */
@@ -36,9 +36,6 @@ class LandingPage
      */
     public const DEFAULTS_KEY = 'landing.defaults';
 
-    /** The built-in pictures a pillar may show (files in public/images/site/lp). */
-    public const SHOTS = ['board', 'growth', 'weather', 'hub', 'report-top', 'report-money', 'datediff', 'anee-chat-hand'];
-
     /** The built-in photos a cost row may show (files in public/images/site/lp). */
     public const PHOTOS = ['tractor', 'sacks', 'storm', 'palay-phone', 'anee-chat-hand'];
 
@@ -49,7 +46,10 @@ class LandingPage
      * The argument, top to bottom (the owner, 2026-09-29/30): a bigger yield
      * despite weather nobody can predict (and the pests it brings), fuel and
      * fertilizer that keep climbing; precision agriculture as the answer; and
-     * every tool a farm needs, in one app.
+     * every tool a farm needs, in one app. Since 2026-10-28 the page also shows
+     * why advice from strangers fails (the Facebook post), the newest tools,
+     * and every tool in folds that open onto how it helps; the four feature
+     * pillars are gone (the page was 22,000 px on a phone).
      * Wrap words of a headline in *stars* to mark them.
      */
     public const DEFAULTS = [
@@ -188,51 +188,20 @@ class LandingPage
             'cta' => 'Get my full season plan free',
             'note' => 'A sample from common practice. Your own plan follows your variety, your field and your weather, and moves when they do.',
         ],
-        // New this season (2026-10-07): the tools that watch the farm from
-        // space and from the label, each with its real screen.
+        // New this season (2026-10-07; the newest tools since 2026-10-28, the owner: "based on all these new changes,
+        // new features ... make this landing page for ads better, persuasive"). Each item's image is a tool's key
+        // (How It Works), whose phone screen of the app as it is now shows on the card, with the plan it comes with.
         'space' => [
             'kicker' => 'New this season',
-            'headline' => 'See the trouble *before it reaches your field*',
-            'sub' => 'Four new tools watch over your farm: what the satellites see in your field, the typhoon on its way, every nutrient in your fertilizer, and the pest behind the damage.',
+            'headline' => 'Plant at the right time. *Sell at the right price.*',
+            'sub' => 'The newest tools follow your crop all the way to the money: the best weeks to plant, a plan for every lot, your field seen from space, the price ahead, whether to dry before you sell, and a fair share for your farm manager.',
             'items' => [
-                ['title' => 'Satellite Analysis', 'text' => 'Draw your field and see its health from space: greenness, the weak corner to walk first, and radar that sees through typhoon clouds.', 'image' => 'satellite'],
-                ['title' => 'Satellite Weather', 'text' => 'Clouds and rain over your farm, played back and fast forwarded, with every typhoon\'s path and a warning when one comes within 300 km.', 'image' => 'sky'],
-                ['title' => 'NPK Plus', 'text' => 'Tap the fertilizers you plan to use and see every nutrient, short, right or too much for your crop, before you buy a single sack. Comes with Libre + Anee.', 'image' => 'npk'],
-                ['title' => 'Pest and disease finders', 'text' => 'From the damage you see to the active ingredient that works, with its group, so the next spray still works too. Comes with Libre + Anee.', 'image' => 'finder'],
-            ],
-        ],
-        'pillars' => [
-            [
-                'kicker' => 'Precision timing',
-                'title' => 'Hit every stage on the right day',
-                'text' => 'A harvest is decided at a few critical stages. The board counts DAS and DAT for you and says what the crop needs at each one, so the fertilizer, the spray and the water arrive when they do the most good.',
-                'bullets' => ['Day counts that switch from DAS to DAT at transplant', 'What to do now, and what to watch for, at every stage', 'The days between any two sprays, measured in one tap'],
-                'image' => 'growth', 'plan' => 'Free on Libre',
-                'upload' => '', 'frame' => 'phone',
-            ],
-            [
-                'kicker' => 'Farming around the weather',
-                'title' => 'Plan around the rain, not after it',
-                'text' => 'See the forecast for your own lot, by the day and by the hour, beside your plan. Spray before the rain instead of into it, and let the rain do the irrigating.',
-                'bullets' => ['A forecast for each lot\'s own town', 'The chance of rain hour by hour, and what it means today', 'When to Plant reads the El Niño and La Niña outlook'],
-                'image' => 'weather', 'plan' => 'Today and tomorrow free; the full forecast from {solo} a month',
-                'upload' => '', 'frame' => 'phone',
-            ],
-            [
-                'kicker' => 'Anee, your smart farm technician',
-                'title' => 'Know what is wrong before you spend on it',
-                'text' => 'Snap the leaf, the pest or the field and ask in Tagalog, Bisaya, Ilocano or Taglish. Anee reads your crop, its stage and your season, and answers with what is accurate and scientifically based, so the fix you buy is the right one.',
-                'bullets' => ['Reads a photo of the leaf, the pest or the field', 'Knows your crop, variety, stage and weather', 'Deep analyses: when to plant, what to plant, which variety'],
-                'image' => 'anee-chat-hand', 'plan' => 'Libre + Anee, {libreAnee} a month',
-                'upload' => '', 'frame' => 'phone',
-            ],
-            [
-                'kicker' => 'Cost control',
-                'title' => 'Cut the costs you can, down to the peso',
-                'text' => 'Wages, fertilizer, chemicals, services and every extra expense add up by themselves, lot by lot. See what each sack cost to grow, where the money went, and what the season kept.',
-                'bullets' => ['Labor, expense and profit reports', 'Inventory: what you bought, used and have left', 'Cash to prepare for any stretch of days'],
-                'image' => 'report-top', 'plan' => 'Full reports from {solo} a month',
-                'upload' => '', 'frame' => 'phone',
+                ['title' => 'Market Price Forecast', 'text' => 'The months your crop sells highest and the low season to stay away from, read from its farmgate prices of the last years.', 'image' => 'market'],
+                ['title' => 'Benta o Bilad Calculator', 'text' => 'Sell it wet, or dry it first? Put in your sacks and the prices and see which way leaves more money in your hand.', 'image' => 'bilad'],
+                ['title' => 'Hatian Calculator', 'text' => 'Your farm manager\'s share from the whole harvest, with your home food set aside, counted the same fair way every time.', 'image' => 'hatian'],
+                ['title' => 'When to Plant Analysis', 'text' => 'Twenty years of your town\'s weather and the El Niño or La Niña outlook, read into the weeks with the safest start and the best price at harvest.', 'image' => 'when'],
+                ['title' => 'Crop Protocol Analysis', 'text' => 'Anee writes the season for your variety and your lots, stage by stage: the fertilizer, the sprays and the water each lot needs.', 'image' => 'cropProtocol'],
+                ['title' => 'Satellite Analysis', 'text' => 'Draw your field and see its health from space, the weak corner to walk first, and radar that sees through typhoon clouds.', 'image' => 'satellite'],
             ],
         ],
         // Every tool, by the step of the season it serves. The tools
@@ -241,7 +210,7 @@ class LandingPage
         // the app does not have, or miss a new one (2026-10-13).
         'more' => [
             'headline' => '{tools} tools for your whole season, *in one app*',
-            'sub' => 'One app instead of a notebook, a calculator, a group chat and a guess. Many are free; the rest come with the paid plans.',
+            'sub' => 'One app instead of a notebook, a calculator, a group chat and a guess. {freeTools} of them are free forever on Libre; the rest come with the paid plans. Tap any tool to see how it helps.',
             // An uploaded phone screenshot in place of the season's modules (blank: those).
             'image' => '',
         ],
@@ -255,8 +224,10 @@ class LandingPage
         'faq' => [
             'headline' => 'Questions before you start',
             'items' => [
-                ['q' => 'Is it really free?', 'a' => 'Yes. Libre is free forever: one active season on one lot, the season board, growth stages, notes and photos, and weather for today and tomorrow. A few ads keep it free.'],
+                ['q' => 'Is it really free?', 'a' => 'Yes. Libre is free forever, with {freeTools} of the {tools} tools: one active season on one lot, the season board, growth stages, notes and photos, weather for today and tomorrow, the Market Price Forecast, Benta o Bilad and the Hatian Calculator among them. A few ads keep it free.'],
                 ['q' => 'Who is Anee?', 'a' => 'Anee is the smart farm technician inside anee.io. Send her a photo or ask in Tagalog, Bisaya, Ilocano, Taglish or English, and she answers in seconds, knowing your lot, its stage, your weather and what you already applied. She comes with Libre + Anee, from {libreAnee} a month, and with every paid plan.'],
+                ['q' => 'How is Anee different from ChatGPT or Gemini?', 'a' => 'Anee runs on a top language model too. The difference is what she reads before she answers: your lots and their soil, your crop\'s day count, the forecast for your farm and the El Niño or La Niña outlook, twenty years of your town\'s weather, and the varieties and products registered here. A general chat app answers about farming in general. Anee answers about your field.'],
+                ['q' => 'Why not just ask in a Facebook group?', 'a' => 'People there mean well, but they cannot see your field. Under one real post, twenty comments gave seven different causes for the same palay, and four said to spray right away. Anee reads your lot first, asks for the one sign that tells the causes apart, and gives one answer with what to do.'],
                 ['q' => 'What is Anee Auto?', 'a' => 'The easiest way to use anee.io. Answer a few questions about your farm once, and Anee plans the whole season, tells you each morning what to do, and moves the work herself when the rain comes or a worker cannot. You just follow.'],
                 ['q' => 'Is it hard to use?', 'a' => 'No. If you can send a photo in a chat, you can use anee.io. Add your lot and your crop, and your season plan is there, day by day. The main screens each have a short video that shows how they work.'],
                 ['q' => 'Do I need sensors, drones or special equipment?', 'a' => 'No. Precision agriculture in anee.io runs on what you already have: your phone, your crop\'s growth calendar, the forecast for your field, and your own records.'],
@@ -347,6 +318,10 @@ class LandingPage
             }
         }
 
+        // Every tool How It Works lists, and the plan every account has (the first in config/tiers).
+        $tools = collect(HowItWorks::stages())->flatMap(fn ($st) => $st['items']);
+        $free = array_key_first(array_filter(config('tiers'), fn ($t, $k) => $k !== 'admin', ARRAY_FILTER_USE_BOTH));
+
         return [
             '{farmers}' => Region::t('farmersOf'),
             '{crops}' => (string) $crops,
@@ -358,7 +333,8 @@ class LandingPage
             '{cropResearch}' => Region::ph() ? 'Philippine rice' : 'crop',
             '{pesoBasis}' => Region::ph() ? '; peso ranges assume a typical palay hectare grossing ₱60,000 to ₱100,000' : '',
             '{solo}' => Region::priceTag(Region::tierPrice('solo', 'month')),
-            '{tools}' => (string) collect(HowItWorks::stages())->sum(fn ($st) => count($st['items'])),
+            '{tools}' => (string) $tools->count(),
+            '{freeTools}' => (string) $tools->filter(fn ($it) => ($it['plan']['tier'] ?? null) === $free)->count(),
         ];
     }
 

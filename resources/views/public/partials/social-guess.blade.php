@@ -8,8 +8,13 @@
      images/site/social). The comments scroll on their own while the section is seen; what they said is counted beside
      them, one guess at a time; then why that can go wrong and what Anee does instead. On the homepage and on Why Anee.
      Counted from the screenshots: 20 comments; rice bug 7 (dangaw, atangya, alitangya, ricebag), stem borer 3, too much
-     nitrogen 2, neck rot, whitefly, black bug, a dry and acidic field 1 each; 4 said to spray, none asked a question. --}}
+     nitrogen 2, neck rot, whitefly, black bug, a dry and acidic field 1 each; 4 said to spray, none asked a question.
+     On the ads landing page too (2026-10-28), with $sgSignup (its signup link, carrying the ad's tags), $sgAsk false (no
+     way off the page) and $sgLean (what Anee does instead in one line, the page's next sections say the rest). --}}
 @php
+    $sgSignup = $sgSignup ?? route('signup');
+    $sgAsk = $sgAsk ?? true;
+    $sgLean = $sgLean ?? false;
     $sgGuesses = [
         ['🪲', 'Rice bug', 'dangaw, atangya', 7],
         ['🐛', 'Stem borer', '"white heads"', 3],
@@ -85,15 +90,17 @@
                 <img src="{{ asset('images/anee/emoji/thinking.png') }}" alt="" width="64" height="64" loading="lazy">
                 <div><p class="sg-k">What Anee does instead</p><h3>She looks for the sign that tells them apart, then gives one answer.</h3></div>
             </div>
+            @unless ($sgLean)
             <ol class="sg-steps">
                 <li><b>She studies the photo closely</b><span>The grains, the neck of the panicle, the color of the leaves.</span></li>
                 <li><b>She reads your lot</b><span>Its stage, the weather of the last weeks, the fertilizer and the sprays it already had.</span></li>
                 <li><b>She asks for the one sign that decides it</b><span>A white head that slides out with a hole at its base is a stem borer. Brown spots on empty grains mean a rice bug. A dark rot at the neck is neck rot, a matter for a fungicide.</span></li>
                 <li><b>One answer, with what to do</b><span>What to put on now, how much, when, and how to stop it next season.</span></li>
             </ol>
+            @endunless
             <div class="sg-cta">
-                <a href="{{ route('signup') }}" class="btn btn-accent btn-lg">Start free, ask with a photo</a>
-                <a href="{{ url('/ask-anee') }}" class="sg-ghost">Or ask her one question now</a>
+                <a href="{{ $sgSignup }}" class="btn btn-accent btn-lg">Start free, ask with a photo</a>
+                @if ($sgAsk)<a href="{{ url('/ask-anee') }}" class="sg-ghost">Or ask her one question now</a>@endif
             </div>
         </div>
         <p class="sg-fine">A real screenshot from a public Facebook group, shared to show how many answers from strangers can pull a farmer in different directions. Every name and face is blurred. Everyone in it was trying to help.</p>

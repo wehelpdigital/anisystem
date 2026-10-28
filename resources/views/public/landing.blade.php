@@ -1,6 +1,7 @@
 @extends('layouts.public')
 
 @include('public.partials.site-css')
+@include('public.partials.hp-base')
 
 @php
     /* The ads landing page (2026-09-29). Every word comes from
@@ -8,7 +9,14 @@
        (AniSystem > Landing page). The ad's tracking tags ride along to the
        signup, so a campaign can be measured to the account it made.
        The argument: precision agriculture; a bigger harvest despite the
-       weather and the costs; every tool the farm needs, in one app. */
+       weather and the costs; every tool the farm needs, in one app.
+       Since 2026-10-28 (the owner: "based on all these new changes, new
+       features ... make this landing page for ads better, persuasive"): the
+       problems as three cards, the losses as one compact list, the real
+       Facebook post (why advice from strangers fails), the newest tools with
+       their real screens, and every tool in folds that open onto how it
+       helps. The four feature pillars are gone: the page was 22,000 px on a
+       phone, and they said again what the cards around them say. */
     $lp = $lp ?? \App\Support\LandingPage::content();
     $keep = collect(request()->only(['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid']))
         ->filter(fn ($v) => is_string($v) && $v !== '' && strlen($v) <= 200)->all();
@@ -22,13 +30,16 @@
         'report-money' => ['lp/report-money.webp', 'Where the money went, by category and by month', 1600],
         'datediff' => ['lp/datediff.webp', 'The days between a herbicide and a fungicide, measured in one tap', 1600],
     ];
-    $photos = ['anee-chat-hand' => ['lp/anee-chat-hand.webp', 'Anee answering a photo of a rice field, on a farmer\'s phone in the field', 1600]];
     $check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
     $arrow = '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg>';
     $mark = fn (string $t) => \App\Support\LandingPage::marked($t);
     // Every tool, by the step of the season it serves: How It Works' own
     // list, with the icons the tools wear in the app (2026-10-13).
     $hwSteps = \App\Support\HowItWorks::stages();
+    $hwTools = collect($hwSteps)->flatMap(fn ($st) => $st['items'])->keyBy('key');
+    // The plan every account has (the first in config/tiers): its tools are the free ones.
+    $freeTier = array_key_first(array_filter(config('tiers'), fn ($t, $k) => $k !== 'admin', ARRAY_FILTER_USE_BOTH));
+    $isFree = fn (array $t) => ($t['plan']['tier'] ?? null) === $freeTier;
 @endphp
 
 @section('title', $lp['meta']['title'])
@@ -101,6 +112,10 @@
     .lp-space-h em, .lp-space-h strong { font-style: normal; color: #f5c518; }
     .lp-space-p { margin: .9rem auto 0; max-width: 42rem; color: #b9caa8; line-height: 1.65; }
     .lp-space-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr)); }
+    @media (min-width: 900px) { .lp-space-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    .lp-space-plan { display: inline-flex; align-items: center; gap: .3rem; margin-top: .55rem; padding: .2rem .6rem; border-radius: 999px; font-size: .7rem; font-weight: 900;
+        color: #d9f99d; background: rgb(132 204 22 / .14); border: 1px solid rgb(163 230 53 / .35); }
+    .lp-space-plan.is-paid { color: #fde68a; background: rgb(245 197 24 / .1); border-color: rgb(245 197 24 / .4); }
     .lp-space-card { overflow: hidden; border-radius: 1.3rem; background: rgb(255 255 255 / .05); border: 1px solid rgb(255 255 255 / .1);
         transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
     .lp-space-card:hover { transform: translateY(-5px); border-color: rgb(245 197 24 / .5); }
@@ -180,24 +195,34 @@
     .lp-float.f2 { bottom: 16%; right: max(0px, calc(50% - 270px)); animation-delay: -3s; }
     @keyframes lpFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
     @media (max-width: 480px) { .lp-float.f1 { left: 0; top: 10%; } .lp-float.f2 { right: 0; bottom: 10%; } }
-    /* The problem rows: photo and words side by side, the photo's side
-       alternating (is-flip puts it on the right). White, so the hero's arc
+    /* The problems (2026-10-28): three cards, each its photo with the kicker and the headline on it, what goes wrong
+       under it, then how anee.io helps. Three across on a desk, one under another on a phone. White, so the hero's arc
        runs straight into it. */
     .lp-problems { background: #fff; }
-    /* The title over the three problem rows. */
     .lp-problems-h { font-family: var(--font-heading); font-weight: 800; color: #14210c; letter-spacing: -.02em; line-height: 1.15;
         font-size: clamp(1.9rem, 4.4vw, 3rem); text-wrap: balance; }
     .lp-problems .fx-kicker + .lp-problems-h { margin-top: .5rem; }
     .lp-problems-sub { margin-top: .85rem; color: #3f4a37; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.65; }
-    .lp-row2 { display: grid; gap: 2.25rem; align-items: center; }
-    .lp-row2 .lp-photo { aspect-ratio: 4 / 3; }
-    /* A grid column may shrink below its longest unbroken line, or a one-line
-       tick stretches the whole row past the phone's edge. */
-    .lp-row2 > * { min-width: 0; }
-    @media (min-width: 1024px) {
-        .lp-row2 { grid-template-columns: 1fr 1fr; gap: 3.5rem; }
-        .lp-row2.is-flip > .lp-photo { order: 2; }
-    }
+    .lp-probs { display: grid; gap: 1.1rem; }
+    @media (min-width: 960px) { .lp-probs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; } }
+    .lp-prob { min-width: 0; display: flex; flex-direction: column; overflow: hidden; border-radius: 1.5rem; background: #fff; border: 1px solid #ece8e1;
+        box-shadow: 0 26px 50px -38px rgb(20 33 12 / .6); }
+    .lp-prob-top { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #1f2a17; }
+    .lp-prob-top img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.22,1,.36,1); }
+    .lp-prob:hover .lp-prob-top img { transform: scale(1.04); }
+    .lp-prob-top::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(10 14 7 / 0) 28%, rgb(10 14 7 / .85) 100%); }
+    .lp-prob-cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 1rem 1.1rem 1.05rem; color: #fff; }
+    .lp-prob-k { display: inline-block; padding: .22rem .6rem; border-radius: 999px; font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase;
+        color: #fff; background: rgb(185 28 28 / .92); }
+    .lp-prob-cap h3 { margin-top: .5rem; font-family: var(--font-heading); font-weight: 800; font-size: 1.2rem; line-height: 1.25; text-wrap: balance; text-shadow: 0 2px 14px rgb(0 0 0 / .55); }
+    .lp-prob-body { flex: 1; display: flex; flex-direction: column; gap: .9rem; padding: 1rem 1.05rem 1.1rem; }
+    .lp-prob-body > p { color: #4b5563; line-height: 1.6; font-size: .94rem; }
+    /* What goes wrong, as plain lines with their red marks: the weather's card stays near its neighbours' height. */
+    .lp-prob .lp-pain { gap: .55rem; }
+    .lp-prob .lp-pain li { padding: 0; gap: .6rem; background: none; border: 0; font-size: .9rem; color: #5b2a20; }
+    .lp-prob .lp-pain li b { width: 1.35rem; height: 1.35rem; font-size: .72rem; margin-top: .1rem; }
+    .lp-prob .lp-fixes { margin-top: auto; }
+    @media (prefers-reduced-motion: reduce) { .lp-prob-top img { transition: none; } }
     /* How anee.io helps: a green card of ticks under each problem. */
     .lp-fixes { margin-top: 1.4rem; padding: 1rem 1.1rem 1.05rem; border-radius: 1.1rem; background: #f3f8ec; border: 1px solid #dcead0; }
     .lp-fixes-h { font-size: .74rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
@@ -217,18 +242,29 @@
         background: #fde2dc; color: #b42318; font-size: .9rem; }
     .lp-photo { border-radius: 1.5rem; overflow: hidden; box-shadow: 0 30px 60px -32px rgb(20 33 12 / .55); }
     .lp-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
-    /* What guessing costs: a dark band of "up to" figures that count up once seen. */
+    /* What guessing costs: a dark band of "up to" figures that count up once seen, one compact row each
+       (2026-10-28): the photo, the figure, what it takes and from a hectare, a red bar filling to it. */
     .lp-losses { position: relative; isolation: isolate; overflow: hidden; color: #fff;
         background: radial-gradient(900px 420px at 90% 0%, rgb(180 35 24 / .28), transparent 60%), linear-gradient(180deg, #16210f, #0f170a); }
     .lp-losses-sub { margin-top: .9rem; font-size: clamp(1rem, 1.6vw, 1.15rem); line-height: 1.6; color: rgb(255 255 255 / .8); }
-    .lp-loss-grid { display: grid; gap: 1.1rem; }
-    @media (min-width: 768px) { .lp-loss-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    .lp-losses .loss-card { border-color: transparent; box-shadow: 0 20px 44px -26px rgb(0 0 0 / .7); }
+    .lp-lgrid { display: grid; gap: .65rem; }
+    @media (min-width: 768px) { .lp-lgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; } }
+    .lp-lrow { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: .85rem; align-items: center; padding: .65rem .8rem .7rem .65rem; border-radius: 1.15rem;
+        background: rgb(255 255 255 / .06); border: 1px solid rgb(255 255 255 / .1); }
+    .lp-lrow-img { width: 4.6rem; height: 4.6rem; border-radius: .85rem; object-fit: cover; }
+    .lp-lrow-b { min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .75rem; align-items: center; }
+    .lp-lrow-n { grid-row: span 2; font-family: var(--font-heading); font-weight: 800; font-size: 2.05rem; line-height: .95; color: #fca5a5; text-align: center; }
+    .lp-lrow-n small { display: block; margin-bottom: .2rem; font-family: var(--font-sans, inherit); font-size: .56rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: rgb(255 255 255 / .6); }
+    .lp-lrow-n i { font-style: normal; font-size: .95rem; }
+    .lp-lrow-t { font-weight: 800; color: #fff; font-size: .93rem; line-height: 1.3; }
+    .lp-lrow-peso { margin-top: .15rem; font-size: .78rem; font-weight: 700; color: #fcd34d; }
+    .lp-lrow-p { display: none; grid-column: 1 / -1; margin-top: .45rem; font-size: .82rem; color: rgb(255 255 255 / .62); line-height: 1.5; }
+    @media (min-width: 768px) { .lp-lrow-p { display: block; } }
+    .lp-lrow-bar { grid-column: 1 / -1; display: block; margin-top: .55rem; height: 4px; border-radius: 999px; background: rgb(255 255 255 / .1); overflow: hidden; }
+    .lp-lrow-bar b { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, #f87171, #dc2626); transition: width 1.1s cubic-bezier(.22,1,.36,1); }
+    .lp-lrow.is-lit .lp-lrow-bar b { width: var(--loss); }
     .lp-loss-note { margin-top: 1.1rem; font-size: .78rem; color: rgb(255 255 255 / .55); text-align: center; line-height: 1.55; }
-    /* The peso range keeps its line, and "lost per hectare" drops whole
-       under it on a phone instead of breaking a pill in two. */
-    .lp-losses .loss-peso { flex-wrap: wrap; column-gap: .3rem; row-gap: 0; border-radius: .85rem; line-height: 1.35; }
-    .lp-losses .loss-peso span { font-weight: 700; }
+    @media (prefers-reduced-motion: reduce) { .lp-lrow-bar b { transition: none; } }
     /* Precision: the four "rights" */
     .lp-rights { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14.5rem), 1fr)); }
     .lp-right { position: relative; padding: 1.35rem 1.2rem 1.25rem; border-radius: 1.25rem; background: #fff;
@@ -264,43 +300,94 @@
         .lp-step:not(:last-child)::after { content: ''; position: absolute; top: 2.6rem; right: -1.05rem; width: .9rem; height: 2px;
             background: repeating-linear-gradient(90deg, #6b9f3d 0 4px, transparent 4px 7px); }
     }
-    /* Plan badge on a pillar */
-    .lp-plan { display: inline-flex; align-items: center; gap: .35rem; margin-top: 1.1rem; padding: .3rem .75rem; border-radius: 999px;
-        font-size: .76rem; font-weight: 800; color: #2d5016; background: #f3f8ec; border: 1px solid #dcead0; }
-    .lp-plan.is-paid { color: #7a4b00; background: #fff7df; border-color: #f6e2a4; }
-    /* Everything in one app: the season's modules beside the tools, grouped. */
+    /* Everything in one app (2026-10-28): the season's modules beside the tools, in one fold per step of the season,
+       each fold's head showing its count, how many are free and its first icons; a tool opens a sheet with what it
+       does and how it helps. The first fold starts open. */
     .lp-all { display: grid; gap: 2.5rem; align-items: start; }
     @media (min-width: 1024px) { .lp-all { grid-template-columns: 20rem 1fr; gap: 3.5rem; } .lp-all-phone { position: sticky; top: 2rem; } }
     .lp-all-phone { display: flex; justify-content: center; }
     /* On a phone the tools speak for themselves: the screenshot would only make the page longer. */
     @media (max-width: 1023.98px) { .lp-all-phone { display: none; } }
     .lp-all-phone .ph-frame { width: min(280px, 72vw); }
-    .lp-group + .lp-group { margin-top: 1.6rem; }
-    .lp-group-h { display: flex; align-items: center; gap: .6rem; margin-bottom: .7rem; font-size: .74rem; font-weight: 900;
-        letter-spacing: .1em; text-transform: uppercase; color: #4a7c2a; }
-    .lp-group-h::after { content: ''; flex: 1; height: 1px; background: #dcead0; }
-    /* Two to a row everywhere, so a group of four is a square, never three and
-       an orphan; a group's odd last tile takes the whole row. */
-    .lp-tiles { display: grid; gap: .75rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .lp-folds { display: grid; gap: .6rem; }
+    .lp-fold { border-radius: 1.2rem; background: #fff; border: 1px solid #e3ecd9; overflow: hidden;
+        transition: box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .lp-fold.is-open { border-color: #c9e0ad; box-shadow: 0 18px 36px -28px rgb(20 33 12 / .55); }
+    .lp-fold-h { width: 100%; display: flex; align-items: center; gap: .75rem; padding: .85rem 1rem; text-align: left; cursor: pointer; }
+    .lp-fold-h .n { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px; font-size: .85rem; font-weight: 900; color: #fff;
+        background: linear-gradient(135deg, #6b9f3d, #3d6823); }
+    .lp-fold-h .t { flex: 1; min-width: 0; font-family: var(--font-heading); font-weight: 800; color: #14210c; font-size: 1rem; line-height: 1.25; }
+    .lp-fold-h .t small { display: block; margin-top: .1rem; font-family: var(--font-sans, inherit); font-size: .74rem; font-weight: 700; color: #6b7a5e; }
+    .lp-fold-h .t small b { color: #3d6823; }
+    .lp-fold-ics { flex: none; display: flex; }
+    .lp-fold-ics img { width: 1.85rem; height: 1.85rem; padding: .25rem; border-radius: 999px; object-fit: contain; background: #f3f8ec; box-shadow: 0 0 0 2px #fff; }
+    .lp-fold-ics img + img { margin-left: -.5rem; }
+    .lp-fold-ics img.is-face { padding: 0; object-fit: cover; }
+    @media (max-width: 420px) { .lp-fold-ics img:nth-child(n+4) { display: none; } }
+    .lp-fold-h > svg { flex: none; width: 1.2rem; height: 1.2rem; color: #4a7c2a; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .lp-fold.is-open .lp-fold-h > svg { transform: rotate(180deg); }
+    .lp-fold-b { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .32s cubic-bezier(.22,1,.36,1); }
+    .lp-fold.is-open .lp-fold-b { grid-template-rows: 1fr; }
+    .lp-fold-b > div { min-height: 0; overflow: hidden; }
+    .lp-fold-b .lp-tiles { padding: .45rem .85rem .95rem; }
+    /* Two to a row everywhere, so a step of four is a square, never three and an orphan; a step's odd last tile takes the whole row. */
+    .lp-tiles { display: grid; gap: .6rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .lp-tile:last-child:nth-child(odd) { grid-column: 1 / -1; }
-    .lp-tile { display: flex; gap: .75rem; align-items: flex-start; padding: .9rem .95rem; border-radius: 1rem; background: #fff;
-        border: 1px solid #e7eee0; transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
-    .lp-tile:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -22px rgb(20 33 12 / .45); }
-    .lp-tile .e { flex: none; display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: .8rem; background: #f3f8ec;
-        font-size: 1.2rem; line-height: 1; overflow: hidden; }
-    .lp-tile .e img { width: 1.55rem; height: 1.55rem; object-fit: contain; }
+    .lp-tile { position: relative; display: flex; gap: .7rem; align-items: flex-start; width: 100%; padding: .8rem .85rem; border-radius: 1rem; text-align: left; cursor: pointer;
+        background: #fafcf7; border: 1px solid #e7eee0; transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .lp-tile:hover, .lp-tile:focus-visible { transform: translateY(-2px); border-color: #c9e0ad; box-shadow: 0 16px 30px -22px rgb(20 33 12 / .45); }
+    .lp-tile .e { flex: none; display: grid; place-items: center; width: 2.3rem; height: 2.3rem; border-radius: .8rem; background: #f0f7e6; overflow: hidden; }
+    .lp-tile .e img { width: 1.5rem; height: 1.5rem; object-fit: contain; }
     .lp-tile .e.is-face img { width: 100%; height: 100%; object-fit: cover; }
-    .lp-tile-tag { display: inline-block; margin-left: .35rem; padding: .05rem .4rem; border-radius: 999px; vertical-align: .1em; font-size: .62rem; font-weight: 900;
+    .lp-tile-tag { display: inline-block; margin-left: .3rem; padding: .05rem .4rem; border-radius: 999px; vertical-align: .1em; font-style: normal; font-size: .6rem; font-weight: 900;
         letter-spacing: .04em; color: #5b4300; background: #fde68a; }
-    .lp-group-h b { display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 999px; font-size: .72rem; color: #fff; background: #4a7c2a; letter-spacing: 0; }
-    .lp-tile h4, .lp-tile .lp-tile-h { font-weight: 800; color: #14210c; font-size: .95rem; line-height: 1.3; }
-    .lp-tile p { margin-top: .15rem; font-size: .84rem; color: #5b6651; line-height: 1.45; }
-    /* On a phone a tile is its icon and its name: {tools} of them, read at a glance. */
+    .lp-tile-free { position: absolute; top: .45rem; right: .5rem; padding: .05rem .4rem; border-radius: 999px; font-style: normal; font-size: .58rem; font-weight: 900; letter-spacing: .04em;
+        text-transform: uppercase; color: #2d5016; background: #dcfce7; }
+    .lp-tile-h { display: block; padding-right: 2.2rem; font-weight: 800; color: #14210c; font-size: .9rem; line-height: 1.3; }
+    .lp-tile small { display: block; margin-top: .15rem; font-size: .8rem; color: #5b6651; line-height: 1.45; }
+    /* On a phone a tile is its icon and its name, read at a glance; a tap says the rest. */
     @media (max-width: 559px) {
-        .lp-tile { align-items: center; gap: .6rem; padding: .65rem .7rem; }
-        .lp-tile .e { width: 2.1rem; height: 2.1rem; }
-        .lp-tile h4, .lp-tile .lp-tile-h { font-size: .84rem; }
-        .lp-tile p { display: none; }
+        .lp-tile { align-items: center; gap: .55rem; padding: .62rem .6rem; }
+        .lp-tile .e { width: 2rem; height: 2rem; }
+        .lp-tile-h { font-size: .8rem; padding-right: 0; }
+        .lp-tile small { display: none; }
+        .lp-tile-free { top: -.35rem; right: .35rem; }
+    }
+
+    /* A tool's sheet: up from the bottom on a phone, a card in the middle on a desk. */
+    .lp-sheet { position: fixed; inset: 0; z-index: 90; display: flex; align-items: flex-end; justify-content: center; }
+    .lp-sheet[hidden] { display: none; }
+    .lp-sheet-bg { position: absolute; inset: 0; background: rgb(12 18 8 / .55); opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .lp-sheet-card { position: relative; width: 100%; max-width: 34rem; max-height: 88vh; overflow-y: auto; overscroll-behavior: contain; border-radius: 1.5rem 1.5rem 0 0; background: #fff;
+        box-shadow: 0 -20px 50px -20px rgb(0 0 0 / .5); transform: translateY(100%); transition: transform .32s cubic-bezier(.22,1,.36,1); }
+    @media (min-width: 640px) {
+        .lp-sheet { align-items: center; padding: 1.5rem; }
+        .lp-sheet-card { border-radius: 1.5rem; transform: translateY(24px) scale(.97); opacity: 0; transition: transform .32s cubic-bezier(.22,1,.36,1), opacity .32s cubic-bezier(.22,1,.36,1); }
+    }
+    .lp-sheet.is-on .lp-sheet-bg { opacity: 1; }
+    .lp-sheet.is-on .lp-sheet-card { transform: none; opacity: 1; }
+    .lp-sheet-x { position: absolute; top: .7rem; right: .7rem; z-index: 2; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: 999px; cursor: pointer;
+        color: #fff; background: rgb(20 33 12 / .55); }
+    .lp-sheet-x svg { width: 1.1rem; height: 1.1rem; }
+    .lp-sheet-shot { position: relative; height: 11rem; overflow: hidden; background: linear-gradient(160deg, #2c4f17, #0d1609); }
+    .lp-sheet-shot img { position: absolute; left: 50%; top: 1rem; width: 62%; max-width: 15rem; transform: translateX(-50%); border-radius: 1rem 1rem 0 0; box-shadow: 0 18px 34px -16px rgb(0 0 0 / .9); }
+    .lp-sheet-in { padding: 1.1rem 1.2rem 1.3rem; }
+    .lp-sheet-h { display: flex; align-items: center; gap: .7rem; }
+    .lp-sheet-h img { flex: none; width: 2.6rem; height: 2.6rem; padding: .35rem; border-radius: .9rem; object-fit: contain; background: #f0f7e6; }
+    .lp-sheet-h img.is-face { padding: 0; object-fit: cover; }
+    .lp-sheet-h b { display: block; font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; color: #14210c; line-height: 1.2; }
+    .lp-sheet-h small { display: block; margin-top: .1rem; font-size: .8rem; font-weight: 700; color: #4a7c2a; }
+    .lp-sheet-p { margin-top: .85rem; color: #374151; line-height: 1.6; font-size: .94rem; }
+    .lp-sheet-help { margin-top: 1rem; padding: .9rem 1rem; border-radius: 1rem; background: #f3f8ec; border: 1px solid #dcead0; }
+    .lp-sheet-help > b { display: block; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #3d6823; }
+    .lp-sheet-help div { position: relative; margin-top: .55rem; padding-left: 1.4rem; font-size: .88rem; line-height: 1.5; color: #374151; }
+    .lp-sheet-help div::before { content: ''; position: absolute; left: .1rem; top: .35rem; width: .8rem; height: .45rem; border-left: 2.5px solid #4a7c2a; border-bottom: 2.5px solid #4a7c2a; transform: rotate(-45deg); }
+    .lp-sheet-help div b { color: #14210c; }
+    .lp-sheet-plan { display: inline-flex; margin-top: 1rem; padding: .3rem .75rem; border-radius: 999px; font-size: .76rem; font-weight: 800; color: #2d5016; background: #ecfccb; }
+    .lp-sheet-plan.is-paid { color: #7a4b00; background: #fff7df; }
+    .lp-sheet-go { display: flex; width: 100%; justify-content: center; margin-top: 1.1rem; }
+    @media (prefers-reduced-motion: reduce) {
+        .lp-fold, .lp-fold-b, .lp-fold-h > svg, .lp-tile, .lp-sheet-bg, .lp-sheet-card { transition: none !important; }
     }
 
     /* The button that stays at hand on a phone: in once the hero's own
@@ -351,7 +438,7 @@
     .lp-risk { margin-top: 1rem; font-size: .9rem; font-weight: 700; color: #d9f99d; }
     @media (prefers-reduced-motion: reduce) {
         .lp-float, .lp-kicker i { animation: none; }
-        .lp-qa .a, .lp-qa button svg, .lp-tile, .lp-right, .loss-bar i { transition: none; }
+        .lp-qa .a, .lp-qa button svg, .lp-tile, .lp-right { transition: none; }
     }
 </style>
 @endpush
@@ -409,7 +496,20 @@
         ];
         $rowPhoto = fn (?string $upload, string $key) => \App\Support\LandingPage::imageUrl($upload, 'lp/' . (isset($photoAlts[$key]) ? $key : 'storm') . '.webp');
     @endphp
-    <section class="lp-problems overflow-x-clip">
+    @php
+        // The three problems as one list: the weather (with what goes wrong), then fuel and fertilizer (with their words).
+        $probs = [[
+            'src' => $rowPhoto($lp['problem']['image'], 'storm'), 'alt' => $photoAlts['storm'],
+            'kicker' => $lp['problem']['kicker'], 'headline' => $lp['problem']['headline'],
+            'pains' => $lp['problem']['bullets'], 'text' => '', 'fixes' => $lp['problem']['fixes'],
+        ]];
+        foreach ($lp['costs']['items'] as $c) {
+            $key = $c['image'] ?: 'tractor';
+            $probs[] = ['src' => $rowPhoto($c['upload'] ?? '', $key), 'alt' => $photoAlts[$key] ?? $c['headline'],
+                'kicker' => $c['kicker'], 'headline' => $c['headline'], 'pains' => [], 'text' => $c['text'], 'fixes' => $c['fixes']];
+        }
+    @endphp
+    <section class="lp-problems">
         @if (trim($lp['problem']['sectionTitle'] ?? '') !== '')
             <div class="max-w-3xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14 text-center reveal">
                 @if (trim($lp['problem']['sectionKicker'] ?? '') !== '')<span class="fx-kicker">{{ $lp['problem']['sectionKicker'] }}</span>@endif
@@ -417,55 +517,38 @@
                 @if (trim($lp['problem']['sectionSub'] ?? '') !== '')<p class="lp-problems-sub">{{ $lp['problem']['sectionSub'] }}</p>@endif
             </div>
         @endif
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-10 pb-16 sm:pt-14 sm:pb-24 space-y-20 sm:space-y-28">
-            <div class="lp-row2">
-                <div class="lp-photo reveal">
-                    <img src="{{ $rowPhoto($lp['problem']['image'], 'storm') }}" alt="{{ $photoAlts['storm'] }}" width="1400" height="1050" loading="lazy">
-                </div>
-                <div class="reveal">
-                    <span class="fx-kicker">{{ $lp['problem']['kicker'] }}</span>
-                    <h2 class="fx-h">{{ $lp['problem']['headline'] }}</h2>
-                    <ul class="lp-pain mt-6">
-                        @foreach ($lp['problem']['bullets'] as $b)
-                            <li><b aria-hidden="true">✕</b><span>{{ $b }}</span></li>
-                        @endforeach
-                    </ul>
-                    @if (! empty($lp['problem']['fixes']))
-                        <div class="lp-fixes">
-                            <p class="lp-fixes-h">{{ $lp['costs']['helpsLabel'] }}</p>
-                            <ul class="fx-list">
-                                @foreach ($lp['problem']['fixes'] as $f)
-                                    <li>{!! $check !!}<span>{{ $f }}</span></li>
-                                @endforeach
-                            </ul>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 pt-9 pb-16 sm:pt-12 sm:pb-20">
+            <div class="lp-probs">
+                @foreach ($probs as $i => $pr)
+                    <article class="lp-prob reveal" style="--reveal-delay: {{ $i * 0.08 }}s">
+                        <div class="lp-prob-top">
+                            <img src="{{ $pr['src'] }}" alt="{{ $pr['alt'] }}" width="1400" height="1050" loading="lazy">
+                            <div class="lp-prob-cap"><span class="lp-prob-k">{{ $pr['kicker'] }}</span><h3>{{ $pr['headline'] }}</h3></div>
                         </div>
-                    @endif
-                </div>
-            </div>
-
-            @foreach ($lp['costs']['items'] as $i => $c)
-                @php $key = $c['image'] ?: 'tractor'; @endphp
-                <div class="lp-row2 {{ $i % 2 === 0 ? 'is-flip' : '' }}">
-                    <div class="lp-photo reveal">
-                        <img src="{{ $rowPhoto($c['upload'] ?? '', $key) }}" alt="{{ $photoAlts[$key] ?? $c['headline'] }}" width="1400" height="1050" loading="lazy">
-                    </div>
-                    <div class="reveal">
-                        <span class="fx-kicker">{{ $c['kicker'] }}</span>
-                        <h2 class="fx-h">{{ $c['headline'] }}</h2>
-                        @if (trim($c['text']) !== '')<p class="fx-p">{{ $c['text'] }}</p>@endif
-                        @if (! empty($c['fixes']))
-                            <div class="lp-fixes">
-                                <p class="lp-fixes-h">{{ $lp['costs']['helpsLabel'] }}</p>
-                                <ul class="fx-list">
-                                    @foreach ($c['fixes'] as $f)
-                                        <li>{!! $check !!}<span>{{ $f }}</span></li>
+                        <div class="lp-prob-body">
+                            @if (! empty($pr['pains']))
+                                <ul class="lp-pain">
+                                    @foreach ($pr['pains'] as $b)
+                                        <li><b aria-hidden="true">✕</b><span>{{ $b }}</span></li>
                                     @endforeach
                                 </ul>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            @endforeach
+                            @elseif (trim($pr['text']) !== '')
+                                <p>{{ $pr['text'] }}</p>
+                            @endif
+                            @if (! empty($pr['fixes']))
+                                <div class="lp-fixes">
+                                    <p class="lp-fixes-h">{{ $lp['costs']['helpsLabel'] }}</p>
+                                    <ul class="fx-list">
+                                        @foreach ($pr['fixes'] as $f)
+                                            <li>{!! $check !!}<span>{{ $f }}</span></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+                    </article>
+                @endforeach
+            </div>
         </div>
     </section>
 
@@ -481,26 +564,25 @@
                     <h2 class="font-heading font-extrabold text-2xl sm:text-4xl text-balance">{{ $lp['losses']['headline'] }}</h2>
                     @if (trim($lp['losses']['sub'] ?? '') !== '')<p class="lp-losses-sub">{{ $lp['losses']['sub'] }}</p>@endif
                 </div>
-                <div class="lp-loss-grid mt-10">
+                <div class="lp-lgrid mt-9">
                     @foreach ($lp['losses']['items'] as $i => $l)
                         @php
                             $n = max(0, min(100, (int) ($l['n'] ?? 0)));
                             $pic = in_array($l['image'] ?? '', \App\Support\LandingPage::LOSS_PHOTOS, true) ? $l['image'] : 'palay-heads';
                             $peso = trim($l['peso'] ?? '');
                         @endphp
-                        <div class="loss-card loss-card2 reveal" style="--loss: {{ $n }}%; --reveal-delay: {{ ($i % 2) * 0.08 }}s">
-                            <div class="loss-img"><img src="{{ \App\Support\LandingPage::imageUrl($l['upload'] ?? '', 'lp/loss/' . $pic . '.webp') }}" alt="" width="400" height="500" loading="lazy"></div>
-                            <div class="loss-body">
-                                <p class="loss-upto">Up to</p>
-                                <p class="loss-n"><span data-n="{{ $n }}">{{ $n }}</span><small>%</small></p>
-                                <p class="loss-l">{{ $l['title'] ?? '' }}</p>
-                                @if (trim($l['text'] ?? '') !== '')<p class="loss-p">{{ $l['text'] }}</p>@endif
+                        <div class="lp-lrow reveal" style="--loss: {{ $n }}%; --reveal-delay: {{ ($i % 2) * 0.06 }}s">
+                            <img class="lp-lrow-img" src="{{ \App\Support\LandingPage::imageUrl($l['upload'] ?? '', 'lp/loss/' . $pic . '.webp') }}" alt="" width="400" height="500" loading="lazy">
+                            <div class="lp-lrow-b">
+                                <p class="lp-lrow-n"><small>Up to</small><span data-n="{{ $n }}">{{ $n }}</span><i>%</i></p>
+                                <p class="lp-lrow-t">{{ $l['title'] ?? '' }}</p>
                                 @if (\App\Support\Region::ph() && $peso !== '')
-                                    <p class="loss-peso"><b>{{ $peso }}</b> <span>lost per hectare</span></p>
+                                    <p class="lp-lrow-peso">{{ $peso }} lost per hectare</p>
                                 @else
-                                    <p class="loss-peso"><span>up to {{ $n }}% of what a hectare earns, lost</span></p>
+                                    <p class="lp-lrow-peso">Up to {{ $n }}% of what a hectare earns</p>
                                 @endif
-                                <div class="loss-bar" aria-hidden="true"><i></i></div>
+                                @if (trim($l['text'] ?? '') !== '')<p class="lp-lrow-p">{{ $l['text'] }}</p>@endif
+                                <span class="lp-lrow-bar" aria-hidden="true"><b></b></span>
                             </div>
                         </div>
                     @endforeach
@@ -509,6 +591,11 @@
             </div>
         </section>
     @endif
+
+    {{-- ================= Where most farmers get answers today (2026-10-28) =================
+         The real Facebook post, its twenty comments and seven causes: why advice from strangers fails, then one line on
+         what Anee does instead. Its button signs up with the ad's tags; nothing on it leads off the page. --}}
+    @include('public.partials.social-guess', ['sgSignup' => $signup, 'sgAsk' => false, 'sgLean' => true])
 
     {{-- ================= The answer: precision agriculture, then how it works ================= --}}
     <section class="py-16 sm:py-24">
@@ -600,10 +687,24 @@
             </div>
             <div class="lp-space-grid mt-10">
                 @foreach ($lp['space']['items'] as $i => $t)
-                    @php $img = in_array($t['image'] ?? '', ['satellite', 'sky', 'npk', 'finder', 'stash'], true) ? $t['image'] : 'sky'; @endphp
-                    <div class="lp-space-card reveal" style="--reveal-delay: {{ ($i % 4) * 0.07 }}s">
-                        <span class="lp-space-shot"><img src="{{ asset('images/site/app/' . $img . '.webp') }}" alt="{{ $t['title'] }} in anee.io" width="780" height="1520" loading="lazy"></span>
-                        <div class="lp-space-tx"><h3>{{ $t['title'] }}</h3><p>{{ $t['text'] }}</p></div>
+                    @php
+                        // An item's image is a tool's key (How It Works): its screen of the app as it is now, and its plan.
+                        // The first four items' old picture names still find their tools.
+                        $img = (string) ($t['image'] ?? '');
+                        $toolKey = ['sky' => 'skyWeather', 'finder' => 'pestFinder'][$img] ?? $img;
+                        $tool = $hwTools[$toolKey] ?? null;
+                        $shot = $tool ? \App\Support\HowItWorks::shot($toolKey) : null;
+                        $src = $shot[0] ?? asset('images/site/app/' . (in_array($img, ['satellite', 'sky', 'npk', 'finder', 'stash'], true) ? $img : 'sky') . '.webp');
+                    @endphp
+                    <div class="lp-space-card reveal" style="--reveal-delay: {{ ($i % 3) * 0.07 }}s">
+                        <span class="lp-space-shot"><img src="{{ $src }}" @if (! empty($shot[1])) srcset="{{ $shot[1] }}" sizes="(max-width: 559px) 40vw, 260px" @endif alt="{{ $t['title'] }} in anee.io" width="540" height="1170" loading="lazy"></span>
+                        <div class="lp-space-tx">
+                            <h3>{{ $t['title'] }}</h3>
+                            <p>{{ $t['text'] }}</p>
+                            @if ($tool)
+                                <span class="lp-space-plan {{ $isFree($tool) ? '' : 'is-paid' }}">{{ $isFree($tool) ? 'Free on ' . $tool['plan']['name'] : 'With ' . $tool['plan']['name'] }}</span>
+                            @endif
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -613,49 +714,6 @@
         </div>
     </section>
     @endif
-
-    {{-- ================= 4. FEATURES AS BENEFITS (zigzag) ================= --}}
-    <section class="py-16 sm:py-24 bg-gradient-to-b from-brand-50/60 to-white overflow-x-clip">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 space-y-20 sm:space-y-28">
-            @foreach ($lp['pillars'] as $i => $p)
-                @php
-                    // An upload from the editor stands in for the built-in picture,
-                    // framed as a phone screenshot or shown as a photo.
-                    $key = $p['image'] ?: 'board';
-                    $upload = \App\Support\LandingPage::photoUrl($p['upload'] ?? '');
-                    $isPhoto = $upload ? ($p['frame'] ?? '') === 'photo' : isset($photos[$key]);
-                    [$src, $alt, $tall] = $photos[$key] ?? $shots[$key] ?? $shots['board'];
-                    $src = $upload ?: asset('images/site/' . $src);
-                    $alt = $upload ? $p['title'] : $alt;
-                    $paid = ! str_contains(strtolower($p['plan'] ?? ''), 'free');
-                @endphp
-                <div class="fx-row {{ $i % 2 ? 'is-flip' : '' }}">
-                    <div class="fx-media fx-glow reveal">
-                        @if ($isPhoto)
-                            <div class="lp-photo" style="max-width: 26rem; aspect-ratio: 3 / 4">
-                                <img src="{{ $src }}" alt="{{ $alt }}" width="1200" height="1600" loading="lazy">
-                            </div>
-                        @else
-                            <div class="ph-frame {{ $i % 2 ? 'ph-tilt-l' : 'ph-tilt-r' }}">
-                                <img src="{{ $src }}" alt="{{ $alt }}" width="780" height="{{ $tall }}" loading="lazy">
-                            </div>
-                        @endif
-                    </div>
-                    <div class="reveal">
-                        <span class="fx-kicker">{{ $p['kicker'] }}</span>
-                        <h2 class="fx-h">{{ $p['title'] }}</h2>
-                        <p class="fx-p">{{ $p['text'] }}</p>
-                        <ul class="fx-list">
-                            @foreach ($p['bullets'] as $b)
-                                <li>{!! $check !!}<span>{{ $b }}</span></li>
-                            @endforeach
-                        </ul>
-                        @if (! empty($p['plan']))<span class="lp-plan {{ $paid ? 'is-paid' : '' }}">{{ $p['plan'] }}</span>@endif
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </section>
 
     {{-- ================= Everything the farm needs, in one app ================= --}}
     <section class="pt-14 pb-16 sm:pt-20 sm:pb-24">
@@ -670,24 +728,68 @@
                         <img src="{{ \App\Support\LandingPage::imageUrl($lp['more']['image'] ?? '', $shots['hub'][0]) }}" alt="{{ $shots['hub'][1] }}" width="780" height="{{ $shots['hub'][2] }}" loading="lazy">
                     </div>
                 </div>
-                <div>
+                <div class="lp-folds" id="lpFolds">
                     @foreach ($hwSteps as $si => $st)
-                        <div class="lp-group reveal">
-                            <p class="lp-group-h"><b>{{ $si + 1 }}</b>{{ $st['title'] }}</p>
-                            <div class="lp-tiles">
-                                @foreach ($st['items'] as $t)
-                                    <div class="lp-tile">
-                                        <span class="e{{ str_starts_with($t['icon'], 'anee/') ? ' is-face' : '' }}" aria-hidden="true"><img src="{{ asset('images/' . $t['icon']) }}" alt="" loading="lazy" width="40" height="40"></span>
-                                        <div><h3 class="lp-tile-h">{{ $t['name'] }}@if ($t['anee'])<i class="lp-tile-tag">Anee</i>@endif</h3><p>{{ $t['short'] }}</p></div>
-                                    </div>
-                                @endforeach
-                            </div>
+                        @php
+                            $nAll = count($st['items']);
+                            $nFree = count(array_filter($st['items'], $isFree));
+                        @endphp
+                        <div class="lp-fold reveal {{ $si === 0 ? 'is-open' : '' }}">
+                            <button type="button" class="lp-fold-h" aria-expanded="{{ $si === 0 ? 'true' : 'false' }}" aria-controls="lpFold{{ $si }}">
+                                <b class="n">{{ $si + 1 }}</b>
+                                <span class="t">{{ $st['title'] }}<small>{{ $nAll }} {{ $nAll === 1 ? 'tool' : 'tools' }}@if ($nFree), <b>{{ $nFree === $nAll ? 'all free' : $nFree . ' free' }}</b>@endif</small></span>
+                                <span class="lp-fold-ics" aria-hidden="true">
+                                    @foreach (array_slice($st['items'], 0, 4) as $t)
+                                        <img src="{{ asset('images/' . $t['icon']) }}" alt="" width="40" height="40" loading="lazy" class="{{ str_starts_with($t['icon'], 'anee/') ? 'is-face' : '' }}">
+                                    @endforeach
+                                </span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                            </button>
+                            <div class="lp-fold-b" id="lpFold{{ $si }}" role="region"><div>
+                                <div class="lp-tiles">
+                                    @foreach ($st['items'] as $t)
+                                        <button type="button" class="lp-tile" data-tool="{{ $t['key'] }}" @if ($si !== 0) tabindex="-1" @endif>
+                                            <span class="e{{ str_starts_with($t['icon'], 'anee/') ? ' is-face' : '' }}" aria-hidden="true"><img src="{{ asset('images/' . $t['icon']) }}" alt="" loading="lazy" width="40" height="40"></span>
+                                            <span><span class="lp-tile-h">{{ $t['name'] }}@if ($t['anee'])<i class="lp-tile-tag">Anee</i>@endif</span><small>{{ $t['short'] }}</small></span>
+                                            @if ($isFree($t))<i class="lp-tile-free">Free</i>@endif
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div></div>
                         </div>
                     @endforeach
                 </div>
             </div>
         </div>
     </section>
+
+    {{-- A tool's sheet: what it does, how it helps, its plan, and the way in. Filled from lpTools when a tool is tapped. --}}
+    <div class="lp-sheet" id="lpSheet" hidden>
+        <div class="lp-sheet-bg" data-sheet-close></div>
+        <div class="lp-sheet-card" role="dialog" aria-modal="true" aria-labelledby="lpSheetName">
+            <button type="button" class="lp-sheet-x" data-sheet-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
+            <div class="lp-sheet-shot" id="lpSheetShot"></div>
+            <div class="lp-sheet-in">
+                <div id="lpSheetBody"></div>
+                <a href="{{ $signup }}" class="btn btn-accent btn-lg lp-sheet-go">{{ $lp['hero']['cta'] }} {!! $arrow !!}</a>
+            </div>
+        </div>
+    </div>
+    @php
+        $lpTools = $hwTools->map(fn ($t) => [
+            'name' => $t['name'],
+            'short' => $t['short'],
+            'icon' => asset('images/' . $t['icon']),
+            'face' => str_starts_with($t['icon'], 'anee/'),
+            'anee' => (bool) $t['anee'],
+            'what' => $t['what'],
+            'helps' => array_map([\App\Support\HowItWorks::class, 'helpHtml'], $t['helps'] ?? []),
+            'plan' => $isFree($t) ? 'Free on ' . $t['plan']['name'] . ', forever' : 'Comes with ' . $t['plan']['name'],
+            'free' => $isFree($t),
+            'shot' => \App\Support\HowItWorks::shot($t['key'])[0] ?? null,
+        ]);
+    @endphp
+    <script type="application/json" id="lpTools">{!! json_encode($lpTools, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>
 
     {{-- ================= 5. TESTIMONIALS — real farmers only, written in the mother app ================= --}}
     @if (! empty($lp['testimonials']['items']))
@@ -797,7 +899,7 @@
 
     // What guessing costs: each figure counts up, and its bar fills, the first time it is seen.
     const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const losses = document.querySelectorAll('#lpLosses .loss-card');
+    const losses = document.querySelectorAll('#lpLosses .lp-lrow');
     const light = (card) => {
         card.classList.add('is-lit');
         const b = card.querySelector('[data-n]');
@@ -821,6 +923,54 @@
         losses.forEach(light);
     }
 
+    // Every tool: a fold per step (opened and closed on its grid, its tiles reachable by tab only while open), and a
+    // tool's sheet with what it does and how it helps your crops and your farm.
+    document.getElementById('lpFolds')?.addEventListener('click', (e) => {
+        const head = e.target.closest('.lp-fold-h');
+        if (head) {
+            const fold = head.parentElement;
+            const open = !fold.classList.contains('is-open');
+            fold.classList.toggle('is-open', open);
+            head.setAttribute('aria-expanded', open ? 'true' : 'false');
+            fold.querySelectorAll('.lp-tile').forEach((t) => { t.tabIndex = open ? 0 : -1; });
+            return;
+        }
+        const tile = e.target.closest('[data-tool]');
+        if (tile) openSheet(tile.dataset.tool, tile);
+    });
+    let TOOLS = {};
+    try { TOOLS = JSON.parse(document.getElementById('lpTools')?.textContent || '{}'); } catch (_) { TOOLS = {}; }
+    const sheet = document.getElementById('lpSheet');
+    const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    let back = null, shutT = 0;
+    function openSheet(key, from) {
+        const t = TOOLS[key];
+        if (!t || !sheet) return;
+        back = from || null;
+        clearTimeout(shutT);
+        document.getElementById('lpSheetShot').innerHTML = t.shot ? '<img src="' + esc(t.shot) + '" alt="' + esc(t.name) + ' in anee.io">' : '';
+        document.getElementById('lpSheetShot').hidden = !t.shot;
+        document.getElementById('lpSheetBody').innerHTML =
+            '<div class="lp-sheet-h"><img src="' + esc(t.icon) + '" alt=""' + (t.face ? ' class="is-face"' : '') + '><div><b id="lpSheetName">' + esc(t.name) + '</b><small>'
+            + (t.anee ? 'Anee does the work · ' : '') + esc(t.short) + '</small></div></div>'
+            + '<p class="lp-sheet-p">' + esc(t.what) + '</p>'
+            + (t.helps && t.helps.length ? '<div class="lp-sheet-help"><b>How it helps your crops and your farm</b>' + t.helps.map((h) => '<div>' + h + '</div>').join('') + '</div>' : '')
+            + '<span class="lp-sheet-plan' + (t.free ? '' : ' is-paid') + '">' + esc(t.plan) + '</span>';
+        sheet.hidden = false;
+        sheet.querySelector('.lp-sheet-card').scrollTop = 0;
+        document.documentElement.style.overflow = 'hidden';
+        requestAnimationFrame(() => requestAnimationFrame(() => sheet.classList.add('is-on')));
+        sheet.querySelector('.lp-sheet-x').focus({ preventScroll: true });
+    }
+    function shutSheet() {
+        if (!sheet || sheet.hidden) return;
+        sheet.classList.remove('is-on');
+        document.documentElement.style.overflow = '';
+        shutT = setTimeout(() => { sheet.hidden = true; }, calm ? 0 : 340);
+        if (back) back.focus({ preventScroll: true });
+    }
+    sheet?.addEventListener('click', (e) => { if (e.target.closest('[data-sheet-close]')) shutSheet(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') shutSheet(); });
 })();
 </script>
 
