@@ -167,9 +167,6 @@
             </div>
         @endforeach
     </div>
-    <div class="hb-dots" aria-hidden="true">
-        @foreach ($hbPhases as $i => $p)<i class="{{ $i === 0 ? 'is-on' : '' }}"></i>@endforeach
-    </div>
 </div>
 
 @once
@@ -366,9 +363,6 @@
         background: linear-gradient(90deg, var(--c), rgb(255 255 255 / .85)); }
     .hb-card.is-on .hb-card-bar { animation: hbBar 4.4s linear both; }
     @keyframes hbBar { to { transform: scaleX(1); } }
-    .hb-dots { display: flex; justify-content: center; gap: .4rem; margin-top: .7rem; }
-    .hb-dots i { width: .5rem; height: .5rem; border-radius: 999px; background: rgb(255 255 255 / .3); transition: width .35s cubic-bezier(.22,1,.36,1), background-color .35s ease; }
-    .hb-dots i.is-on { width: 1.4rem; background: #f5c518; }
     @media (max-width: 639.98px) {
         .hb { width: min(100%, 23rem); }
         .hb-badge { font-size: .7rem; padding: .28rem .65rem; }
@@ -385,7 +379,7 @@
         .hb-card-s { max-width: 4.6rem; padding-left: .65rem; } .hb-card-s b { font-size: 1.2rem; } .hb-card-s i, .hb-card-s small { font-size: .5rem; letter-spacing: .03em; }
     }
     @media (prefers-reduced-motion: reduce) {
-        .hb, .hb-orbit, .hb-halo, .hb-ph, .hb-ph *, .hb-card, .hb-card *, .hb-dots i { animation: none !important; transition: none !important; }
+        .hb, .hb-orbit, .hb-halo, .hb-ph, .hb-ph *, .hb-card, .hb-card * { animation: none !important; transition: none !important; }
         .hb-card-bar { display: none; }
     }
 </style>
@@ -397,7 +391,7 @@
        while on screen. */
     const hb = document.querySelector('[data-hb]');
     if (!hb) return;
-    const phases = [...hb.querySelectorAll('.hb-ph')], cards = [...hb.querySelectorAll('.hb-card')], dots = [...hb.querySelectorAll('.hb-dots i')];
+    const phases = [...hb.querySelectorAll('.hb-ph')], cards = [...hb.querySelectorAll('.hb-card')];
     const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const STAY = 4400;
     let n = 0, timer = 0, live = false;
@@ -410,7 +404,6 @@
     const show = (i) => {
         phases.forEach((p, j) => { p.classList.toggle('is-on', j === i); if (j !== i) p.classList.remove('is-play'); });
         cards.forEach((c, j) => { c.classList.remove('is-on'); if (j === i) { void c.offsetWidth; c.classList.add('is-on'); } });
-        dots.forEach((d, j) => d.classList.toggle('is-on', j === i));
         const p = phases[i];
         p.classList.remove('is-play'); void p.offsetWidth;
         if (!calm) { p.classList.add('is-play'); count(p); }
