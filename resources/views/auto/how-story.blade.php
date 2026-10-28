@@ -255,13 +255,16 @@
     .acs-vs-c h4 { display: flex; align-items: center; gap: .45rem; font-size: .92rem; font-weight: 800; color: #fff; }
     .acs-vs-c h4 img { width: 1.6rem; height: 1.6rem; }
     .acs-vs-c h4 small { margin-left: auto; padding: .1rem .5rem; border-radius: 999px; font-size: .62rem; font-weight: 900; color: #1d330d; background: var(--gold); white-space: nowrap; }
-    .acs-vs-bar { display: flex; height: 1.6rem; margin-top: .8rem; border-radius: .55rem; overflow: hidden; background: rgb(255 255 255 / .06); }
-    .acs-vs-bar i { display: grid; place-items: center; flex: none; width: calc(var(--w) * 100%); font-style: normal; font-size: .6rem; font-weight: 900; color: #1d330d; transform-origin: left; transform: scaleX(0);
-        transition: transform .7s var(--e) calc(.4s + var(--k) * .45s); }
-    .stm-scene.is-in .acs-vs-bar i { transform: none; }
+    /* The bar's pieces stand apart (a thin gap, each rounded) and are wiped in, never squeezed: a stretched piece
+       bent its stripes, and pieces butted together cut the red stripes and the gold shading off mid way (2026-10-28,
+       the owner: "the red stripe and yellow stripe ... is cut off"). Each grows to its share of what the gaps leave. */
+    .acs-vs-bar { display: flex; gap: 2px; height: 1.6rem; margin-top: .8rem; }
+    .acs-vs-bar i { display: grid; place-items: center; flex: var(--w) 1 0%; min-width: 0; border-radius: .4rem; font-style: normal; font-size: .6rem; font-weight: 900; color: #1d330d;
+        clip-path: inset(0 100% 0 0 round .4rem); transition: clip-path .7s var(--e) calc(.4s + var(--k) * .45s); }
+    .stm-scene.is-in .acs-vs-bar i { clip-path: inset(0 0 0 0 round .4rem); }
     .acs-vs-bar i.keep { background: #8fc96a; }
-    .acs-vs-bar i.lost { color: #fff; background: repeating-linear-gradient(135deg, #c2453d 0 6px, #a3362f 6px 12px); }
-    .acs-vs-bar i.gain { background: linear-gradient(90deg, #f5c518, #fde68a); }
+    .acs-vs-bar i.lost { background: #b23d35 repeating-linear-gradient(135deg, rgb(255 255 255 / .16) 0 3px, transparent 3px 7px); }
+    .acs-vs-bar i.gain { background: linear-gradient(180deg, #fde68a, #f5c518 55%, #e6ad12); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .25); }
     .acs-vs-rows { display: grid; gap: .3rem; margin-top: .7rem; }
     .acs-vs-rows div { display: flex; align-items: center; gap: .5rem; font-size: .76rem; line-height: 1.35; color: var(--ink); opacity: 0; transform: translateX(-6px); transition: opacity .45s var(--e) calc(.6s + var(--k) * .45s), transform .45s var(--e) calc(.6s + var(--k) * .45s); }
     .stm-scene.is-in .acs-vs-rows div { opacity: 1; transform: none; }
@@ -271,6 +274,11 @@
     .acs-vs-tot span { font-size: .74rem; font-weight: 800; color: var(--mute); }
     .acs-vs-tot b { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums; }
     .acs-vs-c.is-with .acs-vs-tot b { color: var(--gold); }
+    .acs-vs-plus { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .75rem; }
+    .acs-vs-plus p { width: 100%; font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+    .acs-vs-plus span { padding: .2rem .55rem; border-radius: 999px; font-size: .7rem; font-weight: 700; color: var(--ink); background: rgb(255 255 255 / .08); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .3);
+        opacity: 0; transform: translateY(6px); transition: opacity .4s var(--e) calc(2.6s + var(--k) * .15s), transform .4s var(--e) calc(2.6s + var(--k) * .15s); }
+    .stm-scene.is-in .acs-vs-plus span { opacity: 1; transform: none; }
     .acs-vs-net { display: flex; align-items: center; gap: .8rem; padding: .9rem 1rem; border-radius: 1.1rem; background: rgb(245 197 24 / .12); box-shadow: inset 0 0 0 1px rgb(245 197 24 / .45); }
     .acs-vs-net img { flex: none; width: 2.8rem; height: 2.8rem; }
     .acs-vs-net p { font-size: .86rem; line-height: 1.5; color: var(--ink); }
@@ -602,7 +610,8 @@
         .acs-once-r, .acs-once-r i, .acs-once-stamp, .acs-proto-doc, .acs-proto-ok, .acs-morn-n, .acs-morn-n li, .acs-morn-done, .acs-chk-r, .acs-chk-plan, .acs-chk-r small em.found, .acs-chk-r .st u { opacity: 1; transform: none; }
         .acs-once-r b, .acs-proto-doc span { clip-path: none; } .acs-chk-r small em:not(.found), .acs-chk-r .st i { display: none; } .acs-chk-bar i { transform: none; }
         .acs-bud-o > div:not(:nth-child(2)) { display: none; } .acs-bud-o > div:nth-child(2) { opacity: 1; } .acs-bud-t i { transform: translateX(100%); }
-        .acs-vs-bar i, .acs-vs-rows div { transform: none; opacity: 1; transition: none; }
+        .acs-vs-bar i, .acs-vs-rows div, .acs-vs-plus span { transform: none; opacity: 1; transition: none; }
+        .acs-vs-bar i { clip-path: none; }
         .acs-wtp *, .acs-wtp-why span { animation: none !important; transition: none !important; }
         .acs-lb * { animation: none !important; }
         .acs-lb-staves i.zn, .acs-lb-staves i.s { height: 96%; } .acs-lb-water { height: 92%; } .acs-lb-say span.c { opacity: 1; }
@@ -990,32 +999,38 @@
                  and potential added income ... what you do now without anee ... all the lost yield and disasters and lost income"). --}}
             <div class="acs-vs">
                 <p class="stm-kick">Worth it?</p>
-                <h3 class="acs-vs-h">The same hectare of palay, two ways<small>An example, at ₱20 a kilo. A field that could give about 5.5 tons.</small></h3>
+                <h3 class="acs-vs-h">The same hectare of palay: traditional farming against precision farming<small>An example, at ₱20 a kilo. A field that could give about 5.6 tons.</small></h3>
                 <div class="acs-vs-cols">
                     <div class="acs-vs-c">
-                        <h4>😟 What you do now, without Anee</h4>
-                        <div class="acs-vs-bar"><i class="keep" style="--w: .673; --k: 0">3.7 t</i><i class="lost" style="--w: .109; --k: 1"></i><i class="lost" style="--w: .127; --k: 2"></i><i class="lost" style="--w: .091; --k: 3"></i></div>
+                        <h4>😟 Traditional farming, what you do now</h4>
+                        <div class="acs-vs-bar"><i class="keep" style="--w: .661; --k: 0">3.7 t</i><i class="lost" style="--w: .071; --k: 1"></i><i class="lost" style="--w: .071; --k: 2"></i><i class="lost" style="--w: .036; --k: 3"></i><i class="lost" style="--w: .161; --k: 4"></i></div>
                         <div class="acs-vs-rows">
-                            <div style="--k: 1">⏰ Fertilizer late or at the wrong stage<b>−0.6 t</b></div>
-                            <div style="--k: 2">🐛 A pest seen too late<b>−0.7 t</b></div>
-                            <div style="--k: 3">🌀 A typhoon week with no plan<b>−0.5 t</b></div>
-                            <div style="--k: 4">🌧️ Sprays and fertilizer washed away<b>−₱2,500</b></div>
+                            <div style="--k: 1">⏰ Fertilizer late or at the wrong stage<b>−0.4 t</b></div>
+                            <div style="--k: 2">🐛 A pest seen too late<b>−0.4 t</b></div>
+                            <div style="--k: 3">🌀 A typhoon week with no plan<b>−0.2 t</b></div>
+                            <div style="--k: 4">🌾 Lodging: too much nitrogen at the wrong time<b>−0.9 t</b></div>
+                            <div style="--k: 5">🌧️ Sprays and fertilizer washed away<b>−₱2,500</b></div>
                         </div>
                         <div class="acs-vs-tot"><span>Harvest worth</span><b>₱<span data-count="71500">0</span></b></div>
                     </div>
                     <div class="acs-vs-c is-with">
-                        <h4><img src="{{ $asFace('thumbsup') }}" alt="">With Anee Auto<small>{{ number_format($asPrice) }} credits a lot</small></h4>
-                        <div class="acs-vs-bar"><i class="keep" style="--w: .673; --k: 0">3.7 t</i><i class="gain" style="--w: .109; --k: 1"></i><i class="gain" style="--w: .127; --k: 2"></i><i class="gain" style="--w: .091; --k: 3"></i></div>
+                        <h4><img src="{{ $asFace('thumbsup') }}" alt="">Anee Auto: precision farming<small>{{ number_format($asPrice) }} credits a lot</small></h4>
+                        <div class="acs-vs-bar"><i class="keep" style="--w: .661; --k: 0">3.7 t</i><i class="gain" style="--w: .071; --k: 1"></i><i class="gain" style="--w: .071; --k: 2"></i><i class="gain" style="--w: .036; --k: 3"></i><i class="gain" style="--w: .161; --k: 4"></i></div>
                         <div class="acs-vs-rows">
-                            <div style="--k: 1">🎯 Fertilizer on time, by stage<b>+0.6 t</b></div>
-                            <div style="--k: 2">🔍 Weekly scouting, an early spray<b>+0.7 t</b></div>
-                            <div style="--k: 3">🌀 Work moved around the storm<b>+0.5 t</b></div>
-                            <div style="--k: 4">💰 Nothing sprayed into the rain<b>+₱2,500</b></div>
+                            <div style="--k: 1">🎯 Fertilizer on time, by stage<b>+0.4 t</b></div>
+                            <div style="--k: 2">🔍 Weekly scouting, an early spray<b>+0.4 t</b></div>
+                            <div style="--k: 3">🌀 Work moved around the storm<b>+0.2 t</b></div>
+                            <div style="--k: 4">🌾 Nitrogen split by stage: the crop stands<b>+0.9 t</b></div>
+                            <div style="--k: 5">💰 Nothing sprayed into the rain<b>+₱2,500</b></div>
                         </div>
-                        <div class="acs-vs-tot"><span>Harvest worth</span><b>₱<span data-count="110000">0</span></b></div>
+                        <div class="acs-vs-tot"><span>Harvest worth</span><b>₱<span data-count="112000">0</span></b></div>
+                        {{-- What precision farming brings beyond the tons (2026-10-28, the owner). --}}
+                        <div class="acs-vs-plus"><p>And every day</p>
+                            @foreach (['⚡ Quick decisions, made before you wake up', '🎯 Accurate answers for your own field', '⚖️ Nutrients balanced to your goal', '💹 The price forecast at harvest', '📅 The planting forecast: the safest week'] as $k => $w)<span style="--k: {{ $k }}">{{ $w }}</span>@endforeach
+                        </div>
                     </div>
                 </div>
-                <div class="acs-vs-net"><img src="{{ $asFace('cheer') }}" alt=""><p>That is about <b>₱<span data-count="38500">0</span></b> more from one hectare, for {{ number_format($asPrice) }} credits. <span class="text-xs opacity-80">An example, not a promise: your season depends on your field, the weather and the work done.</span></p></div>
+                <div class="acs-vs-net"><img src="{{ $asFace('cheer') }}" alt=""><p>That is about <b>₱<span data-count="40500">0</span></b> more from one hectare, for {{ number_format($asPrice) }} credits. <span class="text-xs opacity-80">An example, not a promise: your season depends on your field, the weather and the work done.</span></p></div>
             </div>
             @include('auto.partials.worth')
         </div>

@@ -33,7 +33,7 @@
     .stm *, .stm *::before, .stm *::after { box-sizing: border-box; }
     /* Slow light behind the story. */
     .stm-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-    .stm-bg i { position: absolute; width: 46rem; height: 46rem; border-radius: 999px; filter: blur(10px); opacity: .55; animation: stmDrift 26s ease-in-out infinite alternate; }
+    .stm-bg i { position: absolute; width: 46rem; height: 46rem; border-radius: 999px; will-change: transform; opacity: .55; animation: stmDrift 26s ease-in-out infinite alternate; }
     .stm-bg i:nth-child(1) { left: -18rem; top: -20rem; background: radial-gradient(circle, rgb(106 163 58 / .45), transparent 62%); }
     .stm-bg i:nth-child(2) { right: -20rem; top: 30%; background: radial-gradient(circle, rgb(245 197 24 / .16), transparent 60%); animation-duration: 32s; }
     .stm-bg i:nth-child(3) { left: 20%; bottom: -28rem; background: radial-gradient(circle, rgb(45 80 22 / .7), transparent 62%); animation-duration: 38s; }
@@ -41,7 +41,7 @@
     @keyframes stmDrift { to { transform: translate(6rem, 4rem) scale(1.12); } }
 
     .stm-bar { position: relative; z-index: 5; flex: none; display: flex; align-items: center; gap: .65rem; padding: calc(.55rem + env(safe-area-inset-top, 0px)) .7rem .55rem 1rem;
-        background: rgb(11 20 7 / .72); border-bottom: 1px solid rgb(255 255 255 / .07); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+        background: rgb(11 20 7 / .94); border-bottom: 1px solid rgb(255 255 255 / .07); }
     .stm-bar img { flex: none; width: 2.1rem; height: 2.1rem; border-radius: 999px; object-fit: cover; background: rgb(255 255 255 / .1); }
     .stm-bar b { display: block; font-family: var(--font-heading); font-size: 1rem; line-height: 1.2; color: #fff; }
     .stm-bar small { display: block; font-size: .7rem; font-weight: 700; color: var(--leaf); }
@@ -104,6 +104,11 @@
     @keyframes stmNudge { 50% { transform: translateY(3px); } }
     .stm-fine { margin-top: .8rem; font-size: .72rem; line-height: 1.5; color: rgb(185 202 168 / .75); }
 
+    /* Scrolling smooth (2026-10-28, the owner: "scrolling down is glitchy like you are scrolling in a gravel sand"): every
+       scene's loops kept painting while the story scrolled, dozens at once. Only a scene in view moves now (is-live,
+       toggled as scenes come and go); the rest wait, paused, and no blur is redrawn under the scroll. */
+    .stm .stm-scene:not(.is-live) *, .stm .stm-scene:not(.is-live) *::before, .stm .stm-scene:not(.is-live) *::after { animation-play-state: paused !important; }
+
     /* What rises in: drawn once, shown each time its scene comes in. */
     .stm [data-in] { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--e) var(--d, 0ms), transform .7s var(--e) var(--d, 0ms); }
     .stm .stm-scene.is-in [data-in] { opacity: 1; transform: none; }
@@ -160,6 +165,9 @@
             if (dots) dots.querySelectorAll('button').forEach((b, i) => b.classList.toggle('is-on', scenes[i] === s));
         }), { root: body, threshold: 0.28 });
         scenes.forEach((s) => io.observe(s));
+        // In view, its loops run; out of view, they pause (any part of it on screen counts).
+        const live = new IntersectionObserver((list) => list.forEach((en) => en.target.classList.toggle('is-live', en.isIntersecting)), { root: body, rootMargin: '80px 0px' });
+        scenes.forEach((s) => live.observe(s));
         body.addEventListener('scroll', () => {
             if (!prog) return;
             const max = body.scrollHeight - body.clientHeight;
