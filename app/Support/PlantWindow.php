@@ -5,7 +5,7 @@ namespace App\Support;
 use Carbon\Carbon;
 
 /**
- * The best weeks to plant a lot, from today to a year ahead (2026-10-28, the owner: "after selecting the crop, and the
+ * The best weeks to plant a lot, from today to four months ahead (2026-10-28, the owner: "after selecting the crop, and the
  * lot (which includes the characteristics), anee should be able to provide an insight (similar to the when to plant
  * analysis using the same process) when is the best date to plant (always from the current date to 1 year range),
  * before the user selects a day when to plant ... also have 2 considerations, the price forecast upon harvest, and the
@@ -22,6 +22,10 @@ use Carbon\Carbon;
  * on the cut crop) and the storms of the flowering and harvest months. The score is 100 less the share of that harm
  * the years held. The price ranking is that score times what the harvest brings against a usual harvest month, and a
  * week under 50 never moves above a safer one.
+ *
+ * Four months, not a year (the same day, the owner: "1 year is too much. let's do it 4 months and the analysis should
+ * show the best date"): a farmer setting up a season plants within it. The harvest price is weighed against a usual
+ * month of the whole year ahead, so a short window still knows a good price from a poor one.
  */
 final class PlantWindow
 {
@@ -111,8 +115,9 @@ final class PlantWindow
         $prepNeed = max(0, (int) ($p['prepNeed'] ?? 0));
         $earliest = $today->copy()->addDays($prepNeed);
 
+        $span = max(8, (int) ceil($today->diffInDays($today->copy()->addMonthsNoOverflow(4)) / 7));
         $weeks = [];
-        for ($k = 0; $k < 52; $k++) {
+        for ($k = 0; $k < $span; $k++) {
             $plant = $today->copy()->addDays(7 * $k + 3);
             $harvest = $plant->copy()->addDays($toHarvest);
             $harm = array_fill_keys(array_keys(self::W), 0.0);
@@ -154,20 +159,28 @@ final class PlantWindow
                 'why' => self::why($harm, $bad, $n, $flowerDay, $harvest, $odds), 'prepShort' => $plant->lt($earliest)];
         }
 
-        // The second ranking: the score times what the harvest brings against a usual harvest month.
+        // The second ranking: the score times what the harvest brings against a usual harvest month, a usual month being
+        // the middle of the twelve from the first harvest on.
         $market = null;
-        $vals = [];
+        $where = (string) ($p['location'] ?? '');
         foreach ($weeks as $i => $w) {
             $h = Carbon::parse($w['harvest']);
-            $v = MarketBook::harvestValue($crop, (string) ($p['location'] ?? ''), $h->year * 12 + $h->month - 1);
+            $v = MarketBook::harvestValue($crop, $where, $h->year * 12 + $h->month - 1);
             if ($v) {
                 $weeks[$i]['net'] = $v['net'];
                 $weeks[$i]['p'] = round($v['p'], 2);
                 $weeks[$i]['unit'] = $v['unit'];
+            }
+        }
+        $first = Carbon::parse($weeks[0]['harvest'] ?? $today->toDateString());
+        $vals = [];
+        for ($m = 0; $m < 12; $m++) {
+            $v = MarketBook::harvestValue($crop, $where, $first->year * 12 + $first->month - 1 + $m);
+            if ($v) {
                 $vals[] = $v['net'];
             }
         }
-        if (count($vals) >= 26) {
+        if (count($vals) >= 8 && array_filter($weeks, fn ($w) => isset($w['net']))) {
             $sorted = $vals;
             sort($sorted);
             $mid = $sorted[intdiv(count($sorted), 2)];
@@ -185,17 +198,8 @@ final class PlantWindow
             // A week Anee scores under 50 never moves above a safer one; between near equals, the nearer week first.
             $key = fn ($i) => [$weeks[$i]['score'] >= 50, $weeks[$i][$by] - 0.06 * $i];
             usort($idx, fn ($a, $b) => $key($b) <=> $key($a));
-            // Three weeks at least three weeks apart, so the choices are real choices, and one of them in the next four
-            // months when a good one is there: a farmer planting this season is not left with only next year's weeks.
+            // Three weeks at least three weeks apart, so the choices are real choices; the best first.
             $out = [];
-            $first = $idx[0] ?? null;
-            if ($first !== null) {
-                $out[] = $first;
-                $near = array_values(array_filter($idx, fn ($i) => $i <= ($idx ? min($idx) : 0) + 16 && $weeks[$i]['score'] >= 60 && abs($i - $first) >= 3));
-                if ($near && $first > min($idx) + 16) {
-                    $out[] = $near[0];
-                }
-            }
             foreach ($idx as $i) {
                 if (count($out) === 3) {
                     break;

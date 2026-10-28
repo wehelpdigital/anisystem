@@ -742,7 +742,7 @@ class AneeAutoController extends Controller
             'nursery' => $n ? (int) round(($n['min'] + $n['max']) / 2) : 0, 'lat' => $lot->pinLat ? (float) $lot->pinLat : null, 'lng' => $lot->pinLng ? (float) $lot->pinLng : null,
             'location' => trim(implode(', ', array_filter([$lot->locTown, $lot->locProvince]))), 'water' => $water ?: 'pump_rain', 'prepNeed' => $prep['need'],
             'today' => now('Asia/Manila')->toDateString()];
-        $w = Cache::remember('auto-window:v2:' . md5(json_encode($p)), 43200, fn () => rescue(fn () => \App\Support\PlantWindow::for($p), null, true));
+        $w = Cache::remember('auto-window:v3:' . md5(json_encode($p)), 43200, fn () => rescue(fn () => \App\Support\PlantWindow::for($p), null, true));
 
         return $this->json(true, 'ok', ['window' => $w, 'prep' => $prep + ['on' => $o['landPrep']], 'waterKnown' => (bool) $water,
             'squeeze' => ! empty(((array) ($a['prepSqueeze'] ?? []))[(string) $lot->id])]);

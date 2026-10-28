@@ -248,6 +248,16 @@
     .au-dbest { display: flex; flex-wrap: wrap; gap: .4rem; }
     .au-dbest .au-pill small { font-weight: 800; opacity: .75; }
     .au-wb.is-on { border-color: #4a7c2a; background: #f1f7ea; }
+    /* The best date, said first. */
+    .au-wtop { display: flex; align-items: center; gap: .7rem; margin-top: .8rem; padding: .75rem .85rem; border-radius: 1rem; background: linear-gradient(135deg, #fff8dc, #fdf0c2); border: 1px solid #f1d98a; animation: auFade .35s var(--au-ease) both; }
+    .au-wtop > span { flex: none; font-size: 1.5rem; line-height: 1; }
+    .au-wtop > div { flex: 1; min-width: 0; display: grid; }
+    .au-wtop small { font-size: .66rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: #8a6400; }
+    .au-wtop b { font-size: 1.05rem; font-weight: 800; color: #3d2f00; }
+    .au-wtop em { font-style: normal; font-size: .74rem; color: #5c4a10; }
+    .au-wtop .au-pill { flex: none; }
+    .au-wb-best { margin-left: .3rem; padding: .05rem .4rem; border-radius: 999px; font-style: normal; font-size: .62rem; font-weight: 900; vertical-align: middle; color: #3d2f00; background: #f5c518; }
+    html.dark .au-wtop { background: linear-gradient(135deg, #2a2410, #231d0b); border-color: #5b4d16; } html.dark .au-wtop small { color: #f3d27a; } html.dark .au-wtop b { color: #fff3c4; } html.dark .au-wtop em { color: #e8d79c; }
     .au-wday { margin: .6rem 0 0; font-size: .78rem; line-height: 1.45; color: var(--color-gray-600); }
     .au-wday b { color: var(--color-gray-900); }
     html.dark .au-wday { color: #b9c6ad; } html.dark .au-wday b { color: #eef3e8; }
@@ -883,7 +893,7 @@
     <section class="au-step" data-step="2">
         <div class="au-card">
             <h3 class="au-h">When to plant</h3>
-            <p class="au-sub">Anee reads each lot's next twelve months: twenty years of its weather, storms and floods, the land preparation your farm can do, and the price at harvest. The best weeks come first. Look them over: you choose the day on the next page.</p>
+            <p class="au-sub">Anee reads each lot's next four months: twenty years of its weather, storms and floods, the land preparation your farm can do, and the price at harvest, then names the best date. Look it over: you choose the day on the next page.</p>
         </div>
         <div id="auWhen"></div>
     </section>
@@ -1568,22 +1578,27 @@
         if (l.method === 'tree') return '';
         const st = WIN[l.id];
         if (!winReady(l)) return '<div class="au-win-h"><span aria-hidden="true">📅</span><div><b>When to plant</b><small>Choose the crop and where the lot is, and Anee reads its best weeks for the year ahead.</small></div></div>';
-        if (!st || st.loading) return '<div class="au-win-h"><span aria-hidden="true" class="au-win-spin">📅</span><div><b>When to plant</b><small>Anee is reading twenty years of this field\'s weather…</small></div></div><div class="au-wchart is-wait">' + '<i></i>'.repeat(52) + '</div>';
+        if (!st || st.loading) return '<div class="au-win-h"><span aria-hidden="true" class="au-win-spin">📅</span><div><b>When to plant</b><small>Anee is reading twenty years of this field\'s weather…</small></div></div><div class="au-wchart is-wait">' + '<i></i>'.repeat(18) + '</div>';
         const w = st.window;
         if (!w) return '<div class="au-win-h"><span aria-hidden="true">📅</span><div><b>When to plant</b><small>' + (st.failed ? 'It did not load. ' : 'This place has no weather record yet, so pick the day you know works. ') + '<button type="button" class="au-link" data-wretry>Try again</button></small></div></div>';
         const by = WMODE === 'price' && w.market ? 'priceScore' : 'score';
         const best = by === 'priceScore' ? w.bestPrice : w.best;
         let months = '', last = -1, lastAt = -9;
         // A month's name where it begins, never on top of the one before (the first week may be the end of a month).
-        w.weeks.forEach((x, i) => { const m = Number(x.date.slice(5, 7)); if (m !== last) { if (i - lastAt >= 3) { months += '<span style="left:' + (i / 52 * 100).toFixed(2) + '%">' + new Date(2000, m - 1, 1).toLocaleDateString(undefined, { month: 'short' }) + '</span>'; lastAt = i; } last = m; } });
+        w.weeks.forEach((x, i) => { const m = Number(x.date.slice(5, 7)); if (m !== last) { if (i - lastAt >= 3) { months += '<span style="left:' + (i / w.weeks.length * 100).toFixed(2) + '%">' + new Date(2000, m - 1, 1).toLocaleDateString(undefined, { month: 'short' }) + '</span>'; lastAt = i; } last = m; } });
         const on = weekOf(l, w);
-        return '<div class="au-win-h"><span aria-hidden="true">📅</span><div><b>When to plant</b><small>' + esc(w.place || 'This field') + ': ' + w.years + ' years of its weather and storms, read for ' + esc(cropName(l.crop).split(',')[0].toLowerCase()) + ', from today to a year ahead. ' + esc(w.waterSays || '') + '</small></div></div>'
+        // The best date said first, then the three best weeks from the nearest to the farthest (2026-10-28, the owner:
+        // "the dates should be the nearest then the farthest arrangement ... the analysis should show the best date").
+        const top = best[0], byDate = [...best].sort((a, b) => a - b), tx = top != null ? w.weeks[top] : null;
+        return '<div class="au-win-h"><span aria-hidden="true">📅</span><div><b>When to plant</b><small>' + esc(w.place || 'This field') + ': ' + w.years + ' years of its weather and storms, read for ' + esc(cropName(l.crop).split(',')[0].toLowerCase()) + ', for the next four months. ' + esc(w.waterSays || '') + '</small></div></div>'
+            + (tx ? '<div class="au-wtop"><span aria-hidden="true">⭐</span><div><small>The best date to plant' + (by === 'priceScore' ? ', with the price' : '') + '</small><b>' + esc(fmtDate(tx.date)) + '</b><em>' + (tx[by] ?? tx.score) + '/100 · harvest about ' + esc(wDay(tx.harvest, true)) + '</em></div>'
+                + '<button type="button" class="au-pill" data-wuse="' + tx.date + '" aria-pressed="' + (top === on) + '">' + (top === on ? '✓ Your day' : 'Use this date') + '</button></div>' : '')
             + (w.market ? '<div class="au-wsw" role="tablist" aria-label="How the weeks are ranked"><i aria-hidden="true"' + (by === 'priceScore' ? ' class="is-price"' : '') + '></i><button type="button" role="tab" data-wmode="crop" aria-selected="' + (by === 'score') + '">🌦️ For the crop</button><button type="button" role="tab" data-wmode="price" aria-selected="' + (by === 'priceScore') + '">💰 With the harvest price</button></div>' : '')
-            + '<div class="au-wchart' + (by === 'priceScore' ? ' is-price' : '') + '" role="img" aria-label="' + esc('Planting score by week for the next 52 weeks, best ' + (best.map((i) => wDay(w.weeks[i].date) + ' ' + w.weeks[i][by]).join(', '))) + '">'
+            + '<div class="au-wchart' + (by === 'priceScore' ? ' is-price' : '') + '" role="img" aria-label="' + esc('Planting score by week for the next ' + w.weeks.length + ' weeks, best ' + (best.map((i) => wDay(w.weeks[i].date) + ' ' + w.weeks[i][by]).join(', '))) + '">'
             + w.weeks.map((x, i) => { const v = x[by] ?? x.score; return '<i class="' + wCls(v) + (x.prepShort ? ' is-prep' : '') + (i === on ? ' is-on' : '') + (best.includes(i) ? ' is-best' : '') + '" style="--h:' + Math.max(0.04, v / 100).toFixed(2) + ';--k:' + i + '" data-wk="' + i + '" title="' + esc(wDay(x.date, true) + ': ' + v + '/100 · harvest ' + wDay(x.harvest) + (x.prepShort ? ' · before the land preparation can finish' : '')) + '"></i>'; }).join('')
             + '</div><div class="au-wmonths" aria-hidden="true">' + months + '</div>'
             + (w.prepNeed ? '<p class="au-wkey"><i class="is-prep"></i>' + (st.prep && st.prep.on ? 'Faded weeks come before your land preparation can finish (' + esc(st.prep.why) + ', ready ' + wDay(w.earliest) + ').' : 'Faded weeks come before the field can be ready (' + esc(st.prep.why) + ').') + '</p>' : '')
-            + '<div class="au-wbest">' + best.map((i, n) => { const x = w.weeks[i]; return '<div class="au-wb' + (n === 0 ? ' is-top' : '') + (i === on ? ' is-on' : '') + '" style="--k:' + n + '"><span class="au-wb-n">' + (n + 1) + '</span><div><b>' + esc(wDay(x.date, true)) + '</b>'
+            + '<div class="au-wbest">' + byDate.map((i, n) => { const x = w.weeks[i]; return '<div class="au-wb' + (i === top ? ' is-top' : '') + (i === on ? ' is-on' : '') + '" style="--k:' + n + '"><span class="au-wb-n">' + (i === top ? '⭐' : (n + 1)) + '</span><div><b>' + esc(wDay(x.date, true)) + (i === top ? ' <i class="au-wb-best">Best</i>' : '') + '</b>'
                 + '<small>' + (by === 'priceScore' ? (x.priceScore ?? x.score) + '/100 with the price · ' + x.score + ' for the crop' : x.score + '/100') + ' · harvest about ' + esc(wDay(x.harvest)) + '</small>'
                 + (by === 'priceScore' && x.rel ? '<small>💰 Sells ' + esc(wPct(x.rel)) + (x.p ? ', about ₱' + Number(x.p).toFixed(2) + (x.unit === 'kg' ? '/kg' : '') : '') + '</small>' : '')
                 + '<small class="au-wb-why">' + esc(x.why && x.why.length ? 'Watch: ' + x.why.join('; ') : 'Few troubles in ' + w.years + ' years') + '</small></div>'
@@ -1591,7 +1606,7 @@
             + (on >= 0 ? '<p class="au-wday">📅 Your planting day: <b>' + esc(fmtDate(l.fieldDate)) + '</b>. Change it on the next page.</p>' : '');
     };
     // The week of the 52 that a lot's planting day falls in, or -1.
-    const weekOf = (l, w) => l.fieldDate ? w.weeks.findIndex((x, i) => l.fieldDate >= addDays(x.date, -3) && (i === 51 || l.fieldDate < addDays(w.weeks[i + 1].date, -3))) : -1;
+    const weekOf = (l, w) => l.fieldDate ? w.weeks.findIndex((x, i) => l.fieldDate >= addDays(x.date, -3) && (i === w.weeks.length - 1 ? l.fieldDate < addDays(x.date, 4) : l.fieldDate < addDays(w.weeks[i + 1].date, -3))) : -1;
     // The day picked: its harvest, how it scores, and the land preparation before it.
     const winPickHtml = (l) => {
         const st = WIN[l.id], w = st && st.window, c = cropOf(l.crop);
@@ -1694,10 +1709,10 @@
     };
     const dayHtml = (l) => {
         const st = WIN[l.id], w = st && st.window, on = w ? weekOf(l, w) : -1;
-        const best = w ? ((WMODE === 'price' && w.market ? w.bestPrice : w.best) || []).slice(0, 3) : [];
+        const ranked = w ? ((WMODE === 'price' && w.market ? w.bestPrice : w.best) || []).slice(0, 3) : [], best = [...ranked].sort((a, b) => a - b);
         return '<span class="au-lab">' + dayLabel(l) + '</span><label class="date-tag w-full" data-empty="Pick the day"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span class="dt-text">Pick the day</span>'
             + '<input type="date" data-f="fieldDate" min="' + B.today + '" max="' + B.latest + '" value="' + (l.fieldDate || '') + '"></label>'
-            + (best.length ? '<span class="au-lab">Anee\'s best weeks <small>(tap one to use it)</small></span><div class="au-dbest">' + best.map((i, n) => { const x = w.weeks[i]; return '<button type="button" class="au-pill" data-wuse="' + x.date + '" aria-pressed="' + (i === on) + '">' + (n === 0 ? '⭐ ' : '') + esc(wDay(x.date, true)) + ' <small>' + (x[WMODE === 'price' && w.market ? 'priceScore' : 'score'] ?? x.score) + '/100</small></button>'; }).join('') + '</div>' : '')
+            + (best.length ? '<span class="au-lab">Anee\'s best weeks <small>(tap one to use it)</small></span><div class="au-dbest">' + best.map((i) => { const x = w.weeks[i]; return '<button type="button" class="au-pill" data-wuse="' + x.date + '" aria-pressed="' + (i === on) + '">' + (i === ranked[0] ? '⭐ ' : '') + esc(wDay(x.date, true)) + ' <small>' + (x[WMODE === 'price' && w.market ? 'priceScore' : 'score'] ?? x.score) + '/100</small></button>'; }).join('') + '</div>' : '')
             + (st && st.loading ? '<p class="au-wkey">Anee is reading this lot\'s best weeks…</p>' : '')
             + '<div data-wpick>' + winPickHtml(l) + '</div><div data-notes></div>';
     };
