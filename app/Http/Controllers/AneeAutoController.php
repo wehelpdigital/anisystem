@@ -263,9 +263,11 @@ class AneeAutoController extends Controller
             })->filter()->values(),
             'canWorkers' => $canWorkers,
             'workers' => $cards->map(fn ($w) => ['id' => (int) $w->id, 'name' => $w->workerName, 'email' => $w->email, 'phone' => $w->phone, 'globalWorkerId' => $w->globalWorkerId,
+                'pay' => (float) $w->costPerHalfDay > 0 ? round((float) $w->costPerHalfDay * 2, 2) : null,
                 'off' => $w->offDays->pluck('dayOfWeek')->map(fn ($d) => (int) $d)->values(), 'parts' => WorkDays::json($w->dayParts)])->values(),
             'roster' => $canWorkers ? AsGlobalWorker::where('userId', Auth::id())->where('deleteStatus', 1)->orderBy('workerName')->get()
-                ->map(fn ($g) => ['id' => (int) $g->id, 'name' => $g->workerName, 'email' => $g->email, 'phone' => $g->phone, 'off' => $g->offWeekdays ?: [], 'parts' => WorkDays::json($g->dayParts)])->values() : [],
+                ->map(fn ($g) => ['id' => (int) $g->id, 'name' => $g->workerName, 'email' => $g->email, 'phone' => $g->phone, 'off' => $g->offWeekdays ?: [], 'parts' => WorkDays::json($g->dayParts),
+                    'pay' => (float) $g->costPerHalfDay > 0 ? round((float) $g->costPerHalfDay * 2, 2) : null])->values() : [],
             'book' => ['signs' => AutoBook::SOIL_SIGNS, 'ph' => AutoBook::PH, 'water' => AutoBook::WATER, 'problems' => AutoBook::PROBLEMS, 'imbalance' => AutoBook::IMBALANCE],
             'optionsBook' => \App\Support\AutoOptions::forPage(),
             'options' => \App\Support\AutoOptions::of((array) ($auto->answers ?? [])),
@@ -407,7 +409,8 @@ class AneeAutoController extends Controller
             return $no;
         }
         $v = Validator::make($request->all(), ['workers' => 'nullable|array|max:60', 'workers.*.name' => 'required|string|max:255', 'workers.*.email' => 'nullable|email|max:255',
-            'workers.*.phone' => 'nullable|string|max:32', 'workers.*.off' => 'nullable|array', 'workers.*.off.*' => 'integer|min:0|max:6', 'workers.*.parts' => 'nullable|array']);
+            'workers.*.phone' => 'nullable|string|max:32', 'workers.*.off' => 'nullable|array', 'workers.*.off.*' => 'integer|min:0|max:6', 'workers.*.parts' => 'nullable|array',
+            'workers.*.pay' => 'nullable|numeric|min:0|max:100000']);
         if ($v->fails()) {
             return $this->json(false, 'Each worker needs a name' . (str_contains($v->errors()->first(), 'email') ? ', and the email must be real' : '') . '.', [], 422);
         }
@@ -438,6 +441,10 @@ class AneeAutoController extends Controller
                 // A page that does not send the half days (an older one still open) keeps what was there.
                 $parts = WorkDays::parts(array_key_exists('parts', $w) ? $w['parts'] : ($card?->dayParts ?? $global?->dayParts), $off);
                 $facts = ['workerName' => mb_substr(trim((string) $w['name']), 0, 255), 'email' => ($w['email'] ?? null) ?: null, 'phone' => ($w['phone'] ?? null) ?: null, 'dayParts' => $parts, 'priority' => $i + 1];
+                // The pay of a whole day, kept as the card keeps it, half a day's (2026-10-28, the owner: "costing should be asked").
+                if (array_key_exists('pay', $w) && is_numeric($w['pay'])) {
+                    $facts['costPerHalfDay'] = round((float) $w['pay'] / 2, 2);
+                }
                 if (! $card) {
                     $card = AsScheduleWorker::create($facts + ['croppingScheduleId' => $schedule->id, 'costPerHalfDay' => $global?->costPerHalfDay ?? 0,
                         'skills' => $global?->skills, 'notes' => $global?->notes, 'globalWorkerId' => $global?->id, 'deleteStatus' => 1]);
@@ -452,7 +459,7 @@ class AneeAutoController extends Controller
                     // Their week is theirs, not the season's: the roster keeps it (2026-10-28, the owner:
                     // "settings for selected workers should be synced in the global workers").
                     $g = AsGlobalWorker::forCard($card->fresh(), (int) Auth::id());
-                    $g->update(['offWeekdays' => $off, 'dayParts' => $parts]);
+                    $g->update(['offWeekdays' => $off, 'dayParts' => $parts] + (isset($facts['costPerHalfDay']) ? ['costPerHalfDay' => $facts['costPerHalfDay']] : []));
                 } catch (\Throwable $e) {
                     report($e);
                 }
@@ -588,6 +595,14 @@ class AneeAutoController extends Controller
 
         return $this->json(true, 'ok', ['window' => $w, 'prep' => $prep + ['on' => $o['landPrep']], 'waterKnown' => (bool) $water,
             'squeeze' => ! empty(((array) ($a['prepSqueeze'] ?? []))[(string) $lot->id])]);
+    }
+
+    /** Is the crew enough for the planting and the harvest of every lot (App\Support\AutoCrew, 2026-10-28). */
+    public function crew(int $id)
+    {
+        $auto = $this->auto($id);
+
+        return $this->json(true, 'ok', \App\Support\AutoCrew::check($auto));
     }
 
     /**

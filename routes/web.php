@@ -636,6 +636,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/app/auto/{id}/crop-problems', [App\Http\Controllers\AneeAutoController::class, 'cropProblems'])->whereNumber('id')->name('auto.problems');
     Route::get('/app/auto/{id}/window', [App\Http\Controllers\AneeAutoController::class, 'window'])->whereNumber('id')->middleware('throttle:60,1')->name('auto.window');
     Route::get('/app/auto/{id}/varieties', [App\Http\Controllers\AneeAutoController::class, 'varieties'])->whereNumber('id')->middleware('throttle:60,1')->name('auto.varieties');
+    Route::get('/app/auto/{id}/crew', [App\Http\Controllers\AneeAutoController::class, 'crew'])->whereNumber('id')->middleware('throttle:60,1')->name('auto.crew');
     Route::post('/app/auto/{id}/analyze', [App\Http\Controllers\AneeAutoController::class, 'analyze'])->whereNumber('id')->name('auto.analyze');
     Route::post('/app/auto/{id}/generate', [App\Http\Controllers\AneeAutoController::class, 'generate'])->whereNumber('id')->name('auto.generate');
     Route::get('/app/auto/{id}/job', [App\Http\Controllers\AneeAutoController::class, 'job'])->whereNumber('id')->name('auto.job');

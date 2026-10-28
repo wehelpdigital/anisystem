@@ -57,6 +57,30 @@
     .au-card { border-radius: 1.2rem; background: var(--color-white); border: 1px solid var(--color-gray-200); padding: 1.05rem 1.1rem; margin-bottom: .9rem; }
     .au-note.is-ask { background: #eef2ff; border-color: #c7d2fe; color: #312e81; }
     html.dark .au-note.is-ask { background: #1b1f3a; border-color: #2f3770; color: #c7d2fe; }
+    /* A worker's pay, and the crew check (2026-10-28). */
+    .au-pay { display: grid; gap: .3rem; margin-top: .6rem; }
+    .au-pay > span:first-child { font-size: .72rem; font-weight: 800; color: var(--color-gray-500); }
+    .au-pay > span small { font-weight: 600; }
+    .au-pay-in { display: flex; align-items: center; gap: .4rem; max-width: 12rem; }
+    .au-pay-in b { font-size: .9rem; color: var(--color-gray-500); }
+    .au-pay-ask { font-size: .72rem; font-weight: 700; color: #92400e; }
+    .au-crew { display: grid; gap: .6rem; }
+    .au-cr { padding: .7rem .8rem; border-radius: .95rem; background: #f6faf1; border: 1px solid #e0ebd3; animation: auFade .35s var(--au-ease) both; animation-delay: calc(var(--k) * 60ms); }
+    .au-cr.is-short { background: #fff8e8; border-color: #f3d98f; }
+    .au-cr-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: .1rem .6rem; }
+    .au-cr-h b { font-size: .86rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-cr-h small { flex: 1; min-width: 10rem; font-size: .72rem; color: var(--color-gray-500); }
+    .au-cr-h span { font-size: .72rem; font-weight: 900; color: #3d6823; }
+    .au-cr.is-short .au-cr-h span { color: #b45309; }
+    .au-cr-bar { position: relative; height: 8px; margin: .45rem 0 .4rem; border-radius: 999px; background: #e3ecd8; overflow: visible; }
+    .au-cr-bar i { display: block; height: 100%; width: var(--w); border-radius: inherit; background: #4a7c2a; transform-origin: left; animation: auCrew .8s var(--au-ease) both; }
+    .au-cr.is-short .au-cr-bar i { background: linear-gradient(90deg, #4a7c2a, #f0b04a 70%, #ef7676); }
+    .au-cr-bar em { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #1f2a17; }
+    @keyframes auCrew { from { transform: scaleX(0); } }
+    .au-cr p { margin: 0; font-size: .76rem; line-height: 1.5; color: var(--color-gray-600); }
+    html.dark .au-cr { background: #151c11; border-color: #2b3a1c; } html.dark .au-cr.is-short { background: #2a2210; border-color: #5b4716; }
+    html.dark .au-cr-h b { color: #eef3e8; } html.dark .au-cr p { color: #b9c6ad; } html.dark .au-cr-bar { background: #26301e; } html.dark .au-cr-bar em { background: #f5c518; }
+    @media (prefers-reduced-motion: reduce) { .au-cr, .au-cr-bar i { animation: none !important; } }
     /* Anee's picks of variety (2026-10-28). */
     .au-vpk:empty { display: none; }
     .au-vpk { margin-top: .85rem; }
@@ -670,6 +694,8 @@
             <button type="button" class="au-add" id="auAddWorker">+ Add a worker</button>
             <p class="au-note is-info" id="auWNote" hidden></p>
         </div>
+        {{-- Is the crew enough (App\Support\AutoCrew, 2026-10-28): the planting and the harvest of every lot against who comes. --}}
+        <div class="au-card" id="auCrew" hidden></div>
     </section>
 
     {{-- 3. The soil. The field in detail that used to open this step is the
@@ -837,7 +863,7 @@
         workers: @json(route('auto.workers', $auto->id)), answers: @json(route('auto.answers', $auto->id)), problems: @json(route('auto.problems', $auto->id)),
         analyze: @json(route('auto.analyze', $auto->id)), generate: @json(route('auto.generate', $auto->id)), job: () => @json(route('auto.job', $auto->id)), goal: @json(route('auto.goal', $auto->id)),
         fert: @json(route('auto.fert', $auto->id)), imbalance: @json(route('auto.imbalance', $auto->id)), ph: @json(asset('data/ph-locations.json')),
-        window: @json(route('auto.window', $auto->id)), varieties: @json(route('auto.varieties', $auto->id)),
+        window: @json(route('auto.window', $auto->id)), varieties: @json(route('auto.varieties', $auto->id)), crew: @json(route('auto.crew', $auto->id)),
         npk: @json(route('npk.page')) + '?frame=auto', buy: @json(route('ai.credits') . '?tab=buy'),
     };
     const STEPS = ['Season', 'Lots', 'Workers', 'Soil', 'Water', 'Troubles', 'Reading', 'Fertilizer', 'Start'];
@@ -962,7 +988,7 @@
     };
     const paintStep = (n) => {
         if (n === 1) paintLots();
-        if (n === 2) paintWorkers();
+        if (n === 2) { paintWorkers(); loadCrew(); }
         if (n === 3) { paintSoil(); paintFrom(); }
         if (n === 4) paintWater();
         if (n === 5) { paintProblems(); paintFrom(); }
@@ -1504,9 +1530,9 @@
     /* ---- 2. the workers ---- */
     // A worker's week: each day whole, a morning, an afternoon or off (partials/work-days, 2026-10-28).
     const WD = window.workDays;
-    S.crewList = S.canWorkers ? S.workers.map((w) => ({ id: w.id, globalWorkerId: w.globalWorkerId, name: w.name, email: w.email || '', phone: w.phone || '', off: w.off || [], parts: WD.partsOf(w.parts) }))
+    S.crewList = S.canWorkers ? S.workers.map((w) => ({ id: w.id, globalWorkerId: w.globalWorkerId, name: w.name, email: w.email || '', phone: w.phone || '', off: w.off || [], parts: WD.partsOf(w.parts), pay: w.pay ?? null }))
         : (S.answers.crew || []).map((c) => ({ name: c.name, off: c.off || [], parts: WD.partsOf(c.parts) }));
-    const saveWorkers = () => put(U.workers, { workers: S.crewList.filter((w) => (w.name || '').trim()).map((w) => ({ id: w.id || null, globalWorkerId: w.globalWorkerId || null, name: w.name.trim(), email: w.email || null, phone: w.phone || null, off: w.off, parts: w.parts })) })
+    const saveWorkers = () => put(U.workers, { workers: S.crewList.filter((w) => (w.name || '').trim()).map((w) => ({ id: w.id || null, globalWorkerId: w.globalWorkerId || null, name: w.name.trim(), email: w.email || null, phone: w.phone || null, off: w.off, parts: w.parts, pay: Number(w.pay) > 0 ? Number(w.pay) : null })) })
         .then((r) => {
             (r.data && r.data.workers || []).forEach((w) => { const row = S.crewList.find((c) => c.id === w.id) || S.crewList.find((c) => !c.id && (c.name || '').trim() === w.name); if (row) { row.id = w.id; row.globalWorkerId = w.globalWorkerId || row.globalWorkerId; } });
             // The server wrote each one's name, contact and week to the farm's list (2026-10-28, the owner: "settings for
@@ -1518,7 +1544,24 @@
             });
             S.roster.sort((a, b) => String(a.name).localeCompare(String(b.name)));
             if (S.canWorkers) paintGwOpen();
+            loadCrew();
         });
+    /* Is the crew enough: the busiest stretches (planting, harvest) of every lot against who comes those days. */
+    const loadCrew = async () => {
+        if (step !== 2) return;
+        try {
+            const d = (await apiGet(U.crew)).data || {};
+            const box = $('auCrew');
+            box.hidden = !(d.peaks && d.peaks.length);
+            if (box.hidden) return;
+            const bad = d.peaks.filter((p) => !p.ok).length;
+            box.innerHTML = '<h3 class="au-h">' + (bad ? '👷 Your crew, at the busiest times' : '👍 Your crew is enough') + '</h3><p class="au-sub">' + esc(d.say) + ' The planting and the harvest are the busiest days: each must be done within a few days.</p>'
+                + '<div class="au-crew">' + d.peaks.map((p, i) => { const w = Math.min(100, Math.round(100 * p.window / Math.max(p.window, p.days))); return '<div class="au-cr' + (p.ok ? '' : ' is-short') + '" style="--k:' + i + '">'
+                    + '<div class="au-cr-h"><b>' + esc(p.what.charAt(0).toUpperCase() + p.what.slice(1)) + '</b><small>' + esc(p.lots.join(', ')) + ' · ' + esc(fmtDate(p.from)) + '</small><span>' + (p.ok ? '✓ Enough' : '+' + p.more + ' needed') + '</span></div>'
+                    + '<div class="au-cr-bar" aria-hidden="true"><i style="--w:' + (p.ok ? Math.round(100 * p.days / p.window) : 100) + '%"></i>' + (p.ok ? '' : '<em style="left:' + w + '%"></em>') + '</div>'
+                    + '<p>' + esc(p.say) + '</p></div>'; }).join('') + '</div>';
+        } catch (_) { /* the check is a help, never a block */ }
+    };
     const gwIn = (g) => S.crewList.some((w) => String(w.globalWorkerId) === String(g.id));
     const paintGwOpen = () => {
         const left = S.roster.filter((g) => !gwIn(g)).length;
@@ -1534,7 +1577,9 @@
         $('auWorkers').innerHTML = S.crewList.map((w, i) => '<div class="au-w" data-w="' + i + '"><div class="au-w-top"><input type="text" class="form-input" data-wf="name" value="' + esc(w.name) + '" placeholder="Name" maxlength="255">'
             + '<button type="button" class="au-x" data-wx aria-label="Remove">✕</button></div>'
             + (S.canWorkers ? '<div class="au-row is-2"><input type="email" class="form-input" data-wf="email" value="' + esc(w.email) + '" placeholder="Email, for the morning list (optional)"><input type="tel" class="form-input" data-wf="phone" value="' + esc(w.phone) + '" placeholder="Phone (optional)"></div>' : '')
-            + '<div><span class="text-xs font-bold text-gray-500">Days they work</span><div class="mt-1">' + WD.html(w.off, w.parts, w.name) + '</div></div></div>').join('')
+            + '<div><span class="text-xs font-bold text-gray-500">Days they work</span><div class="mt-1">' + WD.html(w.off, w.parts, w.name) + '</div></div>'
+            + '<label class="au-pay"><span>Pay for a whole day' + (S.options.payments ? '' : ' <small>(optional: Anee counts the labor cost)</small>') + '</span><span class="au-pay-in"><b>₱</b><input type="number" class="form-input" data-wf="pay" min="0" step="10" inputmode="decimal" value="' + (w.pay ?? '') + '" placeholder="Like 450"></span>'
+            + (S.options.payments && !(Number(w.pay) > 0) ? '<small class="au-pay-ask">Anee counts their pay for payday: add their daily pay.</small>' : '') + '</label></div>').join('')
             || '<p class="text-sm text-gray-500 mb-3">No workers yet. A farm worked by the family alone is fine: Anee plans for a small crew.</p>';
     };
     // The farm's workers sheet: one worker open at a time, their details put right there, then added.
@@ -1597,7 +1642,7 @@
         err.hidden = true;
         if (!name) { err.textContent = 'Each worker needs a name.'; err.hidden = false; return; }
         if (email && !mail.checkValidity()) { err.textContent = 'That email does not look right.'; err.hidden = false; return; }
-        const row = { id: null, globalWorkerId: g.id, name, email, phone, off: [...GW.off], parts: { ...GW.parts } };
+        const row = { id: null, globalWorkerId: g.id, name, email, phone, off: [...GW.off], parts: { ...GW.parts }, pay: g.pay ?? null };
         S.crewList.push(row);
         add.disabled = true;
         try { await saveWorkers(); } catch (_) {
