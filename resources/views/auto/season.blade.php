@@ -357,6 +357,62 @@
     .ac-log-row i { flex: none; width: 3.6rem; font-style: normal; font-size: .7rem; color: var(--color-gray-400); }
     .ac-log-row b { color: var(--color-gray-900); }
 
+    /* The shed and the payroll (2026-10-28). */
+    .ac-modal > div.is-wide { max-width: 40rem; }
+    .ac-mnote { display: flex; align-items: center; gap: .55rem; width: 100%; margin-top: .55rem; padding: .55rem .7rem; border-radius: .85rem; text-align: left; font-size: .8rem; line-height: 1.4; color: #5c4300;
+        background: #fff6d6; border: 1px solid #f3d98f; transition: background-color .28s var(--ac-ease), transform .2s var(--ac-ease); }
+    .ac-mnote:hover { background: #ffefb8; } .ac-mnote:active { transform: scale(.98); }
+    .ac-mnote > span:first-child { flex: none; font-size: 1.1rem; } .ac-mnote > span:nth-child(2) { flex: 1; min-width: 0; } .ac-mnote i { flex: none; font-style: normal; font-weight: 800; opacity: .6; }
+    html.dark .ac-mnote { background: #2a2210; border-color: #4a3b12; color: #f3d9a4; } html.dark .ac-mnote:hover { background: #33290f; }
+    .ac-sh-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; margin-bottom: .6rem; }
+    .ac-sh-tile { padding: .6rem .65rem; border-radius: .9rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); animation: acIn .38s var(--ac-ease) both; animation-delay: calc(var(--i) * 70ms); min-width: 0; }
+    .ac-sh-tile b { display: block; font-family: var(--font-heading); font-size: 1.02rem; font-weight: 800; color: var(--color-gray-900); overflow-wrap: anywhere; }
+    .ac-sh-tile span { display: block; margin-top: .1rem; font-size: .68rem; font-weight: 700; color: var(--color-gray-500); line-height: 1.3; }
+    .ac-sh-tile.is-gold { background: linear-gradient(135deg, #fff8e1, #ffeeb0); border-color: #f3d98f; } .ac-sh-tile.is-gold b { color: #5c4300; } .ac-sh-tile.is-gold span { color: #7a5c00; }
+    .ac-sh { padding: .75rem 0; animation: acIn .38s var(--ac-ease) both; animation-delay: calc(var(--i) * 55ms); }
+    .ac-sh + .ac-sh { border-top: 1px solid var(--color-gray-200); }
+    .ac-sh-h { display: flex; align-items: center; gap: .6rem; }
+    .ac-sh-ic { flex: none; width: 2.3rem; height: 2.3rem; display: grid; place-items: center; border-radius: .75rem; font-size: 1.2rem; background: var(--color-gray-100); }
+    .ac-sh-h > div { flex: 1; }
+    .ac-sh-h b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); overflow-wrap: anywhere; }
+    .ac-sh-h small { display: block; font-size: .72rem; color: var(--color-gray-500); line-height: 1.35; }
+    .ac-sh-st { flex: none; padding: .2rem .55rem; border-radius: 999px; font-size: .68rem; font-weight: 800; white-space: nowrap; }
+    .ac-sh-st.is-soon { background: #ffe4e6; color: #9f1239; } .ac-sh-st.is-short { background: #fff1c7; color: #7a5200; }
+    .ac-sh-st.is-ok { background: #e3f4d4; color: #2d5016; } .ac-sh-st.is-loose { background: var(--color-gray-100); color: var(--color-gray-600); }
+    .ac-sh-bar { position: relative; height: .4rem; margin: .55rem 0 .1rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
+    .ac-sh-bar i { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: inherit; background: linear-gradient(90deg, #9bd06a, #4a7c2a); transition: width .9s var(--ac-ease); }
+    .ac-sh-dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .35rem .9rem; margin: .5rem 0 0; }
+    @media (min-width: 640px) { .ac-sh-dl { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .ac-sh-dl dt { font-size: .64rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-400); }
+    .ac-sh-dl dd { margin: .05rem 0 0; font-size: .8rem; color: var(--color-gray-700); overflow-wrap: anywhere; }
+    .ac-sh-dl dd b { color: var(--color-gray-900); }
+    .ac-sh-btns { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .55rem; }
+    .ac-sh-fold { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s var(--ac-ease); }
+    .ac-sh.is-form .ac-sh-fold { grid-template-rows: 1fr; }
+    .ac-sh-fold > div { overflow: hidden; min-height: 0; }
+    .ac-sh-form { margin-top: .55rem; padding: .2rem .75rem .8rem; border-radius: .9rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-200); }
+    .ac-sh-form .ac-macts { margin-top: .75rem; }
+    .ac-sh.is-saved .ac-sh-ic { animation: acPop .5s var(--ac-ease) both; }
+    .ac-sh-days { margin: .2rem 0 0; padding: 0; list-style: none; }
+    .ac-sh-days li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .1rem .6rem; padding: .45rem 0; font-size: .78rem; color: var(--color-gray-700); }
+    .ac-sh-days li + li { border-top: 1px solid var(--color-gray-200); }
+    .ac-sh-days li small { grid-column: 1 / -1; color: var(--color-gray-500); font-size: .72rem; }
+    .ac-sh-sec { margin: 1rem 0 .1rem; font-size: .72rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
+    .ac-sh-note { margin-top: .8rem; font-size: .74rem; line-height: 1.5; color: var(--color-gray-500); }
+    .ac-take { display: grid; gap: 0; }
+    .ac-take-r { display: grid; grid-template-columns: minmax(0, 1fr) 5.2rem auto; align-items: center; gap: .5rem; padding: .5rem 0; }
+    .ac-take-r + .ac-take-r { border-top: 1px solid var(--color-gray-200); }
+    .ac-take-r b { display: block; font-size: .82rem; color: var(--color-gray-900); overflow-wrap: anywhere; } .ac-take-r small { display: block; font-size: .7rem; color: var(--color-gray-500); }
+    .ac-take-r em { font-style: normal; font-size: .72rem; color: var(--color-gray-500); max-width: 6rem; }
+    .ac-take-miss { margin-top: .35rem; font-size: .74rem; color: var(--color-gray-500); }
+    html.dark .ac-sh-tile, html.dark .ac-sh-form { background: #11170d; border-color: #2b3a1c; }
+    html.dark .ac-sh-tile.is-gold { background: #2a2210; border-color: #4a3b12; } html.dark .ac-sh-tile.is-gold b { color: #f6dc8a; } html.dark .ac-sh-tile.is-gold span { color: #d9c27a; }
+    html.dark .ac-sh + .ac-sh, html.dark .ac-sh-days li + li, html.dark .ac-take-r + .ac-take-r { border-color: #2b3a1c; }
+    html.dark .ac-sh-ic, html.dark .ac-sh-bar { background: #1e2818; }
+    html.dark .ac-sh-st.is-soon { background: #3a1420; color: #fecdd3; } html.dark .ac-sh-st.is-short { background: #2a2210; color: #f3d9a4; }
+    html.dark .ac-sh-st.is-ok { background: #14261a; color: #a7e3b0; } html.dark .ac-sh-st.is-loose { background: #1e2818; color: #b9c6ad; }
+    @media (prefers-reduced-motion: reduce) { .ac-sh, .ac-sh-tile, .ac-sh.is-saved .ac-sh-ic { animation: none !important; } .ac-sh-bar i, .ac-sh-fold { transition: none !important; } }
+
     html.dark .ac-bub, html.dark .ac-card, html.dark .ac-task, html.dark .ac-more, html.dark .ac-mode:not([aria-pressed="true"]), html.dark .ac-ib, html.dark .ac-modal > div, html.dark .ac-reason,
     html.dark .ac-att span, html.dark .ac-lotpick { background: #161c12; border-color: #2b3a1c; color: #dbe5d0; }
     html.dark .ac-row.is-me .ac-bub, html.dark .ac-row.is-me .ac-card { background: #1d2817; border-color: #3f5a2a; color: #e8efe1; }
@@ -398,6 +454,8 @@
             <button type="button" class="ac-hbtn" id="acLogBtn">📖 Season log</button>
             <button type="button" class="ac-hbtn" id="acSafeBtn">🛡️ Safety</button>
             <a class="ac-hbtn" href="{{ route('sm.hub', ['id' => $schedule->id]) }}">🗂️ The season</a>
+            <button type="button" class="ac-hbtn" id="acShedBtn" hidden>📦 Shed</button>
+            <button type="button" class="ac-hbtn" id="acPayBtn" hidden>💵 Pay</button>
             <button type="button" class="ac-hbtn" id="acAddLot" hidden>➕ Add a lot</button>
         </div>
     </div>
@@ -575,6 +633,8 @@
                         + '<div class="ac-prog"><span><i style="width:' + (done / tasks.length * 100) + '%"></i></span>' + done + ' of ' + tasks.length + ' done</div>'
                         : '<div class="ac-none mt-2"><span>🌤️</span><span>Nothing planned that day. A good day to walk the field.</span></div>')
                     + ((c.moved || []).length ? '<p class="ac-sub">Moved for the weather or the workers</p>' + moveRows(c.moved) : (c.movedCount ? '<p class="ac-sub">' + c.movedCount + ' task' + (c.movedCount > 1 ? 's' : '') + ' moved</p>' : ''))
+                    // The shed and the payroll's word for the morning (2026-10-28), each opening its tab.
+                    + (c.notes || []).map((n) => '<button type="button" class="ac-mnote" data-open="' + esc(n.open) + '"><span aria-hidden="true">' + esc(n.icon) + '</span><span>' + esc(n.text) + '</span><i aria-hidden="true">›</i></button>').join('')
                     + '</div><span class="ac-time">' + esc(e.time) + '</span></div>', e);
             }
             case 'done': {
@@ -668,6 +728,8 @@
         paintHarvest();
         milestones();
         $('acAddLot').hidden = !F.canAddLot;
+        $('acShedBtn').hidden = !F.shed;
+        $('acPayBtn').hidden = !F.pay;
     };
     /* ---- the harvest (2026-10-28, the owner: "after the harvest date is complete, have a survey as well (similar to the
        activities module when you set the lot as harvested) asking the details of the harvest and do a final post analysis
@@ -859,7 +921,7 @@
     });
 
     /* ---- modals ---- */
-    const modal = (html, mount) => { const m = $('acModal'); $('acModalBox').innerHTML = html; m.hidden = false; void m.offsetWidth; m.classList.add('is-on'); $('acModalBox').querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeModal)); mount && mount($('acModalBox')); };
+    const modal = (html, mount) => { const m = $('acModal'); $('acModalBox').classList.remove('is-wide'); $('acModalBox').innerHTML = html; m.hidden = false; void m.offsetWidth; m.classList.add('is-on'); $('acModalBox').querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeModal)); mount && mount($('acModalBox')); };
     const closeModal = () => { const m = $('acModal'); m.classList.remove('is-on'); setTimeout(() => { m.hidden = true; }, 300); };
     $('acModal').addEventListener('click', (e) => { if (e.target === $('acModal')) closeModal(); });
     const peekTask = (t) => {
@@ -869,7 +931,10 @@
     const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
     const doneModal = (t, card) => modal('<h3>✅ ' + esc(t.title) + '</h3><p class="ac-msub">Anee keeps it in the season log. If it went in on another day, say which: the days after it count from there.</p>'
         + '<label class="ac-lab" for="acDDate">Done on</label><input type="date" id="acDDate" class="form-input" max="' + today() + '" value="' + today() + '">'
-        + '<label class="ac-lab" for="acDUsed">What you used <small class="font-normal text-gray-400">(optional)</small></label><input type="text" id="acDUsed" class="form-input w-full" maxlength="400" placeholder="Like 2 bags of urea, or the product and how much">'
+        // The shed (2026-10-28): what the task takes off the shelf, the plan's amounts, changed to what was really used.
+        + (t.take && t.take.take.length ? '<span class="ac-lab">From your shed</span><div class="ac-take">' + t.take.take.map((x) => '<label class="ac-take-r"><span><b>' + esc(x.name) + '</b><small>You have ' + esc(x.haveSays) + '</small></span><input type="number" class="form-input" data-take="' + x.itemId + '" min="0" step="any" inputmode="decimal" value="' + (x.qty ?? '') + '" aria-label="' + esc(x.name) + ' used"><em>' + esc(x.unitSays) + '</em></label>').join('') + '</div>' : '')
+        + (t.take && t.take.missing.length ? '<p class="ac-take-miss">Not in your shed, so not counted: ' + esc(t.take.missing.join(', ')) + '. Add ' + (t.take.missing.length === 1 ? 'it' : 'them') + ' in 📦 Shed.</p>' : '')
+        + '<label class="ac-lab" for="acDUsed">' + (t.take && t.take.take.length ? 'Anything else you used' : 'What you used') + ' <small class="font-normal text-gray-400">(optional)</small></label><input type="text" id="acDUsed" class="form-input w-full" maxlength="400" placeholder="Like 2 bags of urea, or the product and how much">'
         + (F.people.length ? '<span class="ac-lab">Who did it</span><div class="ac-pills" id="acDWho">' + F.people.map((p) => '<button type="button" class="ac-pill" data-w="' + p.id + '" aria-pressed="' + (t.workers || []).includes(p.name) + '">' + esc(p.name) + '</button>').join('') + '</div>' : '')
         + '<label class="ac-lab" for="acDNote">Notes <small class="font-normal text-gray-400">(optional)</small></label><textarea id="acDNote" class="form-textarea w-full" rows="2" maxlength="2000" placeholder="Anything worth remembering"></textarea>'
         + '<label class="ac-lab">A photo <small class="font-normal text-gray-400">(optional)</small></label><input type="file" id="acDPhoto" accept="image/*" capture="environment" class="text-sm">'
@@ -880,6 +945,8 @@
             fd.append('date', box.querySelector('#acDDate').value || today());
             fd.append('used', box.querySelector('#acDUsed').value); fd.append('note', box.querySelector('#acDNote').value);
             box.querySelectorAll('#acDWho [aria-pressed="true"]').forEach((b) => fd.append('workers[]', b.dataset.w));
+            const take = [...box.querySelectorAll('[data-take]')].map((i) => ({ itemId: Number(i.dataset.take), qty: Number(i.value) || 0 })).filter((x) => x.qty > 0);
+            if (take.length) fd.append('spend', JSON.stringify(take));
             const ph = box.querySelector('#acDPhoto').files[0]; if (ph) fd.append('photo', ph);
             e.target.disabled = true; e.target.textContent = 'Saving…';
             try { await window.api(U.done(t.id), { method: 'POST', body: fd }); closeModal(); card.classList.add('is-leaving'); setTimeout(() => load(true).then(scrollEnd), 380); }
@@ -917,6 +984,165 @@
             $('acModalBox').querySelector('[data-close]').addEventListener('click', closeModal);
         } catch (err) { window.toast?.(err.message, 'error'); }
     });
+
+    /* ---- the shed and the payroll (2026-10-28, the owner: "ask the user if user wants to include inventory and price
+       (if yes, then there's a tab for inventory in which user needs to fulfill during the season) ... and worker
+       payments"). The season's options turn them on. The shed is the season's own inventory (the board's Inventory
+       module keeps the same book): what the plan still needs, what is on hand, what is left to buy and what it costs.
+       The payroll counts what each worker earned from the tasks marked done with their name. ---- */
+    const peso = (v) => '₱' + Number(v || 0).toLocaleString(undefined, { maximumFractionDigits: 2 });
+    const SHED = { url: @json(route('auto.shed', $auto->id)), add: @json(route('auto.shed.add', $auto->id)), price: @json(route('auto.shed.price', $auto->id)) };
+    const PAY = { url: @json(route('auto.pay', $auto->id)), rate: @json(route('auto.pay.rate', $auto->id)), paid: @json(route('auto.paid', $auto->id)) };
+    const SHED_STATE = { soon: ['Buy soon', 'is-soon'], short: ['To buy', 'is-short'], ok: ['Ready', 'is-ok'], loose: ['Read the label', 'is-loose'] };
+    let SB = null, PB = null;
+    const tile = (n, label, i, gold) => '<div class="ac-sh-tile' + (gold ? ' is-gold' : '') + '" style="--i:' + i + '"><b>' + n + '</b><span>' + label + '</span></div>';
+    const growBars = (box) => requestAnimationFrame(() => box.querySelectorAll('.ac-sh-bar i[data-w]').forEach((b) => { b.style.width = b.dataset.w + '%'; }));
+    const unitOne = (k) => (SB && SB.units[k] ? SB.units[k][0] : k);
+    const shedRow = (r, i) => {
+        const st = SHED_STATE[r.state] || SHED_STATE.loose;
+        const pct = r.still ? Math.max(0, Math.min(100, Math.round((r.have || 0) / r.still * 100))) : 0;
+        const when = r.next ? 'Next on ' + esc(r.next) + (r.days != null ? (r.days <= 0 ? ', today' : ', in ' + r.days + ' day' + (r.days === 1 ? '' : 's')) : '') : '';
+        return '<div class="ac-sh" style="--i:' + i + '" data-key="' + esc(r.key) + '">'
+            + '<div class="ac-sh-h"><span class="ac-sh-ic" aria-hidden="true">' + r.icon + '</span><div class="min-w-0"><b>' + esc(r.name) + '</b><small>' + when + (r.lots.length ? ' · ' + (r.lots.length > 1 ? r.lots.length + ' lots' : esc(r.lots[0])) : '') + ' · ' + r.tasks + ' task' + (r.tasks === 1 ? '' : 's') + '</small></div>'
+            + '<span class="ac-sh-st ' + st[1] + '">' + st[0] + '</span></div>'
+            + (r.still ? '<div class="ac-sh-bar" role="img" aria-label="' + esc((r.haveSays || 'None') + ' of ' + r.stillSays + ' on hand') + '"><i data-w="' + pct + '"></i></div>' : '')
+            + '<dl class="ac-sh-dl"><div><dt>Season needs</dt><dd>' + esc(r.stillSays || (r.loose.length ? r.loose.join(', ') : 'As the label says')) + '</dd></div>'
+            + '<div><dt>You have</dt><dd>' + esc(r.haveSays || 'None yet') + '</dd></div>'
+            + '<div><dt>To buy</dt><dd>' + (r.buySays ? '<b>' + esc(r.buySays) + '</b>' + (r.cost != null ? '<br>' + peso(r.cost) : '') : (r.state === 'ok' ? 'Nothing' : 'Check the label')) + '</dd></div>'
+            + '<div><dt>Price</dt><dd>' + (r.price != null ? peso(r.price) + ' a ' + esc(r.unitOne || '') : 'Not set') + '</dd></div></dl>'
+            + '<div class="ac-sh-btns"><button type="button" class="ac-pill" data-sh-add>＋ ' + (r.itemId ? 'Bought more' : 'I have it or bought it') + '</button>' + (r.itemId ? '<button type="button" class="ac-pill" data-sh-price>₱ Price</button>' : '') + '</div>'
+            + '<div class="ac-sh-fold"><div></div></div></div>';
+    };
+    const shedHtml = () => {
+        const T = SB.totals, rows = SB.rows;
+        return '<h3>📦 Your shed</h3><p class="ac-msub">What the season still needs, what you have and what is left to buy. Fill it in as you buy: each task you mark done takes what it used off the shelf.</p>'
+            + '<div class="ac-sh-tiles">' + (T.buy ? tile(peso(T.buy), 'left to buy' + (T.unpriced ? ', and ' + T.unpriced + ' more without a price' : ' this season'), 0, true)
+                : tile(T.short ? T.short + ' to buy' : 'All set', T.short ? 'set their prices to see the cost' : 'nothing left to buy', 0, T.short > 0))
+            + tile(peso(T.worth), 'in the shed now', 1) + tile(peso(T.spent), 'used so far', 2) + '</div>'
+            + (rows.length ? rows.map(shedRow).join('') : '<p class="text-sm text-gray-500 py-3">Nothing left to buy: the plan names no more products.</p>')
+            + (SB.extra.length ? '<p class="ac-sh-sec">Also in your shed</p>' + SB.extra.map((x, i) => '<div class="ac-sh" style="--i:' + (rows.length + i) + '"><div class="ac-sh-h"><span class="ac-sh-ic" aria-hidden="true">' + x.icon + '</span><div class="min-w-0"><b>' + esc(x.name) + '</b><small>' + esc(x.haveSays) + (x.price != null ? ' · ' + peso(x.price) + ' a ' + esc(x.unitSays) : '') + '</small></div></div></div>').join('') : '')
+            + '<p class="ac-sh-note">Amounts come from Anee\'s plan for each lot. Prices are yours: the cost to buy is counted at the price you set. The same book shows in the season\'s Inventory.</p>'
+            + '<div class="ac-macts"><button type="button" class="btn btn-primary" data-close>Close</button></div>';
+    };
+    const paintShed = () => { const box = $('acModalBox'); box.innerHTML = shedHtml(); box.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeModal)); growBars(box); };
+    const shedForm = (r, mode) => {
+        if (mode === 'price') {
+            return '<div class="ac-sh-form"><label class="ac-lab" for="acShP">Price for one ' + esc(r.unitOne || 'unit') + '</label><input id="acShP" type="number" class="form-input w-full" data-f="price" min="0" step="any" inputmode="decimal" value="' + (r.price ?? '') + '" placeholder="Like 1450">'
+                + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-primary" data-sh-save="price">Save the price</button></div></div>';
+        }
+        const units = r.kin && r.kin.length ? r.kin : Object.keys(SB.units);
+        return '<div class="ac-sh-form"><div class="ac-row2"><div><label class="ac-lab" for="acShQ">How much</label><input id="acShQ" type="number" class="form-input w-full" data-f="qty" min="0" step="any" inputmode="decimal" value="' + (r.buy > 0 ? r.buy : '') + '"></div>'
+            + '<div><label class="ac-lab" for="acShU">In</label><select id="acShU" class="form-select w-full" data-f="unit">' + units.map((k) => '<option value="' + esc(k) + '"' + (k === (r.unit || units[0]) ? ' selected' : '') + '>' + esc(SB.units[k] ? SB.units[k][1] : k) + '</option>').join('') + '</select></div></div>'
+            + '<label class="ac-lab" for="acShP">Price for one <span data-f="one">' + esc(unitOne(r.unit || units[0])) + '</span> <small class="font-normal text-gray-400">(optional)</small></label><input id="acShP" type="number" class="form-input w-full" data-f="price" min="0" step="any" inputmode="decimal" value="' + (r.price ?? '') + '" placeholder="Like 1450">'
+            + '<div class="ac-pills mt-3" data-f="how"><button type="button" class="ac-pill" data-b="1" aria-pressed="true">I bought it</button><button type="button" class="ac-pill" data-b="0" aria-pressed="false">I have it already</button></div>'
+            + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-primary" data-sh-save="add">Save</button></div></div>';
+    };
+    const openShed = async () => {
+        modal('<h3>📦 Your shed</h3><p class="ac-msub">Reading the plan against your shed…</p>');
+        $('acModalBox').classList.add('is-wide');
+        try { SB = (await window.api(SHED.url)).data; paintShed(); } catch (err) { window.toast?.(err.message, 'error'); closeModal(); }
+    };
+    $('acModalBox').addEventListener('click', async (e) => {
+        if (!SB || !$('acModalBox').querySelector('.ac-sh[data-key]')) return;
+        const row = e.target.closest('.ac-sh[data-key]'); if (!row) return;
+        const r = SB.rows.find((x) => x.key === row.dataset.key); if (!r) return;
+        const fold = row.querySelector('.ac-sh-fold > div');
+        if (e.target.closest('[data-sh-add], [data-sh-price]')) {
+            const mode = e.target.closest('[data-sh-price]') ? 'price' : 'add';
+            if (row.classList.contains('is-form') && row.dataset.mode === mode) { row.classList.remove('is-form'); return; }
+            fold.innerHTML = shedForm(r, mode); row.dataset.mode = mode;
+            requestAnimationFrame(() => row.classList.add('is-form'));
+            setTimeout(() => fold.querySelector('input')?.focus({ preventScroll: true }), 320);
+            return;
+        }
+        if (e.target.closest('[data-sh-cancel]')) { row.classList.remove('is-form'); return; }
+        const how = e.target.closest('[data-f="how"] [data-b]');
+        if (how) { how.parentElement.querySelectorAll('[data-b]').forEach((b) => b.setAttribute('aria-pressed', String(b === how))); return; }
+        const save = e.target.closest('[data-sh-save]'); if (!save) return;
+        const v = (f) => fold.querySelector('[data-f="' + f + '"]')?.value?.trim() ?? '';
+        let url, body;
+        if (save.dataset.shSave === 'price') {
+            url = SHED.price; body = { itemId: r.itemId, price: v('price') === '' ? null : Number(v('price')) };
+        } else {
+            if (!(Number(v('qty')) > 0)) return window.toast?.('Say how much.', 'error');
+            url = SHED.add; body = { itemId: r.itemId, name: r.name, kind: r.kind, unit: v('unit'), qty: Number(v('qty')), price: v('price') === '' ? null : Number(v('price')),
+                bought: fold.querySelector('[data-f="how"] [aria-pressed="true"]')?.dataset.b !== '0' };
+        }
+        save.disabled = true; save.textContent = 'Saving…';
+        try {
+            const res = await window.api(url, { method: 'POST', body });
+            SB = Object.assign(SB, res.data); paintShed();
+            const again = $('acModalBox').querySelector('.ac-sh[data-key="' + CSS.escape(r.itemId ? 'i' + r.itemId : r.key) + '"]') || [...$('acModalBox').querySelectorAll('.ac-sh[data-key]')].find((x) => SB.rows.find((y) => y.key === x.dataset.key && y.name === r.name));
+            if (again) { again.classList.add('is-saved'); again.scrollIntoView({ block: 'nearest', behavior: still() ? 'auto' : 'smooth' }); }
+            window.toast?.(res.message, 'success');
+        } catch (err) { window.toast?.(err.message, 'error'); save.disabled = false; save.textContent = save.dataset.shSave === 'price' ? 'Save the price' : 'Save'; }
+    });
+    $('acModalBox').addEventListener('change', (e) => {
+        const sel = e.target.closest('.ac-sh-form [data-f="unit"]'); if (!sel) return;
+        const one = sel.closest('.ac-sh-form').querySelector('[data-f="one"]'); if (one) one.textContent = unitOne(sel.value);
+    });
+    $('acShedBtn').addEventListener('click', openShed);
+    $('acFeed').addEventListener('click', (e) => { const n = e.target.closest('.ac-mnote[data-open]'); if (n) (n.dataset.open === 'pay' ? openPay : openShed)(); });
+
+    const payRow = (w, i) => '<div class="ac-sh" style="--i:' + i + '" data-wk="' + w.id + '">'
+        + '<div class="ac-sh-h"><span class="ac-sh-ic" aria-hidden="true">🧑‍🌾</span><div class="min-w-0"><b>' + esc(w.name) + '</b><small>' + (w.dayPay != null ? peso(w.dayPay) + ' a day' : 'No daily pay yet') + ' · ' + esc(w.daysSays) + (w.lastPaid ? ' · last paid ' + esc(w.lastPaid) : '') + '</small></div>'
+        + (w.owed > 0 ? '<span class="ac-sh-st is-short">Owed ' + peso(w.owed) + '</span>' : (w.earned > 0 ? '<span class="ac-sh-st is-ok">Paid up</span>' : (w.dayPay == null ? '<span class="ac-sh-st is-loose">Set the pay</span>' : ''))) + '</div>'
+        + '<dl class="ac-sh-dl"><div><dt>Worked</dt><dd>' + esc(w.daysSays) + '</dd></div><div><dt>Earned</dt><dd>' + (w.earned != null ? peso(w.earned) : 'Set the daily pay') + '</dd></div>'
+        + '<div><dt>Paid</dt><dd>' + peso(w.paid) + '</dd></div><div><dt>Owed</dt><dd><b>' + (w.owed != null ? peso(w.owed) : 'Not counted') + '</b></dd></div></dl>'
+        + '<div class="ac-sh-btns">' + (w.owed > 0 ? '<button type="button" class="ac-pill" data-pay="paid" style="background:#f5c518;color:#2b2100">💵 Pay ' + peso(w.owed) + '</button>' : '')
+        + '<button type="button" class="ac-pill" data-pay="rate">Daily pay</button>' + (w.lines.length ? '<button type="button" class="ac-pill" data-pay="days">Days worked</button>' : '') + '</div>'
+        + '<div class="ac-sh-fold"><div></div></div></div>';
+    const payForm = (w, mode) => mode === 'days'
+        ? '<div class="ac-sh-form"><ul class="ac-sh-days">' + w.lines.map((l) => '<li><span><b>' + esc(l.date) + '</b> · ' + esc(l.part) + '</span><span>' + (l.pay != null ? peso(l.pay) : '') + '</span><small>' + esc(l.tasks.join(', ')) + '</small></li>').join('') + '</ul></div>'
+        : (mode === 'rate'
+            ? '<div class="ac-sh-form"><label class="ac-lab" for="acPyR">Pay for a whole day</label><input id="acPyR" type="number" class="form-input w-full" data-f="dayPay" min="0" step="any" inputmode="decimal" value="' + (w.dayPay ?? '') + '" placeholder="Like 500">'
+                + '<p class="ac-sh-note" style="margin-top:.4rem">Half a day is paid half. Saved on ' + esc(w.name) + '\'s card for every season.</p>'
+                + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-primary" data-pay-save="rate">Save</button></div></div>'
+            : '<div class="ac-sh-form"><label class="ac-lab" for="acPyA">Amount paid</label><input id="acPyA" type="number" class="form-input w-full" data-f="amount" min="0" step="any" inputmode="decimal" value="' + (w.owed || '') + '">'
+                + '<label class="ac-lab" for="acPyN">Note <small class="font-normal text-gray-400">(optional)</small></label><input id="acPyN" class="form-input w-full" data-f="note" maxlength="300" placeholder="Like: cash, for the week">'
+                + '<div class="ac-macts"><button type="button" class="btn btn-white" data-sh-cancel>Cancel</button><button type="button" class="btn btn-primary" data-pay-save="paid">Record the payment</button></div></div>');
+    const payHtml = () => {
+        const T = PB.totals;
+        return '<h3>💵 Worker pay</h3><p class="ac-msub">What each worker earned from the tasks marked done with their name, what you paid, and what is owed.</p>'
+            + '<div class="ac-sh-tiles">' + tile(peso(T.owed), 'owed now', 0, T.owed > 0) + tile(peso(T.earned), 'earned this season', 1) + tile(peso(T.paid), 'paid so far', 2) + '</div>'
+            + (PB.rows.length ? PB.rows.map(payRow).join('') : '<p class="text-sm text-gray-500 py-3">No workers on this season yet. Add them in the season\'s Workers.</p>')
+            + '<p class="ac-sh-note">A morning task counts half a day, an afternoon task the other half, a task with no time of day a whole day. Tick who did each task when you mark it done.' + (T.noRate ? ' Set the daily pay of ' + T.noRate + ' worker' + (T.noRate === 1 ? '' : 's') + ' to count what they earned.' : '') + '</p>'
+            + '<div class="ac-macts"><button type="button" class="btn btn-primary" data-close>Close</button></div>';
+    };
+    const paintPay = () => { const box = $('acModalBox'); box.innerHTML = payHtml(); box.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', closeModal)); };
+    const openPay = async () => {
+        modal('<h3>💵 Worker pay</h3><p class="ac-msub">Counting the days…</p>');
+        $('acModalBox').classList.add('is-wide');
+        try { PB = (await window.api(PAY.url)).data; paintPay(); } catch (err) { window.toast?.(err.message, 'error'); closeModal(); }
+    };
+    $('acModalBox').addEventListener('click', async (e) => {
+        const row = e.target.closest('.ac-sh[data-wk]'); if (!row || !PB) return;
+        const w = PB.rows.find((x) => String(x.id) === row.dataset.wk); if (!w) return;
+        const fold = row.querySelector('.ac-sh-fold > div');
+        const open = e.target.closest('[data-pay]');
+        if (open) {
+            const mode = open.dataset.pay;
+            if (row.classList.contains('is-form') && row.dataset.mode === mode) { row.classList.remove('is-form'); return; }
+            fold.innerHTML = payForm(w, mode); row.dataset.mode = mode;
+            requestAnimationFrame(() => row.classList.add('is-form'));
+            setTimeout(() => fold.querySelector('input')?.focus({ preventScroll: true }), 320);
+            return;
+        }
+        if (e.target.closest('[data-sh-cancel]')) { row.classList.remove('is-form'); return; }
+        const save = e.target.closest('[data-pay-save]'); if (!save) return;
+        const v = (f) => fold.querySelector('[data-f="' + f + '"]')?.value?.trim() ?? '';
+        const isRate = save.dataset.paySave === 'rate';
+        if (isRate ? v('dayPay') === '' : !(Number(v('amount')) > 0)) return window.toast?.(isRate ? 'Say the pay for a whole day.' : 'Say how much you paid.', 'error');
+        save.disabled = true; save.textContent = 'Saving…';
+        try {
+            const res = await window.api(isRate ? PAY.rate : PAY.paid, { method: 'POST', body: isRate ? { workerId: w.id, dayPay: Number(v('dayPay')) } : { workerId: w.id, amount: Number(v('amount')), note: v('note') } });
+            PB = res.data; paintPay();
+            $('acModalBox').querySelector('.ac-sh[data-wk="' + w.id + '"]')?.classList.add('is-saved');
+            window.toast?.(res.message, 'success');
+            if (!isRate) { celebrate('💵 ' + w.name + ' is paid', 'Kept in the season log.'); setTimeout(() => load(true), 600); }
+        } catch (err) { window.toast?.(err.message, 'error'); save.disabled = false; save.textContent = isRate ? 'Save' : 'Record the payment'; }
+    });
+    $('acPayBtn').addEventListener('click', openPay);
 
     /* ---- the composer ---- */
     let mode = 'ask', photos = [], video = null, frames = [], voice = null, rec = null, recChunks = [], recStream = null, recT0 = 0;

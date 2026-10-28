@@ -22,6 +22,8 @@ use App\Support\AiUsage;
 use App\Support\AneeEmoji;
 use App\Support\AutoBook;
 use App\Support\AutoGoal;
+use App\Support\AutoPay;
+use App\Support\AutoShed;
 use App\Support\CropCatalog;
 use App\Support\CropStages;
 use App\Support\FieldCatalogue;
@@ -1367,7 +1369,11 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             }
         }
 
+        // The shed (2026-10-28): what each task takes off the shelf, read once for the whole feed.
+        $shedOn = AutoShed::on($auto);
+        [$shelfItems, $shelfHave] = $shedOn ? AutoShed::shelf($auto) : [collect(), []];
         $row = fn (AsAutoTask $t) => [
+            'take' => $shedOn && $t->status === 'planned' ? AutoShed::forTask($t, $shelfItems, $shelfHave) : null,
             'id' => (int) $t->id, 'lotId' => $t->lotId, 'lot' => $t->lotId ? ($lots->get($t->lotId)?->lotName) : null, 'kind' => $t->kind,
             'kindLabel' => AutoBook::KINDS[$t->kind][0] ?? 'Farm work', 'emoji' => AutoBook::KINDS[$t->kind][1] ?? '🧑‍🌾', 'tone' => AutoBook::KINDS[$t->kind][3] ?? 'leaf',
             'title' => $t->title, 'summary' => $t->summary, 'why' => $t->why, 'detail' => $t->detail, 'date' => $t->plannedDate?->toDateString(),
@@ -1409,7 +1415,115 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
                 ->map(fn ($al) => ['id' => (int) $al->lotId, 'name' => (string) (AsScheduleLot::find($al->lotId)?->lotName ?? 'New lot')])->values() : [],
             'perLot' => AiPrices::of(self::KIND), 'balance' => round($this->credits->balance($this->payer()->id), 2), 'unlimited' => $this->credits->unlimited((int) $this->payer()->id),
             'canAddLot' => $auto->status === AsAutoSeason::ACTIVE && ($this->lotCap() === null || AsAutoLot::where('autoId', $auto->id)->count() < $this->lotCap()),
+            // The tabs the farmer's options turn on (AutoOptions): the shed and the payroll.
+            'shed' => $shedOn, 'pay' => AutoPay::on($auto),
         ]);
+    }
+
+    /* ------------------------------------------------ the shed and the payroll */
+
+    /** The shed against the plan (AutoShed::book): what the season still needs, what is on hand, what to buy. */
+    public function shed(int $id)
+    {
+        $auto = $this->auto($id);
+        abort_unless(AutoShed::on($auto), 404);
+        rescue(fn () => \App\Support\AutoNudge::seen($auto), null, false);
+
+        return $this->json(true, 'ok', AutoShed::book($auto) + ['today' => now('Asia/Manila')->toDateString()]);
+    }
+
+    /** The farmer fills the shed: what they have or bought of a product, and its price. */
+    public function shedAdd(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        abort_unless(AutoShed::on($auto) && $auto->isLive(), 423);
+        $v = Validator::make($request->all(), ['itemId' => 'nullable|integer', 'name' => 'required_without:itemId|nullable|string|max:190', 'kind' => 'nullable|string|max:20',
+            'unit' => 'required|in:' . implode(',', array_keys(\App\Models\AsInventoryItem::UNITS)), 'qty' => 'required|numeric|gt:0|max:100000',
+            'price' => 'nullable|numeric|min:0|max:10000000', 'bought' => 'nullable|boolean', 'on' => 'nullable|date']);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        $on = $request->filled('on') ? Carbon::parse($request->input('on'), 'Asia/Manila')->min(now('Asia/Manila'))->toDateString() : now('Asia/Manila')->toDateString();
+        $price = $request->filled('price') ? (float) $request->input('price') : null;
+        try {
+            $r = DB::transaction(fn () => AutoShed::add($auto, $request->filled('itemId') ? (int) $request->input('itemId') : null, (string) $request->input('name', ''),
+                (string) $request->input('kind', 'other'), (string) $request->input('unit'), (float) $request->input('qty'), $price, $on, $request->boolean('bought', true)));
+        } catch (\InvalidArgumentException $e) {
+            return $this->json(false, $e->getMessage(), [], 422);
+        }
+        $typed = AutoShed::say((float) $request->input('qty'), (string) $request->input('unit'));
+        AsAutoEvent::say($auto->id, 'shed', '📦 ' . ($request->boolean('bought', true) ? 'Bought ' : 'In the shed: ') . $typed . ' of ' . $r['item']->name
+            . ($price !== null ? ' at ' . AutoShed::peso($price) . ' each' : ''), ['itemId' => (int) $r['item']->id], ['role' => 'farmer', 'userId' => Auth::id()]);
+
+        return $this->json(true, $r['item']->name . ': ' . $typed . ' in the shed.', AutoShed::book($auto));
+    }
+
+    /** A product's price, per its unit: what the rest of the season's buying is costed at. */
+    public function shedPrice(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        abort_unless(AutoShed::on($auto), 404);
+        $v = Validator::make($request->all(), ['itemId' => 'required|integer', 'price' => 'nullable|numeric|min:0|max:10000000']);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        $item = \App\Models\AsInventoryItem::where('croppingScheduleId', $auto->croppingScheduleId)->where('deleteStatus', 1)->findOrFail((int) $request->input('itemId'));
+        $item->update(['unitPrice' => $request->filled('price') ? round((float) $request->input('price'), 2) : null]);
+
+        return $this->json(true, 'Price saved.', AutoShed::book($auto));
+    }
+
+    /** What each worker earned from the work marked done, what was paid, and what is owed (AutoPay::book). */
+    public function pay(int $id)
+    {
+        $auto = $this->auto($id);
+        abort_unless(AutoPay::on($auto), 404);
+
+        return $this->json(true, 'ok', AutoPay::book($auto));
+    }
+
+    /** A worker's daily pay, on their card for this season and on the roster. */
+    public function payRate(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        abort_unless(AutoPay::on($auto), 404);
+        $v = Validator::make($request->all(), ['workerId' => 'required|integer', 'dayPay' => 'required|numeric|min:0|max:1000000']);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        $wid = (int) $request->input('workerId');
+        $half = round((float) $request->input('dayPay') / 2, 2);
+        if ($wid < 0) {
+            // A crew only named in the wizard (no cards): the daily pay is kept with the name.
+            $answers = (array) $auto->answers;
+            abort_unless(isset($answers['crew'][-1 - $wid]), 404);
+            $answers['crew'][-1 - $wid]['pay'] = round((float) $request->input('dayPay'), 2);
+            $auto->update(['answers' => $answers]);
+        } else {
+            $card = AsScheduleWorker::active()->where('croppingScheduleId', $auto->croppingScheduleId)->findOrFail($wid);
+            $card->update(['costPerHalfDay' => $half]);
+            rescue(fn () => AsGlobalWorker::forCard($card->fresh(), (int) Auth::id())->update(['costPerHalfDay' => $half]), null, true);
+        }
+
+        return $this->json(true, 'Pay saved.', AutoPay::book($auto));
+    }
+
+    /** Payday: what was handed to a worker, kept in the season's story. */
+    public function paid(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        abort_unless(AutoPay::on($auto), 404);
+        $v = Validator::make($request->all(), ['workerId' => 'required|integer', 'amount' => 'required|numeric|gt:0|max:10000000', 'note' => 'nullable|string|max:300']);
+        if ($v->fails()) {
+            return $this->json(false, $v->errors()->first(), [], 422);
+        }
+        $who = AutoPlanner::people($auto)->firstWhere('id', (int) $request->input('workerId'));
+        abort_unless($who, 404);
+        $amount = round((float) $request->input('amount'), 2);
+        AsAutoEvent::say($auto->id, 'paid', '💵 Paid ' . $who['name'] . ' ' . AutoShed::peso($amount) . ($request->filled('note') ? "\n" . trim((string) $request->input('note')) : ''),
+            ['workerId' => (int) $who['id'], 'amount' => $amount], ['role' => 'farmer', 'userId' => Auth::id()]);
+
+        return $this->json(true, 'Paid ' . $who['name'] . ' ' . AutoShed::peso($amount) . '.', AutoPay::book($auto));
     }
 
     /** What the season page's lot form needs for a lot that joins the running season (2026-10-28). */
@@ -1494,6 +1608,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
                 'sky' => $d['sky'] ?? null, 'lots' => $d['lots'] ?? null,
                 'tasks' => array_values(array_filter(array_map($task, (array) ($d['tasks'] ?? [])))),
                 'moved' => isset($d['movedList']) ? $movedList($d['movedList']) : null, 'movedCount' => (int) ($d['moved'] ?? 0), 'late' => (int) ($d['late'] ?? 0),
+                'notes' => $d['notes'] ?? null,
             ],
             $e->kind === 'done' => ['type' => 'done', 'task' => $task($e->taskId), 'lot' => $lotOf($e->lotId), 'used' => $d['used'] ?? null,
                 'workers' => ($t = $ctx['tasks']->get((int) $e->taskId)) ? collect((array) ($t->doneData['workers'] ?? []))->map(fn ($w) => $ctx['people']->get($w)['name'] ?? null)->filter()->values()->all() : [],
@@ -1525,8 +1640,12 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
         rescue(fn () => \App\Support\AutoNudge::seen($this->auto($id)), null, false);
         $auto = $this->auto($id);
         $t = $this->liveTask($auto, $taskId);
+        // A double tap, or a page left open: a task is done once (its shed spend with it).
+        if ($t->status === 'done') {
+            return $this->json(true, 'Already marked done.');
+        }
         $v = Validator::make($request->all(), ['date' => 'nullable|date', 'note' => 'nullable|string|max:2000', 'workers' => 'nullable|array', 'used' => 'nullable|string|max:400',
-            'photo' => 'nullable|image|max:12288']);
+            'photo' => 'nullable|image|max:12288', 'spend' => 'nullable|string|max:4000']);
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), [], 422);
         }
@@ -1543,6 +1662,16 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
         }
         $t->update(['status' => 'done', 'doneDate' => $date->toDateString(), 'doneAt' => now(), 'doneNote' => $request->input('note'),
             'doneData' => array_filter(['workers' => array_values(array_map('intval', (array) $request->input('workers', []))), 'used' => $request->input('used'), 'media' => $media ?: null])]);
+        // The shed (2026-10-28): what the farmer said the task used comes off the shelf, once.
+        $took = '';
+        if ($request->filled('spend') && AutoShed::on($auto)) {
+            $spent = rescue(fn () => AutoShed::spend($auto, $t->fresh(), (array) json_decode((string) $request->input('spend'), true), $date->toDateString()), [], true);
+            if ($spent) {
+                $t->update(['doneData' => array_merge((array) $t->doneData, ['spent' => $spent])]);
+                $names = \App\Models\AsInventoryItem::whereIn('id', array_column($spent, 'itemId'))->get()->keyBy('id');
+                $took = ' 📦 Taken off the shed: ' . implode(', ', array_map(fn ($x) => ($names->get($x['itemId'])?->say((float) $x['qty']) ?? $x['qty']) . ' of ' . ($names->get($x['itemId'])?->name ?? 'an item'), $spent)) . '.';
+            }
+        }
 
         // The day the crop went in is the day every count runs from: a sowing, transplanting or planting done on another day moves them all.
         $shift = '';
@@ -1565,7 +1694,7 @@ YOUR FIRST ANSWER HAD ONLY " . $count . " TASKS: " . json_encode(array_map(fn ($
             ['role' => 'farmer', 'taskId' => $t->id, 'lotId' => $t->lotId, 'userId' => Auth::id(), 'media' => $media ?: null]);
         $moved = $this->planner->plan($auto->fresh());
         $praise = ['Ayos! :anee-thumbsup:', 'Galing! :anee-happy:', 'Nice work :anee-grin:', 'Done and noted :anee-salute:'][$t->id % 4];
-        AsAutoEvent::say($auto->id, 'reply', $praise . ' ' . $t->title . ' is done.' . $shift . $this->movedWords($moved), ['moved' => $moved], ['taskId' => $t->id, 'lotId' => $t->lotId]);
+        AsAutoEvent::say($auto->id, 'reply', $praise . ' ' . $t->title . ' is done.' . $shift . $took . $this->movedWords($moved), ['moved' => $moved], ['taskId' => $t->id, 'lotId' => $t->lotId]);
 
         return $this->json(true, 'Marked done.');
     }

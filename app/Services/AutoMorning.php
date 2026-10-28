@@ -99,6 +99,25 @@ class AutoMorning
         if ($moved) {
             $lines[] = 'I moved ' . count($moved) . ' task' . (count($moved) > 1 ? 's' : '') . ' for the weather or the workers: ' . implode('; ', array_map(fn ($m) => $m['title'] . ' to ' . Carbon::parse($m['to'])->format('D, M j'), array_slice($moved, 0, 3))) . (count($moved) > 3 ? '; and more' : '') . '.';
         }
+        // The shed and the payroll (2026-10-28): what to buy before the week's tasks need it, and on Saturdays what is owed.
+        $notes = [];
+        if (\App\Support\AutoShed::on($auto)) {
+            $buy = array_filter(rescue(fn () => \App\Support\AutoShed::book($auto)['rows'], [], true), fn ($r) => $r['state'] === 'soon');
+            if ($buy) {
+                $notes[] = ['open' => 'shed', 'icon' => '📦', 'text' => 'Buy before it is needed: ' . implode('; ', array_map(fn ($r) => $r['name'] . ', ' . $r['buySays'] . ' by ' . $r['next'], array_slice($buy, 0, 3)))
+                    . (count($buy) > 3 ? '; and more' : '') . '.'];
+            }
+        }
+        if ($today->isSaturday() && \App\Support\AutoPay::on($auto)) {
+            $owed = rescue(fn () => \App\Support\AutoPay::book($auto), null, true);
+            $who = $owed ? array_filter($owed['rows'], fn ($r) => $r['owed'] > 0) : [];
+            if ($who) {
+                $notes[] = ['open' => 'pay', 'icon' => '💵', 'text' => 'Payday? ' . \App\Support\AutoShed::peso($owed['totals']['owed']) . ' is owed to ' . implode(', ', array_map(fn ($r) => $r['name'], $who)) . '.'];
+            }
+        }
+        foreach ($notes as $n) {
+            $lines[] = $n['icon'] . ' ' . $n['text'];
+        }
         // The same morning as data, for the morning card the season page draws (2026-10-27, the owner: "daily thing
         // should appear as cards"): the sky, each lot's day and stage, and what moved.
         $lotCards = [];
@@ -120,7 +139,7 @@ class AutoMorning
         AsAutoEvent::say($auto->id, 'briefing', implode("\n", $lines), [
             'date' => $today->toDateString(), 'tasks' => $tasks->pluck('id')->all(), 'moved' => count($moved),
             'sky' => $sky ? array_intersect_key($sky, array_flip(['emoji', 'pop', 'mm', 'wind', 'tmax'])) : null,
-            'lots' => $lotCards, 'late' => $late,
+            'lots' => $lotCards, 'late' => $late, 'notes' => $notes ?: null,
             'movedList' => array_map(fn ($m) => ['id' => $m['id'] ?? null, 'title' => $m['title'], 'to' => $m['to'], 'why' => $m['why'] ?? null], array_slice($moved, 0, 6)),
         ]);
     }

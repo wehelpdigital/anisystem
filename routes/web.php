@@ -643,6 +643,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/app/auto/{id}/approve', [App\Http\Controllers\AneeAutoController::class, 'approve'])->whereNumber('id')->middleware('throttle:10,1')->name('auto.approve');
     Route::post('/app/auto/{id}/new-lot', [App\Http\Controllers\AneeAutoController::class, 'newLot'])->whereNumber('id')->middleware('throttle:10,1')->name('auto.newlot');
     Route::get('/app/auto/{id}/lot-form', [App\Http\Controllers\AneeAutoController::class, 'lotForm'])->whereNumber('id')->name('auto.lotform');
+    // The shed and the payroll (2026-10-28), the tabs the season's options turn on.
+    Route::get('/app/auto/{id}/shed', [App\Http\Controllers\AneeAutoController::class, 'shed'])->whereNumber('id')->name('auto.shed');
+    Route::post('/app/auto/{id}/shed', [App\Http\Controllers\AneeAutoController::class, 'shedAdd'])->whereNumber('id')->middleware('throttle:40,1')->name('auto.shed.add');
+    Route::post('/app/auto/{id}/shed/price', [App\Http\Controllers\AneeAutoController::class, 'shedPrice'])->whereNumber('id')->middleware('throttle:40,1')->name('auto.shed.price');
+    Route::get('/app/auto/{id}/pay', [App\Http\Controllers\AneeAutoController::class, 'pay'])->whereNumber('id')->name('auto.pay');
+    Route::post('/app/auto/{id}/pay/rate', [App\Http\Controllers\AneeAutoController::class, 'payRate'])->whereNumber('id')->middleware('throttle:40,1')->name('auto.pay.rate');
+    Route::post('/app/auto/{id}/pay', [App\Http\Controllers\AneeAutoController::class, 'paid'])->whereNumber('id')->middleware('throttle:20,1')->name('auto.paid');
     Route::get('/app/auto/{id}/job', [App\Http\Controllers\AneeAutoController::class, 'job'])->whereNumber('id')->name('auto.job');
     Route::put('/app/auto/{id}/fert', [App\Http\Controllers\AneeAutoController::class, 'saveFert'])->whereNumber('id')->name('auto.fert');
     Route::put('/app/auto/{id}/imbalance', [App\Http\Controllers\AneeAutoController::class, 'saveImbalance'])->whereNumber('id')->name('auto.imbalance');
