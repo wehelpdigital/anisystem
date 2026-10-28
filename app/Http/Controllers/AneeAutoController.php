@@ -33,6 +33,7 @@ use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -522,6 +523,11 @@ class AneeAutoController extends Controller
         if ($request->has('notes')) {
             $a['notes'] = mb_substr(trim((string) $request->input('notes')), 0, 2000) ?: null;
         }
+        // A lot planted before its land preparation can finish, the farmer's yes to a shortened one (2026-10-28).
+        if ($request->has('prepSqueeze')) {
+            $mine = AsAutoLot::where('autoId', $auto->id)->pluck('lotId')->map(fn ($x) => (string) $x)->all();
+            $a['prepSqueeze'] = array_filter(array_intersect_key(array_map('boolval', (array) $request->input('prepSqueeze', [])), array_flip($mine)));
+        }
         // How the farmer wants the season run (App\Support\AutoOptions, 2026-10-28): the extras, the protection, the machines.
         if ($request->has('options')) {
             $a['options'] = \App\Support\AutoOptions::clean((array) $request->input('options', []) + ['set' => true]);
@@ -553,6 +559,79 @@ class AneeAutoController extends Controller
         $auto->update(['answers' => $a, 'step' => max((int) $auto->step, (int) $request->input('step', 0))]);
 
         return $this->json(true, 'Saved.', ['soilRead' => $a['soilRead'] ?? null]);
+    }
+
+    /**
+     * The best weeks to plant one lot, from today to a year ahead, two ways (App\Support\PlantWindow, 2026-10-28):
+     * for the crop alone, and with the price at harvest; with the land preparation the farm can do before planting
+     * (prep: the days it needs, the earliest ready day) and the days in the field to harvest. Kept half a day.
+     */
+    public function window(Request $request, int $id)
+    {
+        $auto = $this->auto($id);
+        $al = AsAutoLot::where('autoId', $auto->id)->where('lotId', (int) $request->query('lotId'))->firstOrFail();
+        $lot = AsScheduleLot::findOrFail($al->lotId);
+        if (! $lot->crop || ! $al->method || $al->method === 'tree') {
+            return $this->json(true, 'ok', ['window' => null]);
+        }
+        $a = (array) $auto->answers;
+        $o = \App\Support\AutoOptions::of($a);
+        $fp = (array) ($a['fieldProfile'] ?? []);
+        $water = $a['water'] ?? ($fp ? (FieldProfile::legacy($fp)['waterAuto'] ?? null) : null);
+        $prep = self::prepNeed((string) $lot->crop, (string) $al->method, $fp, $o);
+        $n = AutoBook::nursery($lot->crop);
+        $p = ['crop' => $lot->crop, 'method' => $al->method, 'maturity' => $lot->maturityDays() ?: CropCatalog::maturity($lot->crop),
+            'nursery' => $n ? (int) round(($n['min'] + $n['max']) / 2) : 0, 'lat' => $lot->pinLat ? (float) $lot->pinLat : null, 'lng' => $lot->pinLng ? (float) $lot->pinLng : null,
+            'location' => trim(implode(', ', array_filter([$lot->locTown, $lot->locProvince]))), 'water' => $water ?: 'pump_rain', 'prepNeed' => $prep['need'],
+            'today' => now('Asia/Manila')->toDateString()];
+        $w = Cache::remember('auto-window:v2:' . md5(json_encode($p)), 43200, fn () => rescue(fn () => \App\Support\PlantWindow::for($p), null, true));
+
+        return $this->json(true, 'ok', ['window' => $w, 'prep' => $prep + ['on' => $o['landPrep']], 'waterKnown' => (bool) $water,
+            'squeeze' => ! empty(((array) ($a['prepSqueeze'] ?? []))[(string) $lot->id])]);
+    }
+
+    /**
+     * The days of land preparation a lot needs before planting, by the Land Prep Planner's own count (its steps for
+     * the crop and way of planting, bent by the lot's last season: a rice field rests 30 days without rice), plus a
+     * week to book a machine when hiring takes that long. need = the days, why = in words.
+     *
+     * @return array{need: int, why: string}
+     */
+    public static function prepNeed(string $crop, string $method, array $fp, array $o): array
+    {
+        $rice = str_starts_with($crop, 'rice');
+        $has = fn (string $t) => (bool) array_filter((array) $o['fleet'], fn ($f) => $f['type'] === $t);
+        $lp = $rice
+            ? ($method === 'transplanted' ? ($has('transplanter') ? 'tpr_mechanical' : 'tpr_manual') : ($has('drum_seeder') ? 'dsr_wet_drum' : 'dsr_wet_broadcast'))
+            : (function () use ($crop, $method) {
+                $ms = array_keys(\App\Support\LandPrepPlanner::methodsFor($crop));
+
+                return $method === 'transplanted' && in_array('transplant', $ms, true) ? 'transplant' : ($ms[0] ?? 'direct');
+            })();
+        $split = FieldProfile::split($fp);
+        $need = 0;
+        $why = '';
+        try {
+            $t = \App\Support\LandPrepPlanner::timeCheck(['crop' => $crop, 'method' => $lp, 'crew' => ['fleet' => $o['fleet'], 'workers' => 2],
+                'lots' => [['name' => 'Lot', 'planting' => now('Asia/Manila')->addDays(400)->toDateString(), 'soil' => $split['soil'], 'history' => $split['history']]]])[0] ?? null;
+            if ($t) {
+                $need = (int) $t['need'];
+                $why = ($t['rest'] && $t['rest'] >= $t['needed']) ? 'a rice field rests about 30 days with no rice before sowing' : 'about ' . $t['needed'] . ' days of land preparation';
+            }
+        } catch (\Throwable $e) {
+            report($e);
+        }
+        if (! $need) {
+            $need = (int) (AutoBook::landPrep($crop)['min'] ?? 21);
+            $why = 'about ' . $need . ' days of land preparation';
+        }
+        $owns = (bool) array_filter((array) $o['fleet'], fn ($f) => $f['own'] > 0 && ! in_array($f['type'], ['transplanter', 'drum_seeder'], true));
+        if (! $owns && $o['hire'] === 'slow') {
+            $need += 7;
+            $why .= ', and a week to book the hired machine';
+        }
+
+        return ['need' => $need, 'why' => $why];
     }
 
     /** The lots' crop problems to offer on the troubles step. */

@@ -55,6 +55,58 @@
     @keyframes auIn { from { opacity: 0; } }
     @keyframes auInBack { from { opacity: 0; } }
     .au-card { border-radius: 1.2rem; background: var(--color-white); border: 1px solid var(--color-gray-200); padding: 1.05rem 1.1rem; margin-bottom: .9rem; }
+    /* When to plant: the year's weeks as bars, the three best, the day picked (2026-10-28). */
+    .au-win { margin-top: .85rem; padding: .85rem; border-radius: 1rem; background: linear-gradient(160deg, #fbfdf8, #f2f8ea); border: 1px solid #e0ebd3; }
+    .au-win:empty { display: none; }
+    .au-win-h { display: flex; gap: .6rem; align-items: flex-start; }
+    .au-win-h > span { flex: none; font-size: 1.3rem; line-height: 1.2; }
+    .au-win-h b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-win-h small { display: block; margin-top: .1rem; font-size: .74rem; line-height: 1.45; color: var(--color-gray-500); }
+    .au-win-spin { animation: auWinBob 1.2s ease-in-out infinite; }
+    @keyframes auWinBob { 50% { transform: translateY(-3px) rotate(-6deg); } }
+    .au-wsw { position: relative; display: grid; grid-template-columns: 1fr 1fr; margin: .7rem 0 .2rem; padding: .2rem; border-radius: 999px; background: #e8f1dc; }
+    .au-wsw button { position: relative; z-index: 1; padding: .38rem .4rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: #4d6338; transition: color .28s var(--au-ease); }
+    .au-wsw button[aria-selected="true"] { color: #fff; }
+    .au-wsw > i { position: absolute; top: .2rem; bottom: .2rem; left: .2rem; width: calc(50% - .2rem); border-radius: 999px; background: #4a7c2a; transition: transform .32s var(--au-ease), background-color .32s var(--au-ease); }
+    .au-wsw > i.is-price { transform: translateX(100%); background: #b7791f; }
+    .au-wchart { display: flex; align-items: flex-end; gap: 2px; height: 5.2rem; margin-top: .8rem; padding-top: .3rem; }
+    .au-wchart i { flex: 1 1 0; min-width: 0; height: calc(var(--h) * 100%); min-height: 3px; border-radius: 3px 3px 0 0; background: var(--color-gray-200); cursor: pointer;
+        transform-origin: bottom; animation: auWinBar .5s var(--au-ease) both; animation-delay: calc(var(--k) * 8ms); transition: height .45s var(--au-ease), background-color .3s var(--au-ease), opacity .3s var(--au-ease); }
+    @keyframes auWinBar { from { transform: scaleY(0); } to { transform: none; } }
+    .au-wchart i.is-good { background: #4a7c2a; } .au-wchart i.is-ok { background: #8fc96a; } .au-wchart i.is-poor { background: #f0b04a; } .au-wchart i.is-bad { background: #ef7676; }
+    .au-wchart.is-price i.is-good { background: #b7791f; } .au-wchart.is-price i.is-ok { background: #e0b04f; }
+    .au-wchart i.is-prep { opacity: .3; }
+    .au-wchart i.is-best { box-shadow: inset 0 3px 0 #f5c518; }
+    .au-wchart i.is-on { outline: 2px solid #1f3a10; outline-offset: 1px; }
+    .au-wchart i:hover { opacity: .8; }
+    .au-wchart.is-wait i { height: 30%; background: #e3ecd8; animation: auWinWait 1.4s ease-in-out infinite; animation-delay: calc(var(--k, 0) * 20ms); }
+    @keyframes auWinWait { 50% { opacity: .4; } }
+    .au-wmonths { position: relative; height: 1rem; margin-top: .2rem; }
+    .au-wmonths span { position: absolute; top: 0; font-size: .58rem; font-weight: 800; color: var(--color-gray-500); white-space: nowrap; }
+    .au-wkey { display: flex; align-items: center; gap: .4rem; margin: .45rem 0 0; font-size: .7rem; line-height: 1.4; color: var(--color-gray-500); }
+    .au-wkey i { flex: none; width: .7rem; height: .7rem; border-radius: 2px; background: #4a7c2a; opacity: .3; }
+    .au-wbest { display: grid; gap: .45rem; margin-top: .75rem; }
+    @media (min-width: 720px) { .au-wbest { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    .au-wb { position: relative; display: flex; gap: .55rem; align-items: flex-start; padding: .65rem .7rem; border-radius: .9rem; background: #fff; border: 1px solid #e3ecd8; animation: auFade .35s var(--au-ease) both; animation-delay: calc(var(--k) * 70ms); }
+    .au-wb.is-top { border-color: #9cc97a; box-shadow: 0 10px 22px -18px rgb(45 80 22 / .7); }
+    .au-wb-n { flex: none; width: 1.6rem; height: 1.6rem; border-radius: 999px; display: grid; place-items: center; font-size: .78rem; font-weight: 900; color: #3d5226; background: #eef4e6; }
+    .au-wb.is-top .au-wb-n { color: #fff; background: #4a7c2a; }
+    .au-wb > div { flex: 1; min-width: 0; display: grid; gap: .1rem; }
+    .au-wb b { font-size: .86rem; font-weight: 800; color: var(--color-gray-900); }
+    .au-wb small { font-size: .72rem; line-height: 1.4; color: var(--color-gray-600); }
+    .au-wb small.au-wb-why { color: var(--color-gray-500); }
+    .au-wb .au-link { position: absolute; right: .6rem; top: .55rem; font-size: .72rem; }
+    @media (min-width: 720px) { .au-wb { flex-direction: column; } .au-wb .au-link { position: static; justify-self: start; margin-top: .2rem; } }
+    .au-wpick-h { margin-top: .7rem; }
+    .au-wsq { display: flex; align-items: center; gap: .45rem; margin-top: .45rem; font-weight: 800; cursor: pointer; }
+    .au-wsq input { width: 1.05rem; height: 1.05rem; accent-color: #b45309; }
+    html.dark .au-win { background: linear-gradient(160deg, #151c11, #18220f); border-color: #2b3a1c; }
+    html.dark .au-win-h b, html.dark .au-wb b { color: #eef3e8; } html.dark .au-win-h small { color: #9aa88d; }
+    html.dark .au-wsw { background: #1c2616; } html.dark .au-wsw button { color: #a5c97e; } html.dark .au-wsw button[aria-selected="true"] { color: #fff; }
+    html.dark .au-wchart i { background: #2b3a1c; } html.dark .au-wchart i.is-on { outline-color: #f5c518; }
+    html.dark .au-wb { background: #10150c; border-color: #2b3a1c; } html.dark .au-wb small { color: #b9c6ad; } html.dark .au-wb-n { background: #1c2616; color: #cfe6b8; }
+    @media (prefers-reduced-motion: reduce) { .au-wchart i, .au-wb, .au-win-spin, .au-wchart.is-wait i { animation: none !important; } .au-wchart i, .au-wsw > i, .au-wsw button { transition: none !important; } }
+
     /* How Anee runs the season: switches, the machines, the protection (2026-10-28). */
     .au-sws { display: grid; }
     .au-sw { display: flex; align-items: center; gap: .75rem; width: 100%; padding: .75rem .1rem; text-align: left; border-radius: .8rem; transition: background-color .28s var(--au-ease); }
@@ -745,6 +797,7 @@
         workers: @json(route('auto.workers', $auto->id)), answers: @json(route('auto.answers', $auto->id)), problems: @json(route('auto.problems', $auto->id)),
         analyze: @json(route('auto.analyze', $auto->id)), generate: @json(route('auto.generate', $auto->id)), job: () => @json(route('auto.job', $auto->id)), goal: @json(route('auto.goal', $auto->id)),
         fert: @json(route('auto.fert', $auto->id)), imbalance: @json(route('auto.imbalance', $auto->id)), ph: @json(asset('data/ph-locations.json')),
+        window: @json(route('auto.window', $auto->id)),
         npk: @json(route('npk.page')) + '?frame=auto', buy: @json(route('ai.credits') . '?tab=buy'),
     };
     const STEPS = ['Season', 'Lots', 'Workers', 'Soil', 'Water', 'Troubles', 'Reading', 'Fertilizer', 'Start'];
@@ -959,13 +1012,14 @@
         if (!l.crop) return 'choose the crop.';
         if (!l.method) return 'say how it goes into the field.';
         if (l.method !== 'tree' && !l.fieldDate) return 'pick the planting day.';
+        { const w = WIN[l.id]; if (w && w.window && l.fieldDate && l.fieldDate < w.window.earliest && !w.squeeze) return 'the planting day comes before the land preparation can finish: pick a later day, or shorten the land preparation.'; }
         if (!(Number(l.size) > 0)) return 'say how big it is.';
         if (!l.pin && !(l.province && l.town)) return LINK[l.id] ? 'drop a pin, or give your lot its town with Edit the lot.' : 'pick its province and town, or drop a pin.';
         return null;
     };
     const saveLot = (l, extra = {}) => put(U.lot, Object.assign({ lotId: l.id, name: l.name, size: l.size, unit: l.unit || 'ha', crop: l.crop, variety: l.variety || '', method: l.method,
         fieldDate: l.method === 'tree' ? null : l.fieldDate, treeMonths: l.method === 'tree' ? l.treeMonths : null, province: l.province, town: l.town, barangay: l.barangay,
-        lat: l.pin ? l.pin.lat : null, lng: l.pin ? l.pin.lng : null }, extra)).then((r) => { if (r && r.data) { l.sowDate = r.data.sowDate; l.method = r.data.method || l.method; } paintLotNotes(l); paintLotState(l); goalsSoon(null, 900); return r; });
+        lat: l.pin ? l.pin.lat : null, lng: l.pin ? l.pin.lng : null }, extra)).then((r) => { if (r && r.data) { l.sowDate = r.data.sowDate; l.method = r.data.method || l.method; } paintLotNotes(l); paintLotState(l); goalsSoon(null, 900); if (WIN[l.id] && WIN[l.id].key !== winKey(l)) loadWin(l); return r; });
     const methodsOf = (l) => (cropOf(l.crop) || {}).methods || {};
     /* The farm lot this lot was filled from: the loaded row, or (until the
        farm's lots load) what was copied from it into this lot. */
@@ -1007,7 +1061,7 @@
             + '<div class="au-row is-2"><div><span class="au-lab">Variety <small>(optional, but it sharpens everything)</small></span><div data-var>' + varTag(l) + '</div></div>'
             + (l.method === 'tree' ? '<div></div>' : '<div><span class="au-lab" data-daylab>' + dayLabel(l) + '</span><label class="date-tag w-full" data-empty="Pick the day"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span class="dt-text">Pick the day</span>'
                 + '<input type="date" data-f="fieldDate" min="' + B.today + '" max="' + B.latest + '" value="' + (l.fieldDate || '') + '"></label></div>')
-            + '</div><div data-notes></div>'
+            + '</div>' + (l.method === 'tree' ? '' : '<div class="au-win" data-win="' + l.id + '">' + winHtml(l) + '</div>') + '<div data-notes></div>'
             + (fv ? '' : '<div class="au-row is-2"><div><span class="au-lab">Province</span><button type="button" class="au-tag' + (l.province ? '' : ' is-none') + '" data-act="prov"><span>' + esc(l.province || 'Choose the province') + '</span>' + CHEV + '</button></div>'
                 + '<div><span class="au-lab">Town or city</span><button type="button" class="au-tag' + (l.town ? '' : ' is-none') + '" data-act="town"' + (l.province ? '' : ' disabled') + '><span>' + esc(l.town ? townName(l.town) : (l.province ? 'Choose the town' : 'Province first')) + '</span>' + CHEV + '</button></div></div>'
                 + '<label class="au-lab">Barangay <small>(optional)</small></label><input type="text" class="form-input w-full" data-f="barangay" maxlength="120" value="' + esc(l.barangay || '') + '">')
@@ -1133,12 +1187,99 @@
     const dayLabel = (l) => ({ transplanted: 'Transplanting day (DAT 0)', direct: 'Sowing day in the field (DAS 0)', planted: 'Planting day (DAP 0)' })[l.method] || 'Planting day';
     const paintLots = () => {
         $('auLots').innerHTML = S.lots.map(lotCard).join('');
-        S.lots.forEach((l) => { paintLotNotes(l); paintLotState(l); });
+        S.lots.forEach((l) => { paintLotNotes(l); paintLotState(l); loadWin(l); });
         window.smDateTags?.($('auLots'));
         const cap = S.lotCap;
         $('auAddLot').hidden = cap != null && S.lots.length >= cap;
         $('auAddLot').textContent = '+ Add another lot · ' + Number(S.perLot).toLocaleString() + ' credits';
     };
+    /* ---- when to plant each lot (App\Support\PlantWindow, 2026-10-28, the owner: "anee should be able to provide an
+       insight ... when is the best date to plant (always from the current date to 1 year range), before the user selects
+       a day ... also have 2 considerations, the price forecast upon harvest, and the usual ... upon selecting the date,
+       have a dynamic calculation on when it will be harvested"). Fifty two weeks scored from the field's own twenty years,
+       the three best as cards, the land preparation the farm can do, the harvest day of the day picked. ---- */
+    const WIN = {};
+    let WMODE = 'crop';
+    const winKey = (l) => [l.crop, l.method, l.variety || '', l.province || '', l.town || '', l.pin ? l.pin.lat + ',' + l.pin.lng : ''].join('|');
+    const winReady = (l) => l.crop && l.method && l.method !== 'tree' && (l.pin || (l.province && l.town) || LINK[l.id]);
+    const loadWin = async (l, force) => {
+        if (!winReady(l)) { const b = document.querySelector('[data-win="' + l.id + '"]'); if (b) b.innerHTML = winHtml(l); return; }
+        const k = winKey(l);
+        if (!force && WIN[l.id] && WIN[l.id].key === k) { paintWin(l); return; }
+        WIN[l.id] = { key: k, loading: true };
+        paintWin(l);
+        try {
+            const r = await window.api(U.window + '?lotId=' + l.id);
+            WIN[l.id] = Object.assign({ key: k }, r.data || {});
+        } catch (_) { WIN[l.id] = { key: k, failed: true }; }
+        paintWin(l); paintLotNotes(l); paintLotState(l);
+    };
+    const wCls = (v) => v >= 75 ? 'is-good' : (v >= 60 ? 'is-ok' : (v >= 40 ? 'is-poor' : 'is-bad'));
+    const wDay = (iso, y) => { const [yy, m, d] = iso.split('-').map(Number); return new Date(yy, m - 1, d).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: y ? 'numeric' : undefined }); };
+    const wPct = (rel) => { const d = Math.round((Number(rel) - 1) * 100); return d === 0 ? 'at a usual price' : (d > 0 ? d + '% above' : Math.abs(d) + '% below') + ' a usual harvest month'; };
+    const winHtml = (l) => {
+        if (l.method === 'tree') return '';
+        const st = WIN[l.id];
+        if (!winReady(l)) return '<div class="au-win-h"><span aria-hidden="true">📅</span><div><b>When to plant</b><small>Choose the crop and where the lot is, and Anee reads its best weeks for the year ahead.</small></div></div>';
+        if (!st || st.loading) return '<div class="au-win-h"><span aria-hidden="true" class="au-win-spin">📅</span><div><b>When to plant</b><small>Anee is reading twenty years of this field\'s weather…</small></div></div><div class="au-wchart is-wait">' + '<i></i>'.repeat(52) + '</div>';
+        const w = st.window;
+        if (!w) return '<div class="au-win-h"><span aria-hidden="true">📅</span><div><b>When to plant</b><small>' + (st.failed ? 'It did not load. ' : 'This place has no weather record yet, so pick the day you know works. ') + '<button type="button" class="au-link" data-wretry>Try again</button></small></div></div>';
+        const by = WMODE === 'price' && w.market ? 'priceScore' : 'score';
+        const best = by === 'priceScore' ? w.bestPrice : w.best;
+        let months = '', last = -1, lastAt = -9;
+        // A month's name where it begins, never on top of the one before (the first week may be the end of a month).
+        w.weeks.forEach((x, i) => { const m = Number(x.date.slice(5, 7)); if (m !== last) { if (i - lastAt >= 3) { months += '<span style="left:' + (i / 52 * 100).toFixed(2) + '%">' + new Date(2000, m - 1, 1).toLocaleDateString(undefined, { month: 'short' }) + '</span>'; lastAt = i; } last = m; } });
+        const on = l.fieldDate ? w.weeks.findIndex((x, i) => l.fieldDate >= addDays(x.date, -3) && (i === 51 || l.fieldDate < addDays(w.weeks[i + 1].date, -3))) : -1;
+        return '<div class="au-win-h"><span aria-hidden="true">📅</span><div><b>When to plant</b><small>' + esc(w.place || 'This field') + ': ' + w.years + ' years of its weather and storms, read for ' + esc(cropName(l.crop).split(',')[0].toLowerCase()) + ', from today to a year ahead. ' + esc(w.waterSays || '') + '</small></div></div>'
+            + (w.market ? '<div class="au-wsw" role="tablist" aria-label="How the weeks are ranked"><i aria-hidden="true"' + (by === 'priceScore' ? ' class="is-price"' : '') + '></i><button type="button" role="tab" data-wmode="crop" aria-selected="' + (by === 'score') + '">🌦️ For the crop</button><button type="button" role="tab" data-wmode="price" aria-selected="' + (by === 'priceScore') + '">💰 With the harvest price</button></div>' : '')
+            + '<div class="au-wchart' + (by === 'priceScore' ? ' is-price' : '') + '" role="img" aria-label="' + esc('Planting score by week for the next 52 weeks, best ' + (best.map((i) => wDay(w.weeks[i].date) + ' ' + w.weeks[i][by]).join(', '))) + '">'
+            + w.weeks.map((x, i) => { const v = x[by] ?? x.score; return '<i class="' + wCls(v) + (x.prepShort ? ' is-prep' : '') + (i === on ? ' is-on' : '') + (best.includes(i) ? ' is-best' : '') + '" style="--h:' + Math.max(0.04, v / 100).toFixed(2) + ';--k:' + i + '" data-wk="' + i + '" title="' + esc(wDay(x.date, true) + ': ' + v + '/100 · harvest ' + wDay(x.harvest) + (x.prepShort ? ' · before the land preparation can finish' : '')) + '"></i>'; }).join('')
+            + '</div><div class="au-wmonths" aria-hidden="true">' + months + '</div>'
+            + (w.prepNeed ? '<p class="au-wkey"><i class="is-prep"></i>' + (st.prep && st.prep.on ? 'Faded weeks come before your land preparation can finish (' + esc(st.prep.why) + ', ready ' + wDay(w.earliest) + ').' : 'Faded weeks come before the field can be ready (' + esc(st.prep.why) + ').') + '</p>' : '')
+            + '<div class="au-wbest">' + best.map((i, n) => { const x = w.weeks[i]; return '<div class="au-wb' + (n === 0 ? ' is-top' : '') + '" style="--k:' + n + '"><span class="au-wb-n">' + (n + 1) + '</span><div><b>' + esc(wDay(x.date, true)) + '</b>'
+                + '<small>' + (by === 'priceScore' ? (x.priceScore ?? x.score) + '/100 with the price · ' + x.score + ' for the crop' : x.score + '/100') + ' · harvest about ' + esc(wDay(x.harvest)) + '</small>'
+                + (by === 'priceScore' && x.rel ? '<small>💰 Sells ' + esc(wPct(x.rel)) + (x.p ? ', about ₱' + Number(x.p).toFixed(2) + (x.unit === 'kg' ? '/kg' : '') : '') + '</small>' : '')
+                + '<small class="au-wb-why">' + esc(x.why && x.why.length ? 'Watch: ' + x.why.join('; ') : 'Few troubles in ' + w.years + ' years') + '</small></div>'
+                + '<button type="button" class="au-link" data-wuse="' + x.date + '">Plant this week</button></div>'; }).join('') + '</div>'
+            + '<div data-wpick>' + winPickHtml(l) + '</div>';
+    };
+    // The day picked: its harvest, how it scores, and the land preparation before it.
+    const winPickHtml = (l) => {
+        const st = WIN[l.id], w = st && st.window, c = cropOf(l.crop);
+        if (!l.fieldDate || l.method === 'tree') return '';
+        const toH = w ? w.toHarvest : (c && c.maturity ? (l.method === 'transplanted' && String(l.crop).startsWith('rice') && c.nursery ? c.maturity - Math.round((c.nursery.min + c.nursery.max) / 2) : c.maturity) : null);
+        let html = toH ? '<div class="au-note is-info au-wpick-h"><span>🌾</span><span><b>Harvest about ' + esc(fmtDate(addDays(l.fieldDate, toH))) + '</b>, ' + toH + ' days in the field' + (w ? (() => { const i = w.weeks.findIndex((x, j) => l.fieldDate >= addDays(x.date, -3) && (j === 51 || l.fieldDate < addDays(w.weeks[j + 1].date, -3))); const x = w.weeks[Math.max(0, i)]; return i < 0 ? '' : '. This week scores <b>' + x.score + '/100</b>' + (x.priceScore != null ? ' (' + x.priceScore + ' with the price)' : '') + (x.why && x.why.length ? ': watch ' + esc(x.why.join('; ')) : ', with few troubles on record'); })() : '') + '.</span></div>' : '';
+        if (w && l.fieldDate < w.earliest) {
+            html += '<div class="au-note is-warn"><span>⚠️</span><span><b>Too soon for the land preparation.</b> It needs ' + esc(st.prep.why) + ', so the field is ready about ' + esc(fmtDate(w.earliest)) + '. Pick that day or later, or plant on your day with a shortened land preparation: Anee squeezes the waiting between passes, at the cost of weeds that come back and a rougher seedbed.'
+                + '<label class="au-wsq"><input type="checkbox" data-wsq' + (st.squeeze ? ' checked' : '') + '> Shorten the land preparation to fit my day</label></span></div>';
+        }
+        return html;
+    };
+    const paintWin = (l) => { const b = document.querySelector('[data-win="' + l.id + '"]'); if (b) b.innerHTML = winHtml(l); };
+    const paintWinPick = (l) => { const b = document.querySelector('[data-win="' + l.id + '"] [data-wpick]'); if (b) b.innerHTML = winPickHtml(l); else paintWin(l);
+        const w = WIN[l.id] && WIN[l.id].window; if (w) { const on = l.fieldDate ? w.weeks.findIndex((x, i) => l.fieldDate >= addDays(x.date, -3) && (i === 51 || l.fieldDate < addDays(w.weeks[i + 1].date, -3))) : -1;
+            document.querySelectorAll('[data-win="' + l.id + '"] .au-wchart i').forEach((el, i) => el.classList.toggle('is-on', i === on)); } };
+    const saveSqueeze = () => put(U.answers, { prepSqueeze: Object.fromEntries(Object.entries(WIN).filter(([, v]) => v && v.squeeze).map(([k]) => [k, true])) });
+    $('auLots').addEventListener('click', (e) => {
+        const box = e.target.closest('[data-win]'); if (!box) return;
+        const l = lotById(box.dataset.win); if (!l) return;
+        const mode = e.target.closest('[data-wmode]'), use = e.target.closest('[data-wuse]'), bar = e.target.closest('[data-wk]');
+        if (e.target.closest('[data-wretry]')) { loadWin(l, true); return; }
+        if (mode) { WMODE = mode.dataset.wmode; S.lots.forEach(paintWin); return; }
+        const pickDay = (iso) => {
+            l.fieldDate = iso < B.today ? B.today : iso;
+            const inp = lotEl(l.id)?.querySelector('[data-f="fieldDate"]'); if (inp) { inp.value = l.fieldDate; window.smDateTags?.(lotEl(l.id)); inp.dispatchEvent(new Event('input', { bubbles: true })); }
+            paintLotNotes(l); paintWinPick(l); paintLotState(l); later('lot' + l.id, () => saveLot(l), 50);
+            lotEl(l.id)?.querySelector('[data-wpick]')?.scrollIntoView({ block: 'nearest', behavior: still() ? 'auto' : 'smooth' });
+        };
+        if (use) { pickDay(use.dataset.wuse); return; }
+        if (bar) { const w = WIN[l.id].window; pickDay(w.weeks[Number(bar.dataset.wk)].date); }
+    });
+    $('auLots').addEventListener('change', (e) => {
+        const sq = e.target.closest('[data-wsq]'); if (!sq) return;
+        const l = lotById(e.target.closest('[data-win]').dataset.win); if (!l || !WIN[l.id]) return;
+        WIN[l.id].squeeze = sq.checked; paintLotState(l); later('squeeze', saveSqueeze, 200);
+    });
     const lotEl = (id) => document.querySelector('.au-lot[data-lot="' + id + '"]');
     const lotById = (id) => S.lots.find((l) => String(l.id) === String(id));
     const paintLotState = (l) => {
@@ -1156,8 +1297,11 @@
         if (c && l.fieldDate && l.method !== 'tree') {
             const left = daysFrom(B.today, l.fieldDate), p = c.prep || { min: 14, max: 21 };
             const src = p.source ? ' <a href="' + esc(p.source.url) + '" target="_blank" rel="noopener">' + esc(String(p.source.label).split(' (')[0]) + '</a>' : '';
-            if (left < p.min) html += '<div class="au-note is-warn"><span>⚠️</span><span><b>Land preparation needs about ' + p.min + (p.max > p.min ? ' to ' + p.max : '') + ' days</b> for ' + esc(cropName(l.crop).split(',')[0].toLowerCase()) + (p.note ? ': ' + esc(p.note.charAt(0).toLowerCase() + p.note.slice(1)) : '.') + ' Your day leaves ' + Math.max(0, left) + '. Anee will squeeze it in, but a later day gives the field a better start.' + src + '</span></div>';
-            else html += '<div class="au-note is-ok"><span>✅</span><span>' + left + ' days to prepare the land, enough for the ' + p.min + (p.max > p.min ? ' to ' + p.max : '') + ' it needs.' + src + '</span></div>';
+            // The land preparation is said by the planting window, from the farm's own machines (2026-10-28); until it loads, the crop book's days.
+            if (!(WIN[l.id] && WIN[l.id].window)) {
+                if (left < p.min) html += '<div class="au-note is-warn"><span>⚠️</span><span><b>Land preparation needs about ' + p.min + (p.max > p.min ? ' to ' + p.max : '') + ' days</b> for ' + esc(cropName(l.crop).split(',')[0].toLowerCase()) + (p.note ? ': ' + esc(p.note.charAt(0).toLowerCase() + p.note.slice(1)) : '.') + ' Your day leaves ' + Math.max(0, left) + '. Anee will squeeze it in, but a later day gives the field a better start.' + src + '</span></div>';
+                else html += '<div class="au-note is-ok"><span>✅</span><span>' + left + ' days to prepare the land, enough for the ' + p.min + (p.max > p.min ? ' to ' + p.max : '') + ' it needs.' + src + '</span></div>';
+            }
             if (l.method === 'transplanted' && c.nursery) {
                 const sow = addDays(l.fieldDate, -Math.round((c.nursery.min + c.nursery.max) / 2));
                 html += '<div class="au-note is-info"><span>🌱</span><span>The seedbed is sown about <b>' + fmtDate(sow) + '</b> (DAS 0), ' + c.nursery.min + ' to ' + c.nursery.max + ' days before transplanting.' + (sow < B.today ? ' That day has passed: Anee will plan older seedlings or a quicker seedbed, or pick a later day.' : '') + '</span></div>';
@@ -1173,10 +1317,10 @@
             l.treeMonths = y * 12 + Math.min(11, m);
         } else l[f] = e.target.value;
         paintLotState(l);
-        if (f === 'fieldDate') paintLotNotes(l);
+        if (f === 'fieldDate') { paintLotNotes(l); paintWinPick(l); }
         later('lot' + l.id, () => saveLot(l), f === 'fieldDate' ? 50 : 700);
     });
-    $('auLots').addEventListener('change', (e) => { if (e.target.dataset.f === 'fieldDate') { const l = lotById(e.target.closest('.au-lot').dataset.lot); if (l) { l.fieldDate = e.target.value; paintLotNotes(l); later('lot' + l.id, () => saveLot(l), 50); } } });
+    $('auLots').addEventListener('change', (e) => { if (e.target.dataset.f === 'fieldDate') { const l = lotById(e.target.closest('.au-lot').dataset.lot); if (l) { l.fieldDate = e.target.value; paintLotNotes(l); paintWinPick(l); paintLotState(l); later('lot' + l.id, () => saveLot(l), 50); } } });
     $('auLots').addEventListener('click', async (e) => {
         const card = e.target.closest('.au-lot'); if (!card) return;
         const l = lotById(card.dataset.lot);
