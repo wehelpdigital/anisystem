@@ -35,11 +35,11 @@
             </div>
             <div class="ff-copy reveal" style="--reveal-delay: .1s">
                 <p class="hp-kick">Real video of the field</p>
-                <h2 class="hp-h2" id="ffH">This Is What Precision <em>Looks Like.</em></h2>
-                <p class="hp-p">An Anee supported palay field, filmed just before harvest. It followed Anee's guidance through the season, and it shows: an even, healthy field, its stems still standing.</p>
+                <h2 class="hp-h2" id="ffH">Standing Strong, <em>Right Up to Harvest.</em></h2>
+                <p class="hp-p">An Anee supported palay field, filmed just before harvest, when a field is most likely to fall. It followed Anee's guidance through the season, and every stem is still standing strong.</p>
                 <ul class="ff-pts">
                     <li style="--k: 0">{!! $ffTick !!}<span><b>Strong stems</b> that carry the grain without falling</span></li>
-                    <li style="--k: 1">{!! $ffTick !!}<span><b>An even, healthy field</b> from one end to the other</span></li>
+                    <li style="--k: 1">{!! $ffTick !!}<span><b>Upright from end to end,</b> with no flattened patches</span></li>
                     <li style="--k: 2">{!! $ffTick !!}<span><b>No lodging,</b> so the harvest is cut standing, not picked up from the mud</span></li>
                 </ul>
                 <div class="hp-cta is-left">
