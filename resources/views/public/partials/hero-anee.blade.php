@@ -230,7 +230,7 @@
        pile is not done. */
     .hb-pile { position: absolute; z-index: 4; bottom: 4cqw; display: grid; grid-template-columns: 14cqw; justify-items: center; gap: 1.2cqw; }
     .hb-pile.is-them { left: 5cqw; }
-    .hb-pile.is-anee { right: 5cqw; }
+    .hb-pile.is-anee { right: 1.5cqw; }
     .hb-pile-up { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 999px; color: #14210c; background: #f5c518;
         box-shadow: 0 0 0 5px rgb(245 197 24 / .25), 0 0 22px rgb(245 197 24 / .6); }
     .hb-pile-up svg { width: 1.3rem; height: 1.3rem; }
