@@ -55,7 +55,9 @@
     </div>
 </div>
 <style>
-    .aw-veil { position: fixed; inset: 0; z-index: 320; display: flex; align-items: center; justify-content: center;
+    /* Over every sheet and panel, whatever asked for Anee (2026-10-30, the owner: Range Effect's look up ran behind its
+       sheet, at 420, so nobody saw that Anee had started). Only the toasts sit higher. */
+    .aw-veil { position: fixed; inset: 0; z-index: 9990; display: flex; align-items: center; justify-content: center;
         padding: 1.25rem; background: rgb(246 249 242 / .96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         opacity: 0; transition: opacity .34s cubic-bezier(.22,1,.36,1); }
     .aw-veil[hidden] { display: none; }

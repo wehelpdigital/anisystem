@@ -256,6 +256,11 @@
     .rfx.is-on .rfx-veil { opacity: 1; }
     .rfx.is-on .rfx-box { opacity: 1; transform: none; }
     html.rfx-lock { overflow: hidden; }
+    /* A notice, a question or the upgrade card asked from inside the sheet comes over it ("Anee could not confirm it"
+       after a look up sat behind it at 200), and the shared backdrop is lifted with the question. */
+    html.rfx-lock #confirm-sheet { z-index: 450; }
+    html.rfx-lock:has(#confirm-sheet.is-open) .sheet-backdrop { z-index: 445; }
+    html.rfx-lock #aneeUpgradeBox { z-index: 455; }
     .rfx-head { display: flex; align-items: center; gap: .8rem; padding: .85rem 1rem; background: linear-gradient(135deg, #1f3a12, #2f5219 60%, #3b6620); color: #fff; }
     .rfx-logo { display: grid; place-items: center; flex: none; width: 2.6rem; height: 2.6rem; border-radius: .9rem; color: #14210c; background: #f5c518; box-shadow: 0 0 0 4px rgb(245 197 24 / .25); }
     .rfx-logo svg { width: 1.45rem; height: 1.45rem; }
