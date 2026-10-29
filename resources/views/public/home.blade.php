@@ -113,18 +113,15 @@
                     @endif
                 </p>
                 <div class="hp-hero-acts animate-fade-up" style="animation-delay:.18s">
+                    {{-- One call here (2026-10-30, the owner: "remove the watch the tour and ask anee a free question from the
+                         top section of the homepage"); the free question is still offered further down the page. --}}
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
-                    <a href="{{ $ask }}" class="hp-alt is-glass"><img src="{{ $face }}" alt="" class="hp-face">Ask Anee a free question</a>
                 </div>
                 <ul class="hp-trust animate-fade-up" style="animation-delay:.24s">
                     <li>{!! $tick !!}Free forever on Libre</li>
                     <li>{!! $tick !!}No card needed</li>
                     <li>{!! $tick !!}Set up in minutes</li>
                 </ul>
-                <button type="button" class="hp-tour animate-fade-up" style="animation-delay:.3s" data-tour-open>
-                    <span class="hp-tour-dot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72L19 12 8 5.14z"/></svg></span>
-                    Watch the tour
-                </button>
             </div>
 
             <div class="hp-hero-stage animate-fade-up" style="animation-delay:.15s" data-tilt>
@@ -138,19 +135,6 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
         </a>
     </section>
-
-    {{-- The tour: the long landscape film, in a window over the page. --}}
-    <div class="hp-modal" data-tour role="dialog" aria-modal="true" aria-label="The anee.io tour" hidden>
-        <div class="hp-modal-veil" data-tour-close></div>
-        <div class="hp-modal-box">
-            <button type="button" class="hp-modal-x" data-tour-close aria-label="Close the tour">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
-            </button>
-            <video controls playsinline preload="none" poster="{{ asset('images/top-yield.webp') }}" data-tour-video>
-                <source src="{{ asset('videos/how-it-works.mp4') }}" type="video/mp4">
-            </video>
-        </div>
-    </div>
 
     {{-- A tool's film on a phone, over the page (the steps' Watch buttons on a phone). --}}
     <div class="hp-fm" data-fm role="dialog" aria-modal="true" aria-labelledby="hpFmName" hidden>
@@ -4162,31 +4146,6 @@
         new IntersectionObserver((es) => es.forEach((e) => {
             if (e.isIntersecting && heroPhone.offsetWidth) pv.play().catch(() => {}); else pv.pause();
         }), { threshold: .25 }).observe(heroPhone);
-    }
-
-    /* The tour window. */
-    const tour = document.querySelector('[data-tour]');
-    if (tour) {
-        const tv = tour.querySelector('[data-tour-video]');
-        let back = null;
-        const open = () => {
-            back = document.activeElement;
-            tour.hidden = false;
-            requestAnimationFrame(() => tour.classList.add('is-open'));
-            document.documentElement.style.overflow = 'hidden';
-            tour.querySelector('.hp-modal-x')?.focus();
-            const p = tv.play(); if (p && p.catch) p.catch(() => {});
-        };
-        const close = () => {
-            tour.classList.remove('is-open');
-            tv.pause();
-            document.documentElement.style.overflow = '';
-            setTimeout(() => { tour.hidden = true; }, 320);
-            back?.focus?.();
-        };
-        document.querySelectorAll('[data-tour-open]').forEach((b) => b.addEventListener('click', open));
-        tour.querySelectorAll('[data-tour-close]').forEach((b) => b.addEventListener('click', close));
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && tour.classList.contains('is-open')) close(); });
     }
 
     /* The steps: tabs that walk on by themselves while the section is

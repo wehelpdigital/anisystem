@@ -403,7 +403,9 @@
     @keyframes hbFlash { 0%, 9%, 100% { opacity: 0; } 2% { opacity: .6; } 4% { opacity: .1; } 6% { opacity: .4; } }
     /* The benefit's card under her, in its own color: name, heading, line, a number, and a bar that fills while its turn
        lasts. All five share one grid cell, so the cards' row is as tall as the tallest. */
-    .hb-cards { position: relative; display: grid; margin-top: -.6rem; }
+    /* Clear of the micronutrients circling under the photo (2026-10-30, the owner: the card "overlaps with the smaller
+       nutrients in the nutrient part animation"): their outer ring reaches about half an orb below the circle. */
+    .hb-cards { position: relative; display: grid; margin-top: 1.35rem; }
     .hb-card { grid-area: 1 / 1; position: relative; display: flex; align-items: center; gap: .9rem; padding: .9rem 1rem 1rem .9rem; border-radius: 1.35rem; overflow: hidden; color: #fff;
         background: linear-gradient(135deg, rgb(26 40 18 / .95), rgb(9 16 7 / .95)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         box-shadow: inset 0 0 0 1px rgb(255 255 255 / .1), inset 0 1px 0 rgb(255 255 255 / .14), 0 26px 50px -22px rgb(0 0 0 / .9), 0 0 44px -20px var(--c);
@@ -444,6 +446,7 @@
         .hb-pile-up { width: 1.8rem; height: 1.8rem; } .hb-pile-up svg { width: 1rem; height: 1rem; }
         .hb-mic { width: 1.35rem; height: 1.35rem; margin: -.675rem 0 0 -.675rem; } .hb-mic b { font-size: .52rem; }
         .hb-pile small { font-size: .6rem; padding: .18rem .45rem; }
+        .hb-cards { margin-top: 1.1rem; }
         .hb-card { gap: .65rem; padding: .75rem .8rem .85rem .7rem; border-radius: 1.15rem; }
         .hb-card-i { width: 2.5rem; height: 2.5rem; border-radius: .8rem; font-size: 1.25rem; }
         .hb-card-k { font-size: .56rem; letter-spacing: .08em; }
