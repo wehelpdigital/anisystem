@@ -227,7 +227,7 @@ class RangeEffect
     /**
      * The calendar for one lot and one check. $tries: [{date: Y-m-d, product: product array (see productOf), qty, unit}].
      */
-    public static function run(AsCroppingSchedule $schedule, int $lotId, string $checkKey, array $tries = [], array $also = []): array
+    public static function run(AsCroppingSchedule $schedule, int $lotId, string $checkKey, array $tries = [], array $also = [], array $logic = []): array
     {
         $schedule->loadMissing(['lots', 'activities.lots', 'activities.items.material']);
         $lot = $schedule->lots->firstWhere('id', $lotId);
@@ -238,6 +238,10 @@ class RangeEffect
         $c = self::ctx($schedule, $lot, $anchors);
         $check = self::checkOf($checkKey, $c['crop']) ?? self::checkOf('n:N');
         $today = Carbon::now('Asia/Manila')->startOfDay();
+        // The deeper reading (RangeEffectLogic): amounts, the soil, the links between nutrients, the crop's health.
+        $opts = RangeEffectLogic::opts($logic);
+        $soil = RangeEffectLogic::soil($schedule, $lot, $c);
+        $c['soilF'] = $opts['soil'] ? $soil['f'] : [];
 
         // Every product line on this lot's tasks, read once; then the tries.
         $apps = self::applications($schedule, $c);
@@ -344,6 +348,15 @@ class RangeEffect
         foreach ($alsoChecks as $k => $ck) {
             $series[] = self::seriesOf($apps, $k, $ck, $days, $info, $stages, $crit, $lateNotes, $c);
         }
+        $deep = RangeEffectLogic::read($days, $apps, $check, $c, $soil, $opts, $info);
+        if ($opts['health'] && $check['kind'] !== 'nutrient') {
+            [$marks, $healthNotes] = self::health($apps, $check, $c, $days, $info, $crit);
+            foreach ($days as $i => &$day) {
+                $day['h'] = $marks[$i] ?? '';
+            }
+            unset($day);
+            $deep['notes'] = array_merge($deep['notes'], $healthNotes);
+        }
 
         return [
             'lot' => ['id' => (int) $lot->id, 'name' => (string) ($lot->lotName ?: 'Lot ' . $lot->id), 'crop' => $c['cropLabel'], 'icon' => CropStages::icon($c['crop']),
@@ -357,7 +370,104 @@ class RangeEffect
             'tables' => ['crit' => $c['table'], 'hasCrit' => (bool) $crit],
             'phaseWords' => self::phaseWords($check, $relevant),
             'series' => $series,
+            'logic' => ['opts' => $opts, 'soil' => $soil['facts'], 'amt' => $deep['amt'], 'notes' => $deep['notes'], 'others' => $deep['others']],
         ];
+    }
+
+    /**
+     * What the nutrients do to the crop's guard (the health part of the logic), for a check of insects, fungal or
+     * bacterial diseases or one of them by name: nitrogen still strong when the stage no longer takes it, or very
+     * heavy at any stage, makes soft lush leaves that blast, sheath blight, bacterial blight and planthoppers find
+     * easy; potassium and silicon at work help the crop hold out. Per day: 'n' (nitrogen risk), 'k' (a guard
+     * helped), ''. With notes for the runs.
+     */
+    private static function health(array $apps, array $check, array $c, array $days, array $info, array $crit): array
+    {
+        $cat = $check['cat'] ?? null;
+        if (! in_array($cat, ['insect', 'fungus', 'bacteria'], true)) {
+            return [[], []];
+        }
+        $nCk = self::checkOf('n:N');
+        $kCk = self::checkOf('n:K');
+        $sCk = self::checkOf('n:Si');
+        $curves = [];
+        foreach ($apps as $a) {
+            $curves[] = [$a, self::curveFor($a, $nCk, $c), self::curveFor($a, $kCk, $c), self::curveFor($a, $sCk, $c)];
+        }
+        $marks = [];
+        $runs = ['n' => [], 'k' => []];
+        $open = [];
+        $who = ['n' => [], 'k' => []];
+        foreach ($days as $i => $d) {
+            $date = $info[$i]['date'];
+            $n = 0.0;
+            $k = 0.0;
+            $si = 0.0;
+            foreach ($curves as [$a, $cn, $ck, $cs]) {
+                $t = (int) $a['date']->diffInDays($date, false);
+                foreach ([[$cn, 'n'], [$ck, 'k'], [$cs, 's']] as [$cv, $w]) {
+                    if (! $cv) {
+                        continue;
+                    }
+                    $v = self::level($cv, $t);
+                    if ($v <= 0.01) {
+                        continue;
+                    }
+                    if ($w === 'n') {
+                        $n += $v;
+                        $who['n'][$a['as']] = true;
+                    } elseif ($w === 'k') {
+                        $k += $v;
+                        $who['k'][$a['as']] = true;
+                    } else {
+                        $si += $v;
+                        $who['k'][$a['as']] = true;
+                    }
+                }
+            }
+            $mark = '';
+            $late = false;
+            if (! empty($info[$i]['in'])) {
+                $nLvl = self::critOf($crit, $info[$i]['label'], $nCk)[0];
+                $late = $nLvl === 0 && $n >= 0.35;
+                if ($late || $n >= 1.45) {
+                    $mark = 'n';
+                } elseif ($k >= 0.75 || $si >= 0.35) {
+                    $mark = 'k';
+                }
+            }
+            $marks[$i] = $mark;
+            foreach (['n', 'k'] as $rk) {
+                if ($mark === $rk) {
+                    $open[$rk] ??= ['from' => $d['d'], 'to' => $d['d'], 'n' => 0, 'late' => false];
+                    $open[$rk]['to'] = $d['d'];
+                    $open[$rk]['n']++;
+                    $open[$rk]['late'] = $open[$rk]['late'] || ($rk === 'n' && ! empty($late));
+                } elseif (isset($open[$rk])) {
+                    $runs[$rk][] = $open[$rk];
+                    unset($open[$rk]);
+                }
+            }
+        }
+        foreach ($open as $rk => $r) {
+            $runs[$rk][] = $r;
+        }
+        $say = fn ($r) => Carbon::parse($r['from'])->format('M j') . ($r['to'] !== $r['from'] ? ' to ' . Carbon::parse($r['to'])->format('M j') : '');
+        $them = ['insect' => 'planthoppers, leafhoppers and leaffolders', 'fungus' => 'blast and sheath blight', 'bacteria' => 'bacterial leaf blight'][$cat];
+        $notes = [];
+        foreach (array_slice(array_filter($runs['n'], fn ($r) => $r['n'] >= 3), 0, 3) as $r) {
+            $notes[] = ['k' => 'health', 'icon' => '🌿', 'tone' => 'warn', 'title' => $say($r) . ': nitrogen is lush',
+                'text' => ($r['late'] ? 'Nitrogen is still strong on these days, more than the stage takes.' : 'More than one full dose of nitrogen is working on these days.')
+                    . ' It makes soft, lush leaves that ' . $them . ' find easy. Scout these days more often, and keep the next nitrogen light or hold it.',
+                'from' => $r['from'], 'to' => $r['to']];
+        }
+        foreach (array_slice(array_filter($runs['k'], fn ($r) => $r['n'] >= 5), 0, 2) as $r) {
+            $notes[] = ['k' => 'health', 'icon' => '🛡️', 'tone' => 'good', 'title' => $say($r) . ': potassium and silicon at work',
+                'text' => 'Potassium or silicon is working on these days. They make firmer cell walls and stems, which helps the crop hold out against ' . $them . ': it does not replace a spray when the pest is there.',
+                'from' => $r['from'], 'to' => $r['to']];
+        }
+
+        return [$marks, $notes];
     }
 
     /**
@@ -627,11 +737,14 @@ class RangeEffect
         }
         $nut = [];
         $doseKnown = false;
+        $prodKgHa = null;
         $estimate = $npk['estimate'] ?? null;
         if ($pct || $estimate) {
             $p = $npk ?: ['unit' => in_array($u, ['l', 'liter', 'liters', 'ml'], true) ? 'L' : 'kg', 'bagKg' => 50, 'density' => 1, 'pct' => $pct, 'estimate' => null];
             $kg = $qty > 0 ? NpkPlan::kg($qty, $unit, $p) : null;
             $ha = $c['ha'] ?: 1.0;
+            // The product itself, kg a hectare: what the soil logic reads (its acid, its lime, its gypsum).
+            $prodKgHa = $kg !== null && $kg > 0 && ! $estimate ? $kg * $share / $ha : null;
             if ($estimate) {
                 foreach ($estimate as $n => $v) {
                     $nut[$n] = (float) $v;
@@ -696,7 +809,8 @@ class RangeEffect
         $label = $npk ? ($npk['name'] . (! empty($npk['local']) && preg_match('/^\d/', (string) $npk['local']) ? ' ' . $npk['local'] : '')) : ($book['b'] ?? $name);
 
         return ['date' => $date, 'name' => $name, 'as' => $label, 'company' => (string) ($book['c'] ?? ''), 'qty' => $qty, 'unit' => $unit, 'nut' => $nut, 'doseKnown' => $doseKnown,
-            'ai' => $ai, 'form' => $form, 'nsrc' => $nsrc, 'kindWord' => $book ? (ProductLibrary::TYPES[$book['t'] ?? ''] ?? null) : ($npk ? 'Fertilizer' : null)];
+            'ai' => $ai, 'form' => $form, 'nsrc' => $nsrc, 'kindWord' => $book ? (ProductLibrary::TYPES[$book['t'] ?? ''] ?? null) : ($npk ? 'Fertilizer' : null),
+            'pct' => $pct, 'slug' => (string) ($npk['slug'] ?? ''), 'prodKgHa' => $prodKgHa];
     }
 
     /**
@@ -791,12 +905,22 @@ class RangeEffect
                     $on = self::N_SOIL_DAYS[$a['nsrc']][$c['water'] === 'flooded' ? 0 : 1];
                 }
             }
+            // Your soil (RangeEffectLogic, switched on): sandy soil washes it down sooner, clay holds it longer.
+            if (! empty($c['soilF'])) {
+                $dm = RangeEffectLogic::daysMult($check['el'], $c['soilF']);
+                $days = array_map(fn ($x) => (int) max(1, round($x * $dm)), $days);
+            }
             [$lo, $typ, $hi] = self::days3($days);
             $pk = max($pk, $on + ($on > 0 ? 2 : 0));
 
             return ['onset' => $on, 'peak' => max($on, min($pk, $typ)), 'typ' => $typ, 'hi' => max($typ, $hi), 'lo' => $lo, 'amp' => round($amp, 2), 'fade' => $fade,
                 'note' => (string) ($prof['note'] ?? ''), 'conf' => $prof ? 'book' : 'estimate', 'kgHa' => $kgHa, 'ref' => $ref, 'ratio' => round($ratio, 3),
-                'words' => self::nutrientWords($check['nut'], $a['form'], $a['nsrc'])];
+                'words' => self::nutrientWords($check['nut'], $a['form'], $a['nsrc']),
+                // Roots taking it up is the crop feeding on it (the owner, 2026-10-30: a basal P on DAS 0 read as a week's
+                // gap while its roots were taking it up): counted as covered from the first day of uptake, rising to
+                // full; slower for manure, coated and biological, which open up over weeks.
+                'rise' => in_array($a['form'], ['organic', 'slow', 'bio'], true) ? 0.35 : 0.75,
+                'pre' => in_array($a['form'], ['organic', 'slow', 'bio'], true) ? 0.0 : 0.4];
         }
 
         // A threat or a named pest: the longest working of the line's ingredients that act on it.
@@ -986,8 +1110,12 @@ class RangeEffect
         $pk = $k['peak'];
         $typ = $k['typ'];
         $hi = $k['hi'];
-        if ($t < $on || $t > $hi) {
+        if ($t < 0 || $t > $hi) {
             return 0.0;
+        }
+        // Still in the soil: a salt dissolving is partly there already; manure, coated or biological is not yet.
+        if ($t < $on) {
+            return (float) ($k['pre'] ?? 0) * (float) $k['amp'];
         }
         if ($t < $pk) {
             $rise = (float) ($k['rise'] ?? 0);

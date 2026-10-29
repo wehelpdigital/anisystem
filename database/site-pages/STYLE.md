@@ -236,7 +236,12 @@ season (a "cropping schedule"). It has:
   and one thing (N, P, K, a micronutrient, insects, diseases, weeds or a named
   pest), how long each fertilizer and spray on the tasks keeps working, day by
   day, against how critical each stage is; try a product on a date; save the
-  reading; Anee looks up a product the book lacks for credits.
+  reading; Anee looks up a product the book lacks for credits. Since 2026-10-30
+  also, each switchable: amounts (the NPK Plus need spread over the season
+  against what the products give a day), the lot's soil (durations and need),
+  links between products and nutrients (acid freeing zinc or calcium,
+  lockouts, lime, gypsum), and crop health (lush nitrogen days, K and Si).
+  Always called a guide, never a soil test.
 - Offline mode for the field (every plan, Libre included), a Contact List,
   Global Notes, Global Lots (each field's place, soil and water, answered once).
 - Plans: Libre (free, with ads), Libre plus Anee, Solo Farmer, Farm Owner;

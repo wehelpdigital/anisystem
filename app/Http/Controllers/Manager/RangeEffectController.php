@@ -76,12 +76,20 @@ class RangeEffectController extends BaseScheduleController
         $this->gate();
         $schedule = $this->schedule($request->input('scheduleId'));
         try {
-            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request));
+            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request), $this->logic($request));
         } catch (\InvalidArgumentException $e) {
             return $this->jsonFail($e->getMessage(), 422);
         }
 
         return $this->jsonOk('ok', ['data' => $res]);
+    }
+
+    /** The parts of the deeper reading the farmer switched on (RangeEffectLogic::OPTS). */
+    private function logic(Request $request): array
+    {
+        $in = (array) $request->input('logic', []);
+
+        return array_intersect_key(array_map(fn ($v) => filter_var($v, FILTER_VALIDATE_BOOLEAN), $in), array_flip(\App\Support\RangeEffectLogic::OPTS));
     }
 
     /** The other checks read beside the main one. */
@@ -149,9 +157,10 @@ class RangeEffectController extends BaseScheduleController
         }
 
         return DB::table(self::SAVED)->where('croppingScheduleId', $scheduleId)->where('userId', Auth::id())->where('deleteStatus', 1)
-            ->orderByDesc('id')->limit(30)->get(['id', 'title', 'lotId', 'created_at'])
+            ->orderByDesc('updated_at')->orderByDesc('id')->limit(30)->get(['id', 'title', 'lotId', 'created_at', 'updated_at'])
             ->map(fn ($r) => ['id' => (int) $r->id, 'title' => (string) $r->title, 'lotId' => (int) $r->lotId,
-                'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A')])->all();
+                'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A'),
+                'edited' => $r->updated_at && $r->updated_at !== $r->created_at ? Carbon::parse($r->updated_at)->timezone('Asia/Manila')->format('M j, Y g:i A') : null])->all();
     }
 
     public function save(Request $request)
@@ -162,7 +171,7 @@ class RangeEffectController extends BaseScheduleController
         }
         $schedule = $this->schedule($request->input('scheduleId'));
         try {
-            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request));
+            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request), $this->logic($request));
         } catch (\InvalidArgumentException $e) {
             return $this->jsonFail($e->getMessage(), 422);
         }
@@ -170,15 +179,40 @@ class RangeEffectController extends BaseScheduleController
         if ($title === '') {
             $title = $res['check']['label'] . ' · ' . $res['lot']['name'];
         }
-        $params = ['check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'date', 'qty', 'unit', 'name', 'method'])),
+        $params = ['check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'logic' => $res['logic']['opts'] ?? [], 'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'date', 'qty', 'unit', 'name', 'method'])),
             array_slice((array) $request->input('tries', []), 0, self::MAX_TRIES)))];
-        $id = DB::table(self::SAVED)->insertGetId([
-            'userId' => Auth::id(), 'croppingScheduleId' => (int) $schedule->id, 'lotId' => (int) $res['lot']['id'], 'title' => mb_substr($title, 0, 190),
-            'params' => json_encode($params, JSON_UNESCAPED_UNICODE), 'result' => json_encode($res, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
-        ]);
+        $row = ['lotId' => (int) $res['lot']['id'], 'title' => mb_substr($title, 0, 190),
+            'params' => json_encode($params, JSON_UNESCAPED_UNICODE), 'result' => json_encode($res, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'updated_at' => now()];
+        // A saved reading opened and changed is saved over itself (the owner, 2026-10-30: "if you are editing a saved
+        // file, clicking save should update it, not save a new one"); "Save as new" sends no id.
+        $id = (int) $request->input('id', 0);
+        $have = $id ? DB::table(self::SAVED)->where('id', $id)->where('croppingScheduleId', $schedule->id)->where('userId', Auth::id())->where('deleteStatus', 1)->first() : null;
+        if ($have) {
+            DB::table(self::SAVED)->where('id', $have->id)->update($row);
+            $id = (int) $have->id;
+        } else {
+            $id = DB::table(self::SAVED)->insertGetId($row + ['userId' => Auth::id(), 'croppingScheduleId' => (int) $schedule->id, 'deleteStatus' => 1, 'created_at' => now()]);
+        }
 
-        return $this->jsonOk('Saved.', ['data' => ['id' => $id, 'saved' => $this->savedList((int) $schedule->id)]]);
+        return $this->jsonOk($have ? 'Updated.' : 'Saved.', ['data' => ['id' => $id, 'title' => $row['title'], 'updated' => (bool) $have, 'saved' => $this->savedList((int) $schedule->id)]]);
+    }
+
+    /** A saved reading's name, changed. */
+    public function rename(Request $request, int $id)
+    {
+        $this->gate();
+        $schedule = $this->schedule($request->input('scheduleId'));
+        $title = mb_substr(trim((string) $request->input('title', '')), 0, 190);
+        if ($title === '') {
+            return $this->jsonFail('Give it a name.', 422);
+        }
+        $n = $this->savedReady() ? DB::table(self::SAVED)->where('id', $id)->where('croppingScheduleId', $schedule->id)->where('userId', Auth::id())->where('deleteStatus', 1)
+            ->update(['title' => $title]) : 0;
+        if (! $n && ! DB::table(self::SAVED)->where('id', $id)->where('userId', Auth::id())->where('deleteStatus', 1)->exists()) {
+            return $this->jsonFail('That saved reading is gone.', 404);
+        }
+
+        return $this->jsonOk('Renamed.', ['data' => ['id' => $id, 'title' => $title, 'saved' => $this->savedList((int) $schedule->id)]]);
     }
 
     public function saved(Request $request, int $id)

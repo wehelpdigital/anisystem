@@ -81,6 +81,17 @@
                     <span class="rfx-label">Compare</span>
                     <div class="rfx-sel" data-rfx-sel></div>
                 </div>
+                {{-- What the reading counts besides coverage (the owner, 2026-10-30: "these options to get these logic
+                     calculations should be a selectable option in the filtering"). --}}
+                <div class="rfx-row is-sub">
+                    <span class="rfx-label">Logic</span>
+                    <div class="rfx-logic" data-rfx-logic role="group" aria-label="What the reading counts">
+                        <button type="button" class="rfx-tog is-on" data-logic="amt" aria-pressed="true"><em aria-hidden="true">⚖️</em><span><b>Amounts</b><small>Kg a day against the need</small></span><i class="rfx-tog-s" aria-hidden="true"></i></button>
+                        <button type="button" class="rfx-tog is-on" data-logic="soil" aria-pressed="true"><em aria-hidden="true">🪨</em><span><b>Your soil</b><small>Its type, pH and what it holds</small></span><i class="rfx-tog-s" aria-hidden="true"></i></button>
+                        <button type="button" class="rfx-tog is-on" data-logic="links" aria-pressed="true"><em aria-hidden="true">🔗</em><span><b>Nutrient links</b><small>What one product does to another</small></span><i class="rfx-tog-s" aria-hidden="true"></i></button>
+                        <button type="button" class="rfx-tog is-on" data-logic="health" aria-pressed="true"><em aria-hidden="true">🛡️</em><span><b>Crop health</b><small>Nutrients against pests and diseases</small></span><i class="rfx-tog-s" aria-hidden="true"></i></button>
+                    </div>
+                </div>
                 <div class="rfx-row is-sub">
                     <span class="rfx-label">Try</span>
                     <div class="rfx-tries">
@@ -112,7 +123,7 @@
                                 </button>
                             </div>
                             <div class="rfx-picked-f">
-                                <label><span>Apply on</span><input type="date" data-rfx-date></label>
+                                <div class="rfx-when"><span>Apply on</span><button type="button" class="rfx-datetag" data-date-for="data-rfx-date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" d="M3.5 10h17M8 3v4M16 3v4"/></svg><b data-date-say>Pick a day</b><svg class="rfx-dt-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button><input type="date" class="rfx-date-in" data-rfx-date tabindex="-1" aria-label="Apply on"></div>
                                 <label><span>Amount for the lot <i data-rfx-ha>(optional)</i></span><span class="rfx-amt"><input type="number" min="0" step="any" inputmode="decimal" data-rfx-qty placeholder="e.g. 2"><select data-rfx-unit><option value="bags">bags</option><option value="kg">kg</option><option value="L">liters</option><option value="mL">mL</option><option value="g">grams</option></select></span></label>
                             </div>
                             <div class="rfx-picked-b">
@@ -146,7 +157,16 @@
 
         <footer class="rfx-foot">
             <span class="rfx-foot-note" data-rfx-note>Counts the products written on each day's tasks, from your shed or typed in, on the day they are used.</span>
-            <button type="button" class="rfx-btn is-go" data-rfx-save><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 4h14v17l-7-4-7 4V4z"/></svg>Save this reading</button>
+            {{-- A saved reading opened: Save puts the changes over it; it can be renamed here or in Saved. --}}
+            <div class="rfx-editing" data-rfx-editing hidden>
+                <span class="rfx-editing-l">Editing</span>
+                <b data-rfx-editing-t></b>
+                <input type="text" data-rfx-editing-in maxlength="190" aria-label="Name of this saved reading" hidden>
+                <button type="button" class="rfx-ico" data-rfx-rename-cur aria-label="Rename"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg></button>
+                <button type="button" class="rfx-ico" data-rfx-stop-edit aria-label="Stop editing this saved reading" title="Start a new reading"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
+            </div>
+            <button type="button" class="rfx-btn is-ghost" data-rfx-save-new hidden>Save as new</button>
+            <button type="button" class="rfx-btn is-go" data-rfx-save><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 4h14v17l-7-4-7 4V4z"/></svg><span data-rfx-save-t>Save this reading</span></button>
         </footer>
 
         {{-- Saved readings. --}}
@@ -169,7 +189,7 @@
                     <button type="button" role="radio" aria-checked="false" data-how="foliar">{!! $rfxHowF !!}<span><b>Foliar</b><small>Sprayed on the leaves</small></span></button>
                 </div>
                 <div class="rfx-picked-f">
-                    <label><span>Apply on</span><input type="date" data-rfx-edit-date></label>
+                    <div class="rfx-when"><span>Apply on</span><button type="button" class="rfx-datetag" data-date-for="data-rfx-edit-date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" d="M3.5 10h17M8 3v4M16 3v4"/></svg><b data-date-say>Pick a day</b><svg class="rfx-dt-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button><input type="date" class="rfx-date-in" data-rfx-edit-date tabindex="-1" aria-label="Apply on"></div>
                     <label><span>Amount for the lot <i data-rfx-edit-ha>(optional)</i></span><span class="rfx-amt"><input type="number" min="0" step="any" inputmode="decimal" data-rfx-edit-qty placeholder="e.g. 2"><select data-rfx-edit-unit><option value="bags">bags</option><option value="kg">kg</option><option value="L">liters</option><option value="mL">mL</option><option value="g">grams</option></select></span></label>
                 </div>
                 <div class="rfx-edit-b">
@@ -583,11 +603,10 @@
     .rfx-drawer-h b { font-family: var(--font-heading); font-size: 1.05rem; }
     .rfx-drawer-h .rfx-x, .rfx-day-h .rfx-x { background: var(--rx-soft); color: var(--rx-text); box-shadow: inset 0 0 0 1px var(--rx-line); }
     .rfx-drawer-b { flex: 1; overflow: auto; padding: .8rem; display: grid; align-content: start; gap: .5rem; }
-    .rfx-sv { display: flex; align-items: center; gap: .6rem; padding: .7rem .75rem; border-radius: .9rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); text-align: left; transition: box-shadow .2s, transform .2s cubic-bezier(.22,1,.36,1); }
-    .rfx-sv:hover { box-shadow: inset 0 0 0 1.5px var(--rx-hover); transform: translateX(-2px); }
+    .rfx-sv:hover { box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
     .rfx-sv b { display: block; font-size: .9rem; color: var(--rx-ink); }
     .rfx-sv small { display: block; font-size: .76rem; color: var(--rx-muted); }
-    .rfx-sv-x { margin-left: auto; flex: none; display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 999px; color: var(--rx-faint); }
+    .rfx-sv-x { flex: none; display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 999px; color: var(--rx-faint); }
     .rfx-sv-x:hover { color: #dc2626; background: var(--rx-gap-bg); }
     .rfx-sv-x svg { width: .95rem; height: .95rem; }
     .rfx-day { position: absolute; z-index: 7; left: 50%; bottom: 1rem; width: min(calc(100% - 2rem), 26rem); max-height: calc(100% - 6rem); overflow: auto; padding: 1rem; border-radius: 1.2rem; color: var(--rx-text); background: var(--rx-card); transform: translateX(-50%);
@@ -615,6 +634,97 @@
         .rfx-edit { place-items: end center; padding: 0; }
         .rfx-edit-c { width: 100%; border-radius: 1.2rem 1.2rem 0 0; padding-bottom: calc(1rem + env(safe-area-inset-bottom)); transform: translateY(40px); }
     }
+    /* The logic switches. */
+    .rfx-logic { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 12.5rem), 1fr)); gap: .4rem; }
+    .rfx-tog { display: flex; align-items: center; gap: .55rem; min-width: 0; padding: .5rem .6rem; border-radius: .9rem; text-align: left; color: var(--rx-muted); background: var(--rx-card);
+        box-shadow: inset 0 0 0 1.5px var(--rx-line-2); transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s, box-shadow .28s, transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-tog:hover { transform: translateY(-1px); }
+    .rfx-tog em { flex: none; font-style: normal; font-size: 1.1rem; filter: grayscale(1); opacity: .6; transition: filter .28s, opacity .28s; }
+    .rfx-tog > span { flex: 1; min-width: 0; }
+    .rfx-tog b { display: block; font-size: .86rem; color: inherit; }
+    .rfx-tog small { display: block; font-size: .72rem; line-height: 1.3; opacity: .85; }
+    .rfx-tog-s { position: relative; flex: none; width: 2.1rem; height: 1.2rem; border-radius: 999px; background: var(--rx-track); box-shadow: inset 0 0 0 1px var(--rx-line-2); transition: background-color .28s; }
+    .rfx-tog-s::after { content: ''; position: absolute; top: .15rem; left: .15rem; width: .9rem; height: .9rem; border-radius: 999px; background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .35); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-tog.is-on { color: var(--rx-ink); box-shadow: inset 0 0 0 1.5px var(--rx-hover); background: var(--rx-soft); }
+    .rfx-tog.is-on em { filter: none; opacity: 1; }
+    .rfx-tog.is-on .rfx-tog-s { background: #3f7a22; box-shadow: none; }
+    .rfx-tog.is-on .rfx-tog-s::after { transform: translateX(.9rem); }
+    @media (max-width: 559.98px) { .rfx-logic { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rfx-tog small { display: none; } .rfx-tog { padding: .5rem; gap: .4rem; } }
+    /* Apply on: a tag that opens the date picker. */
+    .rfx-when { position: relative; display: grid; gap: .25rem; align-content: start; font-size: .78rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-datetag { justify-self: start; display: inline-flex; align-items: center; gap: .45rem; padding: .55rem .8rem; border-radius: 999px; font-size: .92rem; font-weight: 800; color: var(--rx-ink);
+        background: var(--rx-field); box-shadow: inset 0 0 0 1.5px #f5c518, 0 6px 14px -10px rgb(184 138 0 / .8); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s, background-color .28s; }
+    .rfx-datetag:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 2px #f5c518, 0 10px 18px -10px rgb(184 138 0 / .9); }
+    .rfx-datetag svg { width: 1.05rem; height: 1.05rem; color: #b8941c; }
+    .rfx-datetag .rfx-dt-c { width: .9rem; height: .9rem; opacity: .7; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-datetag.is-pop .rfx-dt-c { transform: rotate(180deg); }
+    .rfx-datetag.is-flash { animation: rfxFlash .6s cubic-bezier(.22,1,.36,1); }
+    @keyframes rfxFlash { 40% { transform: scale(1.06); } }
+    .rfx-date-in { position: absolute; left: 0; bottom: 0; width: 1px; height: 1px; padding: 0; border: 0; opacity: 0; pointer-events: none; }
+    /* Editing a saved reading, in the foot. */
+    .rfx-editing { display: flex; align-items: center; gap: .4rem; min-width: 0; flex: 1; padding: .3rem .4rem .3rem .7rem; border-radius: 999px; background: var(--rx-saved-bg); box-shadow: inset 0 0 0 1px var(--rx-saved-line); color: var(--rx-saved-ink); animation: rfxPop .3s cubic-bezier(.22,1,.36,1) both; }
+    .rfx-editing[hidden] { display: none; }
+    .rfx-editing-l { flex: none; font-size: .68rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+    .rfx-editing b { min-width: 0; flex: 1; font-size: .86rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rfx-editing input, .rfx-sv-in { flex: 1; min-width: 0; padding: .35rem .6rem; border-radius: .6rem; border: 1.5px solid var(--rx-saved-line); font-size: .88rem; color: var(--rx-ink); background: var(--rx-field); }
+    .rfx-ico { display: grid; place-items: center; flex: none; width: 1.9rem; height: 1.9rem; border-radius: 999px; color: inherit; transition: background-color .2s; }
+    .rfx-ico:hover { background: rgb(128 128 128 / .18); }
+    .rfx-ico svg { width: .95rem; height: .95rem; }
+    @media (max-width: 559.98px) { .rfx-foot { flex-wrap: wrap; } .rfx-editing { flex: 1 1 100%; } .rfx-foot .rfx-btn.is-ghost { flex: 1; } }
+    /* The guide notice. */
+    .rfx-banner.is-guide { align-items: flex-start; font-size: .82rem; font-weight: 600; color: var(--rx-muted); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-banner.is-guide b { color: var(--rx-ink); }
+    /* How much: the season line in the summary, and the card of the days. */
+    .rfx-amtline { margin-top: .8rem; display: grid; gap: .35rem; font-size: .86rem; line-height: 1.5; color: var(--rx-text); }
+    .rfx-amtline b { color: var(--rx-ink); }
+    .rfx-amtbar { position: relative; height: .7rem; border-radius: 999px; background: var(--rx-track); overflow: hidden; }
+    .rfx-amtbar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 999px; transition: width 1.1s cubic-bezier(.22,1,.36,1) .2s; }
+    .rfx-amtbar em { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--rx-ink); opacity: .5; }
+    .rfx-amt-g { display: grid; gap: 1rem; padding: .5rem 1rem 1rem; }
+    @media (min-width: 900px) { .rfx-amt-g { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .rfx-amt-g h4 { font-size: .8rem; font-weight: 800; color: var(--rx-text); margin-bottom: .35rem; }
+    .rfx-amt-g h4 small { font-weight: 600; color: var(--rx-faint); }
+    .rfx-amt-g svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .rfx-amt-g .ax { font-size: 13px; font-weight: 800; fill: var(--rx-faint); }
+    .rfx-amt-g .bar { transform-box: fill-box; transform-origin: bottom; animation: rfxBar .7s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 4ms); }
+    @keyframes rfxBar { from { transform: scaleY(0); } }
+    .rfx-amt-g .needl { fill: none; stroke: var(--rx-ink); stroke-width: 2.4; stroke-dasharray: 6 5; }
+    .rfx-amt-g .givel { fill: none; stroke: #3f9a26; stroke-width: 2.8; stroke-linejoin: round; }
+    html.dark .rfx-amt-g .givel { stroke: #8fd163; }
+    .rfx-amt-g .givea { fill: rgb(63 154 38 / .14); }
+    /* How it connects. */
+    .rfx-notes { display: grid; gap: .9rem; padding: .5rem 1rem 1rem; }
+    .rfx-notes h4 { display: flex; align-items: center; gap: .4rem; font-size: .74rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--rx-faint); margin-bottom: .45rem; }
+    .rfx-notes h4 i { font-style: normal; font-size: .62rem; padding: .05rem .4rem; border-radius: 999px; letter-spacing: 0; text-transform: none; color: var(--rx-muted); background: var(--rx-soft); }
+    .rfx-note { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .65rem; padding: .7rem .8rem; border-radius: .9rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line);
+        animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 50ms); }
+    .rfx-note + .rfx-note { margin-top: .45rem; }
+    .rfx-note > em { font-style: normal; font-size: 1.15rem; line-height: 1.3; }
+    .rfx-note b { display: block; font-size: .9rem; line-height: 1.4; color: var(--rx-ink); }
+    .rfx-note p { margin-top: .2rem; font-size: .84rem; line-height: 1.55; color: var(--rx-text); }
+    .rfx-note.is-warn { background: var(--rx-thin-bg); box-shadow: inset 0 0 0 1px var(--rx-thin-line); }
+    .rfx-note.is-good { box-shadow: inset 3px 0 0 #4f9030, inset 0 0 0 1px var(--rx-line); }
+    .rfx-note[data-jump] { cursor: pointer; transition: transform .2s cubic-bezier(.22,1,.36,1); }
+    .rfx-note[data-jump]:hover { transform: translateX(3px); }
+    .rfx-note small { display: inline-block; margin-top: .35rem; font-size: .74rem; font-weight: 800; color: var(--rx-accent); }
+    .rfx-others { display: grid; gap: .35rem; }
+    .rfx-others li { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .5rem; list-style: none; font-size: .84rem; line-height: 1.45; color: var(--rx-text); }
+    .rfx-others li b { color: var(--rx-ink); }
+    .rfx-others .rfx-chip { padding: .25rem .65rem; font-size: .76rem; }
+    .rfx-way { padding: .05rem .45rem; border-radius: 999px; font-size: .7rem; font-weight: 900; }
+    .rfx-way.is-less { color: var(--rx-thin-ink); background: var(--rx-thin-bg); } .rfx-way.is-more { color: var(--rx-done-ink); background: var(--rx-done-bg); }
+    .rfx-notes-more { justify-self: start; font-size: .82rem; font-weight: 800; color: var(--rx-accent); }
+    .rfx-day-amt { margin-top: .6rem; padding: .55rem .7rem; border-radius: .8rem; font-size: .84rem; line-height: 1.5; color: var(--rx-text); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-day-amt b { color: var(--rx-ink); }
+    /* A day's health mark: nitrogen lush (risk), or potassium and silicon helping. */
+    .rfx-hm { position: absolute; z-index: 2; left: .25rem; bottom: .25rem; display: grid; place-items: center; min-width: 1rem; height: 1rem; padding: 0 .2rem; border-radius: .35rem; font-size: .58rem; font-weight: 900; color: #fff; box-shadow: 0 0 0 1.5px var(--rx-card); }
+    .rfx-hm.is-n { background: #ea580c; } .rfx-hm.is-k { background: #2563eb; }
+    @media (max-width: 639.98px) { .rfx-hm { left: .12rem; bottom: .12rem; min-width: .85rem; height: .85rem; font-size: .5rem; } }
+    .rfx-cell[data-p=soil] .rfx-fill { background: var(--ph-soil); }
+    .rfx-sv { display: flex; align-items: center; gap: .3rem; padding: .35rem .4rem .35rem .3rem; border-radius: .9rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); transition: box-shadow .2s, transform .2s cubic-bezier(.22,1,.36,1); }
+    .rfx-sv.is-cur { box-shadow: inset 0 0 0 2px var(--rx-saved-line); background: var(--rx-saved-bg); }
+    .rfx-sv-open { flex: 1; min-width: 0; padding: .35rem .45rem; border-radius: .7rem; text-align: left; }
+    .rfx-sv-open:hover { background: rgb(128 128 128 / .08); }
     .rfx-meter { position: relative; height: .6rem; margin-top: .6rem; border-radius: 999px; background: var(--rx-track); overflow: hidden; }
     .rfx-meter i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; transition: width .5s cubic-bezier(.22,1,.36,1); }
     @media (prefers-reduced-motion: reduce) {
@@ -654,7 +764,13 @@
     const PHC = { soil: '#a8723f', absorb: '#22b09a', strong: '#3b7a1f', easing: '#86c25a', fading: '#cfe8b8' };
     const EL = { P2O5: 'P₂O₅', K2O: 'K₂O' };
     const tabOf = (key) => key.startsWith('t:') ? 'prot' : key.startsWith('p:') ? 'pest' : ((S.opts?.nutrients || []).find((n) => n.key === key) || {}).micro ? 'micro' : 'nut';
-    const S = { opts: null, lot: null, check: 'n:N', checks: ['n:N'], tab: 'nut', tries: [], res: null, saved: null, picked: null, q: '', busy: false };
+    // What the reading counts besides coverage (RangeEffectLogic): every part on until the farmer switches it off.
+    const LOGIC_DEF = { amt: true, soil: true, links: true, health: true };
+    const S = { opts: null, lot: null, check: 'n:N', checks: ['n:N'], tab: 'nut', tries: [], res: null, saved: null, picked: null, q: '', busy: false,
+        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '' };
+    const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg>';
+    const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>';
+    const kgSay = (v) => { v = Number(v) || 0; return v >= 10 ? String(Math.round(v)) : v >= 1 ? String(Math.round(v * 10) / 10) : String(Math.round(v * 100) / 100); };
 
     // The app's theme flipped while the sheet is open: the drawings carry colours, so paint them again.
     let wasDark = document.documentElement.classList.contains('dark');
@@ -822,6 +938,33 @@
         try { q.setSelectionRange(at, at); } catch (_) {}
     });
 
+    const paintLogic = () => $$('[data-logic]').forEach((b) => { const v = !!S.logic[b.dataset.logic]; b.classList.toggle('is-on', v); b.setAttribute('aria-pressed', String(v)); });
+    $('[data-rfx-logic]').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-logic]');
+        if (!b) return;
+        S.logic[b.dataset.logic] = !S.logic[b.dataset.logic];
+        paintLogic();
+        run();
+    });
+
+    /* ---------------- Apply on: a tag that opens the date picker ---------------- */
+    const paintDate = (input) => { const t = input.parentElement.querySelector('[data-date-say]'); if (t) t.textContent = input.value ? sayY(input.value) : 'Pick a day'; };
+    const setDate = (input, v) => { input.value = v || ''; paintDate(input); };
+    $$('[data-date-for]').forEach((btn) => {
+        const input = btn.parentElement.querySelector('.rfx-date-in');
+        btn.addEventListener('click', () => {
+            btn.classList.add('is-pop');
+            try { if (typeof input.showPicker === 'function') input.showPicker(); else { input.focus(); input.click(); } }
+            catch (_) { input.focus(); input.click(); }
+        });
+        input.addEventListener('change', () => {
+            paintDate(input);
+            btn.classList.remove('is-pop');
+            if (!calm) { btn.classList.remove('is-flash'); void btn.offsetWidth; btn.classList.add('is-flash'); }
+        });
+        input.addEventListener('blur', () => btn.classList.remove('is-pop'));
+    });
+
     /* ---------------- tries: a product you plan to apply ---------------- */
     const tryBox = $('[data-rfx-try]');
     const paintTries = () => {
@@ -852,7 +995,7 @@
         if (!t) return;
         editing = i;
         $('[data-rfx-edit-p]').innerHTML = `<em>${t.method === 'foliar' ? '💧' : '🟤'}</em><span><b>${esc(t.name)}</b><small>${esc(t.line || (t.ai && !t.productId ? 'The active ingredient on its own' : 'Your try'))}</small></span>`;
-        $('[data-rfx-edit-date]').value = t.date;
+        setDate($('[data-rfx-edit-date]'), t.date);
         $('[data-rfx-edit-qty]').value = t.qty || '';
         $('[data-rfx-edit-unit]').value = t.unit || 'kg';
         const ha = lotOf()?.ha;
@@ -860,7 +1003,7 @@
         setHow(t.method || 'granular', false, editHow, $('[data-rfx-edit-unit]'));
         editBox.hidden = false;
         requestAnimationFrame(() => requestAnimationFrame(() => editBox.classList.add('is-on')));
-        setTimeout(() => $('[data-rfx-edit-date]').focus({ preventScroll: true }), calm ? 0 : 200);
+        setTimeout(() => $('[data-date-for="data-rfx-edit-date"]').focus({ preventScroll: true }), calm ? 0 : 200);
     };
     const closeEdit = () => {
         editing = -1;
@@ -897,7 +1040,7 @@
         $('[data-rfx-results]').innerHTML = '';
         $('[data-rfx-picked]').hidden = true;
         $('[data-rfx-look]').hidden = true;
-        $('[data-rfx-date]').value = iso(new Date());
+        setDate($('[data-rfx-date]'), iso(new Date()));
         $('[data-rfx-qty]').value = '';
         const ha = lotOf()?.ha;
         $('[data-rfx-ha]').textContent = ha ? `(${Math.round(ha * 100) / 100} ha, optional)` : '(optional)';
@@ -1023,7 +1166,7 @@
         $('[data-rfx-body]').style.opacity = S.res ? '.55' : '1';
         if (!S.res) body('<div class="rfx-loading"><span></span><span></span><span></span></div>');
         try {
-            const r = await window.api(U.run, { method: 'POST', body: { scheduleId: SID, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries } });
+            const r = await window.api(U.run, { method: 'POST', body: { scheduleId: SID, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic } });
             if (seq !== runSeq) return;
             S.res = r.data;
             paint();
@@ -1045,6 +1188,8 @@
         const parts = [];
         if (S.saved) parts.push(`<div class="rfx-banner is-saved"><span>📌 Saved ${esc(S.saved.at)}: <b>${esc(S.saved.title)}</b>, as it stood then.</span><button type="button" class="rfx-btn is-ghost" data-rfx-rerun>Read it with today's plan</button></div>`);
         if (!R.lot.hasDay) parts.push(`<div class="rfx-banner">📅 This lot has no planting day yet, so the stages and what matters when cannot be shown. Set its day zero in Lots, then open this again.</div>`);
+        // A guide only (the owner, 2026-10-30): said every time, above the numbers.
+        parts.push(`<div class="rfx-banner is-guide"><span>🧭 <b>A guide only.</b> It reads our books, what you told us about this lot and the products on your tasks. Your field, the weather and the product you buy can differ, so check with a soil test, the label and your own eyes in the field.</span></div>`);
         // A try that misses what is checked says what it does act on, one tap away; a try too small to count says so.
         R.apps.filter((a) => a.try).forEach((a) => {
             if (!a.relevant) {
@@ -1073,9 +1218,11 @@
                 <span><i style="background:#f59e0b"></i>${sm.thinDays} thin</span>
                 <span><i style="background:#dc2626"></i>${sm.gapDays} gap</span>
                 ${isNut ? `<span><i style="background:#8b5cf6"></i>${(sm.late || []).reduce((a, r) => a + r.n, 0)} late</span>` : ''}
-              </div></div></div>
+              </div>${amountLine(R)}</div></div>
             ${runsHtml(sm, isNut)}</div>`);
         if ((R.series || []).length) parts.push(compareHtml(R));
+        parts.push(logicHtml(R));
+        parts.push(amountsHtml(R));
         parts.push(chartHtml(R));
         parts.push(calHtml(R));
         parts.push(appsHtml(R));
@@ -1085,11 +1232,79 @@
             const v = $('.rfx-ring .v');
             if (v) v.style.strokeDasharray = `${(Number(v.dataset.pct) / 100) * 326.7} 400`;
             $$('.rfx-mini .v').forEach((m) => { m.style.strokeDasharray = `${(Number(m.dataset.pct) / 100) * 113.1} 200`; });
+            $$('.rfx-amtbar i').forEach((m) => { m.style.width = m.dataset.w + '%'; });
             const n = $('[data-count]');
             if (n && pct !== null) countUp(n, pct);
             const cal = $('.rfx-cal');
             if (cal) requestAnimationFrame(() => cal.classList.add('is-in'));
         });
+    };
+    /* How much over the season, in the summary: given against needed from the bag. */
+    const amountLine = (R) => {
+        const A = R.logic?.amt;
+        if (!A) return '';
+        if (!A.known) return '<div class="rfx-amtline"><span>⚖️ This crop has no numbers in NPK Plus yet, so the amounts cannot be weighed.</span></div>';
+        if (A.soilGives) return `<div class="rfx-amtline"><span>⚖️ The soil likely gives all the ${esc(A.word)} this crop needs, so none has to come from the bag${A.applied ? `. The season puts on about ${kgSay(A.applied)} kg ${esc(A.say)} a hectare anyway` : ''}.</span></div>`;
+        const pct = A.pct ?? 0;
+        const col = pct >= 90 ? '#3f9a26' : pct >= 60 ? '#f59e0b' : '#dc2626';
+        return `<div class="rfx-amtline"><span>⚖️ Over the season your products give about <b>${kgSay(A.given)} of the ${kgSay(A.need)} kg ${esc(A.say)}</b> a hectare this field needs from the bag (<b>${pct}%</b>).</span>
+            <div class="rfx-amtbar" title="The line is the need"><i data-w="${Math.min(100, pct / 1.5).toFixed(1)}" style="background:${col}"></i><em style="left:${(100 / 1.5).toFixed(1)}%"></em></div></div>`;
+    };
+    /* How much, day by day: what each day gets against what it takes, and the two added up. */
+    const amountsHtml = (R) => {
+        const A = R.logic?.amt;
+        if (!A || !A.known || !A.n || A.soilGives) return '';
+        const days = R.days, n = days.length, W = 600, H = 170, top = 14, base = 140, bw = W / n;
+        const maxD = Math.max(0.0001, ...A.g, ...A.n) * 1.12;
+        const yD = (v) => base - v / maxD * (base - top);
+        let bg = '', bars = '', k = 0;
+        days.forEach((d, i) => {
+            const x = i * bw;
+            if (d.c >= 2 && (A.s[i] === 'short' || A.s[i] === 'low')) bg += `<rect x="${x.toFixed(1)}" y="${top}" width="${(bw + 0.4).toFixed(1)}" height="${base - top}" fill="${A.s[i] === 'short' ? 'rgb(220 38 38 / .13)' : 'rgb(245 158 11 / .12)'}"/>`;
+            const g = A.g[i];
+            if (g > 0.0005) bars += `<rect class="bar" style="--k:${k++}" x="${(x + bw * 0.1).toFixed(2)}" y="${yD(g).toFixed(1)}" width="${(bw * 0.8).toFixed(2)}" height="${(base - yD(g)).toFixed(1)}" fill="${PHC[d.p] || PHC.strong}"><title>${say(d.d)}: gives ${kgSay(g)} kg, the crop needs ${kgSay(A.n[i])}</title></rect>`;
+        });
+        const line = (arr, y) => arr.map((v, i) => (i ? 'L' : 'M') + ((i + 0.5) * bw).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
+        let mo = '';
+        days.forEach((d, i) => { if (d.d.endsWith('-01')) mo += `<text class="ax" x="${(i * bw + 2).toFixed(1)}" y="${base + 18}">${MON[D(d.d).getMonth()]}</text><line x1="${(i * bw).toFixed(1)}" x2="${(i * bw).toFixed(1)}" y1="${base}" y2="${base + 5}" stroke="${tok('--rx-line-2')}"/>`; });
+        const ti = days.findIndex((d) => d.d === R.today);
+        const todayL = ti >= 0 ? `<line x1="${((ti + 0.5) * bw).toFixed(1)}" x2="${((ti + 0.5) * bw).toFixed(1)}" y1="${top}" y2="${base}" stroke="${tok('--rx-today')}" stroke-width="1.5" stroke-dasharray="3 3"/>` : '';
+        // Added up over the crop's own days.
+        const CG = [], CN = [];
+        let cg = 0, cn = 0;
+        days.forEach((d, i) => { if (!A.in || A.in[i]) { cg += A.g[i]; cn += A.n[i]; } CG.push(cg); CN.push(cn); });
+        const maxC = Math.max(0.0001, cg, cn) * 1.1;
+        const yC = (v) => base - v / maxC * (base - top);
+        const area = `M${(0.5 * bw).toFixed(1)} ${base} ` + CG.map((v, i) => 'L' + ((i + 0.5) * bw).toFixed(1) + ' ' + yC(v).toFixed(1)).join(' ') + ` L${((n - 0.5) * bw).toFixed(1)} ${base} Z`;
+        const nowSay = ti >= 0 ? `<text class="ax" x="${Math.min(W - 4, (ti + 0.5) * bw + 4).toFixed(1)}" y="${top + 12}" text-anchor="${ti > n * 0.7 ? 'end' : 'start'}" fill="${tok('--rx-today')}">By today ${kgSay(CG[ti])} of ${kgSay(CN[ti])}</text>` : '';
+        const axis = `<line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="${tok('--rx-line-2')}"/>${mo}`;
+        const runs = (A.short || []).map((r, i) => `<div class="rfx-run" data-jump="${r.from}" style="--d:${0.1 + i * 0.05}s"><em>⚖️</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>: the products give under half of what the crop takes these days.</span></div>`).join('')
+            + (A.low || []).map((r, i) => `<div class="rfx-run is-thin" data-jump="${r.from}" style="--d:${0.25 + i * 0.05}s"><em>⚖️</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>: a little under what the crop takes.</span></div>`).join('');
+        return `<div class="rfx-card" style="--d:.1s"><div class="rfx-card-h">How much, day by day <small>kg of ${esc(A.say)} a hectare</small></div>
+            <div class="rfx-amt-g">
+              <div><h4>Each day <small>bars: what your products give · dashes: what the crop takes</small></h4><div class="rfx-chart-w"><svg viewBox="0 -4 ${W} ${H + 8}" style="min-width:28rem" aria-label="What each day gets against what it takes">${bg}${bars}<path class="needl" d="${line(A.n, yD)}"/>${todayL}${axis}<text class="ax" x="2" y="${top - 2}">${kgSay(maxD / 1.12)} kg a day</text></svg></div></div>
+              <div><h4>Adding up <small>given so far against needed so far</small></h4><div class="rfx-chart-w"><svg viewBox="0 -4 ${W} ${H + 8}" style="min-width:28rem" aria-label="Given and needed, added up"><path class="givea" d="${area}"/><path class="givel" d="${line(CG, yC)}"/><path class="needl" d="${line(CN, yC)}"/>${todayL}${nowSay}${axis}<text class="ax" x="2" y="${top - 2}">${kgSay(maxC / 1.1)} kg</text></svg></div></div>
+            </div>
+            ${runs ? `<div class="rfx-runs">${runs}</div>` : ''}
+            <div class="rfx-legend"><span><i style="background:${PHC.strong}"></i>Given, coloured by what it is doing</span><span><i style="background:none;border-top:2.5px dashed ${tok('--rx-ink')};height:0;border-radius:0"></i>Needed</span><span><i style="background:rgb(220 38 38 / .25)"></i>Short on a day that matters</span><span><i style="background:rgb(245 158 11 / .25)"></i>A little short</span></div></div>`;
+    };
+    /* How it connects: the soil, the links between products and nutrients, amounts and the crop's health, in words. */
+    const GROUPS = [['soil', '🪨', 'Your soil'], ['links', '🔗', 'How your products connect'], ['amt', '⚖️', 'Amounts'], ['health', '🛡️', 'Crop health']];
+    const logicHtml = (R) => {
+        const L = R.logic;
+        if (!L) return '';
+        const notes = L.notes || [];
+        const others = L.others || [];
+        if (!notes.length && !others.length) return '';
+        let html = '', k = 0;
+        GROUPS.forEach(([key, icon, title]) => {
+            const list = notes.filter((x) => x.k === key);
+            if (!list.length) return;
+            html += `<section><h4>${icon} ${title}</h4>${list.map((x) => `<div class="rfx-note is-${esc(x.tone || 'info')}" ${x.from ? `data-jump="${esc(x.from)}"` : ''} style="--k:${k++}"><em>${x.icon || '•'}</em><div><b>${esc(x.title)}</b><p>${esc(x.text)}</p>${x.from ? `<small>${say(x.from)}${x.to && x.to !== x.from ? ' to ' + say(x.to) : ''} · show it in the calendar</small>` : ''}</div></div>`).join('')}</section>`;
+        });
+        if (others.length) html += `<section><h4>🔁 What your products do to other nutrients</h4><ul class="rfx-others">${others.map((x) => `<li><b>${esc(x.name)}</b><span class="rfx-way is-${x.way === 'more' ? 'more' : 'less'}">${x.way === 'more' ? 'freed' : 'held back'}</span><span>${esc(x.why)}</span>${x.key ? `<button type="button" class="rfx-chip" data-goto="${esc(x.key)}">Check it</button>` : ''}</li>`).join('')}</ul></section>`;
+        const on = Object.entries(L.opts || {}).filter(([, v]) => v).map(([kk]) => ({ amt: 'amounts', soil: 'soil', links: 'links', health: 'health' }[kk])).join(' · ');
+        return `<div class="rfx-card" style="--d:.06s"><div class="rfx-card-h">How it connects <small>${esc(on)}</small></div><div class="rfx-notes">${html}</div></div>`;
     };
     const countUp = (el, to) => {
         if (calm) { el.textContent = to; return; }
@@ -1258,7 +1473,7 @@
                 const pale = (full || half) && ['easing', 'fading'].includes(d.p);
                 cells.push(`<button type="button" class="rfx-cell ${ds === R.today ? 'is-today' : ''} ${full ? 'is-full' : ''} ${half ? 'is-half' : ''} ${pale ? 'is-lt' : ''}" data-day="${ds}" data-s="${d.s}" data-p="${d.p || ''}" data-t="${d.t ? 1 : 0}" style="--k:${k++};--h:${Math.round(Math.min(1, d.v) * 100)}%">
                     <span class="rfx-fill"></span>${d.sl ? '<span class="rfx-soil"></span>' : ''}<span class="rfx-n">${dd}</span>${d.dl ? `<span class="rfx-dl">${esc(d.dl)}</span>` : ''}
-                    ${d.c ? `<span class="rfx-crit c${d.c}" aria-label="${CRIT[d.c]}"><i></i><i></i><i></i></span>` : ''}${ap ? `<span class="rfx-ap">${ap}</span>` : ''}</button>`);
+                    ${d.c ? `<span class="rfx-crit c${d.c}" aria-label="${CRIT[d.c]}"><i></i><i></i><i></i></span>` : ''}${ap ? `<span class="rfx-ap">${ap}</span>` : ''}${d.h ? `<span class="rfx-hm is-${d.h}" title="${d.h === 'n' ? 'Nitrogen is lush: scout more often' : 'Potassium or silicon is helping the crop hold out'}">${d.h === 'n' ? 'N' : 'K'}</span>` : ''}</button>`);
             }
             html += `<div class="rfx-month"><div class="rfx-month-h"><b>${MON[m.getMonth()]} ${m.getFullYear()}</b>${crit ? `<small>${crit} critical day${crit === 1 ? '' : 's'}</small>` : ''}</div>
                 <div class="rfx-wk">${DOW.map((w) => `<span class="rfx-wd">${w}</span>`).join('')}${cells.join('')}</div></div>`;
@@ -1271,7 +1486,9 @@
               <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px #f59e0b"></i>${STATE.thin[0]}, only partly covered</span>
               <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px #a78bfa;background:repeating-linear-gradient(135deg,rgb(124 58 237 / .45) 0 2px,#fff 2px 5px)"></i>${STATE[late][0]}</span>
               <span><span class="rfx-crit c3" style="position:static"><i></i><i></i><i></i></span>&nbsp;How critical the stage is</span>
-              <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px var(--rx-today)"></i>Today</span></div>
+              <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px var(--rx-today)"></i>Today</span>
+              ${R.days.some((x) => x.h === 'n') ? '<span><span class="rfx-hm is-n" style="position:static">N</span>Nitrogen lush: pests and disease like it</span>' : ''}
+              ${R.days.some((x) => x.h === 'k') ? '<span><span class="rfx-hm is-k" style="position:static">K</span>Potassium or silicon helping the crop hold out</span>' : ''}</div>
             <div class="rfx-legend rfx-leg-ap"><b class="rfx-leg-h">What went on</b>
               <span><span class="rfx-ap"><i><svg><use href="#rfxI-gran"/></svg></i></span>Spread on the soil</span>
               <span><span class="rfx-ap"><i><svg><use href="#rfxI-drop"/></svg></i></span>Sprayed or poured</span>
@@ -1363,6 +1580,18 @@
             <div class="rfx-meter"><i style="width:0;background:${col}" data-w="${Math.min(100, pct)}"></i></div>
             <p>${cmpOn ? `<b style="color:${colorOf(R.check.key)}">${esc(R.check.label)}</b>: ` : ''}<b>${STATE[d.s] ? STATE[d.s][0] : ''}</b>. Coverage ${pct}% of one full dose. ${d.c ? 'This stage: ' + CRIT[d.c].toLowerCase() + '.' : ''} ${esc(g.why || '')}</p>
             ${apps.length ? `<ul>${apps.map((a) => { const ph = phaseOn(a); return `<li><i class="rfx-sw is-${ph ? ph.p : 'strong'}"></i> <b>${esc(a.as)}</b> (${say(a.date)}${a.try ? ', your try' : ''}): ${ph ? esc(ph.w.charAt(0).toLowerCase() + ph.w.slice(1)) + (ph.p === 'soil' ? ', taken up from ' + say(a.effect.from) : ph.p === 'fading' ? ', gone by about ' + say(a.effect.until) : ', working until about ' + say(a.effect.full)) : 'working until about ' + say(a.effect.full)}</li>`; }).join('')}</ul>` : '<p style="color:#6b7280">Nothing applied is working on this day.</p>'}`;
+        // How much that day and so far; the crop's health that day.
+        const A = R.logic?.amt;
+        const ix = R.days.indexOf(d);
+        let more = '';
+        if (A && A.known && A.n && !A.soilGives) {
+            let cg = 0, cn = 0;
+            for (let j = 0; j <= ix; j++) { if (!A.in || A.in[j]) { cg += A.g[j]; cn += A.n[j]; } }
+            const g = A.g[ix], nd = A.n[ix];
+            more += `<div class="rfx-day-amt">⚖️ <b>That day</b> your products give about ${kgSay(g)} kg ${esc(A.say)} a hectare; the crop takes about ${kgSay(nd)}${nd > 0.0005 ? ` (${Math.round(g / nd * 100)}%)` : ''}. <b>So far</b>: ${kgSay(cg)} of ${kgSay(cn)} kg.</div>`;
+        }
+        if (d.h) more += `<div class="rfx-day-amt">${d.h === 'n' ? '🌿 <b>Nitrogen is lush</b> on this day: soft leaves draw pests and disease. Scout more often.' : '🛡️ <b>Potassium or silicon</b> is working on this day, helping the crop hold out.'}</div>`;
+        if (more) dayBox.insertAdjacentHTML('beforeend', more);
         // The other checks on the same day.
         if (cmpOn) {
             const i = R.days.indexOf(d);
@@ -1383,34 +1612,110 @@
         b.hidden = !n;
         b.textContent = n;
     };
-    $('[data-rfx-save]').addEventListener('click', async () => {
+    // A saved reading opened (or just saved) is the one Save puts the changes over (the owner, 2026-10-30).
+    const defaultTitle = () => [S.res.check.label, ...(S.res.series || []).map((x) => x.check.label)].join(', ') + ` · ${S.res.lot.name}` + (S.tries.length ? ` · with ${S.tries.map((t) => t.name).join(', ')}` : '');
+    const paintFoot = () => {
+        const ed = !!S.savedId;
+        $('[data-rfx-editing]').hidden = !ed;
+        $('[data-rfx-note]').hidden = ed;
+        $('[data-rfx-save-new]').hidden = !ed;
+        $('[data-rfx-save-t]').textContent = ed ? 'Update saved reading' : 'Save this reading';
+        $('[data-rfx-editing-t]').textContent = S.savedTitle || '';
+    };
+    const doSave = async (asNew) => {
         if (!S.res || S.busy) return;
         S.busy = true;
-        const btn = $('[data-rfx-save]');
-        btn.disabled = true;
+        const btns = [$('[data-rfx-save]'), $('[data-rfx-save-new]')];
+        btns.forEach((b) => { b.disabled = true; });
         try {
-            const title = [S.res.check.label, ...(S.res.series || []).map((x) => x.check.label)].join(', ') + ` · ${S.res.lot.name}` + (S.tries.length ? ` · with ${S.tries.map((t) => t.name).join(', ')}` : '');
-            const r = await window.api(U.save, { method: 'POST', body: { scheduleId: SID, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, title } });
+            const id = asNew ? null : S.savedId;
+            const r = await window.api(U.save, { method: 'POST', body: { scheduleId: SID, id, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, title: id ? S.savedTitle : defaultTitle() } });
             S.opts.saved = r.data.saved;
+            S.savedId = r.data.id;
+            S.savedTitle = r.data.title;
             paintSavedCount();
-            window.toast?.('Saved. Open it any time from Saved.');
+            paintFoot();
+            window.toast?.(r.data.updated ? 'Updated. The saved reading now holds these changes.' : 'Saved. Rename it below, or open it any time from Saved.');
         } catch (err) { window.toast?.(err.message || 'It could not be saved.', 'error'); }
-        finally { S.busy = false; btn.disabled = false; }
+        finally { S.busy = false; btns.forEach((b) => { b.disabled = false; }); }
+    };
+    $('[data-rfx-save]').addEventListener('click', () => doSave(false));
+    $('[data-rfx-save-new]').addEventListener('click', () => doSave(true));
+    $('[data-rfx-stop-edit]').addEventListener('click', () => { S.savedId = null; S.savedTitle = ''; S.saved = null; paintFoot(); if (S.res) paint(); });
+    const renameSaved = async (id, title) => {
+        const t = String(title || '').trim();
+        if (!t) return false;
+        try {
+            const r = await window.api(U.saved + id + '/name', { method: 'POST', body: { scheduleId: SID, title: t } });
+            S.opts.saved = r.data.saved;
+            if (S.savedId === id) { S.savedTitle = r.data.title; paintFoot(); }
+            return true;
+        } catch (err) { window.toast?.(err.message || 'It could not be renamed.', 'error'); return false; }
+    };
+    // Renaming the one being edited, in the foot.
+    const curIn = $('[data-rfx-editing-in]');
+    $('[data-rfx-rename-cur]').addEventListener('click', () => {
+        curIn.value = S.savedTitle;
+        curIn.hidden = false;
+        $('[data-rfx-editing-t]').hidden = true;
+        curIn.focus();
+        curIn.select();
     });
+    const endCur = async (keep) => {
+        if (curIn.hidden) return;
+        const v = curIn.value.trim();
+        curIn.hidden = true;
+        $('[data-rfx-editing-t]').hidden = false;
+        if (keep && v && v !== S.savedTitle && await renameSaved(S.savedId, v)) window.toast?.('Renamed.');
+    };
+    curIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); endCur(true); } else if (e.key === 'Escape') { e.stopPropagation(); endCur(false); } });
+    curIn.addEventListener('blur', () => endCur(true));
     const openSaved = () => {
         const list = S.opts?.saved || [];
         const lots = Object.fromEntries((S.opts?.lots || []).map((l) => [l.id, l.name]));
-        $('[data-rfx-saved]').innerHTML = list.length ? list.map((s) => `<button type="button" class="rfx-sv" data-open-saved="${s.id}"><span><b>${esc(s.title)}</b><small>${esc(s.at)}${lots[s.lotId] ? ' · ' + esc(lots[s.lotId]) : ''}</small></span><span class="rfx-sv-x" data-del-saved="${s.id}" role="button" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg></span></button>`).join('')
+        $('[data-rfx-saved]').innerHTML = list.length ? list.map((s) => `<div class="rfx-sv ${s.id === S.savedId ? 'is-cur' : ''}"><button type="button" class="rfx-sv-open" data-open-saved="${s.id}"><b>${esc(s.title)}</b><small>${esc(s.at)}${s.edited ? ' · changed ' + esc(s.edited) : ''}${lots[s.lotId] ? ' · ' + esc(lots[s.lotId]) : ''}${s.id === S.savedId ? ' · open now' : ''}</small></button><button type="button" class="rfx-sv-x" data-ren-saved="${s.id}" aria-label="Rename">${PEN}</button><button type="button" class="rfx-sv-x" data-del-saved="${s.id}" aria-label="Remove">${TRASH}</button></div>`).join('')
             : '<p class="rfx-muted" style="padding:.5rem">Nothing saved yet. Save a reading to keep it as it stands today.</p>';
         $('[data-rfx-drawer]').hidden = false;
         requestAnimationFrame(() => $('[data-rfx-drawer]').classList.add('is-on'));
     };
     $('[data-rfx-saved]').addEventListener('click', async (e) => {
+        const ren = e.target.closest('[data-ren-saved]');
+        if (ren) {
+            // Its name, changed in place.
+            const row = ren.closest('.rfx-sv');
+            const id = Number(ren.dataset.renSaved);
+            const cur = (S.opts.saved || []).find((x) => x.id === id);
+            const openB = row.querySelector('.rfx-sv-open');
+            openB.hidden = true;
+            const inp = document.createElement('input');
+            inp.className = 'rfx-sv-in';
+            inp.maxLength = 190;
+            inp.value = cur?.title || '';
+            inp.setAttribute('aria-label', 'Name of this saved reading');
+            row.insertBefore(inp, openB);
+            inp.focus();
+            inp.select();
+            let done = false;
+            const end = async (keep) => {
+                if (done) return;
+                done = true;
+                if (keep && inp.value.trim() && inp.value.trim() !== cur?.title) await renameSaved(id, inp.value);
+                openSaved();
+            };
+            inp.addEventListener('keydown', (ev) => { if (ev.key === 'Enter') { ev.preventDefault(); end(true); } else if (ev.key === 'Escape') { ev.stopPropagation(); end(false); } });
+            inp.addEventListener('blur', () => end(true));
+            return;
+        }
         const del = e.target.closest('[data-del-saved]');
         if (del) {
             e.stopPropagation();
-            try { const r = await window.api(U.saved + del.dataset.delSaved + '?scheduleId=' + SID, { method: 'DELETE' }); S.opts.saved = r.data.saved; paintSavedCount(); openSaved(); }
-            catch (err) { window.toast?.(err.message, 'error'); }
+            try {
+                const r = await window.api(U.saved + del.dataset.delSaved + '?scheduleId=' + SID, { method: 'DELETE' });
+                S.opts.saved = r.data.saved;
+                if (Number(del.dataset.delSaved) === S.savedId) { S.savedId = null; S.savedTitle = ''; paintFoot(); }
+                paintSavedCount();
+                openSaved();
+            } catch (err) { window.toast?.(err.message, 'error'); }
             return;
         }
         const b = e.target.closest('[data-open-saved]');
@@ -1424,8 +1729,12 @@
             S.checks = [S.check, ...(d.params.also || [])];
             S.tries = (d.params.tries || []).map((t) => ({ ...t, name: t.name || t.ai || 'Product' }));
             S.tab = tabOf(S.check);
-            paintLots(); paintPicks(); paintTries();
+            S.logic = { ...LOGIC_DEF, ...(d.params.logic || {}) };
+            paintLots(); paintPicks(); paintTries(); paintLogic();
             S.saved = { title: d.title, at: d.at };
+            S.savedId = d.id;
+            S.savedTitle = d.title;
+            paintFoot();
             paint();
             $('[data-rfx-drawer]').classList.remove('is-on');
             $('[data-rfx-scroll]').scrollTo({ top: 0, behavior: calm ? 'auto' : 'smooth' });
