@@ -348,7 +348,6 @@
        up its own messages come over it, and the shared confirm is lifted for
        exactly as long as it is asking (any other sheet stays where it is:
        the note editor is often open behind the pad, and it belongs behind). */
-    html.draw-pad-open #toast-stack { z-index:450; }
     /* Both halves of the lift are spelled with .draw-pad-open too, so a class
        left behind by some future accident cannot put the shared backdrop over
        every sheet in an app that has no pad up. */

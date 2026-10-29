@@ -379,12 +379,22 @@ window.aneeDropChips = function aneeDropChips(held) {
 /* Toasts                                                               */
 /* ------------------------------------------------------------------ */
 
+/* Above every overlay (2026-10-30, the owner: the Range Effect sheet hid its toasts):
+   a z-index over any fixed sheet, and the top layer as a popover, shown again with
+   each toast so it also lands over a <dialog> opened since. */
 function toastStack() {
     let el = document.getElementById('toast-stack');
     if (!el) {
         el = document.createElement('div');
         el.id = 'toast-stack';
+        if ('popover' in el) el.popover = 'manual';
         document.body.appendChild(el);
+    }
+    if (el.showPopover) {
+        try {
+            if (el.matches(':popover-open')) el.hidePopover();
+            el.showPopover();
+        } catch (_) { /* no top layer here: the z-index holds */ }
     }
     return el;
 }

@@ -473,7 +473,6 @@
            and the backdrop rises with it or it would dim nothing. */
         html.mir-open #confirm-sheet { z-index: 420; }
         html.mir-open:has(#confirm-sheet.is-open) .sheet-backdrop { z-index: 410; }
-        html.mir-open #toast-stack { z-index: 430; }
         /* The day's three dots reach the camera, the recorder, the voice
            note and the lightbox -- none of them sheets, each pinned under
            the mirror's 340 -- so from in here they opened behind the screen
@@ -4137,12 +4136,13 @@
             <svg id="viewIconList" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <span id="viewToggleLabel">Calendar view</span>
         </button>
-        {{-- Range Effect (2026-10-29, the owner: "just say range effect in desktop and put it after the calendar view"):
+        {{-- Range Effect (2026-10-29, the owner: "just say range effect in desktop and put it after the calendar view"),
+             said "Coverage" on the desktop button since 2026-10-30 (the owner: "in desktop rename range effect to coverage"):
              how long every product on the plan keeps working, against what each stage needs (sm.partials.range-effect). --}}
         <button type="button" id="rangeEffectBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only
-                title="Range Effect: how long every product keeps working, day by day">
+                title="Coverage: how long every product keeps working, day by day">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 3v3M16 3v3"/><path d="M6.5 15.5c1.6-3.2 3.4-3.2 5 0s3.4 3.2 5 0"/></svg>
-            <span>Range effect</span>
+            <span>Coverage</span>
         </button>
         <button type="button" id="openNotesBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only
                 title="Open this season's notes">

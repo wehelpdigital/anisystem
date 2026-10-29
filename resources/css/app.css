@@ -731,7 +731,8 @@ html.dark .sheet-body::-webkit-scrollbar-thumb { background: rgb(255 255 255 / .
 }
 
 /* Toasts */
-#toast-stack { @apply fixed z-[250] top-4 right-4 left-4 sm:left-auto sm:w-96 flex flex-col gap-2 pointer-events-none; }
+/* Over every sheet; as a popover (app.js toastStack) the browser's own popover box is undone. */
+#toast-stack { @apply fixed z-[10050] top-4 right-4 left-4 bottom-auto w-auto h-auto m-0 p-0 border-0 bg-transparent overflow-visible sm:left-auto sm:w-96 flex flex-col gap-2 pointer-events-none; }
 .toast {
     @apply pointer-events-auto rounded-xl px-4 py-3 text-sm font-medium text-white shadow-lg flex items-start gap-2
         translate-y-[-8px] opacity-0 transition-all duration-200;
