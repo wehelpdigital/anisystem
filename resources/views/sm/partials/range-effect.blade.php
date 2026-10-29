@@ -178,6 +178,13 @@
         </div>
         {{-- One day, opened. --}}
         <div class="rfx-day" data-rfx-day hidden></div>
+        {{-- One growth stage, opened from its mark over the season chart (the owner, 2026-10-30: "when that is clicked,
+             show a modal showing the dates where that falls"): its days, its count, Anee's realign and the delay
+             counter when the lot has them, how much it matters, the coverage and what the plan puts on then. --}}
+        <div class="rfx-edit rfx-stgm" data-rfx-stg hidden>
+            <div class="rfx-edit-veil" data-rfx-stg-x></div>
+            <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxStgT" data-rfx-stg-b></div>
+        </div>
         {{-- A try, opened to change it (the owner, 2026-10-30: "if i click the item that is added make it editable like
              show a modal to edit it"): its day, granular or foliar, how much; or take it out. --}}
         <div class="rfx-edit" data-rfx-edit hidden>
@@ -539,14 +546,77 @@
     @keyframes rfxLane { to { clip-path: inset(0 0 0 0 round .45rem); } }
     .rfx-lane.is-on .rfx-lane-s { box-shadow: 0 0 0 2px var(--sc); }
     .rfx-lane.is-head { animation: none; }
-    .rfx-stg { display: flex; overflow: hidden; font-size: .66rem; font-weight: 800; color: var(--rx-muted); }
-    .rfx-stg span { flex: none; min-width: 0; padding: 0 .2rem; border-left: 1px solid var(--rx-line-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rfx-stg { display: flex; overflow: hidden; }
+    .rfx-stg .rfx-sb { position: relative; flex: none; height: 1.5rem; border-left: 1px solid var(--rx-line-2); }
+    /* A stage's mark: a symbol and two letters in a pill over its band; a narrow band keeps the letters, a very narrow
+       one the symbol alone (each mark is its own size container). */
+    .rfx-chart-in { min-width: 46rem; }
+    .rfx-sbar { position: relative; height: 1.9rem; }
+    .rfx-sb { position: absolute; top: 0; bottom: 0; display: grid; place-items: center; padding: 0 1px; container-type: inline-size; cursor: pointer; }
+    .rfx-sb > span { display: inline-flex; align-items: center; gap: .2rem; max-width: 100%; padding: .18rem .45rem; border-radius: 999px; font-size: .72rem; font-weight: 900; line-height: 1.1; white-space: nowrap; overflow: hidden;
+        color: var(--rx-muted); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s, color .28s, background-color .28s; }
+    .rfx-sb i { font-style: normal; font-size: .82rem; }
+    .rfx-sb b { letter-spacing: .03em; color: inherit; }
+    .rfx-sb.c3 > span { color: var(--rx-gap-ink); background: var(--rx-gap-bg); box-shadow: inset 0 0 0 1px var(--rx-gap-line); }
+    .rfx-sb.c2 > span { color: var(--rx-thin-ink); background: var(--rx-thin-bg); box-shadow: inset 0 0 0 1px var(--rx-thin-line); }
+    .rfx-sb.is-now > span { box-shadow: inset 0 0 0 2px var(--rx-today), 0 6px 14px -10px var(--rx-today); }
+    .rfx-sb:hover > span { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--rx-hover), 0 8px 16px -12px rgb(0 0 0 / .5); }
+    .rfx-sb:focus-visible { outline: none; }
+    .rfx-sb:focus-visible > span { outline: 2px solid var(--rx-accent); outline-offset: 1px; }
+    .rfx-sb.is-sm > span { padding: .1rem .3rem; font-size: .64rem; }
+    .rfx-sb.is-sm i { font-size: .7rem; }
+    @container (max-width: 3.3rem) { .rfx-sb i { display: none; } .rfx-sb > span { padding: .15rem .3rem; } }
+    @container (max-width: 1.7rem) { .rfx-sb i { display: inline; } .rfx-sb b { display: none; } .rfx-sb > span { padding: .15rem; } }
+    /* A stage, opened. */
+    .rfx-stgm .rfx-edit-c { gap: .7rem; width: min(100%, 32rem); }
+    .rfx-stgm .rfx-edit-c.is-step { animation: rfxPop .3s cubic-bezier(.22,1,.36,1); }
+    .rfx-stgm .rfx-day-h b { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+    .rfx-stg-ic { font-size: 1.35rem; line-height: 1; }
+    .rfx-stg-ab { padding: .1rem .45rem; border-radius: 999px; font-style: normal; font-size: .72rem; font-weight: 900; letter-spacing: .05em; color: var(--rx-ink); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line-2); }
+    .rfx-stg-when { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: .3rem .8rem; }
+    .rfx-stg-when b { display: block; font-family: var(--font-heading); font-size: 1.2rem; color: var(--rx-ink); }
+    .rfx-stg-when small { display: block; font-size: .8rem; font-weight: 700; color: var(--rx-muted); }
+    .rfx-stg-when > span { font-size: .8rem; font-weight: 800; color: var(--rx-today); }
+    .rfx-stgm .rfx-meter { margin-top: -.3rem; }
+    .rfx-stg-ra { padding: .7rem .8rem; border-radius: .9rem; background: var(--rx-try-bg); box-shadow: inset 0 0 0 1.5px var(--rx-try-line); }
+    .rfx-stg-ra.is-delay { background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line-2); }
+    .rfx-stg-ra > b { display: block; font-size: .88rem; color: var(--rx-ink); }
+    .rfx-stg-ra p { margin-top: .3rem; font-size: .84rem; line-height: 1.5; color: var(--rx-text); }
+    .rfx-stg-ra p b { color: var(--rx-ink); }
+    .rfx-stg-cmp { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; margin-top: .55rem; }
+    .rfx-stg-cmp span { display: grid; gap: .1rem; padding: .45rem .6rem; border-radius: .7rem; background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-stg-cmp span.is-ra { box-shadow: inset 0 0 0 1.5px #f5c518; }
+    .rfx-stg-cmp em { font-style: normal; font-size: .72rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-stg-cmp b { font-size: .9rem; color: var(--rx-ink); }
+    .rfx-stg-saw { margin-top: .45rem; }
+    .rfx-stg-saw summary { cursor: pointer; font-size: .8rem; font-weight: 800; color: var(--rx-accent); }
+    .rfx-stg-crit { padding: .65rem .8rem; border-radius: .9rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-stg-crit.c3 { background: var(--rx-gap-bg); box-shadow: inset 0 0 0 1px var(--rx-gap-line); }
+    .rfx-stg-crit.c2 { background: var(--rx-thin-bg); box-shadow: inset 0 0 0 1px var(--rx-thin-line); }
+    .rfx-stg-crit > b { display: block; font-size: .88rem; color: var(--rx-ink); }
+    .rfx-stg-crit p { margin-top: .25rem; font-size: .82rem; line-height: 1.5; color: var(--rx-text); }
+    .rfx-stg-cov { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
+    .rfx-stg-cov span { padding: .15rem .55rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: var(--rx-text); background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-stg-cov .is-ok { color: var(--rx-ink); }
+    .rfx-stg-cov .is-gap { color: var(--rx-gap-ink); }
+    .rfx-stg-cov .is-thin { color: var(--rx-thin-ink); }
+    .rfx-stg-do p { font-size: .84rem; line-height: 1.5; color: var(--rx-text); }
+    .rfx-stg-do p + p { margin-top: .25rem; }
+    .rfx-stg-do b, .rfx-stg-apps > b { color: var(--rx-ink); }
+    .rfx-stg-apps > b { display: block; font-size: .82rem; }
+    .rfx-stg-apps > p { margin-top: .2rem; font-size: .82rem; color: var(--rx-muted); }
+    .rfx-stg-apps ul { margin: .35rem 0 0; padding: 0; list-style: none; display: grid; gap: .3rem; }
+    .rfx-stg-apps li { display: grid; grid-template-columns: 4.6rem 1fr auto; align-items: center; gap: .5rem; padding: .4rem .55rem; border-radius: .7rem; font-size: .82rem; color: var(--rx-text); background: var(--rx-soft); }
+    .rfx-stg-apps li.is-rel { box-shadow: inset 3px 0 0 var(--rx-accent); }
+    .rfx-stg-apps li span { font-weight: 800; color: var(--rx-ink); }
+    .rfx-stg-apps li small { display: block; font-size: .68rem; font-weight: 700; color: var(--rx-muted); }
+    .rfx-stg-apps li em { font-style: normal; min-width: 0; }
+    .rfx-stg-apps li i { font-style: normal; font-size: .72rem; font-weight: 800; color: var(--rx-muted); }
     .rfx-mo { position: relative; height: 1rem; font-size: .68rem; font-weight: 800; color: var(--rx-faint); }
     .rfx-mo span { position: absolute; top: 0; padding-left: .15rem; border-left: 1px solid var(--rx-line-2); }
     @media (max-width: 639.98px) {
         .rfx-mini { gap: .45rem; padding: .5rem; } .rfx-mini svg { width: 2.3rem; height: 2.3rem; }
         .rfx-lane { grid-template-columns: 4.8rem minmax(0, 1fr); gap: .4rem; }
-        .rfx-lanes .rfx-lane.is-head:first-child { display: none; }   /* the stage names do not fit a phone; the ticks on top say it */
     }
     .rfx-day-cmp { display: grid; gap: .45rem; margin-top: .7rem; padding-top: .6rem; border-top: 1px solid var(--rx-line); }
     .rfx-day-cmp > div { display: grid; grid-template-columns: auto minmax(0, 1fr) 4.5rem; align-items: center; gap: .1rem .45rem; font-size: .84rem; }
@@ -875,7 +945,8 @@
     });
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape' || M.hidden) return;
-        if (!$('[data-rfx-edit]').hidden) closeEdit();
+        if (!$('[data-rfx-stg]').hidden) closeStage();
+        else if (!$('[data-rfx-edit]').hidden) closeEdit();
         else if (!$('[data-rfx-day]').hidden) hideDay();
         else if ($('[data-rfx-drawer]').classList.contains('is-on')) $('[data-rfx-drawer]').classList.remove('is-on');
         else close();
@@ -1505,9 +1576,9 @@
         const lanes = all.map((x, k) => `<div class="rfx-lane ${x.main ? 'is-on' : ''}" style="--sc:${colorOf(x.key)};--k:${k}">
             <button type="button" class="rfx-lane-n" data-focus="${esc(x.key)}" title="${esc(x.label)}"><i></i>${esc(x.short)}</button>
             <svg class="rfx-lane-s" viewBox="0 0 ${n} 10" preserveAspectRatio="none" data-lane role="img" aria-label="${esc(x.label)} over the season">${lane(x)}</svg></div>`).join('');
-        const stg = R.stages.map((g) => {
+        const stg = R.stages.map((g, gi) => {
             const i0 = R.days.findIndex((d) => d.d === g.from), i1 = R.days.findIndex((d) => d.d === g.to);
-            return i0 < 0 ? '' : `<span style="width:${((i1 - i0 + 1) / n * 100).toFixed(3)}%" title="${esc(g.label)}">${esc(g.label)}</span>`;
+            return i0 < 0 ? '' : stageMark(g, gi, R, `width:${((i1 - i0 + 1) / n * 100).toFixed(3)}%`, true);
         }).join('');
         let mo = '';
         R.days.forEach((d, i) => { if (d.d.endsWith('-01')) mo += `<span style="left:${(i / n * 100).toFixed(2)}%">${MON[D(d.d).getMonth()]}</span>`; });
@@ -1562,6 +1633,129 @@
         keep();
     };
 
+    /* The growth stages said short (the owner, 2026-10-30: "in the season, just use symbols and acronym for the growth
+       stages"): a symbol and two letters each, the same on the chart and side by side; a tap opens the stage's sheet.
+       Every stage name of the crop book is here; one it lacks gets its initials. */
+    const STAGE_MARK = {
+        'Before planting': ['🚜', 'BP'], 'No planting day yet': ['❔', 'ND'], 'After harvest': ['🧺', 'AH'],
+        'Germination': ['🫘', 'GR'], 'Germination & emergence': ['🌱', 'GE'], 'Emergence': ['🌱', 'EM'], 'Seedling': ['🌱', 'SD'],
+        'Seedling establishment': ['🪴', 'SE'], 'Establishment': ['🪴', 'ES'], 'Recovery': ['🪴', 'RC'], 'Root initiation': ['🪴', 'RI'],
+        'Early vegetative': ['🌿', 'EV'], 'Vegetative': ['🌿', 'VG'], 'Vegetative growth': ['🌿', 'VG'], 'Late vegetative': ['🌿', 'LV'],
+        'Rapid growth': ['🌿', 'RG'], 'Grand growth': ['🌿', 'GG'], 'Juvenile growth': ['🌱', 'JG'], 'Leaf growth': ['🍃', 'LG'], 'Vine growth': ['🍃', 'VN'],
+        'Tillering': ['🌿', 'TL'], 'Early tillering': ['🌿', 'ET'], 'Active tillering': ['🌿', 'AT'],
+        'Panicle initiation': ['🎯', 'PI'], 'Booting & heading': ['🎋', 'BH'], 'Heading & filling': ['🎋', 'HF'], 'Shooting': ['🎋', 'SH'], 'Tasselling': ['🎋', 'TS'],
+        'Reproductive': ['🌼', 'RP'], 'Flowering': ['🌼', 'FL'], 'Silking & pollination': ['🌼', 'SP'], 'Fruit set & filling': ['🍅', 'FS'],
+        'Pod filling': ['🫛', 'PF'], 'Grain filling': ['🍚', 'GF'], 'Milk stage': ['🥛', 'MK'], 'Bunch filling': ['🍌', 'BF'], 'Bulking': ['🥔', 'BK'], 'Bulbing': ['🧅', 'BB'],
+        'Maturation': ['🌕', 'MT'], 'Maturity & curing': ['🌕', 'MC'], 'Maturity & harvest': ['🧺', 'MH'], 'Ripening & harvest': ['🧺', 'RH'], 'Harvest': ['🧺', 'HV'],
+        'First bearing': ['🍊', 'FB'], 'Mature bearing': ['🌳', 'MB'], 'Old and declining': ['🍂', 'OD'],
+    };
+    const markOf = (label) => {
+        if (STAGE_MARK[label]) return STAGE_MARK[label];
+        const w = String(label || '?').split(/[\s&,/]+/).filter((x) => x && !['and', 'of', 'the'].includes(x.toLowerCase()));
+        const ab = w.length > 1 ? w[0][0] + w[1][0] : (w[0] || '?')[0] + (((w[0] || '').slice(1).match(/[^aeiou]/i) || [''])[0]);
+        return ['🌿', ab.toUpperCase()];
+    };
+    const stageMark = (g, gi, R, style, small = false) => {
+        const [ic, ab] = markOf(g.label);
+        const now = R.today >= g.from && R.today <= g.to;
+        return `<button type="button" class="rfx-sb${small ? ' is-sm' : ''} c${g.crit || 0}${now ? ' is-now' : ''}" data-stage="${gi}" style="${style}" title="${esc(g.label)}: ${say(g.from)} to ${say(g.to)}" aria-label="${esc(g.label)}, ${say(g.from)} to ${say(g.to)}"><span><i aria-hidden="true">${ic}</i><b>${esc(ab)}</b></span></button>`;
+    };
+    const CRIT_SAY = ['Not needed now', 'Matters a little', 'Needed', 'Critical'];
+    const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
+    // "DAS 15" and "DAS 36" as "DAS 15 to 36"; a count the delay counter moves, as the board writes it.
+    const countRange = (a, b, minus = 0) => {
+        const m0 = /^([A-Z]+) (-?\d+)$/.exec(a || ''), m1 = /^([A-Z]+) (-?\d+)$/.exec(b || '');
+        if (m0 && m1 && m0[1] === m1[1]) { const f = Number(m0[2]) - minus, t = Number(m1[2]) - minus; return `${m0[1]} ${f}${t !== f ? ' to ' + t : ''}`; }
+        return minus ? '' : [a, b].filter(Boolean).filter((v, i, x) => x.indexOf(v) === i).join(' to ');
+    };
+    const stageBox = $('[data-rfx-stg]');
+    let stageAt = -1;
+    const stageHtml = (R, gi) => {
+        const g = R.stages[gi];
+        const [ic, ab] = markOf(g.label);
+        const ds = R.days.filter((d) => d.d >= g.from && d.d <= g.to);
+        const len = ds.length;
+        const cnt = ds.length ? countRange(ds[0].dl, ds[ds.length - 1].dl) : '';
+        let when;
+        if (R.today < g.from) when = `Starts in ${plural(Math.round((D(g.from) - D(R.today)) / 864e5), 'day')}`;
+        else if (R.today > g.to) when = `Ended ${plural(Math.round((D(R.today) - D(g.to)) / 864e5), 'day')} ago`;
+        else { const k = Math.round((D(R.today) - D(g.from)) / 864e5) + 1; when = `Today is day ${k} of ${len}`; }
+        const nowPct = R.today >= g.from && R.today <= g.to ? Math.round((Math.round((D(R.today) - D(g.from)) / 864e5) + 1) / Math.max(1, len) * 100) : (R.today > g.to ? 100 : 0);
+        let h = `<div class="rfx-day-h"><div><b id="rfxStgT"><span class="rfx-stg-ic" aria-hidden="true">${ic}</span>${esc(g.label)}<em class="rfx-stg-ab">${esc(ab)}</em></b>
+            <small>${g.index != null && g.count ? `Stage ${g.index + 1} of ${g.count} · ` : ''}${esc(R.lot.name)}, ${esc(R.lot.crop)}</small></div>
+            <button type="button" class="rfx-x" data-rfx-stg-x aria-label="Close">${'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>'}</button></div>`;
+        // Its days: the dates, how long, the count, where today is.
+        h += `<div class="rfx-stg-when"><div><b>${say(g.from)}${g.to !== g.from ? ' to ' + say(g.to) : ''}</b><small>${plural(len, 'day')}${cnt ? ' · ' + esc(cnt) : ''}</small></div><span>${esc(when)}</span></div>
+            <div class="rfx-meter" aria-hidden="true"><i style="width:${nowPct}%;background:var(--rx-accent)"></i></div>`;
+        // Anee's realign: these dates follow it; the calendar's own beside them.
+        const ra = R.lot.realign;
+        if (ra && g.stage) {
+            const sh = Number(ra.shift) || 0, sure = ra.confidence ? `, ${ra.confidence}% sure` : '';
+            h += `<div class="rfx-stg-ra"><b>🎯 Anee's realign, ${say(ra.at)}${sure}</b>`;
+            if (!sh) h += `<p>She found the crop on time with the calendar, so these are the calendar's own dates.</p>`;
+            else {
+                h += `<p>She found the crop <b>${plural(Math.abs(sh), 'day')} ${sh < 0 ? 'behind' : 'ahead of'}</b> the calendar, so the dates above follow her reading.</p>`;
+                if (g.cal && g.cal.from) {
+                    h += `<div class="rfx-stg-cmp"><span><em>📅 The calendar alone</em><b>${say(g.cal.from)}${g.cal.to && g.cal.to !== g.cal.from ? ' to ' + say(g.cal.to) : ''}</b></span>
+                        <span class="is-ra"><em>🎯 With the realign</em><b>${say(g.from)}${g.to !== g.from ? ' to ' + say(g.to) : ''}</b></span></div>`;
+                }
+            }
+            if (ra.summary) h += `<details class="rfx-stg-saw"><summary>What Anee saw</summary><p>${esc(ra.summary)}</p></details>`;
+            h += '</div>';
+        }
+        // The farmer's own delay counter, as the board counts it beside the calendar's.
+        const dl = Number(R.lot.delay) || 0;
+        if (dl > 0 && g.stage && ds.length) {
+            const dc = countRange(ds[0].dl, ds[ds.length - 1].dl, dl);
+            h += `<div class="rfx-stg-ra is-delay"><b>⏳ Your delay counter: ${plural(dl, 'day')} behind</b><p>${dc ? `By its count this stage is <b>DELAY ${esc(dc)}</b>. ` : ''}The board shows both counts on each task.</p></div>`;
+        }
+        // How much the check matters here, and how well it is covered.
+        if (g.stage) {
+            const by = {};
+            ds.forEach((d) => { by[d.s] = (by[d.s] || 0) + 1; });
+            const bits = [];
+            if (by.ok) bits.push(`<span class="is-ok">${plural(by.ok, 'day')} covered</span>`);
+            if (by.thin) bits.push(`<span class="is-thin">${by.thin} partly</span>`);
+            if (by.gap) bits.push(`<span class="is-gap">${plural(by.gap, 'gap day')}</span>`);
+            if (by.late) bits.push(`<span>${by.late} still working, not needed</span>`);
+            h += `<div class="rfx-stg-crit c${g.crit || 0}"><b>${CRIT_SAY[g.crit || 0]} for ${esc(R.check.word)}</b>${g.why ? `<p>${esc(g.why)}</p>` : ''}${bits.length ? `<div class="rfx-stg-cov">${bits.join('')}</div>` : ''}</div>`;
+        }
+        if (g.what || g.needs) h += `<div class="rfx-stg-do">${g.what ? `<p><b>The crop:</b> ${esc(g.what)}</p>` : ''}${g.needs ? `<p><b>It needs:</b> ${esc(g.needs)}</p>` : ''}</div>`;
+        // What the plan puts on in these days: where the stage sits in the protocol.
+        const apps = (R.apps || []).filter((a) => a.date >= g.from && a.date <= g.to);
+        h += `<div class="rfx-stg-apps"><b>On the plan in these days</b>${apps.length ? `<ul>${apps.map((a) => {
+            const at = R.days.find((d) => d.d === a.date);
+            return `<li class="${a.relevant ? 'is-rel' : ''}"><span>${say(a.date)}${at && at.dl ? `<small>${esc(at.dl)}</small>` : ''}</span><em>${esc(a.as)}</em><i>${a.try ? 'Added by you' : a.done ? 'Done' : 'Planned'}</i></li>`;
+        }).join('')}</ul>` : '<p>Nothing on the tasks in these days.</p>'}</div>`;
+        // Step to the stage before or after.
+        const prev = R.stages[gi - 1], next = R.stages[gi + 1];
+        h += `<div class="rfx-edit-b">${prev ? `<button type="button" class="rfx-btn is-ghost" data-stg-go="${gi - 1}">‹ ${markOf(prev.label)[0]} ${esc(markOf(prev.label)[1])}</button>` : ''}<span style="flex:1"></span>${next ? `<button type="button" class="rfx-btn is-ghost" data-stg-go="${gi + 1}">${markOf(next.label)[0]} ${esc(markOf(next.label)[1])} ›</button>` : ''}</div>`;
+        return h;
+    };
+    const openStage = (gi) => {
+        const R = S.res;
+        if (!R || !R.stages || !R.stages[gi]) return;
+        const was = stageAt;
+        stageAt = gi;
+        const c = $('[data-rfx-stg-b]');
+        c.innerHTML = stageHtml(R, gi);
+        c.scrollTop = 0;
+        if (was >= 0 && !stageBox.hidden) { if (!calm) { c.classList.remove('is-step'); void c.offsetWidth; c.classList.add('is-step'); } return; }
+        stageBox.hidden = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => stageBox.classList.add('is-on')));
+        setTimeout(() => c.querySelector('[data-rfx-stg-x]')?.focus({ preventScroll: true }), calm ? 0 : 200);
+    };
+    const closeStage = () => {
+        stageAt = -1;
+        stageBox.classList.remove('is-on');
+        setTimeout(() => { if (stageAt < 0) stageBox.hidden = true; }, calm ? 0 : 260);
+    };
+    stageBox.addEventListener('click', (e) => {
+        if (e.target.closest('[data-rfx-stg-x]')) { closeStage(); return; }
+        const go = e.target.closest('[data-stg-go]');
+        if (go) openStage(Number(go.dataset.stgGo));
+    });
+
     /* The season as a chart: coverage per day over the stages, each stage tinted by how critical it is. */
     const chartHtml = (R) => {
         const days = R.days;
@@ -1569,19 +1763,19 @@
         // Every line hidden (the last shown one taken out above): all of them come back.
         if (S.checks.every((k) => S.hide.includes(k))) S.hide = [];
         const mk = esc(R.check.key), off = (k) => (shownOn(k) ? '' : ' is-off'), offMain = off(R.check.key);
-        const W = 1000, H = 190, top = 22, base = 150, n = days.length;
+        const W = 1000, H = 176, top = 8, base = 136, n = days.length;
         const x = (i) => (i / Math.max(1, n - 1)) * W;
         const y = (v) => base - Math.min(1.6, v) / 1.6 * (base - top);
         const critCol = ['rgba(0,0,0,0)', 'rgba(245,158,11,.10)', 'rgba(249,115,22,.16)', 'rgba(220,38,38,.18)'];
-        let bands = '', labels = '';
-        R.stages.forEach((g) => {
+        let bands = '', marks = '';
+        R.stages.forEach((g, gi) => {
             const i0 = days.findIndex((d) => d.d === g.from), i1 = days.findIndex((d) => d.d === g.to);
             if (i0 < 0) return;
             const x0 = x(i0) - (W / n) / 2, x1 = x(i1) + (W / n) / 2;
             bands += `<rect x="${x0.toFixed(1)}" y="${top}" width="${Math.max(0, x1 - x0).toFixed(1)}" height="${base - top}" fill="${critCol[g.crit] || critCol[0]}"/>`;
-            // A stage name fits its own band (about 7 units a letter at this size), shortened rather than run into the next.
-            const fit = Math.floor((x1 - x0 - 8) / 7);
-            if (fit >= 4) labels += `<text class="stg" x="${((x0 + x1) / 2).toFixed(1)}" y="${top - 8}" text-anchor="middle"><title>${esc(g.label)}</title>${esc(g.label.length > fit ? g.label.slice(0, fit - 1).trimEnd() + '…' : g.label)}</text>`;
+            // Each stage a symbol and two letters over its band, never words cut short; a tap opens the stage.
+            const l0 = Math.max(0, x0), l1 = Math.min(W, x1);
+            marks += stageMark(g, gi, R, `left:${(l0 / W * 100).toFixed(3)}%;width:${((l1 - l0) / W * 100).toFixed(3)}%`);
             bands += `<line class="grid" x1="${x0.toFixed(1)}" x2="${x0.toFixed(1)}" y1="${top}" y2="${base}"/>`;
         });
         let line = '', area = `M0 ${base}`, tryLine = '';
@@ -1618,17 +1812,18 @@
             if (i < 0) return;
             dots += `<circle class="app ${a.try ? 'is-try' : a.done ? 'is-done' : 'is-plan'}" cx="${x(i).toFixed(1)}" cy="${base + 32}" r="5.5" data-jump="${a.date}"><title>${esc(a.as)} · ${say(a.date)}</title></circle>`;
         });
-        return `<div class="rfx-card" data-fold="chart" style="--d:.08s"><div class="rfx-card-h">The season <small>coverage of ${esc(R.check.word)}, day by day</small></div>${lnRowHtml(R)}<div class="rfx-chart"><div class="rfx-chart-w">
+        return `<div class="rfx-card" data-fold="chart" style="--d:.08s"><div class="rfx-card-h">The season <small>coverage of ${esc(R.check.word)}, day by day</small></div>${lnRowHtml(R)}<div class="rfx-chart"><div class="rfx-chart-w"><div class="rfx-chart-in">
+            <div class="rfx-sbar" role="group" aria-label="Growth stages: tap one to see its dates">${marks}</div>
             <svg viewBox="0 -4 ${W} ${H + 26}" aria-label="Coverage over the season">
               <defs><linearGradient id="rfxPhG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${W}" y2="0">${stops}</linearGradient>
                 <linearGradient id="rfxCovV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
                 <mask id="rfxCovM" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${base + 1}"><rect x="0" y="0" width="${W}" height="${base + 1}" fill="url(#rfxCovV)"/></mask></defs>
-              ${bands}${labels}
+              ${bands}
               <line class="dose" x1="0" x2="${W}" y1="${full.toFixed(1)}" y2="${full.toFixed(1)}"/><text class="mo" x="2" y="${(full - 4).toFixed(1)}">one full dose</text>
               <g class="reveal"><path class="ln${offMain}" data-ln="${mk}" d="${area}" fill="url(#rfxPhG)" mask="url(#rfxCovM)"/>${others}<path class="cov-l ln${offMain}" data-ln="${mk}" d="${line}" ${cmp ? `style="stroke:${colorOf(R.check.key)};stroke-width:2.6"` : ''}/>${tryLine ? `<path class="try-l ln${offMain}" data-ln="${mk}" d="${tryLine}"/>` : ''}</g>
               <line class="base" x1="0" x2="${W}" y1="${base}" y2="${base}"/>
               <g class="ln${offMain}" data-ln="${mk}">${ribbon}</g>${months}${today}${harv}${dots}
-            </svg></div></div>
+            </svg></div></div></div>
             ${phaseLegend(R)}
             <div class="rfx-legend"><span><i class="rfx-leg-band is-crit"></i>Critical stage</span><span><i class="rfx-leg-band is-mid"></i>Matters</span>${R.days.some((d) => d.t) ? '<span><i style="background:#f5c518"></i>Added by you</span>' : ''}<span><i class="rfx-leg-dot is-done"></i>Done</span><span><i class="rfx-leg-dot is-plan"></i>Planned</span></div></div>`;
     };
@@ -1752,6 +1947,8 @@
         }
         const lt = e.target.closest('[data-ln-t]');
         if (lt) { toggleLine(lt.dataset.lnT); return; }
+        const sb = e.target.closest('[data-stage]');
+        if (sb) { openStage(Number(sb.dataset.stage)); return; }
         const cp = e.target.closest('[data-copy-ans]');
         if (cp) {
             cp.disabled = true;

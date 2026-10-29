@@ -69,7 +69,7 @@ class RangeEffect
      * The way of counting, by date: a saved reading counted an older way is counted again when it is opened (the
      * owner, 2026-10-30: "i opened the saved file and the P is still at 78%"). Raise it whenever the numbers change.
      */
-    public const VERSION = '2026-10-30.6';
+    public const VERSION = '2026-10-30.7';
 
     /**
      * What an application is doing on a day (2026-10-30, the owner: "the absorption stage, the ammonization in soil
@@ -154,10 +154,14 @@ class RangeEffect
         $maturity = $tree ? null : $lot->maturityDays();
         // The day the field's own count starts: the transplant for a transplanted lot, else day zero.
         $anchor = $tree ? null : (($mode === 'DAT' && $tr) ? $tr->copy() : ($zero ? $zero->copy() : null));
+        // Anee's realign moves the harvest as it moves the stages (2026-10-30): a crop she found 12 days behind is cut
+        // 12 days later, as Harvest dates reads it, so its last stages are no longer cut off at the calendar's day.
+        $shift = $tree ? 0 : (int) ($lot->growthShiftDays ?? 0);
 
         return [
             'lot' => $lot, 'crop' => $crop, 'cropLabel' => CropStages::label($crop) ?: ((string) ($lot->crop ?: 'Crop not set')), 'mode' => $mode, 'tree' => $tree,
-            'zero' => $zero, 'tr' => $tr, 'anchor' => $anchor, 'maturity' => $maturity, 'harvest' => $anchor && $maturity ? $anchor->copy()->addDays($maturity) : null,
+            'zero' => $zero, 'tr' => $tr, 'anchor' => $anchor, 'maturity' => $maturity, 'harvest' => $anchor && $maturity ? $anchor->copy()->addDays($maturity - $shift) : null,
+            'calHarvest' => $anchor && $maturity ? $anchor->copy()->addDays($maturity) : null,
             'counter' => $tree ? 'AGE' : ($mode === 'DAT' ? 'DAT' : ($mode === 'DAP' ? 'DAP' : 'DAS')),
             'table' => self::tableOf($crop, $mode), 'water' => $crop && str_starts_with($crop, 'rice') && $crop !== 'rice_dsr_dry' ? 'flooded' : 'upland',
             'ha' => NpkPlan::hectares($lot->lotSize, $lot->lotSizeUnit),
@@ -336,8 +340,12 @@ class RangeEffect
                 $label = 'After harvest';
             }
             if ($label !== $last) {
+                $real = $label !== null && ! $afterHarvest;
+                // What the crop does and needs then, and its place in the crop's table, for the stage's own sheet.
                 $stages[] = ['label' => $label ?? ($c['anchor'] ? 'Before planting' : 'No planting day yet'), 'from' => $d->toDateString(), 'to' => $d->toDateString(),
-                    'crit' => $lvl, 'why' => $why, 'stage' => $label !== null && ! $afterHarvest];
+                    'crit' => $lvl, 'why' => $why, 'stage' => $real,
+                    'what' => $real ? (string) ($stage['what'] ?? '') : '', 'needs' => $real ? (string) ($stage['needs'] ?? '') : '',
+                    'index' => $real ? ($stage['index'] ?? null) : null, 'count' => $real ? ($stage['count'] ?? null) : null];
                 $last = $label;
             } else {
                 $stages[count($stages) - 1]['to'] = $d->toDateString();
@@ -349,6 +357,7 @@ class RangeEffect
             $days[] = ['d' => $d->toDateString(), 'c' => $lvl, 'v' => round($cov, 2), 's' => $state, 'g' => count($stages) - 1, 'dl' => $dayLabel,
                 'a' => $by, 't' => $tryCov > 0.01 ? round($tryCov, 2) : 0, 'p' => $phase ?: ($inSoil ? 'soil' : ''), 'sl' => $inSoil ? 1 : 0];
         }
+        $realign = self::realignOf($c, $stages);
         $relevant = array_filter($apps, fn ($a) => $a['curve'] !== null);
         $series = [];
         foreach ($alsoChecks as $k => $ck) {
@@ -367,7 +376,7 @@ class RangeEffect
         return [
             'lot' => ['id' => (int) $lot->id, 'name' => (string) ($lot->lotName ?: 'Lot ' . $lot->id), 'crop' => $c['cropLabel'], 'icon' => CropStages::icon($c['crop']),
                 'counter' => $c['counter'], 'ha' => $c['ha'], 'anchor' => $c['anchor']?->toDateString(), 'harvest' => $c['harvest']?->toDateString(), 'water' => $c['water'],
-                'hasDay' => $c['anchor'] !== null || $c['tree']],
+                'hasDay' => $c['anchor'] !== null || $c['tree'], 'realign' => $realign, 'delay' => $c['tree'] ? 0 : max(0, (int) ($lot->delayDays ?? 0))],
             'check' => array_diff_key($check, ['ai' => 1]),
             'from' => $from->toDateString(), 'to' => $to->toDateString(), 'today' => $today->toDateString(),
             'days' => $days, 'stages' => $stages,
@@ -379,6 +388,42 @@ class RangeEffect
             'logic' => ['opts' => $opts, 'soil' => $soil['facts'], 'amt' => $deep['amt'], 'notes' => $deep['notes'], 'others' => $deep['others']],
             'version' => self::VERSION,
         ];
+    }
+
+    /**
+     * Anee's realign of this lot, when one was saved: the days it found the crop ahead of (+) or behind (-) the
+     * calendar, when, how sure, and what it saw. The stages above already follow it (stageDay); each real stage
+     * also gets the dates the calendar alone would give it ('cal'), so the stage's sheet can show both.
+     * Null for a lot never realigned, and for trees (they count months, not days).
+     */
+    private static function realignOf(array $c, array &$stages): ?array
+    {
+        $lot = $c['lot'];
+        if ($c['tree'] || ! $lot->growthRealignedAt || ! is_array($lot->growthRealign)) {
+            return null;
+        }
+        $r = $lot->growthRealign;
+        $shift = (int) ($lot->growthShiftDays ?? 0);
+        if ($shift !== 0 && $c['anchor'] && $c['crop']) {
+            $table = CropStages::stagesFor($c['crop'], $c['counter'], $c['maturity']);
+            foreach ($stages as &$g) {
+                $i = $g['index'];
+                if (! $g['stage'] || $i === null || ! isset($table[$i])) {
+                    continue;
+                }
+                $from = $c['anchor']->copy()->addDays((int) $table[$i][0]);
+                $to = isset($table[$i + 1]) ? $c['anchor']->copy()->addDays((int) $table[$i + 1][0] - 1) : $c['calHarvest'];
+                if ($to && $c['calHarvest'] && $to->gt($c['calHarvest'])) {
+                    $to = $c['calHarvest']->copy();
+                }
+                $g['cal'] = ['from' => $from->toDateString(), 'to' => $to ? $to->toDateString() : null];
+            }
+            unset($g);
+        }
+
+        return ['shift' => $shift, 'at' => $lot->growthRealignedAt->copy()->timezone('Asia/Manila')->toDateString(),
+            'confidence' => isset($r['confidence']) ? (int) $r['confidence'] : null, 'summary' => (string) ($r['summary'] ?? ''),
+            'stage' => $r['stageLabel'] ?? null, 'calendarStage' => $r['calendarStageLabel'] ?? null];
     }
 
     /**
