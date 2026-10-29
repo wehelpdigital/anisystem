@@ -55,6 +55,20 @@
         <div class="hp-hero-glow" aria-hidden="true"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 hp-hero-in">
+            {{-- Anee in the app, on a phone to the left of the words (2026-10-29, the owner: "add the phone again to the left
+                 before the main hero text then adjust everything accordingly"): the real chat film, a farmer's photo of
+                 worms in the leaves and Anee's answer, playing only while the hero is seen. On wide screens only, where
+                 the hero becomes three columns; narrower, the words and the circle keep the room. --}}
+            <figure class="hp-hero-phone animate-fade-up" aria-hidden="true" data-hero-phone>
+                <div class="hp-phone is-sm">
+                    <div class="hp-phone-scr">
+                        <video class="hp-film" muted loop playsinline preload="none" poster="{{ asset('videos/how/hero-chat.webp') }}" width="780" height="1688">
+                            <source src="{{ asset('videos/how/hero-chat.mp4') }}" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+                <figcaption><img src="{{ $face }}" alt="" width="40" height="40">Anee in the app</figcaption>
+            </figure>
             <div class="hp-hero-copy">
                 <span class="hp-chip animate-fade-up">
                     <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 2a1 1 0 011 1v1.07A6 6 0 0116 10c0 4-3 6-6 8-3-2-6-4-6-8a6 6 0 015-5.93V3a1 1 0 011-1z"/></svg>
@@ -2005,6 +2019,23 @@
         animation: aneeBreath 8s ease-in-out infinite; pointer-events: none; }
     .hp-hero-in { display: grid; gap: 3rem; align-items: center; padding-top: 4rem; padding-bottom: 5.5rem; }
     @media (min-width: 1024px) { .hp-hero-in { grid-template-columns: 1.08fr .92fr; gap: 3.5rem; padding-top: 5.5rem; padding-bottom: 6.5rem; } }
+    /* The phone with Anee's chat, left of the words: three columns on wide screens, inside the page's own width so the
+       hero lines up with the header (the heading and the lede a little smaller, the circle a little narrower); hidden
+       below, where there is no room. */
+    .hp-hero-phone { display: none; position: relative; margin: 0; }
+    .hp-hero-phone .hp-phone { max-width: none; box-shadow: 0 0 0 2px rgb(245 197 24 / .5), 0 0 40px rgb(245 197 24 / .22), 0 50px 90px -40px rgb(0 0 0 / .9), 0 0 0 1px rgb(255 255 255 / .1) inset;
+        animation: hpBob 6s ease-in-out 1.2s infinite; }
+    .hp-hero-phone::before { content: ''; position: absolute; inset: 8% -18%; z-index: -1; border-radius: 999px; filter: blur(30px);
+        background: radial-gradient(closest-side, rgb(245 197 24 / .28), rgb(168 204 126 / .12) 60%, transparent); }
+    .hp-hero-phone figcaption { display: flex; align-items: center; gap: .4rem; width: max-content; margin: 1.1rem auto 0; padding: .32rem .8rem .32rem .35rem; border-radius: 999px;
+        font-size: .8rem; font-weight: 900; color: #14210c; background: #f5c518; box-shadow: 0 12px 26px -12px rgb(0 0 0 / .7); }
+    .hp-hero-phone figcaption img { width: 1.4rem; height: 1.4rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px #fff; }
+    @media (min-width: 1280px) {
+        .hp-hero .hp-hero-in { grid-template-columns: 12.5rem minmax(0, 1fr) minmax(0, 28rem); gap: 2.5rem; }
+        .hp-hero-phone { display: block; }
+        .hp-hero .hp-h1 { font-size: clamp(3rem, 4.1vw, 3.6rem); }
+        .hp-hero .hp-lede { font-size: 1.05rem; }
+    }
     .hp-chip { display: inline-flex; align-items: center; gap: .5rem; padding: .4rem .95rem; border-radius: 999px;
         font-size: .85rem; font-weight: 700; color: #f4d778; background: rgb(255 255 255 / .1);
         box-shadow: inset 0 0 0 1px rgb(255 255 255 / .2); backdrop-filter: blur(8px); }
@@ -3844,7 +3875,7 @@
 
     @media (prefers-reduced-motion: reduce) {
         html { scroll-behavior: auto; }
-        .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down,
+        .hp-hero-phone .hp-phone, .hp-hero-bg, .hp-hero-glow, .hp-stage-ring, .hp-shimmer, .hp-mark-line, .hp-mark-line path, .hp-go::after, .hp-tour-dot::before, .hp-float, .hp-down,
         .hp-biz-b, .hp-final-face, .hp-live, .hp-read i, .hp-sum-ico, .hp-sum-ico svg, .hp-vs-group.is-visible .hp-vs-new > span { animation: none !important; }
         .hp-st-tab.is-on.is-timing .hp-st-bar i { animation: none; }
         .hp-reel { transition: none; transform: none; }
@@ -4096,6 +4127,15 @@
             stage.style.setProperty('--rx', (-y * 10).toFixed(2) + 'deg');
         });
         stage.addEventListener('pointerleave', () => { stage.style.setProperty('--ry', '0deg'); stage.style.setProperty('--rx', '0deg'); });
+    }
+
+    /* The phone with Anee's chat, left of the words: plays only while seen, and only where it shows. */
+    const heroPhone = document.querySelector('[data-hero-phone]');
+    if (heroPhone && !reduce && 'IntersectionObserver' in window) {
+        const pv = heroPhone.querySelector('video');
+        new IntersectionObserver((es) => es.forEach((e) => {
+            if (e.isIntersecting && heroPhone.offsetWidth) pv.play().catch(() => {}); else pv.pause();
+        }), { threshold: .25 }).observe(heroPhone);
     }
 
     /* The tour window. */
