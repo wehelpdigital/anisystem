@@ -49,7 +49,7 @@ class RangeEffectController extends BaseScheduleController
     {
         if (FieldPack::lockedHere()) {
             abort(response()->json(['success' => false, 'packLock' => true,
-                'message' => 'The Range Effect calendar comes with Libre + Anee and every plan above it. Upgrade to see how long every product you apply keeps working.'], 403));
+                'message' => 'The Coverage Planner comes with Libre + Anee and every plan above it. Upgrade to see how long every product you apply keeps working.'], 403));
         }
     }
 
@@ -289,7 +289,7 @@ class RangeEffectController extends BaseScheduleController
         $this->gate();
         $schedule = $this->schedule($request->input('scheduleId'));
         if (! Tier::farmCan('aiAnalyses')) {
-            Tier::farmDenyFor('aiAnalyses', 'Anee looking up a product comes with {plan}, and with every plan above it. The Range Effect calendar itself stays yours.');
+            Tier::farmDenyFor('aiAnalyses', 'Anee looking up a product comes with {plan}, and with every plan above it. The Coverage Planner itself stays yours.');
         }
         $payer = $this->payer();
         $settings = AiSetting::current();
@@ -325,7 +325,7 @@ class RangeEffectController extends BaseScheduleController
         }
         $case = ['name' => $name, 'ai' => $ai, 'scheduleId' => (int) $schedule->id];
         $rid = DB::table('as_plant_analyses')->insertGetId([
-            'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr('Range Effect look up · ' . ($name !== '' ? $name : $ai), 0, 190),
+            'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr('Coverage Planner look up · ' . ($name !== '' ? $name : $ai), 0, 190),
             'params' => json_encode($case, JSON_UNESCAPED_UNICODE), 'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1,
             'created_at' => now(), 'updated_at' => now(),
         ]);
@@ -368,7 +368,7 @@ class RangeEffectController extends BaseScheduleController
             $kept = $this->keep($d, $name, $ai, $payerId, (array) ($result['sources'] ?? []));
             $row = DB::table('as_plant_analyses')->where('id', $id)->first();
             $note = AiUsage::record(self::KIND, (int) $row->userId, $payerId, $id, $settings, $result, (int) $price);
-            app(AiCreditService::class)->chargeAllowingNegative($payerId, $price, mb_substr('Range Effect, product look up: ' . ($name !== '' ? $name : $ai) . $note, 0, 250));
+            app(AiCreditService::class)->chargeAllowingNegative($payerId, $price, mb_substr('Coverage Planner, product look up: ' . ($name !== '' ? $name : $ai) . $note, 0, 250));
             AiPricing::audit(self::KIND, $result, $price, [], $settings);
             $report = ['found' => $d['found'], 'summary' => $d['summary'], 'product' => $kept['product'], 'ingredients' => $kept['ingredients'], 'learned' => $kept['learned'],
                 'at' => now('Asia/Manila')->format('M j, Y g:i A')];

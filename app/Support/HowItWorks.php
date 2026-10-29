@@ -454,7 +454,7 @@ class HowItWorks
                         ['Mix or not, pair by pair', 'The mixing order and a jar test', 'How strong the spray is for your crop'],
                         null, 'fh.page:compat'),
                     // The Range Effect calendar (2026-10-29): how long everything on the plan keeps working.
-                    self::item('rangeEffect', 'Range Effect calendar', 'How long every fertilizer and spray keeps working', 'icons/range-effect.svg', false,
+                    self::item('rangeEffect', 'Coverage Planner', 'How long every fertilizer and spray keeps working', 'icons/range-effect.svg', false,
                         'Open it from the Activities board. Pick a lot and what to check: nitrogen, phosphorus, potassium, a micronutrient, insects, diseases, weeds, or one named pest. The calendar shows, day by day, how long each product on your tasks keeps working, how critical that day is for your crop\'s stage, and where the gaps are. Try a product on a date before you buy it, and save the reading.',
                         ['Coverage day by day, as a calendar', 'Gaps on the days that matter most', 'Try a product on a date before you buy'],
                         'residual-effect-calendar', null),

@@ -62,8 +62,11 @@ class RangeEffect
 
     public const MAX_DAYS = 240;
 
-    /** How many checks can be read side by side. */
-    public const MAX_CHECKS = 6;
+    /**
+     * How many checks can be read side by side: no limit the farmer meets (2026-10-30, the owner: "compare should have no
+     * limits"), only a guard against a runaway request; every nutrient, kind of threat and pest of a crop fits under it.
+     */
+    public const MAX_CHECKS = 120;
 
     /**
      * The way of counting, by date: a saved reading counted an older way is counted again when it is opened (the

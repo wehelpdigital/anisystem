@@ -50,7 +50,8 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 3v3M16 3v3"/><path d="M6.5 15.5c1.6-3.2 3.4-3.2 5 0s3.4 3.2 5 0" stroke-width="2.2"/></svg>
             </span>
             <div class="rfx-head-t">
-                <h2 id="rfxTitle">Range Effect</h2>
+                {{-- Called the Coverage Planner since 2026-10-30 (the owner: "change the modal title to Coverage Planner"). --}}
+                <h2 id="rfxTitle">Coverage Planner</h2>
                 <p>How long everything you put on keeps working, against what your crop needs each day.</p>
             </div>
             <button type="button" class="rfx-hbtn" data-rfx-saved-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 4h14v17l-7-4-7 4V4z"/></svg><span>Saved</span><b data-rfx-saved-n hidden></b></button>
@@ -261,6 +262,11 @@
     html.rfx-lock #confirm-sheet { z-index: 450; }
     html.rfx-lock:has(#confirm-sheet.is-open) .sheet-backdrop { z-index: 445; }
     html.rfx-lock #aneeUpgradeBox { z-index: 455; }
+    /* And any other sheet of the app opened while the planner is up (2026-10-30, the owner: "make sure all modal boxes,
+       things coming from the range effect when it is open will come infront"): the sheet and the backdrop under it.
+       The dialogs of the field questions sit in the browser's top layer already; the toasts and Anee's wait are higher. */
+    html.rfx-lock .sheet.is-open { z-index: 450; }
+    html.rfx-lock:has(.sheet.is-open) .sheet-backdrop.is-open { z-index: 445; }
     .rfx-head { display: flex; align-items: center; gap: .8rem; padding: .85rem 1rem; background: linear-gradient(135deg, #1f3a12, #2f5219 60%, #3b6620); color: #fff; }
     .rfx-logo { display: grid; place-items: center; flex: none; width: 2.6rem; height: 2.6rem; border-radius: .9rem; color: #14210c; background: #f5c518; box-shadow: 0 0 0 4px rgb(245 197 24 / .25); }
     .rfx-logo svg { width: 1.45rem; height: 1.45rem; }
@@ -278,7 +284,7 @@
     @media (max-width: 639.98px) { .rfx-head p { display: none; } .rfx-hbtn span { display: none; } .rfx-hbtn { padding: .55rem; } }
     .rfx-scroll { flex: 1; overflow: auto; overscroll-behavior: contain; }
     .rfx-controls { position: relative; z-index: 3; display: grid; gap: .6rem; padding: .9rem 1rem; background: var(--rx-card); border-bottom: 1px solid var(--rx-line); }
-    .rfx-row { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: .6rem; align-items: center; }
+    .rfx-row { display: grid; grid-template-columns: 6.6rem minmax(0, 1fr); gap: .75rem; align-items: center; }
     .rfx-row.is-sub { align-items: start; }
     .rfx-row.is-sub .rfx-label { padding-top: .5rem; }
     .rfx-label { font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--rx-faint); }
@@ -977,7 +983,7 @@
             if (lot) {
                 const fits = (k) => typeof k === 'string' && k !== '' && (!k.startsWith('p:') || (lot.threats || []).some((t) => 'p:' + t.slug === k));
                 S.lot = lot.id;
-                S.checks = (Array.isArray(st.checks) ? st.checks : []).filter(fits).slice(0, SERIES.length);
+                S.checks = (Array.isArray(st.checks) ? st.checks : []).filter(fits);
                 if (!S.checks.length) S.checks = [fits(st.check) ? st.check : 'n:N'];
                 S.check = S.checks.includes(st.check) ? st.check : S.checks[0];
                 S.tab = ['nut', 'micro', 'prot', 'pest'].includes(st.tab) ? st.tab : tabOf(S.check);
@@ -1041,7 +1047,17 @@
     const SERIES = ['#3b7a1f', '#2563eb', '#c2650a', '#9333ea', '#db2777', '#0e7490'];
     const SERIES_DARK = ['#8fd163', '#60a5fa', '#fbbf24', '#c084fc', '#f472b6', '#22d3ee'];
     const isDark = () => document.documentElement.classList.contains('dark');
-    const colorOf = (key) => (isDark() ? SERIES_DARK : SERIES)[Math.max(0, S.checks.indexOf(key))] || '#6b7280';
+    // No limit on how many are compared (the owner, 2026-10-30: "compare should have no limits. we want a deep planning"):
+    // past the fourteen named colours each one takes a hue of its own, a golden angle from the last.
+    const SERIES_MORE = ['#b91c1c', '#a16207', '#4d7c0f', '#4338ca', '#be185d', '#0369a1', '#7c2d12', '#6d28d9'];
+    const SERIES_MORE_DARK = ['#f87171', '#facc15', '#a3e635', '#a5b4fc', '#fb7185', '#7dd3fc', '#fdba74', '#ddd6fe'];
+    const seriesColor = (i) => {
+        const pal = isDark() ? SERIES_DARK.concat(SERIES_MORE_DARK) : SERIES.concat(SERIES_MORE);
+        if (i < pal.length) return pal[i];
+        const h = Math.round((i * 137.508 + 18) % 360);
+        return isDark() ? `hsl(${h} 72% 70%)` : `hsl(${h} 64% 36%)`;
+    };
+    const colorOf = (key) => seriesColor(Math.max(0, S.checks.indexOf(key)));
     // A colour token of the sheet, for the SVG drawings CSS cannot reach.
     const tok = (name) => getComputedStyle(M).getPropertyValue(name).trim();
     const on = (key) => S.checks.includes(key) ? 'is-on' : '';
@@ -1075,7 +1091,6 @@
             S.hide = S.hide.filter((k) => k !== key);
             if (S.check === key) S.check = S.checks[S.checks.length - 1];
         } else {
-            if (S.checks.length >= SERIES.length) { window.toast?.(`Up to ${SERIES.length} at a time. Take one out first.`, 'error'); return; }
             S.checks = [...S.checks, key];
             if (!keepMain) S.check = key;
         }
@@ -1365,7 +1380,7 @@
         const parts = [];
         // A saved reading shows its numbers as they were when it was saved (the owner, 2026-10-30: "i don't get the
         // idea of the read it with today's plan button"): the button counts it again with the tasks on the board now.
-        if (S.recounted) parts.push(`<div class="rfx-banner is-saved"><span>📌 <b>${esc(S.recounted.title)}</b>, saved ${esc(S.recounted.at)}, was counted again just now: the way Range Effect counts has improved since, and your tasks may have changed. Your lot, checks and fertilizers are as you saved them. Tap <b>Update saved reading</b> to keep these numbers.</span></div>`);
+        if (S.recounted) parts.push(`<div class="rfx-banner is-saved"><span>📌 <b>${esc(S.recounted.title)}</b>, saved ${esc(S.recounted.at)}, was counted again just now: the way the Coverage Planner counts has improved since, and your tasks may have changed. Your lot, checks and fertilizers are as you saved them. Tap <b>Update saved reading</b> to keep these numbers.</span></div>`);
         if (S.saved) parts.push(`<div class="rfx-banner is-saved"><span>📌 <b>${esc(S.saved.title)}</b>, saved ${esc(S.saved.at)}. These are its numbers from that day: tasks you added or changed since, and app updates, are not in them.</span><button type="button" class="rfx-btn is-ghost" data-rfx-rerun>Recount with my tasks now</button></div>`);
         if (!R.lot.hasDay) parts.push(`<div class="rfx-banner">📅 This lot has no planting day yet, so the stages and what matters when cannot be shown. Set its day zero in Lots, then open this again.</div>`);
         // A guide only (the owner, 2026-10-30): said every time, above the numbers.
@@ -1627,7 +1642,6 @@
     };
     const toggleLine = (key) => {
         if (!S.checks.includes(key)) {
-            if (S.checks.length >= SERIES.length) { window.toast?.(`Up to ${SERIES.length} on the chart. Take one out first.`, 'error'); return; }
             const b = $(`[data-ln-t="${key}"]`);
             if (b) b.classList.add('is-busy');
             togglePick(key, true);

@@ -4333,7 +4333,7 @@
     </button>
     {{-- Range Effect on a phone (2026-10-29, the owner: "just an icon in mobile, and put it after harvest button"). --}}
     <button type="button" id="rangeEffectMobileBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
-            title="Range Effect: how long every product keeps working" aria-label="Range Effect">
+            title="Coverage Planner: how long every product keeps working" aria-label="Coverage Planner">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 3v3M16 3v3"/><path d="M6.5 15.5c1.6-3.2 3.4-3.2 5 0s3.4 3.2 5 0"/></svg>
     </button>
     <button type="button" id="todayTomorrowBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
