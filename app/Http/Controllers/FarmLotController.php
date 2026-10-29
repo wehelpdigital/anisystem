@@ -173,6 +173,15 @@ class FarmLotController extends Controller
 
     private function json(bool $ok, string $message, array $data = [], int $status = 200)
     {
+        // A lot's answers go out as a set even when empty: [] made the page drop every answer put on it (2026-10-30).
+        $set = fn ($row) => is_array($row) && array_key_exists('answers', $row) ? ['answers' => (object) $row['answers']] + $row : $row;
+        if (isset($data['row'])) {
+            $data['row'] = $set($data['row']);
+        }
+        if (isset($data['rows']) && is_array($data['rows'])) {
+            $data['rows'] = array_map($set, $data['rows']);
+        }
+
         return response()->json(['success' => $ok, 'message' => $message, 'data' => $data], $status);
     }
 }

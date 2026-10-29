@@ -320,7 +320,7 @@
     /* ---- one card ---- */
     function mount(el, o) {
         o = o || {};
-        const st = { value: clone(o.value), from: o.from || null, open: false, more: false, filled: '' };
+        const st = { value: Array.isArray(o.value) ? {} : clone(o.value), from: o.from || null, open: false, more: false, filled: '' };
         const crop = () => (typeof o.crop === 'function' ? o.crop() : o.crop) || null;
         const title = () => (typeof o.title === 'function' ? o.title() : o.title) || 'Your field';
         el.innerHTML = '<div class="fpc">'

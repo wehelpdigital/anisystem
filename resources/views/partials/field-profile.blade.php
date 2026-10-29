@@ -547,7 +547,9 @@
        either made the question refuse every tap. Every way in goes through
        this, so an old answer opens as a ticked box and the rest stay tappable. */
     function shape(v) {
-        const out = clone(v);
+        // A lot with no answers yet comes from the server as [] (an empty PHP array): answers put on a list are
+        // dropped when it is sent, so the save kept nothing (2026-10-30, the owner: "i saved answers but it was not saved").
+        const out = Array.isArray(v) ? {} : clone(v);
         Object.keys(out).forEach((k) => {
             const q = Q[k];
             if (!q) return;

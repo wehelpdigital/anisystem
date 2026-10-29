@@ -362,7 +362,9 @@
     const D = @json($flData);
     const $ = (id) => document.getElementById(id);
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-    const clone = (o) => JSON.parse(JSON.stringify(o || {}));
+    // Lots and answer sets only: a lot with no answers yet comes as [] and is an empty set here (2026-10-30).
+    const clone = (o) => JSON.parse(JSON.stringify(Array.isArray(o) ? {} : (o || {})));
+    const fixRow = (l) => { if (l && Array.isArray(l.answers)) l.answers = {}; return l; };
     const reduce = () => document.documentElement.classList.contains('sm-still') || matchMedia('(prefers-reduced-motion: reduce)').matches;
     const apiReady = () => (window.api ? Promise.resolve() : new Promise((r) => window.addEventListener('load', r, { once: true })));
     const call = (url, opts) => apiReady().then(() => window.api(url, opts));
@@ -382,7 +384,7 @@
     let ROWS = null, META = { ready: true, stale: 0 };
     function rows(fresh) {
         if (!ROWS || fresh) {
-            ROWS = call(D.urls.list).then((r) => { META = { ready: !!(r.data && r.data.ready), stale: (r.data && r.data.stale) || 0 }; return (r.data && r.data.rows) || []; })
+            ROWS = call(D.urls.list).then((r) => { META = { ready: !!(r.data && r.data.ready), stale: (r.data && r.data.stale) || 0 }; return ((r.data && r.data.rows) || []).map(fixRow); })
                 .catch(() => { ROWS = null; return []; });
         }
         return ROWS;
@@ -595,7 +597,7 @@
                 const body = { name: st.name, province: st.province, town: st.town, barangay: st.barangay || null, areaHa: Number(st.area) > 0 ? Number(st.area) * UNITS[st.areaUnit][2] : null, areaUnit: st.areaUnit,
                     crop: null, answers: st.answers };
                 const r = await call(st.id ? D.urls.update + '/' + st.id : D.urls.save, { method: 'POST', body });
-                result = r.data.row;
+                result = fixRow(r.data.row);
                 window.toast?.(r.message, 'success');
                 changed(result);
                 sheetClose(dlg);
@@ -612,7 +614,7 @@
     async function confirm(lot) {
         const r = await call(D.urls.update + '/' + lot.id + '/checked', { method: 'POST' });
         window.toast?.(r.message, 'success');
-        changed(r.data.row);
+        changed(fixRow(r.data.row));
         return r.data.row;
     }
 
@@ -689,9 +691,9 @@
     /* ---- saving: the answers only, through the lot's own save (FarmLots::save) ----
        The place and the size stay as they are. The six month check starts again, as any save does. */
     async function saveAnswers(lot, answers) {
-        const r = await call(D.urls.update + '/' + lot.id, { method: 'POST', body: { answers } });
+        const r = await call(D.urls.update + '/' + lot.id, { method: 'POST', body: { answers: Array.isArray(answers) ? {} : answers } });
         ROWS = null;
-        return r.data.row;
+        return fixRow(r.data.row);
     }
     const sameAnswers = (a, b) => { const FP = window.aneeFieldProfile, sh = FP && FP.shape ? FP.shape : clone; return JSON.stringify(sh(a || {})) === JSON.stringify(sh(b || {})); };
 
