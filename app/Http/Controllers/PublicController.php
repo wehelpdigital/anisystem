@@ -73,6 +73,18 @@ class PublicController extends Controller
         return view('public.anee-vs-now');
     }
 
+    /** Anee Auto (2026-10-29): the season Anee plans and re-plans every morning, step by step. */
+    public function auto()
+    {
+        return view('public.anee-auto');
+    }
+
+    /** Easy to use (2026-10-29): why anee.io is easy, and made by Filipino farmers for Filipino farmers. */
+    public function easy()
+    {
+        return view('public.easy-to-use');
+    }
+
     public function pricing()
     {
         // The same table the in-app gates read — the page can never promise

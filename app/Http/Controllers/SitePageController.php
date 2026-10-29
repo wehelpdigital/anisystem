@@ -188,7 +188,7 @@ class SitePageController extends Controller
 
     public function sitemap()
     {
-        $static = ['/', '/how-it-works', '/how-it-works/why-anee', '/how-it-works/anee-vs-now', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/how-to-plant', '/problems', '/pests', '/diseases', '/weeds', '/nutrient-deficiencies', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
+        $static = ['/', '/how-it-works', '/how-it-works/why-anee', '/how-it-works/anee-vs-now', '/how-it-works/anee-auto', '/how-it-works/easy-to-use', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/how-to-plant', '/problems', '/pests', '/diseases', '/weeds', '/nutrient-deficiencies', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
         // Each crop's variety finder (2026-10-13).
         foreach (\App\Support\CropVarieties::crops() as $c) {
             if ($c['hasHub']) {
@@ -250,6 +250,8 @@ class SitePageController extends Controller
         $out[] = '';
         $out[] = '- [Why Anee answers better than a general AI chat app](' . url('/how-it-works/why-anee') . '): before she answers, Anee reads the farm\'s own lots, crop, variety and planting date, its field profile and the usual soil of its barangay, the forecast for its spot, the ENSO outlook, twenty years of local rain and heat, every typhoon, flood and drought in its town since 2005, the records of over 1,600 varieties and over 7,000 fertilizers and pesticides registered in the Philippines. A general chat app only has what it learned online and what the farmer types.';
         $out[] = '- [Anee vs Now](' . url('/how-it-works/anee-vs-now') . '): nine jobs of a farming season done the usual way and with Anee side by side, what guessing can cost a hectare beside a year of a plan, what credits buy, and a day with Anee Auto.';
+        $out[] = '- [Anee Auto](' . url('/how-it-works/anee-auto') . '): the farmer answers a few questions about the farm once; Anee reads the weather record, ENSO, soil, variety, pests and prices, writes the whole season, re-plans it at 5:00 every morning and sends each worker the day\'s tasks.';
+        $out[] = '- [Easy to use](' . url('/how-it-works/easy-to-use') . '): why anee.io is easy for any farmer: a video tutorial on every screen, Taglish help tags on technical words, questions in Tagalog, Bisaya, Ilocano or English, works offline; made by Filipino farmers for Filipino farmers.';
         $out[] = '';
         $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'how-to-plant' => 'How to plant, the traditional way, crop by crop', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'nutrient-deficiencies' => 'Nutrient deficiencies by crop', 'rice-varieties' => 'Rice varieties', 'crop-varieties' => 'Crop varieties', 'features' => 'Feature pages'];
         try {

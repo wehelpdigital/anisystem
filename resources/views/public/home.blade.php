@@ -632,6 +632,11 @@
         </div>
     </section>
 
+    {{-- ================= EASY TO USE, MADE BY FILIPINO FARMERS (2026-10-29) ================= --}}
+    @if ($ph)
+    @include('public.partials.easy-section', ['signup' => $signup])
+    @endif
+
     {{-- ================= MEET ANEE ================= --}}
     {{-- Anee, said the owner's way (2026-10-06): a smart farm technician, not
          "an AI": she reads the whole farm before she answers, so the answer
