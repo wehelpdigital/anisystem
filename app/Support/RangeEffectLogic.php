@@ -294,7 +294,7 @@ final class RangeEffectLogic
         $near = $soil['near'] ?? null;
         $name = $farm ? $farm['name'] : 'This lot';
         // A lot with no answers says which lot in Global Lots to answer (2026-10-30, the owner read the area's pH 6.2 on a
-        // lot he thought answered: it was a lot new to Global Lots), and offers an answered lot nearby.
+        // lot believed answered: it was a lot new to Global Lots), and offers an answered lot nearby.
         $text = match ($from) {
             'answers' => 'From your answers about ' . $name . ' in Global Lots.',
             'both' => 'From your answers about ' . $name . ' in Global Lots, with the area\'s typical soil where a question is still open.',
