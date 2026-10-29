@@ -186,7 +186,15 @@
     });
     $('glAdd').addEventListener('click', () => L().edit(null, {}));
     $('glQ').addEventListener('input', paint);
-    window.addEventListener('aneelots:changed', () => load(true));
+    // The lot just saved lights up where it stands, and a new one is brought into view: the cards keep their order.
+    window.addEventListener('aneelots:changed', async (e) => {
+        const id = Number((e.detail && e.detail.lot && e.detail.lot.id) || 0);
+        NEW_ID = id;
+        await load(true);
+        const el = id && $('glGrid').querySelector('[data-id="' + id + '"]');
+        if (el) { const r = el.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) el.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+        setTimeout(() => { if (NEW_ID === id) NEW_ID = 0; }, 2500);
+    });
 
     const start = async () => {
         await load();

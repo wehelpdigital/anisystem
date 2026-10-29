@@ -19,7 +19,7 @@
        });
        p.value()  p.set(id)  p.refresh()
        aneeLots.edit(lot | null, { crop }) -> Promise<lot | null>   the lot sheet (new when null)
-       aneeLots.rows(fresh) -> Promise<lots>
+       aneeLots.rows(fresh) -> Promise<lots>   in name order ("Masin 2" before "Masin 10"), never by the last save
        aneeLots.answered(lot) -> the question keys the lot has answered
        aneeLots.has(lot, key) -> whether one question is answered
        aneeLots.legacy(lot, crop) -> Promise of FieldProfile::legacy() for the lot's answers
@@ -380,11 +380,15 @@
     const inUnit = (ha, u) => { const f = (UNITS[u] || UNITS.ha)[2]; const v = Number(ha) / f; return v >= 100 ? Math.round(v) : Math.round(v * 100) / 100; };
     const fmtSize = (lot) => { const u = UNITS[lot && lot.areaUnit] ? lot.areaUnit : 'ha'; return lot && Number(lot.areaHa) > 0 ? (u === 'ha' ? fmtHa(lot.areaHa) : inUnit(lot.areaHa, u).toLocaleString() + ' ' + UNITS[u][1]) : ''; };
 
-    /* ---- the farm's lots, once a page (fresh after a save) ---- */
+    /* ---- the farm's lots, once a page (fresh after a save) ----
+       In name order, numbers read as numbers. Never the newest save first (2026-10-30): a saved lot
+       jumped to the top, the next tap at the same place opened the lot that took its place, and
+       answers meant for Masin 4 went to Tagum. */
     let ROWS = null, META = { ready: true, stale: 0 };
+    const byName = (a, b) => String(a.name || '').localeCompare(String(b.name || ''), undefined, { numeric: true, sensitivity: 'base' }) || a.id - b.id;
     function rows(fresh) {
         if (!ROWS || fresh) {
-            ROWS = call(D.urls.list).then((r) => { META = { ready: !!(r.data && r.data.ready), stale: (r.data && r.data.stale) || 0 }; return ((r.data && r.data.rows) || []).map(fixRow); })
+            ROWS = call(D.urls.list).then((r) => { META = { ready: !!(r.data && r.data.ready), stale: (r.data && r.data.stale) || 0 }; return ((r.data && r.data.rows) || []).map(fixRow).sort(byName); })
                 .catch(() => { ROWS = null; return []; });
         }
         return ROWS;
