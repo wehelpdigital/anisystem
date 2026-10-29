@@ -1383,6 +1383,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sm-range-effect/saved/{id}', [App\Http\Controllers\Manager\RangeEffectController::class, 'delete'])->whereNumber('id')->name('sm.effect.delete');
     Route::post('/app/sm-range-effect/saved/{id}/name', [App\Http\Controllers\Manager\RangeEffectController::class, 'rename'])->whereNumber('id')->middleware('throttle:30,1')->name('sm.effect.rename');
     Route::post('/app/sm-range-effect/copy-answers', [App\Http\Controllers\Manager\RangeEffectController::class, 'copyAnswers'])->middleware('throttle:20,1')->name('sm.effect.copyAnswers');
+    Route::post('/app/sm-range-effect/apply-check', [App\Http\Controllers\Manager\RangeEffectController::class, 'applyCheck'])->middleware('throttle:40,1')->name('sm.effect.applyCheck');
+    Route::post('/app/sm-range-effect/apply', [App\Http\Controllers\Manager\RangeEffectController::class, 'apply'])->middleware('throttle:20,1')->name('sm.effect.apply');
     Route::post('/app/sm-range-effect/lookup', [App\Http\Controllers\Manager\RangeEffectController::class, 'lookup'])->middleware('throttle:10,1')->name('sm.effect.lookup');
     Route::get('/app/sm-range-effect/lookup/{id}', [App\Http\Controllers\Manager\RangeEffectController::class, 'job'])->whereNumber('id')->name('sm.effect.job');
     // Media Box: every picture and video this schedule has, in one place.

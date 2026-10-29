@@ -30,6 +30,8 @@
         'lookup' => route('sm.effect.lookup') . '?scheduleId=' . $schedule->id,
         'job' => url('/app/sm-range-effect/lookup') . '/',
         'copyAnswers' => route('sm.effect.copyAnswers') . '?scheduleId=' . $schedule->id,
+        'applyCheck' => route('sm.effect.applyCheck') . '?scheduleId=' . $schedule->id,
+        'apply' => route('sm.effect.apply') . '?scheduleId=' . $schedule->id,
     ];
     // Granular and foliar, as the try box and the edit dialog both draw them.
     $rfxHowG = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 25c4-2 8-2 13 0s9 2 13 0v4H3z" fill="#a8723f"/><circle cx="9" cy="13" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="17" cy="9" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="23" cy="16" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="14" cy="19" r="2.4" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/></svg>';
@@ -101,6 +103,8 @@
                         {{-- Its own button, first, so a long list never pushes it away. It opens the picker. --}}
                         <div class="rfx-tries-b">
                             <button type="button" class="rfx-add" data-rfx-try-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>A product you plan to apply</button>
+                            {{-- Onto the plan (the owner, 2026-10-30): each one on its day, into the lot's tasks, never twice. --}}
+                            <button type="button" class="rfx-add is-plan" data-rfx-apply hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.5 10h17M8 3v4M16 3v4M8.5 15l2.3 2.3 4.7-4.6"/></svg>Put them on the plan</button>
                         </div>
                         {{-- Grouped by kind, each kind by date (the owner, 2026-10-30). --}}
                         <div class="rfx-tgs" data-rfx-tries></div>
@@ -186,6 +190,11 @@
                 </div>
                 <div class="rfx-pick-foot"><span data-rfx-pick-n></span><button type="button" class="rfx-btn is-go" data-rfx-try-x>Done</button></div>
             </div>
+        </div>
+        {{-- The planned products onto the season's plan: what each would do first, then done. --}}
+        <div class="rfx-edit rfx-applym" data-rfx-apply-box hidden>
+            <div class="rfx-edit-veil" data-rfx-apply-x></div>
+            <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxApplyT" data-rfx-apply-c></div>
         </div>
         {{-- One day, opened. --}}
         <div class="rfx-day" data-rfx-day hidden></div>
@@ -359,6 +368,31 @@
         font-size: .82rem; font-weight: 700; color: var(--rx-muted); background: var(--rx-card); box-shadow: 0 -1px 0 var(--rx-line); }
     /* The products added, a group a kind, each kind by date. */
     .rfx-tries-b { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .rfx-add.is-plan { color: #fff; background: var(--rx-on); box-shadow: 0 8px 18px -10px rgb(47 82 25 / .9); }
+    .rfx-add.is-plan:hover { background: #2f6a16; }
+    html.dark .rfx-add.is-plan:hover { background: #5a9a33; }
+    /* Onto the plan: each product, what it would do, then done. */
+    .rfx-applym .rfx-edit-c { width: min(100%, 38rem); padding-bottom: 0; }
+    .rfx-ap-list { display: grid; gap: .4rem; margin: 0; padding: 0; list-style: none; }
+    .rfx-ap-row { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr) auto; align-items: center; gap: .6rem; padding: .55rem .65rem; border-radius: .85rem; background: var(--rx-soft); box-shadow: inset 3px 0 0 var(--rx-line-2);
+        animation: rfxPop .3s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 30ms); }
+    .rfx-ap-row.is-new { box-shadow: inset 3px 0 0 var(--rx-accent); }
+    .rfx-ap-row.is-join { box-shadow: inset 3px 0 0 #2563eb; }
+    .rfx-ap-row.is-there, .rfx-ap-row.is-twice, .rfx-ap-row.is-bad { opacity: .78; }
+    .rfx-ap-d { font-weight: 900; font-size: .86rem; color: var(--rx-ink); }
+    .rfx-ap-n b { display: block; font-size: .88rem; color: var(--rx-ink); overflow-wrap: anywhere; }
+    .rfx-ap-n small { display: block; font-size: .76rem; line-height: 1.4; color: var(--rx-muted); }
+    .rfx-ap-tag { display: inline-block; margin-right: .3rem; padding: 0 .45rem; border-radius: 999px; font-size: .68rem; font-weight: 900; color: var(--rx-ink); background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line-2); }
+    .rfx-ap-row.is-new .rfx-ap-tag { color: #fff; background: var(--rx-on); box-shadow: none; }
+    .rfx-ap-row.is-join .rfx-ap-tag { color: #fff; background: #2563eb; box-shadow: none; }
+    .rfx-ap-q { font-size: .8rem; font-weight: 800; color: var(--rx-text); white-space: nowrap; }
+    .rfx-ap-q input { width: 4.2rem; padding: .35rem .45rem; border-radius: .55rem; border: 1.5px solid var(--rx-field-line); font-size: .86rem; color: var(--rx-ink); background: var(--rx-field); }
+    .rfx-ap-q select { padding: .35rem .3rem; border-radius: .55rem; border: 1.5px solid var(--rx-field-line); font-size: .82rem; color: var(--rx-ink); background: var(--rx-field); }
+    @media (max-width: 559.98px) { .rfx-ap-row { grid-template-columns: 3.4rem minmax(0, 1fr); } .rfx-ap-q { grid-column: 2; } }
+    .rfx-ap-done { display: grid; justify-items: center; gap: .4rem; padding: 1rem .5rem; text-align: center; }
+    .rfx-ap-done img { width: 72px; height: 72px; }
+    .rfx-ap-done b { font-family: var(--font-heading); font-size: 1.1rem; color: var(--rx-ink); }
+    .rfx-ap-done p { font-size: .88rem; line-height: 1.5; color: var(--rx-text); }
     .rfx-tgs { display: grid; gap: .45rem; width: 100%; }
     .rfx-tgs:empty { display: none; }
     .rfx-tg { display: grid; gap: .3rem; }
@@ -988,6 +1022,8 @@
         document.documentElement.classList.remove('rfx-lock');
         setTimeout(() => { M.hidden = true; }, calm ? 0 : 320);
         hideDay();
+        // Tasks were put on the plan from here: the board behind is read again.
+        if (S.boardStale) setTimeout(() => location.reload(), calm ? 0 : 340);
     };
     document.addEventListener('click', (e) => {
         if (e.target.closest('#rangeEffectBtn, #rangeEffectMobileBtn, [data-range-effect-open]')) { e.preventDefault(); open(); }
@@ -1000,6 +1036,7 @@
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape' || M.hidden) return;
         if (!$('[data-rfx-stg]').hidden) closeStage();
+        else if (!applyBox.hidden) closeApply();
         else if (!$('[data-rfx-edit]').hidden) closeEdit();
         else if (!tryBox.hidden) closePick();
         else if (!$('[data-rfx-day]').hidden) hideDay();
@@ -1216,6 +1253,7 @@
     };
     const paintTries = () => {
         $('[data-rfx-tries]').innerHTML = triesGroupsHtml();
+        $('[data-rfx-apply]').hidden = !S.tries.length || !U.apply;
         paintAdded();
     };
     const paintAdded = () => {
@@ -1422,6 +1460,91 @@
         if (!calm) { box.classList.remove('is-flash'); void box.offsetWidth; box.classList.add('is-flash'); }
         box.scrollIntoView({ block: 'nearest', behavior: calm ? 'auto' : 'smooth' });
         window.toast?.(`${p.name} is added. Pick another, or tap Done.`);
+    });
+
+    /* ---------------- onto the plan ---------------- */
+    /* The products planned here, put on the season's plan (the owner, 2026-10-30: "apply the product you plan to apply
+       listed into the current activity plan (do not remove the exising items in the activities, and do not duplicate
+       the fertilizer in the activity day if its already there"). First what each one would do, then done; those on
+       the plan leave the list (they are tasks now) and the board is read again when the planner closes. */
+    const applyBox = $('[data-rfx-apply-box]');
+    let applyRows = null, applyBusy = false;
+    const AP_SAY = { new: 'New task', join: 'Joins', there: 'Already on the plan', twice: 'Twice in your list', bad: 'Cannot go on' };
+    const applyHead = () => `<div class="rfx-day-h"><div><b id="rfxApplyT">Put them on the plan</b><small>For ${esc(lotOf()?.name || 'this lot')}. Nothing on the board is removed or changed, and a product already there that day is not added again.</small></div><button type="button" class="rfx-x" data-rfx-apply-x aria-label="Close">${'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>'}</button></div>`;
+    const UNITS_OPT = ['bags', 'kg', 'L', 'mL', 'g'];
+    const paintApply = () => {
+        const rows = (applyRows || []).slice().sort((a, b) => String(a.date).localeCompare(String(b.date)));
+        const go = rows.filter((r) => r.status === 'new' || r.status === 'join').length;
+        const amt = (r) => {
+            const t = S.tries[r.i];
+            if (!t || !['new', 'join'].includes(r.status)) return r.qty ? `<span class="rfx-ap-q">${esc(String(r.qty))} ${esc(r.unit)}</span>` : '';
+            if (Number(t.qty) > 0) return `<span class="rfx-ap-q">${esc(String(t.qty))} ${esc(t.unit)}</span>`;
+            const u = UNITS_OPT.includes(t.unit) ? t.unit : 'kg';
+            return `<span class="rfx-ap-q"><input type="number" min="0" step="any" inputmode="decimal" placeholder="Amount" data-ap-qty="${r.i}" aria-label="Amount of ${esc(r.name)}"> <select data-ap-unit="${r.i}" aria-label="Unit">${UNITS_OPT.map((x) => `<option${x === u ? ' selected' : ''}>${x}</option>`).join('')}</select></span>`;
+        };
+        $('[data-rfx-apply-c]').innerHTML = applyHead()
+            + `<ul class="rfx-ap-list">${rows.map((r, k) => `<li class="rfx-ap-row is-${r.status}" style="--k:${Math.min(k, 20)}"><span class="rfx-ap-d">${r.date ? esc(say(r.date)) : ''}</span>
+                <span class="rfx-ap-n"><b>${esc(r.name)}</b><small><span class="rfx-ap-tag">${AP_SAY[r.status] || ''}</span>${esc(r.task || '')}${r.note ? '. ' + esc(r.note) : ''}</small></span>${amt(r)}</li>`).join('')}</ul>`
+            + (rows.some((r) => ['new', 'join'].includes(r.status) && !(Number(S.tries[r.i]?.qty) > 0)) ? '<p class="rfx-pick-hint">A product with no amount goes on as one usual dose, as its label says; type the amount to put it in now.</p>' : '')
+            + `<div class="rfx-pick-foot"><span>${go ? `${go} to put on the plan` : 'Nothing new to put on'}</span><span style="display:flex;gap:.4rem"><button type="button" class="rfx-btn is-ghost" data-rfx-apply-x>Cancel</button><button type="button" class="rfx-btn is-go" data-rfx-apply-go ${go ? '' : 'disabled'}>Put ${go || ''} on the plan</button></span></div>`;
+    };
+    const openApply = async () => {
+        if (!S.tries.length || applyBusy) return;
+        applyRows = null;
+        $('[data-rfx-apply-c]').innerHTML = applyHead() + '<div class="rfx-loading"><span></span><span></span><span></span></div>';
+        applyBox.hidden = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => applyBox.classList.add('is-on')));
+        try {
+            const r = await window.api(U.applyCheck, { method: 'POST', body: { lotId: S.lot, tries: S.tries } });
+            applyRows = r.data.rows || [];
+            paintApply();
+        } catch (err) {
+            $('[data-rfx-apply-c]').innerHTML = applyHead() + `<p class="rfx-pick-hint" style="color:var(--rx-gap-ink)">${esc(err.message || 'It could not be read. Please try again.')}</p>`;
+        }
+    };
+    const closeApply = () => {
+        applyBox.classList.remove('is-on');
+        setTimeout(() => { if (!applyBox.classList.contains('is-on')) applyBox.hidden = true; }, calm ? 0 : 260);
+    };
+    $('[data-rfx-apply]').addEventListener('click', openApply);
+    applyBox.addEventListener('input', (e) => {
+        const q = e.target.closest('[data-ap-qty]');
+        if (q && S.tries[q.dataset.apQty]) { S.tries[q.dataset.apQty].qty = Number(q.value) || 0; pickDirty = true; }
+        const u = e.target.closest('[data-ap-unit]');
+        if (u && S.tries[u.dataset.apUnit]) S.tries[u.dataset.apUnit].unit = u.value;
+    });
+    applyBox.addEventListener('change', (e) => {
+        const u = e.target.closest('[data-ap-unit]');
+        if (u && S.tries[u.dataset.apUnit]) S.tries[u.dataset.apUnit].unit = u.value;
+    });
+    applyBox.addEventListener('click', async (e) => {
+        if (e.target.closest('[data-rfx-apply-x]')) { closeApply(); return; }
+        if (e.target.closest('[data-rfx-apply-board]')) { closeApply(); close(); return; }
+        const go = e.target.closest('[data-rfx-apply-go]');
+        if (!go || applyBusy) return;
+        applyBusy = true;
+        go.disabled = true;
+        go.textContent = 'Putting them on…';
+        try {
+            const r = await window.api(U.apply, { method: 'POST', body: { lotId: S.lot, tries: S.tries } });
+            const rows = r.data.rows || [];
+            const m = r.data.made || {};
+            // On the plan now (or already there): they leave the list, the plan's own lines count them from here.
+            const gone = new Set(rows.filter((x) => ['new', 'join', 'there', 'twice'].includes(x.status)).map((x) => x.i));
+            S.tries = S.tries.filter((t, i) => !gone.has(i));
+            S.boardStale = S.boardStale || (m.lines || 0) > 0;
+            paintTries();
+            keep();
+            run();
+            $('[data-rfx-apply-c]').innerHTML = applyHead() + `<div class="rfx-ap-done"><img src="{{ \App\Support\AneeEmoji::url('happy') }}" alt=""><b>${esc(r.message || 'Done.')}</b>
+                <p>${m.join ? `${m.join} went into tasks already on that day. ` : ''}${m.there ? `${m.there} ${m.there === 1 ? 'was' : 'were'} on the plan already, left as ${m.there === 1 ? 'it is' : 'they are'}. ` : ''}Give them to your workers, link them to the shed or change the amounts in Activities.</p></div>
+                <div class="rfx-pick-foot"><span></span><span style="display:flex;gap:.4rem"><button type="button" class="rfx-btn is-ghost" data-rfx-apply-x>Keep planning</button>${m.lines ? '<button type="button" class="rfx-btn is-go" data-rfx-apply-board>See them on the board</button>' : ''}</span></div>`;
+            window.toast?.(r.message, 'success');
+        } catch (err) {
+            go.disabled = false;
+            go.textContent = 'Try again';
+            window.toast?.(err.message || 'They could not be put on the plan. Please try again.', 'error');
+        } finally { applyBusy = false; }
     });
 
     /* ---------------- Anee looks it up ---------------- */

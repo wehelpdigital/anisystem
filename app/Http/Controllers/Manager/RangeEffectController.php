@@ -154,6 +154,42 @@ class RangeEffectController extends BaseScheduleController
         return $this->jsonOk('ok', ['data' => ['items' => $items, 'ingredient' => $ing ? ['name' => $ing['name'], 'kind' => $ing['kind'] ?? '', 'known' => (bool) RangeEffectBook::ingredient($ing['name'])] : null]]);
     }
 
+    /* =============================================================== onto the plan */
+
+    /** What putting the planned products on the plan would do: each one new, joining a task, already there or twice. */
+    public function applyCheck(Request $request)
+    {
+        return $this->applyRun($request, false);
+    }
+
+    /** The planned products put on the season's plan (App\Support\RangeEffectApply): nothing there is removed or doubled. */
+    public function apply(Request $request)
+    {
+        return $this->applyRun($request, true);
+    }
+
+    private function applyRun(Request $request, bool $write)
+    {
+        $this->gate();
+        // A write to the plan: the season's editors only, never a closed season (the query's scheduleId, as every write).
+        $schedule = $this->scheduleFromRequest($request);
+        $lot = \App\Models\AsScheduleLot::where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->where('id', (int) $request->input('lotId'))->first();
+        if (! $lot) {
+            return $this->jsonFail('That lot is not on this season.', 404);
+        }
+        $tries = array_slice(array_values(array_filter((array) $request->input('tries', []), 'is_array')), 0, self::MAX_TRIES);
+        if (! $tries) {
+            return $this->jsonFail('Add a product you plan to apply first.', 422);
+        }
+        $out = \App\Support\RangeEffectApply::run($schedule, $lot, $tries, $write);
+        $m = $out['made'];
+        $say = ! $write ? 'ok' : ($m['lines']
+            ? ($m['lines'] === 1 ? 'One product is on the plan' : $m['lines'] . ' products are on the plan') . ($m['tasks'] ? ', in ' . ($m['tasks'] === 1 ? 'a new task' : $m['tasks'] . ' new tasks') : '') . '.'
+            : 'Everything was on the plan already.');
+
+        return $this->jsonOk($say, ['data' => $out]);
+    }
+
     /* =============================================================== saved readings */
 
     private function savedReady(): bool

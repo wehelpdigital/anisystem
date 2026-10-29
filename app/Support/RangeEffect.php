@@ -72,7 +72,7 @@ class RangeEffect
      * The way of counting, by date: a saved reading counted an older way is counted again when it is opened (the
      * owner, 2026-10-30: "i opened the saved file and the P is still at 78%"). Raise it whenever the numbers change.
      */
-    public const VERSION = '2026-10-30.7';
+    public const VERSION = '2026-10-30.8';
 
     /**
      * What an application is doing on a day (2026-10-30, the owner: "the absorption stage, the ammonization in soil
@@ -730,7 +730,10 @@ class RangeEffect
                 if ($name === '' || $name === 'Item') {
                     continue;
                 }
-                $a = self::read($name, (float) $it->quantity, (string) ($it->unitOfMeasure ?: $it->displayUnit() ?: ''), $share, $c, Carbon::parse($act->targetDate)->startOfDay());
+                // A task the farmer called a foliar spray was sprayed, whatever unit its lines are in (2026-10-30: the
+                // planner's own products put on the plan as foliar keep reading as foliar).
+                $a = self::read($name, (float) $it->quantity, (string) ($it->unitOfMeasure ?: $it->displayUnit() ?: ''), $share, $c, Carbon::parse($act->targetDate)->startOfDay(),
+                    null, $act->activityType === 'foliar_spray' ? 'foliar' : null);
                 if (! $a) {
                     continue;
                 }

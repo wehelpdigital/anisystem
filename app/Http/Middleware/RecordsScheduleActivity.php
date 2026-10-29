@@ -27,6 +27,8 @@ class RecordsScheduleActivity
         'sm.day-type' => 'Changed how days are counted',
         'sm.status' => 'Changed the season status',
         'sm.activities.store' => 'Added an activity',
+        'sm.effect.apply' => 'Put the Coverage Planner\'s products on the plan',
+        'sm.effect.save' => 'Saved a Coverage Planner reading',
         'sm.activities.update' => 'Edited an activity',
         'sm.activities.destroy' => 'Deleted an activity',
         'sm.activities.toggle-done' => 'Ticked an activity',
@@ -130,6 +132,8 @@ class RecordsScheduleActivity
         'sm.map.update', 'sm.map.push', 'sm.map.remove', 'sm.map.trace',
         'sm.map.loc', 'sm.map.load', 'sm.photo.push', 'sm.photo.set',
         'sm.photo.undo', 'sm.default-groupings.save',
+        // A reading of the Coverage Planner, and its check of what would go on the plan: looks, not deeds.
+        'sm.effect.run', 'sm.effect.applyCheck',
     ];
 
     public function handle(Request $request, Closure $next): Response
