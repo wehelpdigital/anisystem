@@ -23,7 +23,21 @@
 {{-- The field questions, for a what-if lot's answers (its dialogs sit in the browser's top layer, over the sheet). --}}
 @include('partials.field-profile')
 @php
-    $rfxU = [
+    // In the Protocol Builder (2026-10-30, the owner: "this module should also be in the protocol builder"): the same sheet
+    // on a protocol, @include('sm.partials.range-effect', ['schedule' => null, 'rfxProtocol' => $protocol]); its lots are
+    // the farm's lots in Global Lots, its days a day zero picked here, and nothing is saved or put on a season.
+    $rfxPb = $rfxProtocol ?? null;
+    $rfxSid = $rfxPb ? 'pb' . (int) $rfxPb['id'] : (int) $schedule->id;
+    $rfxU = $rfxPb ? [
+        'pb' => true,
+        'dayType' => strtoupper((string) ($rfxPb['dayType'] ?? 'DAS')),
+        'options' => route('pb.coverage', (int) $rfxPb['id']),
+        'run' => route('pb.coverage.run', (int) $rfxPb['id']),
+        'products' => route('sm.effect.products') . '?pb=1',
+        'lookup' => route('sm.effect.lookup'),
+        'job' => url('/app/sm-range-effect/lookup') . '/',
+        'save' => null, 'saved' => null, 'copyAnswers' => null, 'applyCheck' => null, 'apply' => null,
+    ] : [
         'options' => route('sm.effect') . '?scheduleId=' . $schedule->id,
         'run' => route('sm.effect.run') . '?scheduleId=' . $schedule->id,
         'products' => route('sm.effect.products') . '?scheduleId=' . $schedule->id,
@@ -39,7 +53,7 @@
     $rfxHowG = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 25c4-2 8-2 13 0s9 2 13 0v4H3z" fill="#a8723f"/><circle cx="9" cy="13" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="17" cy="9" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="23" cy="16" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="14" cy="19" r="2.4" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/></svg>';
     $rfxHowF = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 27c0-8 5-15 15-19-2 8-5 15-15 19z" fill="#86c25a" stroke="#3b7a1f" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 27c4-5 7-9 12-14" fill="none" stroke="#3b7a1f" stroke-width="1.4" stroke-linecap="round"/><path d="M24 3c1.6 2.4 2.6 3.8 2.6 5a2.6 2.6 0 01-5.2 0c0-1.2 1-2.6 2.6-5z" fill="#38bdf8"/><path d="M28 11c1 1.5 1.6 2.4 1.6 3.1a1.6 1.6 0 01-3.2 0c0-.7.6-1.6 1.6-3.1z" fill="#38bdf8"/></svg>';
 @endphp
-<div class="rfx" id="rfxModal" role="dialog" aria-modal="true" aria-labelledby="rfxTitle" hidden data-u='@json($rfxU)' data-sid="{{ $schedule->id }}">
+<div class="rfx{{ $rfxPb ? ' is-pb' : '' }}" id="rfxModal" role="dialog" aria-modal="true" aria-labelledby="rfxTitle" hidden data-u='@json($rfxU)' data-sid="{{ $rfxSid }}">
     {{-- The calendar's application marks: granules spread, a spray, organic, a try. --}}
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
         <symbol id="rfxI-gran" viewBox="0 0 16 16"><circle cx="4.6" cy="6.2" r="2.3"/><circle cx="10.6" cy="4.8" r="2.1"/><circle cx="8.2" cy="10.9" r="2.5"/><circle cx="13" cy="10.4" r="1.5"/></symbol>
@@ -56,7 +70,7 @@
             <div class="rfx-head-t">
                 {{-- Called the Coverage Planner since 2026-10-30 (the owner: "change the modal title to Coverage Planner"). --}}
                 <h2 id="rfxTitle">Coverage Planner</h2>
-                <p>How long everything you put on keeps working, against what your crop needs each day.</p>
+                <p>@if ($rfxPb){{ $rfxPb['title'] }}: how long everything it puts on keeps working, against what the crop needs each day.@else How long everything you put on keeps working, against what your crop needs each day.@endif</p>
             </div>
             <button type="button" class="rfx-hbtn" data-rfx-saved-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 4h14v17l-7-4-7 4V4z"/></svg><span>Saved</span><b data-rfx-saved-n hidden></b></button>
             <button type="button" class="rfx-x" data-rfx-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button>
@@ -66,9 +80,23 @@
             {{-- ================= THE CONTROLS ================= --}}
             <section class="rfx-controls">
                 <div class="rfx-row">
-                    <span class="rfx-label">Lot</span>
+                    <span class="rfx-label">{{ $rfxPb ? 'Its lot' : 'Lot' }}</span>
                     <div class="rfx-chips" data-rfx-lots></div>
                 </div>
+                @if ($rfxPb)
+                {{-- The protocol's days on the calendar: its day zero (and the transplant of a DAT protocol), and the area its
+                     amounts are written for. --}}
+                <div class="rfx-row is-sub">
+                    <span class="rfx-label">Its days</span>
+                    <div class="rfx-pbdays">
+                        <div class="rfx-when"><span>{{ strtoupper((string) ($rfxPb['dayType'] ?? 'DAS')) === 'DAP' ? 'Planted on (DAP 0)' : 'Sown on (DAS 0)' }}</span><button type="button" class="rfx-datetag" data-date-for="data-rfx-pb-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" d="M3.5 10h17M8 3v4M16 3v4"/></svg><b data-date-say>Pick a day</b><svg class="rfx-dt-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button><input type="date" class="rfx-date-in" data-rfx-pb-start tabindex="-1" aria-label="Day zero"></div>
+                        @if (strtoupper((string) ($rfxPb['dayType'] ?? '')) === 'DAT')
+                        <div class="rfx-when"><span>Transplanted on (DAT 0)</span><button type="button" class="rfx-datetag" data-date-for="data-rfx-pb-tr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" d="M3.5 10h17M8 3v4M16 3v4"/></svg><b data-date-say>Pick a day</b><svg class="rfx-dt-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button><input type="date" class="rfx-date-in" data-rfx-pb-tr tabindex="-1" aria-label="Transplant day"></div>
+                        @endif
+                        <label class="rfx-pbha"><span>Its amounts are for</span><span><input type="number" min="0.01" step="any" inputmode="decimal" data-rfx-pb-ha value="1"> ha</span></label>
+                    </div>
+                </div>
+                @endif
                 <div class="rfx-row">
                     <span class="rfx-label">Check</span>
                     <div class="rfx-tabs" role="tablist" data-rfx-tabs>
@@ -106,7 +134,7 @@
                         <div class="rfx-tries-b">
                             <button type="button" class="rfx-add" data-rfx-try-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>A product you plan to apply</button>
                             {{-- Onto the plan (the owner, 2026-10-30): each one on its day, into the lot's tasks, never twice. --}}
-                            <button type="button" class="rfx-add is-plan" data-rfx-apply hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.5 10h17M8 3v4M16 3v4M8.5 15l2.3 2.3 4.7-4.6"/></svg>Put them on the plan</button>
+                            <button type="button" class="rfx-add is-plan" data-rfx-apply hidden>@if ($rfxPb)<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" d="M3.5 10h17M8 3v4M16 3v4"/></svg>Put them in the protocol @else<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.5 10h17M8 3v4M16 3v4M8.5 15l2.3 2.3 4.7-4.6"/></svg>Put them on the plan @endif</button>
                         </div>
                         {{-- Grouped by kind, each kind by date (the owner, 2026-10-30). --}}
                         <div class="rfx-tgs" data-rfx-tries></div>
@@ -121,7 +149,7 @@
         </div>
 
         <footer class="rfx-foot">
-            <span class="rfx-foot-note" data-rfx-note>Counts the products written on each day's tasks, from your shed or typed in, on the day they are used.</span>
+            <span class="rfx-foot-note" data-rfx-note>{{ $rfxPb ? 'Counts what each task of the protocol applies, on its day of the count, from the days picked above.' : 'Counts the products written on the tasks of each day, from your shed or typed in, on the day they are used.' }}</span>
             {{-- A saved reading opened: Save puts the changes over it; it can be renamed here or in Saved. --}}
             <div class="rfx-editing" data-rfx-editing hidden>
                 <span class="rfx-editing-l">Editing</span>
@@ -377,6 +405,12 @@
     /* The products added, a group a kind, each kind by date. */
     .rfx-tries-b { display: flex; flex-wrap: wrap; gap: .45rem; }
     .rfx-add.is-plan { color: #fff; background: var(--rx-on); box-shadow: 0 8px 18px -10px rgb(47 82 25 / .9); }
+    /* In the Protocol Builder: no saved readings (a protocol is not a season), its days and area in their own row. */
+    .rfx.is-pb [data-rfx-saved-open], .rfx.is-pb [data-rfx-save], .rfx.is-pb [data-rfx-save-new], .rfx.is-pb [data-rfx-editing] { display: none !important; }
+    .rfx-pbdays { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .6rem 1rem; }
+    .rfx-pbha { display: grid; gap: .25rem; font-size: .78rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-pbha > span:last-child { display: inline-flex; align-items: center; gap: .35rem; font-size: .9rem; color: var(--rx-ink); }
+    .rfx-pbha input { width: 5rem; padding: .5rem .6rem; border-radius: .75rem; border: 1.5px solid var(--rx-field-line); font-size: .92rem; color: var(--rx-ink); background: var(--rx-field); }
     /* The what-if lot: its chip, dashed until it is in use, and its sheet. */
     .rfx-chip.is-what { box-shadow: inset 0 0 0 1.5px var(--rx-line-2); background: repeating-linear-gradient(135deg, var(--rx-card) 0 6px, var(--rx-soft) 6px 12px); }
     .rfx-chip.is-what.is-on { color: #fff; background: #6d28d9; box-shadow: 0 8px 18px -10px rgb(109 40 217 / .8); }
@@ -967,6 +1001,9 @@
     document.body.appendChild(M);
     const U = JSON.parse(M.dataset.u);
     const SID = M.dataset.sid;
+    // The Protocol Builder's planner: its lots are the farm's lots, its days picked here, its products put in the protocol.
+    const PB = !!U.pb;
+    const addDays = (s, n) => { const d = new Date(s + 'T00:00:00'); d.setDate(d.getDate() + n); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
     const $ = (s, r = M) => r.querySelector(s);
     const $$ = (s, r = M) => [...r.querySelectorAll(s)];
     const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -988,7 +1025,7 @@
     // What the reading counts besides coverage (RangeEffectLogic): every part on until the farmer switches it off.
     const LOGIC_DEF = { amt: true, soil: true, links: true, health: true };
     const S = { opts: null, lot: null, check: 'n:N', checks: ['n:N'], tab: 'nut', tries: [], res: null, saved: null, picked: null, q: '', busy: false,
-        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '', recounted: null, hide: [], custom: null, useCustom: false };
+        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '', recounted: null, hide: [], custom: null, useCustom: false, pb: null };
     const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg>';
     const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>';
     const kgSay = (v) => { v = Number(v) || 0; return v >= 10 ? String(Math.round(v)) : v >= 1 ? String(Math.round(v * 10) / 10) : String(Math.round(v * 100) / 100); };
@@ -1012,7 +1049,7 @@
     const keep = () => {
         if (!S.opts) return;
         try {
-            localStorage.setItem(KEEP, JSON.stringify({ lot: S.lot, check: S.check, checks: S.checks, tab: S.tab, tries: S.tries, logic: S.logic, hide: S.hide, custom: S.custom, useCustom: S.useCustom,
+            localStorage.setItem(KEEP, JSON.stringify({ lot: S.lot, check: S.check, checks: S.checks, tab: S.tab, tries: S.tries, logic: S.logic, hide: S.hide, custom: S.custom, useCustom: S.useCustom, pb: S.pb,
                 // A hidden sheet reads as scrolled to the top: keep where it was when it closed.
                 savedId: S.savedId, savedTitle: S.savedTitle, top: Math.round(M.hidden || !M.classList.contains('is-on') ? (S.lastTop || 0) : scroller().scrollTop), at: Date.now() }));
         } catch (_) {}
@@ -1071,7 +1108,12 @@
         try {
             const r = await window.api(U.options);
             S.opts = r.data;
-            S.lot = (S.opts.lots[0] || {}).id || null;
+            S.lot = (S.opts.lots[0] || {}).id ?? null;
+            if (PB) {
+                // A protocol: the first of the farm's lots that has answers, else none; its days from today.
+                S.lot = ((S.opts.lots || []).find((l) => l.id && Object.keys(l.answers || {}).length) || (S.opts.lots || [])[0] || {}).id ?? 0;
+                S.pb = { start: iso(new Date()), transplant: addDays(iso(new Date()), 21), ha: 1 };
+            }
             // Pick up where the farmer left off, as far as it still fits this season.
             const st = leftOff();
             const lot = st ? (S.opts.lots || []).find((l) => l.id === st.lot) : null;
@@ -1086,6 +1128,7 @@
                 S.logic = { ...LOGIC_DEF, ...(st.logic || {}) };
                 S.hide = (Array.isArray(st.hide) ? st.hide : []).filter((k) => S.checks.includes(k));
                 if (st.custom && typeof st.custom === 'object') { S.custom = st.custom; S.useCustom = !!st.useCustom && S.custom.base === S.lot; }
+                if (PB && st.pb && st.pb.start) S.pb = { start: st.pb.start, transplant: st.pb.transplant || addDays(st.pb.start, 21), ha: Number(st.pb.ha) > 0 ? Number(st.pb.ha) : 1 };
                 if (st.savedId && (S.opts.saved || []).some((x) => x.id === st.savedId)) { S.savedId = st.savedId; S.savedTitle = st.savedTitle || ''; }
                 S.restoreTop = Number(st.top) || 0;
             }
@@ -1094,6 +1137,7 @@
             paintPicks();
             paintTries();
             paintLogic();
+            paintPbDays();
             paintFoot();
             if (!S.lot) { body(empty('Add a lot first', 'The calendar reads one lot at a time: its crop, its planting day and the products on its tasks.')); return; }
             run();
@@ -1105,7 +1149,8 @@
     const lotOf = () => (S.opts?.lots || []).find((l) => l.id === S.lot) || null;
     const paintLots = () => {
         const base = S.custom ? (S.opts.lots || []).find((l) => l.id === S.custom.base) : null;
-        $('[data-rfx-lots]').innerHTML = (S.opts.lots || []).map((l) => `<button type="button" class="rfx-chip ${!S.useCustom && l.id === S.lot ? 'is-on' : ''}" data-lot="${l.id}">${esc(l.icon)} ${esc(l.name)} <small>${esc(l.crop.split(',')[0])}</small></button>`).join('')
+        const lotSmall = (l) => (PB ? (l.id ? (whatCount(l.answers) ? whatCount(l.answers) + ' answers' : 'no answers yet') : 'soil not counted') : l.crop.split(',')[0]);
+        $('[data-rfx-lots]').innerHTML = (S.opts.lots || []).map((l) => `<button type="button" class="rfx-chip ${!S.useCustom && l.id === S.lot ? 'is-on' : ''}" data-lot="${l.id}">${esc(l.icon)} ${esc(l.name)} <small>${esc(lotSmall(l))}</small></button>`).join('')
             + `<button type="button" class="rfx-chip is-what ${S.useCustom ? 'is-on' : ''}" data-lot-what title="${S.custom ? 'A what-if lot: tap to use it, tap again to change it' : 'Try another soil and field, never saved as a lot'}">🧪 ${S.custom ? esc(S.custom.name) : 'What if'} <small>${S.custom ? esc((base ? 'on ' + base.name : '') + ' · ' + whatCount(S.custom.answers) + ' answers') : 'your own soil'}</small>${S.useCustom ? PEN_I : ''}</button>`;
     };
     $('[data-rfx-lots]').addEventListener('click', (e) => {
@@ -1259,6 +1304,40 @@
         input.addEventListener('blur', () => btn.classList.remove('is-pop'));
     });
 
+    /* The protocol's days (the Protocol Builder): its day zero, the transplant and the area its amounts are for; a change
+       is read again at once. Moving day zero moves the transplant with it, the seedbed keeping its length. */
+    const pbIns = PB ? { start: $('[data-rfx-pb-start]'), tr: $('[data-rfx-pb-tr]'), ha: $('[data-rfx-pb-ha]') } : null;
+    const paintPbDays = () => {
+        if (!PB || !S.pb) return;
+        setDate(pbIns.start, S.pb.start);
+        if (pbIns.tr) setDate(pbIns.tr, S.pb.transplant);
+        pbIns.ha.value = S.pb.ha;
+    };
+    if (PB) {
+        pbIns.start.addEventListener('change', () => {
+            const v = pbIns.start.value;
+            if (!v || !S.pb) return;
+            const shift = Math.round((new Date(v + 'T00:00:00') - new Date(S.pb.start + 'T00:00:00')) / 864e5);
+            S.pb.start = v;
+            S.pb.transplant = addDays(S.pb.transplant, shift);
+            paintPbDays();
+            run();
+            keep();
+        });
+        pbIns.tr?.addEventListener('change', () => {
+            if (!pbIns.tr.value || !S.pb) return;
+            S.pb.transplant = pbIns.tr.value < S.pb.start ? S.pb.start : pbIns.tr.value;
+            paintPbDays();
+            run();
+            keep();
+        });
+        let haT = 0;
+        pbIns.ha.addEventListener('input', () => {
+            clearTimeout(haT);
+            haT = setTimeout(() => { const v = Number(pbIns.ha.value); if (v > 0 && S.pb && v !== S.pb.ha) { S.pb.ha = v; run(); keep(); } }, 500);
+        });
+    }
+
     /* ---------------- fertilizers: the products you plan to apply ---------------- */
     const tryBox = $('[data-rfx-try]');
     // Each product's kind, as the picker's tabs and the groups read it (the book's types).
@@ -1284,7 +1363,7 @@
     };
     const paintTries = () => {
         $('[data-rfx-tries]').innerHTML = triesGroupsHtml();
-        $('[data-rfx-apply]').hidden = !S.tries.length || !U.apply;
+        $('[data-rfx-apply]').hidden = !S.tries.length || !(U.apply || (PB && window.pbCoverage));
         paintAdded();
     };
     const paintAdded = () => {
@@ -1569,7 +1648,7 @@
     const applyBox = $('[data-rfx-apply-box]');
     let applyRows = null, applyBusy = false;
     const AP_SAY = { new: 'New task', join: 'Joins', there: 'Already on the plan', twice: 'Twice in your list', bad: 'Cannot go on' };
-    const applyHead = () => `<div class="rfx-day-h"><div><b id="rfxApplyT">Put them on the plan</b><small>For ${esc(lotOf()?.name || 'this lot')}. Nothing on the board is removed or changed, and a product already there that day is not added again.</small></div><button type="button" class="rfx-x" data-rfx-apply-x aria-label="Close">${'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>'}</button></div>`;
+    const applyHead = () => `<div class="rfx-day-h"><div><b id="rfxApplyT">${PB ? 'Put them in the protocol' : 'Put them on the plan'}</b><small>${PB ? 'Each one as a task on its day of the count. Nothing in the protocol is removed or changed, and a product already there that day is not added again.' : `For ${esc(lotOf()?.name || 'this lot')}. Nothing on the board is removed or changed, and a product already there that day is not added again.`}</small></div><button type="button" class="rfx-x" data-rfx-apply-x aria-label="Close">${'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>'}</button></div>`;
     const UNITS_OPT = ['bags', 'kg', 'L', 'mL', 'g'];
     const paintApply = () => {
         const rows = (applyRows || []).slice().sort((a, b) => String(a.date).localeCompare(String(b.date)));
@@ -1594,7 +1673,7 @@
         applyBox.hidden = false;
         requestAnimationFrame(() => requestAnimationFrame(() => applyBox.classList.add('is-on')));
         try {
-            const r = await window.api(U.applyCheck, { method: 'POST', body: { lotId: S.lot, tries: S.tries } });
+            const r = PB ? { data: window.pbCoverage.check(S.tries, S.pb) } : await window.api(U.applyCheck, { method: 'POST', body: { lotId: S.lot, tries: S.tries } });
             applyRows = r.data.rows || [];
             paintApply();
         } catch (err) {
@@ -1625,19 +1704,19 @@
         go.disabled = true;
         go.textContent = 'Putting them on…';
         try {
-            const r = await window.api(U.apply, { method: 'POST', body: { lotId: S.lot, tries: S.tries } });
+            const r = PB ? window.pbCoverage.add(S.tries, S.pb) : await window.api(U.apply, { method: 'POST', body: { lotId: S.lot, tries: S.tries } });
             const rows = r.data.rows || [];
             const m = r.data.made || {};
             // On the plan now (or already there): they leave the list, the plan's own lines count them from here.
             const gone = new Set(rows.filter((x) => ['new', 'join', 'there', 'twice'].includes(x.status)).map((x) => x.i));
             S.tries = S.tries.filter((t, i) => !gone.has(i));
-            S.boardStale = S.boardStale || (m.lines || 0) > 0;
+            S.boardStale = !PB && (S.boardStale || (m.lines || 0) > 0);
             paintTries();
             keep();
             run();
             $('[data-rfx-apply-c]').innerHTML = applyHead() + `<div class="rfx-ap-done"><img src="{{ \App\Support\AneeEmoji::url('happy') }}" alt=""><b>${esc(r.message || 'Done.')}</b>
-                <p>${m.join ? `${m.join} went into tasks already on that day. ` : ''}${m.there ? `${m.there} ${m.there === 1 ? 'was' : 'were'} on the plan already, left as ${m.there === 1 ? 'it is' : 'they are'}. ` : ''}Give them to your workers, link them to the shed or change the amounts in Activities.</p></div>
-                <div class="rfx-pick-foot"><span></span><span style="display:flex;gap:.4rem"><button type="button" class="rfx-btn is-ghost" data-rfx-apply-x>Keep planning</button>${m.lines ? '<button type="button" class="rfx-btn is-go" data-rfx-apply-board>See them on the board</button>' : ''}</span></div>`;
+                <p>${m.join ? `${m.join} went into tasks already on that day. ` : ''}${m.there ? `${m.there} ${m.there === 1 ? 'was' : 'were'} on the plan already, left as ${m.there === 1 ? 'it is' : 'they are'}. ` : ''}${PB ? 'They are tasks of the protocol now: change them there, and Undo takes them out.' : 'Give them to your workers, link them to the shed or change the amounts in Activities.'}</p></div>
+                <div class="rfx-pick-foot"><span></span><span style="display:flex;gap:.4rem"><button type="button" class="rfx-btn is-ghost" data-rfx-apply-x>Keep planning</button>${m.lines && !PB ? '<button type="button" class="rfx-btn is-go" data-rfx-apply-board>See them on the board</button>' : ''}</span></div>`;
             window.toast?.(r.message, 'success');
         } catch (err) {
             go.disabled = false;
@@ -1660,7 +1739,7 @@
         const L = S.opts.lookup;
         window.aneeWait?.show({ title: 'Anee is looking it up…', sub: 'The label, the maker and how long it keeps working. About a minute.', lines: ['Reading the label…', 'Finding its active ingredients…', 'Checking how long one spray lasts in our heat and rain…'] });
         try {
-            let r = await window.api(U.lookup, { method: 'POST', body: { scheduleId: SID, name, ai, quote: L.price } });
+            let r = await window.api(U.lookup, { method: 'POST', body: PB ? { name, ai, quote: L.price } : { scheduleId: SID, name, ai, quote: L.price } });
             if (r.data && r.data.known) {
                 window.aneeWait?.fail();
                 takeFound(r.data);
@@ -1695,14 +1774,18 @@
     const empty = (h, p) => `<div class="rfx-card rfx-empty"><img src="{{ \App\Support\AneeEmoji::url('thinking') }}" alt=""><b>${esc(h)}</b><p>${esc(p)}</p></div>`;
     let runSeq = 0;
     const run = async (keepNote = false) => {
-        if (!S.lot) return;
+        if (S.lot === null || S.lot === undefined) return;
         const seq = ++runSeq;
         S.saved = null;
         if (!keepNote) S.recounted = null;
         $('[data-rfx-body]').style.opacity = S.res ? '.55' : '1';
         if (!S.res) body('<div class="rfx-loading"><span></span><span></span><span></span></div>');
         try {
-            const r = await window.api(U.run, { method: 'POST', body: { scheduleId: SID, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, custom: S.useCustom ? S.custom : null } });
+            const src = PB && window.pbCoverage ? window.pbCoverage.source() : null;
+            const r = await window.api(U.run, { method: 'POST', body: PB
+                ? { basis: S.lot, start: S.pb.start, transplant: S.pb.transplant, ha: S.pb.ha, tasks: src ? src.tasks : undefined, materials: src ? src.materials : undefined,
+                    check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, custom: S.useCustom ? S.custom : null }
+                : { scheduleId: SID, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, custom: S.useCustom ? S.custom : null } });
             if (seq !== runSeq) return;
             S.res = r.data;
             paint();

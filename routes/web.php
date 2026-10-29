@@ -1187,6 +1187,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/protocol-builder-review-preview/{aid}', [App\Http\Controllers\ProtocolBuilderController::class, 'analysisPreview'])->whereNumber('aid')->name('pb.analyses.preview');
     Route::post('/app/protocol-builder/{id}/analyses/{aid}/delete', [App\Http\Controllers\ProtocolBuilderController::class, 'analysisDestroy'])->whereNumber(['id', 'aid'])->name('pb.analyses.delete');
     Route::get('/app/protocol-builder/lots', [App\Http\Controllers\ProtocolBuilderController::class, 'lots'])->name('pb.lots');
+    // The Coverage Planner on a protocol (2026-10-30): the farm's lots as its basis, nothing saved.
+    Route::get('/app/protocol-builder/{id}/coverage', [App\Http\Controllers\ProtocolEffectController::class, 'options'])->whereNumber('id')->name('pb.coverage');
+    Route::post('/app/protocol-builder/{id}/coverage/run', [App\Http\Controllers\ProtocolEffectController::class, 'run'])->whereNumber('id')->middleware('throttle:60,1')->name('pb.coverage.run');
     Route::post('/app/protocol-builder/port', [App\Http\Controllers\ProtocolBuilderController::class, 'port'])->name('pb.port');
     // Versions of a protocol, each with its own tasks, materials, rules & notes and files.
     Route::post('/app/protocol-builder/{id}/versions', [App\Http\Controllers\ProtocolBuilderController::class, 'versionStore'])->whereNumber('id')->name('pb.versions.store');

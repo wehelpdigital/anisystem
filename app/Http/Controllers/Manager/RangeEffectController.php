@@ -108,6 +108,12 @@ class RangeEffectController extends BaseScheduleController
         return array_values(array_filter(array_map(fn ($k) => mb_substr((string) $k, 0, 80), (array) $request->input('also', [])), fn ($k) => $k !== ''));
     }
 
+    /** The tries as the engine reads them, for the Protocol Builder's planner too (ProtocolEffectController). */
+    public function triesOf(Request $request): array
+    {
+        return $this->tries($request);
+    }
+
     /** The tries as the engine reads them: a book product (by id) or a bare ingredient, a date, an amount. */
     private function tries(Request $request): array
     {
@@ -327,7 +333,7 @@ class RangeEffectController extends BaseScheduleController
 
     /* =============================================================== Anee looks it up */
 
-    private function lookupInfo(): array
+    public function lookupInfo(): array
     {
         $payer = $this->payer();
         $credits = app(AiCreditService::class);
@@ -348,7 +354,8 @@ class RangeEffectController extends BaseScheduleController
     public function lookup(Request $request)
     {
         $this->gate();
-        $schedule = $this->schedule($request->input('scheduleId'));
+        // From a season's planner, or the Protocol Builder's (no season: the look up is the member's own).
+        $schedule = $request->filled('scheduleId') ? $this->schedule($request->input('scheduleId')) : null;
         if (! Tier::farmCan('aiAnalyses')) {
             Tier::farmDenyFor('aiAnalyses', 'Anee looking up a product comes with {plan}, and with every plan above it. The Coverage Planner itself stays yours.');
         }
@@ -384,7 +391,7 @@ class RangeEffectController extends BaseScheduleController
         if ($standing) {
             return $this->jsonOk('Already working on it.', ['data' => ['pending' => true, 'id' => (int) $standing->id]]);
         }
-        $case = ['name' => $name, 'ai' => $ai, 'scheduleId' => (int) $schedule->id];
+        $case = ['name' => $name, 'ai' => $ai, 'scheduleId' => (int) ($schedule?->id ?? 0)];
         $rid = DB::table('as_plant_analyses')->insertGetId([
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr('Coverage Planner look up · ' . ($name !== '' ? $name : $ai), 0, 190),
             'params' => json_encode($case, JSON_UNESCAPED_UNICODE), 'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1,

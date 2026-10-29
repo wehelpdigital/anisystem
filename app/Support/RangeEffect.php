@@ -1294,7 +1294,7 @@ class RangeEffect
         $answers = is_array($in['answers'] ?? null) ? FieldProfile::normalize($in['answers'], null) : [];
 
         return ['name' => mb_substr(trim((string) ($in['name'] ?? '')), 0, 80) ?: 'What if', 'place' => mb_substr(trim((string) ($in['place'] ?? '')), 0, 160),
-            'answers' => $answers];
+            'answers' => $answers, 'farm' => ! empty($in['farm'])];
     }
 
     /** A product the book holds, by id, as a try reads it. */

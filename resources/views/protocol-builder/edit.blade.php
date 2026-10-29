@@ -80,6 +80,9 @@
     @media (prefers-reduced-motion: reduce) { .pb-tools { transition: none; } }
     @media (min-width: 480px) { .pb-tool-w { display: inline; } }
     .pb-tool.is-div { color: #92400e; border-color: #fcd34d; }
+    .pb-tool.is-cov { color: #14210c; background: #f5c518; border-color: #f5c518; }
+    .pb-tool.is-cov:not(:disabled):hover { background: #ffd43b; border-color: #ffd43b; }
+    @media (max-width: 559.98px) { .pb-tool.is-cov { padding-left: .55rem; padding-right: .55rem; } }
     .pb-tool.is-div:not(:disabled):hover { background: #fffbeb; border-color: #f59e0b; }
     html.dark .pb-tool.is-div { color: #f0d9a8; border-color: #6b4f16; }
     .pb-tool:disabled { opacity: .38; cursor: default; }
@@ -717,6 +720,11 @@
         <button type="button" class="pb-tool is-div" id="pbAddDivTop" data-for="tasks" title="Add a named line between tasks">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3m4 0h4m4 0h3"/><path d="M8 4h8v5l-4-2-4 2z"/></svg> Divider
         </button>
+        {{-- The Coverage Planner on this protocol (2026-10-30, the owner: "as you plan in the protocol builder, you can also
+             open it and check if you are doing right"). --}}
+        <button type="button" class="pb-tool is-cov" id="pbCoverage" data-for="tasks" data-range-effect-open title="How long every product of the protocol keeps working, against what the crop needs each day">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 3v3M16 3v3"/><path d="M6.5 15.5c1.6-3.2 3.4-3.2 5 0s3.4 3.2 5 0"/></svg> Coverage
+        </button>
         <button type="button" class="pb-tool is-add" id="pbAddMatTop" data-for="materials">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Material
         </button>
@@ -1177,6 +1185,7 @@
 
 @include('partials.user-tags')
 @include('sm.partials.anee-wait')
+@include('sm.partials.range-effect', ['schedule' => null, 'rfxProtocol' => $protocol])
 
 <script>
 (() => {
@@ -1631,6 +1640,86 @@
             c.classList.toggle('is-out', !!t && (isNote(t) || (isTask(t) && !FILTER.has(t.type || 'other'))));
         });
     }
+    /* ---- the Coverage Planner's side of this page (sm.partials.range-effect, protocol mode) ----
+       source() is the protocol as it stands here, saved or not; check() and add() put the products planned there in as
+       tasks on their day of the count: a task of their kind that day takes them as more lines, else a new task of that
+       kind; a product the day's tasks already carry is left as it is, one listed twice goes in once, nothing is removed.
+       The add is one step of Undo. */
+    const COV_TITLE = { fertilizer: 'Fertilizer application', foliar_spray: 'Foliar spray', herbicide: 'Herbicide spray', pesticide: 'Insecticide spray',
+        fungicide: 'Fungicide spray', microbial: 'Microbial application', other: 'Application' };
+    const covType = (t, m) => {
+        if (t === 'herbicide') return 'herbicide';
+        if (['insecticide', 'acaricide', 'molluscicide', 'nematicide', 'rodenticide'].includes(t)) return 'pesticide';
+        if (t === 'fungicide') return 'fungicide';
+        if (t === 'biological') return 'microbial';
+        if (m === 'foliar' || (m !== 'granular' && ['foliar', 'soluble', 'biostimulant', 'pgr'].includes(t))) return 'foliar_spray';
+        if (m === 'granular' || ['granular', 'amendment', ''].includes(t || '')) return 'fertilizer';
+        return 'other';
+    };
+    const covKind = (t) => ({ herbicide: 'herbicide', insecticide: 'insecticide', acaricide: 'insecticide', nematicide: 'insecticide', fungicide: 'fungicide', molluscicide: 'molluscicide',
+        rodenticide: 'rodenticide', granular: 'fertilizer', amendment: 'fertilizer', foliar: 'foliar', soluble: 'foliar', pgr: 'growth', adjuvant: 'adjuvant', biological: 'bio', biostimulant: 'bio' }[t] || 'other');
+    const covKey = (x) => String(x || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const covDay = (date, o) => {
+        const diff = (a, b) => Math.round((new Date(a + 'T00:00:00') - new Date(b + 'T00:00:00')) / 864e5);
+        const cs = counters();
+        if (cs.includes('DAT') && o.transplant && date >= o.transplant) return { counter: 'DAT', day: diff(date, o.transplant) };
+        return { counter: cs[0], day: diff(date, o.start) };
+    };
+    function covPlan(tries, o) {
+        const seen = new Set();
+        const rows = (tries || []).map((t, i) => {
+            const base = { i, name: t.name || 'A product', date: t.date || '', qty: Number(t.qty) || 0, unit: t.unit || '', task: '', note: '' };
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(base.date) || !o || !o.start) return { ...base, status: 'bad', note: 'It has no day.' };
+            const when = covDay(base.date, o), type = covType(t.t || '', t.method || null), key = covKey(base.name);
+            const sk = when.counter + ':' + when.day + ':' + (t.productId || key);
+            if (seen.has(sk)) return { ...base, ...when, type, key, status: 'twice', note: 'It is in your list twice on this day: it goes in once.' };
+            seen.add(sk);
+            const same = TASKS.filter((x) => isTask(x) && x.counter === when.counter && Number(x.day) === when.day);
+            const there = same.find((x) => (x.groups || []).some((g) => (g.items || []).some((it) => { const k = covKey(it.name); return k && (k === key || (key.length >= 4 && k.startsWith(key))); })));
+            if (there) return { ...base, ...when, type, key, status: 'there', task: there.title };
+            const join = same.find((x) => x.type === type);
+            return { ...base, ...when, type, key, status: join ? 'join' : 'new', task: join ? join.title : COV_TITLE[type], joinId: join ? join.id : null };
+        });
+        const made = { tasks: 0, lines: 0, there: 0, twice: 0, bad: 0, new: 0, join: 0 };
+        rows.forEach((r) => { if (made[r.status] !== undefined) made[r.status]++; });
+        return { rows, made };
+    }
+    window.pbCoverage = {
+        source: () => ({ tasks: TASKS, materials: MATS }),
+        check: (tries, o) => covPlan(tries, o),
+        add: (tries, o) => {
+            const plan = covPlan(tries, o);
+            const go = plan.rows.filter((r) => r.status === 'new' || r.status === 'join');
+            if (!go.length) return { data: plan, message: 'Everything was in the protocol already.' };
+            commit('Put in from the Coverage Planner', () => {
+                const fresh = {};
+                let pos = TASKS.reduce((m, x) => Math.max(m, Number(x.pos) || 0), 0);
+                go.forEach((r) => {
+                    const t = tries[r.i];
+                    const line = { id: uid('i'), name: r.name, kind: covKind(t.t || ''), amount: r.qty > 0 ? `${r.qty} ${r.unit}`.trim() : '', materialId: null, qty: null };
+                    let task = r.joinId ? TASKS.find((x) => x.id === r.joinId) : null;
+                    if (!task) {
+                        const fk = r.counter + ':' + r.day + ':' + r.type;
+                        task = fresh[fk];
+                        if (!task) {
+                            pos += 10;
+                            task = fresh[fk] = { id: uid('t'), counter: r.counter, day: r.day, title: COV_TITLE[r.type] || 'Application', subtitle: '', description: 'Put in from the Coverage Planner.',
+                                type: r.type, groups: [], note: '', priority: 'medium', workers: null, pos };
+                            TASKS.push(task);
+                            plan.made.tasks++;
+                        }
+                    }
+                    if (!task.groups.length) task.groups.push({ id: uid('g'), title: '', perKnapsack: false, loads: null, items: [] });
+                    task.groups[0].items.push(line);
+                    plan.made.lines++;
+                    flash(task.id);
+                });
+            });
+            const m = plan.made;
+            return { data: plan, message: (m.lines === 1 ? 'One product is in the protocol' : m.lines + ' products are in the protocol') + (m.tasks ? ', in ' + (m.tasks === 1 ? 'a new task' : m.tasks + ' new tasks') : '') + '.' };
+        },
+    };
+
     function render() {
         USE = useOf(TASKS);
         renderHead();

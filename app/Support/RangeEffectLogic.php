@@ -125,7 +125,7 @@ final class RangeEffectLogic
         $farm = ! $custom && FarmLots::ready() ? LotSync::farmOf($s, $lot) : null;
         $near = $farm && ! $answers ? LotSync::nearAnswered($s, $farm) : null;
 
-        return $memo[$mk] = ['in' => $in, 'key' => $key, 'f' => array_values($f), 'from' => $from, 'custom' => $custom ? $custom['name'] : null,
+        return $memo[$mk] = ['in' => $in, 'key' => $key, 'f' => array_values($f), 'from' => $from, 'custom' => $custom ? $custom['name'] : null, 'customFarm' => $custom && ! empty($custom['farm']),
             'farm' => $farm ? ['id' => (int) $farm['id'], 'name' => (string) $farm['name']] : null,
             'near' => $near ? ['id' => (int) $near['id'], 'name' => (string) $near['name'], 'same' => $near['same']] : null,
             'facts' => ['say' => self::soilWords($texture, $ph, $f), 'from' => $from, 'texture' => $texture, 'ph' => $ph, 'factors' => array_values($f), 'place' => $place]];
@@ -296,6 +296,17 @@ final class RangeEffectLogic
         $near = $soil['near'] ?? null;
         $name = $farm ? $farm['name'] : 'This lot';
         // A what-if lot: its own answers, nothing to answer in Global Lots.
+        if (! empty($soil['custom']) && ! empty($soil['customFarm'])) {
+            // A lot of Global Lots taken as the basis of a protocol (the Protocol Builder's planner).
+            $text = match ($from) {
+                'answers' => 'From your answers about ' . $soil['custom'] . ' in Global Lots.',
+                'both' => 'From your answers about ' . $soil['custom'] . ' in Global Lots, with the typical soil of the area where a question is still open.',
+                'area' => $soil['custom'] . ' has no answers in Global Lots yet, so this is the typical soil of the area. Answer its questions there to make it yours.',
+                default => $soil['custom'] . ' has no answers in Global Lots and its place has no soil record, so the soil is not counted.',
+            };
+
+            return ['k' => 'soil', 'icon' => '🪨', 'tone' => in_array($from, ['area', 'none'], true) ? 'warn' : 'info', 'title' => 'Your soil: ' . $soil['facts']['say'], 'text' => $text, 'acts' => []];
+        }
         if (! empty($soil['custom'])) {
             $text = match ($from) {
                 'answers' => 'From the answers of ' . $soil['custom'] . ', the what-if lot. It is not a lot of yours: only this reading uses it.',
