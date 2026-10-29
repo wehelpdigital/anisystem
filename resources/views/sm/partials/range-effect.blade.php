@@ -94,7 +94,8 @@
                     </div>
                 </div>
                 <div class="rfx-row is-sub">
-                    <span class="rfx-label">Try</span>
+                    {{-- Called Fertilizers since 2026-10-30 (the owner: "change try to fertilizers"), with no limit on how many. --}}
+                    <span class="rfx-label">Fertilizers</span>
                     <div class="rfx-tries">
                         {{-- Its own button, first, so a long list of tries never pushes it away. --}}
                         <button type="button" class="rfx-add" data-rfx-try-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>A product you plan to apply</button>
@@ -182,7 +183,7 @@
         <div class="rfx-edit" data-rfx-edit hidden>
             <div class="rfx-edit-veil" data-rfx-edit-x></div>
             <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxEditT">
-                <div class="rfx-day-h"><div><b id="rfxEditT">Change your try</b><small>Its day, how it goes on, and how much</small></div><button type="button" class="rfx-x" data-rfx-edit-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+                <div class="rfx-day-h"><div><b id="rfxEditT">Change this fertilizer</b><small>Its day, how it goes on, and how much</small></div><button type="button" class="rfx-x" data-rfx-edit-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
                 <div class="rfx-picked-p" data-rfx-edit-p></div>
                 <div class="rfx-how" role="radiogroup" aria-label="How you apply it" data-rfx-edit-how data-on="granular">
                     <i class="rfx-how-pill" aria-hidden="true"></i>
@@ -300,7 +301,6 @@
         box-shadow: 0 8px 18px -10px rgb(184 138 0 / .9); transition: background-color .28s, transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s; }
     .rfx-add:hover { background: #ffd43b; transform: translateY(-1px); }
     .rfx-add svg { width: .9rem; height: .9rem; }
-    .rfx-add.is-full { color: var(--rx-muted); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
     /* Several checks: the one the calendar shows is filled, the rest are outlined in their own colour. */
     .rfx-sel { display: flex; flex-wrap: wrap; gap: .4rem; }
     .rfx-sel .rfx-chip { gap: .4rem; padding: .35rem .45rem .35rem .7rem; animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; }
@@ -802,7 +802,6 @@
     const STATE = { ok: ['Covered', '#4a7c2a'], thin: ['Thin', '#f59e0b'], gap: ['Gap: critical, not covered', '#dc2626'], late: ['Late: the crop no longer takes it', '#8b5cf6'],
         extra: ['Covered when it matters little', '#8b5cf6'], watch: ['Worth watching', '#86c25a'], pre: ['Before the crop', '#86c25a'], none: ['Nothing needed', '#d1d5db'] };
     const CRIT = ['Not needed now', 'Low', 'Matters', 'Critical'];
-    const MAX_TRIES = 8;
     // What an application is doing, in its order, and each phase's colour where CSS cannot reach (the chart's SVG).
     const PH_ORDER = ['soil', 'absorb', 'strong', 'easing', 'fading'];
     const PHC = { soil: '#a8723f', absorb: '#22b09a', strong: '#3b7a1f', easing: '#86c25a', fading: '#cfe8b8' };
@@ -898,7 +897,7 @@
                 if (!S.checks.length) S.checks = [fits(st.check) ? st.check : 'n:N'];
                 S.check = S.checks.includes(st.check) ? st.check : S.checks[0];
                 S.tab = ['nut', 'micro', 'prot', 'pest'].includes(st.tab) ? st.tab : tabOf(S.check);
-                S.tries = (Array.isArray(st.tries) ? st.tries : []).filter((t) => t && t.date && (t.productId || t.ai)).slice(0, MAX_TRIES);
+                S.tries = (Array.isArray(st.tries) ? st.tries : []).filter((t) => t && t.date && (t.productId || t.ai));
                 S.logic = { ...LOGIC_DEF, ...(st.logic || {}) };
                 S.hide = (Array.isArray(st.hide) ? st.hide : []).filter((k) => S.checks.includes(k));
                 if (st.savedId && (S.opts.saved || []).some((x) => x.id === st.savedId)) { S.savedId = st.savedId; S.savedTitle = st.savedTitle || ''; }
@@ -1061,7 +1060,6 @@
     const tryBox = $('[data-rfx-try]');
     const paintTries = () => {
         $('[data-rfx-tries]').innerHTML = S.tries.map((t, i) => `<span class="rfx-chip is-try" data-try="${i}" role="button" tabindex="0" title="Tap to change it">${t.method === 'foliar' ? '💧' : '🟤'} ${esc(t.name)} <small>${esc(say(t.date))}${t.method ? ' · ' + t.method : ''}${t.qty ? ' · ' + t.qty + ' ' + esc(t.unit) : ''}</small><svg class="rfx-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg><button type="button" data-untry="${i}" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`).join('');
-        $('[data-rfx-try-open]').classList.toggle('is-full', S.tries.length >= MAX_TRIES);
     };
     $('[data-rfx-tries]').addEventListener('click', (e) => {
         const b = e.target.closest('[data-untry]');
@@ -1086,7 +1084,7 @@
         const t = S.tries[i];
         if (!t) return;
         editing = i;
-        $('[data-rfx-edit-p]').innerHTML = `<em>${t.method === 'foliar' ? '💧' : '🟤'}</em><span><b>${esc(t.name)}</b><small>${esc(t.line || (t.ai && !t.productId ? 'The active ingredient on its own' : 'Your try'))}</small></span>`;
+        $('[data-rfx-edit-p]').innerHTML = `<em>${t.method === 'foliar' ? '💧' : '🟤'}</em><span><b>${esc(t.name)}</b><small>${esc(t.line || (t.ai && !t.productId ? 'The active ingredient on its own' : 'Added by you'))}</small></span>`;
         setDate($('[data-rfx-edit-date]'), t.date);
         $('[data-rfx-edit-qty]').value = t.qty || '';
         $('[data-rfx-edit-unit]').value = t.unit || 'kg';
@@ -1122,7 +1120,6 @@
         }
     });
     $('[data-rfx-try-open]').addEventListener('click', () => {
-        if (S.tries.length >= MAX_TRIES && tryBox.hidden) { window.toast?.(`Up to ${MAX_TRIES} tries at a time. Take one out first.`, 'error'); return; }
         tryBox.hidden = !tryBox.hidden;
         if (!tryBox.hidden) { resetTry(); setTimeout(() => $('[data-rfx-q]').focus(), 60); }
     });
@@ -1284,7 +1281,7 @@
         const parts = [];
         // A saved reading shows its numbers as they were when it was saved (the owner, 2026-10-30: "i don't get the
         // idea of the read it with today's plan button"): the button counts it again with the tasks on the board now.
-        if (S.recounted) parts.push(`<div class="rfx-banner is-saved"><span>📌 <b>${esc(S.recounted.title)}</b>, saved ${esc(S.recounted.at)}, was counted again just now: the way Range Effect counts has improved since, and your tasks may have changed. Your lot, checks and tries are as you saved them. Tap <b>Update saved reading</b> to keep these numbers.</span></div>`);
+        if (S.recounted) parts.push(`<div class="rfx-banner is-saved"><span>📌 <b>${esc(S.recounted.title)}</b>, saved ${esc(S.recounted.at)}, was counted again just now: the way Range Effect counts has improved since, and your tasks may have changed. Your lot, checks and fertilizers are as you saved them. Tap <b>Update saved reading</b> to keep these numbers.</span></div>`);
         if (S.saved) parts.push(`<div class="rfx-banner is-saved"><span>📌 <b>${esc(S.saved.title)}</b>, saved ${esc(S.saved.at)}. These are its numbers from that day: tasks you added or changed since, and app updates, are not in them.</span><button type="button" class="rfx-btn is-ghost" data-rfx-rerun>Recount with my tasks now</button></div>`);
         if (!R.lot.hasDay) parts.push(`<div class="rfx-banner">📅 This lot has no planting day yet, so the stages and what matters when cannot be shown. Set its day zero in Lots, then open this again.</div>`);
         // A guide only (the owner, 2026-10-30): said every time, above the numbers.
@@ -1301,8 +1298,8 @@
             : pct >= 50 ? `${esc(ck.short)} is covered on most critical days, with gaps.`
             : (isNut ? `${esc(ck.short)} runs short when the crop needs it most.` : `The crop is unguarded against ${esc(ck.word)} on most critical days.`);
         const sub = isNut
-            ? `${sm.apps} application${sm.apps === 1 ? '' : 's'} carry ${esc(ck.word)} on this lot${sm.tries ? `, ${sm.tries} of them a try` : ''}. Each keeps feeding the crop for a while, then fades.`
-            : `${sm.apps} application${sm.apps === 1 ? '' : 's'} act on ${esc(ck.word)}${sm.tries ? `, ${sm.tries} of them a try` : ''}. Protection is only needed when the pest shows up: on a gap, scout first and spray only when you find it.`;
+            ? `${sm.apps} application${sm.apps === 1 ? '' : 's'} carry ${esc(ck.word)} on this lot${sm.tries ? `, ${sm.tries} of them added by you` : ''}. Each keeps feeding the crop for a while, then fades.`
+            : `${sm.apps} application${sm.apps === 1 ? '' : 's'} act on ${esc(ck.word)}${sm.tries ? `, ${sm.tries} of them added by you` : ''}. Protection is only needed when the pest shows up: on a gap, scout first and spray only when you find it.`;
         parts.push(`<div class="rfx-card" data-fold="sum" style="--d:0s"><div class="rfx-card-h">At a glance <small>${pct === null ? 'nothing critical yet' : pct + '% of critical days covered'}${sm.gapDays ? ' · ' + sm.gapDays + ' gap day' + (sm.gapDays === 1 ? '' : 's') : ''}</small></div><div class="rfx-sum">
             <div class="rfx-ring"><svg viewBox="0 0 120 120"><circle class="t" cx="60" cy="60" r="52"/><circle class="v" cx="60" cy="60" r="52" stroke="${ringCol}" data-pct="${pct ?? 0}"/></svg>
               <div class="rfx-ring-n"><b data-count="${pct ?? 0}">${pct === null ? '–' : '0'}</b><small>${pct === null ? 'no critical days' : '% of critical days covered'}</small></div></div>
@@ -1346,7 +1343,7 @@
             const acts = a.acts || [];
             return `<div class="rfx-trow"><span>✨ <b>${esc(a.as)}</b> does not act on ${esc(ck.word)}.${acts.length ? ' It acts on:' : ' We could not read what it carries or guards against. Try its active ingredient, or let Anee look it up.'}</span>${acts.length ? `<span class="rfx-acts">${acts.map((x) => `<button type="button" class="rfx-chip" data-goto="${esc(x.key)}">${esc(x.label)}</button>`).join('')}</span>` : ''}</div>`;
         }).concat(trace.map((a) => `<div class="rfx-trow"><span>✨ <b>${esc(a.as)}</b>${a.amount ? ' at ' + esc(a.amount) : ''} gives very little ${esc(ck.word)}: about ${a.effect.kgHa} kg of ${EL[a.effect.el] || esc(a.effect.el)} a hectare, where one usual ${a.form === 'foliar' ? 'leaf spray gives' : 'dose on the soil gives'} about ${a.effect.ref}. Its days still show, faintly.</span></div>`));
-        return `<div class="rfx-card" data-fold="tries" style="--d:0s"><div class="rfx-card-h">Your tries <small>${meta}</small></div><div class="rfx-trows">${rows.join('')}</div></div>`;
+        return `<div class="rfx-card" data-fold="tries" style="--d:0s"><div class="rfx-card-h">Your fertilizers <small>${meta}</small></div><div class="rfx-trows">${rows.join('')}</div></div>`;
     };
     /* Folding sections (the owner, 2026-10-30: "make that part expandable contractable including the other sections below
        it for easier reading and not info overload"): the answer and the calendar open, the rest a line each until opened.
@@ -1633,7 +1630,7 @@
               <g class="ln${offMain}" data-ln="${mk}">${ribbon}</g>${months}${today}${harv}${dots}
             </svg></div></div>
             ${phaseLegend(R)}
-            <div class="rfx-legend"><span><i class="rfx-leg-band is-crit"></i>Critical stage</span><span><i class="rfx-leg-band is-mid"></i>Matters</span>${R.days.some((d) => d.t) ? '<span><i style="background:#f5c518"></i>Your try</span>' : ''}<span><i class="rfx-leg-dot is-done"></i>Done</span><span><i class="rfx-leg-dot is-plan"></i>Planned</span></div></div>`;
+            <div class="rfx-legend"><span><i class="rfx-leg-band is-crit"></i>Critical stage</span><span><i class="rfx-leg-band is-mid"></i>Matters</span>${R.days.some((d) => d.t) ? '<span><i style="background:#f5c518"></i>Added by you</span>' : ''}<span><i class="rfx-leg-dot is-done"></i>Done</span><span><i class="rfx-leg-dot is-plan"></i>Planned</span></div></div>`;
     };
     /* The phases this reading shows, in the order one application lives them. */
     const phaseLegend = (R, all = null) => {
@@ -1666,7 +1663,7 @@
                 if (!d) { cells.push(`<span class="rfx-cell is-out"><span class="rfx-n" style="opacity:.35">${dd}</span></span>`); continue; }
                 crit += d.c >= 2 ? 1 : 0;
                 const here = appsOn[ds] || [];
-                const ap = here.slice(0, 2).map((a) => `<i class="${a.try ? 'is-try' : a.done ? '' : 'is-plan'}" title="${esc(a.as)}${a.try ? ', your try' : a.done ? ', done' : ', planned'}"><svg><use href="#rfxI-${apMark(a)}"/></svg></i>`).join('')
+                const ap = here.slice(0, 2).map((a) => `<i class="${a.try ? 'is-try' : a.done ? '' : 'is-plan'}" title="${esc(a.as)}${a.try ? ', added by you' : a.done ? ', done' : ', planned'}"><svg><use href="#rfxI-${apMark(a)}"/></svg></i>`).join('')
                     + (here.length > 2 ? `<b>+${here.length - 2}</b>` : '');
                 // Text over the fill: the number when it is nearly full, the day count from about half; white on the
                 // deep fills, near black on the pale ones.
@@ -1695,7 +1692,7 @@
               <span><span class="rfx-ap"><i><svg><use href="#rfxI-gran"/></svg></i></span>Spread on the soil</span>
               <span><span class="rfx-ap"><i><svg><use href="#rfxI-drop"/></svg></i></span>Sprayed or poured</span>
               <span><span class="rfx-ap"><i><svg><use href="#rfxI-leaf"/></svg></i></span>Organic or biological</span>
-              <span><span class="rfx-ap"><i class="is-try"><svg><use href="#rfxI-star"/></svg></i></span>Your try</span>
+              <span><span class="rfx-ap"><i class="is-try"><svg><use href="#rfxI-star"/></svg></i></span>Added by you</span>
               <span><span class="rfx-ap"><i class="is-plan"><svg><use href="#rfxI-gran"/></svg></i></span>Outlined: still planned</span></div></div>`;
     };
     // How a product went on, as its mark: a try's star, a spray's drop, organic's leaf, else granules.
@@ -1722,13 +1719,13 @@
             const trace = e.dose === 'trace' && e.kgHa !== null ? `<small class="rfx-trace">Very little at this amount: about ${e.kgHa} kg of ${EL[e.el] || esc(e.el)} a hectare, where one usual ${a.form === 'foliar' ? 'leaf spray' : 'dose on the soil'} gives about ${e.ref}.</small>` : '';
             return `<div class="rfx-app ${a.try ? 'is-try' : ''}" style="--d:${.18 + Math.min(k, 10) * .04}s">
                 <span class="rfx-app-d"><small>${MON[d.getMonth()]}</small><b>${d.getDate()}</b></span>
-                <div class="rfx-app-t"><b>${esc(a.as)}</b>${a.try ? '<span class="rfx-tag is-try">Your try</span>' : a.done ? '<span class="rfx-tag is-done">Done</span>' : '<span class="rfx-tag">Planned</span>'}${e.conf === 'estimate' || e.conf === 'low' ? '<span class="rfx-tag is-est">Estimated</span>' : ''}
+                <div class="rfx-app-t"><b>${esc(a.as)}</b>${a.try ? '<span class="rfx-tag is-try">Added by you</span>' : a.done ? '<span class="rfx-tag is-done">Done</span>' : '<span class="rfx-tag">Planned</span>'}${e.conf === 'estimate' || e.conf === 'low' ? '<span class="rfx-tag is-est">Estimated</span>' : ''}
                   <small>${esc([a.title !== 'If you apply it' ? a.title : '', a.amount, a.formWord, doseWord].filter(Boolean).join(' · '))}</small>
                   <small>Works${by} from <b>${say(e.from)}</b> to about <b>${say(e.full)}</b>, fading out by ${say(e.until)} (${e.days[1]} days, ${e.days[0]} to ${e.days[2]}).</small>
                   <div class="rfx-bar"><span class="rfx-segs">${segs}</span></div>${phRow}${trace}
                   ${e.note ? `<div class="rfx-app-n">${esc(e.note)}</div>` : ''}</div></div>`;
         }).join('');
-        const none = !rel.length ? `<div class="rfx-empty" style="padding:1.2rem"><p>Nothing on this lot's tasks acts on ${esc(R.check.word)} yet. Add it to a task, or try a product above to see what it would do.</p></div>` : '';
+        const none = !rel.length ? `<div class="rfx-empty" style="padding:1.2rem"><p>Nothing on this lot's tasks acts on ${esc(R.check.word)} yet. Add it to a task, or add a product under Fertilizers above to see what it would do.</p></div>` : '';
         const oth = other.length ? `<details class="rfx-other"><summary>${other.length} other product${other.length === 1 ? '' : 's'} on this lot do not act on ${esc(R.check.word)}</summary><ul>${other.map((a) => `<li>${say(a.date)} · ${esc(a.as)}${a.carries.length ? ' (' + esc(a.carries.join(', ')) + ')' : a.ai.length ? ' (' + esc(a.ai.join(' + ')) + ')' : ''}</li>`).join('')}</ul></details>` : '';
         return `<div class="rfx-card" data-fold="apps" style="--d:.2s"><div class="rfx-card-h">What is working <small>${rel.length} product${rel.length === 1 ? '' : 's'}</small></div><div class="rfx-apps">${rows}${none}</div>${oth}</div>`;
     };
@@ -1813,7 +1810,7 @@
         dayBox.innerHTML = `<div class="rfx-day-h"><div><b>${DOW[D(ds).getDay()]}, ${sayY(ds)}</b><small>${esc([d.dl, g.label].filter(Boolean).join(' · '))}</small></div><button type="button" class="rfx-x" data-rfx-day-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
             <div class="rfx-meter"><i style="width:0;background:${col}" data-w="${Math.min(100, pct)}"></i></div>
             <p>${cmpOn ? `<b style="color:${colorOf(R.check.key)}">${esc(R.check.label)}</b>: ` : ''}<b>${STATE[d.s] ? STATE[d.s][0] : ''}</b>. Coverage ${pct}% of one full dose. ${d.c ? 'This stage: ' + CRIT[d.c].toLowerCase() + '.' : ''} ${esc(g.why || '')}</p>
-            ${apps.length ? `<ul>${apps.map((a) => { const ph = phaseOn(a); return `<li><i class="rfx-sw is-${ph ? ph.p : 'strong'}"></i> <b>${esc(a.as)}</b> (${say(a.date)}${a.try ? ', your try' : ''}): ${ph ? esc(ph.w.charAt(0).toLowerCase() + ph.w.slice(1)) + (ph.p === 'soil' ? ', taken up from ' + say(a.effect.from) : ph.p === 'fading' ? ', gone by about ' + say(a.effect.until) : ', working until about ' + say(a.effect.full)) : 'working until about ' + say(a.effect.full)}</li>`; }).join('')}</ul>` : '<p style="color:#6b7280">Nothing applied is working on this day.</p>'}`;
+            ${apps.length ? `<ul>${apps.map((a) => { const ph = phaseOn(a); return `<li><i class="rfx-sw is-${ph ? ph.p : 'strong'}"></i> <b>${esc(a.as)}</b> (${say(a.date)}${a.try ? ', added by you' : ''}): ${ph ? esc(ph.w.charAt(0).toLowerCase() + ph.w.slice(1)) + (ph.p === 'soil' ? ', taken up from ' + say(a.effect.from) : ph.p === 'fading' ? ', gone by about ' + say(a.effect.until) : ', working until about ' + say(a.effect.full)) : 'working until about ' + say(a.effect.full)}</li>`; }).join('')}</ul>` : '<p style="color:#6b7280">Nothing applied is working on this day.</p>'}`;
         // How much that day and so far; the crop's health that day.
         const A = R.logic?.amt;
         const ix = R.days.indexOf(d);

@@ -41,7 +41,9 @@ class RangeEffectController extends BaseScheduleController
 
     public const SAVED = 'as_range_effects';
 
-    public const MAX_TRIES = 8;
+    // No limit the farmer meets (2026-10-30, the owner: "dont have limit into adding in try"): only a guard against a
+    // runaway request.
+    public const MAX_TRIES = 200;
 
     private function gate()
     {
