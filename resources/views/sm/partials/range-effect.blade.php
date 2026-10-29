@@ -419,6 +419,24 @@
     .rfx-chart .try-l { fill: none; stroke: #e0a800; stroke-width: 2.2; stroke-dasharray: 5 4; }
     .rfx-chart .reveal { clip-path: inset(0 100% 0 0); animation: rfxWipe 1.3s cubic-bezier(.45,0,.25,1) .15s forwards; }
     @keyframes rfxWipe { to { clip-path: inset(0 0 0 0); } }
+    .rfx-chart .ln { transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-chart .ln.is-off { opacity: 0; pointer-events: none; }
+    /* The chart's switches: filled in its colour when shown, a ring of it when hidden, a plus when not picked yet. */
+    .rfx-lnrow { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; padding: 0 1rem .55rem; }
+    .rfx-ln { display: inline-flex; align-items: center; gap: .4rem; min-height: 2rem; padding: .3rem .75rem .3rem .55rem; border-radius: 999px; font-size: .82rem; font-weight: 800; color: var(--rx-text); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-line-2);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), transform .2s, opacity .2s; animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 30ms); }
+    .rfx-ln:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-ln:focus-visible { outline: 2px solid var(--rx-accent); outline-offset: 2px; }
+    .rfx-ln i { flex: none; width: .7rem; height: .7rem; border-radius: 999px; box-shadow: inset 0 0 0 2px var(--sc); transition: background-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-ln svg { flex: none; width: .75rem; height: .75rem; opacity: .7; }
+    .rfx-ln small { font-size: .68rem; font-weight: 700; opacity: .85; }
+    .rfx-ln.is-on { color: #fff; background: var(--sc); box-shadow: 0 8px 16px -12px var(--sc); }
+    .rfx-ln.is-on i { background: #fff; box-shadow: none; }
+    html.dark .rfx-ln.is-on { color: #111a0c; }
+    html.dark .rfx-ln.is-on i { background: #111a0c; }
+    .rfx-ln:not(.is-on):not(.is-add) { color: var(--rx-muted); }
+    .rfx-ln.is-add { color: var(--rx-muted); background: transparent; box-shadow: inset 0 0 0 1.5px var(--rx-line); }
+    .rfx-ln.is-busy { opacity: .55; pointer-events: none; }
     .rfx-chart .grid { stroke: var(--rx-line); stroke-width: 1; }
     .rfx-chart .base { stroke: var(--rx-line-2); stroke-width: 1.2; }
     .rfx-chart .dose { stroke: var(--rx-faint); stroke-width: 1; stroke-dasharray: 2 4; }
@@ -793,7 +811,7 @@
     // What the reading counts besides coverage (RangeEffectLogic): every part on until the farmer switches it off.
     const LOGIC_DEF = { amt: true, soil: true, links: true, health: true };
     const S = { opts: null, lot: null, check: 'n:N', checks: ['n:N'], tab: 'nut', tries: [], res: null, saved: null, picked: null, q: '', busy: false,
-        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '', recounted: null };
+        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '', recounted: null, hide: [] };
     const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg>';
     const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>';
     const kgSay = (v) => { v = Number(v) || 0; return v >= 10 ? String(Math.round(v)) : v >= 1 ? String(Math.round(v * 10) / 10) : String(Math.round(v * 100) / 100); };
@@ -817,7 +835,7 @@
     const keep = () => {
         if (!S.opts) return;
         try {
-            localStorage.setItem(KEEP, JSON.stringify({ lot: S.lot, check: S.check, checks: S.checks, tab: S.tab, tries: S.tries, logic: S.logic,
+            localStorage.setItem(KEEP, JSON.stringify({ lot: S.lot, check: S.check, checks: S.checks, tab: S.tab, tries: S.tries, logic: S.logic, hide: S.hide,
                 // A hidden sheet reads as scrolled to the top: keep where it was when it closed.
                 savedId: S.savedId, savedTitle: S.savedTitle, top: Math.round(M.hidden || !M.classList.contains('is-on') ? (S.lastTop || 0) : scroller().scrollTop), at: Date.now() }));
         } catch (_) {}
@@ -882,6 +900,7 @@
                 S.tab = ['nut', 'micro', 'prot', 'pest'].includes(st.tab) ? st.tab : tabOf(S.check);
                 S.tries = (Array.isArray(st.tries) ? st.tries : []).filter((t) => t && t.date && (t.productId || t.ai)).slice(0, MAX_TRIES);
                 S.logic = { ...LOGIC_DEF, ...(st.logic || {}) };
+                S.hide = (Array.isArray(st.hide) ? st.hide : []).filter((k) => S.checks.includes(k));
                 if (st.savedId && (S.opts.saved || []).some((x) => x.id === st.savedId)) { S.savedId = st.savedId; S.savedTitle = st.savedTitle || ''; }
                 S.restoreTop = Number(st.top) || 0;
             }
@@ -965,15 +984,17 @@
         run();
     };
     // A tap adds a check to the comparison (and shows it), or takes it out; one always stays.
-    const togglePick = (key) => {
+    // keepMain: added beside the one the calendar shows (the season chart's switches), not in its place.
+    const togglePick = (key, keepMain = false) => {
         if (S.checks.includes(key)) {
             if (S.checks.length === 1) return;
             S.checks = S.checks.filter((k) => k !== key);
+            S.hide = S.hide.filter((k) => k !== key);
             if (S.check === key) S.check = S.checks[S.checks.length - 1];
         } else {
             if (S.checks.length >= SERIES.length) { window.toast?.(`Up to ${SERIES.length} at a time. Take one out first.`, 'error'); return; }
             S.checks = [...S.checks, key];
-            S.check = key;
+            if (!keepMain) S.check = key;
         }
         // The chips stay where they are; only their marks change.
         $$('[data-rfx-picks] [data-check]').forEach((x) => { const k = x.dataset.check; x.classList.toggle('is-on', S.checks.includes(k)); x.setAttribute('aria-pressed', String(S.checks.includes(k))); });
@@ -1500,10 +1521,57 @@
             <div class="rfx-legend"><span><i style="background:linear-gradient(180deg,#dc2626 0 22%,var(--rx-soft) 22%);box-shadow:inset 0 0 0 1px var(--rx-line)"></i>A line on top: that one is critical now</span><span><i style="background:var(--rx-gap-line)"></i>A gap</span><span><i style="background:var(--rx-today);width:3px"></i>Today</span></div></div>`;
     };
 
+    /* Quick switches over the season chart (the owner, 2026-10-30: "the season have a quick toggle buttons to show and
+       hide the nutrients"). A picked check shows or hides its line at a tap, nothing counted again. With a nutrient
+       shown, N, P, K and every nutrient the season's products carry are offered too: one not picked yet is added to
+       the comparison (counted then) and shown, beside the shaded one. One always stays on the chart. */
+    const shownOn = (key) => S.checks.includes(key) && !S.hide.includes(key);
+    const seasonKeys = (R) => {
+        const nuts = ((S.opts || {}).nutrients || []).map((n) => n.key);
+        const carried = new Set(['n:N', 'n:P', 'n:K']);
+        (R.apps || []).forEach((a) => (a.carries || []).forEach((c) => carried.add('n:' + String(c).split(' ')[0])));
+        const offer = R.check.kind === 'nutrient' ? nuts.filter((k) => carried.has(k) && !S.checks.includes(k)) : [];
+        return [...S.checks, ...offer];
+    };
+    const lnRowHtml = (R) => {
+        const keys = seasonKeys(R);
+        if (keys.length < 2) return '';
+        const nuts = (S.opts || {}).nutrients || [];
+        const name = (k) => { const n = nuts.find((x) => x.key === k); return n ? n.short : labelOf(k); };
+        const add = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>';
+        return `<div class="rfx-lnrow" role="group" aria-label="Show or hide on the chart">${keys.map((k, i) => {
+            const picked = S.checks.includes(k), on = shownOn(k);
+            return `<button type="button" class="rfx-ln${on ? ' is-on' : ''}${picked ? '' : ' is-add'}" data-ln-t="${esc(k)}" aria-pressed="${on}" style="--sc:${picked ? colorOf(k) : 'var(--rx-faint)'};--k:${i}" title="${esc(labelOf(k))}${picked ? (on ? ': tap to hide it' : ': tap to show it') : ': tap to add it to the chart'}">${picked ? '<i></i>' : add}${esc(name(k))}${k === R.check.key && S.checks.length > 1 ? '<small>shaded</small>' : ''}</button>`;
+        }).join('')}</div>`;
+    };
+    const toggleLine = (key) => {
+        if (!S.checks.includes(key)) {
+            if (S.checks.length >= SERIES.length) { window.toast?.(`Up to ${SERIES.length} on the chart. Take one out first.`, 'error'); return; }
+            const b = $(`[data-ln-t="${key}"]`);
+            if (b) b.classList.add('is-busy');
+            togglePick(key, true);
+            return;
+        }
+        const off = !S.hide.includes(key);
+        if (off && S.checks.filter((k) => !S.hide.includes(k)).length <= 1) { window.toast?.('One stays on the chart.'); return; }
+        S.hide = off ? [...S.hide, key] : S.hide.filter((k) => k !== key);
+        $$(`.rfx-chart [data-ln="${key}"]`).forEach((el) => el.classList.toggle('is-off', off));
+        const b = $(`[data-ln-t="${key}"]`);
+        if (b) {
+            b.classList.toggle('is-on', !off);
+            b.setAttribute('aria-pressed', String(!off));
+            b.title = labelOf(key) + (off ? ': tap to show it' : ': tap to hide it');
+        }
+        keep();
+    };
+
     /* The season as a chart: coverage per day over the stages, each stage tinted by how critical it is. */
     const chartHtml = (R) => {
         const days = R.days;
         if (!days.length) return '';
+        // Every line hidden (the last shown one taken out above): all of them come back.
+        if (S.checks.every((k) => S.hide.includes(k))) S.hide = [];
+        const mk = esc(R.check.key), off = (k) => (shownOn(k) ? '' : ' is-off'), offMain = off(R.check.key);
         const W = 1000, H = 190, top = 22, base = 150, n = days.length;
         const x = (i) => (i / Math.max(1, n - 1)) * W;
         const y = (v) => base - Math.min(1.6, v) / 1.6 * (base - top);
@@ -1525,7 +1593,7 @@
         if (days.some((d) => d.t)) days.forEach((d, i) => { tryLine += (i ? ' L' : 'M') + `${x(i).toFixed(1)} ${y(d.t).toFixed(1)}`; });
         // The other checks being compared, a line each in its own colour.
         const cmp = (R.series || []).length;
-        const others = (R.series || []).map((sr) => `<path d="${sr.v.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ')}" fill="none" stroke="${colorOf(sr.check.key)}" stroke-width="1.8" stroke-linejoin="round" opacity=".9"/>`).join('');
+        const others = (R.series || []).map((sr) => `<path class="ln${off(sr.check.key)}" data-ln="${esc(sr.check.key)}" d="${sr.v.map((v, i) => (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ')}" fill="none" stroke="${colorOf(sr.check.key)}" stroke-width="1.8" stroke-linejoin="round" opacity=".9"/>`).join('');
         // The coverage takes the colour of what the strongest product is doing that day, and a ribbon under the
         // baseline shows every phase, the days in the soil too (nothing covers yet, so the area has no height there).
         let stops = '', prev = PHC.strong;
@@ -1553,19 +1621,18 @@
             if (i < 0) return;
             dots += `<circle class="app ${a.try ? 'is-try' : a.done ? 'is-done' : 'is-plan'}" cx="${x(i).toFixed(1)}" cy="${base + 32}" r="5.5" data-jump="${a.date}"><title>${esc(a.as)} · ${say(a.date)}</title></circle>`;
         });
-        return `<div class="rfx-card" data-fold="chart" style="--d:.08s"><div class="rfx-card-h">The season <small>coverage of ${esc(R.check.word)}, day by day</small></div><div class="rfx-chart"><div class="rfx-chart-w">
+        return `<div class="rfx-card" data-fold="chart" style="--d:.08s"><div class="rfx-card-h">The season <small>coverage of ${esc(R.check.word)}, day by day</small></div>${lnRowHtml(R)}<div class="rfx-chart"><div class="rfx-chart-w">
             <svg viewBox="0 -4 ${W} ${H + 26}" aria-label="Coverage over the season">
               <defs><linearGradient id="rfxPhG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${W}" y2="0">${stops}</linearGradient>
                 <linearGradient id="rfxCovV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
                 <mask id="rfxCovM" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${base + 1}"><rect x="0" y="0" width="${W}" height="${base + 1}" fill="url(#rfxCovV)"/></mask></defs>
               ${bands}${labels}
               <line class="dose" x1="0" x2="${W}" y1="${full.toFixed(1)}" y2="${full.toFixed(1)}"/><text class="mo" x="2" y="${(full - 4).toFixed(1)}">one full dose</text>
-              <g class="reveal"><path d="${area}" fill="url(#rfxPhG)" mask="url(#rfxCovM)"/>${others}<path class="cov-l" d="${line}" ${cmp ? `style="stroke:${colorOf(R.check.key)};stroke-width:2.6"` : ''}/>${tryLine ? `<path class="try-l" d="${tryLine}"/>` : ''}</g>
+              <g class="reveal"><path class="ln${offMain}" data-ln="${mk}" d="${area}" fill="url(#rfxPhG)" mask="url(#rfxCovM)"/>${others}<path class="cov-l ln${offMain}" data-ln="${mk}" d="${line}" ${cmp ? `style="stroke:${colorOf(R.check.key)};stroke-width:2.6"` : ''}/>${tryLine ? `<path class="try-l ln${offMain}" data-ln="${mk}" d="${tryLine}"/>` : ''}</g>
               <line class="base" x1="0" x2="${W}" y1="${base}" y2="${base}"/>
-              ${ribbon}${months}${today}${harv}${dots}
+              <g class="ln${offMain}" data-ln="${mk}">${ribbon}</g>${months}${today}${harv}${dots}
             </svg></div></div>
             ${phaseLegend(R)}
-            ${cmp ? `<div class="rfx-legend"><b class="rfx-leg-h">Lines</b>${allChecks(R).map((c) => `<span><i style="background:${colorOf(c.key)};height:.25rem;border-radius:999px"></i>${esc(c.label)}${c.main ? ' (shaded, its stages tinted)' : ''}</span>`).join('')}</div>` : ''}
             <div class="rfx-legend"><span><i class="rfx-leg-band is-crit"></i>Critical stage</span><span><i class="rfx-leg-band is-mid"></i>Matters</span>${R.days.some((d) => d.t) ? '<span><i style="background:#f5c518"></i>Your try</span>' : ''}<span><i class="rfx-leg-dot is-done"></i>Done</span><span><i class="rfx-leg-dot is-plan"></i>Planned</span></div></div>`;
     };
     /* The phases this reading shows, in the order one application lives them. */
@@ -1686,6 +1753,8 @@
             setFold(c, !c.classList.contains('is-open'));
             return;
         }
+        const lt = e.target.closest('[data-ln-t]');
+        if (lt) { toggleLine(lt.dataset.lnT); return; }
         const cp = e.target.closest('[data-copy-ans]');
         if (cp) {
             cp.disabled = true;
