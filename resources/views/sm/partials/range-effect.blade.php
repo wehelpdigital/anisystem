@@ -30,6 +30,9 @@
         'lookup' => route('sm.effect.lookup') . '?scheduleId=' . $schedule->id,
         'job' => url('/app/sm-range-effect/lookup') . '/',
     ];
+    // Granular and foliar, as the try box and the edit dialog both draw them.
+    $rfxHowG = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 25c4-2 8-2 13 0s9 2 13 0v4H3z" fill="#a8723f"/><circle cx="9" cy="13" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="17" cy="9" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="23" cy="16" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="14" cy="19" r="2.4" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/></svg>';
+    $rfxHowF = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 27c0-8 5-15 15-19-2 8-5 15-15 19z" fill="#86c25a" stroke="#3b7a1f" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 27c4-5 7-9 12-14" fill="none" stroke="#3b7a1f" stroke-width="1.4" stroke-linecap="round"/><path d="M24 3c1.6 2.4 2.6 3.8 2.6 5a2.6 2.6 0 01-5.2 0c0-1.2 1-2.6 2.6-5z" fill="#38bdf8"/><path d="M28 11c1 1.5 1.6 2.4 1.6 3.1a1.6 1.6 0 01-3.2 0c0-.7.6-1.6 1.6-3.1z" fill="#38bdf8"/></svg>';
 @endphp
 <div class="rfx" id="rfxModal" role="dialog" aria-modal="true" aria-labelledby="rfxTitle" hidden data-u='@json($rfxU)' data-sid="{{ $schedule->id }}">
     {{-- The calendar's application marks: granules spread, a spray, organic, a try. --}}
@@ -100,11 +103,11 @@
                             <div class="rfx-how" role="radiogroup" aria-label="How you apply it" data-rfx-how data-on="granular">
                                 <i class="rfx-how-pill" aria-hidden="true"></i>
                                 <button type="button" role="radio" aria-checked="true" data-how="granular">
-                                    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 25c4-2 8-2 13 0s9 2 13 0v4H3z" fill="#a8723f"/><circle cx="9" cy="13" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="17" cy="9" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="23" cy="16" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="14" cy="19" r="2.4" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/></svg>
+                                    {!! $rfxHowG !!}
                                     <span><b>Granular</b><small>Spread on the soil or the water</small></span>
                                 </button>
                                 <button type="button" role="radio" aria-checked="false" data-how="foliar">
-                                    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M7 27c0-8 5-15 15-19-2 8-5 15-15 19z" fill="#86c25a" stroke="#3b7a1f" stroke-width="1.4" stroke-linejoin="round"/><path d="M7 27c4-5 7-9 12-14" fill="none" stroke="#3b7a1f" stroke-width="1.4" stroke-linecap="round"/><path d="M24 3c1.6 2.4 2.6 3.8 2.6 5a2.6 2.6 0 01-5.2 0c0-1.2 1-2.6 2.6-5z" fill="#38bdf8"/><path d="M28 11c1 1.5 1.6 2.4 1.6 3.1a1.6 1.6 0 01-3.2 0c0-.7.6-1.6 1.6-3.1z" fill="#38bdf8"/></svg>
+                                    {!! $rfxHowF !!}
                                     <span><b>Foliar</b><small>Sprayed on the leaves</small></span>
                                 </button>
                             </div>
@@ -153,23 +156,72 @@
         </div>
         {{-- One day, opened. --}}
         <div class="rfx-day" data-rfx-day hidden></div>
+        {{-- A try, opened to change it (the owner, 2026-10-30: "if i click the item that is added make it editable like
+             show a modal to edit it"): its day, granular or foliar, how much; or take it out. --}}
+        <div class="rfx-edit" data-rfx-edit hidden>
+            <div class="rfx-edit-veil" data-rfx-edit-x></div>
+            <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxEditT">
+                <div class="rfx-day-h"><div><b id="rfxEditT">Change your try</b><small>Its day, how it goes on, and how much</small></div><button type="button" class="rfx-x" data-rfx-edit-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+                <div class="rfx-picked-p" data-rfx-edit-p></div>
+                <div class="rfx-how" role="radiogroup" aria-label="How you apply it" data-rfx-edit-how data-on="granular">
+                    <i class="rfx-how-pill" aria-hidden="true"></i>
+                    <button type="button" role="radio" aria-checked="true" data-how="granular">{!! $rfxHowG !!}<span><b>Granular</b><small>Spread on the soil or the water</small></span></button>
+                    <button type="button" role="radio" aria-checked="false" data-how="foliar">{!! $rfxHowF !!}<span><b>Foliar</b><small>Sprayed on the leaves</small></span></button>
+                </div>
+                <div class="rfx-picked-f">
+                    <label><span>Apply on</span><input type="date" data-rfx-edit-date></label>
+                    <label><span>Amount for the lot <i data-rfx-edit-ha>(optional)</i></span><span class="rfx-amt"><input type="number" min="0" step="any" inputmode="decimal" data-rfx-edit-qty placeholder="e.g. 2"><select data-rfx-edit-unit><option value="bags">bags</option><option value="kg">kg</option><option value="L">liters</option><option value="mL">mL</option><option value="g">grams</option></select></span></label>
+                </div>
+                <div class="rfx-edit-b">
+                    <button type="button" class="rfx-btn is-ghost is-del" data-rfx-edit-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>Take it out</button>
+                    <button type="button" class="rfx-btn is-ghost" data-rfx-edit-x>Cancel</button>
+                    <button type="button" class="rfx-btn is-go" data-rfx-edit-save>Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 @once
 @push('styles')
 <style>
-    /* ===================== RANGE EFFECT (rfx-) ===================== */
+    /* ===================== RANGE EFFECT (rfx-) =====================
+       Every colour is a token on .rfx, set again for dark mode (2026-10-30, the owner: "please fix readability and
+       fonts in dark or white mode"): body text stays at 4.5:1 or better on its card, labels and axis text at 3:1 or
+       better, in both modes. */
     .rfx { position: fixed; inset: 0; z-index: 420; display: grid; place-items: center;
+        --rx-bg: #f4f7f0; --rx-card: #fff; --rx-soft: #f5f8f1; --rx-line: #e1ead6; --rx-line-2: #cddcbd; --rx-hover: #a9c98c;
+        --rx-ink: #132009; --rx-text: #2e3929; --rx-muted: #525e4e; --rx-faint: #687463; --rx-accent: #3b6b1f;
+        --rx-chip-ink: #2f5219; --rx-on: #2f5219; --rx-track: #e6eedf; --rx-dot: #d1d5db; --rx-veil: rgb(10 16 7 / .55);
+        --rx-gap-a: #fff1f1; --rx-gap-b: #ffe0e0; --rx-gap-edge: #f19c9c; --rx-gap-bg: #fef2f2; --rx-gap-line: #fecaca; --rx-gap-ink: #991b1b;
+        --rx-thin-bg: #fffbeb; --rx-thin-line: #fde68a; --rx-thin-ink: #92400e; --rx-thin-edge: #f59e0b;
+        --rx-late-bg: #f5f3ff; --rx-late-line: #ddd6fe; --rx-late-ink: #5b21b6; --rx-late-edge: #a78bfa;
+        --rx-gold-bg: #fff6d6; --rx-gold-line: #f3e3a3; --rx-gold-ink: #5c4500;
+        --rx-try-bg: #fffdf3; --rx-try-line: #f0dfa0; --rx-field: #fff; --rx-field-line: #e3d9b0; --rx-res-icon: #f6f1dc; --rx-how-bg: #f6efd2; --rx-how-ink: #6e5a1c;
+        --rx-saved-bg: #eef2ff; --rx-saved-line: #c7d2fe; --rx-saved-ink: #1e3a8a;
+        --rx-done-bg: #dcfce7; --rx-done-ink: #14532d; --rx-tag-bg: #eef1ea;
+        --rx-badge: #1f3a10; --rx-badge-ink: #fff; --rx-today: #2563eb;
         /* What an application is doing: in the soil, being taken up, strongest, easing, fading away. */
-        --ph-soil: linear-gradient(180deg, #c99158, #8a5a2b); --ph-absorb: linear-gradient(180deg, #62d4bf, #138a77); --ph-strong: linear-gradient(180deg, #4f9030, #22500e);
-        --ph-easing: linear-gradient(180deg, #a2d477, #62a03c); --ph-fading: linear-gradient(180deg, #e6f4d8, #c2e1a6); }
+        --ph-soil: linear-gradient(180deg, #c99158, #8a5a2b); --ph-absorb: linear-gradient(180deg, #5fcfba, #12806f); --ph-strong: linear-gradient(180deg, #4f9030, #22500e);
+        --ph-easing: linear-gradient(180deg, #a6d67c, #6aa843); --ph-fading: linear-gradient(180deg, #e9f5dc, #c6e3ab); }
+    html.dark .rfx {
+        --rx-bg: #0d120a; --rx-card: #151c11; --rx-soft: #1b2416; --rx-line: #2c3b22; --rx-line-2: #3d5230; --rx-hover: #6b8f50;
+        --rx-ink: #eef5e8; --rx-text: #d6e2cc; --rx-muted: #b1c0a5; --rx-faint: #93a487; --rx-accent: #a9d982;
+        --rx-chip-ink: #d3e8bf; --rx-on: #4a8128; --rx-track: #26331d; --rx-dot: #3d4c34; --rx-veil: rgb(0 0 0 / .65);
+        --rx-gap-a: #3a1717; --rx-gap-b: #2b1010; --rx-gap-edge: #b33a3a; --rx-gap-bg: rgb(220 38 38 / .14); --rx-gap-line: rgb(248 113 113 / .38); --rx-gap-ink: #fca5a5;
+        --rx-thin-bg: rgb(245 158 11 / .13); --rx-thin-line: rgb(251 191 36 / .38); --rx-thin-ink: #fcd34d; --rx-thin-edge: #f59e0b;
+        --rx-late-bg: rgb(139 92 246 / .16); --rx-late-line: rgb(167 139 250 / .42); --rx-late-ink: #c9bcff; --rx-late-edge: #a78bfa;
+        --rx-gold-bg: rgb(245 197 24 / .12); --rx-gold-line: rgb(245 197 24 / .38); --rx-gold-ink: #f7dc7c;
+        --rx-try-bg: #1c1a0e; --rx-try-line: #4d4421; --rx-field: #11170d; --rx-field-line: #4d4421; --rx-res-icon: #2a2614; --rx-how-bg: #2a2512; --rx-how-ink: #e3cf86;
+        --rx-saved-bg: rgb(99 102 241 / .16); --rx-saved-line: rgb(129 140 248 / .42); --rx-saved-ink: #c7d2fe;
+        --rx-done-bg: rgb(34 197 94 / .18); --rx-done-ink: #86efac; --rx-tag-bg: #26331d;
+        --rx-badge: #e3f1d6; --rx-badge-ink: #1f3a10; --rx-today: #60a5fa; }
     .rfx-sw { display: inline-block; flex: none; width: .9rem; height: .9rem; border-radius: .25rem; background: var(--ph-strong); vertical-align: -.1rem; }
     .rfx .is-soil { --ph: var(--ph-soil); } .rfx .is-absorb { --ph: var(--ph-absorb); } .rfx .is-strong { --ph: var(--ph-strong); } .rfx .is-easing { --ph: var(--ph-easing); } .rfx .is-fading { --ph: var(--ph-fading); }
     .rfx .rfx-sw[class*=is-] { background: var(--ph); }
     .rfx[hidden] { display: none; }
-    .rfx-veil { position: absolute; inset: 0; background: rgb(10 16 7 / .55); backdrop-filter: blur(3px); opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
-    .rfx-box { position: relative; display: flex; flex-direction: column; width: 100%; height: 100%; background: #f6f8f3; overflow: hidden;
+    .rfx-veil { position: absolute; inset: 0; background: var(--rx-veil); backdrop-filter: blur(3px); opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-box { position: relative; display: flex; flex-direction: column; width: 100%; height: 100%; color: var(--rx-text); background: var(--rx-bg); overflow: hidden;
         opacity: 0; transform: translateY(18px) scale(.985); transition: opacity .32s cubic-bezier(.22,1,.36,1), transform .32s cubic-bezier(.22,1,.36,1); }
     @media (min-width: 900px) { .rfx-box { width: min(96vw, 82rem); height: min(94vh, 60rem); border-radius: 1.4rem; box-shadow: 0 40px 90px -30px rgb(0 0 0 / .6); } }
     .rfx.is-on .rfx-veil { opacity: 1; }
@@ -179,109 +231,116 @@
     .rfx-logo { display: grid; place-items: center; flex: none; width: 2.6rem; height: 2.6rem; border-radius: .9rem; color: #14210c; background: #f5c518; box-shadow: 0 0 0 4px rgb(245 197 24 / .25); }
     .rfx-logo svg { width: 1.45rem; height: 1.45rem; }
     .rfx-head-t { min-width: 0; flex: 1; }
-    .rfx-head h2 { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; line-height: 1.2; }
-    .rfx-head p { margin-top: .1rem; font-size: .8rem; color: #cfe0c0; line-height: 1.35; }
-    .rfx-hbtn { position: relative; display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .8rem; border-radius: .8rem; font-size: .84rem; font-weight: 800; color: #fff;
+    .rfx-head h2 { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; line-height: 1.2; color: #fff; }
+    .rfx-head p { margin-top: .1rem; font-size: .82rem; color: #dcebd0; line-height: 1.35; }
+    .rfx-hbtn { position: relative; display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .8rem; border-radius: .8rem; font-size: .86rem; font-weight: 800; color: #fff;
         background: rgb(255 255 255 / .12); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .25); transition: background-color .28s cubic-bezier(.22,1,.36,1); }
     .rfx-hbtn:hover { background: rgb(255 255 255 / .2); }
     .rfx-hbtn svg { width: 1.05rem; height: 1.05rem; }
-    .rfx-hbtn b { position: absolute; top: -.35rem; right: -.35rem; min-width: 1.2rem; height: 1.2rem; padding: 0 .3rem; border-radius: 999px; font-size: .66rem; line-height: 1.2rem; color: #14210c; background: #f5c518; }
+    .rfx-hbtn b { position: absolute; top: -.35rem; right: -.35rem; min-width: 1.2rem; height: 1.2rem; padding: 0 .3rem; border-radius: 999px; font-size: .68rem; line-height: 1.2rem; color: #14210c; background: #f5c518; }
     .rfx-x { display: grid; place-items: center; flex: none; width: 2.4rem; height: 2.4rem; border-radius: 999px; color: inherit; background: rgb(255 255 255 / .12); transition: background-color .28s, transform .28s cubic-bezier(.22,1,.36,1); }
     .rfx-x:hover { background: rgb(255 255 255 / .22); transform: rotate(90deg); }
     .rfx-x svg { width: 1.15rem; height: 1.15rem; }
     @media (max-width: 639.98px) { .rfx-head p { display: none; } .rfx-hbtn span { display: none; } .rfx-hbtn { padding: .55rem; } }
     .rfx-scroll { flex: 1; overflow: auto; overscroll-behavior: contain; }
-    .rfx-controls { position: relative; z-index: 3; display: grid; gap: .55rem; padding: .9rem 1rem; background: #fff; border-bottom: 1px solid #e3ecd9; }
-    .rfx-row { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr); gap: .6rem; align-items: center; }
+    .rfx-controls { position: relative; z-index: 3; display: grid; gap: .6rem; padding: .9rem 1rem; background: var(--rx-card); border-bottom: 1px solid var(--rx-line); }
+    .rfx-row { display: grid; grid-template-columns: 4.6rem minmax(0, 1fr); gap: .6rem; align-items: center; }
     .rfx-row.is-sub { align-items: start; }
-    .rfx-label { font-size: .7rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #6b7280; }
+    .rfx-row.is-sub .rfx-label { padding-top: .5rem; }
+    .rfx-label { font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--rx-faint); }
     @media (max-width: 639.98px) { .rfx-row { grid-template-columns: minmax(0, 1fr); gap: .35rem; } .rfx-row.is-sub .rfx-label { display: none; } }
     .rfx-chips, .rfx-picks { display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; padding: .15rem .1rem; }
     .rfx-picks { flex-wrap: wrap; overflow: visible; }
     .rfx-chips::-webkit-scrollbar { display: none; }
-    .rfx-chip { flex: none; display: inline-flex; align-items: center; gap: .35rem; padding: .45rem .8rem; border-radius: 999px; font-size: .84rem; font-weight: 800; white-space: nowrap; color: #2f5219; background: #fff;
-        box-shadow: inset 0 0 0 1.5px #d6e5c6; cursor: pointer; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s, box-shadow .28s, transform .28s cubic-bezier(.22,1,.36,1); }
-    .rfx-chip:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px #a9c98c; }
-    .rfx-chip.is-on { color: #fff; background: #2f5219; box-shadow: 0 8px 18px -10px rgb(47 82 25 / .8); }
-    .rfx-chip small { font-size: .7rem; font-weight: 700; opacity: .75; }
-    .rfx-chip.is-try { color: #5c4500; background: #fff6d6; box-shadow: inset 0 0 0 1.5px #f5c518; cursor: default; }
-    .rfx-chip.is-try button { display: grid; place-items: center; width: 1.2rem; height: 1.2rem; margin-right: -.3rem; border-radius: 999px; background: rgb(0 0 0 / .08); }
-    .rfx-chip.is-try button svg { width: .7rem; height: .7rem; }
-    .rfx-tabs { display: flex; gap: .3rem; padding: .25rem; border-radius: 1rem; background: #eef3e8; overflow-x: auto; scrollbar-width: none; }
-    .rfx-tabs button { flex: 1 0 auto; padding: .5rem .8rem; border-radius: .75rem; font-size: .84rem; font-weight: 800; white-space: nowrap; color: #4b5563; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s, box-shadow .28s; }
-    .rfx-tabs button.is-on { color: #14210c; background: #fff; box-shadow: 0 4px 12px -6px rgb(20 33 12 / .35); }
-    @media (max-width: 559.98px) { .rfx-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .rfx-tabs button { padding: .5rem .4rem; font-size: .8rem; } }
+    .rfx-chip { flex: none; display: inline-flex; align-items: center; gap: .35rem; padding: .45rem .8rem; border-radius: 999px; font-size: .86rem; font-weight: 800; white-space: nowrap; color: var(--rx-chip-ink); background: var(--rx-card);
+        box-shadow: inset 0 0 0 1.5px var(--rx-line-2); cursor: pointer; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s, box-shadow .28s, transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-chip:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-chip.is-on { color: #fff; background: var(--rx-on); box-shadow: 0 8px 18px -10px rgb(47 82 25 / .8); }
+    .rfx-chip small { font-size: .74rem; font-weight: 700; opacity: .8; }
+    .rfx-chip.is-try { color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1.5px #f5c518; cursor: pointer; }
+    .rfx-chip.is-try:hover { box-shadow: inset 0 0 0 2px #f5c518, 0 8px 16px -10px rgb(184 138 0 / .8); }
+    .rfx-chip.is-try .rfx-pen { width: .8rem; height: .8rem; opacity: .7; }
+    .rfx-chip.is-try button, .rfx-sel .rfx-chip button { display: grid; place-items: center; width: 1.25rem; height: 1.25rem; border-radius: 999px; background: rgb(128 128 128 / .2); }
+    .rfx-chip.is-try button { margin-right: -.3rem; }
+    .rfx-chip.is-try button svg, .rfx-sel .rfx-chip button svg { width: .68rem; height: .68rem; }
+    .rfx-tabs { display: flex; gap: .3rem; padding: .25rem; border-radius: 1rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); overflow-x: auto; scrollbar-width: none; }
+    .rfx-tabs button { flex: 1 0 auto; padding: .52rem .8rem; border-radius: .75rem; font-size: .86rem; font-weight: 800; white-space: nowrap; color: var(--rx-muted); transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s, box-shadow .28s; }
+    .rfx-tabs button:hover { color: var(--rx-ink); }
+    .rfx-tabs button.is-on { color: var(--rx-ink); background: var(--rx-card); box-shadow: 0 4px 12px -6px rgb(0 0 0 / .35), inset 0 0 0 1px var(--rx-line); }
+    @media (max-width: 559.98px) { .rfx-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .rfx-tabs button { padding: .52rem .4rem; font-size: .82rem; } }
     .rfx-picks .rfx-chip { animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 25ms); }
     @keyframes rfxPop { from { opacity: 0; transform: translateY(6px) scale(.96); } }
-    .rfx-picks input[type=search] { flex: 1 1 100%; padding: .55rem .8rem; border-radius: .8rem; border: 1.5px solid #d6e5c6; font-size: .9rem; }
+    .rfx-picks input[type=search] { flex: 1 1 100%; padding: .55rem .8rem; border-radius: .8rem; border: 1.5px solid var(--rx-line-2); font-size: .92rem; color: var(--rx-ink); background: var(--rx-field); }
     .rfx-tries { display: grid; justify-items: start; gap: .45rem; }
     .rfx-chips.is-wrap { flex-wrap: wrap; overflow: visible; padding: 0; }
     .rfx-chips.is-wrap:empty { display: none; }
     .rfx-chips.is-wrap .rfx-chip { max-width: 100%; white-space: normal; animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; }
-    .rfx-add { display: inline-flex; align-items: center; gap: .35rem; padding: .5rem .9rem; border-radius: 999px; font-size: .84rem; font-weight: 800; color: #14210c; background: #f5c518;
+    .rfx-add { display: inline-flex; align-items: center; gap: .35rem; padding: .52rem .95rem; border-radius: 999px; font-size: .86rem; font-weight: 800; color: #14210c; background: #f5c518;
         box-shadow: 0 8px 18px -10px rgb(184 138 0 / .9); transition: background-color .28s, transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s; }
-    .rfx-add.is-full { color: #6b7280; background: #f3f4f6; box-shadow: none; }
+    .rfx-add:hover { background: #ffd43b; transform: translateY(-1px); }
+    .rfx-add svg { width: .9rem; height: .9rem; }
+    .rfx-add.is-full { color: var(--rx-muted); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
     /* Several checks: the one the calendar shows is filled, the rest are outlined in their own colour. */
     .rfx-sel { display: flex; flex-wrap: wrap; gap: .4rem; }
     .rfx-sel .rfx-chip { gap: .4rem; padding: .35rem .45rem .35rem .7rem; animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; }
     .rfx-sel .rfx-chip i { width: .65rem; height: .65rem; border-radius: 999px; background: var(--sc); }
     .rfx-sel .rfx-chip.is-on { background: var(--sc); color: #fff; }
     .rfx-sel .rfx-chip.is-on i { background: #fff; }
-    .rfx-sel .rfx-chip button { display: grid; place-items: center; width: 1.25rem; height: 1.25rem; border-radius: 999px; background: rgb(0 0 0 / .08); }
-    .rfx-sel .rfx-chip button svg { width: .65rem; height: .65rem; }
-    .rfx-picks .rfx-chip.is-on::after { content: '✓'; font-size: .75rem; font-weight: 900; }
-    .rfx-hint { align-self: center; font-size: .74rem; font-weight: 600; color: #9ca3af; }
-    .rfx-add:hover { background: #ffd43b; transform: translateY(-1px); }
-    .rfx-add svg { width: .9rem; height: .9rem; }
+    .rfx-picks .rfx-chip.is-on::after { content: '✓'; font-size: .78rem; font-weight: 900; }
+    .rfx-hint { align-self: center; font-size: .78rem; font-weight: 600; color: var(--rx-faint); }
+    .rfx-muted { font-size: .84rem; color: var(--rx-muted); }
     .rfx-try { overflow: hidden; }
-    .rfx-try-in { display: grid; gap: .6rem; padding: .8rem; border-radius: 1.1rem; background: #fffdf3; box-shadow: inset 0 0 0 1.5px #f3e3a3; animation: rfxSlide .32s cubic-bezier(.22,1,.36,1) both; }
+    .rfx-try-in { display: grid; gap: .6rem; padding: .8rem; border-radius: 1.1rem; background: var(--rx-try-bg); box-shadow: inset 0 0 0 1.5px var(--rx-try-line); animation: rfxSlide .32s cubic-bezier(.22,1,.36,1) both; }
     @keyframes rfxSlide { from { opacity: 0; transform: translateY(-8px); } }
-    .rfx-search { display: flex; align-items: center; gap: .5rem; padding: 0 .8rem; border-radius: .9rem; background: #fff; box-shadow: inset 0 0 0 1.5px #e7d9a5; }
-    .rfx-search svg { width: 1.1rem; height: 1.1rem; color: #9a7b14; flex: none; }
-    .rfx-search input { flex: 1; min-width: 0; padding: .65rem 0; border: 0; background: transparent; font-size: .95rem; outline: none; }
+    .rfx-search { display: flex; align-items: center; gap: .5rem; padding: 0 .8rem; border-radius: .9rem; background: var(--rx-field); box-shadow: inset 0 0 0 1.5px var(--rx-field-line); }
+    .rfx-search svg { width: 1.1rem; height: 1.1rem; color: #b8941c; flex: none; }
+    .rfx-search input { flex: 1; min-width: 0; padding: .65rem 0; border: 0; background: transparent; font-size: .96rem; color: var(--rx-ink); outline: none; }
+    .rfx input::placeholder { color: var(--rx-faint); opacity: 1; }
     .rfx-results { display: grid; gap: .35rem; max-height: 16rem; overflow: auto; }
-    .rfx-res { display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem; border-radius: .8rem; text-align: left; background: #fff; box-shadow: inset 0 0 0 1px #efe6c6;
+    .rfx-res { display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem; border-radius: .8rem; text-align: left; background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-field-line);
         transition: box-shadow .2s, transform .2s cubic-bezier(.22,1,.36,1); animation: rfxPop .28s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 22ms); }
     .rfx-res:hover { box-shadow: inset 0 0 0 1.5px #f5c518; transform: translateX(2px); }
-    .rfx-res em { flex: none; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: .7rem; font-style: normal; font-size: 1.05rem; background: #f6f1dc; }
-    .rfx-res b { display: block; font-size: .88rem; color: #14210c; }
-    .rfx-res small { display: block; font-size: .74rem; color: #6b7280; line-height: 1.35; }
+    .rfx-res em { flex: none; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: .7rem; font-style: normal; font-size: 1.05rem; background: var(--rx-res-icon); }
+    .rfx-res b, .rfx-picked-p b { display: block; font-size: .9rem; color: var(--rx-ink); }
+    .rfx-res small, .rfx-picked-p small { display: block; font-size: .76rem; color: var(--rx-muted); line-height: 1.35; }
     .rfx-picked { display: grid; gap: .6rem; }
-    .rfx-picked-p { display: flex; align-items: center; gap: .6rem; padding: .7rem; border-radius: .9rem; background: #fff; box-shadow: inset 0 0 0 1.5px #f5c518; }
+    .rfx-picked-p { display: flex; align-items: center; gap: .6rem; padding: .7rem; border-radius: .9rem; background: var(--rx-card); box-shadow: inset 0 0 0 1.5px #f5c518; }
+    .rfx-picked-p em { font-style: normal; font-size: 1.3rem; }
     .rfx-picked-f { display: grid; gap: .6rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     @media (max-width: 559.98px) { .rfx-picked-f { grid-template-columns: minmax(0, 1fr); } }
-    .rfx-picked-f label { display: grid; gap: .25rem; font-size: .74rem; font-weight: 800; color: #6b7280; }
+    .rfx-picked-f label { display: grid; gap: .25rem; font-size: .78rem; font-weight: 800; color: var(--rx-muted); }
     .rfx-picked-f label i { font-style: normal; font-weight: 600; }
-    .rfx-picked-f input, .rfx-picked-f select { width: 100%; padding: .6rem .7rem; border-radius: .75rem; border: 1.5px solid #e3d9b0; font-size: .92rem; background: #fff; color: #14210c; }
+    .rfx-picked-f input, .rfx-picked-f select, .rfx-look-f input { width: 100%; padding: .6rem .7rem; border-radius: .75rem; border: 1.5px solid var(--rx-field-line); font-size: .94rem; background: var(--rx-field); color: var(--rx-ink); color-scheme: light; }
+    html.dark .rfx-picked-f input, html.dark .rfx-picked-f select { color-scheme: dark; }
     .rfx-amt { display: grid; grid-template-columns: minmax(0, 1fr) 6.5rem; gap: .4rem; }
-    .rfx-how { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .3rem; padding: .25rem; border-radius: 1rem; background: #f6efd2; }
-    .rfx-how button { position: relative; z-index: 1; display: flex; align-items: center; gap: .55rem; min-width: 0; padding: .55rem .7rem; border-radius: .8rem; text-align: left; color: #7a6420;
+    .rfx-how { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .3rem; padding: .25rem; border-radius: 1rem; background: var(--rx-how-bg); }
+    .rfx-how button { position: relative; z-index: 1; display: flex; align-items: center; gap: .55rem; min-width: 0; padding: .55rem .7rem; border-radius: .8rem; text-align: left; color: var(--rx-how-ink);
         transition: color .28s cubic-bezier(.22,1,.36,1); }
-    .rfx-how button[aria-checked=true] { color: #14210c; }
+    .rfx-how button[aria-checked=true] { color: var(--rx-ink); }
     .rfx-how svg { flex: none; width: 1.7rem; height: 1.7rem; transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .rfx-how button[aria-checked=true] svg { transform: scale(1.12) rotate(-4deg); }
-    .rfx-how b { display: block; font-size: .88rem; }
-    .rfx-how small { display: block; font-size: .7rem; font-weight: 600; line-height: 1.3; opacity: .8; }
-    .rfx-how-pill { position: absolute; z-index: 0; top: .25rem; bottom: .25rem; left: .25rem; width: calc(50% - .4rem); border-radius: .8rem; background: #fff;
+    .rfx-how b { display: block; font-size: .9rem; }
+    .rfx-how small { display: block; font-size: .74rem; font-weight: 600; line-height: 1.3; opacity: .9; }
+    .rfx-how-pill { position: absolute; z-index: 0; top: .25rem; bottom: .25rem; left: .25rem; width: calc(50% - .4rem); border-radius: .8rem; background: var(--rx-card);
         box-shadow: inset 0 0 0 1.5px #f5c518, 0 6px 14px -8px rgb(92 69 0 / .5); transition: transform .28s cubic-bezier(.22,1,.36,1); }
     .rfx-how[data-on=foliar] .rfx-how-pill { transform: translateX(calc(100% + .3rem)); }
     .rfx-picked-b { display: flex; justify-content: flex-end; gap: .5rem; }
-    .rfx-btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; padding: .62rem 1rem; border-radius: .85rem; font-size: .88rem; font-weight: 800;
+    .rfx-btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; padding: .62rem 1rem; border-radius: .85rem; font-size: .9rem; font-weight: 800;
         transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s, background-color .28s; }
     .rfx-btn svg { width: 1.05rem; height: 1.05rem; }
     .rfx-btn:hover { transform: translateY(-1px); }
     .rfx-btn.is-go { color: #fff; background: #2f5219; box-shadow: 0 10px 20px -12px rgb(47 82 25 / .8); }
+    html.dark .rfx-btn.is-go { background: #3f7322; }
     .rfx-btn.is-gold { color: #14210c; background: #f5c518; box-shadow: 0 10px 20px -12px rgb(184 138 0 / .8); }
-    .rfx-btn.is-ghost { color: #4b5563; background: #fff; box-shadow: inset 0 0 0 1.5px #e5e7eb; }
+    .rfx-btn.is-ghost { color: var(--rx-text); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-line-2); }
     .rfx-btn:disabled { opacity: .55; transform: none; }
-    .rfx-look { display: flex; gap: .8rem; align-items: flex-start; padding: .8rem; border-radius: .9rem; background: #fff; box-shadow: inset 0 0 0 1px #efe6c6; }
+    .rfx-look { display: flex; gap: .8rem; align-items: flex-start; padding: .8rem; border-radius: .9rem; background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-field-line); }
     .rfx-look > img { flex: none; width: 3rem; height: 3rem; }
-    .rfx-look b { font-size: .92rem; color: #14210c; }
-    .rfx-look p { margin-top: .2rem; font-size: .82rem; line-height: 1.5; color: #4b5563; }
+    .rfx-look b { font-size: .94rem; color: var(--rx-ink); }
+    .rfx-look p { margin-top: .2rem; font-size: .84rem; line-height: 1.5; color: var(--rx-muted); }
     .rfx-look-f { display: grid; gap: .45rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: .6rem 0; }
     @media (max-width: 559.98px) { .rfx-look-f { grid-template-columns: minmax(0, 1fr); } }
-    .rfx-look-f input { width: 100%; padding: .6rem .7rem; border-radius: .75rem; border: 1.5px solid #e3d9b0; font-size: .9rem; }
-    .rfx-look small { display: block; margin-top: .45rem; font-size: .74rem; color: #6b7280; }
+    .rfx-look small { display: block; margin-top: .45rem; font-size: .76rem; color: var(--rx-muted); }
 
     /* ---- the reading ---- */
     .rfx-body { padding: 1rem; display: grid; gap: 1rem; }
@@ -292,71 +351,81 @@
     .rfx-loading span { width: .7rem; height: .7rem; border-radius: 999px; background: #4a7c2a; animation: rfxDot 1s ease-in-out infinite; }
     .rfx-loading span:nth-child(2) { animation-delay: .15s; } .rfx-loading span:nth-child(3) { animation-delay: .3s; }
     @keyframes rfxDot { 50% { transform: translateY(-8px); opacity: .5; } }
-    .rfx-card { border-radius: 1.2rem; background: #fff; box-shadow: 0 0 0 1px #e3ecd9, 0 18px 36px -30px rgb(20 33 12 / .5); animation: rfxIn .45s cubic-bezier(.22,1,.36,1) both; animation-delay: var(--d, 0s); }
+    .rfx-card { border-radius: 1.2rem; background: var(--rx-card); box-shadow: 0 0 0 1px var(--rx-line), 0 18px 36px -30px rgb(0 0 0 / .5); animation: rfxIn .45s cubic-bezier(.22,1,.36,1) both; animation-delay: var(--d, 0s); }
     @keyframes rfxIn { from { opacity: 0; transform: translateY(12px); } }
-    .rfx-card-h { display: flex; align-items: center; gap: .5rem; padding: .9rem 1rem .2rem; font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #4a7c2a; }
-    .rfx-card-h small { margin-left: auto; font-size: .72rem; font-weight: 700; letter-spacing: 0; text-transform: none; color: #6b7280; }
-    .rfx-banner { display: flex; align-items: center; gap: .7rem; padding: .75rem 1rem; border-radius: 1rem; font-size: .86rem; font-weight: 700; color: #5c4500; background: #fff6d6; box-shadow: inset 0 0 0 1px #f3e3a3; }
-    .rfx-banner.is-saved { color: #1e3a8a; background: #eef2ff; box-shadow: inset 0 0 0 1px #c7d2fe; }
-    .rfx-banner .rfx-btn { margin-left: auto; padding: .45rem .8rem; font-size: .8rem; }
+    .rfx-card-h { display: flex; align-items: center; gap: .5rem; padding: .95rem 1rem .25rem; font-size: .76rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--rx-accent); }
+    .rfx-card-h small { margin-left: auto; font-size: .78rem; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--rx-muted); }
+    .rfx-banner { display: flex; align-items: center; gap: .7rem; padding: .75rem 1rem; border-radius: 1rem; font-size: .88rem; font-weight: 700; line-height: 1.5; color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px var(--rx-gold-line); }
+    .rfx-banner b { color: inherit; }
+    .rfx-banner.is-saved { color: var(--rx-saved-ink); background: var(--rx-saved-bg); box-shadow: inset 0 0 0 1px var(--rx-saved-line); }
+    .rfx-banner .rfx-btn { margin-left: auto; padding: .45rem .8rem; font-size: .82rem; }
     .rfx-banner.is-miss { flex-wrap: wrap; font-weight: 600; animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; }
     .rfx-banner.is-miss > span:first-child { flex: 1 1 16rem; }
     .rfx-acts { display: flex; flex-wrap: wrap; gap: .35rem; }
-    .rfx-acts .rfx-chip { padding: .35rem .7rem; font-size: .78rem; }
+    .rfx-acts .rfx-chip { padding: .38rem .75rem; font-size: .8rem; }
     /* The summary. */
     .rfx-sum { display: grid; gap: 1rem; padding: 1rem; grid-template-columns: auto minmax(0, 1fr); align-items: center; }
     @media (max-width: 559.98px) { .rfx-sum { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; } }
     .rfx-ring { position: relative; width: 8.2rem; aspect-ratio: 1; }
     .rfx-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
     .rfx-ring circle { fill: none; stroke-width: 10; }
-    .rfx-ring .t { stroke: #eef3e8; }
+    .rfx-ring .t, .rfx-mini .t { stroke: var(--rx-track); }
     .rfx-ring .v { stroke-linecap: round; stroke-dasharray: 0 400; transition: stroke-dasharray 1.2s cubic-bezier(.22,1,.36,1); }
     .rfx-ring-n { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; text-align: center; }
-    .rfx-ring-n b { font-family: var(--font-heading); font-size: 1.9rem; font-weight: 900; line-height: 1; color: #14210c; }
-    .rfx-ring-n small { margin-top: .2rem; font-size: .66rem; font-weight: 800; color: #6b7280; line-height: 1.2; max-width: 5.5rem; }
-    .rfx-say h3 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 800; line-height: 1.3; color: #14210c; }
-    .rfx-say p { margin-top: .35rem; font-size: .88rem; line-height: 1.55; color: #4b5563; }
+    .rfx-ring-n b { font-family: var(--font-heading); font-size: 2rem; font-weight: 900; line-height: 1; color: var(--rx-ink); }
+    .rfx-ring-n small { margin-top: .25rem; font-size: .7rem; font-weight: 800; color: var(--rx-muted); line-height: 1.25; max-width: 5.8rem; }
+    .rfx-say h3 { font-family: var(--font-heading); font-size: 1.18rem; font-weight: 800; line-height: 1.3; color: var(--rx-ink); }
+    .rfx-say p { margin-top: .35rem; font-size: .92rem; line-height: 1.6; color: var(--rx-muted); }
     .rfx-counts { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem; }
-    .rfx-counts span { display: inline-flex; align-items: center; gap: .35rem; padding: .3rem .65rem; border-radius: 999px; font-size: .76rem; font-weight: 800; background: #f5f7f2; color: #374151; }
+    .rfx-counts span { display: inline-flex; align-items: center; gap: .35rem; padding: .32rem .7rem; border-radius: 999px; font-size: .8rem; font-weight: 800; background: var(--rx-soft); color: var(--rx-text); box-shadow: inset 0 0 0 1px var(--rx-line); }
     .rfx-counts i { width: .6rem; height: .6rem; border-radius: 3px; }
     @media (max-width: 559.98px) { .rfx-counts { justify-content: center; } }
     .rfx-runs { display: grid; gap: .45rem; padding: 0 1rem 1rem; }
-    .rfx-run { display: flex; align-items: flex-start; gap: .6rem; padding: .65rem .75rem; border-radius: .85rem; font-size: .84rem; line-height: 1.45; color: #374151; background: #fef2f2; box-shadow: inset 0 0 0 1px #fecaca; cursor: pointer;
+    .rfx-run { display: flex; align-items: flex-start; gap: .6rem; padding: .65rem .8rem; border-radius: .85rem; font-size: .88rem; line-height: 1.5; color: var(--rx-text); background: var(--rx-gap-bg); box-shadow: inset 0 0 0 1px var(--rx-gap-line); cursor: pointer;
         transition: transform .2s cubic-bezier(.22,1,.36,1); animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; animation-delay: var(--d, 0s); }
     .rfx-run:hover { transform: translateX(3px); }
-    .rfx-run b { color: #991b1b; }
-    .rfx-run.is-thin { background: #fffbeb; box-shadow: inset 0 0 0 1px #fde68a; } .rfx-run.is-thin b { color: #92400e; }
-    .rfx-run.is-late { background: #f5f3ff; box-shadow: inset 0 0 0 1px #ddd6fe; } .rfx-run.is-late b { color: #5b21b6; }
+    .rfx-run b { color: var(--rx-gap-ink); }
+    .rfx-run.is-thin { background: var(--rx-thin-bg); box-shadow: inset 0 0 0 1px var(--rx-thin-line); } .rfx-run.is-thin b { color: var(--rx-thin-ink); }
+    .rfx-run.is-late { background: var(--rx-late-bg); box-shadow: inset 0 0 0 1px var(--rx-late-line); } .rfx-run.is-late b { color: var(--rx-late-ink); }
     .rfx-run em { flex: none; font-style: normal; }
-    /* The season chart. */
+    /* The season chart. Its text is sized for the drawing, which a phone scrolls sideways at 46rem. */
     .rfx-chart { padding: .2rem 1rem 1rem; }
     .rfx-chart-w { position: relative; overflow-x: auto; scrollbar-width: thin; }
-    .rfx-chart svg { display: block; min-width: 40rem; width: 100%; height: auto; overflow: visible; }
-    .rfx-chart .cov-l { fill: none; stroke: #2f5219; stroke-width: 2; stroke-linejoin: round; }
+    .rfx-chart svg { display: block; min-width: 46rem; width: 100%; height: auto; overflow: visible; }
+    .rfx-chart .cov-l { fill: none; stroke: var(--rx-accent); stroke-width: 2.2; stroke-linejoin: round; }
     .rfx-chart .rib { transform-box: fill-box; transform-origin: left; animation: rfxRib .9s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(.3s + var(--k, 0) * 40ms); }
     @keyframes rfxRib { from { transform: scaleX(0); opacity: 0; } }
-    .rfx-chart .try-l { fill: none; stroke: #e0a800; stroke-width: 2; stroke-dasharray: 5 4; }
+    .rfx-chart .try-l { fill: none; stroke: #e0a800; stroke-width: 2.2; stroke-dasharray: 5 4; }
     .rfx-chart .reveal { clip-path: inset(0 100% 0 0); animation: rfxWipe 1.3s cubic-bezier(.45,0,.25,1) .15s forwards; }
     @keyframes rfxWipe { to { clip-path: inset(0 0 0 0); } }
-    .rfx-chart .grid { stroke: #eef3e8; stroke-width: 1; }
-    .rfx-chart .stg { font-size: 9px; font-weight: 800; fill: #4b5563; }
-    .rfx-chart .mo { font-size: 9px; font-weight: 800; fill: #9ca3af; }
-    .rfx-chart .today { stroke: #2563eb; stroke-width: 1.5; stroke-dasharray: 3 3; }
-    .rfx-chart .harv { stroke: #b45309; stroke-width: 1.5; }
-    .rfx-chart .app { stroke: #fff; stroke-width: 1.5; cursor: pointer; transition: r .2s; }
-    .rfx-chart .app:hover { r: 6; }
+    .rfx-chart .grid { stroke: var(--rx-line); stroke-width: 1; }
+    .rfx-chart .base { stroke: var(--rx-line-2); stroke-width: 1.2; }
+    .rfx-chart .dose { stroke: var(--rx-faint); stroke-width: 1; stroke-dasharray: 2 4; }
+    .rfx-chart .stg { font-size: 12px; font-weight: 800; fill: var(--rx-muted); }
+    .rfx-chart .mo { font-size: 12px; font-weight: 800; fill: var(--rx-faint); }
+    .rfx-chart .today { stroke: var(--rx-today); stroke-width: 1.5; stroke-dasharray: 3 3; }
+    .rfx-chart .t-today { fill: var(--rx-today); }
+    .rfx-chart .harv { stroke: #d97706; stroke-width: 1.5; }
+    .rfx-chart .t-harv { fill: #c2650a; }
+    html.dark .rfx-chart .t-harv { fill: #fbbf24; }
+    .rfx-chart .app { stroke-width: 1.8; cursor: pointer; transition: r .2s; }
+    .rfx-chart .app.is-done { fill: var(--rx-ink); stroke: var(--rx-card); }
+    .rfx-chart .app.is-plan { fill: var(--rx-card); stroke: var(--rx-ink); }
+    .rfx-chart .app.is-try { fill: #f5c518; stroke: #b8860b; }
+    .rfx-chart .app:hover { r: 6.5; }
     /* The calendar. */
     .rfx-cal { display: grid; gap: .4rem 1.1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); padding: .2rem .8rem 1rem; }
     .rfx-month { margin-top: .8rem; min-width: 0; }
     .rfx-month-h { display: flex; align-items: baseline; gap: .6rem; padding: 0 .2rem .4rem; }
-    .rfx-month-h b { font-family: var(--font-heading); font-size: 1rem; font-weight: 800; color: #14210c; }
-    .rfx-month-h small { font-size: .74rem; color: #6b7280; }
+    .rfx-month-h b { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: var(--rx-ink); }
+    .rfx-month-h small { font-size: .78rem; color: var(--rx-muted); }
     .rfx-wk { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .3rem; }
-    .rfx-wd { padding: 0 .2rem .2rem; font-size: .62rem; font-weight: 900; letter-spacing: .06em; text-align: center; text-transform: uppercase; color: #9ca3af; }
-    .rfx-cell { position: relative; min-height: 3.5rem; padding: .3rem .35rem; border-radius: .7rem; overflow: hidden; text-align: left; background: #fff; box-shadow: inset 0 0 0 1px #e9efe3;
+    .rfx-wd { padding: 0 .2rem .2rem; font-size: .66rem; font-weight: 900; letter-spacing: .06em; text-align: center; text-transform: uppercase; color: var(--rx-faint); }
+    .rfx-cell { position: relative; min-height: 3.5rem; padding: .3rem .35rem; border-radius: .7rem; overflow: hidden; text-align: left; background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line);
         transition: transform .2s cubic-bezier(.22,1,.36,1), box-shadow .2s; }
-    .rfx-cell:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1.5px #a9c98c, 0 10px 18px -12px rgb(20 33 12 / .5); z-index: 1; }
+    .rfx-cell:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1.5px var(--rx-hover), 0 10px 18px -12px rgb(0 0 0 / .5); z-index: 1; }
     .rfx-cell.is-out { background: transparent; box-shadow: none; pointer-events: none; }
+    .rfx-cell.is-out .rfx-n { color: var(--rx-faint); opacity: .6; }
     .rfx-fill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; overflow: hidden; background: linear-gradient(180deg, #86c25a, #4a7c2a);
         transition: height .7s cubic-bezier(.22,1,.36,1); transition-delay: calc(var(--k, 0) * 6ms); }
     .rfx-cal.is-in .rfx-fill { height: var(--h, 0%); }
@@ -366,7 +435,7 @@
     .rfx-cell[data-p=easing] .rfx-fill { background: var(--ph-easing); }
     .rfx-cell[data-p=fading] .rfx-fill { background: var(--ph-fading); }
     .rfx-cell[data-p=absorb] .rfx-fill::before { content: ''; position: absolute; left: 0; right: 0; top: -100%; height: 300%;
-        background: linear-gradient(0deg, transparent 38%, rgb(255 255 255 / .42) 50%, transparent 62%); animation: rfxRise 2.4s linear infinite; }
+        background: linear-gradient(0deg, transparent 38%, rgb(255 255 255 / .38) 50%, transparent 62%); animation: rfxRise 2.4s linear infinite; }
     @keyframes rfxRise { from { transform: translateY(33%); } to { transform: translateY(-33%); } }
     /* Still in the soil: an earth band at the foot of the day (urea turning into ammonium, a salt dissolving, manure breaking down). */
     .rfx-soil { position: absolute; left: 0; right: 0; bottom: 0; height: 30%; transform: scaleY(0); transform-origin: bottom;
@@ -375,167 +444,179 @@
     .rfx-cal.is-in .rfx-soil { transform: none; }
     .rfx-cell[data-p=soil] .rfx-soil { height: 42%; }
     @keyframes rfxSoil { to { background-position: 12px -10px, 0 0; } }
-    .rfx-cell[data-s=gap] { background: repeating-linear-gradient(135deg, #fff1f1 0 6px, #ffe1e1 6px 12px); box-shadow: inset 0 0 0 1.5px #fca5a5; }
-    .rfx-cell[data-s=thin] { box-shadow: inset 0 0 0 2px #f59e0b; }
-    .rfx-cell[data-s=late], .rfx-cell[data-s=extra] { box-shadow: inset 0 0 0 2px #a78bfa; }
+    .rfx-cell[data-s=gap] { background: repeating-linear-gradient(135deg, var(--rx-gap-a) 0 6px, var(--rx-gap-b) 6px 12px); box-shadow: inset 0 0 0 1.5px var(--rx-gap-edge); }
+    .rfx-cell[data-s=thin] { box-shadow: inset 0 0 0 2px var(--rx-thin-edge); }
+    .rfx-cell[data-s=late], .rfx-cell[data-s=extra] { box-shadow: inset 0 0 0 2px var(--rx-late-edge); }
     .rfx-cell[data-s=late] .rfx-fill::after, .rfx-cell[data-s=extra] .rfx-fill::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgb(124 58 237 / .5) 0 3px, transparent 3px 7px); }
-    .rfx-cell.is-today { box-shadow: inset 0 0 0 2px #2563eb; }
+    .rfx-cell.is-today { box-shadow: inset 0 0 0 2px var(--rx-today); }
     .rfx-cell[data-t="1"]::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 2px #f5c518; pointer-events: none; animation: rfxTry 1.8s ease-in-out infinite; }
     @keyframes rfxTry { 50% { box-shadow: inset 0 0 0 2px rgb(245 197 24 / .35); } }
-    .rfx-n { position: relative; z-index: 1; display: block; font-size: .78rem; font-weight: 900; color: #14210c; }
-    .rfx-dl { position: relative; z-index: 1; display: block; font-size: .56rem; font-weight: 800; color: #6b7280; white-space: nowrap; }
-    .rfx-cell.is-full .rfx-n { color: #fff; } .rfx-cell.is-full .rfx-dl { color: rgb(255 255 255 / .85); }
-    .rfx-cell.is-full .rfx-n, .rfx-cell.is-full .rfx-dl { transition: color .4s ease .5s; }
-    .rfx-crit { position: absolute; z-index: 1; top: .32rem; right: .3rem; display: flex; gap: 2px; }
-    .rfx-crit i { width: .32rem; height: .32rem; border-radius: 999px; background: #d1d5db; }
+    .rfx-n { position: relative; z-index: 1; display: block; font-size: .84rem; font-weight: 900; line-height: 1.2; color: var(--rx-ink); }
+    .rfx-dl { position: relative; z-index: 1; display: block; font-size: .6rem; font-weight: 800; color: var(--rx-muted); white-space: nowrap; }
+    /* A day filled past its numbers: white on the deep fills, near black on the pale ones, in either mode. */
+    .rfx-cell.is-full .rfx-n { color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / .35); } .rfx-cell.is-full .rfx-dl { color: rgb(255 255 255 / .92); text-shadow: 0 1px 2px rgb(0 0 0 / .35); }
+    .rfx-cell.is-full.is-lt .rfx-n { color: #132009; text-shadow: none; } .rfx-cell.is-full.is-lt .rfx-dl { color: #2e3e24; text-shadow: none; }
+    .rfx-cell.is-half .rfx-dl { color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / .35); }
+    .rfx-cell.is-half.is-lt .rfx-dl { color: #2e3e24; text-shadow: none; }
+    .rfx-cell.is-full .rfx-n, .rfx-cell.is-full .rfx-dl, .rfx-cell.is-half .rfx-dl { transition: color .4s ease .5s; }
+    .rfx-crit { position: absolute; z-index: 1; top: .34rem; right: .3rem; display: flex; gap: 2px; }
+    .rfx-crit i { width: .34rem; height: .34rem; border-radius: 999px; background: var(--rx-dot); }
+    .rfx-cell.is-full .rfx-crit i { box-shadow: 0 0 0 1px rgb(255 255 255 / .55); }
     .rfx-crit.c1 i:nth-child(-n+1), .rfx-crit.c2 i:nth-child(-n+2), .rfx-crit.c3 i:nth-child(-n+3) { background: #dc2626; }
     .rfx-crit.c1 i:nth-child(-n+1) { background: #f59e0b; } .rfx-crit.c2 i:nth-child(-n+2) { background: #f97316; }
+    html.dark .rfx-crit.c1 i:nth-child(-n+1), html.dark .rfx-crit.c2 i:nth-child(-n+2), html.dark .rfx-crit.c3 i:nth-child(-n+3) { background: #f87171; }
+    html.dark .rfx-crit.c1 i:nth-child(-n+1) { background: #fbbf24; } html.dark .rfx-crit.c2 i:nth-child(-n+2) { background: #fb923c; }
     /* What went on that day: a small badge per product, its mark saying how (granules, a spray, organic), filled when
        done, outlined while planned, gold for a try. */
     .rfx-ap { position: absolute; z-index: 2; right: .25rem; bottom: .25rem; display: flex; align-items: center; }
-    .rfx-ap i { display: grid; place-items: center; width: 1.15rem; height: 1.15rem; border-radius: 999px; color: #fff; background: #1f3a10; box-shadow: 0 0 0 1.5px #fff, 0 3px 6px -2px rgb(0 0 0 / .45);
+    .rfx-ap i { display: grid; place-items: center; width: 1.2rem; height: 1.2rem; border-radius: 999px; color: var(--rx-badge-ink); background: var(--rx-badge); box-shadow: 0 0 0 1.5px var(--rx-card), 0 3px 6px -2px rgb(0 0 0 / .45);
         animation: rfxPop .4s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(.4s + var(--k, 0) * 6ms); }
     .rfx-ap i + i { margin-left: -.35rem; }
-    .rfx-ap i svg { width: .72rem; height: .72rem; fill: currentColor; }
-    .rfx-ap i.is-plan { color: #1f3a10; background: #fff; box-shadow: inset 0 0 0 1.5px #1f3a10, 0 0 0 1.5px #fff, 0 3px 6px -2px rgb(0 0 0 / .3); }
+    .rfx-ap i svg { width: .74rem; height: .74rem; fill: currentColor; }
+    .rfx-ap i.is-plan { color: var(--rx-ink); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-ink), 0 0 0 1.5px var(--rx-card), 0 3px 6px -2px rgb(0 0 0 / .3); }
     .rfx-ap i.is-try { color: #5c4500; background: #f5c518; }
-    .rfx-ap b { margin-left: .1rem; padding: 0 .22rem; border-radius: 999px; font-size: .52rem; font-weight: 900; line-height: 1rem; color: #1f3a10; background: #fff; box-shadow: 0 0 0 1px #d6e5c6; }
-    @media (max-width: 639.98px) { .rfx-ap { right: .12rem; bottom: .12rem; } .rfx-ap i { width: .98rem; height: .98rem; } .rfx-ap i svg { width: .6rem; height: .6rem; } }
+    .rfx-ap b { margin-left: .1rem; padding: 0 .25rem; border-radius: 999px; font-size: .58rem; font-weight: 900; line-height: 1.05rem; color: var(--rx-ink); background: var(--rx-card); box-shadow: 0 0 0 1px var(--rx-line-2); }
+    @media (max-width: 639.98px) { .rfx-ap { right: .12rem; bottom: .12rem; } .rfx-ap i { width: 1rem; height: 1rem; } .rfx-ap i svg { width: .62rem; height: .62rem; } }
     /* Side by side. */
-    .rfx-minis { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.2rem), 1fr)); gap: .5rem; padding: .7rem 1rem .3rem; }
-    @media (max-width: 639.98px) {
-        .rfx-mini { gap: .45rem; padding: .5rem; } .rfx-mini svg { width: 2.3rem; height: 2.3rem; }
-        .rfx-lane { grid-template-columns: 4.6rem minmax(0, 1fr); gap: .4rem; }
-        .rfx-lanes .rfx-lane.is-head:first-child { display: none; }   /* the stage names do not fit a phone; the ticks on top say it */
-    }
-    .rfx-mini { display: flex; align-items: center; gap: .6rem; min-width: 0; padding: .55rem .65rem; border-radius: .95rem; text-align: left; background: #f8faf6; box-shadow: inset 0 0 0 1px #e3ecd9;
+    .rfx-minis { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.4rem), 1fr)); gap: .5rem; padding: .7rem 1rem .3rem; }
+    .rfx-mini { display: flex; align-items: center; gap: .6rem; min-width: 0; padding: .55rem .65rem; border-radius: .95rem; text-align: left; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line);
         transition: box-shadow .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), background-color .28s; animation: rfxPop .35s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 50ms); }
     .rfx-mini:hover { transform: translateY(-1px); }
-    .rfx-mini.is-on { background: #fff; box-shadow: inset 0 0 0 2px var(--sc), 0 12px 24px -18px var(--sc); }
+    .rfx-mini.is-on { background: var(--rx-card); box-shadow: inset 0 0 0 2px var(--sc), 0 12px 24px -18px var(--sc); }
     .rfx-mini svg { flex: none; width: 2.8rem; height: 2.8rem; transform: rotate(-90deg); }
     .rfx-mini circle { fill: none; stroke-width: 5; }
-    .rfx-mini .t { stroke: #e9efe3; }
     .rfx-mini .v { stroke-linecap: round; stroke-dasharray: 0 200; transition: stroke-dasharray 1s cubic-bezier(.22,1,.36,1); }
     .rfx-mini > span { min-width: 0; display: grid; }
-    .rfx-mini b { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 900; line-height: 1.1; color: #14210c; }
-    .rfx-mini span span { font-size: .78rem; font-weight: 800; color: #374151; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .rfx-mini small { font-size: .68rem; color: #6b7280; }
+    .rfx-mini b { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 900; line-height: 1.1; color: var(--rx-ink); }
+    .rfx-mini span span { font-size: .8rem; font-weight: 800; color: var(--rx-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rfx-mini small { font-size: .72rem; color: var(--rx-muted); }
     .rfx-lanes { display: grid; gap: .4rem; padding: .7rem 1rem .5rem; }
-    .rfx-lane { display: grid; grid-template-columns: 5.4rem minmax(0, 1fr); gap: .55rem; align-items: center; animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(.08s + var(--k, 0) * 60ms); }
-    .rfx-lane-n { display: flex; align-items: center; gap: .35rem; min-width: 0; font-size: .72rem; font-weight: 800; line-height: 1.15; color: #4b5563; text-align: left; overflow: hidden; }
+    .rfx-lane { display: grid; grid-template-columns: 5.6rem minmax(0, 1fr); gap: .55rem; align-items: center; animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(.08s + var(--k, 0) * 60ms); }
+    .rfx-lane-n { display: flex; align-items: center; gap: .35rem; min-width: 0; font-size: .76rem; font-weight: 800; line-height: 1.15; color: var(--rx-muted); text-align: left; overflow: hidden; }
     .rfx-lane-n i { flex: none; width: .6rem; height: .6rem; border-radius: 999px; background: var(--sc); }
-    .rfx-lane.is-on .rfx-lane-n { color: #14210c; }
-    .rfx-lane-s { display: block; width: 100%; height: 2rem; border-radius: .45rem; background: #f3f6ef; cursor: pointer; clip-path: inset(0 100% 0 0 round .45rem);
+    .rfx-lane.is-on .rfx-lane-n { color: var(--rx-ink); }
+    .rfx-lane-s { display: block; width: 100%; height: 2rem; border-radius: .45rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); cursor: pointer; clip-path: inset(0 100% 0 0 round .45rem);
         animation: rfxLane 1.1s cubic-bezier(.45,0,.25,1) forwards; animation-delay: calc(.15s + var(--k, 0) * 90ms); }
     @keyframes rfxLane { to { clip-path: inset(0 0 0 0 round .45rem); } }
     .rfx-lane.is-on .rfx-lane-s { box-shadow: 0 0 0 2px var(--sc); }
     .rfx-lane.is-head { animation: none; }
-    .rfx-stg { display: flex; overflow: hidden; font-size: .58rem; font-weight: 800; color: #6b7280; }
-    .rfx-stg span { flex: none; min-width: 0; padding: 0 .2rem; border-left: 1px solid #dfe8d5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .rfx-mo { position: relative; height: .9rem; font-size: .6rem; font-weight: 800; color: #9ca3af; }
-    .rfx-mo span { position: absolute; top: 0; padding-left: .15rem; border-left: 1px solid #dfe8d5; }
-    .rfx-day-cmp { display: grid; gap: .45rem; margin-top: .7rem; padding-top: .6rem; border-top: 1px solid #eef3e8; }
-    .rfx-day-cmp > div { display: grid; grid-template-columns: auto minmax(0, 1fr) 4.5rem; align-items: center; gap: .1rem .45rem; font-size: .8rem; }
+    .rfx-stg { display: flex; overflow: hidden; font-size: .66rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-stg span { flex: none; min-width: 0; padding: 0 .2rem; border-left: 1px solid var(--rx-line-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rfx-mo { position: relative; height: 1rem; font-size: .68rem; font-weight: 800; color: var(--rx-faint); }
+    .rfx-mo span { position: absolute; top: 0; padding-left: .15rem; border-left: 1px solid var(--rx-line-2); }
+    @media (max-width: 639.98px) {
+        .rfx-mini { gap: .45rem; padding: .5rem; } .rfx-mini svg { width: 2.3rem; height: 2.3rem; }
+        .rfx-lane { grid-template-columns: 4.8rem minmax(0, 1fr); gap: .4rem; }
+        .rfx-lanes .rfx-lane.is-head:first-child { display: none; }   /* the stage names do not fit a phone; the ticks on top say it */
+    }
+    .rfx-day-cmp { display: grid; gap: .45rem; margin-top: .7rem; padding-top: .6rem; border-top: 1px solid var(--rx-line); }
+    .rfx-day-cmp > div { display: grid; grid-template-columns: auto minmax(0, 1fr) 4.5rem; align-items: center; gap: .1rem .45rem; font-size: .84rem; }
     .rfx-day-cmp > div > i { width: .6rem; height: .6rem; border-radius: 999px; background: var(--sc); }
-    .rfx-day-cmp b { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #14210c; }
+    .rfx-day-cmp b { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--rx-ink); }
     .rfx-day-cmp .rfx-meter { margin: 0; height: .45rem; }
-    .rfx-day-cmp small { grid-column: 2 / -1; font-size: .72rem; color: #6b7280; }
+    .rfx-day-cmp small { grid-column: 2 / -1; font-size: .76rem; color: var(--rx-muted); }
     @media (max-width: 639.98px) {
         .rfx-cal { padding: .2rem .4rem .8rem; }
         .rfx-wk { gap: .18rem; }
-        .rfx-cell { min-height: 3.6rem; padding: .2rem .22rem; border-radius: .5rem; }
-        .rfx-n { font-size: .7rem; }
-        .rfx-dl { font-size: .48rem; }
-        .rfx-crit i { width: .26rem; height: .26rem; }
+        .rfx-cell { min-height: 3.6rem; padding: .22rem .24rem; border-radius: .5rem; }
+        .rfx-n { font-size: .76rem; }
+        .rfx-dl { font-size: .54rem; letter-spacing: -.01em; }
+        .rfx-crit i { width: .28rem; height: .28rem; }
     }
-    .rfx-legend { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .8rem; padding: .3rem 1rem 1rem; font-size: .74rem; font-weight: 700; color: #4b5563; }
+    .rfx-legend { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .85rem; padding: .3rem 1rem 1rem; font-size: .78rem; font-weight: 700; color: var(--rx-text); }
     .rfx-legend + .rfx-legend { margin-top: -.5rem; }
     .rfx-legend span { display: inline-flex; align-items: center; gap: .35rem; }
     .rfx-legend i { display: inline-block; width: .9rem; height: .9rem; border-radius: .25rem; }
-    .rfx-leg-h { flex: 0 0 100%; font-size: .64rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: #9ca3af; }
+    .rfx-leg-h { flex: 0 0 100%; font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--rx-faint); }
+    .rfx-leg-dot { border-radius: 999px !important; }
+    .rfx-leg-dot.is-done { background: var(--rx-ink); }
+    .rfx-leg-dot.is-plan { background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-ink); }
+    .rfx-leg-band.is-crit { background: rgb(220 38 38 / .28); } .rfx-leg-band.is-mid { background: rgb(249 115 22 / .26); }
     /* The life of one application, left to right. */
     .rfx-flow { gap: .35rem .3rem; }
-    .rfx-flow > span:not(.rfx-leg-h) { padding: .25rem .55rem .25rem .3rem; border-radius: 999px; background: #f5f7f2; animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 60ms); }
-    .rfx-flow > em { font-style: normal; font-weight: 900; color: #c0c8b8; }
-    .rfx-leg-cell { width: 1.1rem !important; height: .9rem; border-radius: .25rem; background: #fff; }
-    .rfx-legend .rfx-crit i { width: .38rem; height: .38rem; border-radius: 999px; }
+    .rfx-flow > span:not(.rfx-leg-h) { padding: .28rem .6rem .28rem .32rem; border-radius: 999px; color: var(--rx-text); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 60ms); }
+    .rfx-flow > em { font-style: normal; font-weight: 900; color: var(--rx-faint); }
+    .rfx-leg-cell { width: 1.1rem !important; height: .9rem; border-radius: .25rem; background: var(--rx-card); }
+    .rfx-legend .rfx-crit i { width: .4rem; height: .4rem; border-radius: 999px; }
     .rfx-leg-ap .rfx-ap { position: static; }
-    .rfx-leg-ap .rfx-ap i { display: grid; width: 1.15rem; height: 1.15rem; border-radius: 999px; animation: none; }
+    .rfx-leg-ap .rfx-ap i { display: grid; width: 1.2rem; height: 1.2rem; border-radius: 999px; animation: none; }
     /* The products. */
     .rfx-apps { display: grid; gap: .55rem; padding: 0 1rem 1rem; }
-    .rfx-app { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .7rem; padding: .75rem .8rem; border-radius: .95rem; background: #f8faf6; box-shadow: inset 0 0 0 1px #e3ecd9;
+    .rfx-app { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .75rem; padding: .8rem .85rem; border-radius: .95rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line);
         animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; animation-delay: var(--d, 0s); }
-    .rfx-app.is-try { background: #fffbe8; box-shadow: inset 0 0 0 1.5px #f5c518; }
-    .rfx-app-d { display: grid; place-items: center; width: 3.1rem; padding: .35rem 0; border-radius: .75rem; background: #fff; box-shadow: inset 0 0 0 1px #e3ecd9; text-align: center; }
-    .rfx-app-d b { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 900; line-height: 1; color: #14210c; }
-    .rfx-app-d small { font-size: .6rem; font-weight: 900; text-transform: uppercase; color: #6b7280; }
-    .rfx-app-t b { font-size: .9rem; color: #14210c; }
-    .rfx-app-t small { display: block; margin-top: .1rem; font-size: .76rem; color: #6b7280; line-height: 1.4; }
-    .rfx-bar { position: relative; height: .6rem; margin-top: .5rem; border-radius: 999px; background: #e9efe3; overflow: hidden; }
+    .rfx-app.is-try { background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1.5px #f5c518; }
+    .rfx-app-d { display: grid; place-items: center; align-self: start; width: 3.2rem; padding: .45rem 0; border-radius: .75rem; background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line); text-align: center; }
+    .rfx-app-d b { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 900; line-height: 1; color: var(--rx-ink); }
+    .rfx-app-d small { font-size: .64rem; font-weight: 900; text-transform: uppercase; color: var(--rx-muted); }
+    .rfx-app-t b { font-size: .94rem; color: var(--rx-ink); }
+    .rfx-app-t small { display: block; margin-top: .15rem; font-size: .8rem; color: var(--rx-muted); line-height: 1.45; }
+    .rfx-app-t small b { font-size: inherit; color: var(--rx-ink); }
+    .rfx-bar { position: relative; height: .62rem; margin-top: .55rem; border-radius: 999px; background: var(--rx-track); overflow: hidden; }
     .rfx-segs { position: absolute; inset: 0; clip-path: inset(0 100% 0 0); animation: rfxWipe 1s cubic-bezier(.45,0,.25,1) forwards; animation-delay: calc(var(--d, 0s) + .2s); }
     .rfx-segs i { position: absolute; top: 0; bottom: 0; background: var(--ph, var(--ph-strong)); }
     .rfx-segs i:first-child { border-radius: 999px 0 0 999px; } .rfx-segs i:last-child { border-radius: 0 999px 999px 0; } .rfx-segs i:only-child { border-radius: 999px; }
-    .rfx-phs { display: flex; flex-wrap: wrap; gap: .3rem .7rem; margin-top: .45rem; font-size: .72rem; font-weight: 700; color: #4b5563; }
+    .rfx-phs { display: flex; flex-wrap: wrap; gap: .3rem .75rem; margin-top: .5rem; font-size: .76rem; font-weight: 700; color: var(--rx-text); }
     .rfx-phs span { display: inline-flex; align-items: center; gap: .3rem; }
-    .rfx-phs .rfx-sw { width: .7rem; height: .7rem; }
-    .rfx-phs small { font-weight: 600; color: #9ca3af; }
-    .rfx-trace { display: block; margin-top: .35rem; padding: .35rem .55rem; border-radius: .6rem; font-size: .74rem; line-height: 1.4; color: #92400e; background: #fffbeb; }
-    .rfx-app-n { margin-top: .4rem; font-size: .78rem; line-height: 1.45; color: #4b5563; }
-    .rfx-tag { display: inline-block; margin-left: .3rem; padding: .05rem .45rem; border-radius: 999px; font-size: .64rem; font-weight: 900; vertical-align: middle; color: #374151; background: #e5e7eb; }
-    .rfx-tag.is-done { color: #14532d; background: #dcfce7; } .rfx-tag.is-try { color: #5c4500; background: #fde68a; } .rfx-tag.is-est { color: #6b7280; background: #f3f4f6; }
+    .rfx-phs .rfx-sw { width: .72rem; height: .72rem; }
+    .rfx-phs small { font-weight: 600; color: var(--rx-faint); }
+    .rfx-trace { display: block; margin-top: .4rem; padding: .4rem .6rem; border-radius: .6rem; font-size: .78rem; line-height: 1.45; color: var(--rx-thin-ink); background: var(--rx-thin-bg); }
+    .rfx-app-n { margin-top: .45rem; font-size: .82rem; line-height: 1.5; color: var(--rx-muted); }
+    .rfx-tag { display: inline-block; margin-left: .3rem; padding: .08rem .5rem; border-radius: 999px; font-size: .68rem; font-weight: 900; vertical-align: middle; color: var(--rx-muted); background: var(--rx-tag-bg); }
+    .rfx-tag.is-done { color: var(--rx-done-ink); background: var(--rx-done-bg); } .rfx-tag.is-try { color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px var(--rx-gold-line); }
     .rfx-other { padding: 0 1rem 1rem; }
-    .rfx-other summary { cursor: pointer; font-size: .82rem; font-weight: 800; color: #4b5563; }
+    .rfx-other summary { cursor: pointer; font-size: .86rem; font-weight: 800; color: var(--rx-text); }
     .rfx-other ul { margin: .5rem 0 0; padding: 0; list-style: none; display: grid; gap: .3rem; }
-    .rfx-other li { font-size: .8rem; color: #6b7280; }
+    .rfx-other li { font-size: .84rem; color: var(--rx-muted); }
     .rfx-empty { padding: 2.5rem 1rem; text-align: center; }
     .rfx-empty img { width: 5rem; height: 5rem; margin: 0 auto; }
-    .rfx-empty b { display: block; margin-top: .8rem; font-family: var(--font-heading); font-size: 1.1rem; color: #14210c; }
-    .rfx-empty p { margin-top: .35rem; font-size: .88rem; color: #4b5563; }
+    .rfx-empty b { display: block; margin-top: .8rem; font-family: var(--font-heading); font-size: 1.1rem; color: var(--rx-ink); }
+    .rfx-empty p { margin-top: .35rem; font-size: .9rem; line-height: 1.55; color: var(--rx-muted); }
     /* The foot. */
-    .rfx-foot { display: flex; align-items: center; gap: .8rem; padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom)); background: #fff; border-top: 1px solid #e3ecd9; }
-    .rfx-foot-note { flex: 1; min-width: 0; font-size: .74rem; line-height: 1.4; color: #6b7280; }
+    .rfx-foot { display: flex; align-items: center; gap: .8rem; padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom)); background: var(--rx-card); border-top: 1px solid var(--rx-line); }
+    .rfx-foot-note { flex: 1; min-width: 0; font-size: .8rem; line-height: 1.4; color: var(--rx-muted); }
     @media (max-width: 559.98px) { .rfx-foot-note { display: none; } .rfx-foot .rfx-btn { flex: 1; } }
     /* Saved, and one day opened. */
-    .rfx-drawer { position: absolute; z-index: 6; top: 0; right: 0; bottom: 0; width: min(100%, 24rem); display: flex; flex-direction: column; background: #fff; box-shadow: -20px 0 50px -20px rgb(0 0 0 / .4);
+    .rfx-drawer { position: absolute; z-index: 6; top: 0; right: 0; bottom: 0; width: min(100%, 24rem); display: flex; flex-direction: column; color: var(--rx-text); background: var(--rx-card); box-shadow: -20px 0 50px -20px rgb(0 0 0 / .5);
         transform: translateX(100%); transition: transform .32s cubic-bezier(.22,1,.36,1); }
     .rfx-drawer.is-on { transform: none; }
-    .rfx-drawer-h { display: flex; align-items: center; justify-content: space-between; padding: .9rem 1rem; border-bottom: 1px solid #eef3e8; color: #14210c; }
-    .rfx-drawer-h .rfx-x { background: #f3f4f6; color: #374151; }
+    .rfx-drawer-h { display: flex; align-items: center; justify-content: space-between; padding: .9rem 1rem; border-bottom: 1px solid var(--rx-line); color: var(--rx-ink); }
+    .rfx-drawer-h b { font-family: var(--font-heading); font-size: 1.05rem; }
+    .rfx-drawer-h .rfx-x, .rfx-day-h .rfx-x { background: var(--rx-soft); color: var(--rx-text); box-shadow: inset 0 0 0 1px var(--rx-line); }
     .rfx-drawer-b { flex: 1; overflow: auto; padding: .8rem; display: grid; align-content: start; gap: .5rem; }
-    .rfx-sv { display: flex; align-items: center; gap: .6rem; padding: .7rem .75rem; border-radius: .9rem; background: #f8faf6; box-shadow: inset 0 0 0 1px #e3ecd9; text-align: left; transition: box-shadow .2s, transform .2s cubic-bezier(.22,1,.36,1); }
-    .rfx-sv:hover { box-shadow: inset 0 0 0 1.5px #86c25a; transform: translateX(-2px); }
-    .rfx-sv b { display: block; font-size: .86rem; color: #14210c; }
-    .rfx-sv small { display: block; font-size: .72rem; color: #6b7280; }
-    .rfx-sv-x { margin-left: auto; flex: none; display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 999px; color: #9ca3af; }
-    .rfx-sv-x:hover { color: #dc2626; background: #fef2f2; }
+    .rfx-sv { display: flex; align-items: center; gap: .6rem; padding: .7rem .75rem; border-radius: .9rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); text-align: left; transition: box-shadow .2s, transform .2s cubic-bezier(.22,1,.36,1); }
+    .rfx-sv:hover { box-shadow: inset 0 0 0 1.5px var(--rx-hover); transform: translateX(-2px); }
+    .rfx-sv b { display: block; font-size: .9rem; color: var(--rx-ink); }
+    .rfx-sv small { display: block; font-size: .76rem; color: var(--rx-muted); }
+    .rfx-sv-x { margin-left: auto; flex: none; display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 999px; color: var(--rx-faint); }
+    .rfx-sv-x:hover { color: #dc2626; background: var(--rx-gap-bg); }
     .rfx-sv-x svg { width: .95rem; height: .95rem; }
-    .rfx-day { position: absolute; z-index: 7; left: 50%; bottom: 1rem; width: min(calc(100% - 2rem), 26rem); padding: 1rem; border-radius: 1.2rem; background: #fff; transform: translateX(-50%);
-        box-shadow: 0 0 0 1px #e3ecd9, 0 30px 60px -20px rgb(0 0 0 / .45); animation: rfxUp .3s cubic-bezier(.22,1,.36,1) both; }
+    .rfx-day { position: absolute; z-index: 7; left: 50%; bottom: 1rem; width: min(calc(100% - 2rem), 26rem); max-height: calc(100% - 6rem); overflow: auto; padding: 1rem; border-radius: 1.2rem; color: var(--rx-text); background: var(--rx-card); transform: translateX(-50%);
+        box-shadow: 0 0 0 1px var(--rx-line), 0 30px 60px -20px rgb(0 0 0 / .55); animation: rfxUp .3s cubic-bezier(.22,1,.36,1) both; }
     @keyframes rfxUp { from { opacity: 0; transform: translate(-50%, 16px); } }
     .rfx-day-h { display: flex; align-items: flex-start; gap: .6rem; }
-    .rfx-day-h b { display: block; font-family: var(--font-heading); font-size: 1.05rem; color: #14210c; }
-    .rfx-day-h small { display: block; font-size: .78rem; color: #6b7280; }
-    .rfx-day-h .rfx-x { margin-left: auto; background: #f3f4f6; color: #374151; width: 2rem; height: 2rem; }
-    .rfx-day p { margin-top: .5rem; font-size: .84rem; line-height: 1.5; color: #374151; }
-    .rfx-day ul { margin: .5rem 0 0; padding: 0; list-style: none; display: grid; gap: .3rem; }
-    .rfx-day li { font-size: .8rem; color: #374151; }
-    .rfx-meter { position: relative; height: .6rem; margin-top: .6rem; border-radius: 999px; background: #eef3e8; overflow: hidden; }
+    .rfx-day-h b { display: block; font-family: var(--font-heading); font-size: 1.08rem; color: var(--rx-ink); }
+    .rfx-day-h small { display: block; font-size: .8rem; color: var(--rx-muted); }
+    .rfx-day-h .rfx-x { margin-left: auto; width: 2rem; height: 2rem; }
+    .rfx-day p { margin-top: .5rem; font-size: .88rem; line-height: 1.55; color: var(--rx-text); }
+    .rfx-day p b { color: var(--rx-ink); }
+    .rfx-day ul { margin: .5rem 0 0; padding: 0; list-style: none; display: grid; gap: .35rem; }
+    .rfx-day li { font-size: .84rem; line-height: 1.45; color: var(--rx-text); }
+    .rfx-day li b { color: var(--rx-ink); }
+    .rfx-edit { position: absolute; inset: 0; z-index: 8; display: grid; place-items: center; padding: 1rem; }
+    .rfx-edit[hidden] { display: none; }
+    .rfx-edit-veil { position: absolute; inset: 0; background: rgb(0 0 0 / .45); opacity: 0; transition: opacity .25s cubic-bezier(.22,1,.36,1); }
+    .rfx-edit-c { position: relative; display: grid; gap: .75rem; width: min(100%, 30rem); max-height: 100%; overflow: auto; padding: 1rem; border-radius: 1.2rem; color: var(--rx-text); background: var(--rx-card);
+        box-shadow: 0 0 0 1px var(--rx-line), 0 30px 70px -20px rgb(0 0 0 / .6); opacity: 0; transform: translateY(14px) scale(.98); transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-edit.is-on .rfx-edit-veil { opacity: 1; }
+    .rfx-edit.is-on .rfx-edit-c { opacity: 1; transform: none; }
+    .rfx-edit-b { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; }
+    .rfx-edit-b .is-del { margin-right: auto; color: var(--rx-gap-ink); }
+    @media (max-width: 559.98px) {
+        .rfx-edit { place-items: end center; padding: 0; }
+        .rfx-edit-c { width: 100%; border-radius: 1.2rem 1.2rem 0 0; padding-bottom: calc(1rem + env(safe-area-inset-bottom)); transform: translateY(40px); }
+    }
+    .rfx-meter { position: relative; height: .6rem; margin-top: .6rem; border-radius: 999px; background: var(--rx-track); overflow: hidden; }
     .rfx-meter i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; transition: width .5s cubic-bezier(.22,1,.36,1); }
-    html.dark .rfx-box, html.dark .rfx-controls, html.dark .rfx-card, html.dark .rfx-foot, html.dark .rfx-drawer, html.dark .rfx-day { background: #151b12; color: #e8efe1; }
-    html.dark .rfx-box { background: #10150d; }
-    html.dark .rfx-cell { background: #151b12; box-shadow: inset 0 0 0 1px #2b3a1c; }
-    html.dark .rfx-n, html.dark .rfx-say h3, html.dark .rfx-app-t b, html.dark .rfx-month-h b, html.dark .rfx-ring-n b, html.dark .rfx-day-h b { color: #e8efe1; }
-    html.dark .rfx-app, html.dark .rfx-sv { background: #1b2416; box-shadow: inset 0 0 0 1px #2b3a1c; }
-    html.dark .rfx-chip { background: #151b12; color: #cfe0c0; box-shadow: inset 0 0 0 1.5px #2b3a1c; }
-    html.dark .rfx-chip.is-on { background: #4a7c2a; color: #fff; }
-    html.dark .rfx-tabs { background: #1b2416; } html.dark .rfx-tabs button.is-on { background: #2b3a1c; color: #fff; }
-    html.dark .rfx-flow > span:not(.rfx-leg-h) { background: #1b2416; color: #cfe0c0; }
-    html.dark .rfx-legend, html.dark .rfx-phs { color: #b8c7ab; }
-    html.dark .rfx-leg-cell { background: #151b12; }
-    html.dark .rfx-mini { background: #1b2416; box-shadow: inset 0 0 0 1px #2b3a1c; } html.dark .rfx-mini.is-on { background: #151b12; box-shadow: inset 0 0 0 2px var(--sc); }
-    html.dark .rfx-mini b, html.dark .rfx-day-cmp b { color: #e8efe1; } html.dark .rfx-mini span span, html.dark .rfx-lane-n { color: #cfe0c0; }
-    html.dark .rfx-lane-s { background: #1b2416; }
-    html.dark .rfx-trace { color: #fcd34d; background: rgb(245 158 11 / .12); }
     @media (prefers-reduced-motion: reduce) {
         .rfx *, .rfx *::before, .rfx *::after { animation: none !important; transition: none !important; }
         .rfx-chart .reveal, .rfx-segs { clip-path: none; }
@@ -575,6 +656,15 @@
     const tabOf = (key) => key.startsWith('t:') ? 'prot' : key.startsWith('p:') ? 'pest' : ((S.opts?.nutrients || []).find((n) => n.key === key) || {}).micro ? 'micro' : 'nut';
     const S = { opts: null, lot: null, check: 'n:N', checks: ['n:N'], tab: 'nut', tries: [], res: null, saved: null, picked: null, q: '', busy: false };
 
+    // The app's theme flipped while the sheet is open: the drawings carry colours, so paint them again.
+    let wasDark = document.documentElement.classList.contains('dark');
+    new MutationObserver(() => {
+        const d = document.documentElement.classList.contains('dark');
+        if (d === wasDark) return;
+        wasDark = d;
+        if (!M.hidden && S.res) { paint(); paintSel(); }
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
     /* ---------------- open and close ---------------- */
     const open = async () => {
         M.hidden = false;
@@ -599,7 +689,8 @@
     });
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape' || M.hidden) return;
-        if (!$('[data-rfx-day]').hidden) hideDay();
+        if (!$('[data-rfx-edit]').hidden) closeEdit();
+        else if (!$('[data-rfx-day]').hidden) hideDay();
         else if ($('[data-rfx-drawer]').classList.contains('is-on')) $('[data-rfx-drawer]').classList.remove('is-on');
         else close();
     });
@@ -650,15 +741,20 @@
             html = list.length
                 ? `<input type="search" data-rfx-pest-q placeholder="Find a pest or disease" value="${esc(S.q)}">` + list.filter((t) => !S.q || (t.name + ' ' + t.local).toLowerCase().includes(S.q.toLowerCase()))
                     .map((t, k) => `<button type="button" class="rfx-chip ${on('p:' + t.slug)}" data-check="p:${esc(t.slug)}" aria-pressed="${S.checks.includes('p:' + t.slug)}" style="--k:${Math.min(k, 20)}" title="${esc(t.local)}">${esc(t.name)} <small>${esc(t.kind)}</small></button>`).join('')
-                : '<small style="color:#6b7280">This lot\'s crop has no pests or diseases in our book yet. Use Protection instead.</small>';
+                : '<small class="rfx-muted">This lot\'s crop has no pests or diseases in our book yet. Use Protection instead.</small>';
         }
         if (S.checks.length === 1) html += '<small class="rfx-hint">Tap more to compare them</small>';
         $('[data-rfx-picks]').innerHTML = html;
         paintSel();
     };
     // Picked checks: each keeps the colour of its place in the pick, the one the calendar shows is filled.
-    const SERIES = ['#3b7a1f', '#2563eb', '#d97706', '#9333ea', '#db2777', '#0891b2'];
-    const colorOf = (key) => SERIES[Math.max(0, S.checks.indexOf(key))] || '#6b7280';
+    // Lighter on the dark sheet so each line and ring stays clear of the background.
+    const SERIES = ['#3b7a1f', '#2563eb', '#c2650a', '#9333ea', '#db2777', '#0e7490'];
+    const SERIES_DARK = ['#8fd163', '#60a5fa', '#fbbf24', '#c084fc', '#f472b6', '#22d3ee'];
+    const isDark = () => document.documentElement.classList.contains('dark');
+    const colorOf = (key) => (isDark() ? SERIES_DARK : SERIES)[Math.max(0, S.checks.indexOf(key))] || '#6b7280';
+    // A colour token of the sheet, for the SVG drawings CSS cannot reach.
+    const tok = (name) => getComputedStyle(M).getPropertyValue(name).trim();
     const on = (key) => S.checks.includes(key) ? 'is-on' : '';
     const labelOf = (key) => {
         const o = S.opts || {};
@@ -673,7 +769,7 @@
         const row = $('[data-rfx-sel-row]');
         row.hidden = S.checks.length < 2;
         if (row.hidden) return;
-        $('[data-rfx-sel]').innerHTML = S.checks.map((k, i) => `<span class="rfx-chip ${k === S.check ? 'is-on' : ''}" style="--sc:${SERIES[i]};--k:${i}" role="button" tabindex="0" data-focus="${esc(k)}" title="Show it in the calendar"><i></i>${esc(labelOf(k))}<button type="button" data-unpick="${esc(k)}" aria-label="Remove from the comparison"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`).join('');
+        $('[data-rfx-sel]').innerHTML = S.checks.map((k, i) => `<span class="rfx-chip ${k === S.check ? 'is-on' : ''}" style="--sc:${colorOf(k)};--k:${i}" role="button" tabindex="0" data-focus="${esc(k)}" title="Show it in the calendar"><i></i>${esc(labelOf(k))}<button type="button" data-unpick="${esc(k)}" aria-label="Remove from the comparison"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`).join('');
     };
     const focusCheck = (key) => {
         if (key === S.check || !S.checks.includes(key)) return;
@@ -729,15 +825,66 @@
     /* ---------------- tries: a product you plan to apply ---------------- */
     const tryBox = $('[data-rfx-try]');
     const paintTries = () => {
-        $('[data-rfx-tries]').innerHTML = S.tries.map((t, i) => `<span class="rfx-chip is-try">${t.method === 'foliar' ? '💧' : '🟤'} ${esc(t.name)} <small>${esc(say(t.date))}${t.method ? ' · ' + t.method : ''}</small><button type="button" data-untry="${i}" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`).join('');
+        $('[data-rfx-tries]').innerHTML = S.tries.map((t, i) => `<span class="rfx-chip is-try" data-try="${i}" role="button" tabindex="0" title="Tap to change it">${t.method === 'foliar' ? '💧' : '🟤'} ${esc(t.name)} <small>${esc(say(t.date))}${t.method ? ' · ' + t.method : ''}${t.qty ? ' · ' + t.qty + ' ' + esc(t.unit) : ''}</small><svg class="rfx-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg><button type="button" data-untry="${i}" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`).join('');
         $('[data-rfx-try-open]').classList.toggle('is-full', S.tries.length >= MAX_TRIES);
     };
     $('[data-rfx-tries]').addEventListener('click', (e) => {
         const b = e.target.closest('[data-untry]');
-        if (!b) return;
-        S.tries.splice(Number(b.dataset.untry), 1);
-        paintTries();
-        run();
+        if (b) {
+            S.tries.splice(Number(b.dataset.untry), 1);
+            paintTries();
+            run();
+            return;
+        }
+        const c = e.target.closest('[data-try]');
+        if (c) openEdit(Number(c.dataset.try));
+    });
+    $('[data-rfx-tries]').addEventListener('keydown', (e) => {
+        const c = e.target.closest('[data-try]');
+        if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openEdit(Number(c.dataset.try)); }
+    });
+    /* A try, opened to change it. */
+    const editBox = $('[data-rfx-edit]');
+    const editHow = $('[data-rfx-edit-how]');
+    let editing = -1;
+    const openEdit = (i) => {
+        const t = S.tries[i];
+        if (!t) return;
+        editing = i;
+        $('[data-rfx-edit-p]').innerHTML = `<em>${t.method === 'foliar' ? '💧' : '🟤'}</em><span><b>${esc(t.name)}</b><small>${esc(t.line || (t.ai && !t.productId ? 'The active ingredient on its own' : 'Your try'))}</small></span>`;
+        $('[data-rfx-edit-date]').value = t.date;
+        $('[data-rfx-edit-qty]').value = t.qty || '';
+        $('[data-rfx-edit-unit]').value = t.unit || 'kg';
+        const ha = lotOf()?.ha;
+        $('[data-rfx-edit-ha]').textContent = ha ? `(${Math.round(ha * 100) / 100} ha, optional)` : '(optional)';
+        setHow(t.method || 'granular', false, editHow, $('[data-rfx-edit-unit]'));
+        editBox.hidden = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => editBox.classList.add('is-on')));
+        setTimeout(() => $('[data-rfx-edit-date]').focus({ preventScroll: true }), calm ? 0 : 200);
+    };
+    const closeEdit = () => {
+        editing = -1;
+        editBox.classList.remove('is-on');
+        setTimeout(() => { if (editing < 0) editBox.hidden = true; }, calm ? 0 : 260);
+    };
+    editHow.addEventListener('click', (e) => { const b = e.target.closest('[data-how]'); if (b) setHow(b.dataset.how, true, editHow, $('[data-rfx-edit-unit]')); });
+    editBox.addEventListener('click', (e) => {
+        if (e.target.closest('[data-rfx-edit-x]')) { closeEdit(); return; }
+        if (e.target.closest('[data-rfx-edit-del]') && editing >= 0) {
+            S.tries.splice(editing, 1);
+            closeEdit();
+            paintTries();
+            run();
+            return;
+        }
+        if (e.target.closest('[data-rfx-edit-save]') && editing >= 0) {
+            const date = $('[data-rfx-edit-date]').value;
+            if (!date) { window.toast?.('Pick the day you would apply it.', 'error'); return; }
+            S.tries[editing] = { ...S.tries[editing], date, qty: Number($('[data-rfx-edit-qty]').value) || 0, unit: $('[data-rfx-edit-unit]').value, method: editHow.dataset.on || 'granular' };
+            closeEdit();
+            paintTries();
+            run();
+        }
     });
     $('[data-rfx-try-open]').addEventListener('click', () => {
         if (S.tries.length >= MAX_TRIES && tryBox.hidden) { window.toast?.(`Up to ${MAX_TRIES} tries at a time. Take one out first.`, 'error'); return; }
@@ -756,13 +903,11 @@
         $('[data-rfx-ha]').textContent = ha ? `(${Math.round(ha * 100) / 100} ha, optional)` : '(optional)';
     };
     // Granular or foliar: the pill slides to the pick; a unit that cannot go with it changes too.
-    const setHow = (m, fixUnit = true) => {
-        if (S.picked) S.picked.method = m;
-        const box = $('[data-rfx-how]');
+    const setHow = (m, fixUnit = true, box = $('[data-rfx-how]'), u = $('[data-rfx-unit]')) => {
+        if (box.hasAttribute('data-rfx-how') && S.picked) S.picked.method = m;
         box.dataset.on = m;
         $$('[data-how]', box).forEach((b) => b.setAttribute('aria-checked', String(b.dataset.how === m)));
         if (!fixUnit) return;
-        const u = $('[data-rfx-unit]');
         if (m === 'granular' && ['L', 'mL'].includes(u.value)) u.value = 'kg';
         if (m === 'foliar' && u.value === 'bags') u.value = 'kg';
     };
@@ -782,13 +927,13 @@
                 const ing = r.data.ingredient;
                 let html = items.map((p, k) => `<button type="button" class="rfx-res" data-pid="${p.id}" style="--k:${k}"><em>${typeIcon(p.t)}</em><span><b>${esc(p.b)}</b><small>${esc([p.type, p.grade, (p.ai || []).join(' + '), p.c].filter(Boolean).join(' · '))}</small></span></button>`).join('');
                 if (ing) html = `<button type="button" class="rfx-res" data-ai="${esc(ing.name)}"><em>⚗️</em><span><b>${esc(ing.name)}</b><small>The active ingredient on its own${ing.known ? '' : ' · days estimated from its group'}</small></span></button>` + html;
-                $('[data-rfx-results]').innerHTML = html || '<small style="color:#6b7280;padding:.3rem">Nothing in our book by that name.</small>';
+                $('[data-rfx-results]').innerHTML = html || '<small class="rfx-muted" style="padding:.3rem">Nothing in our book by that name.</small>';
                 S.found = { items, ing };
                 const look = $('[data-rfx-look]');
                 look.hidden = false;
                 $('[data-rfx-look-name]').value = items.length ? '' : q;
                 paintLookWhy();
-            } catch (err) { $('[data-rfx-results]').innerHTML = `<small style="color:#b91c1c">${esc(err.message)}</small>`; }
+            } catch (err) { $('[data-rfx-results]').innerHTML = `<small class="rfx-muted" style="color:var(--rx-gap-ink)">${esc(err.message)}</small>`; }
         }, 260);
     });
     $('[data-rfx-results]').addEventListener('click', (e) => {
@@ -804,7 +949,7 @@
     });
     const showPicked = () => {
         const p = S.picked;
-        $('[data-rfx-picked-p]').innerHTML = `<em style="font-style:normal;font-size:1.3rem">${typeIcon(p.t)}</em><span><b style="font-size:.92rem;color:#14210c">${esc(p.name)}</b><small style="display:block;font-size:.76rem;color:#6b7280">${esc(p.line)}</small></span>`;
+        $('[data-rfx-picked-p]').innerHTML = `<em>${typeIcon(p.t)}</em><span><b>${esc(p.name)}</b><small>${esc(p.line)}</small></span>`;
         $('[data-rfx-unit]').value = p.granular || ['granular', 'amendment'].includes(p.t) ? 'bags' : (['insecticide', 'fungicide', 'herbicide', 'foliar', 'soluble'].includes(p.t) ? 'mL' : 'kg');
         // A spray or a leaf feed starts as foliar; fertilizer, salts, baits and anything else start as granular.
         setHow(p.method || (['insecticide', 'fungicide', 'herbicide', 'acaricide', 'nematicide', 'foliar', 'soluble', 'biostimulant', 'biological'].includes(p.t) && !p.granular ? 'foliar' : 'granular'), false);
@@ -817,7 +962,7 @@
         const p = S.picked;
         const date = $('[data-rfx-date]').value;
         if (!p || !date) { window.toast?.('Pick the day you would apply it.', 'error'); return; }
-        S.tries.push({ productId: p.productId || null, ai: p.ai || null, name: p.name, date, qty: Number($('[data-rfx-qty]').value) || 0, unit: $('[data-rfx-unit]').value, method: p.method || 'granular' });
+        S.tries.push({ productId: p.productId || null, ai: p.ai || null, name: p.name, line: p.line || '', date, qty: Number($('[data-rfx-qty]').value) || 0, unit: $('[data-rfx-unit]').value, method: p.method || 'granular' });
         tryBox.hidden = true;
         paintTries();
         run();
@@ -911,7 +1056,7 @@
         });
         // The summary.
         const pct = sm.pct;
-        const ringCol = pct === null ? '#9ca3af' : pct >= 80 ? '#4a7c2a' : pct >= 50 ? '#f59e0b' : '#dc2626';
+        const ringCol = pct === null ? '#9ca3af' : pct >= 80 ? (isDark() ? '#7cc24f' : '#4a7c2a') : pct >= 50 ? '#f59e0b' : (isDark() ? '#f87171' : '#dc2626');
         const head = pct === null ? `Nothing in this season is critical for ${esc(ck.word)} yet.`
             : pct >= 80 ? `${esc(ck.short)} is well covered when it matters.`
             : pct >= 50 ? `${esc(ck.short)} is covered on most critical days, with gaps.`
@@ -975,17 +1120,18 @@
             <span><b>${x.pct === null ? '–' : x.pct + '%'}</b><span>${esc(x.label)}</span><small>${x.pct === null ? 'nothing critical yet' : x.gap ? x.gap + ' gap day' + (x.gap === 1 ? '' : 's') : 'no gaps'}</small></span></button>`).join('');
         // One lane: a tick on top where the stage needs it, pink where it is a gap, and each day filled to its
         // coverage in the colour of what the product is doing.
+        const gapFill = tok('--rx-gap-line') || '#fecaca';
         const lane = (x) => {
             let r = '';
             for (let i = 0; i < n; i++) {
                 if (x.c[i] >= 2) r += `<rect x="${i}" y="0" width="1.02" height="1.4" fill="${x.c[i] >= 3 ? '#dc2626' : '#f97316'}"/>`;
-                if (x.s[i] === 'gap') r += `<rect x="${i}" y="1.8" width="1.02" height="8.2" fill="#fecaca"/>`;
+                if (x.s[i] === 'gap') r += `<rect x="${i}" y="1.8" width="1.02" height="8.2" fill="${gapFill}"/>`;
                 const p = x.p[i];
                 if (p && x.v[i] > 0.01) { const h = Math.max(1.2, Math.min(1, x.v[i]) * 8.2); r += `<rect x="${i}" y="${(10 - h).toFixed(2)}" width="1.02" height="${h.toFixed(2)}" fill="${PHC[p]}"/>`; }
                 else if (p === 'soil') r += `<rect x="${i}" y="7.4" width="1.02" height="2.6" fill="${PHC.soil}"/>`;
             }
-            if (ti >= 0) r += `<line x1="${ti + .5}" x2="${ti + .5}" y1="0" y2="10" stroke="#2563eb" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;
-            if (hi >= 0) r += `<line x1="${hi + .5}" x2="${hi + .5}" y1="0" y2="10" stroke="#b45309" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;
+            if (ti >= 0) r += `<line x1="${ti + .5}" x2="${ti + .5}" y1="0" y2="10" stroke="${tok('--rx-today')}" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;
+            if (hi >= 0) r += `<line x1="${hi + .5}" x2="${hi + .5}" y1="0" y2="10" stroke="#d97706" stroke-width="1.5" vector-effect="non-scaling-stroke"/>`;
             return r;
         };
         const lanes = all.map((x, k) => `<div class="rfx-lane ${x.main ? 'is-on' : ''}" style="--sc:${colorOf(x.key)};--k:${k}">
@@ -1001,7 +1147,7 @@
             <div class="rfx-minis">${rings}</div>
             <div class="rfx-lanes"><div class="rfx-lane is-head"><span></span><div class="rfx-stg">${stg}</div></div>${lanes}<div class="rfx-lane is-head"><span></span><div class="rfx-mo">${mo}</div></div></div>
             ${phaseLegend(R, all)}
-            <div class="rfx-legend"><span><i style="background:linear-gradient(180deg,#dc2626 0 22%,#f3f6ef 22%)"></i>A line on top: that one is critical now</span><span><i style="background:#fecaca"></i>A gap</span><span><i style="background:#2563eb;width:3px"></i>Today</span></div></div>`;
+            <div class="rfx-legend"><span><i style="background:linear-gradient(180deg,#dc2626 0 22%,var(--rx-soft) 22%);box-shadow:inset 0 0 0 1px var(--rx-line)"></i>A line on top: that one is critical now</span><span><i style="background:var(--rx-gap-line)"></i>A gap</span><span><i style="background:var(--rx-today);width:3px"></i>Today</span></div></div>`;
     };
 
     /* The season as a chart: coverage per day over the stages, each stage tinted by how critical it is. */
@@ -1018,7 +1164,9 @@
             if (i0 < 0) return;
             const x0 = x(i0) - (W / n) / 2, x1 = x(i1) + (W / n) / 2;
             bands += `<rect x="${x0.toFixed(1)}" y="${top}" width="${Math.max(0, x1 - x0).toFixed(1)}" height="${base - top}" fill="${critCol[g.crit] || critCol[0]}"/>`;
-            if (x1 - x0 > 46) labels += `<text class="stg" x="${((x0 + x1) / 2).toFixed(1)}" y="${top - 8}" text-anchor="middle">${esc(g.label.length > 18 ? g.label.slice(0, 17) + '…' : g.label)}</text>`;
+            // A stage name fits its own band (about 7 units a letter at this size), shortened rather than run into the next.
+            const fit = Math.floor((x1 - x0 - 8) / 7);
+            if (fit >= 4) labels += `<text class="stg" x="${((x0 + x1) / 2).toFixed(1)}" y="${top - 8}" text-anchor="middle"><title>${esc(g.label)}</title>${esc(g.label.length > fit ? g.label.slice(0, fit - 1).trimEnd() + '…' : g.label)}</text>`;
             bands += `<line class="grid" x1="${x0.toFixed(1)}" x2="${x0.toFixed(1)}" y1="${top}" y2="${base}"/>`;
         });
         let line = '', area = `M0 ${base}`, tryLine = '';
@@ -1045,16 +1193,15 @@
         let months = '';
         days.forEach((d, i) => { if (d.d.endsWith('-01') || i === 0) months += `<text class="mo" x="${x(i).toFixed(1)}" y="${base + 21}">${MON[D(d.d).getMonth()]}</text><line class="grid" x1="${x(i).toFixed(1)}" x2="${x(i).toFixed(1)}" y1="${base + 10}" y2="${base + 13}"/>`; });
         const ti = days.findIndex((d) => d.d === R.today);
-        const today = ti >= 0 ? `<line class="today" x1="${x(ti)}" x2="${x(ti)}" y1="${top - 2}" y2="${base}"/><text class="mo" x="${x(ti) + 3}" y="${base - 4}" fill="#2563eb">Today</text>` : '';
+        const today = ti >= 0 ? `<line class="today" x1="${x(ti)}" x2="${x(ti)}" y1="${top - 2}" y2="${base}"/><text class="mo t-today" x="${x(ti) + 4}" y="${base - 5}">Today</text>` : '';
         const hi = R.lot.harvest ? days.findIndex((d) => d.d === R.lot.harvest) : -1;
-        const harv = hi >= 0 ? `<line class="harv" x1="${x(hi)}" x2="${x(hi)}" y1="${top}" y2="${base}"/><text class="mo" x="${x(hi) - 3}" y="${top + 10}" text-anchor="end" fill="#b45309">Harvest</text>` : '';
+        const harv = hi >= 0 ? `<line class="harv" x1="${x(hi)}" x2="${x(hi)}" y1="${top}" y2="${base}"/><text class="mo t-harv" x="${x(hi) - 4}" y="${top + 12}" text-anchor="end">Harvest</text>` : '';
         const full = y(1);
         let dots = '';
         R.apps.filter((a) => a.relevant).forEach((a) => {
             const i = days.findIndex((d) => d.d === a.date);
             if (i < 0) return;
-            const fill = a.try ? '#f5c518' : a.done ? '#14210c' : '#fff';
-            dots += `<circle class="app" cx="${x(i).toFixed(1)}" cy="${base + 32}" r="5" fill="${fill}" stroke="${a.try ? '#b8860b' : '#14210c'}" data-jump="${a.date}"><title>${esc(a.as)} · ${say(a.date)}</title></circle>`;
+            dots += `<circle class="app ${a.try ? 'is-try' : a.done ? 'is-done' : 'is-plan'}" cx="${x(i).toFixed(1)}" cy="${base + 32}" r="5.5" data-jump="${a.date}"><title>${esc(a.as)} · ${say(a.date)}</title></circle>`;
         });
         return `<div class="rfx-card" style="--d:.08s"><div class="rfx-card-h">The season <small>coverage of ${esc(R.check.word)}, day by day</small></div><div class="rfx-chart"><div class="rfx-chart-w">
             <svg viewBox="0 -4 ${W} ${H + 26}" aria-label="Coverage over the season">
@@ -1062,14 +1209,14 @@
                 <linearGradient id="rfxCovV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
                 <mask id="rfxCovM" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${base + 1}"><rect x="0" y="0" width="${W}" height="${base + 1}" fill="url(#rfxCovV)"/></mask></defs>
               ${bands}${labels}
-              <line x1="0" x2="${W}" y1="${full.toFixed(1)}" y2="${full.toFixed(1)}" stroke="#9ca3af" stroke-dasharray="2 4"/><text class="mo" x="2" y="${(full - 4).toFixed(1)}">one full dose</text>
+              <line class="dose" x1="0" x2="${W}" y1="${full.toFixed(1)}" y2="${full.toFixed(1)}"/><text class="mo" x="2" y="${(full - 4).toFixed(1)}">one full dose</text>
               <g class="reveal"><path d="${area}" fill="url(#rfxPhG)" mask="url(#rfxCovM)"/>${others}<path class="cov-l" d="${line}" ${cmp ? `style="stroke:${colorOf(R.check.key)};stroke-width:2.6"` : ''}/>${tryLine ? `<path class="try-l" d="${tryLine}"/>` : ''}</g>
-              <line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="#d1d5db"/>
+              <line class="base" x1="0" x2="${W}" y1="${base}" y2="${base}"/>
               ${ribbon}${months}${today}${harv}${dots}
             </svg></div></div>
             ${phaseLegend(R)}
             ${cmp ? `<div class="rfx-legend"><b class="rfx-leg-h">Lines</b>${allChecks(R).map((c) => `<span><i style="background:${colorOf(c.key)};height:.25rem;border-radius:999px"></i>${esc(c.label)}${c.main ? ' (shaded, its stages tinted)' : ''}</span>`).join('')}</div>` : ''}
-            <div class="rfx-legend"><span><i style="background:rgba(220,38,38,.25)"></i>Critical stage</span><span><i style="background:rgba(249,115,22,.22)"></i>Matters</span>${R.days.some((d) => d.t) ? '<span><i style="background:#f5c518"></i>Your try</span>' : ''}<span><i style="background:#14210c;border-radius:999px"></i>Done</span><span><i style="background:#fff;border:1.5px solid #14210c;border-radius:999px"></i>Planned</span></div></div>`;
+            <div class="rfx-legend"><span><i class="rfx-leg-band is-crit"></i>Critical stage</span><span><i class="rfx-leg-band is-mid"></i>Matters</span>${R.days.some((d) => d.t) ? '<span><i style="background:#f5c518"></i>Your try</span>' : ''}<span><i class="rfx-leg-dot is-done"></i>Done</span><span><i class="rfx-leg-dot is-plan"></i>Planned</span></div></div>`;
     };
     /* The phases this reading shows, in the order one application lives them. */
     const phaseLegend = (R, all = null) => {
@@ -1104,8 +1251,12 @@
                 const here = appsOn[ds] || [];
                 const ap = here.slice(0, 2).map((a) => `<i class="${a.try ? 'is-try' : a.done ? '' : 'is-plan'}" title="${esc(a.as)}${a.try ? ', your try' : a.done ? ', done' : ', planned'}"><svg><use href="#rfxI-${apMark(a)}"/></svg></i>`).join('')
                     + (here.length > 2 ? `<b>+${here.length - 2}</b>` : '');
-                const full = d.v >= 0.7 && d.s !== 'gap' && d.p !== 'fading';
-                cells.push(`<button type="button" class="rfx-cell ${ds === R.today ? 'is-today' : ''} ${full ? 'is-full' : ''}" data-day="${ds}" data-s="${d.s}" data-p="${d.p || ''}" data-t="${d.t ? 1 : 0}" style="--k:${k++};--h:${Math.round(Math.min(1, d.v) * 100)}%">
+                // Text over the fill: the number when it is nearly full, the day count from about half; white on the
+                // deep fills, near black on the pale ones.
+                const full = d.v >= 0.7 && d.s !== 'gap';
+                const half = !full && d.v >= 0.42 && d.s !== 'gap';
+                const pale = (full || half) && ['easing', 'fading'].includes(d.p);
+                cells.push(`<button type="button" class="rfx-cell ${ds === R.today ? 'is-today' : ''} ${full ? 'is-full' : ''} ${half ? 'is-half' : ''} ${pale ? 'is-lt' : ''}" data-day="${ds}" data-s="${d.s}" data-p="${d.p || ''}" data-t="${d.t ? 1 : 0}" style="--k:${k++};--h:${Math.round(Math.min(1, d.v) * 100)}%">
                     <span class="rfx-fill"></span>${d.sl ? '<span class="rfx-soil"></span>' : ''}<span class="rfx-n">${dd}</span>${d.dl ? `<span class="rfx-dl">${esc(d.dl)}</span>` : ''}
                     ${d.c ? `<span class="rfx-crit c${d.c}" aria-label="${CRIT[d.c]}"><i></i><i></i><i></i></span>` : ''}${ap ? `<span class="rfx-ap">${ap}</span>` : ''}</button>`);
             }
@@ -1116,11 +1267,11 @@
         return `<div class="rfx-card" style="--d:.14s"><div class="rfx-card-h">The calendar <small>tap a day</small></div><div class="rfx-cal">${html}</div>
             ${phaseLegend(R)}
             <div class="rfx-legend"><b class="rfx-leg-h">What it means for the crop</b>
-              <span><i style="background:repeating-linear-gradient(135deg,#fff1f1 0 3px,#fca5a5 3px 5px);box-shadow:inset 0 0 0 1.5px #fca5a5"></i>${STATE.gap[0]}</span>
+              <span><i style="background:repeating-linear-gradient(135deg,var(--rx-gap-a) 0 3px,var(--rx-gap-edge) 3px 5px);box-shadow:inset 0 0 0 1.5px var(--rx-gap-edge)"></i>${STATE.gap[0]}</span>
               <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px #f59e0b"></i>${STATE.thin[0]}, only partly covered</span>
               <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px #a78bfa;background:repeating-linear-gradient(135deg,rgb(124 58 237 / .45) 0 2px,#fff 2px 5px)"></i>${STATE[late][0]}</span>
               <span><span class="rfx-crit c3" style="position:static"><i></i><i></i><i></i></span>&nbsp;How critical the stage is</span>
-              <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px #2563eb"></i>Today</span></div>
+              <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px var(--rx-today)"></i>Today</span></div>
             <div class="rfx-legend rfx-leg-ap"><b class="rfx-leg-h">What went on</b>
               <span><span class="rfx-ap"><i><svg><use href="#rfxI-gran"/></svg></i></span>Spread on the soil</span>
               <span><span class="rfx-ap"><i><svg><use href="#rfxI-drop"/></svg></i></span>Sprayed or poured</span>
@@ -1217,7 +1368,7 @@
             const i = R.days.indexOf(d);
             dayBox.insertAdjacentHTML('beforeend', `<div class="rfx-day-cmp">${R.series.map((sr) => {
                 const p = sr.p[i], st = sr.s[i];
-                return `<div style="--sc:${colorOf(sr.check.key)}"><i></i><b>${esc(sr.check.label)}</b><span class="rfx-meter"><i style="width:${Math.min(100, Math.round(sr.v[i] * 100))}%;background:${p ? `var(--ph-${p})` : '#d1d5db'}"></i></span><small>${Math.round(sr.v[i] * 100)}% · ${esc(STATE[st] ? STATE[st][0].split(':')[0] : '')}${p ? ' · ' + esc((sr.words || {})[p] || '') : ''}</small></div>`;
+                return `<div style="--sc:${colorOf(sr.check.key)}"><i></i><b>${esc(sr.check.label)}</b><span class="rfx-meter"><i style="width:${Math.min(100, Math.round(sr.v[i] * 100))}%;background:${p ? `var(--ph-${p})` : 'var(--rx-dot)'}"></i></span><small>${Math.round(sr.v[i] * 100)}% · ${esc(STATE[st] ? STATE[st][0].split(':')[0] : '')}${p ? ' · ' + esc((sr.words || {})[p] || '') : ''}</small></div>`;
             }).join('')}</div>`);
         }
         dayBox.hidden = false;
@@ -1250,7 +1401,7 @@
         const list = S.opts?.saved || [];
         const lots = Object.fromEntries((S.opts?.lots || []).map((l) => [l.id, l.name]));
         $('[data-rfx-saved]').innerHTML = list.length ? list.map((s) => `<button type="button" class="rfx-sv" data-open-saved="${s.id}"><span><b>${esc(s.title)}</b><small>${esc(s.at)}${lots[s.lotId] ? ' · ' + esc(lots[s.lotId]) : ''}</small></span><span class="rfx-sv-x" data-del-saved="${s.id}" role="button" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg></span></button>`).join('')
-            : '<p style="font-size:.86rem;color:#6b7280;padding:.5rem">Nothing saved yet. Save a reading to keep it as it stands today.</p>';
+            : '<p class="rfx-muted" style="padding:.5rem">Nothing saved yet. Save a reading to keep it as it stands today.</p>';
         $('[data-rfx-drawer]').hidden = false;
         requestAnimationFrame(() => $('[data-rfx-drawer]').classList.add('is-on'));
     };
