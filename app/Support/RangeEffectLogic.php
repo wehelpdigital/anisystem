@@ -119,7 +119,13 @@ final class RangeEffectLogic
         }
         $from = $answers ? (! empty($in['areaSoil']) ? 'both' : 'answers') : (! empty($in['areaSoil']) ? 'area' : 'none');
 
+        // Its farm lot in Global Lots, and an answered one nearby when it has no answers of its own.
+        $farm = FarmLots::ready() ? LotSync::farmOf($s, $lot) : null;
+        $near = $farm && ! $answers ? LotSync::nearAnswered($s, $farm) : null;
+
         return $memo[$mk] = ['in' => $in, 'key' => $key, 'f' => array_values($f), 'from' => $from,
+            'farm' => $farm ? ['id' => (int) $farm['id'], 'name' => (string) $farm['name']] : null,
+            'near' => $near ? ['id' => (int) $near['id'], 'name' => (string) $near['name'], 'same' => $near['same']] : null,
             'facts' => ['say' => self::soilWords($texture, $ph, $f), 'from' => $from, 'texture' => $texture, 'ph' => $ph, 'factors' => array_values($f), 'place' => $place]];
     }
 
@@ -284,14 +290,29 @@ final class RangeEffectLogic
     private static function soilFactNote(array $soil): array
     {
         $from = $soil['from'];
+        $farm = $soil['farm'] ?? null;
+        $near = $soil['near'] ?? null;
+        $name = $farm ? $farm['name'] : 'This lot';
+        // A lot with no answers says which lot in Global Lots to answer (2026-10-30, the owner read the area's pH 6.2 on a
+        // lot he thought answered: it was a lot new to Global Lots), and offers an answered lot nearby.
         $text = match ($from) {
-            'answers' => 'From your answers about this lot.',
-            'both' => 'From your answers about this lot, with the area\'s typical soil where you left a question open.',
-            'area' => 'Typical for the area, from soil records of the place: this lot has no answers yet. Answer its field questions in Lots, or add a soil test, to make this yours.',
-            default => 'This lot has no soil answers and its place has no soil record, so the soil is not counted. Answer its field questions in Lots to count it.',
+            'answers' => 'From your answers about ' . $name . ' in Global Lots.',
+            'both' => 'From your answers about ' . $name . ' in Global Lots, with the area\'s typical soil where a question is still open.',
+            'area' => $name . ' has no answers in Global Lots yet, so this is the area\'s typical soil, from the soil records of the place.'
+                . ($near ? ' ' . $near['name'] . ', in the same ' . $near['same'] . ', is answered: if it is the same kind of ground, use its answers.' : ' Answer its questions once, or add a soil test, to make this yours.'),
+            default => $name . ' has no answers in Global Lots and its place has no soil record, so the soil is not counted. Answer its questions once to count it.',
         };
+        $acts = [];
+        if ($farm && in_array($from, ['area', 'none'], true)) {
+            $acts[] = ['label' => 'Answer ' . $farm['name'] . '\'s questions', 'href' => route('farmlots.index') . '?lot=' . $farm['id'] . '&answers=1'];
+            if ($near) {
+                $acts[] = ['label' => 'Use ' . $near['name'] . '\'s answers', 'copy' => ['to' => $farm['id'], 'from' => $near['id']]];
+            }
+        } elseif ($farm) {
+            $acts[] = ['label' => 'See or change the answers', 'href' => route('farmlots.index') . '?lot=' . $farm['id'] . '&answers=1'];
+        }
 
-        return ['k' => 'soil', 'icon' => '🪨', 'tone' => $from === 'none' ? 'warn' : 'info', 'title' => 'Your soil: ' . $soil['facts']['say'], 'text' => $text];
+        return ['k' => 'soil', 'icon' => '🪨', 'tone' => in_array($from, ['area', 'none'], true) ? 'warn' : 'info', 'title' => 'Your soil: ' . $soil['facts']['say'], 'text' => $text, 'acts' => $acts];
     }
 
     /** What the soil does to the need of the element: NpkModel::ADJUST for N, P2O5 and K2O; the soil's share for the rest. */

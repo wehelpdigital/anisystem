@@ -29,6 +29,7 @@
         'saved' => url('/app/sm-range-effect/saved') . '/',
         'lookup' => route('sm.effect.lookup') . '?scheduleId=' . $schedule->id,
         'job' => url('/app/sm-range-effect/lookup') . '/',
+        'copyAnswers' => route('sm.effect.copyAnswers') . '?scheduleId=' . $schedule->id,
     ];
     // Granular and foliar, as the try box and the edit dialog both draw them.
     $rfxHowG = '<svg viewBox="0 0 32 32" aria-hidden="true"><path d="M3 25c4-2 8-2 13 0s9 2 13 0v4H3z" fill="#a8723f"/><circle cx="9" cy="13" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="17" cy="9" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="23" cy="16" r="3" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/><circle cx="14" cy="19" r="2.4" fill="#e9d6b0" stroke="#8a5a2b" stroke-width="1.4"/></svg>';
@@ -713,6 +714,11 @@
     .rfx-others .rfx-chip { padding: .25rem .65rem; font-size: .76rem; }
     .rfx-way { padding: .05rem .45rem; border-radius: 999px; font-size: .7rem; font-weight: 900; }
     .rfx-way.is-less { color: var(--rx-thin-ink); background: var(--rx-thin-bg); } .rfx-way.is-more { color: var(--rx-done-ink); background: var(--rx-done-bg); }
+    .rfx-soilline { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .6rem; }
+    .rfx-soilline .rfx-chip { padding: .3rem .7rem; font-size: .78rem; text-decoration: none; }
+    @media (max-width: 559.98px) { .rfx-soilline { justify-content: center; } }
+    .rfx-note-acts { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+    .rfx-note-acts .rfx-chip { padding: .35rem .75rem; font-size: .8rem; text-decoration: none; }
     .rfx-notes-more { justify-self: start; font-size: .82rem; font-weight: 800; color: var(--rx-accent); }
     .rfx-day-amt { margin-top: .6rem; padding: .55rem .7rem; border-radius: .8rem; font-size: .84rem; line-height: 1.5; color: var(--rx-text); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
     .rfx-day-amt b { color: var(--rx-ink); }
@@ -1285,7 +1291,7 @@
                 <span><i style="background:#f59e0b"></i>${sm.thinDays} thin</span>
                 <span><i style="background:#dc2626"></i>${sm.gapDays} gap</span>
                 ${isNut ? `<span><i style="background:#8b5cf6"></i>${(sm.late || []).reduce((a, r) => a + r.n, 0)} late</span>` : ''}
-              </div>${amountLine(R)}</div></div>
+              </div>${amountLine(R)}${soilLine(R)}</div></div>
             ${runsHtml(sm, isNut)}</div>`);
         if ((R.series || []).length) parts.push(compareHtml(R));
         parts.push(logicHtml(R));
@@ -1357,6 +1363,16 @@
             setFold(card, key in foldPref ? !!foldPref[key] : !!FOLD_DEF[key], false);
         });
     };
+    /* The soil the reading counts, in the summary, so a lot read by the area's typical soil says so up front. */
+    const soilLine = (R) => {
+        const L = R.logic;
+        if (!L || !L.opts || !L.opts.soil || !L.soil) return '';
+        const note = (L.notes || []).find((x) => x.k === 'soil' && (x.acts || []).length);
+        const from = L.soil.from;
+        const how = from === 'answers' || from === 'both' ? 'from your answers' : from === 'area' ? "the area's typical soil: this lot is not answered yet" : 'not known yet';
+        const act = note && note.acts[0] && (from === 'area' || from === 'none') ? `<a class="rfx-chip" href="${esc(note.acts[0].href)}">${esc(note.acts[0].label)}</a>` : '';
+        return `<div class="rfx-amtline rfx-soilline"><span>🪨 <b>Soil</b>: ${esc(L.soil.say)} (${esc(how)})</span>${act}</div>`;
+    };
     /* How much over the season, in the summary: given against needed from the bag. */
     const amountLine = (R) => {
         const A = R.logic?.amt;
@@ -1418,7 +1434,7 @@
         GROUPS.forEach(([key, icon, title]) => {
             const list = notes.filter((x) => x.k === key);
             if (!list.length) return;
-            html += `<section><h4>${icon} ${title}</h4>${list.map((x) => `<div class="rfx-note is-${esc(x.tone || 'info')}" ${x.from ? `data-jump="${esc(x.from)}"` : ''} style="--k:${k++}"><em>${x.icon || '•'}</em><div><b>${esc(x.title)}</b><p>${esc(x.text)}</p>${x.from ? `<small>${say(x.from)}${x.to && x.to !== x.from ? ' to ' + say(x.to) : ''} · show it in the calendar</small>` : ''}</div></div>`).join('')}</section>`;
+            html += `<section><h4>${icon} ${title}</h4>${list.map((x) => `<div class="rfx-note is-${esc(x.tone || 'info')}" ${x.from ? `data-jump="${esc(x.from)}"` : ''} style="--k:${k++}"><em>${x.icon || '•'}</em><div><b>${esc(x.title)}</b><p>${esc(x.text)}</p>${(x.acts || []).length ? `<span class="rfx-note-acts">${x.acts.map((a) => a.href ? `<a class="rfx-chip" href="${esc(a.href)}">${esc(a.label)}</a>` : `<button type="button" class="rfx-chip is-on" data-copy-ans data-to="${a.copy.to}" data-from="${a.copy.from}">${esc(a.label)}</button>`).join('')}</span>` : ''}${x.from ? `<small>${say(x.from)}${x.to && x.to !== x.from ? ' to ' + say(x.to) : ''} · show it in the calendar</small>` : ''}</div></div>`).join('')}</section>`;
         });
         if (others.length) html += `<section><h4>🔁 What your products do to other nutrients</h4><ul class="rfx-others">${others.map((x) => `<li><b>${esc(x.name)}</b><span class="rfx-way is-${x.way === 'more' ? 'more' : 'less'}">${x.way === 'more' ? 'freed' : 'held back'}</span><span>${esc(x.why)}</span>${x.key ? `<button type="button" class="rfx-chip" data-goto="${esc(x.key)}">Check it</button>` : ''}</li>`).join('')}</ul></section>`;
         const on = Object.entries(L.opts || {}).filter(([, v]) => v).map(([kk]) => ({ amt: 'amounts', soil: 'soil', links: 'links', health: 'health' }[kk])).join(' · ');
@@ -1668,6 +1684,14 @@
         if (fh) {
             const c = fh.closest('[data-fold]');
             setFold(c, !c.classList.contains('is-open'));
+            return;
+        }
+        const cp = e.target.closest('[data-copy-ans]');
+        if (cp) {
+            cp.disabled = true;
+            window.api(U.copyAnswers, { method: 'POST', body: { to: Number(cp.dataset.to), from: Number(cp.dataset.from) } })
+                .then((r) => { window.toast?.(r.message); run(); })
+                .catch((err) => { window.toast?.(err.message, 'error'); cp.disabled = false; });
             return;
         }
         const go = e.target.closest('[data-goto]');

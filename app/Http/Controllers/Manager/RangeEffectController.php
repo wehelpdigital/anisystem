@@ -197,6 +197,28 @@ class RangeEffectController extends BaseScheduleController
         return $this->jsonOk($have ? 'Updated.' : 'Saved.', ['data' => ['id' => $id, 'title' => $row['title'], 'updated' => (bool) $have, 'saved' => $this->savedList((int) $schedule->id)]]);
     }
 
+    /**
+     * A lot with no answers takes an answered lot's, from the soil note ("Use Masin 1's answers"): both the season
+     * owner's farm lots, the one taking them still unanswered.
+     */
+    public function copyAnswers(Request $request)
+    {
+        $this->gate();
+        $schedule = $this->schedule($request->input('scheduleId'));
+        $owner = \App\Support\LotSync::ownerOf($schedule);
+        $to = \App\Support\FarmLots::one($owner, (int) $request->input('to'));
+        $from = \App\Support\FarmLots::one($owner, (int) $request->input('from'));
+        if (! $to || ! $from || empty($from['answers'])) {
+            return $this->jsonFail('Those lots could not be found.', 404);
+        }
+        if (! empty($to['answers'])) {
+            return $this->jsonFail($to['name'] . ' has answers of its own already. Change them in Global Lots.', 422);
+        }
+        \App\Support\FarmLots::save($owner, ['answers' => (array) $from['answers']], (int) $to['id']);
+
+        return $this->jsonOk($to['name'] . ' now has ' . $from['name'] . '\'s answers. Change any of them in Global Lots.');
+    }
+
     /** A saved reading's name, changed. */
     public function rename(Request $request, int $id)
     {

@@ -219,6 +219,43 @@ final class LotSync
         }
     }
 
+    /** A season lot's farm lot, read once from the owner's lots (null when it has none). */
+    public static function farmOf(AsCroppingSchedule $s, AsScheduleLot $lot): ?array
+    {
+        try {
+            return self::farmLotOf($lot, self::farmLots(self::ownerOf($s)));
+        } catch (\Throwable $e) {
+            report($e);
+
+            return null;
+        }
+    }
+
+    /**
+     * An answered farm lot near an unanswered one, to offer its answers: the same barangay first, else the same town.
+     * Null when none is answered there.
+     */
+    public static function nearAnswered(AsCroppingSchedule $s, array $f): ?array
+    {
+        $town = self::key($f['town'] ?? '');
+        if ($town === '') {
+            return null;
+        }
+        $brgy = self::key($f['barangay'] ?? '');
+        $best = null;
+        foreach (self::farmLots(self::ownerOf($s)) as $x) {
+            if ((int) $x['id'] === (int) $f['id'] || empty($x['answers']) || self::key($x['town'] ?? '') !== $town) {
+                continue;
+            }
+            if ($brgy !== '' && self::key($x['barangay'] ?? '') === $brgy) {
+                return $x + ['same' => 'barangay'];
+            }
+            $best ??= $x + ['same' => 'town'];
+        }
+
+        return $best;
+    }
+
     /** The farm lots not in a season yet (by link or name), for "Add from your lots". */
     public static function notIn(AsCroppingSchedule $s): array
     {
