@@ -56,18 +56,26 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 hp-hero-in">
             {{-- Anee in the app, on a phone to the left of the words (2026-10-29, the owner: "add the phone again to the left
-                 before the main hero text then adjust everything accordingly"): the real chat film, a farmer's photo of
-                 worms in the leaves and Anee's answer, playing only while the hero is seen. On wide screens only, where
-                 the hero becomes three columns; narrower, the words and the circle keep the room. --}}
-            <figure class="hp-hero-phone animate-fade-up" aria-hidden="true" data-hero-phone>
+                 before the main hero text then adjust everything accordingly"; then: "show anee auto daily screen and
+                 some analysis results like when to plant, pricing forecast, also satellite view"). One 28 second film,
+                 crossfaded (public/videos/site/anee-phone-tour.mp4): Anee Auto's season and today's plan (recorded from
+                 the demo season 17), the When to Plant ranking, the price forecast, a satellite reading and the farm on
+                 the satellite map. The tag under the phone names what is showing (data-cues, seconds into the film).
+                 Plays only while the hero is seen; wide screens only, where the hero becomes three columns. --}}
+            @php
+                $hpTour = 'videos/site/anee-phone-tour';
+                $hpTourV = '?v=' . (@filemtime(public_path($hpTour . '.mp4')) ?: 1);
+                $hpCues = [[0, 'Anee Auto, your day'], [7.1, 'When to plant'], [12.6, 'Price forecast'], [18.1, 'Satellite reading'], [22.1, 'Your farm from space']];
+            @endphp
+            <figure class="hp-hero-phone animate-fade-up" aria-hidden="true" data-hero-phone data-cues='@json($hpCues)'>
                 <div class="hp-phone is-sm">
                     <div class="hp-phone-scr">
-                        <video class="hp-film" muted loop playsinline preload="none" poster="{{ asset('videos/how/hero-chat.webp') }}" width="780" height="1688">
-                            <source src="{{ asset('videos/how/hero-chat.mp4') }}" type="video/mp4">
+                        <video class="hp-film" muted loop playsinline preload="none" poster="{{ asset($hpTour . '.webp') . $hpTourV }}" width="420" height="910">
+                            <source src="{{ asset($hpTour . '.mp4') . $hpTourV }}" type="video/mp4">
                         </video>
                     </div>
                 </div>
-                <figcaption><img src="{{ $face }}" alt="" width="40" height="40">Anee in the app</figcaption>
+                <figcaption><img src="{{ $face }}" alt="" width="40" height="40"><span data-hero-cue>{{ $hpCues[0][1] }}</span></figcaption>
             </figure>
             <div class="hp-hero-copy">
                 <span class="hp-chip animate-fade-up">
@@ -2030,6 +2038,8 @@
     .hp-hero-phone figcaption { display: flex; align-items: center; gap: .4rem; width: max-content; margin: 1.1rem auto 0; padding: .32rem .8rem .32rem .35rem; border-radius: 999px;
         font-size: .8rem; font-weight: 900; color: #14210c; background: #f5c518; box-shadow: 0 12px 26px -12px rgb(0 0 0 / .7); }
     .hp-hero-phone figcaption img { width: 1.4rem; height: 1.4rem; border-radius: 999px; object-fit: cover; box-shadow: 0 0 0 2px #fff; }
+    .hp-hero-phone figcaption span { display: inline-block; transition: opacity .22s ease, transform .22s cubic-bezier(.22,1,.36,1); }
+    .hp-hero-phone figcaption span.is-swap { opacity: 0; transform: translateY(4px); }
     @media (min-width: 1280px) {
         .hp-hero .hp-hero-in { grid-template-columns: 12.5rem minmax(0, 1fr) minmax(0, 28rem); gap: 2.5rem; }
         .hp-hero-phone { display: block; }
@@ -4129,10 +4139,21 @@
         stage.addEventListener('pointerleave', () => { stage.style.setProperty('--ry', '0deg'); stage.style.setProperty('--rx', '0deg'); });
     }
 
-    /* The phone with Anee's chat, left of the words: plays only while seen, and only where it shows. */
+    /* The phone with Anee in the app, left of the words: plays only while seen, and only where it shows; the tag under it
+       names what the film is showing. */
     const heroPhone = document.querySelector('[data-hero-phone]');
     if (heroPhone && !reduce && 'IntersectionObserver' in window) {
-        const pv = heroPhone.querySelector('video');
+        const pv = heroPhone.querySelector('video'), tag = heroPhone.querySelector('[data-hero-cue]');
+        const cues = JSON.parse(heroPhone.dataset.cues || '[]');
+        let cue = 0;
+        pv.addEventListener('timeupdate', () => {
+            let k = 0;
+            cues.forEach((c, i) => { if (pv.currentTime >= c[0]) k = i; });
+            if (k === cue || !tag) return;
+            cue = k;
+            tag.classList.add('is-swap');
+            setTimeout(() => { tag.textContent = cues[k][1]; tag.classList.remove('is-swap'); }, 220);
+        });
         new IntersectionObserver((es) => es.forEach((e) => {
             if (e.isIntersecting && heroPhone.offsetWidth) pv.play().catch(() => {}); else pv.pause();
         }), { threshold: .25 }).observe(heroPhone);
