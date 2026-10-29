@@ -1,0 +1,332 @@
+{
+  "section": "nutrients",
+  "slug": "calcium-in-plants",
+  "lang": "en",
+  "category": "Secondary nutrients",
+  "sortOrder": 210,
+  "title": "Calcium in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Calcium in Plants: Role, Signs and When It Matters",
+  "metaDescription": "Calcium in plants builds the walls of every cell. See why it never moves to new growth, when fruit and vegetables need it most, and how to supply it.",
+  "focusKeyword": "calcium in plants",
+  "keywords": [
+    "role of calcium in plants",
+    "calcium fertilizer",
+    "blossom end rot",
+    "calcium for tomatoes"
+  ],
+  "excerpt": "Calcium in plants is the cement of the cell walls. It holds new cells together and keeps fruit firm, but it cannot move from old leaves to new ones, so the young parts suffer first. Blossom end rot on tomato and tip burn on cabbage are calcium problems. Here is what it does, when each crop needs it most and how to supply it.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-ca.webp",
+    "alt": "Tomatoes with dark sunken rot at the blossom end: calcium in plants running short",
+    "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What calcium does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Calcium binds the walls of neighboring cells together, much like the cement between hollow blocks. It also keeps the outer membrane of every cell whole, and it carries signals inside the cell when the plant meets heat, drought or a pest.\n\nSo calcium matters most wherever new tissue forms fast: root tips, young leaves, the growing point and every fruit. A tomato, a pepper or a melon short of calcium as it swells gets a rotten, sunken spot at its blossom end, and a cabbage head gets brown, burnt inner leaves."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A building block that stays where it lands"
+    },
+    {
+      "type": "text",
+      "text": "Calcium is a building block. Once it is laid into a cell wall it stays there for good. The plant cannot pull it back out to feed a new leaf, the way it does with nitrogen or potassium.\n\nCalcium also travels only with the water the plant draws up. So anything that slows the flow of water, like dry soil, very humid air or a fruit that loses little water, keeps calcium from reaching the parts that need it, even in a soil full of it."
+    },
+    {
+      "type": "table",
+      "caption": "Calcium in short",
+      "rows": [
+        [
+          "Fact",
+          "Calcium"
+        ],
+        [
+          "Group",
+          "Secondary macronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Building block"
+        ],
+        [
+          "Moves inside the plant",
+          "Hardly at all"
+        ],
+        [
+          "Where a shortage shows first",
+          "The young leaves, growing tips and fruit"
+        ],
+        [
+          "Taken up as",
+          "Calcium ion"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where calcium shows first"
+    },
+    {
+      "type": "text",
+      "text": "Because calcium does not move inside the plant, a shortage starts on the newest growth. The young leaves come out hooked, wrinkled or burnt at the tips, the growing point can die, and fruit rot at the blossom end. The old leaves stay normal.\n\nMost calcium problems in the field are about water and timing, not an empty soil. See [calcium deficiency](/nutrient-deficiencies/calcium-deficiency) for how it shows in each crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When calcium in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Calcium matters most while a crop forms its fruit or its head, and in peanut while the pods fill underground. Rice and corn need little of it and most soils give enough.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing calcium in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When calcium is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Rice needs little calcium. Most soils supply enough."
+        ],
+        [
+          "Palay, direct seeded",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Calcium need is small and the soil usually covers it."
+        ],
+        [
+          "Yellow corn",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Calcium need is small and the soil usually covers it."
+        ],
+        [
+          "Sweet corn",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Calcium need is small and the soil usually covers it."
+        ],
+        [
+          "Other grains (sorghum)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Calcium need is small and the soil usually covers it."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When calcium is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "Heading and filling (DAT 19 to 29)",
+          "Leaf growth (DAT 6 to 18)",
+          "Calcium shortage now causes tipburn inside heads. Keep watering even."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "Fruit set and filling (DAT 46 to 63)",
+          "Flowering (DAT 34 to 45), Harvest (DAT 64 to 80)",
+          "Calcium shortage now causes blossom end rot. Keep watering even."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "Fruit set and filling (DAP 34 to 49)",
+          "Flowering (DAP 24 to 33), Harvest (DAP 50 to 62)",
+          "Calcium shortage now causes blossom end rot. Keep watering even."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "Pod filling (DAP 38 to 52)",
+          "Flowering (DAP 27 to 37)",
+          "Peanut pods need calcium in the pegging zone. Gypsum helps."
+        ],
+        [
+          "Onion and garlic",
+          "No stage stands out",
+          "Bulbing (DAT 58 to 91)",
+          "Calcium builds new tissue now. Even watering helps it move."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When calcium is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "No stage stands out",
+          "Root initiation (DAP 47 to 67), Bulking (DAP 68 to 91)",
+          "Calcium builds new tissue now. Even watering helps it move."
+        ],
+        [
+          "Sugarcane",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Calcium need is small and the soil usually covers it."
+        ],
+        [
+          "Banana",
+          "No stage stands out",
+          "Vegetative growth (DAP 60 to 179), Late vegetative (DAP 180 to 269), Shooting (DAP 270 to 329), Bunch filling (DAP 330 to 389)",
+          "Calcium builds new tissue now. Even watering helps it move."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When calcium comes too late"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Fruit vegetables (tomato, eggplant, pepper): Calcium given after blossom end rot shows cannot save the spoiled fruit."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Keep the soil evenly moist through fruit set, because a dry spell followed by heavy watering brings blossom end rot even when the soil holds plenty of calcium."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps calcium from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Strongly acid soil, sandy soil and heavily leached upland soil can run low on calcium. More often, though, the soil has enough and the plant cannot move it: dry soil, uneven watering, roots damaged by too much fertilizer, or heavy ammonium and potassium that crowd calcium out at the roots.\n\nOn sodic soil the trouble is the reverse: too much sodium pushes calcium off the soil and the ground turns hard and sticky. Gypsum puts the calcium back and lets the sodium wash away."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where calcium comes from"
+    },
+    {
+      "type": "text",
+      "text": "Lime gives calcium and raises the pH of acid soil at the same time. Gypsum gives calcium without changing the pH, so it suits sodic and neutral soil. For fruit crops, calcium nitrate on the soil or as a spray reaches the fruit fastest. See [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes) for a fruit crop schedule."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Agricultural lime and dolomite: calcium for acid soil, dolomite with magnesium too.",
+        "Gypsum (calcium sulfate): calcium and sulfur without raising the pH.",
+        "Calcium nitrate: quick calcium with nitrogen, on the soil or the leaves."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too much lime locks up other nutrients",
+      "text": "Liming past a pH of about 7 makes iron, manganese, zinc, boron and phosphorus harder to take up. Lime to the pH the crop needs, guided by a soil test."
+    },
+    {
+      "type": "cta",
+      "title": "Time your calcium to the fruit set",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether calcium reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Calcium questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What causes blossom end rot?",
+          "a": "A shortage of calcium in the fruit while it swells. It usually comes from uneven watering or dry soil rather than a soil without calcium."
+        },
+        {
+          "q": "Is calcium a macronutrient or a micronutrient?",
+          "a": "Calcium is a secondary macronutrient, with magnesium and sulfur. Crops need it in kilograms, but much less than nitrogen or potassium."
+        },
+        {
+          "q": "Does palay need calcium fertilizer?",
+          "a": "Rarely. Most rice soils give enough calcium. Gypsum helps on sodic paddies, where it is the sodium that needs fixing."
+        },
+        {
+          "q": "Can calcium be sprayed on the leaves?",
+          "a": "Yes, calcium nitrate or calcium chloride sprays help fruit and leafy crops, but calcium sprayed on the leaves does not move to the fruit, so spray the fruit itself."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Calcium deficiency",
+          "url": "/nutrient-deficiencies/calcium-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Magnesium in plants",
+          "url": "/nutrients/magnesium-in-plants"
+        },
+        {
+          "label": "Boron in plants",
+          "url": "/nutrients/boron-in-plants"
+        },
+        {
+          "label": "Fertilizer for tomatoes",
+          "url": "/blog/fertilizer-for-tomatoes"
+        },
+        {
+          "label": "Fertilizer for vegetables",
+          "url": "/blog/fertilizer-for-vegetables-philippines"
+        }
+      ]
+    }
+  ]
+}

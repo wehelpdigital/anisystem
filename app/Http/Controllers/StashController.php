@@ -16,6 +16,15 @@ use Illuminate\Support\Facades\Storage;
  */
 class StashController extends Controller
 {
+    /** A shelf of Anee Knowledgebase (App\Support\Knowledge): its guides as blocks, for the full window on the dashboard. */
+    public function knowledge(string $shelf)
+    {
+        $s = \App\Support\Knowledge::shelf($shelf);
+        abort_unless($s, 404);
+
+        return response()->json(['success' => true, 'message' => 'ok', 'data' => ['shelf' => $shelf, 'label' => $s['label'], 'groups' => $s['groups'], 'pages' => \App\Support\Knowledge::pages($shelf)]]);
+    }
+
     public function shelf(string $partner, string $type)
     {
         $p = Stash::partner($partner);

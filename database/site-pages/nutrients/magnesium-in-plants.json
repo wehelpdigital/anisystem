@@ -1,0 +1,316 @@
+{
+  "section": "nutrients",
+  "slug": "magnesium-in-plants",
+  "lang": "en",
+  "category": "Secondary nutrients",
+  "sortOrder": 220,
+  "title": "Magnesium in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Magnesium in Plants: Role, Signs and When It Matters",
+  "metaDescription": "Magnesium in plants sits at the center of chlorophyll. See what it does, when palay, mais and fruit crops need it most, and what crowds it out.",
+  "focusKeyword": "magnesium in plants",
+  "keywords": [
+    "role of magnesium in plants",
+    "magnesium fertilizer",
+    "magnesium sulfate for plants",
+    "dolomite"
+  ],
+  "excerpt": "Magnesium in plants sits at the very center of chlorophyll, the green that turns sunlight into food, and it switches on the enzymes that move energy around the plant. A crop short of it turns yellow between the veins of its older leaves. Here is what it does, when each crop needs it most, and why too much potassium can cause its shortage.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-mg.webp",
+    "alt": "Tomato leaf yellow between green veins: magnesium in plants running short",
+    "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What magnesium does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Every molecule of chlorophyll has one atom of magnesium at its center. Without it the leaf cannot catch light, so a plant short of magnesium makes less food however much nitrogen it gets.\n\nMagnesium also switches on the enzymes that handle ATP, the energy carrier, and it helps load sugar into the phloem so it can travel to the grain, the fruit and the roots. That is why a shortage shows late in the season as poor filling, after the crop has looked fine for weeks."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Both a building block and a helper"
+    },
+    {
+      "type": "text",
+      "text": "Magnesium works two ways. As part of chlorophyll it is a building block, held in the leaf. As the partner of ATP and many enzymes it is a helper, doing its job without being used up.\n\nCrops take less magnesium than calcium, often 10 to 30 kilograms per hectare, but on sandy and acid soils that can be more than the soil gives."
+    },
+    {
+      "type": "table",
+      "caption": "Magnesium in short",
+      "rows": [
+        [
+          "Fact",
+          "Magnesium"
+        ],
+        [
+          "Group",
+          "Secondary macronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Building block and helper"
+        ],
+        [
+          "Moves inside the plant",
+          "Yes"
+        ],
+        [
+          "Where a shortage shows first",
+          "The old leaves, between the veins"
+        ],
+        [
+          "Taken up as",
+          "Magnesium ion"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where magnesium shows first"
+    },
+    {
+      "type": "text",
+      "text": "Magnesium moves inside the plant, so the shortage starts on the older leaves. The tissue between the veins turns yellow while the veins stay green, giving a striped or marbled look, and later the yellow parts can turn reddish or die.\n\nIt is easy to confuse with potassium, which scorches the leaf edges instead, or with manganese, which starts on the young leaves. See [magnesium deficiency](/nutrient-deficiencies/magnesium-deficiency) to tell them apart."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When magnesium in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Magnesium matters most when the crop is filling: grain in palay and mais, fruit in tomato and melon, bunches in banana. Before that the leaves need it to keep making food at full speed.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing magnesium in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When magnesium is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "No stage stands out",
+          "Panicle initiation (DAT 35 to 49), Booting and heading (DAT 50 to 59)",
+          "Magnesium keeps leaves green as panicles form."
+        ],
+        [
+          "Palay, direct seeded",
+          "No stage stands out",
+          "Panicle initiation (DAS 40 to 54), Booting and heading (DAS 55 to 69)",
+          "Magnesium keeps leaves green as panicles form."
+        ],
+        [
+          "Yellow corn",
+          "No stage stands out",
+          "Rapid growth (DAP 30 to 44), Tasselling (DAP 45 to 54)",
+          "Magnesium keeps leaves green during the fastest growth."
+        ],
+        [
+          "Sweet corn",
+          "No stage stands out",
+          "Rapid growth (DAP 24 to 37), Tasselling (DAP 38 to 45)",
+          "Magnesium keeps leaves green during the fastest growth."
+        ],
+        [
+          "Other grains (sorghum)",
+          "No stage stands out",
+          "Reproductive (DAP 46 to 65)",
+          "Magnesium keeps leaves green while demand is high."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When magnesium is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "No stage stands out",
+          "Leaf growth (DAT 6 to 18), Heading and filling (DAT 19 to 29)",
+          "Magnesium keeps leaves green while demand is high."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "No stage stands out",
+          "Vegetative (DAT 14 to 33), Flowering (DAT 34 to 45), Fruit set and filling (DAT 46 to 63)",
+          "Magnesium keeps leaves green while demand is high."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "No stage stands out",
+          "Vine growth (DAP 9 to 23), Flowering (DAP 24 to 33), Fruit set and filling (DAP 34 to 49)",
+          "Magnesium keeps leaves green while demand is high."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Magnesium need is small and the soil usually covers it."
+        ],
+        [
+          "Onion and garlic",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Magnesium need is small and the soil usually covers it."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When magnesium is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "No stage stands out",
+          "Vegetative (DAP 16 to 46), Root initiation (DAP 47 to 67), Bulking (DAP 68 to 91)",
+          "Magnesium keeps leaves green while demand is high."
+        ],
+        [
+          "Sugarcane",
+          "No stage stands out",
+          "Tillering (DAP 45 to 119), Grand growth (DAP 120 to 269)",
+          "Magnesium keeps leaves green while demand is high."
+        ],
+        [
+          "Banana",
+          "No stage stands out",
+          "Vegetative growth (DAP 60 to 179), Late vegetative (DAP 180 to 269), Shooting (DAP 270 to 329)",
+          "Magnesium keeps leaves green. Heavy potash use can push it short."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps magnesium from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Sandy and strongly acid soils hold little magnesium and lose it in heavy rain. On other soils the trouble is competition: heavy potassium or ammonium fertilizer, or a lot of calcium from lime, crowds magnesium out at the roots.\n\nSo a field that gets plenty of muriate of potash season after season, without magnesium, can start to show the yellow stripes. Dolomite instead of plain lime fixes both the acidity and the magnesium."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where magnesium comes from"
+    },
+    {
+      "type": "text",
+      "text": "Dolomite gives magnesium along with calcium and is the cheapest choice for acid soil. Magnesium sulfate, sold as Epsom salt or kieserite, dissolves quickly and works on the soil or as a leaf spray. Many complete fertilizers and foliar feeds also carry some. See [micronutrients for rice](/blog/micronutrients-for-rice) for the trace nutrients that often go with it."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Dolomite: magnesium and calcium, raises the pH of acid soil.",
+        "Magnesium sulfate (Epsom salt, kieserite): fast magnesium with sulfur, on the soil or the leaves.",
+        "Compost and manure: small amounts released slowly."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too much magnesium hurts the soil",
+      "text": "Very high magnesium can make clay soil tight and slow to drain, and it crowds out potassium and calcium. Add it when a soil test or the leaves say it is short."
+    },
+    {
+      "type": "cta",
+      "title": "Keep magnesium up through the filling weeks",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether magnesium reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Magnesium questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is Epsom salt good for plants?",
+          "a": "Epsom salt is magnesium sulfate, so it helps where magnesium or sulfur is short. On a soil with enough magnesium it does nothing for the crop."
+        },
+        {
+          "q": "What does magnesium deficiency look like?",
+          "a": "The older leaves turn yellow between green veins, often in stripes on palay and mais. The young leaves stay green at first."
+        },
+        {
+          "q": "Can too much potassium cause magnesium deficiency?",
+          "a": "Yes. Heavy potassium crowds magnesium out at the roots, most of all on sandy soil."
+        },
+        {
+          "q": "Is magnesium a micronutrient?",
+          "a": "No. Magnesium is a secondary macronutrient, along with calcium and sulfur."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Magnesium deficiency",
+          "url": "/nutrient-deficiencies/magnesium-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Potassium in plants",
+          "url": "/nutrients/potassium-in-plants"
+        },
+        {
+          "label": "Calcium in plants",
+          "url": "/nutrients/calcium-in-plants"
+        },
+        {
+          "label": "Micronutrients for rice",
+          "url": "/blog/micronutrients-for-rice"
+        },
+        {
+          "label": "Foliar fertilizer",
+          "url": "/blog/foliar-fertilizer"
+        }
+      ]
+    }
+  ]
+}

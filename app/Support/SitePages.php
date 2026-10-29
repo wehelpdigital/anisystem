@@ -93,6 +93,19 @@ class SitePages
             'intro' => 'Yellow lower leaves, purple young plants, burnt leaf edges or empty grain often mean the soil is short of one nutrient. Find your crop, see where the change starts and what it looks like, then the fertilizer that fixes it, from urea and potash to zinc and boron.',
             'kicker' => 'Nutrient deficiencies',
         ],
+        // Nutrients (2026-10-30, the owner: "under guides create a new page called Nutrients ... the purpose of each nutrient
+        // (all macro and micro) and what days it is critical usually for each crop ... gated content but make sure it is
+        // crawlable"): one page per plant nutrient and the overview, built by the scratchpad's nutr/build.py from the app's
+        // own stage book (database/range-effect/criticality.json). Gated like the other guides, every word in the HTML.
+        'nutrients' => [
+            'label' => 'Nutrients',
+            'crumb' => 'Nutrients',
+            'hubTitle' => 'Plant Nutrients: What Each One Does and When Crops Need It',
+            'metaTitle' => 'Plant Nutrients Guide: Macro and Micro, Crop by Crop',
+            'metaDescription' => 'What every plant nutrient does, macro and micro, whether it builds the plant or helps it work, and the days palay, mais and gulay need each one most.',
+            'intro' => 'Nitrogen to nickel, one page each: what the nutrient does inside the plant, whether it is a building block the harvest carries away or a helper that works in grams, where its shortage shows first, and the days each crop needs it most.',
+            'kicker' => 'Nutrients',
+        ],
         // The old one section door, kept as the front door to the three.
         'problems' => [
             'label' => 'Crop Problems',

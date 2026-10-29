@@ -188,7 +188,7 @@ class SitePageController extends Controller
 
     public function sitemap()
     {
-        $static = ['/', '/how-it-works', '/how-it-works/why-anee', '/how-it-works/anee-vs-now', '/how-it-works/anee-auto', '/how-it-works/easy-to-use', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/how-to-plant', '/problems', '/pests', '/diseases', '/weeds', '/nutrient-deficiencies', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
+        $static = ['/', '/how-it-works', '/how-it-works/why-anee', '/how-it-works/anee-vs-now', '/how-it-works/anee-auto', '/how-it-works/easy-to-use', '/features', '/pricing', '/pricing/compare', '/about', '/tutorial', '/contact', '/crops', '/how-to-plant', '/problems', '/pests', '/diseases', '/weeds', '/nutrients', '/nutrient-deficiencies', '/land-preparation', '/rice-varieties', '/crop-varieties', '/blog', '/ask-anee', '/questions', '/legal'];
         // Each crop's variety finder (2026-10-13).
         foreach (\App\Support\CropVarieties::crops() as $c) {
             if ($c['hasHub']) {
@@ -253,7 +253,7 @@ class SitePageController extends Controller
         $out[] = '- [Anee Auto](' . url('/how-it-works/anee-auto') . '): the farmer answers a few questions about the farm once; Anee reads the weather record, ENSO, soil, variety, pests and prices, writes the whole season, re-plans it at 5:00 every morning and sends each worker the day\'s tasks.';
         $out[] = '- [Easy to use](' . url('/how-it-works/easy-to-use') . '): why anee.io is easy for any farmer: a video tutorial on every screen, Taglish help tags on technical words, questions in Tagalog, Bisaya, Ilocano or English, works offline; made by Filipino farmers for Filipino farmers.';
         $out[] = '';
-        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'how-to-plant' => 'How to plant, the traditional way, crop by crop', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'nutrient-deficiencies' => 'Nutrient deficiencies by crop', 'rice-varieties' => 'Rice varieties', 'crop-varieties' => 'Crop varieties', 'features' => 'Feature pages'];
+        $names = ['blog' => 'Answers and articles', 'crops' => 'Crop guides', 'how-to-plant' => 'How to plant, the traditional way, crop by crop', 'land-preparation' => 'Land preparation', 'pests' => 'Pests', 'diseases' => 'Diseases', 'weeds' => 'Weeds', 'nutrients' => 'Plant nutrients, what each does and when crops need it', 'nutrient-deficiencies' => 'Nutrient deficiencies by crop', 'rice-varieties' => 'Rice varieties', 'crop-varieties' => 'Crop varieties', 'features' => 'Feature pages'];
         try {
             $pages = AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'title', 'excerpt']);
             foreach ($names as $section => $name) {

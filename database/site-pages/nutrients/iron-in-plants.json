@@ -1,0 +1,320 @@
+{
+  "section": "nutrients",
+  "slug": "iron-in-plants",
+  "lang": "en",
+  "category": "Micronutrients",
+  "sortOrder": 330,
+  "title": "Iron in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Iron in Plants: Role, Signs and When It Matters",
+  "metaDescription": "Iron in plants helps make chlorophyll and carry energy. See why upland crops on limy soil run short, why flooded rice can get too much, and how to fix both.",
+  "focusKeyword": "iron in plants",
+  "keywords": [
+    "role of iron in plants",
+    "iron chlorosis",
+    "iron toxicity in rice",
+    "iron fertilizer"
+  ],
+  "excerpt": "Iron in plants is a helper the leaf cannot make chlorophyll without. A crop short of it turns pale yellow on its newest leaves while the veins stay green. Upland crops on limy or alkaline soil run short most often, while flooded rice is more likely to get too much. Here is what it does, when it matters for each crop and how to handle both troubles.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-fe.webp",
+    "alt": "Twig with young leaves yellow between dark green veins: iron in plants running short",
+    "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What iron does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Iron is not part of chlorophyll itself, but the plant cannot make chlorophyll without it. It also sits in the proteins that pass energy along inside the leaf and the root, so photosynthesis and breathing both depend on it.\n\nA plant short of iron makes pale new leaves that cannot feed it well, so growth slows. In legumes iron is also needed by the nodules that fix nitrogen from the air."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A helper that carries energy"
+    },
+    {
+      "type": "text",
+      "text": "Iron is a helper. It does its work inside enzymes and energy carriers, passing electrons along without being used up, so crops need only a few hundred grams per hectare.\n\nMost soils hold plenty of iron. The trouble is almost always its form: in alkaline, limy and well aired soil it turns into rust like forms the roots cannot take."
+    },
+    {
+      "type": "table",
+      "caption": "Iron in short",
+      "rows": [
+        [
+          "Fact",
+          "Iron"
+        ],
+        [
+          "Group",
+          "Micronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Helper"
+        ],
+        [
+          "Moves inside the plant",
+          "Hardly at all"
+        ],
+        [
+          "Where a shortage shows first",
+          "The youngest leaves, yellow between green veins"
+        ],
+        [
+          "Taken up as",
+          "Ferrous iron or iron chelate"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where iron shows first"
+    },
+    {
+      "type": "text",
+      "text": "Iron hardly moves inside the plant, so the shortage shows on the newest leaves. They turn pale yellow between the veins while the veins stay green, and in a bad case the whole young leaf turns almost white. The old leaves stay green.\n\nSee [iron deficiency](/nutrient-deficiencies/iron-deficiency) for the signs crop by crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When iron in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Iron matters most for young upland crops on alkaline or limy soil, and in direct seeded rice on dry, aerobic soil. Flooded rice seldom lacks it.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing iron in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When iron is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Flooded soil usually has plenty of iron. Too much is the more common trouble."
+        ],
+        [
+          "Palay, direct seeded",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Puddled soil usually has plenty of iron for young rice."
+        ],
+        [
+          "Yellow corn",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ],
+        [
+          "Sweet corn",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ],
+        [
+          "Other grains (sorghum)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When iron is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ],
+        [
+          "Onion and garlic",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When iron is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ],
+        [
+          "Sugarcane",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ],
+        [
+          "Banana",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Iron is usually enough except on high pH or dry soils."
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "In flooded palay the opposite trouble is common: on acid, poorly drained soil the water frees so much iron that the leaves turn orange or bronze. Draining the field for a few days and giving potassium helps."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps iron from the crop"
+    },
+    {
+      "type": "text",
+      "text": "A soil pH above about 7.5, free lime, heavy liming, too much phosphorus or bicarbonate in irrigation water all lock iron up. Waterlogged upland soil and cold roots slow uptake further.\n\nSo the field to watch is an upland one on limy ground, irrigated with hard water, growing a crop like mungbean, peanut or sorghum."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where iron comes from"
+    },
+    {
+      "type": "text",
+      "text": "Iron put on alkaline soil as plain iron sulfate turns unavailable within days, so iron chelate or a leaf spray of iron sulfate works better there. Lowering the pH with sulfur or ammonium sulfate helps over time. See [foliar fertilizer](/blog/foliar-fertilizer) for spray timing."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Iron chelate: stays available on alkaline soil, on the soil or the leaves.",
+        "Iron sulfate: a cheap leaf spray, repeated every one to two weeks.",
+        "Compost and manure: keep iron in forms the roots can take."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too much iron poisons flooded rice",
+      "text": "On acid, poorly drained paddies the water can free so much iron that it poisons the rice. Drain the field from time to time, keep potassium up and avoid piling on fresh organic matter right before flooding."
+    },
+    {
+      "type": "cta",
+      "title": "See when iron matters on your soil",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether iron reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Iron questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does iron deficiency look like?",
+          "a": "The newest leaves turn pale yellow between green veins, and in a bad case almost white, while the older leaves stay green."
+        },
+        {
+          "q": "Why do plants lack iron on alkaline soil?",
+          "a": "At a high pH iron turns into forms the roots cannot take, even though the soil holds plenty."
+        },
+        {
+          "q": "What is iron toxicity in rice?",
+          "a": "On acid, waterlogged paddies the soil frees too much iron. The leaves get small brown spots that spread into an orange or bronze color."
+        },
+        {
+          "q": "Is iron a micronutrient?",
+          "a": "Yes. Crops need it in small amounts, but nothing else can do its job."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Iron deficiency",
+          "url": "/nutrient-deficiencies/iron-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Manganese in plants",
+          "url": "/nutrients/manganese-in-plants"
+        },
+        {
+          "label": "Zinc in plants",
+          "url": "/nutrients/zinc-in-plants"
+        },
+        {
+          "label": "Foliar fertilizer",
+          "url": "/blog/foliar-fertilizer"
+        },
+        {
+          "label": "Fertilizer for sandy soil",
+          "url": "/blog/fertilizer-for-sandy-soil"
+        }
+      ]
+    }
+  ]
+}

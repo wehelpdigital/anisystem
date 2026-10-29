@@ -1,0 +1,329 @@
+{
+  "section": "nutrients",
+  "slug": "zinc-in-plants",
+  "lang": "en",
+  "category": "Micronutrients",
+  "sortOrder": 310,
+  "title": "Zinc in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Zinc in Plants: Role, Signs and When It Matters",
+  "metaDescription": "Zinc in plants is a helper that switches on growth. See why flooded palay runs short of it early, when each crop needs it most, and how to supply it.",
+  "focusKeyword": "zinc in plants",
+  "keywords": [
+    "role of zinc in plants",
+    "zinc sulfate for rice",
+    "zinc fertilizer",
+    "khaira disease"
+  ],
+  "excerpt": "Zinc in plants is a helper: a tiny amount switches on the enzymes and hormones that make leaves grow and stems lengthen. Flooded palay runs short of it more often than of any other trace nutrient, usually two to four weeks after transplanting. Here is what it does, when each crop needs it most, and how a little zinc at the right time saves a season.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-zn.webp",
+    "alt": "Leaves with yellow blotches between green veins: zinc in plants running short",
+    "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What zinc does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Zinc is part of or switches on more than a hundred enzymes. One of its jobs is helping the plant make auxin, the hormone that stretches young stems and leaves. So a plant short of zinc stays stunted, with short stems and small, crowded leaves.\n\nZinc also helps build proteins and chlorophyll, keeps cell membranes whole, and is needed for pollen to form. In palay it decides how fast a young crop recovers after transplanting and how many tillers it makes."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A helper, needed in grams"
+    },
+    {
+      "type": "text",
+      "text": "Zinc is a helper, not a building block. It works like the key to an engine: it switches enzymes on and goes on working without being used up. That is why a crop needs only a few hundred grams of zinc per hectare, while it needs nitrogen by the bag.\n\nBut a helper that is missing stops the whole engine. A field short of zinc cannot use its nitrogen, phosphorus or potassium well, so every peso of fertilizer earns less."
+    },
+    {
+      "type": "table",
+      "caption": "Zinc in short",
+      "rows": [
+        [
+          "Fact",
+          "Zinc"
+        ],
+        [
+          "Group",
+          "Micronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Helper"
+        ],
+        [
+          "Moves inside the plant",
+          "Poorly"
+        ],
+        [
+          "Where a shortage shows first",
+          "The young and middle leaves"
+        ],
+        [
+          "Taken up as",
+          "Zinc ion"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where zinc shows first"
+    },
+    {
+      "type": "text",
+      "text": "Zinc moves poorly inside the plant, so the shortage shows on the young and middle leaves. In palay the midrib of the young leaves turns pale, then dusty brown spots and streaks spread on the older leaves, and the plants stay short and uneven. In mais a broad white or yellow band runs down each side of the midrib.\n\nSee [zinc deficiency](/nutrient-deficiencies/zinc-deficiency) for the signs in each crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When zinc in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Zinc matters most at the very start. In flooded palay the shortage shows two to four weeks after transplanting, when the young roots work hardest and the flooded soil holds zinc tightest. In mais and vegetables it is the first weeks of growth.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing zinc in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When zinc is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "Recovery (DAT 0 to 6), Early tillering (DAT 7 to 20)",
+          "Active tillering (DAT 21 to 34)",
+          "Zinc shortage shows two to four weeks after transplanting in flooded soil."
+        ],
+        [
+          "Palay, direct seeded",
+          "Seedling establishment (DAS 8 to 20)",
+          "Germination and emergence (DAS 0 to 7), Active tillering (DAS 21 to 39)",
+          "Bronzed, stunted seedlings point to zinc. Correct it quickly."
+        ],
+        [
+          "Yellow corn",
+          "Early vegetative (DAP 10 to 29)",
+          "Emergence (DAP 0 to 9), Rapid growth (DAP 30 to 44)",
+          "White striped young leaves mean zinc shortage. Correct it now."
+        ],
+        [
+          "Sweet corn",
+          "Early vegetative (DAP 8 to 23)",
+          "Emergence (DAP 0 to 7), Rapid growth (DAP 24 to 37)",
+          "White striped young leaves mean zinc shortage. Correct it now."
+        ],
+        [
+          "Other grains (sorghum)",
+          "Vegetative (DAP 17 to 45)",
+          "Emergence (DAP 0 to 16)",
+          "Young cereals show zinc shortage as pale striped leaves."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When zinc is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Zinc need is small now."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "No stage stands out",
+          "Vegetative (DAT 14 to 33)",
+          "Zinc still supports leaf and root growth now."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "No stage stands out",
+          "Vine growth (DAP 9 to 23)",
+          "Zinc still supports leaf and root growth now."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "No stage stands out",
+          "Vegetative (DAP 12 to 26)",
+          "Zinc still supports leaf and root growth now."
+        ],
+        [
+          "Onion and garlic",
+          "No stage stands out",
+          "Leaf growth (DAT 23 to 57)",
+          "Zinc still supports leaf and root growth now."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When zinc is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "No stage stands out",
+          "Establishment (DAP 0 to 15), Vegetative (DAP 16 to 46)",
+          "Young cassava and sweet potato show zinc shortage on high pH soils."
+        ],
+        [
+          "Sugarcane",
+          "No stage stands out",
+          "Germination (DAP 0 to 44), Tillering (DAP 45 to 119)",
+          "Young cane on high pH or sandy soil often runs short of zinc."
+        ],
+        [
+          "Banana",
+          "No stage stands out",
+          "Vegetative growth (DAP 60 to 179), Late vegetative (DAP 180 to 269)",
+          "Zinc still supports leaf and root growth now."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When zinc comes too late"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Palay, transplanted: Zinc after flowering only raises grain zinc, not yield."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps zinc from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Most zinc problems come from the soil holding it, not from a soil without it. Alkaline, limy and sodic soils lock zinc up, and so does a paddy kept flooded for a long time. Heavy phosphorus makes it worse.\n\nSoils low in organic matter, sandy soils and fields leveled by cutting away the topsoil also run short. Cold weather and young roots slow uptake further, which is why the shortage is often worst early and fades as the crop grows."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where zinc comes from"
+    },
+    {
+      "type": "text",
+      "text": "Zinc sulfate is the usual choice, on the soil before or at planting, or dissolved and sprayed when the signs show. Some complete and foliar fertilizers also carry zinc. See [micronutrients for rice](/blog/micronutrients-for-rice) and [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Zinc sulfate (heptahydrate or monohydrate): on the soil or as a foliar spray.",
+        "Zinc chelate: a liquid that works well on alkaline soil.",
+        "Zinc oxide: slower, as a coating or in blends.",
+        "Dipping rice seedling roots in zinc mixed with water before transplanting."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "A little zinc goes a long way",
+      "text": "Zinc is needed in grams, not kilograms, and too much harms the crop and the soil. Follow the label rate, and repeat only when the signs come back."
+    },
+    {
+      "type": "cta",
+      "title": "Get zinc in before the young crop needs it",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether zinc reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Zinc questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "When should I apply zinc to palay?",
+          "a": "Before or at transplanting on soils known to be short, or as a spray as soon as the signs show, usually two to four weeks after transplanting. Zinc after flowering only raises the zinc in the grain."
+        },
+        {
+          "q": "Why does flooded rice lack zinc?",
+          "a": "Long flooding changes the soil so that zinc binds tightly and the roots cannot take it, most of all on alkaline or limy soil."
+        },
+        {
+          "q": "Is zinc a micronutrient?",
+          "a": "Yes. Crops need it in grams per hectare, but without it they cannot use the other nutrients well."
+        },
+        {
+          "q": "Can I mix zinc sulfate with other fertilizers?",
+          "a": "Zinc sulfate mixes with urea and potash, but keep it apart from phosphorus fertilizers in the same hole or band, because they bind each other."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Zinc deficiency",
+          "url": "/nutrient-deficiencies/zinc-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Phosphorus in plants",
+          "url": "/nutrients/phosphorus-in-plants"
+        },
+        {
+          "label": "Iron in plants",
+          "url": "/nutrients/iron-in-plants"
+        },
+        {
+          "label": "Micronutrients for rice",
+          "url": "/blog/micronutrients-for-rice"
+        },
+        {
+          "label": "Nutrient deficiency in rice",
+          "url": "/blog/nutrient-deficiency-in-rice"
+        }
+      ]
+    }
+  ]
+}

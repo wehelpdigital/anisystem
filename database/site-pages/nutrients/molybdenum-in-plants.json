@@ -1,0 +1,315 @@
+{
+  "section": "nutrients",
+  "slug": "molybdenum-in-plants",
+  "lang": "en",
+  "category": "Micronutrients",
+  "sortOrder": 360,
+  "title": "Molybdenum in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Molybdenum in Plants: Role, Signs and When It Matters",
+  "metaDescription": "Molybdenum in plants turns nitrate into protein and feeds legume nodules. See which crops need it, why acid soils run short, and how little it takes.",
+  "focusKeyword": "molybdenum in plants",
+  "keywords": [
+    "role of molybdenum in plants",
+    "molybdenum fertilizer",
+    "molybdenum for legumes",
+    "sodium molybdate"
+  ],
+  "excerpt": "Molybdenum in plants is the smallest need of all, often less than a hundred grams per hectare, yet without it a crop cannot use the nitrate it takes up, and a legume cannot fix nitrogen. Acid soils run short most often. Here is what it does, which crops need it most, and how little it takes to fix.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-mo.webp",
+    "alt": "Young corn plant on acid soil with pale, dying older leaves: molybdenum in plants running short",
+    "credit": "Alandmanson, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What molybdenum does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Molybdenum is part of the enzyme that turns nitrate, the form most nitrogen reaches the roots in, into a form the plant can build protein with. A plant short of it piles up nitrate and still looks hungry for nitrogen.\n\nIn legumes like mungbean, peanut, sitaw and soybean, molybdenum is part of the enzyme in the root nodules that fixes nitrogen from the air. So a legume short of molybdenum stays pale and yields little, however well its nodules form."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A helper, the smallest need of all"
+    },
+    {
+      "type": "text",
+      "text": "Molybdenum is a helper. It sits inside two or three enzymes and works without being used up, so a crop needs less of it than of any other nutrient.\n\nThat tiny need is why a seed treatment or a single light spray is usually enough for a whole season."
+    },
+    {
+      "type": "table",
+      "caption": "Molybdenum in short",
+      "rows": [
+        [
+          "Fact",
+          "Molybdenum"
+        ],
+        [
+          "Group",
+          "Micronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Helper"
+        ],
+        [
+          "Moves inside the plant",
+          "Fairly well"
+        ],
+        [
+          "Where a shortage shows first",
+          "The old and middle leaves, pale like nitrogen"
+        ],
+        [
+          "Taken up as",
+          "Molybdate"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where molybdenum shows first"
+    },
+    {
+      "type": "text",
+      "text": "Molybdenum moves fairly well inside the plant, and because it works through nitrogen, its shortage looks like nitrogen shortage: pale older leaves, slow growth and in legumes, poor nodules. Cabbage and cauliflower get narrow, ragged leaves called whiptail.\n\nSee [molybdenum deficiency](/nutrient-deficiencies/molybdenum-deficiency) for the signs crop by crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When molybdenum in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Molybdenum matters most for legumes while their nodules form and work, and for cabbage, cauliflower and other crucifers in their early growth. Palay needs almost none.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing molybdenum in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When molybdenum is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Rice needs almost no molybdenum."
+        ],
+        [
+          "Palay, direct seeded",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Rice needs almost no molybdenum."
+        ],
+        [
+          "Yellow corn",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Corn needs only a trace of molybdenum."
+        ],
+        [
+          "Sweet corn",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Corn needs only a trace of molybdenum."
+        ],
+        [
+          "Other grains (sorghum)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Molybdenum is not a concern for this crop now."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When molybdenum is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "No stage stands out",
+          "Seedling (DAT 0 to 5), Leaf growth (DAT 6 to 18)",
+          "Cabbage family seedlings need molybdenum. Shortage causes whiptail in acid soil."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Molybdenum is needed only in traces now."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Molybdenum is needed only in traces now."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "Vegetative (DAP 12 to 26)",
+          "Emergence (DAP 0 to 11), Flowering (DAP 27 to 37)",
+          "Nodules need molybdenum to fix nitrogen, mostly in acid soils."
+        ],
+        [
+          "Onion and garlic",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Molybdenum is not a concern for this crop now."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When molybdenum is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Molybdenum is not a concern for this crop now."
+        ],
+        [
+          "Sugarcane",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Molybdenum is not a concern for this crop now."
+        ],
+        [
+          "Banana",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Molybdenum is not a concern for this crop now."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps molybdenum from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Unlike most trace nutrients, molybdenum becomes harder to take up as the soil turns more acid. So strongly acid soils run short most often, and liming them often fixes the shortage by itself.\n\nHeavy sulfate fertilizer can also compete with it at the roots."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where molybdenum comes from"
+    },
+    {
+      "type": "text",
+      "text": "Sodium or ammonium molybdate, used as a seed coating for legumes or a weak spray, supplies enough for the season. Liming acid soil frees what is already there. See [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines) for the crops that need it most."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Sodium molybdate or ammonium molybdate: as a seed coating or a weak spray.",
+        "Lime on acid soil: frees the molybdenum the soil holds."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "A few grams is plenty",
+      "text": "Molybdenum is needed in grams per hectare. Much more builds up in forage and can harm cattle that eat it, so stay at the label rate."
+    },
+    {
+      "type": "cta",
+      "title": "Plan molybdenum for your legumes and crucifers",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether molybdenum reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Molybdenum questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Which crops need molybdenum?",
+          "a": "Legumes, which need it to fix nitrogen, and cabbage, cauliflower and other crucifers. Palay and mais need almost none."
+        },
+        {
+          "q": "Why does acid soil lack molybdenum?",
+          "a": "In acid soil molybdenum binds tightly and the roots cannot take it. Liming frees it."
+        },
+        {
+          "q": "What is whiptail?",
+          "a": "A molybdenum shortage in cauliflower and cabbage that makes the leaves narrow and ragged."
+        },
+        {
+          "q": "How much molybdenum does a crop need?",
+          "a": "Very little, often less than a hundred grams per hectare, so a seed coating or one light spray is usually enough."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Molybdenum deficiency",
+          "url": "/nutrient-deficiencies/molybdenum-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Nitrogen in plants",
+          "url": "/nutrients/nitrogen-in-plants"
+        },
+        {
+          "label": "Sulfur in plants",
+          "url": "/nutrients/sulfur-in-plants"
+        },
+        {
+          "label": "Fertilizer for vegetables",
+          "url": "/blog/fertilizer-for-vegetables-philippines"
+        },
+        {
+          "label": "Organic fertilizer examples",
+          "url": "/blog/organic-fertilizer-examples"
+        }
+      ]
+    }
+  ]
+}

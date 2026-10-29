@@ -1,0 +1,330 @@
+{
+  "section": "nutrients",
+  "slug": "phosphorus-in-plants",
+  "lang": "en",
+  "category": "Primary nutrients",
+  "sortOrder": 120,
+  "title": "Phosphorus in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Phosphorus in Plants: Role, Signs and When to Apply",
+  "metaDescription": "Phosphorus in plants carries energy, builds roots and sets the grain. See when palay, mais and gulay need it most, and why it must go in early.",
+  "focusKeyword": "phosphorus in plants",
+  "keywords": [
+    "role of phosphorus in plants",
+    "function of phosphorus",
+    "phosphorus fertilizer",
+    "when to apply phosphorus"
+  ],
+  "excerpt": "Phosphorus in plants is the energy nutrient. It carries the energy every cell runs on, builds new roots, and later moves into the seed and the grain. A crop needs it most when it is young, which is why phosphorus goes in at planting and not as a late topdress. Here is what it does, when each crop needs it, and why it often sits in the soil out of reach.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-p.webp",
+    "alt": "Older leaves turning purple red: phosphorus in plants running short",
+    "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What phosphorus does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Phosphorus is part of ATP, the molecule that carries energy from where the leaves make it to where the plant spends it. Every time a cell divides, a root grows or a sugar moves, phosphorus is in the middle of it. It is also part of DNA and of the membranes around every cell.\n\nSo phosphorus decides how fast a young crop gets going. A seedling with enough of it roots deep and fast, tillers early and flowers on time. Later, phosphorus moves into the seed and the grain, which is why a crop short of it fills poorly and matures late."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A building block and an energy carrier"
+    },
+    {
+      "type": "text",
+      "text": "Phosphorus is a building block. It becomes part of the plant body, in its genes, its cell walls and its seeds, and the harvest takes it away. A ton of palay grain carries off roughly 2 to 3 kilograms of phosphorus, which is much less than nitrogen, but it has to be replaced all the same.\n\nUnlike nitrogen, phosphorus does not wash away easily. The trouble is the reverse: it binds so tightly to the soil that the crop reaches only a small part of what is there. That is why where and when you place it matters as much as how much."
+    },
+    {
+      "type": "table",
+      "caption": "Phosphorus in short",
+      "rows": [
+        [
+          "Fact",
+          "Phosphorus"
+        ],
+        [
+          "Group",
+          "Primary macronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Building block and energy carrier"
+        ],
+        [
+          "Moves inside the plant",
+          "Yes"
+        ],
+        [
+          "Where a shortage shows first",
+          "The old, lower leaves, often purple"
+        ],
+        [
+          "Taken up as",
+          "Phosphate"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where phosphorus shows first"
+    },
+    {
+      "type": "text",
+      "text": "Phosphorus moves inside the plant, so a shortage also starts on the older leaves. But it seldom yellows them the way nitrogen does. Instead the plant stays small and stiff, the leaves turn dark green, and in corn, tomato and many young plants the older leaves turn purple or reddish.\n\nIn palay the sign is fewer tillers and late, uneven maturity rather than a color. See [phosphorus deficiency](/nutrient-deficiencies/phosphorus-deficiency) for the signs crop by crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When phosphorus in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Phosphorus matters most at the start. Young roots need it the day they form, and a crop that runs short in its first weeks rarely catches up, even if phosphorus comes later. So it belongs in the soil at planting or transplanting, worked in near the roots.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing phosphorus in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When phosphorus is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "Recovery (DAT 0 to 6), Early tillering (DAT 7 to 20)",
+          "Active tillering (DAT 21 to 34)",
+          "New roots need phosphorus now. It should be in the soil at transplanting."
+        ],
+        [
+          "Palay, direct seeded",
+          "Germination and emergence (DAS 0 to 7), Seedling establishment (DAS 8 to 20)",
+          "Active tillering (DAS 21 to 39)",
+          "Seedling roots need phosphorus close by. It must be in the soil now."
+        ],
+        [
+          "Yellow corn",
+          "Emergence (DAP 0 to 9), Early vegetative (DAP 10 to 29)",
+          "Rapid growth (DAP 30 to 44), Tasselling (DAP 45 to 54)",
+          "Young roots show purple leaves without phosphorus close by."
+        ],
+        [
+          "Sweet corn",
+          "Emergence (DAP 0 to 7), Early vegetative (DAP 8 to 23)",
+          "Rapid growth (DAP 24 to 37), Tasselling (DAP 38 to 45)",
+          "Young roots show purple leaves without phosphorus close by."
+        ],
+        [
+          "Other grains (sorghum)",
+          "Emergence (DAP 0 to 16)",
+          "Vegetative (DAP 17 to 45), Reproductive (DAP 46 to 65)",
+          "Young roots need phosphorus now, and it must already be in the soil."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When phosphorus is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "Seedling (DAT 0 to 5)",
+          "Leaf growth (DAT 6 to 18)",
+          "Seedling roots need phosphorus close by."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "Seedling (DAT 0 to 13)",
+          "Vegetative (DAT 14 to 33), Flowering (DAT 34 to 45)",
+          "Seedling roots need phosphorus close by."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "Seedling (DAP 0 to 8)",
+          "Vine growth (DAP 9 to 23), Flowering (DAP 24 to 33)",
+          "Seedling roots need phosphorus close by."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "Emergence (DAP 0 to 11), Vegetative (DAP 12 to 26)",
+          "Flowering (DAP 27 to 37)",
+          "Young roots need phosphorus now, and it must already be in the soil."
+        ],
+        [
+          "Onion and garlic",
+          "Establishment (DAT 0 to 22)",
+          "Leaf growth (DAT 23 to 57)",
+          "Young roots need phosphorus close by."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When phosphorus is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "Establishment (DAP 0 to 15)",
+          "Vegetative (DAP 16 to 46), Root initiation (DAP 47 to 67)",
+          "New roots need phosphorus close by."
+        ],
+        [
+          "Sugarcane",
+          "Germination (DAP 0 to 44), Tillering (DAP 45 to 119)",
+          "Small amounts the rest of the season",
+          "Roots from the setts need phosphorus close by."
+        ],
+        [
+          "Banana",
+          "Establishment (DAP 0 to 59)",
+          "Vegetative growth (DAP 60 to 179)",
+          "Roots need phosphorus to establish. Put it in the planting hole."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When phosphorus comes too late"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Palay, transplanted: Phosphorus after panicle initiation comes too late to help the grain.",
+        "Yellow corn: Phosphorus after silking comes too late to help the ear."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps phosphorus from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Most soils hold far more phosphorus than any crop needs, but little of it is in a form the roots can take. On acid soil it locks up with iron and aluminum. On alkaline and limy soil it locks up with calcium. It is most available when the soil pH sits near 6 to 7.\n\nCold, waterlogged or compacted soil also slows phosphorus uptake, because roots grow little there. Organic matter helps, and so does placing the fertilizer close to the roots instead of spreading it thinly over the surface. In a flooded paddy, phosphorus becomes easier to take up as the soil softens, which is one reason rice suffers less from it than upland crops."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where phosphorus comes from"
+    },
+    {
+      "type": "text",
+      "text": "Phosphorus comes in the fertilizers you use at planting. Ammonium phosphate is the usual choice for palay and mais, with complete fertilizer when the soil also needs potassium. See our guides to [16 20 0 fertilizer](/blog/16-20-0-fertilizer) and [complete fertilizer](/blog/complete-fertilizer-14-14-14)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Ammonium phosphate (16 20 0): the common basal phosphorus for palay.",
+        "Complete fertilizer (14 14 14): phosphorus with nitrogen and potassium.",
+        "Diammonium phosphate (18 46 0): the most phosphorus per bag.",
+        "Chicken manure and compost: slow phosphorus that also builds the soil."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too much phosphorus locks up zinc",
+      "text": "Phosphorus piled on season after season builds up in the soil and makes zinc and iron harder for the crop to take. If a soil test already shows plenty, put the money into the nutrient that is short instead."
+    },
+    {
+      "type": "cta",
+      "title": "Check that phosphorus is in before the roots need it",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether phosphorus reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Phosphorus questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Should phosphorus go in at planting or later?",
+          "a": "At planting. Young roots need it first, and phosphorus moves very little in the soil, so it has to be close to the roots from the start. A late phosphorus topdress does little for the yield."
+        },
+        {
+          "q": "Why are my corn leaves purple?",
+          "a": "Purple older leaves on young corn often mean a phosphorus shortage, most of all on cold, wet or acid soil. Some hybrids turn purple for a few days on their own, so check whether the plants are also small and slow."
+        },
+        {
+          "q": "Is phosphorus a macronutrient?",
+          "a": "Yes. Phosphorus is a primary macronutrient, with nitrogen and potassium, though crops take less of it than of the other two."
+        },
+        {
+          "q": "Does liming help phosphorus?",
+          "a": "On acid soil, yes. Raising the pH toward 6 frees phosphorus that was locked with iron and aluminum. On alkaline soil lime makes it worse."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Phosphorus deficiency",
+          "url": "/nutrient-deficiencies/phosphorus-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Nitrogen in plants",
+          "url": "/nutrients/nitrogen-in-plants"
+        },
+        {
+          "label": "Zinc in plants",
+          "url": "/nutrients/zinc-in-plants"
+        },
+        {
+          "label": "16 20 0 fertilizer",
+          "url": "/blog/16-20-0-fertilizer"
+        },
+        {
+          "label": "Balanced fertilization for rice",
+          "url": "/blog/balanced-fertilization-for-rice"
+        }
+      ]
+    }
+  ]
+}

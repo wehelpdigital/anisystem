@@ -1,0 +1,317 @@
+{
+  "section": "nutrients",
+  "slug": "sulfur-in-plants",
+  "lang": "en",
+  "category": "Secondary nutrients",
+  "sortOrder": 230,
+  "title": "Sulfur in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Sulfur in Plants: Role, Signs and When It Matters",
+  "metaDescription": "Sulfur in plants builds proteins and oils and helps the crop use nitrogen. See when palay, mais, onion and legumes need it most, and where it comes from.",
+  "focusKeyword": "sulfur in plants",
+  "keywords": [
+    "role of sulfur in plants",
+    "sulfur fertilizer",
+    "ammonium sulfate",
+    "sulfur for onion"
+  ],
+  "excerpt": "Sulfur in plants is a building block of proteins, and the partner nitrogen cannot work without. It also gives onion and garlic their bite and oil crops their oil. A crop short of it turns pale from the top down, which is easy to mistake for a lack of nitrogen. Here is what it does, when each crop needs it and where it comes from.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-s.webp",
+    "alt": "Young plant pale yellow green all over, new leaves included: sulfur in plants running short",
+    "credit": "R.J. Reynolds Tobacco Company"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What sulfur does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Two of the amino acids that make up proteins carry sulfur. So without it the plant cannot turn the nitrogen it takes up into protein, and a field fed plenty of urea still stays pale. Sulfur is also needed to make chlorophyll and several vitamins.\n\nIn onion, garlic and cabbage, sulfur makes the compounds that give their smell and taste. In legumes it feeds the root nodules that fix nitrogen from the air, and in oil crops like peanut and soybean it raises the oil in the seed."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A building block that works with nitrogen"
+    },
+    {
+      "type": "text",
+      "text": "Sulfur is a building block. It is built into proteins and stays in the plant body, so the harvest takes it away. Crops need roughly one part of sulfur for every ten to fifteen parts of nitrogen.\n\nThat partnership is the thing to remember. When you raise the nitrogen, a soil low in sulfur runs short faster, and the extra nitrogen goes to waste."
+    },
+    {
+      "type": "table",
+      "caption": "Sulfur in short",
+      "rows": [
+        [
+          "Fact",
+          "Sulfur"
+        ],
+        [
+          "Group",
+          "Secondary macronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Building block"
+        ],
+        [
+          "Moves inside the plant",
+          "Slowly"
+        ],
+        [
+          "Where a shortage shows first",
+          "The young leaves, often the whole plant pale"
+        ],
+        [
+          "Taken up as",
+          "Sulfate"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where sulfur shows first"
+    },
+    {
+      "type": "text",
+      "text": "Sulfur moves only slowly inside the plant, so the shortage tends to start on the young leaves or on the whole plant at once. That is the way to tell it from nitrogen: nitrogen yellows the old leaves first, sulfur the new ones.\n\nSee [sulfur deficiency](/nutrient-deficiencies/sulfur-deficiency) for how it looks crop by crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When sulfur in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Sulfur is needed whenever the crop builds protein fast: tillering and panicle initiation in palay, early growth in mais, bulbing in onion, and pod filling in legumes.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing sulfur in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When sulfur is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "No stage stands out",
+          "Early tillering (DAT 7 to 20), Active tillering (DAT 21 to 34)",
+          "Sulfur shortage shows as pale young leaves where only urea is used."
+        ],
+        [
+          "Palay, direct seeded",
+          "No stage stands out",
+          "Seedling establishment (DAS 8 to 20), Active tillering (DAS 21 to 39)",
+          "Sulfur helps build protein while growth is fast."
+        ],
+        [
+          "Yellow corn",
+          "No stage stands out",
+          "Early vegetative (DAP 10 to 29), Rapid growth (DAP 30 to 44)",
+          "Sulfur shortage shows as pale striped young leaves on sandy soils."
+        ],
+        [
+          "Sweet corn",
+          "No stage stands out",
+          "Early vegetative (DAP 8 to 23), Rapid growth (DAP 24 to 37)",
+          "Sulfur shortage shows as pale striped young leaves on sandy soils."
+        ],
+        [
+          "Other grains (sorghum)",
+          "No stage stands out",
+          "Vegetative (DAP 17 to 45), Reproductive (DAP 46 to 65)",
+          "Sulfur helps build protein while growth is fast."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When sulfur is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "No stage stands out",
+          "Leaf growth (DAT 6 to 18), Heading and filling (DAT 19 to 29)",
+          "Cabbage family crops need sulfur for growth and flavor."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Sulfur need is small now."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Sulfur need is small now."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "No stage stands out",
+          "Vegetative (DAP 12 to 26), Flowering (DAP 27 to 37)",
+          "Sulfur helps build protein while growth is fast."
+        ],
+        [
+          "Onion and garlic",
+          "No stage stands out",
+          "Leaf growth (DAT 23 to 57), Bulbing (DAT 58 to 91)",
+          "Sulfur helps build protein while growth is fast."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When sulfur is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Sulfur need is small now."
+        ],
+        [
+          "Sugarcane",
+          "No stage stands out",
+          "Tillering (DAP 45 to 119), Grand growth (DAP 120 to 269)",
+          "Sulfur helps build protein while growth is fast."
+        ],
+        [
+          "Banana",
+          "No stage stands out",
+          "Vegetative growth (DAP 60 to 179), Late vegetative (DAP 180 to 269)",
+          "Sulfur helps build protein while growth is fast."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps sulfur from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Sulfur comes mostly from organic matter in the soil, so sandy soils and soils low in organic matter run short first. Sulfate also washes down with heavy rain like nitrate does.\n\nFarms that use only urea and muriate of potash give the crop no sulfur at all. Burning straw sends the sulfur in it up in smoke. In long flooded paddies, sulfur can also turn into a form the roots cannot take until the field drains."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where sulfur comes from"
+    },
+    {
+      "type": "text",
+      "text": "The easiest sulfur is ammonium sulfate, which gives it with nitrogen. Gypsum and potassium sulfate also carry it. See our guide to [ammonium sulfate](/blog/ammonium-sulfate-21-0-0)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Ammonium sulfate (21 0 0): sulfur with nitrogen, slightly acidifying.",
+        "Gypsum: sulfur with calcium.",
+        "Sulfate of potash (0 0 50): sulfur with potassium.",
+        "Elemental sulfur: slow sulfur that also lowers the pH of alkaline soil."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too much sulfur can sour the soil",
+      "text": "Large amounts of elemental sulfur or ammonium sulfate make the soil more acid over time. That helps an alkaline field but hurts an acid one, so watch the pH."
+    },
+    {
+      "type": "cta",
+      "title": "Pair your sulfur with your nitrogen",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether sulfur reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Sulfur questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is sulfur the same as sulfate?",
+          "a": "Sulfate is the form of sulfur that plant roots take up. Elemental sulfur has to be turned into sulfate by soil microbes first, which takes weeks."
+        },
+        {
+          "q": "Why is my crop pale even after urea?",
+          "a": "It may be short of sulfur, which nitrogen needs to make protein. Look at the young leaves: if they are pale too, sulfur is the likely cause."
+        },
+        {
+          "q": "Is sulfur a macronutrient?",
+          "a": "Yes. Sulfur is a secondary macronutrient, with calcium and magnesium."
+        },
+        {
+          "q": "Which crops need the most sulfur?",
+          "a": "Onion, garlic, cabbage and other crucifers, legumes and oil crops need the most. Palay and mais need it too, mostly in their fast growth."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Sulfur deficiency",
+          "url": "/nutrient-deficiencies/sulfur-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Nitrogen in plants",
+          "url": "/nutrients/nitrogen-in-plants"
+        },
+        {
+          "label": "Calcium in plants",
+          "url": "/nutrients/calcium-in-plants"
+        },
+        {
+          "label": "Ammonium sulfate",
+          "url": "/blog/ammonium-sulfate-21-0-0"
+        },
+        {
+          "label": "Fertilizer for wet season rice",
+          "url": "/blog/fertilizer-for-wet-season-rice"
+        }
+      ]
+    }
+  ]
+}

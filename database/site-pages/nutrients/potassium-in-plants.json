@@ -1,0 +1,332 @@
+{
+  "section": "nutrients",
+  "slug": "potassium-in-plants",
+  "lang": "en",
+  "category": "Primary nutrients",
+  "sortOrder": 130,
+  "title": "Potassium in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Potassium in Plants: Role, Signs and When to Apply",
+  "metaDescription": "Potassium in plants steers water, sugar and strong stems. See when palay, mais and gulay need it most, and why it is a regulator, not a building block.",
+  "focusKeyword": "potassium in plants",
+  "keywords": [
+    "role of potassium in plants",
+    "function of potassium",
+    "potash fertilizer",
+    "when to apply potassium"
+  ],
+  "excerpt": "Potassium in plants is the regulator. It is not built into the plant body at all: it stays dissolved in the sap, where it opens and closes the leaf pores, moves sugar into the grain and keeps the stems firm. A crop short of it lodges, fills poorly and falls to disease. Here is what it does, when each crop needs it most and where it comes from.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-k.webp",
+    "alt": "Leaves with brown, scorched edges: potassium in plants running short",
+    "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What potassium does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Potassium opens and closes the stomata, the tiny pores on the leaves that let in air and let out water. So it decides how well a crop uses its water and how it stands a dry spell. It also switches on dozens of enzymes, and it pushes the sugar the leaves make down into the grain, the fruit and the root.\n\nYou see potassium most in the strength of a crop. It thickens cell walls and stems, so a well fed palay field stands up to wind and rain. It also helps the plant hold out against blast, sheath blight and other diseases, and it gives fruit their size, sweetness and color."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A regulator, not a building block"
+    },
+    {
+      "type": "text",
+      "text": "Potassium is a regulator. Unlike nitrogen and phosphorus it never becomes part of a protein, a gene or a wall. It stays free in the sap as a charged particle, steering water and switching enzymes on, and it can wash back out of old leaves in the rain.\n\nEven so, crops take a lot of it, often as much as nitrogen. Most of it stays in the straw and the stalks, so returning the straw to the field gives much of it back. Burning the straw or taking it away for feed takes that potassium out of the farm."
+    },
+    {
+      "type": "table",
+      "caption": "Potassium in short",
+      "rows": [
+        [
+          "Fact",
+          "Potassium"
+        ],
+        [
+          "Group",
+          "Primary macronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Regulator"
+        ],
+        [
+          "Moves inside the plant",
+          "Yes, freely"
+        ],
+        [
+          "Where a shortage shows first",
+          "The old leaves, at the edges and tips"
+        ],
+        [
+          "Taken up as",
+          "Potassium ion"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where potassium shows first"
+    },
+    {
+      "type": "text",
+      "text": "Potassium moves freely, so the shortage starts on the older leaves. Their tips and edges turn yellow, then brown and dry, as if scorched, while the middle of the leaf stays green. In palay you often see it first as rusty brown spots on the lower leaves.\n\nA crop short of potassium also lodges easily and catches more disease. See [potassium deficiency](/nutrient-deficiencies/potassium-deficiency) for the signs in each crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When potassium in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Potassium matters most when the crop builds its stem and then fills its grain or fruit. In palay that is panicle initiation through heading, when the stem has to carry the weight of the panicle and the sugar has to move into the grain. In fruit crops it is the weeks of fruit fill.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing potassium in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When potassium is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "Panicle initiation (DAT 35 to 49), Booting and heading (DAT 50 to 59)",
+          "Recovery (DAT 0 to 6), Early tillering (DAT 7 to 20), Active tillering (DAT 21 to 34), Flowering (DAT 60 to 72)",
+          "A potassium split now strengthens stems and fills more spikelets."
+        ],
+        [
+          "Palay, direct seeded",
+          "Panicle initiation (DAS 40 to 54), Booting and heading (DAS 55 to 69)",
+          "Seedling establishment (DAS 8 to 20), Active tillering (DAS 21 to 39), Flowering (DAS 70 to 84)",
+          "A potassium split now strengthens stems and fills more spikelets."
+        ],
+        [
+          "Yellow corn",
+          "Rapid growth (DAP 30 to 44), Tasselling (DAP 45 to 54)",
+          "Early vegetative (DAP 10 to 29), Silking and pollination (DAP 55 to 69)",
+          "Most potassium is taken up before tasselling. Stalk strength depends on it."
+        ],
+        [
+          "Sweet corn",
+          "Rapid growth (DAP 24 to 37), Tasselling (DAP 38 to 45)",
+          "Early vegetative (DAP 8 to 23), Silking and pollination (DAP 46 to 57), Milk stage (DAP 58 to 69)",
+          "Most potassium is taken up before tasselling. Stalk strength depends on it."
+        ],
+        [
+          "Other grains (sorghum)",
+          "Reproductive (DAP 46 to 65)",
+          "Vegetative (DAP 17 to 45), Flowering (DAP 66 to 78)",
+          "Potassium firms stems as the head forms."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When potassium is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "Heading and filling (DAT 19 to 29)",
+          "Leaf growth (DAT 6 to 18)",
+          "Potassium firms heads and helps them keep."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "Fruit set and filling (DAT 46 to 63)",
+          "Vegetative (DAT 14 to 33), Flowering (DAT 34 to 45), Harvest (DAT 64 to 80)",
+          "Potassium sizes fruit and improves color and taste."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "Fruit set and filling (DAP 34 to 49)",
+          "Vine growth (DAP 9 to 23), Flowering (DAP 24 to 33), Harvest (DAP 50 to 62)",
+          "Potassium sizes fruit and builds sweetness."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "No stage stands out",
+          "Vegetative (DAP 12 to 26), Flowering (DAP 27 to 37), Pod filling (DAP 38 to 52)",
+          "Potassium keeps stems firm and water use steady now."
+        ],
+        [
+          "Onion and garlic",
+          "Bulbing (DAT 58 to 91)",
+          "Leaf growth (DAT 23 to 57)",
+          "Potassium firms and sizes the bulb for storage."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When potassium is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "Root initiation (DAP 47 to 67), Bulking (DAP 68 to 91)",
+          "Vegetative (DAP 16 to 46)",
+          "Potassium moves sugars down to the forming roots."
+        ],
+        [
+          "Sugarcane",
+          "Grand growth (DAP 120 to 269)",
+          "Tillering (DAP 45 to 119), Maturation (DAP 270 to 329)",
+          "Potassium demand peaks as the cane lengthens."
+        ],
+        [
+          "Banana",
+          "Late vegetative (DAP 180 to 269), Shooting (DAP 270 to 329), Bunch filling (DAP 330 to 389)",
+          "Vegetative growth (DAP 60 to 179)",
+          "Potassium now sets bunch size and finger number."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When potassium comes too late"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Palay, transplanted: Potassium after grain filling starts adds little. The straw already holds enough.",
+        "Yellow corn: Most potassium is taken up before tasselling. Later doses add little.",
+        "Sugarcane: Potassium in the last months adds little to cane weight.",
+        "Banana: Potassium after the bunch is full comes too late for it."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps potassium from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Sandy soil holds little potassium and loses it in heavy rain. Soils rich in clay can hold it tightly between their layers, and a soil heavy in calcium and magnesium, such as many limy or sodic soils, crowds potassium out at the roots. Too much ammonium or magnesium fertilizer also competes with it.\n\nRemoving the straw takes potassium off the farm every season. So the fields that get the full harvest of straw carried away need the most potassium back, and the fields where straw is returned need less."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where potassium comes from"
+    },
+    {
+      "type": "text",
+      "text": "Most potassium here is sold as muriate of potash, the cheapest potassium per kilogram. Sulfate of potash costs more but suits crops that dislike chloride, like tobacco and some vegetables. See our guide to [potash fertilizer](/blog/potash-fertilizer)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Muriate of potash (0 0 60): the usual potassium for palay and mais.",
+        "Sulfate of potash (0 0 50): potassium with sulfur, for chloride sensitive crops.",
+        "Complete fertilizer (14 14 14): potassium along with nitrogen and phosphorus.",
+        "Rice straw and wood ash: potassium returned to the field."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too much potassium crowds out magnesium and calcium",
+      "text": "Heavy potassium can push magnesium and calcium out at the roots and bring on their shortage, most of all on sandy soil. Balance it with what the soil test says."
+    },
+    {
+      "type": "cta",
+      "title": "Make sure potassium is there when the panicle forms",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether potassium reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Potassium questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is potassium the same as potash?",
+          "a": "Potash is the fertilizer, potassium is the nutrient in it. Muriate of potash (0 0 60) is 60 percent potassium oxide."
+        },
+        {
+          "q": "When should I apply potassium to palay?",
+          "a": "Part of it as basal, and a second dose at panicle initiation, about 35 to 45 days after transplanting. Potassium after grain filling starts adds little."
+        },
+        {
+          "q": "Does potassium stop lodging?",
+          "a": "It helps a lot. Potassium thickens the stem walls, so the crop stands better in wind and rain. Too much nitrogen still makes a crop lodge, even with enough potassium."
+        },
+        {
+          "q": "Why is potassium called a regulator?",
+          "a": "Because it is not built into the plant. It stays dissolved in the sap and controls water, enzymes and the movement of sugar."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Potassium deficiency",
+          "url": "/nutrient-deficiencies/potassium-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Nitrogen in plants",
+          "url": "/nutrients/nitrogen-in-plants"
+        },
+        {
+          "label": "Magnesium in plants",
+          "url": "/nutrients/magnesium-in-plants"
+        },
+        {
+          "label": "Potash fertilizer",
+          "url": "/blog/potash-fertilizer"
+        },
+        {
+          "label": "Fertilizer for rice grain filling",
+          "url": "/blog/fertilizer-for-rice-grain-filling"
+        }
+      ]
+    }
+  ]
+}

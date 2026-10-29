@@ -1,0 +1,220 @@
+{
+  "section": "nutrients",
+  "slug": "plant-nutrients",
+  "lang": "en",
+  "category": "Start here",
+  "sortOrder": 10,
+  "title": "Plant Nutrients: What Each One Does and When Crops Need It",
+  "metaTitle": "Plant Nutrients: Macro, Micro and When Crops Need Each",
+  "metaDescription": "Plant nutrients, macro and micro: which ones build the plant, which ones help it work, where each shortage shows and when palay, mais and gulay need them.",
+  "focusKeyword": "plant nutrients",
+  "keywords": [
+    "essential plant nutrients",
+    "macronutrients and micronutrients",
+    "primary secondary micronutrients",
+    "mobile and immobile nutrients"
+  ],
+  "excerpt": "Plant nutrients are the minerals a crop takes from the soil to build its body and run its chemistry. Some are building blocks the harvest carries away, some are helpers that work in tiny amounts, and some are regulators that steer water and sugar. Here is how they group, where each shortage shows first and when crops need each one most.",
+  "heroImage": {
+    "src": "/images/site/photos/hero-planting.jpg",
+    "alt": "Planting by hand in a field that will need plant nutrients all season",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What plant nutrients are"
+    },
+    {
+      "type": "text",
+      "text": "Plants build themselves from air, water and a short list of minerals. Carbon, hydrogen and oxygen come from the air and the water, and they make up most of the plant's weight. The rest, the mineral plant nutrients, come from the soil, from fertilizer, from manure and from the water in the field.\n\nA nutrient counts as essential when the plant cannot finish its life without it and nothing else can do its job. Fourteen minerals pass that test. Silicon, sodium and cobalt also help some crops without being strictly essential, and silicon matters so much to palay that we give it a page of its own."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Macronutrients and micronutrients"
+    },
+    {
+      "type": "text",
+      "text": "The difference is the amount, not the importance. Macronutrients are taken in kilograms per hectare, micronutrients in grams. A field short of a micronutrient loses yield just as surely as one short of nitrogen."
+    },
+    {
+      "type": "table",
+      "caption": "The plant nutrients and their groups",
+      "rows": [
+        [
+          "Group",
+          "Nutrients",
+          "How much a crop takes"
+        ],
+        [
+          "Primary macronutrients",
+          "[Nitrogen](/nutrients/nitrogen-in-plants), [phosphorus](/nutrients/phosphorus-in-plants), [potassium](/nutrients/potassium-in-plants)",
+          "Tens to hundreds of kilograms per hectare"
+        ],
+        [
+          "Secondary macronutrients",
+          "[Calcium](/nutrients/calcium-in-plants), [magnesium](/nutrients/magnesium-in-plants), [sulfur](/nutrients/sulfur-in-plants)",
+          "About 10 to 50 kilograms per hectare"
+        ],
+        [
+          "Micronutrients",
+          "[Zinc](/nutrients/zinc-in-plants), [boron](/nutrients/boron-in-plants), [iron](/nutrients/iron-in-plants), [manganese](/nutrients/manganese-in-plants), [copper](/nutrients/copper-in-plants), [molybdenum](/nutrients/molybdenum-in-plants), [chlorine](/nutrients/chlorine-in-plants), [nickel](/nutrients/nickel-in-plants)",
+          "Grams to a few hundred grams per hectare"
+        ],
+        [
+          "Beneficial",
+          "[Silicon](/nutrients/silicon-in-plants), sodium, cobalt",
+          "Silicon: hundreds of kilograms in palay"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Building blocks, helpers and regulators"
+    },
+    {
+      "type": "text",
+      "text": "Plant nutrients do three kinds of work, and knowing which kind tells you how a crop uses it up.\n\n**Building blocks** become part of the plant body: nitrogen and sulfur in every protein, phosphorus in genes and membranes, calcium and boron in cell walls, magnesium in chlorophyll, silicon in the skin of rice. The crop uses them up as it grows, and the harvest carries them out of the field, so they have to come back every season.\n\n**Helpers** switch on enzymes and do their job again and again without being used up: zinc, iron, manganese, copper, molybdenum and nickel. A few grams do a big job, but a missing helper stops the work of the big nutrients too.\n\n**Regulators** stay dissolved in the sap and steer water, sugar and the leaf pores: potassium and chloride. They are never built into the plant, yet crops take a lot of potassium."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Old leaves or new: where a shortage shows"
+    },
+    {
+      "type": "text",
+      "text": "Some nutrients move inside the plant and some stay where they land. That is the first clue to which one is short.\n\nNitrogen, phosphorus, potassium and magnesium move freely. A hungry plant pulls them from its old leaves to feed the new ones, so the old leaves change first. Calcium, boron, iron, manganese, copper and zinc hardly move, so the young leaves, the tips and the fruit suffer first. Sulfur sits in between and often pales the whole plant. Our [nutrient deficiency guides](/nutrient-deficiencies) show these signs crop by crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When crops need plant nutrients most"
+    },
+    {
+      "type": "text",
+      "text": "A crop does not need every nutrient the same amount every day. Each one has its windows, set by what the crop is building at that stage.\n\nIn palay, phosphorus and zinc matter most in the first weeks, nitrogen at tillering and panicle initiation, potassium and silicon from panicle initiation to heading. In mais, nitrogen and potassium matter most in the fast growth before tasselling. Fruit crops need calcium and boron at flowering and fruit set, and onion needs sulfur as it bulbs. Each nutrient page shows these windows for thirteen kinds of crop, with the usual days."
+    },
+    {
+      "type": "table",
+      "caption": "The most critical windows in palay, transplanted",
+      "rows": [
+        [
+          "Nutrient",
+          "Most critical stage",
+          "Usual days after transplanting"
+        ],
+        [
+          "Phosphorus",
+          "Recovery and early tillering",
+          "Days 0 to 20"
+        ],
+        [
+          "Zinc",
+          "Recovery and early tillering",
+          "Days 0 to 20"
+        ],
+        [
+          "Nitrogen",
+          "Tillering and panicle initiation",
+          "Days 7 to 49"
+        ],
+        [
+          "Potassium",
+          "Panicle initiation to heading",
+          "Days 35 to 59"
+        ],
+        [
+          "Silicon",
+          "Panicle initiation to heading",
+          "Days 35 to 59"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The weakest link sets the harvest"
+    },
+    {
+      "type": "text",
+      "text": "A crop grows only as well as its scarcest nutrient lets it. Picture a barrel made of staves of different heights: it holds water only up to the shortest one. Adding more nitrogen to a field short of zinc or potassium raises nothing but the cost.\n\nThat is why a soil test, or the answers you give about your field, comes before the fertilizer plan. The [NPK Plus calculator](/features/npk-plus-calculator) in anee.io reads your soil and your crop and shows every nutrient in your plan against what the crop needs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How plant nutrients get lost or locked up"
+    },
+    {
+      "type": "text",
+      "text": "A nutrient in the soil is not always a nutrient the crop can use. Some wash away with heavy rain, like nitrate, sulfate and boron. Some escape as gas, like the nitrogen in urea left on wet soil. Many lock up in the wrong pH: phosphorus, iron, manganese and zinc on alkaline soil, phosphorus and molybdenum on very acid soil.\n\nSo the same bag of fertilizer gives more on a field kept near pH 6 to 7, rich in organic matter, and fed in split doses at the stages that need it. Our guide to [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) puts these together for palay."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Return the straw",
+      "text": "Rice straw holds most of the potassium and silicon a crop took, and much of its sulfur. Working it back into the field returns them for free. Burning it sends part up in smoke and leaves the rest to wash away."
+    },
+    {
+      "type": "cta",
+      "title": "See every nutrient on your crop's calendar",
+      "text": "Put your fertilizers on your plan in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, which plant nutrients reach the stages that need them and where they run out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plant nutrient questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How many nutrients do plants need?",
+          "a": "Seventeen are essential: carbon, hydrogen and oxygen from air and water, and fourteen minerals from the soil. Silicon and a few others help some crops without being essential."
+        },
+        {
+          "q": "What is the difference between macronutrients and micronutrients?",
+          "a": "Only the amount. Macronutrients are taken in kilograms per hectare and micronutrients in grams, but both are needed for a full harvest."
+        },
+        {
+          "q": "Which nutrient does palay need most?",
+          "a": "Nitrogen is the one most often short, then phosphorus, potassium and zinc. Palay also takes a lot of silicon from the soil."
+        },
+        {
+          "q": "Why do old leaves yellow first in some crops and new leaves in others?",
+          "a": "Mobile nutrients like nitrogen and potassium move from old leaves to new ones, so old leaves show the shortage. Immobile ones like calcium and iron cannot move, so new growth shows it."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Nutrient deficiencies",
+          "url": "/nutrient-deficiencies"
+        },
+        {
+          "label": "Nitrogen in plants",
+          "url": "/nutrients/nitrogen-in-plants"
+        },
+        {
+          "label": "Zinc in plants",
+          "url": "/nutrients/zinc-in-plants"
+        },
+        {
+          "label": "What is fertilizer",
+          "url": "/blog/what-is-fertilizer"
+        },
+        {
+          "label": "Fertilizer timing by growth stage",
+          "url": "/blog/fertilizer-timing-by-growth-stage"
+        }
+      ]
+    }
+  ]
+}

@@ -13,6 +13,24 @@
     <div class="stc-fold" id="stashBody">
         <div>
             <div class="stc-in">
+                {{-- Anee Knowledgebase (2026-10-30, the owner): anee.io's own guides, each shelf opening in a full window. --}}
+                <div class="stc-partner is-anee">
+                    <div class="stc-p-head">
+                        <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="Anee" width="64" height="64" loading="lazy">
+                        <span><b>Anee Knowledgebase</b><small>Guides from anee.io's farm technicians</small></span>
+                    </div>
+                    <p class="stc-p-about">What Anee knows about your crop, written for the field. Open a shelf and read it here, any time.</p>
+                    <div class="stc-shelves">
+                        @foreach (\App\Support\Knowledge::SHELVES as $kk => $k)
+                            @php $kn = \App\Support\Knowledge::count($kk); @endphp
+                            <button type="button" class="stc-shelf" data-kb-open="{{ $kk }}">
+                                <span class="stc-kb-i" aria-hidden="true">{{ $k['icon'] }}</span>
+                                <span class="stc-s-txt"><b>{{ $k['label'] }}</b><small>{{ $kn }} {{ $kn === 1 ? 'guide' : 'guides' }} · {{ $k['about'] }}</small></span>
+                                <svg fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
                 @foreach (\App\Support\Stash::PARTNERS as $pk => $p)
                     <div class="stc-partner">
                         <div class="stc-p-head">
@@ -37,6 +55,8 @@
         </div>
     </div>
 </section>
+
+@include('partials.knowledge-modal')
 
 @push('head')
 <style>
@@ -78,6 +98,12 @@
     .stc-s-txt b { display: block; font-size: .86rem; font-weight: 800; color: var(--color-gray-900); }
     .stc-s-txt small { font-size: .72rem; color: var(--color-gray-500); }
     .stc-more { font-size: .72rem; color: var(--color-gray-500); text-align: center; }
+    .stc-partner.is-anee { background: linear-gradient(135deg, #f4f9ee, #fffbe8); border-color: #dbe9c8; }
+    html.dark .stc-partner.is-anee { background: linear-gradient(135deg, #16200f, #1f1c0e); border-color: #2b3a1c; }
+    .stc-partner.is-anee .stc-p-head img { border-radius: 999px; }
+    button.stc-shelf { width: 100%; text-align: left; cursor: pointer; }
+    .stc-kb-i { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: .6rem; font-size: 1.05rem; background: #eef5e6; }
+    html.dark .stc-kb-i { background: #22301a; }
     @media (prefers-reduced-motion: reduce) { .stc-fold, .stc-in, .stc-chev, .stc-shelf, .stc-head { transition: none; } }
 </style>
 @endpush

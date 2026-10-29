@@ -1,0 +1,340 @@
+{
+  "section": "nutrients",
+  "slug": "nitrogen-in-plants",
+  "lang": "en",
+  "category": "Primary nutrients",
+  "sortOrder": 110,
+  "title": "Nitrogen in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Nitrogen in Plants: Role, Signs and When to Apply",
+  "metaDescription": "Nitrogen in plants builds every leaf and protein. See what it does, when palay, mais and gulay need it most, and how to keep it from going to waste.",
+  "focusKeyword": "nitrogen in plants",
+  "keywords": [
+    "role of nitrogen in plants",
+    "function of nitrogen in plants",
+    "when to apply nitrogen",
+    "nitrogen fertilizer"
+  ],
+  "excerpt": "Nitrogen in plants is the nutrient of green growth. It is built into chlorophyll, the green color that turns sunlight into food, and into every protein and enzyme, so a crop short of it stays small and pale. Palay, mais and leafy vegetables take more of it than any other nutrient. Here is what it does, when each crop needs it most, and how to keep it from going to waste.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-n.webp",
+    "alt": "Chili plants with pale yellow green older leaves: nitrogen in plants running short",
+    "credit": "Maja Dumat, CC BY 2.0, via Flickr"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What nitrogen does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Every leaf a plant makes is built partly from nitrogen. It sits at the heart of the amino acids that make up proteins, and proteins run the whole plant: they build new cells, drive growth and form the enzymes that carry out the chemistry of life. Nitrogen is also part of chlorophyll, so the deep green of a well fed field is nitrogen you can see.\n\nThat is why nitrogen sets the size of the plant and the size of the harvest. In palay it decides how many tillers form and how many of them carry a panicle. In mais it sets the length of the ear and the number of kernels. For pechay and cabbage it is most of what you sell, because the harvest is the leaves themselves."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A building block, used up as the crop grows"
+    },
+    {
+      "type": "text",
+      "text": "Nitrogen is a building block, not a helper. A helper nutrient such as zinc switches on an enzyme and works again and again in tiny amounts. Nitrogen instead becomes part of the plant body, in every protein and every leaf, so the crop uses it up as it grows and the harvest carries it out of the field.\n\nA crop of palay takes away roughly 15 to 20 kilograms of nitrogen for every ton of grain, counting the straw. So the soil alone rarely holds enough for a full harvest, and nitrogen has to come back every season, from fertilizer, manure, compost or a legume grown before."
+    },
+    {
+      "type": "table",
+      "caption": "Nitrogen in short",
+      "rows": [
+        [
+          "Fact",
+          "Nitrogen"
+        ],
+        [
+          "Group",
+          "Primary macronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Building block"
+        ],
+        [
+          "Moves inside the plant",
+          "Yes, freely"
+        ],
+        [
+          "Where a shortage shows first",
+          "The old, lower leaves"
+        ],
+        [
+          "Taken up as",
+          "Nitrate and ammonium"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where nitrogen shows first"
+    },
+    {
+      "type": "text",
+      "text": "Nitrogen moves freely inside the plant. When the roots cannot find enough, the plant pulls it out of its oldest leaves and sends it to the young ones. So the lower leaves yellow first, often from the tip back, while the top stays green for a while.\n\nThat is the sign to watch for: yellowing that climbs from the bottom up, on a plant that also stays short and thin. See [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) for how it looks in each crop, and what else can look like it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When nitrogen in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Nitrogen is needed the whole season, but a few stages decide the yield. In palay the tillers are counted early and the grains per panicle are set at panicle initiation, so those are the windows to feed. In mais the plant takes most of its nitrogen in the weeks of fast growth before tasselling.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing nitrogen in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when it matters most for each crop, from the same stage book the anee.io calendar reads:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When nitrogen is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "Early tillering (DAT 7 to 20), Active tillering (DAT 21 to 34), Panicle initiation (DAT 35 to 49)",
+          "Booting and heading (DAT 50 to 59)",
+          "First topdress now drives tiller numbers."
+        ],
+        [
+          "Palay, direct seeded",
+          "Active tillering (DAS 21 to 39), Panicle initiation (DAS 40 to 54)",
+          "Seedling establishment (DAS 8 to 20), Booting and heading (DAS 55 to 69)",
+          "Tillers form now. Nitrogen sets the panicle count."
+        ],
+        [
+          "Yellow corn",
+          "Rapid growth (DAP 30 to 44), Tasselling (DAP 45 to 54)",
+          "Early vegetative (DAP 10 to 29), Silking and pollination (DAP 55 to 69)",
+          "Uptake is fastest now. The second side dress sets ear size."
+        ],
+        [
+          "Sweet corn",
+          "Rapid growth (DAP 24 to 37), Tasselling (DAP 38 to 45)",
+          "Early vegetative (DAP 8 to 23), Silking and pollination (DAP 46 to 57)",
+          "Uptake is fastest now. The second side dress sets ear size."
+        ],
+        [
+          "Other grains (sorghum)",
+          "Vegetative (DAP 17 to 45)",
+          "Reproductive (DAP 46 to 65)",
+          "The main nitrogen goes on now to build tillers and leaves."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When nitrogen is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "Leaf growth (DAT 6 to 18)",
+          "Seedling (DAT 0 to 5)",
+          "Nitrogen now makes the leaves you sell."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "Vegetative (DAT 14 to 33)",
+          "Seedling (DAT 0 to 13), Fruit set and filling (DAT 46 to 63)",
+          "Nitrogen builds the frame that will carry the fruit."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "Vine growth (DAP 9 to 23)",
+          "Seedling (DAP 0 to 8), Fruit set and filling (DAP 34 to 49)",
+          "Nitrogen builds vines and leaves before flowering."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "No stage stands out",
+          "Emergence (DAP 0 to 11)",
+          "A small starter dose helps until nodules form."
+        ],
+        [
+          "Onion and garlic",
+          "Leaf growth (DAT 23 to 57)",
+          "Establishment (DAT 0 to 22)",
+          "Each leaf made now becomes a ring of the bulb."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When nitrogen is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "Vegetative (DAP 16 to 46)",
+          "Small amounts the rest of the season",
+          "Nitrogen now builds the leaves that will feed the roots."
+        ],
+        [
+          "Sugarcane",
+          "Tillering (DAP 45 to 119), Grand growth (DAP 120 to 269)",
+          "Small amounts the rest of the season",
+          "Nitrogen now builds the stool and the number of canes."
+        ],
+        [
+          "Banana",
+          "Vegetative growth (DAP 60 to 179), Late vegetative (DAP 180 to 269)",
+          "Establishment (DAP 0 to 59), Shooting (DAP 270 to 329)",
+          "Nitrogen drives the leaf factory that feeds the bunch."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When nitrogen comes too late"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Palay, transplanted: Nitrogen after flowering is barely used. It feeds blast, sheath blight and hoppers and risks lodging.",
+        "Yellow corn: Nitrogen after early grain fill rarely pays. The ear draws on what the leaves hold.",
+        "Sweet corn: Nitrogen near the milk stage is wasted and can lower ear quality.",
+        "Leafy vegetables (pechay, cabbage): Nitrogen near harvest raises leaf nitrate and makes heads loose and soft.",
+        "Fruit vegetables (tomato, eggplant, pepper): Heavy nitrogen at flowering grows leaves instead of fruit and invites pests.",
+        "Gourds and melons (ampalaya, squash): Heavy nitrogen at flowering makes vines leafy and fruit set poor.",
+        "Legumes (mungbean, peanut, sitaw): Nitrogen after nodules form shuts down fixing and is mostly wasted.",
+        "Root crops (kamote, cassava): Nitrogen after roots begin swelling grows tops at the cost of roots.",
+        "Onion and garlic: Nitrogen after bulbing starts gives thick necks and bulbs that rot in storage.",
+        "Sugarcane: Nitrogen after grand growth keeps cane growing and lowers sugar at harvest.",
+        "Banana: Nitrogen near harvest only feeds the follower sucker, not the bunch.",
+        "Other grains (sorghum): Nitrogen after flowering is barely used and invites lodging and disease."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps nitrogen from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Nitrogen is easy to lose. Urea left on the surface of wet soil turns to ammonia gas within days, and in a flooded paddy part of it escapes as gas when the water stands too long. Heavy rain and typhoons also wash nitrate below the roots, most of all on sandy soil.\n\nSo split the dose instead of giving it all at once: a little at planting, more when the crop starts its fastest growth, and the rest before the stage that sets the harvest. Work urea into the soil, or broadcast it into shallow water and keep the water in, so more of it stays for the crop. Soils low in organic matter hold little nitrogen of their own, so they need the split doses most."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where nitrogen comes from"
+    },
+    {
+      "type": "text",
+      "text": "Most farms here buy nitrogen as urea, the cheapest nitrogen per kilogram. The other common fertilizers add a second nutrient with it, so pick by what the soil also lacks. See our guide to [urea fertilizer](/blog/urea-fertilizer) for rates and timing, and the [rice fertilizer schedule](/blog/rice-fertilizer-schedule) for palay."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Urea (46 0 0): the most nitrogen per bag, for topdressing.",
+        "Ammonium sulfate (21 0 0): nitrogen with sulfur, good on alkaline soil.",
+        "Ammonium phosphate (16 20 0) and complete fertilizer (14 14 14): nitrogen with phosphorus at planting.",
+        "Chicken manure, compost and a legume grown before: slower nitrogen that also feeds the soil."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too much nitrogen is a problem too",
+      "text": "Too much nitrogen makes soft, dark green leaves that blast, sheath blight and planthoppers love, and tall weak stems that lodge in the first strong wind. In palay it also delays heading. Give what the crop needs at each stage, not more."
+    },
+    {
+      "type": "cta",
+      "title": "See if your nitrogen lasts to the stages that need it",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether nitrogen reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Nitrogen questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is nitrogen a macronutrient or a micronutrient?",
+          "a": "Nitrogen is a primary macronutrient, along with phosphorus and potassium. Crops take it in tens of kilograms per hectare, far more than any micronutrient."
+        },
+        {
+          "q": "When should I apply nitrogen to palay?",
+          "a": "Split it. Give a small part as basal, the biggest share at active tillering, and the last dose at panicle initiation, about 35 to 45 days after transplanting for most varieties. Nitrogen after flowering is barely used."
+        },
+        {
+          "q": "Why do the lower leaves turn yellow first?",
+          "a": "Because nitrogen moves inside the plant. A hungry plant takes it from its old leaves to feed the new ones, so the oldest leaves yellow while the top stays green."
+        },
+        {
+          "q": "Can I give nitrogen through the leaves?",
+          "a": "Yes, a weak urea spray can green up vegetables quickly. But leaves take up only small amounts at a time, so most of the season's nitrogen still has to go to the soil."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Nitrogen deficiency",
+          "url": "/nutrient-deficiencies/nitrogen-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Phosphorus in plants",
+          "url": "/nutrients/phosphorus-in-plants"
+        },
+        {
+          "label": "Potassium in plants",
+          "url": "/nutrients/potassium-in-plants"
+        },
+        {
+          "label": "Fertilizer for rice tillering",
+          "url": "/blog/fertilizer-for-rice-tillering"
+        },
+        {
+          "label": "Urea fertilizer",
+          "url": "/blog/urea-fertilizer"
+        }
+      ]
+    }
+  ]
+}

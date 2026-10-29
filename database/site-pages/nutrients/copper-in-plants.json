@@ -1,0 +1,316 @@
+{
+  "section": "nutrients",
+  "slug": "copper-in-plants",
+  "lang": "en",
+  "category": "Micronutrients",
+  "sortOrder": 350,
+  "title": "Copper in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Copper in Plants: Role, Signs and When It Matters",
+  "metaDescription": "Copper in plants helps make pollen and strong walls. See which crops and soils run short, when it matters, and why copper sprays already supply it.",
+  "focusKeyword": "copper in plants",
+  "keywords": [
+    "role of copper in plants",
+    "copper fertilizer",
+    "copper sulfate for plants",
+    "copper deficiency in plants"
+  ],
+  "excerpt": "Copper in plants is a helper needed in very small amounts, for photosynthesis, for strong cell walls and above all for pollen. A crop short of it has twisted, wilting young leaves and sets poor grain. Few mineral soils lack it, but peat and very sandy soils can. Here is what it does, when it matters and how to supply it without overdoing it.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-cu.webp",
+    "alt": "Young shoot with drooping, cupped, twisted new leaves: copper in plants running short",
+    "credit": "Florida Division of Plant Industry"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What copper does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Copper works in enzymes that pass energy along in photosynthesis and breathing, and in others that build lignin for strong stems and cell walls.\n\nIt matters most at flowering, because pollen needs copper to form and stay fertile. So a cereal short of copper may flower but leave many empty grains, and its heads may stay pale or bent."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A helper, needed in grams"
+    },
+    {
+      "type": "text",
+      "text": "Copper is a helper. It works inside enzymes and is needed in only tens of grams per hectare. Most of the time the soil has enough, and fungicide sprays based on copper add more.\n\nThe trouble spots are soils that hold copper too tightly, like peat and soils very rich in organic matter, and very sandy soils that have little to begin with."
+    },
+    {
+      "type": "table",
+      "caption": "Copper in short",
+      "rows": [
+        [
+          "Fact",
+          "Copper"
+        ],
+        [
+          "Group",
+          "Micronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Helper"
+        ],
+        [
+          "Moves inside the plant",
+          "Poorly"
+        ],
+        [
+          "Where a shortage shows first",
+          "The young leaves and growing tips"
+        ],
+        [
+          "Taken up as",
+          "Copper ion"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where copper shows first"
+    },
+    {
+      "type": "text",
+      "text": "Copper moves poorly inside the plant, so the shortage starts on the young growth. New leaves come out pale, twisted or rolled, the tips die back, and stems stay weak and floppy.\n\nSee [copper deficiency](/nutrient-deficiencies/copper-deficiency) for the signs crop by crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When copper in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Copper matters most from booting to flowering in cereals, when the pollen forms. It is rarely short on the mineral soils most farms here have.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing copper in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When copper is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ],
+        [
+          "Palay, direct seeded",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ],
+        [
+          "Yellow corn",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ],
+        [
+          "Sweet corn",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ],
+        [
+          "Other grains (sorghum)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When copper is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is not a concern at this stage."
+        ],
+        [
+          "Onion and garlic",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When copper is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is not a concern at this stage."
+        ],
+        [
+          "Sugarcane",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ],
+        [
+          "Banana",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Copper is needed only in traces. Peat soils may run short."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps copper from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Peat and soils very rich in organic matter bind copper tightly. Very sandy soil may simply have little. A high pH and heavy nitrogen or phosphorus also make it harder to take up.\n\nOn most mineral soils, though, copper shortage is rare, and the copper fungicides many farms spray add enough."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where copper comes from"
+    },
+    {
+      "type": "text",
+      "text": "Copper sulfate on the soil or as a weak spray fixes a shortage. Copper fungicides like copper hydroxide and copper oxychloride also supply it while they protect against disease. See [micronutrients for rice](/blog/micronutrients-for-rice) for the other trace nutrients."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Copper sulfate: on the soil or as a weak leaf spray.",
+        "Copper fungicides: copper hydroxide and copper oxychloride, which feed and protect.",
+        "Trace element blends: small amounts with zinc and manganese."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Copper builds up in the soil",
+      "text": "Copper does not wash away, so years of copper sprays can build it up to harmful levels in the soil, most of all in orchards and vegetable plots. Spray copper when disease calls for it, not by habit."
+    },
+    {
+      "type": "cta",
+      "title": "Know when copper matters in your crop",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether copper reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Copper questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Do copper fungicides also feed the plant?",
+          "a": "Yes. Copper hydroxide and copper oxychloride sprays supply copper as they protect against disease."
+        },
+        {
+          "q": "Which soils lack copper?",
+          "a": "Peat, soils very rich in organic matter and very sandy soils. Most mineral farm soils have enough."
+        },
+        {
+          "q": "Is copper a micronutrient?",
+          "a": "Yes. Crops need only tens of grams per hectare."
+        },
+        {
+          "q": "Can copper harm the crop?",
+          "a": "Too much can. It builds up in soil that gets copper sprays for many years and stunts the roots."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Copper deficiency",
+          "url": "/nutrient-deficiencies/copper-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Zinc in plants",
+          "url": "/nutrients/zinc-in-plants"
+        },
+        {
+          "label": "Manganese in plants",
+          "url": "/nutrients/manganese-in-plants"
+        },
+        {
+          "label": "Micronutrients for rice",
+          "url": "/blog/micronutrients-for-rice"
+        },
+        {
+          "label": "Fertilizer for fruit trees",
+          "url": "/blog/fertilizer-for-fruit-trees"
+        }
+      ]
+    }
+  ]
+}

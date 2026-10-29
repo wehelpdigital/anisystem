@@ -1,0 +1,183 @@
+{
+  "section": "nutrients",
+  "slug": "chlorine-in-plants",
+  "lang": "en",
+  "category": "Micronutrients",
+  "sortOrder": 370,
+  "title": "Chlorine in Plants: What It Does and Which Crops Need It",
+  "metaTitle": "Chlorine in Plants: Role, Coconut and Salt Sensitive Crops",
+  "metaDescription": "Chlorine in plants opens and closes the leaf pores and helps split water. See why coconut needs it, which crops dislike it, and where it comes from.",
+  "focusKeyword": "chlorine in plants",
+  "keywords": [
+    "role of chlorine in plants",
+    "chloride for coconut",
+    "salt for coconut",
+    "chloride sensitive crops"
+  ],
+  "excerpt": "Chlorine in plants works as chloride, a helper that keeps water balanced in the cells and the leaf pores working. Most crops get all they need from rain, irrigation water and muriate of potash, and some crops dislike too much of it. Coconut is the exception: it needs more chloride than most crops, which is why coconut farmers here spread salt. Here is what it does and which crops need it.",
+  "heroImage": {
+    "src": "/images/site/photos/inspect.jpg",
+    "alt": "A farmer inspecting a crop for signs of chlorine in plants running short or too high",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What chlorine does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Plants take chlorine as chloride, a charged particle dissolved in the sap. Together with potassium it pulls water into cells and keeps them firm, and it opens and closes the stomata, the leaf pores that let in air and let out water.\n\nSo chlorine in plants works hand in hand with potassium. Chloride also takes part in the step of photosynthesis that splits water in sunlight, and it helps some crops resist leaf and root diseases."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A helper and a regulator"
+    },
+    {
+      "type": "text",
+      "text": "Chlorine is a helper and a regulator. It is never built into the plant body. It stays dissolved, balancing charges and steering water, much like potassium does.\n\nCrops need only a small amount, but they often take far more than they need because chloride is everywhere: in rain near the sea, in irrigation water and in muriate of potash."
+    },
+    {
+      "type": "table",
+      "caption": "Chlorine in short",
+      "rows": [
+        [
+          "Fact",
+          "Chlorine"
+        ],
+        [
+          "Group",
+          "Micronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Helper and regulator"
+        ],
+        [
+          "Moves inside the plant",
+          "Yes, freely"
+        ],
+        [
+          "Where a shortage shows first",
+          "The young leaves wilting, then bronzing"
+        ],
+        [
+          "Taken up as",
+          "Chloride"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where chlorine shows first"
+    },
+    {
+      "type": "text",
+      "text": "A true shortage is rare. When it happens the leaves wilt in the afternoon, the young ones turn pale and bronzed, and the roots stay short and thick.\n\nToo much chloride is more common, on salty soil or with salty water. Leaf tips and edges burn brown, much like a [potassium shortage](/nutrient-deficiencies/potassium-deficiency) looks."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which crops need chlorine most"
+    },
+    {
+      "type": "text",
+      "text": "Coconut needs more chloride than most crops. It helps the palm open its leaf pores and hold water, and coconuts given chloride carry more nuts with heavier meat. That is why many coconut farms here spread common salt or muriate of potash around the palm, and why palms near the sea often bear well.\n\nOil palm and kiwi also respond to chloride. For palay and mais, the chloride in muriate of potash and in water is more than enough.\n\nSome crops dislike chloride. Tobacco burns poorly and potato and sweet potato store worse with too much, and citrus, avocado and many vegetables and beans burn at the leaf edges when chloride piles up. For these, sulfate of potash is the safer potassium. See [potassium in plants](/nutrients/potassium-in-plants) for the potash choices."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps chlorine from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Very little keeps chloride from a crop. It moves freely in water and washes out of soil easily, so a shortage shows only far from the sea, on sandy soil, after heavy rain, with no muriate of potash and no salt in the water.\n\nThe real worry is the opposite: salty soil and salty water in coastal and dry areas push chloride too high, and the crop burns."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where chlorine comes from"
+    },
+    {
+      "type": "text",
+      "text": "Muriate of potash, the common potassium fertilizer, is almost half chloride, so it supplies all most crops need. Rain near the coast and irrigation water add more. For coconut, common salt spread around the palm is the cheap source. See [potash fertilizer](/blog/potash-fertilizer) and [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Muriate of potash (0 0 60): potassium and chloride together.",
+        "Common salt: for coconut only, spread in a ring around the palm.",
+        "Irrigation water and rain near the sea."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too much chloride burns leaves",
+      "text": "On salty ground or with salty water, chloride builds up and burns leaf tips and edges. Never use salt on crops other than coconut, and use sulfate of potash for chloride sensitive crops."
+    },
+    {
+      "type": "cta",
+      "title": "Plan your potassium and chloride by crop",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether potassium, the nutrient that brings chloride with it, reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Chlorine questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Why do farmers put salt on coconut?",
+          "a": "Coconut needs more chloride than most crops. Salt supplies it cheaply, and palms given chloride carry more and heavier nuts."
+        },
+        {
+          "q": "Is chlorine a nutrient?",
+          "a": "Yes. Plants take it as chloride and need a small amount as a helper and regulator."
+        },
+        {
+          "q": "Which crops dislike chloride?",
+          "a": "Tobacco, potato, sweet potato, citrus, avocado and many beans and vegetables. Use sulfate of potash for them."
+        },
+        {
+          "q": "Does muriate of potash give chloride?",
+          "a": "Yes. It is almost half chloride, enough for most crops."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Potassium in plants",
+          "url": "/nutrients/potassium-in-plants"
+        },
+        {
+          "label": "Potassium deficiency",
+          "url": "/nutrient-deficiencies/potassium-deficiency"
+        },
+        {
+          "label": "Potash fertilizer",
+          "url": "/blog/potash-fertilizer"
+        },
+        {
+          "label": "Fertilizer for fruit trees",
+          "url": "/blog/fertilizer-for-fruit-trees"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,316 @@
+{
+  "section": "nutrients",
+  "slug": "manganese-in-plants",
+  "lang": "en",
+  "category": "Micronutrients",
+  "sortOrder": 340,
+  "title": "Manganese in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Manganese in Plants: Role, Signs and When It Matters",
+  "metaDescription": "Manganese in plants splits water in sunlight and switches on enzymes. See when each crop needs it, why limed soils run short, and how to supply it.",
+  "focusKeyword": "manganese in plants",
+  "keywords": [
+    "role of manganese in plants",
+    "manganese fertilizer",
+    "manganese sulfate",
+    "manganese deficiency in plants"
+  ],
+  "excerpt": "Manganese in plants is the helper that splits water inside the leaf, the first step of turning sunlight into food. It also switches on enzymes that build defenses against disease. A crop short of it gets speckled, pale young leaves. Here is what it does, when each crop needs it most and why heavily limed soils often run short.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-mn.webp",
+    "alt": "Leaf with pale, speckled areas between the veins: manganese in plants running short",
+    "credit": "R.J. Reynolds Tobacco Company"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What manganese does in plants"
+    },
+    {
+      "type": "text",
+      "text": "In the leaf, manganese sits in the part of the chloroplast that splits water in sunlight and releases oxygen. Without it photosynthesis stalls at the very first step.\n\nManganese also switches on enzymes that make lignin, the tough stuff in cell walls, and other compounds that help the plant fight fungi and other diseases. So a crop short of it grows weak and catches more disease."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A helper, needed in small amounts"
+    },
+    {
+      "type": "text",
+      "text": "Manganese is a helper. It works inside enzymes and the water splitting step without being used up, so crops need only a few hundred grams per hectare.\n\nLike iron, it is usually in the soil but in the wrong form. Oxygen and a high pH turn it into forms the roots cannot take, while flooding and acid soil free it, sometimes too much."
+    },
+    {
+      "type": "table",
+      "caption": "Manganese in short",
+      "rows": [
+        [
+          "Fact",
+          "Manganese"
+        ],
+        [
+          "Group",
+          "Micronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Helper"
+        ],
+        [
+          "Moves inside the plant",
+          "Poorly"
+        ],
+        [
+          "Where a shortage shows first",
+          "The young leaves, speckled between the veins"
+        ],
+        [
+          "Taken up as",
+          "Manganese ion"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where manganese shows first"
+    },
+    {
+      "type": "text",
+      "text": "Manganese moves poorly, so the shortage starts on the young and middle leaves. They turn pale between the veins with small dead specks, and the plant may look grayish. It looks a lot like iron shortage, but the speckles and the paler veins give manganese away.\n\nSee [manganese deficiency](/nutrient-deficiencies/manganese-deficiency) for the signs crop by crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When manganese in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Manganese matters most for upland crops on limy or heavily limed soil, early in the season. Flooded palay seldom lacks it because flooding frees manganese.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing manganese in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When manganese is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ],
+        [
+          "Palay, direct seeded",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ],
+        [
+          "Yellow corn",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ],
+        [
+          "Sweet corn",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ],
+        [
+          "Other grains (sorghum)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When manganese is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ],
+        [
+          "Onion and garlic",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When manganese is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ],
+        [
+          "Sugarcane",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ],
+        [
+          "Banana",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Manganese is rarely short except on high pH soils."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps manganese from the crop"
+    },
+    {
+      "type": "text",
+      "text": "A pH above about 6.5, heavy liming, dry and well aired soil, and soil rich in organic matter all bind manganese. On the other hand, strongly acid and waterlogged soil can free so much that it harms the crop.\n\nSo the risk of shortage is highest on a limed, sandy or limy upland field in a dry spell."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where manganese comes from"
+    },
+    {
+      "type": "text",
+      "text": "Manganese sulfate on the soil or as a leaf spray is the usual fix. A spray works faster on limy soil, where soil applied manganese locks up quickly. Many trace element blends also carry it. See [micronutrients for rice](/blog/micronutrients-for-rice)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Manganese sulfate: on the soil or as a leaf spray.",
+        "Manganese chelate: for alkaline soil.",
+        "Trace element blends and foliar fertilizers: small amounts with zinc, iron and copper."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too much manganese is toxic on acid soil",
+      "text": "On very acid or waterlogged soil, manganese can rise to toxic levels and show as brown spots on older leaves. Liming acid soil to the right pH fixes it."
+    },
+    {
+      "type": "cta",
+      "title": "See when manganese matters on your soil",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether manganese reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Manganese questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How do I tell manganese from iron deficiency?",
+          "a": "Both pale the young leaves between the veins. Manganese adds small dead specks and the veins look paler, while iron leaves the veins sharp green."
+        },
+        {
+          "q": "Does lime cause manganese deficiency?",
+          "a": "Too much lime can. Raising the pH past about 6.5 makes manganese harder for the roots to take."
+        },
+        {
+          "q": "Is manganese a micronutrient?",
+          "a": "Yes. Crops need it in small amounts as a helper for photosynthesis and disease defense."
+        },
+        {
+          "q": "Can manganese be sprayed?",
+          "a": "Yes, a manganese sulfate spray is the quickest fix, most of all on limy soil."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Manganese deficiency",
+          "url": "/nutrient-deficiencies/manganese-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Iron in plants",
+          "url": "/nutrients/iron-in-plants"
+        },
+        {
+          "label": "Copper in plants",
+          "url": "/nutrients/copper-in-plants"
+        },
+        {
+          "label": "Micronutrients for rice",
+          "url": "/blog/micronutrients-for-rice"
+        },
+        {
+          "label": "Foliar fertilizer",
+          "url": "/blog/foliar-fertilizer"
+        }
+      ]
+    }
+  ]
+}

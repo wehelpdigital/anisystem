@@ -477,6 +477,9 @@ Route::get('/nutrient-deficiencies/{slug}', [App\Http\Controllers\SitePageContro
 Route::get('/pests/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'pests')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.pests.show');
 Route::get('/diseases', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'diseases')->name('site.diseases');
 Route::get('/diseases/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'diseases')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.diseases.show');
+// Nutrients (2026-10-30): what each plant nutrient does and when each crop needs it, gated.
+Route::get('/nutrients', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'nutrients')->name('site.nutrients');
+Route::get('/nutrients/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'nutrients')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.nutrients.show');
 // How to Plant (2026-10-19): how traditional farmers plant every crop, the guides of the app's tool (no video), gated.
 Route::get('/how-to-plant', [App\Http\Controllers\SitePageController::class, 'hub'])->defaults('face', 'ph')->defaults('section', 'how-to-plant')->name('site.howtoplant');
 Route::get('/how-to-plant/{slug}', [App\Http\Controllers\SitePageController::class, 'show'])->defaults('section', 'how-to-plant')->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('site.howtoplant.show');
@@ -1056,6 +1059,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::delete('/app/sky-weather/{id}', [App\Http\Controllers\SkyWeatherController::class, 'destroy'])->whereNumber('id')->name('sky.delete');
     // The Stash (2026-10-07): partners' resources, shelved, searched and read in the app.
     Route::get('/app/stash/read/{id}', [App\Http\Controllers\StashController::class, 'read'])->whereNumber('id')->name('stash.read');
+    // Anee Knowledgebase (2026-10-30): anee.io's own guides, a shelf at a time, read in a full window.
+    Route::get('/app/stash/knowledge/{shelf}', [App\Http\Controllers\StashController::class, 'knowledge'])->where('shelf', '[a-z0-9\-]+')->name('stash.knowledge');
     Route::get('/app/stash/file/{id}', [App\Http\Controllers\StashController::class, 'file'])->whereNumber('id')->middleware('throttle:600,1')->name('stash.file');
     Route::get('/app/stash/{partner}/{type}', [App\Http\Controllers\StashController::class, 'shelf'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.shelf');
     Route::get('/app/stash/{partner}/{type}/items', [App\Http\Controllers\StashController::class, 'items'])->where(['partner' => '[a-z0-9\-]+', 'type' => '[a-z0-9\-]+'])->name('stash.items');

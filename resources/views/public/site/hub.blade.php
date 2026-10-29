@@ -50,6 +50,7 @@
                     <a href="{{ $S::url('pests') }}" class="{{ $section === 'pests' ? 'is-on' : '' }}">Crop pests</a>
                     <a href="{{ $S::url('diseases') }}" class="{{ $section === 'diseases' ? 'is-on' : '' }}">Crop diseases</a>
                     <a href="{{ $S::url('weeds') }}" class="{{ $section === 'weeds' ? 'is-on' : '' }}">Weeds and grasses</a>
+                    <a href="{{ $S::url('nutrients') }}" class="{{ $section === 'nutrients' ? 'is-on' : '' }}">Nutrients</a>
                     <a href="{{ $S::url('nutrient-deficiencies') }}" class="{{ $section === 'nutrient-deficiencies' ? 'is-on' : '' }}">Nutrient deficiencies</a>
                     <a href="{{ $S::url('blog') }}" class="{{ $section === 'blog' ? 'is-on' : '' }}">Latest in Agriculture</a>
                 </div>

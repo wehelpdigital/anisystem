@@ -1,0 +1,174 @@
+{
+  "section": "nutrients",
+  "slug": "nickel-in-plants",
+  "lang": "en",
+  "category": "Micronutrients",
+  "sortOrder": 380,
+  "title": "Nickel in Plants: What It Does and Why It Is Rarely Short",
+  "metaTitle": "Nickel in Plants: Role, Urea and Legumes",
+  "metaDescription": "Nickel in plants helps them use urea and feeds legume nodules. See what it does, why it is almost never short on farm soils, and when it matters.",
+  "focusKeyword": "nickel in plants",
+  "keywords": [
+    "role of nickel in plants",
+    "nickel and urea",
+    "nickel for legumes",
+    "nickel micronutrient"
+  ],
+  "excerpt": "Nickel in plants is the newest nutrient on the list and the smallest need after molybdenum. It is part of urease, the enzyme that breaks down urea inside the plant, and it helps legumes fix nitrogen. Farm soils almost always hold enough, so a true shortage is rare. Here is what it does and when it matters.",
+  "heroImage": {
+    "src": "/images/site/photos/palay-heads.jpg",
+    "alt": "Ripe palay heads in a field where nickel in plants is seldom short",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What nickel does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Nickel is the center of urease, the enzyme that breaks urea into ammonia the plant can build with. Urea forms inside every plant as it handles nitrogen, and a plant short of nickel lets it pile up until it burns the leaf tips.\n\nIn legumes like mungbean, peanut and soybean, nickel also helps the nodules that fix nitrogen and the seed that sprouts from them."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A helper, needed in traces"
+    },
+    {
+      "type": "text",
+      "text": "Nickel is a helper. It works inside urease and one or two other enzymes, and a crop needs only a trace of it, about a gram per hectare or less.\n\nBecause the need is so small, nearly every farm soil holds enough, and the seed carries enough to start the crop."
+    },
+    {
+      "type": "table",
+      "caption": "Nickel in short",
+      "rows": [
+        [
+          "Fact",
+          "Nickel"
+        ],
+        [
+          "Group",
+          "Micronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Helper"
+        ],
+        [
+          "Moves inside the plant",
+          "Fairly well"
+        ],
+        [
+          "Where a shortage shows first",
+          "The leaf tips, dead from urea build up"
+        ],
+        [
+          "Taken up as",
+          "Nickel ion"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where nickel shows first"
+    },
+    {
+      "type": "text",
+      "text": "A nickel shortage shows as dead, burnt leaf tips where urea built up, and in some trees as small, rounded, crumpled young leaves. These signs are rare on farm soils.\n\nIf leaf tips burn after a urea spray, the spray rate is a far more likely cause than nickel. See [nitrogen deficiency](/nutrient-deficiencies/nitrogen-deficiency) and our guide to [urea fertilizer](/blog/urea-fertilizer)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When nickel in plants matters"
+    },
+    {
+      "type": "text",
+      "text": "Nickel matters most for legumes and for crops fed mostly with urea sprays, because both depend on urease. Seed from a field low in nickel can also sprout poorly, since the young seedling lives on the nickel its seed carried until its roots take over.\n\nSo the time to think about nickel is before planting a legume on a very sandy or heavily limed field, or when a crop fed with urea through the leaves keeps burning at the tips at a normal rate. Even then, check the spray rate and the weather first, because a hot midday spray burns leaves far more often than a lack of nickel does.\n\nFor palay, mais and most vegetables on ordinary farm soil, there is no stage when nickel needs attention."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps nickel from the crop"
+    },
+    {
+      "type": "text",
+      "text": "A very high soil pH, heavy liming and large amounts of zinc, copper or iron can make nickel harder to take up. Very sandy, heavily leached soil may hold little.\n\nEven then a shortage is rare, because the crop needs so little."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where nickel comes from"
+    },
+    {
+      "type": "text",
+      "text": "Farm soil, manure and the seed itself usually give enough. Where a shortage is proven, a weak nickel sulfate spray fixes it, but almost no farm here needs one.\n\nSpend the money on the nutrients that run short more often instead: [nitrogen](/nutrients/nitrogen-in-plants), [zinc](/nutrients/zinc-in-plants) and [potassium](/nutrients/potassium-in-plants)."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too much nickel is toxic",
+      "text": "Soils on certain rocks and land near mines can hold enough nickel to stunt crops. Never add nickel unless a soil or leaf test shows a shortage."
+    },
+    {
+      "type": "cta",
+      "title": "Know which nutrients your field really needs",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, which nutrients reach the stages that need them, and where they run out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Nickel questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is nickel a plant nutrient?",
+          "a": "Yes. It is the newest essential micronutrient, needed in traces for the enzyme that breaks down urea."
+        },
+        {
+          "q": "Do I need nickel fertilizer?",
+          "a": "Almost never. Farm soils, manure and seed give enough for nearly every crop."
+        },
+        {
+          "q": "Why does nickel matter for urea?",
+          "a": "Nickel is part of urease, the enzyme that turns urea into a form the plant can use."
+        },
+        {
+          "q": "Can nickel harm crops?",
+          "a": "Yes, on soils near some mines or certain rocks nickel can rise high enough to stunt crops."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Nitrogen in plants",
+          "url": "/nutrients/nitrogen-in-plants"
+        },
+        {
+          "label": "Molybdenum in plants",
+          "url": "/nutrients/molybdenum-in-plants"
+        },
+        {
+          "label": "Urea fertilizer",
+          "url": "/blog/urea-fertilizer"
+        },
+        {
+          "label": "What is fertilizer",
+          "url": "/blog/what-is-fertilizer"
+        }
+      ]
+    }
+  ]
+}

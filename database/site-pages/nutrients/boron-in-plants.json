@@ -1,0 +1,328 @@
+{
+  "section": "nutrients",
+  "slug": "boron-in-plants",
+  "lang": "en",
+  "category": "Micronutrients",
+  "sortOrder": 320,
+  "title": "Boron in Plants: What It Does and When Your Crop Needs It",
+  "metaTitle": "Boron in Plants: Role, Signs and When It Matters",
+  "metaDescription": "Boron in plants builds cell walls and makes pollen work. See why fruit and seed crops need it at flowering, and why too much is close to enough.",
+  "focusKeyword": "boron in plants",
+  "keywords": [
+    "role of boron in plants",
+    "boron fertilizer",
+    "boron for flowering",
+    "borax for plants"
+  ],
+  "excerpt": "Boron in plants helps build cell walls and makes pollen grow, so flowers turn into fruit and seed. It does not move to new growth, so a shortage hits the growing tips and the flowers first. Fruit crops, root crops and coconut need it most. Here is what it does, when each crop needs it, and why the gap between enough and too much is small.",
+  "heroImage": {
+    "src": "/images/site/deficiencies/general-b.webp",
+    "alt": "Coconut frond with leaflets stuck together and crumpled: boron in plants running short",
+    "credit": "Scot Nelson, CC0 1.0, via Flickr"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What boron does in plants"
+    },
+    {
+      "type": "text",
+      "text": "Boron ties together the pieces of the cell wall, so new cells form strong and whole. It also helps sugar move through the plant and keeps the growing tips dividing.\n\nIts biggest job comes at flowering. Pollen needs boron to grow its tube down to the ovule, so a crop short of boron flowers but sets little fruit or seed. That is why boron shows up as hollow stems in broccoli, cracked roots in carrot, poorly filled ears in mais and button nuts in coconut."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "A building block in tiny amounts"
+    },
+    {
+      "type": "text",
+      "text": "Boron is a building block of the cell wall, though it is needed only in grams per hectare. Once laid down it stays where it is, much like calcium, so the plant cannot move it to new leaves or flowers.\n\nThat makes boron a nutrient of steady supply. The crop needs a little all the time, and above all at flowering, rather than a big dose once."
+    },
+    {
+      "type": "table",
+      "caption": "Boron in short",
+      "rows": [
+        [
+          "Fact",
+          "Boron"
+        ],
+        [
+          "Group",
+          "Micronutrient"
+        ],
+        [
+          "Kind of nutrient",
+          "Building block, in small amounts"
+        ],
+        [
+          "Moves inside the plant",
+          "Hardly at all"
+        ],
+        [
+          "Where a shortage shows first",
+          "The growing tips, young leaves and flowers"
+        ],
+        [
+          "Taken up as",
+          "Boric acid"
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where boron shows first"
+    },
+    {
+      "type": "text",
+      "text": "Because boron hardly moves, the shortage starts at the growing points. Tips die back, young leaves come out thick, brittle or crumpled, flowers drop and fruit crack or grow hollow.\n\nSee [boron deficiency](/nutrient-deficiencies/boron-deficiency) for the signs in each crop."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When boron in plants is most critical"
+    },
+    {
+      "type": "text",
+      "text": "Boron matters most from flowering to fruit set, and in root crops and cabbage while the root or head forms. Palay needs very little.\n\nDAT means days after transplanting, DAS days after sowing in the field, and DAP days after planting. The days are the usual ones for a typical variety, so a long or short variety moves them a little. Timing boron in plants to these windows gets more harvest from the same bags. Our guide to [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) puts them together for a whole season.\n\nHere is when each crop needs it most, from the anee.io stage book:"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice, corn and other grains"
+    },
+    {
+      "type": "table",
+      "caption": "When boron is critical: rice, corn and other grains",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Palay, transplanted",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Boron need is small now."
+        ],
+        [
+          "Palay, direct seeded",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Boron need is small now."
+        ],
+        [
+          "Yellow corn",
+          "Silking and pollination (DAP 55 to 69)",
+          "Tasselling (DAP 45 to 54)",
+          "Boron is needed for silks to catch pollen and set kernels."
+        ],
+        [
+          "Sweet corn",
+          "Silking and pollination (DAP 46 to 57)",
+          "Tasselling (DAP 38 to 45)",
+          "Boron is needed for silks to catch pollen and set kernels."
+        ],
+        [
+          "Other grains (sorghum)",
+          "No stage stands out",
+          "Flowering (DAP 66 to 78)",
+          "Boron supports pollen and grain set."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and legumes"
+    },
+    {
+      "type": "table",
+      "caption": "When boron is critical: vegetables and legumes",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Leafy vegetables (pechay, cabbage)",
+          "Heading and filling (DAT 19 to 29)",
+          "Leaf growth (DAT 6 to 18)",
+          "Boron shortage causes hollow stems and brown hearts in cabbage family heads."
+        ],
+        [
+          "Fruit vegetables (tomato, eggplant, pepper)",
+          "Flowering (DAT 34 to 45)",
+          "Fruit set and filling (DAT 46 to 63)",
+          "Boron is needed for pollen and fruit set."
+        ],
+        [
+          "Gourds and melons (ampalaya, squash)",
+          "Flowering (DAP 24 to 33)",
+          "Fruit set and filling (DAP 34 to 49)",
+          "Boron is needed for pollen and fruit set."
+        ],
+        [
+          "Legumes (mungbean, peanut, sitaw)",
+          "Flowering (DAP 27 to 37)",
+          "Pod filling (DAP 38 to 52)",
+          "Boron helps flowers set pods."
+        ],
+        [
+          "Onion and garlic",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Boron need is small now."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Root crops, sugarcane and banana"
+    },
+    {
+      "type": "table",
+      "caption": "When boron is critical: root crops, sugarcane and banana",
+      "rows": [
+        [
+          "Crop",
+          "Most critical",
+          "Also needed",
+          "Why it matters then"
+        ],
+        [
+          "Root crops (kamote, cassava)",
+          "No stage stands out",
+          "Root initiation (DAP 47 to 67), Bulking (DAP 68 to 91)",
+          "Boron shortage cracks roots and browns their centers."
+        ],
+        [
+          "Sugarcane",
+          "No stage stands out",
+          "Small amounts the rest of the season",
+          "Boron need is small now."
+        ],
+        [
+          "Banana",
+          "No stage stands out",
+          "Late vegetative (DAP 180 to 269), Shooting (DAP 270 to 329)",
+          "Boron supports growing tips and flower parts now."
+        ]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "When boron comes too late"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Yellow corn: Boron after silking is too late for kernel set."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What keeps boron from the crop"
+    },
+    {
+      "type": "text",
+      "text": "Boron washes out of sandy soil and soil low in organic matter in heavy rain. Liming acid soil past neutral also makes it harder to take up, and a dry spell stops its flow into the plant.\n\nSo the risk is highest on light, limed or upland soils in a wet season followed by a dry spell at flowering."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where boron comes from"
+    },
+    {
+      "type": "text",
+      "text": "Borax and solubor are the usual sources, on the soil or as a weak spray before flowering. Many foliar fertilizers carry a little boron. See [foliar fertilizer](/blog/foliar-fertilizer) and [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines)."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Borax: on the soil, mixed evenly with other fertilizer.",
+        "Solubor (sodium borate): dissolves fast, for leaf sprays.",
+        "Compost: small amounts that last."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "The line between enough and too much is thin",
+      "text": "Boron burns leaf edges and kills young plants at only a few times the right rate. Spread it evenly, never pile it, and follow the label to the gram."
+    },
+    {
+      "type": "cta",
+      "title": "Have boron in place before the flowers open",
+      "text": "Put your fertilizers on your crop's calendar in anee.io and the [Coverage Planner](/features/residual-effect-calendar) shows, day by day, whether boron reaches the stages that need it, and where it runs out. Free to start.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Boron questions"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "When should I apply boron?",
+          "a": "Before flowering, so it is there when the pollen grows. On fruit crops a light spray at the start of flowering is common."
+        },
+        {
+          "q": "What does boron deficiency look like?",
+          "a": "Dead or crumpled growing tips, brittle young leaves, flowers that drop, and fruit or roots that crack or grow hollow."
+        },
+        {
+          "q": "Is borax safe for plants?",
+          "a": "In very small amounts it supplies boron. A little too much harms the crop, so measure carefully and spread it evenly."
+        },
+        {
+          "q": "Does palay need boron?",
+          "a": "Very little. Most rice soils give enough, and too much boron is the more common trouble in rice."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related pages",
+      "items": [
+        {
+          "label": "Boron deficiency",
+          "url": "/nutrient-deficiencies/boron-deficiency"
+        },
+        {
+          "label": "Plant nutrients",
+          "url": "/nutrients/plant-nutrients"
+        },
+        {
+          "label": "Calcium in plants",
+          "url": "/nutrients/calcium-in-plants"
+        },
+        {
+          "label": "Zinc in plants",
+          "url": "/nutrients/zinc-in-plants"
+        },
+        {
+          "label": "Foliar fertilizer",
+          "url": "/blog/foliar-fertilizer"
+        },
+        {
+          "label": "Fertilizer for fruit trees",
+          "url": "/blog/fertilizer-for-fruit-trees"
+        }
+      ]
+    }
+  ]
+}
