@@ -725,6 +725,26 @@
     .rfx-sv.is-cur { box-shadow: inset 0 0 0 2px var(--rx-saved-line); background: var(--rx-saved-bg); }
     .rfx-sv-open { flex: 1; min-width: 0; padding: .35rem .45rem; border-radius: .7rem; text-align: left; }
     .rfx-sv-open:hover { background: rgb(128 128 128 / .08); }
+    /* Folding sections. */
+    .rfx-fold-h { cursor: pointer; user-select: none; padding-bottom: .95rem; border-radius: 1.2rem; transition: padding .3s cubic-bezier(.22,1,.36,1), background-color .2s; }
+    .rfx-fold-h:hover { background: rgb(128 128 128 / .06); }
+    .rfx-fold-h:focus-visible { outline: 2px solid var(--rx-accent); outline-offset: -2px; }
+    .rfx-fold.is-open > .rfx-fold-h { padding-bottom: .25rem; }
+    .rfx-fold-h { white-space: nowrap; }
+    .rfx-fold-h small { flex: 1 1 auto; min-width: 0; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rfx-chev { flex: none; width: 1.1rem; height: 1.1rem; color: var(--rx-muted); transition: transform .3s cubic-bezier(.22,1,.36,1); }
+    .rfx-fold.is-open .rfx-chev { transform: rotate(180deg); }
+    .rfx-fold-b { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .34s cubic-bezier(.22,1,.36,1); }
+    .rfx-fold.is-open > .rfx-fold-b { grid-template-rows: 1fr; }
+    .rfx-fold-in { min-height: 0; overflow: hidden; opacity: 0; transition: opacity .25s ease; }
+    .rfx-fold.is-open > .rfx-fold-b > .rfx-fold-in { opacity: 1; transition: opacity .3s ease .08s; }
+    .rfx-foldbar { display: flex; justify-content: flex-end; gap: .4rem; margin: -.4rem 0 -.5rem; }
+    .rfx-foldbar button { padding: .3rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 800; color: var(--rx-muted); background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line-2); transition: color .2s, box-shadow .2s; }
+    .rfx-foldbar button:hover { color: var(--rx-ink); box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-trows { display: grid; gap: .45rem; padding: .3rem 1rem 1rem; }
+    .rfx-trow { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .6rem; padding: .6rem .75rem; border-radius: .85rem; font-size: .86rem; line-height: 1.5; color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px var(--rx-gold-line); }
+    .rfx-trow > span:first-child { flex: 1 1 16rem; }
+    .rfx-trow b { color: inherit; }
     .rfx-meter { position: relative; height: .6rem; margin-top: .6rem; border-radius: 999px; background: var(--rx-track); overflow: hidden; }
     .rfx-meter i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; transition: width .5s cubic-bezier(.22,1,.36,1); }
     @media (prefers-reduced-motion: reduce) {
@@ -1186,19 +1206,16 @@
         const ck = R.check;
         const isNut = ck.kind === 'nutrient';
         const parts = [];
-        if (S.saved) parts.push(`<div class="rfx-banner is-saved"><span>📌 Saved ${esc(S.saved.at)}: <b>${esc(S.saved.title)}</b>, as it stood then.</span><button type="button" class="rfx-btn is-ghost" data-rfx-rerun>Read it with today's plan</button></div>`);
+        // A saved reading shows its numbers as they were when it was saved (the owner, 2026-10-30: "i don't get the
+        // idea of the read it with today's plan button"): the button counts it again with the tasks on the board now.
+        if (S.saved) parts.push(`<div class="rfx-banner is-saved"><span>📌 <b>${esc(S.saved.title)}</b>, saved ${esc(S.saved.at)}. These are its numbers from that day: tasks you added or changed since, and app updates, are not in them.</span><button type="button" class="rfx-btn is-ghost" data-rfx-rerun>Recount with my tasks now</button></div>`);
         if (!R.lot.hasDay) parts.push(`<div class="rfx-banner">📅 This lot has no planting day yet, so the stages and what matters when cannot be shown. Set its day zero in Lots, then open this again.</div>`);
         // A guide only (the owner, 2026-10-30): said every time, above the numbers.
-        parts.push(`<div class="rfx-banner is-guide"><span>🧭 <b>A guide only.</b> It reads our books, what you told us about this lot and the products on your tasks. Your field, the weather and the product you buy can differ, so check with a soil test, the label and your own eyes in the field.</span></div>`);
-        // A try that misses what is checked says what it does act on, one tap away; a try too small to count says so.
-        R.apps.filter((a) => a.try).forEach((a) => {
-            if (!a.relevant) {
-                const acts = a.acts || [];
-                parts.push(`<div class="rfx-banner is-miss"><span>✨ <b>${esc(a.as)}</b> does not act on ${esc(ck.word)}. ${acts.length ? 'It acts on:' : 'We could not read what it carries or guards against. Try its active ingredient, or let Anee look it up.'}</span>${acts.length ? `<span class="rfx-acts">${acts.map((x) => `<button type="button" class="rfx-chip" data-goto="${esc(x.key)}">${esc(x.label)}</button>`).join('')}</span>` : ''}</div>`);
-            } else if (a.effect && a.effect.dose === 'trace') {
-                parts.push(`<div class="rfx-banner is-miss"><span>✨ <b>${esc(a.as)}</b>${a.amount ? ' at ' + esc(a.amount) : ''} gives very little ${esc(ck.word)}: about ${a.effect.kgHa} kg of ${EL[a.effect.el] || esc(a.effect.el)} a hectare, where one usual ${a.form === 'foliar' ? 'leaf spray gives' : 'dose on the soil gives'} about ${a.effect.ref}. Its days still show, faintly.</span></div>`);
-            }
-        });
+        parts.push(`<div class="rfx-banner is-guide"><span>🧭 <b>A guide only.</b> It reads our books, your answers about this lot and your tasks. Your field and the weather can differ: check with a soil test, the label and your own eyes.</span></div>`);
+        // Every section folds; these open or close them all.
+        parts.push('<div class="rfx-foldbar"><button type="button" data-fold-all="1">Open all</button><button type="button" data-fold-all="0">Close all</button></div>');
+        // The tries in one folding card: those that miss what is checked say what they act on, one tap away.
+        parts.push(triesHtml(R, ck));
         // The summary.
         const pct = sm.pct;
         const ringCol = pct === null ? '#9ca3af' : pct >= 80 ? (isDark() ? '#7cc24f' : '#4a7c2a') : pct >= 50 ? '#f59e0b' : (isDark() ? '#f87171' : '#dc2626');
@@ -1209,7 +1226,7 @@
         const sub = isNut
             ? `${sm.apps} application${sm.apps === 1 ? '' : 's'} carry ${esc(ck.word)} on this lot${sm.tries ? `, ${sm.tries} of them a try` : ''}. Each keeps feeding the crop for a while, then fades.`
             : `${sm.apps} application${sm.apps === 1 ? '' : 's'} act on ${esc(ck.word)}${sm.tries ? `, ${sm.tries} of them a try` : ''}. Protection is only needed when the pest shows up: on a gap, scout first and spray only when you find it.`;
-        parts.push(`<div class="rfx-card" style="--d:0s"><div class="rfx-sum">
+        parts.push(`<div class="rfx-card" data-fold="sum" style="--d:0s"><div class="rfx-card-h">At a glance <small>${pct === null ? 'nothing critical yet' : pct + '% of critical days covered'}${sm.gapDays ? ' · ' + sm.gapDays + ' gap day' + (sm.gapDays === 1 ? '' : 's') : ''}</small></div><div class="rfx-sum">
             <div class="rfx-ring"><svg viewBox="0 0 120 120"><circle class="t" cx="60" cy="60" r="52"/><circle class="v" cx="60" cy="60" r="52" stroke="${ringCol}" data-pct="${pct ?? 0}"/></svg>
               <div class="rfx-ring-n"><b data-count="${pct ?? 0}">${pct === null ? '–' : '0'}</b><small>${pct === null ? 'no critical days' : '% of critical days covered'}</small></div></div>
             <div class="rfx-say"><h3>${head}</h3><p>${sub}</p>
@@ -1227,6 +1244,7 @@
         parts.push(calHtml(R));
         parts.push(appsHtml(R));
         body(parts.join(''));
+        wrapFolds();
         // Bring it in: the ring, the count, the cells.
         requestAnimationFrame(() => {
             const v = $('.rfx-ring .v');
@@ -1237,6 +1255,56 @@
             if (n && pct !== null) countUp(n, pct);
             const cal = $('.rfx-cal');
             if (cal) requestAnimationFrame(() => cal.classList.add('is-in'));
+        });
+    };
+    /* The tries, one card: what each misses or gives too little of. */
+    const triesHtml = (R, ck) => {
+        const tries = R.apps.filter((a) => a.try);
+        const miss = tries.filter((a) => !a.relevant);
+        const trace = tries.filter((a) => a.relevant && a.effect && a.effect.dose === 'trace');
+        if (!miss.length && !trace.length) return '';
+        const working = tries.length - miss.length - trace.length;
+        const meta = [miss.length ? `${miss.length} ${miss.length === 1 ? 'does' : 'do'} not act on ${esc(ck.word)}` : '', trace.length ? `${trace.length} ${trace.length === 1 ? 'gives' : 'give'} very little` : '', working ? `${working} working` : ''].filter(Boolean).join(' · ');
+        const rows = miss.map((a) => {
+            const acts = a.acts || [];
+            return `<div class="rfx-trow"><span>✨ <b>${esc(a.as)}</b> does not act on ${esc(ck.word)}.${acts.length ? ' It acts on:' : ' We could not read what it carries or guards against. Try its active ingredient, or let Anee look it up.'}</span>${acts.length ? `<span class="rfx-acts">${acts.map((x) => `<button type="button" class="rfx-chip" data-goto="${esc(x.key)}">${esc(x.label)}</button>`).join('')}</span>` : ''}</div>`;
+        }).concat(trace.map((a) => `<div class="rfx-trow"><span>✨ <b>${esc(a.as)}</b>${a.amount ? ' at ' + esc(a.amount) : ''} gives very little ${esc(ck.word)}: about ${a.effect.kgHa} kg of ${EL[a.effect.el] || esc(a.effect.el)} a hectare, where one usual ${a.form === 'foliar' ? 'leaf spray gives' : 'dose on the soil gives'} about ${a.effect.ref}. Its days still show, faintly.</span></div>`));
+        return `<div class="rfx-card" data-fold="tries" style="--d:0s"><div class="rfx-card-h">Your tries <small>${meta}</small></div><div class="rfx-trows">${rows.join('')}</div></div>`;
+    };
+    /* Folding sections (the owner, 2026-10-30: "make that part expandable contractable including the other sections below
+       it for easier reading and not info overload"): the answer and the calendar open, the rest a line each until opened.
+       What a farmer opens or closes is remembered on this device. */
+    const FOLD_DEF = { sum: true, tries: false, cmp: true, logic: false, amt: false, chart: false, cal: true, apps: false };
+    let foldPref = {};
+    try { foldPref = JSON.parse(localStorage.getItem('rfx-folds') || '{}') || {}; } catch (_) { foldPref = {}; }
+    const setFold = (card, open, remember = true) => {
+        if (!card) return;
+        card.classList.toggle('is-open', open);
+        const h = card.querySelector(':scope > .rfx-fold-h');
+        if (h) h.setAttribute('aria-expanded', String(open));
+        if (remember) {
+            foldPref[card.dataset.fold] = open;
+            try { localStorage.setItem('rfx-folds', JSON.stringify(foldPref)); } catch (_) {}
+        }
+    };
+    const wrapFolds = () => {
+        $$('[data-rfx-body] .rfx-card[data-fold]').forEach((card) => {
+            const h = card.querySelector(':scope > .rfx-card-h');
+            if (!h || card.querySelector(':scope > .rfx-fold-b')) return;
+            const b = document.createElement('div');
+            b.className = 'rfx-fold-b';
+            const inner = document.createElement('div');
+            inner.className = 'rfx-fold-in';
+            while (h.nextSibling) inner.appendChild(h.nextSibling);
+            b.appendChild(inner);
+            card.appendChild(b);
+            card.classList.add('rfx-fold');
+            h.classList.add('rfx-fold-h');
+            h.setAttribute('role', 'button');
+            h.tabIndex = 0;
+            h.insertAdjacentHTML('beforeend', '<svg class="rfx-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>');
+            const key = card.dataset.fold;
+            setFold(card, key in foldPref ? !!foldPref[key] : !!FOLD_DEF[key], false);
         });
     };
     /* How much over the season, in the summary: given against needed from the bag. */
@@ -1280,7 +1348,7 @@
         const axis = `<line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="${tok('--rx-line-2')}"/>${mo}`;
         const runs = (A.short || []).map((r, i) => `<div class="rfx-run" data-jump="${r.from}" style="--d:${0.1 + i * 0.05}s"><em>⚖️</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>: the products give under half of what the crop takes these days.</span></div>`).join('')
             + (A.low || []).map((r, i) => `<div class="rfx-run is-thin" data-jump="${r.from}" style="--d:${0.25 + i * 0.05}s"><em>⚖️</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>: a little under what the crop takes.</span></div>`).join('');
-        return `<div class="rfx-card" style="--d:.1s"><div class="rfx-card-h">How much, day by day <small>kg of ${esc(A.say)} a hectare</small></div>
+        return `<div class="rfx-card" data-fold="amt" style="--d:.1s"><div class="rfx-card-h">How much, day by day <small>${A.pct !== null && A.pct !== undefined ? `${kgSay(A.given)} of ${kgSay(A.need)} kg ${esc(A.say)} a hectare (${A.pct}%)` : `kg of ${esc(A.say)} a hectare`}</small></div>
             <div class="rfx-amt-g">
               <div><h4>Each day <small>bars: what your products give · dashes: what the crop takes</small></h4><div class="rfx-chart-w"><svg viewBox="0 -4 ${W} ${H + 8}" style="min-width:28rem" aria-label="What each day gets against what it takes">${bg}${bars}<path class="needl" d="${line(A.n, yD)}"/>${todayL}${axis}<text class="ax" x="2" y="${top - 2}">${kgSay(maxD / 1.12)} kg a day</text></svg></div></div>
               <div><h4>Adding up <small>given so far against needed so far</small></h4><div class="rfx-chart-w"><svg viewBox="0 -4 ${W} ${H + 8}" style="min-width:28rem" aria-label="Given and needed, added up"><path class="givea" d="${area}"/><path class="givel" d="${line(CG, yC)}"/><path class="needl" d="${line(CN, yC)}"/>${todayL}${nowSay}${axis}<text class="ax" x="2" y="${top - 2}">${kgSay(maxC / 1.1)} kg</text></svg></div></div>
@@ -1304,7 +1372,8 @@
         });
         if (others.length) html += `<section><h4>🔁 What your products do to other nutrients</h4><ul class="rfx-others">${others.map((x) => `<li><b>${esc(x.name)}</b><span class="rfx-way is-${x.way === 'more' ? 'more' : 'less'}">${x.way === 'more' ? 'freed' : 'held back'}</span><span>${esc(x.why)}</span>${x.key ? `<button type="button" class="rfx-chip" data-goto="${esc(x.key)}">Check it</button>` : ''}</li>`).join('')}</ul></section>`;
         const on = Object.entries(L.opts || {}).filter(([, v]) => v).map(([kk]) => ({ amt: 'amounts', soil: 'soil', links: 'links', health: 'health' }[kk])).join(' · ');
-        return `<div class="rfx-card" style="--d:.06s"><div class="rfx-card-h">How it connects <small>${esc(on)}</small></div><div class="rfx-notes">${html}</div></div>`;
+        const warns = notes.filter((x) => x.tone === 'warn').length;
+        return `<div class="rfx-card" data-fold="logic" style="--d:.06s"><div class="rfx-card-h">How it connects <small>${notes.length + others.length} note${notes.length + others.length === 1 ? '' : 's'}${warns ? ' · ' + warns + ' to watch' : ''}</small></div><div class="rfx-notes">${html}</div></div>`;
     };
     const countUp = (el, to) => {
         if (calm) { el.textContent = to; return; }
@@ -1358,7 +1427,7 @@
         }).join('');
         let mo = '';
         R.days.forEach((d, i) => { if (d.d.endsWith('-01')) mo += `<span style="left:${(i / n * 100).toFixed(2)}%">${MON[D(d.d).getMonth()]}</span>`; });
-        return `<div class="rfx-card rfx-cmp" style="--d:.04s"><div class="rfx-card-h">Side by side <small>tap one to open it below</small></div>
+        return `<div class="rfx-card rfx-cmp" data-fold="cmp" style="--d:.04s"><div class="rfx-card-h">Side by side <small>${all.length} checks · tap one to open it below</small></div>
             <div class="rfx-minis">${rings}</div>
             <div class="rfx-lanes"><div class="rfx-lane is-head"><span></span><div class="rfx-stg">${stg}</div></div>${lanes}<div class="rfx-lane is-head"><span></span><div class="rfx-mo">${mo}</div></div></div>
             ${phaseLegend(R, all)}
@@ -1418,7 +1487,7 @@
             if (i < 0) return;
             dots += `<circle class="app ${a.try ? 'is-try' : a.done ? 'is-done' : 'is-plan'}" cx="${x(i).toFixed(1)}" cy="${base + 32}" r="5.5" data-jump="${a.date}"><title>${esc(a.as)} · ${say(a.date)}</title></circle>`;
         });
-        return `<div class="rfx-card" style="--d:.08s"><div class="rfx-card-h">The season <small>coverage of ${esc(R.check.word)}, day by day</small></div><div class="rfx-chart"><div class="rfx-chart-w">
+        return `<div class="rfx-card" data-fold="chart" style="--d:.08s"><div class="rfx-card-h">The season <small>coverage of ${esc(R.check.word)}, day by day</small></div><div class="rfx-chart"><div class="rfx-chart-w">
             <svg viewBox="0 -4 ${W} ${H + 26}" aria-label="Coverage over the season">
               <defs><linearGradient id="rfxPhG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${W}" y2="0">${stops}</linearGradient>
                 <linearGradient id="rfxCovV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
@@ -1479,7 +1548,7 @@
                 <div class="rfx-wk">${DOW.map((w) => `<span class="rfx-wd">${w}</span>`).join('')}${cells.join('')}</div></div>`;
         }
         const late = R.check.kind === 'nutrient' ? 'late' : 'extra';
-        return `<div class="rfx-card" style="--d:.14s"><div class="rfx-card-h">The calendar <small>tap a day</small></div><div class="rfx-cal">${html}</div>
+        return `<div class="rfx-card" data-fold="cal" style="--d:.14s"><div class="rfx-card-h">The calendar <small>tap a day</small></div><div class="rfx-cal">${html}</div>
             ${phaseLegend(R)}
             <div class="rfx-legend"><b class="rfx-leg-h">What it means for the crop</b>
               <span><i style="background:repeating-linear-gradient(135deg,var(--rx-gap-a) 0 3px,var(--rx-gap-edge) 3px 5px);box-shadow:inset 0 0 0 1.5px var(--rx-gap-edge)"></i>${STATE.gap[0]}</span>
@@ -1528,13 +1597,29 @@
         }).join('');
         const none = !rel.length ? `<div class="rfx-empty" style="padding:1.2rem"><p>Nothing on this lot's tasks acts on ${esc(R.check.word)} yet. Add it to a task, or try a product above to see what it would do.</p></div>` : '';
         const oth = other.length ? `<details class="rfx-other"><summary>${other.length} other product${other.length === 1 ? '' : 's'} on this lot do not act on ${esc(R.check.word)}</summary><ul>${other.map((a) => `<li>${say(a.date)} · ${esc(a.as)}${a.carries.length ? ' (' + esc(a.carries.join(', ')) + ')' : a.ai.length ? ' (' + esc(a.ai.join(' + ')) + ')' : ''}</li>`).join('')}</ul></details>` : '';
-        return `<div class="rfx-card" style="--d:.2s"><div class="rfx-card-h">What is working <small>${rel.length} product${rel.length === 1 ? '' : 's'}</small></div><div class="rfx-apps">${rows}${none}</div>${oth}</div>`;
+        return `<div class="rfx-card" data-fold="apps" style="--d:.2s"><div class="rfx-card-h">What is working <small>${rel.length} product${rel.length === 1 ? '' : 's'}</small></div><div class="rfx-apps">${rows}${none}</div>${oth}</div>`;
     };
 
     /* One day, opened. */
     const dayBox = $('[data-rfx-day]');
     const hideDay = () => { dayBox.hidden = true; };
+    $('[data-rfx-body]').addEventListener('keydown', (e) => {
+        const fh = e.target.closest('.rfx-fold-h');
+        if (fh && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); const c = fh.closest('[data-fold]'); setFold(c, !c.classList.contains('is-open')); }
+    });
     $('[data-rfx-body]').addEventListener('click', (e) => {
+        const fa = e.target.closest('[data-fold-all]');
+        if (fa) {
+            const v = fa.dataset.foldAll === '1';
+            $$('[data-rfx-body] .rfx-card[data-fold]').forEach((c) => setFold(c, v));
+            return;
+        }
+        const fh = e.target.closest('.rfx-fold-h');
+        if (fh) {
+            const c = fh.closest('[data-fold]');
+            setFold(c, !c.classList.contains('is-open'));
+            return;
+        }
         const go = e.target.closest('[data-goto]');
         if (go) {
             const k = go.dataset.goto;
@@ -1547,7 +1632,13 @@
         const jump = e.target.closest('[data-jump]');
         if (jump) {
             const cell = $(`.rfx-cell[data-day="${jump.dataset.jump}"]`);
-            if (cell) { cell.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'center' }); setTimeout(() => showDay(jump.dataset.jump), calm ? 0 : 450); }
+            if (cell) {
+                // A closed calendar opens first, then the day comes into view.
+                const f = cell.closest('[data-fold]');
+                const wait = f && !f.classList.contains('is-open') ? (calm ? 0 : 340) : 0;
+                if (wait || (f && !f.classList.contains('is-open'))) setFold(f, true);
+                setTimeout(() => { cell.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'center' }); setTimeout(() => showDay(jump.dataset.jump), calm ? 0 : 450); }, wait);
+            }
             return;
         }
         const f = e.target.closest('[data-focus]');
