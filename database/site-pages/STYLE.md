@@ -232,6 +232,11 @@ season (a "cropping schedule"). It has:
   (buyers, prices); Compare Reports season against season.
 - Community: news feed, discussion rooms, direct messages, co-farmers, a
   ranking ladder; a team Collab Room per season with chat and whiteboard.
+- Range Effect (2026-10-29), a calendar on the Activities board: for one lot
+  and one thing (N, P, K, a micronutrient, insects, diseases, weeds or a named
+  pest), how long each fertilizer and spray on the tasks keeps working, day by
+  day, against how critical each stage is; try a product on a date; save the
+  reading; Anee looks up a product the book lacks for credits.
 - Offline mode for the field (every plan, Libre included), a Contact List,
   Global Notes, Global Lots (each field's place, soil and water, answered once).
 - Plans: Libre (free, with ads), Libre plus Anee, Solo Farmer, Farm Owner;
@@ -240,8 +245,8 @@ season (a "cropping schedule"). It has:
   comparison at /pricing/compare shows it): Anee, her analyses, the Land
   Prep Planner, the field helpers (pest, disease, weed, nutrient and variety
   finders and the Compatibility Checker), Satellite Weather, the NPK Plus
-  calculator and Maps come with Libre plus Anee and every plan above it, and
-  are locked on Libre. There is no add-on. NPK Plus is not free: its count
+  calculator, Maps and the Range Effect calendar come with Libre plus Anee
+  and every plan above it, and are locked on Libre. There is no add-on. NPK Plus is not free: its count
   uses no credits. Workers and inventory come with Solo Farmer; worker
   logins and the Collab Room with Farm Owner.
 
@@ -287,7 +292,8 @@ Features:
 /features/anee-season-report, /features/compare-reports,
 /features/view-as-protocol, /features/satellite-analysis,
 /features/satellite-weather, /features/npk-plus-calculator,
-/features/pest-and-disease-finders, /features/the-stash
+/features/pest-and-disease-finders, /features/the-stash,
+/features/residual-effect-calendar
 
 Crops:
 /crops/palay, /crops/pagtatanim-ng-palay, /crops/rice-varieties-philippines,

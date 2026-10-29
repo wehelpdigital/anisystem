@@ -69,6 +69,9 @@ final class AiPrices
         // 2026-10-22: a Land Prep or Crop Protocol plan put into a season that already has work: Anee checks it
         // against the board (the other lots, the crew, what is already there) and places it. Priced by the work read.
         'fitcheck' => 25,
+        // 2026-10-29: the Range Effect calendar's look up, Anee finding a product (or an active ingredient) the books
+        // lack and how long it keeps working. Kept in both books after, so it is asked once.
+        'effect' => 80,
     ];
 
     public const NAMES = [
@@ -95,6 +98,7 @@ final class AiPrices
         'landprep' => 'Land Prep Planner, per lot (every lot\'s land preparation, around the crew and the weather)',
         'compat' => 'Compatibility Checker, the online check (Anee looks up the products the book lacks, searches the web; a flat price whatever the count)',
         'fitcheck' => 'A plan put into a season that already has work (Anee checks it against the board and the crew, and places it)',
+        'effect' => 'Range Effect, a product look up (Anee finds a product or ingredient the books lack and how long it keeps working; searches the web)',
     ];
 
     /** @var array<string, int>|null */

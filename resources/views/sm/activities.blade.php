@@ -2980,6 +2980,8 @@
            wins over the buttons' own display/`hidden` toggling on small screens.
            These carry !important because `.btn` is unlayered CSS and would
            otherwise beat Tailwind's layered `hidden` / `md:hidden` utilities. */
+        /* The Range Effect's phone icon is the phone's door only; the desktop has the toolbar's. */
+        @media (min-width: 768px) { #rangeEffectMobileBtn { display: none !important; } }
         @media (max-width: 767px) {
             .toolbar-desktop-action { display: none !important; }
             /* Both day filters live behind the eye button here; the real
@@ -3045,6 +3047,7 @@
             #actToolbar > #searchToolbarBtn,
             #actHeaderBar > #todayTomorrowBtn,
             #actHeaderBar > #harvestDatesBtn,
+            #actHeaderBar > #rangeEffectMobileBtn,
             #actHeaderBar > #addActivityWrap > .btn { width: 2.25rem;
                 padding-left: 0; padding-right: 0; }
         }
@@ -4134,6 +4137,13 @@
             <svg id="viewIconList" class="w-4 h-4 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
             <span id="viewToggleLabel">Calendar view</span>
         </button>
+        {{-- Range Effect (2026-10-29, the owner: "just say range effect in desktop and put it after the calendar view"):
+             how long every product on the plan keeps working, against what each stage needs (sm.partials.range-effect). --}}
+        <button type="button" id="rangeEffectBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only
+                title="Range Effect: how long every product keeps working, day by day">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 3v3M16 3v3"/><path d="M6.5 15.5c1.6-3.2 3.4-3.2 5 0s3.4 3.2 5 0"/></svg>
+            <span>Range effect</span>
+        </button>
         <button type="button" id="openNotesBtn" class="btn btn-white btn-sm toolbar-desktop-action" data-activities-only
                 title="Open this season's notes">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
@@ -4320,6 +4330,11 @@
     <button type="button" id="harvestDatesBtn" class="btn btn-white btn-sm shrink-0" data-activities-only title="Harvest dates of every lot">
         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V3.5"/><path d="M5 4h13l-2.2 4L18 12H5"/><path d="M9.3 4v8M13.6 4v8M5 8h11.8" stroke-width="1.3"/></svg>
         <span class="hidden sm:inline">Harvest</span>
+    </button>
+    {{-- Range Effect on a phone (2026-10-29, the owner: "just an icon in mobile, and put it after harvest button"). --}}
+    <button type="button" id="rangeEffectMobileBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
+            title="Range Effect: how long every product keeps working" aria-label="Range Effect">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="16" rx="2.5"/><path d="M3 9.5h18M8 3v3M16 3v3"/><path d="M6.5 15.5c1.6-3.2 3.4-3.2 5 0s3.4 3.2 5 0"/></svg>
     </button>
     <button type="button" id="todayTomorrowBtn" class="btn btn-white btn-sm shrink-0" data-activities-only
             title="Scroll to today">
@@ -6598,6 +6613,7 @@
 {{-- The tag picker: one shared sheet for every form on the board. --}}
 @include('sm.partials.tag-picker')
 @include('sm.partials.harvest-dates', ['schedule' => $schedule])
+@include('sm.partials.range-effect', ['schedule' => $schedule])
 @include('community.partials.lightbox-js')
 <script>
     // Filter-sheet extras: active-filter count badge on the toolbar button, and

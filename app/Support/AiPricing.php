@@ -153,6 +153,8 @@ final class AiPricing
             // 2026-10-22: a plan into a season with work: one ask, no search. A unit is a task read: the plan's new
             // tasks plus the board's around them; she answers a date and a reason for every new task.
             'fitcheck' => ['unit' => 'task', 'free' => 40, 'units' => 60, 'max' => 600, 'baseIn' => 9000, 'baseOut' => 4000, 'unitIn' => 110, 'unitOut' => 30, 'outCap' => 18048],
+            // 2026-10-29: the Range Effect look up: a research step on one product or ingredient, then a short JSON.
+            'effect' => ['unit' => '', 'baseIn' => 7000, 'baseOut' => 5000, 'search' => 1],
         ],
     ];
 

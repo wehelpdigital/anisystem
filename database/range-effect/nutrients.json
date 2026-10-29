@@ -1,0 +1,2094 @@
+{
+ "v": 1,
+ "asOf": "2026-10-29",
+ "note": "How long one application keeps feeding the current crop, in days after it goes on. Days are the supply to the plant, not the trace left in soil.",
+ "forms": {
+  "basal": "Granular, worked into the soil before planting.",
+  "topdress": "Granular, spread on a standing crop or into floodwater.",
+  "foliar": "Sprayed on the leaves.",
+  "drench": "Dissolved and poured or fed through drip to the roots.",
+  "slow": "Coated, controlled or slow release.",
+  "organic": "Manure, compost or organic fertilizer.",
+  "bio": "Biofertilizer or microbial inoculant."
+ },
+ "nutrients": {
+  "N": {
+   "basal": {
+    "flooded": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      14,
+      25,
+      35
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      14,
+      25,
+      40
+     ],
+     "fade": "gradual"
+    },
+    "note": "Worked into the soil it feeds the young crop for about three to five weeks.",
+    "src": [
+     "https://www.tropentag.de/2003/proceedings/node276.html",
+     "https://publish.csiro.au/CP/AR9840189",
+     "https://www.scielo.br/j/cr/a/spDtjMXV6vgXVB45FCDKyws/abstract/?lang=en"
+    ]
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      10,
+      17,
+      24
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 7,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "note": "Urea into floodwater is taken up or lost within two to three weeks; on dry land a bit longer.",
+    "src": [
+     "https://www.tropentag.de/2003/proceedings/node276.html",
+     "https://publish.csiro.au/CP/AR9840189",
+     "https://www.scielo.br/j/cr/a/spDtjMXV6vgXVB45FCDKyws/abstract/?lang=en"
+    ]
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      7,
+      12
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      7,
+      12
+     ],
+     "fade": "sharp"
+    },
+    "note": "Leaves take it in within a day; the boost is gone in about a week.",
+    "src": [
+     "https://archive.lib.msu.edu/tic/ressum/2007/16.pdf",
+     "https://www.usga.org/content/usga/home-page/course-care/foliar-nitrogen-fertilization-feeds-the-grass-well-21474855769.html",
+     "https://www.jstage.jst.go.jp/article/jjshs1925/28/1/28_1_1/_article"
+    ]
+   },
+   "drench": {
+    "flooded": {
+     "onset": 0,
+     "peak": 3,
+     "days": [
+      7,
+      12,
+      18
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 3,
+     "days": [
+      5,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "note": "Dissolved feed reaches roots at once but is used up or washed down within two weeks.",
+    "src": []
+   },
+   "slow": {
+    "flooded": {
+     "onset": 3,
+     "peak": 20,
+     "days": [
+      40,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 3,
+     "peak": 20,
+     "days": [
+      40,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Coated urea lets nitrogen out over about two months; tropical heat makes it run faster than the label.",
+    "src": [
+     "https://www.sciencesocieties.org/publications/crops-soils/2021/march-april/nitrogen-release-from-polymer-coated-urea-effect-of",
+     "https://crops.confex.com/crops/2007am/techprogram/P33484.HTM"
+    ]
+   },
+   "organic": {
+    "flooded": {
+     "onset": 10,
+     "peak": 30,
+     "days": [
+      40,
+      60,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Manure and compost release nitrogen slowly; only part of it reaches this crop.",
+    "src": [
+     "https://ars.usda.gov/ARSUserFiles/60100500/csr/ResearchPubs/watts/watts_10a.pdf",
+     "https://link.springer.com/article/10.1007/s003740050641"
+    ]
+   },
+   "bio": {
+    "flooded": {
+     "onset": 10,
+     "peak": 30,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 10,
+     "peak": 30,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "note": "Nitrogen fixing microbes add a little nitrogen over several weeks once they settle on roots.",
+    "src": []
+   }
+  },
+  "P": {
+   "basal": {
+    "flooded": {
+     "onset": 3,
+     "peak": 21,
+     "days": [
+      45,
+      70,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 5,
+     "peak": 21,
+     "days": [
+      40,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Phosphorus worked in at planting feeds through much of the season, then tails off as soil locks it up.",
+    "src": []
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      21,
+      35,
+      50
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 5,
+     "peak": 14,
+     "days": [
+      14,
+      30,
+      45
+     ],
+     "fade": "gradual"
+    },
+    "note": "Phosphorus spread on top barely moves, so a standing crop gets only part of it.",
+    "src": []
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "note": "A leaf spray gives a short boost of about a week or two, never a full supply.",
+    "src": [
+     "https://archive.lib.msu.edu/tic/ressum/2007/16.pdf",
+     "https://www.usga.org/content/usga/home-page/course-care/foliar-nitrogen-fertilization-feeds-the-grass-well-21474855769.html",
+     "https://www.jstage.jst.go.jp/article/jjshs1925/28/1/28_1_1/_article"
+    ]
+   },
+   "drench": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      10,
+      20,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      10,
+      20,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "note": "Dissolved phosphorus near the roots feeds for two to four weeks.",
+    "src": []
+   },
+   "slow": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      45,
+      75,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      45,
+      75,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "note": "Coated or rock phosphate releases slowly, most useful in acid soils over a long season.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      45,
+      75,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      45,
+      75,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "note": "Manure and compost give phosphorus slowly through the season and into the next.",
+    "src": [
+     "https://ars.usda.gov/ARSUserFiles/60100500/csr/ResearchPubs/watts/watts_10a.pdf",
+     "https://link.springer.com/article/10.1007/s003740050641"
+    ]
+   },
+   "bio": {
+    "flooded": {
+     "onset": 14,
+     "peak": 40,
+     "days": [
+      40,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 14,
+     "peak": 40,
+     "days": [
+      40,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Phosphorus freeing microbes and root fungi help roots reach locked soil phosphorus over weeks.",
+    "src": []
+   }
+  },
+  "K": {
+   "basal": {
+    "flooded": {
+     "onset": 1,
+     "peak": 10,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 14,
+     "days": [
+      30,
+      50,
+      70
+     ],
+     "fade": "gradual"
+    },
+    "note": "Potash worked in feeds about six weeks; sandy soils and heavy rain shorten it.",
+    "src": [
+     "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12450872/",
+     "https://old.iuss.org/19th WCSS/Symposium/pdf/1435.pdf"
+    ]
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      25,
+      35
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 7,
+     "days": [
+      21,
+      30,
+      40
+     ],
+     "fade": "gradual"
+    },
+    "note": "Potash spread on a standing crop dissolves fast and feeds for about a month.",
+    "src": [
+     "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12450872/",
+     "https://old.iuss.org/19th WCSS/Symposium/pdf/1435.pdf"
+    ]
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      8,
+      12
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      8,
+      12
+     ],
+     "fade": "sharp"
+    },
+    "note": "A potassium spray helps for about a week; it cannot carry a crop alone.",
+    "src": [
+     "https://archive.lib.msu.edu/tic/ressum/2007/16.pdf",
+     "https://www.usga.org/content/usga/home-page/course-care/foliar-nitrogen-fertilization-feeds-the-grass-well-21474855769.html",
+     "https://www.jstage.jst.go.jp/article/jjshs1925/28/1/28_1_1/_article"
+    ]
+   },
+   "drench": {
+    "flooded": {
+     "onset": 0,
+     "peak": 3,
+     "days": [
+      7,
+      12,
+      18
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 3,
+     "days": [
+      7,
+      12,
+      18
+     ],
+     "fade": "sharp"
+    },
+    "note": "Dissolved potash feeds the roots for one to two weeks.",
+    "src": []
+   },
+   "slow": {
+    "flooded": {
+     "onset": 3,
+     "peak": 20,
+     "days": [
+      40,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 3,
+     "peak": 20,
+     "days": [
+      40,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Coated potash spreads its supply over about two months.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      30,
+      50,
+      70
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      30,
+      50,
+      70
+     ],
+     "fade": "gradual"
+    },
+    "note": "Potassium in straw, ash and manure washes out fast and feeds for several weeks.",
+    "src": []
+   },
+   "bio": {
+    "flooded": {
+     "onset": 14,
+     "peak": 40,
+     "days": [
+      30,
+      50,
+      70
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 14,
+     "peak": 40,
+     "days": [
+      30,
+      50,
+      70
+     ],
+     "fade": "gradual"
+    },
+    "note": "Potassium freeing microbes add a modest supply over several weeks.",
+    "src": []
+   }
+  },
+  "Ca": {
+   "basal": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      60,
+      100,
+      150
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      60,
+      100,
+      150
+     ],
+     "fade": "gradual"
+    },
+    "note": "Lime or gypsum worked in supplies calcium through the season and beyond.",
+    "src": []
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "note": "Gypsum on a standing crop, such as peanut at pegging, feeds for about six weeks.",
+    "src": []
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 1,
+     "days": [
+      5,
+      7,
+      10
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 1,
+     "days": [
+      5,
+      7,
+      10
+     ],
+     "fade": "sharp"
+    },
+    "note": "Calcium stays where it lands, so only the leaves and fruit it touches benefit for about a week.",
+    "src": []
+   },
+   "drench": {
+    "flooded": {
+     "onset": 0,
+     "peak": 3,
+     "days": [
+      7,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 3,
+     "days": [
+      7,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "note": "Calcium nitrate at the roots feeds for one to two weeks.",
+    "src": []
+   },
+   "slow": {
+    "flooded": {
+     "onset": 14,
+     "peak": 45,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 14,
+     "peak": 45,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "note": "Coarse lime or slow forms keep releasing calcium for months.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "note": "Compost and manure add calcium slowly through the season.",
+    "src": []
+   }
+  },
+  "Mg": {
+   "basal": {
+    "flooded": {
+     "onset": 5,
+     "peak": 21,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 5,
+     "peak": 21,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "note": "Dolomite or kieserite worked in supplies magnesium for most of the season.",
+    "src": []
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "note": "Magnesium sulfate spread on a standing crop feeds for about six weeks.",
+    "src": []
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      7,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      7,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "note": "Epsom salt sprays green up leaves within days and last about ten days.",
+    "src": [
+     "https://archive.lib.msu.edu/tic/ressum/2007/16.pdf",
+     "https://www.usga.org/content/usga/home-page/course-care/foliar-nitrogen-fertilization-feeds-the-grass-well-21474855769.html",
+     "https://www.jstage.jst.go.jp/article/jjshs1925/28/1/28_1_1/_article"
+    ]
+   },
+   "drench": {
+    "flooded": {
+     "onset": 0,
+     "peak": 3,
+     "days": [
+      10,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 3,
+     "days": [
+      10,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "note": "Dissolved magnesium at the roots feeds for about two weeks.",
+    "src": []
+   },
+   "slow": {
+    "flooded": {
+     "onset": 14,
+     "peak": 45,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 14,
+     "peak": 45,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "note": "Slow forms like dolomite keep giving magnesium for months.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      45,
+      75,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      45,
+      75,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "note": "Compost and manure release magnesium slowly through the season.",
+    "src": []
+   }
+  },
+  "S": {
+   "basal": {
+    "flooded": {
+     "onset": 2,
+     "peak": 14,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 14,
+     "days": [
+      30,
+      50,
+      70
+     ],
+     "fade": "gradual"
+    },
+    "note": "Sulfate worked in feeds about six weeks; in flooded soil some turns unavailable.",
+    "src": []
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 1,
+     "peak": 7,
+     "days": [
+      14,
+      25,
+      35
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 7,
+     "days": [
+      14,
+      25,
+      35
+     ],
+     "fade": "gradual"
+    },
+    "note": "Ammonium sulfate on a standing crop gives sulfur for three to five weeks.",
+    "src": []
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      8,
+      12
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      8,
+      12
+     ],
+     "fade": "sharp"
+    },
+    "note": "Sulfur in a leaf spray helps for about a week.",
+    "src": []
+   },
+   "drench": {
+    "flooded": {
+     "onset": 0,
+     "peak": 3,
+     "days": [
+      7,
+      12,
+      18
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 3,
+     "days": [
+      7,
+      12,
+      18
+     ],
+     "fade": "sharp"
+    },
+    "note": "Dissolved sulfate at the roots feeds for one to two weeks.",
+    "src": []
+   },
+   "slow": {
+    "flooded": {
+     "onset": 14,
+     "peak": 45,
+     "days": [
+      45,
+      75,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 14,
+     "peak": 45,
+     "days": [
+      45,
+      75,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "note": "Elemental sulfur must be turned into sulfate by soil microbes, so it starts late and lasts long.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Compost and manure release sulfur slowly over the season.",
+    "src": []
+   }
+  },
+  "Zn": {
+   "basal": {
+    "flooded": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      60,
+      100,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      60,
+      100,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "note": "Zinc sulfate worked in lasts the whole season and often helps the next crop too.",
+    "src": [
+     "https://epubs.icar.org.in/index.php/IndFarm/article/view/134181",
+     "https://indiaenvironmentportal.org.in/articles/effect-of-zinc-fertilization-in-sub-tropical-floodplain-soils-under-rice-wheat-cropping-sequence",
+     "https://link.springer.com/article/10.1007/BF02374338"
+    ]
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "note": "Zinc spread on a standing crop corrects a shortage for about six weeks.",
+    "src": [
+     "https://epubs.icar.org.in/index.php/IndFarm/article/view/134181",
+     "https://indiaenvironmentportal.org.in/articles/effect-of-zinc-fertilization-in-sub-tropical-floodplain-soils-under-rice-wheat-cropping-sequence",
+     "https://link.springer.com/article/10.1007/BF02374338"
+    ]
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      7,
+      12,
+      18
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      7,
+      12,
+      18
+     ],
+     "fade": "gradual"
+    },
+    "note": "A zinc spray greens new leaves within days and lasts about two weeks.",
+    "src": [
+     "https://epubs.icar.org.in/index.php/IndFarm/article/view/134181",
+     "https://indiaenvironmentportal.org.in/articles/effect-of-zinc-fertilization-in-sub-tropical-floodplain-soils-under-rice-wheat-cropping-sequence",
+     "https://link.springer.com/article/10.1007/BF02374338"
+    ]
+   },
+   "drench": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "note": "Dissolved zinc at the roots feeds for about three weeks.",
+    "src": []
+   },
+   "slow": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      45,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      45,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Zinc coated fertilizer feeds slowly for about two months.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      45,
+      75,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      45,
+      75,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "note": "Manure adds zinc and keeps soil zinc more available through the season.",
+    "src": []
+   },
+   "bio": {
+    "flooded": {
+     "onset": 14,
+     "peak": 30,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 14,
+     "peak": 30,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "note": "Zinc freeing microbes help roots reach soil zinc over several weeks.",
+    "src": []
+   }
+  },
+  "B": {
+   "basal": {
+    "flooded": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      45,
+      70,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      45,
+      70,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "note": "Borax worked in usually covers one season; heavy rain on sandy soil washes it down sooner.",
+    "src": [
+     "https://agriculture.borax.com/resources/faq",
+     "https://www.tfi.org/wp-content/uploads/2024/01/tfi-boron.pdf",
+     "https://corn.aae.wisc.edu/Management/pdfs/a2522.pdf"
+    ]
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "note": "Boron spread on a standing crop feeds for about six weeks.",
+    "src": [
+     "https://agriculture.borax.com/resources/faq",
+     "https://www.tfi.org/wp-content/uploads/2024/01/tfi-boron.pdf",
+     "https://corn.aae.wisc.edu/Management/pdfs/a2522.pdf"
+    ]
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "note": "Boron barely moves inside most plants, so spray just before flowering and repeat if needed.",
+    "src": [
+     "https://agriculture.borax.com/resources/faq",
+     "https://www.tfi.org/wp-content/uploads/2024/01/tfi-boron.pdf",
+     "https://corn.aae.wisc.edu/Management/pdfs/a2522.pdf"
+    ]
+   },
+   "drench": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      10,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      10,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "note": "Dissolved boron at the roots feeds for about two weeks.",
+    "src": []
+   },
+   "slow": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "note": "Slow boron minerals release over months and suit sandy, rainy sites.",
+    "src": [
+     "https://agriculture.borax.com/resources/faq",
+     "https://www.tfi.org/wp-content/uploads/2024/01/tfi-boron.pdf",
+     "https://corn.aae.wisc.edu/Management/pdfs/a2522.pdf"
+    ]
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Compost holds a little boron and releases it through the season.",
+    "src": []
+   }
+  },
+  "Fe": {
+   "basal": {
+    "flooded": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      21,
+      30,
+      45
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 7,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "note": "Iron sulfate in soil locks up fast on high pH ground; flooded soils rarely need it.",
+    "src": []
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 2,
+     "peak": 7,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 7,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "note": "Iron spread on a standing crop helps for two to four weeks at best.",
+    "src": []
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      5,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "note": "An iron spray greens leaves within days but needs repeating on new growth.",
+    "src": []
+   },
+   "drench": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      21,
+      30,
+      45
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      21,
+      30,
+      45
+     ],
+     "fade": "gradual"
+    },
+    "note": "Chelated iron at the roots stays available for about a month.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Compost keeps soil iron more available through the season.",
+    "src": []
+   }
+  },
+  "Mn": {
+   "basal": {
+    "flooded": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      21,
+      35,
+      50
+     ],
+     "fade": "gradual"
+    },
+    "note": "Manganese sulfate in soil lasts about a month or more; high pH shortens it.",
+    "src": []
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 2,
+     "peak": 7,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 7,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "note": "Manganese on a standing crop helps for two to four weeks.",
+    "src": []
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      7,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      7,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "note": "A manganese spray corrects pale leaves in days and lasts about ten days.",
+    "src": []
+   },
+   "drench": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      10,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      10,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "note": "Dissolved manganese at the roots feeds for about two weeks.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Compost adds a little manganese through the season.",
+    "src": []
+   }
+  },
+  "Cu": {
+   "basal": {
+    "flooded": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      60,
+      100,
+      150
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      60,
+      100,
+      150
+     ],
+     "fade": "gradual"
+    },
+    "note": "Copper sulfate in soil lasts the season and often several more; do not repeat it often.",
+    "src": []
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 2,
+     "peak": 10,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "note": "Copper on a standing crop corrects a shortage for about six weeks.",
+    "src": []
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      7,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      7,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "note": "A copper spray covers the crop for about two weeks.",
+    "src": []
+   },
+   "drench": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "note": "Dissolved copper at the roots feeds for about three weeks.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Manure adds traces of copper through the season.",
+    "src": []
+   }
+  },
+  "Mo": {
+   "basal": {
+    "flooded": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "note": "A small soil dose or seed coating of molybdate lasts the season.",
+    "src": []
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      10,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      10,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "note": "A molybdenum spray lasts two to three weeks; tiny amounts are enough.",
+    "src": []
+   },
+   "drench": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "note": "Dissolved molybdate at the roots feeds for about three weeks.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Compost adds traces of molybdenum through the season.",
+    "src": []
+   }
+  },
+  "Si": {
+   "basal": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "note": "Silicate or rice hull ash worked in feeds silicon through the whole season.",
+    "src": []
+   },
+   "topdress": {
+    "flooded": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "note": "Silicate spread at tillering feeds for about six weeks.",
+    "src": []
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 1,
+     "peak": 3,
+     "days": [
+      7,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 3,
+     "days": [
+      7,
+      10,
+      14
+     ],
+     "fade": "sharp"
+    },
+    "note": "Silicon sprays add a thin leaf coat for about ten days; roots take up far more.",
+    "src": []
+   },
+   "drench": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "note": "Dissolved silicate at the roots feeds for about three weeks.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 14,
+     "peak": 40,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 14,
+     "peak": 40,
+     "days": [
+      60,
+      90,
+      120
+     ],
+     "fade": "gradual"
+    },
+    "note": "Rice straw and hull compost return silicon slowly over the season.",
+    "src": []
+   },
+   "bio": {
+    "flooded": {
+     "onset": 14,
+     "peak": 30,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 14,
+     "peak": 30,
+     "days": [
+      30,
+      45,
+      60
+     ],
+     "fade": "gradual"
+    },
+    "note": "Silicon freeing microbes help roots reach soil silicon over several weeks.",
+    "src": []
+   }
+  }
+ },
+ "sources": {
+  "urea": {
+   "factor": 1.0,
+   "flooded": 1.0,
+   "upland": 1.0,
+   "note": "The yardstick: other nitrogen sources are compared with plain urea."
+  },
+  "ammonium sulfate": {
+   "factor": 1.1,
+   "flooded": 1.1,
+   "upland": 1.0,
+   "note": "Loses less to the air than urea in floodwater, so it lasts a little longer."
+  },
+  "ammonium chloride": {
+   "factor": 1.1,
+   "flooded": 1.1,
+   "upland": 1.0,
+   "note": "Behaves like ammonium sulfate in a flooded field."
+  },
+  "ammonium phosphate": {
+   "factor": 1.0,
+   "flooded": 1.0,
+   "upland": 1.0,
+   "note": "The nitrogen in 16 20 0 or 18 46 0 lasts about as long as urea."
+  },
+  "complete": {
+   "factor": 1.0,
+   "flooded": 1.0,
+   "upland": 1.0,
+   "note": "The nitrogen in 14 14 14 lasts about as long as urea."
+  },
+  "calcium nitrate": {
+   "factor": 0.8,
+   "flooded": 0.4,
+   "upland": 0.8,
+   "note": "Ready at once, but nitrate is lost fast in flooded soil and washes out in heavy rain."
+  },
+  "potassium nitrate": {
+   "factor": 0.8,
+   "flooded": 0.4,
+   "upland": 0.8,
+   "note": "Ready at once, but nitrate is lost fast in flooded soil and washes out in heavy rain."
+  },
+  "ammonium nitrate": {
+   "factor": 0.9,
+   "flooded": 0.6,
+   "upland": 0.9,
+   "note": "Half nitrate, so it is shorter lived than urea in a flooded field."
+  },
+  "urea with inhibitor": {
+   "factor": 1.3,
+   "flooded": 1.3,
+   "upland": 1.3,
+   "note": "The inhibitor slows the loss of nitrogen, stretching it about a third longer."
+  },
+  "deep placed urea": {
+   "factor": 1.6,
+   "flooded": 1.6,
+   "upland": 1.2,
+   "note": "Urea pushed deep into puddled soil stays out of the floodwater and lasts much longer."
+  },
+  "sulfur coated urea": {
+   "factor": 2.0,
+   "flooded": 2.0,
+   "upland": 2.0,
+   "note": "The coat cracks open over weeks, roughly doubling how long the nitrogen lasts."
+  },
+  "controlled release urea": {
+   "factor": 3.0,
+   "flooded": 3.0,
+   "upland": 3.0,
+   "note": "A polymer coat lets nitrogen out over about two months in warm soil."
+  },
+  "manure": {
+   "factor": 2.5,
+   "flooded": 2.5,
+   "upland": 2.5,
+   "note": "Releases slowly over the season, but only part of its nitrogen reaches this crop."
+  },
+  "chicken manure": {
+   "factor": 1.8,
+   "flooded": 1.8,
+   "upland": 1.8,
+   "note": "Richer and quicker than other manures, but still slower than urea."
+  },
+  "compost": {
+   "factor": 3.0,
+   "flooded": 3.0,
+   "upland": 3.0,
+   "note": "Very slow release; feeds the soil more than the current crop."
+  },
+  "vermicompost": {
+   "factor": 2.5,
+   "flooded": 2.5,
+   "upland": 2.5,
+   "note": "Slow release like compost, a little quicker to start."
+  },
+  "biofertilizer": {
+   "factor": 2.0,
+   "flooded": 2.0,
+   "upland": 2.0,
+   "note": "Microbes add small amounts over weeks; they top up, not replace, fertilizer."
+  }
+ },
+ "micros_soil_season": {
+  "note": "Most soil applied micronutrients outlast one leaf spray by far; some carry into later seasons.",
+  "byNutrient": {
+   "Zn": {
+    "seasons": 2,
+    "note": "Zinc sulfate worked into the soil lasts the season and usually helps one or two crops after."
+   },
+   "Cu": {
+    "seasons": 3,
+    "note": "Soil copper lasts several seasons; repeating it often can build up to harmful levels."
+   },
+   "B": {
+    "seasons": 1,
+    "note": "Borax lasts about one season; rain leaches it, and too much burns the next crop."
+   },
+   "Mo": {
+    "seasons": 2,
+    "note": "A small molybdate dose lasts a season or more, longer in limed soil."
+   },
+   "Mn": {
+    "seasons": 1,
+    "note": "Manganese sulfate lasts about one season or less on high pH soil."
+   },
+   "Fe": {
+    "seasons": 0,
+    "note": "Iron sulfate in soil locks up within weeks on high pH ground; it rarely lasts the season."
+   },
+   "Si": {
+    "seasons": 1,
+    "note": "Silicate and rice hull ash last the season and leave some for the next."
+   }
+  }
+ }
+}

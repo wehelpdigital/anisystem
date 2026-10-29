@@ -88,7 +88,7 @@ return [
         ],
         'excludes' => [
             'Anee: AI chat, analyses and credits (Libre + Anee)',
-            'The field helpers and the Compatibility Checker (Libre + Anee)',
+            'The field helpers, the Compatibility Checker and the Range Effect calendar (Libre + Anee)',
             'Satellite Weather, NPK Plus and Maps (Libre + Anee)',
             'Market Price Forecast, Seed Count and Distance, How to Plant (Libre + Anee)',
             'Workers and inventory (Solo Farmer)',
@@ -153,6 +153,7 @@ return [
             'All AI analyses: What to Plant, When to Plant, Variety Ranking, Crop Protocol, Satellite Analysis',
             'Land Prep Planner, Anee Auto and Realign by Anee',
             'Field helpers: the pest, disease, weed, nutrient and variety finders and the Compatibility Checker',
+            'The Range Effect calendar: how long every fertilizer and spray keeps working',
             'Satellite Weather and the NPK Plus calculator',
             'Maps: draw and measure up to 3 fields',
             'The Market Price Forecast, the Seed Count and Distance Calculator and How to Plant',

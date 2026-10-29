@@ -1,0 +1,54 @@
+{
+  "section": "features",
+  "slug": "residual-effect-calendar",
+  "sortOrder": 425,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Range Effect: The Residual Effect of Every Fertilizer and Spray, Day by Day",
+  "metaTitle": "Residual Effect Calendar for Fertilizer and Sprays",
+  "metaDescription": "See the residual effect of every fertilizer and spray on your plan, day by day, against what your crop needs at each stage. Find gaps before they cost you.",
+  "focusKeyword": "residual effect",
+  "keywords": ["how long does fertilizer last", "how long does urea last in the soil", "pesticide residual activity", "how long does insecticide last", "fertilizer timing for rice", "spray interval"],
+  "excerpt": "Every bag of fertilizer and every spray keeps working for a while, then fades. That fading is its residual effect, and it decides whether your crop is covered on the days that matter. Range Effect, a calendar on the anee.io Activities board, draws that residual effect for everything on your plan. It goes lot by lot and day by day, against how critical each day is for your crop.",
+  "heroImage": { "src": "/images/site/app/range-effect.webp", "alt": "Range Effect calendar on a phone showing the residual effect of nitrogen on a rice lot, with covered days in green and gaps in red", "credit": "" },
+  "blocks": [
+    { "type": "heading", "level": 2, "text": "Why the residual effect matters" },
+    { "type": "text", "text": "Two farmers can spread the same three bags of urea and get very different harvests. The difference is timing. Urea thrown into the floodwater of a rice paddy feeds the crop for about two to three weeks. Then the crop has taken it up or the water has lost it. So if that window closes just before panicle initiation, the crop runs short at the stage that sets the number of grains.\n\nSprays work the same way. A contact insecticide guards the leaves for about a week, but a systemic one can hold for two. That is why a spray plan that looks full on paper can still leave the crop unguarded when a pest hits hardest." },
+    { "type": "heading", "level": 2, "text": "How the residual effect calendar works" },
+    { "type": "steps", "items": [
+      { "title": "Open it from your board", "text": "On the [Activities board](/features/daily-farm-tasks) of your season, tap Range Effect. On a phone it is the calendar icon next to Harvest." },
+      { "title": "Pick a lot and what to check", "text": "Choose the lot, then nitrogen, phosphorus, potassium, a micronutrient such as zinc or boron, a kind of threat such as insects, fungal diseases or weeds, or one named pest of your crop." },
+      { "title": "Read the calendar", "text": "Each day of the season fills up to how much is still working that day. Dots show how critical the day is for the crop's stage. Red days are gaps: critical, and nothing is covering them." },
+      { "title": "Try a product before you buy it", "text": "Search our book of over 7,000 products sold in the Philippines, pick a date, and see what that product would add to the calendar." }
+    ] },
+    { "type": "heading", "level": 2, "text": "What it reads from your season" },
+    { "type": "text", "text": "Range Effect counts the products you wrote on each day's tasks, from your shed or typed in, on the day you use them. It reads each fertilizer the way the [NPK Plus calculator](/features/npk-plus-calculator) does. So a bag of complete 14 14 14 counts its nitrogen, phosphorus and potassium per hectare of your lot. For sprays it reads the active ingredients, then how long each one keeps working in hot, rainy fields.\n\nIt also knows how the form changes the residual effect. For example, urea worked into the soil before planting lasts longer than urea thrown into floodwater. A foliar spray acts within a day but fades in about a week. Organic fertilizer starts slowly and feeds for months." },
+    { "type": "heading", "level": 3, "text": "How critical each day is" },
+    { "type": "text", "text": "The calendar follows your lot's own day count and the [growth stages](/features/growth-stages-and-weather) of your crop. In palay, nitrogen is critical at tillering and at panicle initiation. After flowering the crop barely takes it up, and it only feeds disease. So nitrogen still working that late shows as late, not as covered." },
+    { "type": "callout", "tone": "tip", "title": "A gap is a reason to look, not to spray", "text": "For pests and diseases, a red day means no protection is working while the crop is at risk. Scout the field first, and spray only when you find the pest. Always follow the product label and its FPA registration." },
+    { "type": "heading", "level": 2, "text": "When a product is not in the book" },
+    { "type": "text", "text": "Type its name, its active ingredient, or both. Anee, your smart farm technician, looks it up for a few credits: the maker, the active ingredients and how long each keeps working. We keep what she finds, so the next farmer who names that product finds it at once." },
+    { "type": "cta", "title": "See the residual effect of your own plan", "text": "Sign up, choose Libre plus Anee or a bigger plan, and open Range Effect on your season's board.", "label": "Get started", "url": "/signup" },
+    { "type": "heading", "level": 2, "text": "How Range Effect helps you and your farm" },
+    { "type": "list", "ordered": false, "items": [
+      "**No hidden gaps.** See the days your crop is critical and nothing is covering it, before the yield is lost.",
+      "**No wasted bags.** Fertilizer still working when the crop no longer takes it up is marked, so the next split goes where it counts.",
+      "**Sprays timed to the risk.** Know how long each spray guards the crop, and when the next one is really due.",
+      "**Try before you buy.** See what a product would add on the date you plan, then save the reading to compare."
+    ] },
+    { "type": "heading", "level": 2, "text": "Questions about the residual effect calendar" },
+    { "type": "faq", "items": [
+      { "q": "Which plan has Range Effect?", "a": "Libre plus Anee and every plan above it. The calendar itself uses no credits. Only Anee looking up a product the book does not know uses credits." },
+      { "q": "How does it know how long a product lasts?", "a": "It reads a book of over 400 active ingredients and every major nutrient by how you apply it, written for hot, rainy tropical fields. When it cannot read a product, it lists it so you can look it up." },
+      { "q": "Does it count the amount I put on?", "a": "Yes, for fertilizers. The amount on the task, shared by lot size, sets how strong the coverage is. When it cannot read the amount, it counts one usual dose and says so." },
+      { "q": "Can I keep a reading?", "a": "Yes. Save it, and open it again from Saved, or read it again with today's plan." }
+    ] },
+    { "type": "links", "title": "Related pages", "items": [
+      { "label": "NPK Plus calculator", "url": "/features/npk-plus-calculator" },
+      { "label": "Daily farm tasks", "url": "/features/daily-farm-tasks" },
+      { "label": "Growth stages and weather", "url": "/features/growth-stages-and-weather" },
+      { "label": "Pest and disease finders", "url": "/features/pest-and-disease-finders" },
+      { "label": "Cropping calendar", "url": "/features/cropping-calendar" }
+    ] }
+  ]
+}

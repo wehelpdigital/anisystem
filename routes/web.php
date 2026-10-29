@@ -1370,6 +1370,15 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-npk-plan', [App\Http\Controllers\Manager\NpkSeasonController::class, 'generate'])->name('sm.npk.generate');
     Route::get('/app/sm-npk-plan-job/{id}', [App\Http\Controllers\Manager\NpkSeasonController::class, 'job'])->whereNumber('id')->name('sm.npk.job');
     Route::get('/app/sm-npk-plan-list', [App\Http\Controllers\Manager\NpkSeasonController::class, 'list'])->name('sm.npk.list');
+    // The Range Effect calendar on the board (2026-10-29): how long every product keeps working, against what each stage needs.
+    Route::get('/app/sm-range-effect', [App\Http\Controllers\Manager\RangeEffectController::class, 'options'])->name('sm.effect');
+    Route::post('/app/sm-range-effect/run', [App\Http\Controllers\Manager\RangeEffectController::class, 'run'])->middleware('throttle:60,1')->name('sm.effect.run');
+    Route::get('/app/sm-range-effect/products', [App\Http\Controllers\Manager\RangeEffectController::class, 'products'])->name('sm.effect.products');
+    Route::post('/app/sm-range-effect/save', [App\Http\Controllers\Manager\RangeEffectController::class, 'save'])->middleware('throttle:30,1')->name('sm.effect.save');
+    Route::get('/app/sm-range-effect/saved/{id}', [App\Http\Controllers\Manager\RangeEffectController::class, 'saved'])->whereNumber('id')->name('sm.effect.saved');
+    Route::delete('/app/sm-range-effect/saved/{id}', [App\Http\Controllers\Manager\RangeEffectController::class, 'delete'])->whereNumber('id')->name('sm.effect.delete');
+    Route::post('/app/sm-range-effect/lookup', [App\Http\Controllers\Manager\RangeEffectController::class, 'lookup'])->middleware('throttle:10,1')->name('sm.effect.lookup');
+    Route::get('/app/sm-range-effect/lookup/{id}', [App\Http\Controllers\Manager\RangeEffectController::class, 'job'])->whereNumber('id')->name('sm.effect.job');
     // Media Box: every picture and video this schedule has, in one place.
     Route::get('/app/sm-media', [App\Http\Controllers\Manager\MediaBoxController::class, 'page'])->name('sm.media');
     // The season modules' old addresses land on the global pages.

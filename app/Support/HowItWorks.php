@@ -93,6 +93,8 @@ class HowItWorks
         'landprep' => 'land-preparation-planner',
         'lcc' => 'lcc-checker',
         'nutrientFinder' => 'nutrient-deficiency-finder',
+        // The Range Effect calendar on the Activities board (2026-10-29).
+        'rangeEffect' => 'residual-effect-calendar',
     ];
 
     /**
@@ -108,7 +110,7 @@ class HowItWorks
         'chat' => 'ai', 'realign' => 'ai',
         'maps' => 'maps', 'skyWeather' => 'skyWeather', 'npk' => 'npkPlus', 'bilad' => 'bentaBilad', 'hatian' => 'hatian', 'market' => 'marketPrices', 'seedCount' => 'seedCount', 'howToPlant' => 'howToPlant',
         'varietyFinder' => 'fieldHelpers', 'pestFinder' => 'fieldHelpers', 'diseaseFinder' => 'fieldHelpers',
-        'nutrientFinder' => 'fieldHelpers', 'weedHelper' => 'fieldHelpers', 'compat' => 'fieldHelpers',
+        'nutrientFinder' => 'fieldHelpers', 'weedHelper' => 'fieldHelpers', 'compat' => 'fieldHelpers', 'rangeEffect' => 'fieldHelpers',
         'inventory' => 'inventory', 'stock' => 'inventory',
         'workers' => 'workers', 'globalWorkers' => 'workers',
         'access' => 'workerLogins', 'collab' => 'collab',
@@ -451,6 +453,11 @@ class HowItWorks
                         'Add the sprays and fertilizers you want to put on together, with how much of each. The checker says if they mix, the order to pour them in, how strong the spray is for your crop and its age, and what to watch. It knows over 7,000 products ' . ($ph ? 'sold in the Philippines' : 'registered for sale') . ', and Anee can look up one it does not know, once: what she finds is kept for next time.',
                         ['Mix or not, pair by pair', 'The mixing order and a jar test', 'How strong the spray is for your crop'],
                         null, 'fh.page:compat'),
+                    // The Range Effect calendar (2026-10-29): how long everything on the plan keeps working.
+                    self::item('rangeEffect', 'Range Effect calendar', 'How long every fertilizer and spray keeps working', 'icons/range-effect.svg', false,
+                        'Open it from the Activities board. Pick a lot and what to check: nitrogen, phosphorus, potassium, a micronutrient, insects, diseases, weeds, or one named pest. The calendar shows, day by day, how long each product on your tasks keeps working, how critical that day is for your crop\'s stage, and where the gaps are. Try a product on a date before you buy it, and save the reading.',
+                        ['Coverage day by day, as a calendar', 'Gaps on the days that matter most', 'Try a product on a date before you buy'],
+                        'residual-effect-calendar', null),
                     $ph ? self::item('guides', 'Crop problem guides', 'Pests, diseases and weeds, explained', 'icons/tool-box.png', false,
                         'Guides to the pests, diseases and weeds of Philippine crops: how to spot them, why they come and what to do about them.',
                         ['Written for Philippine farms', 'What to look for, with pictures', 'What to do, step by step'],

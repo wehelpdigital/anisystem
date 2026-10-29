@@ -30,7 +30,7 @@
     $fShot = fn (string $key) => $HW::shot($key);
     // New this month: on their cards and in the band.
     // (2026-10-18: the tools placed in the season this week.)
-    $fNew = ['globalLots', 'varietyFinder', 'landprep', 'lcc', 'news', 'nutrientFinder', 'compat', 'auto'];
+    $fNew = ['globalLots', 'varietyFinder', 'landprep', 'lcc', 'news', 'nutrientFinder', 'compat', 'auto', 'rangeEffect'];
     // Where each card's phone screen rests (percent down the screen, 2026-10-29): a sheet that opens at the bottom of
     // the screen shows the sheet. On hover, and once as the card comes in, the screen scrolls to the other end.
     $fFocus = ['cash' => 100, 'daycount' => 100, 'share' => 100, 'access' => 100, 'draw' => 0, 'chat' => 35];

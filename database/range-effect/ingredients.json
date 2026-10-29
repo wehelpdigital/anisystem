@@ -1,0 +1,8439 @@
+{
+ "v": 1,
+ "asOf": "2026-10-29",
+ "note": "How long one application at the label rate keeps protecting a crop in hot, wet, sunny Philippine fields. Herbicide days are how long the treated ground stays weed controlled.",
+ "ingredients": {
+  "Chlorpyrifos": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Contact and vapor action; a leaf spray fades within a week in hot weather.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Chlorpyrifos methyl": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    2,
+    4,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Short lived in the field; on stored grain it guards for months.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Profenofos": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Strong contact kill on caterpillars and mites, but little lasting cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Malathion": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    1,
+    3,
+    5
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Breaks down fast in sun and alkaline water; expect only a few days of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Diazinon": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "A spray lasts several days; granules in paddy water hold a week or two.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Dimethoate": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Moves into the leaf; sucking pests stay controlled about a week.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Acephate": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    12
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Taken up fast by leaves; about a week of cover on sucking and chewing pests.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Phenthoate": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Contact and stomach action on rice pests; cover fades within about five days.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Fenitrothion": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    4,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Contact organophosphate; heat, sun and rain wear it off within about a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Quinalphos": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Contact organophosphate; heat, sun and rain wear it off within about a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Triazophos": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Contact with some depth into the leaf; about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Fenthion": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Soaks a little into leaves and fruit; about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Pirimiphos methyl": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    2,
+    4,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Short field life, but on stored grain and sacks it lasts for months.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Azamethiphos": {
+   "targets": [
+    "insect"
+   ],
+   "move": "bait",
+   "onset": 0,
+   "days": [
+    3,
+    7,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Fly bait and spray for sheds; works while the deposit stays dry.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Cadusafos": {
+   "targets": [
+    "insect",
+    "nematode"
+   ],
+   "move": "soil",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil nematicide; guards roots for about six weeks after placement.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Fosthiazate": {
+   "targets": [
+    "nematode",
+    "insect"
+   ],
+   "move": "soil",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil applied; moves into roots and holds nematodes back for about six weeks.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Terbufos": {
+   "targets": [
+    "insect",
+    "nematode"
+   ],
+   "move": "soil",
+   "onset": 0,
+   "days": [
+    30,
+    40,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil granule that guards roots and seedlings for about a month or more.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Fenamiphos": {
+   "targets": [
+    "nematode",
+    "insect"
+   ],
+   "move": "soil",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil nematicide; about six weeks of root protection in moist soil.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Monocrotophos": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Highly toxic systemic; about a week of cover on sucking pests.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Methamidophos": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Highly toxic systemic; about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Ethoprophos": {
+   "targets": [
+    "nematode",
+    "insect"
+   ],
+   "move": "soil",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil nematicide and insecticide; about six weeks of cover around roots.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Dichlorvos": {
+   "targets": [
+    "insect"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    0,
+    1,
+    2
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Acts as a vapor and is gone within a day or two.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Trichlorfon": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 0,
+   "days": [
+    2,
+    3,
+    5
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Breaks down quickly, mostly in alkaline water; only a few days of cover.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Methidathion": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Contact organophosphate; heat, sun and rain wear it off within about a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Phosalone": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Longer lasting than most of its group; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Prothiofos": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Contact organophosphate; heat, sun and rain wear it off within about a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Temephos": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Larvicide for standing water; keeps mosquito larvae down for weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Isazofos": {
+   "targets": [
+    "insect",
+    "nematode"
+   ],
+   "move": "soil",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil applied; guards roots for about a month.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Fenobucarb (BPMC)": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    2,
+    3,
+    5
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Quick knockdown of hoppers on contact, but gone within a few days.",
+   "conf": "med",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Carbaryl": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Quick contact kill that breaks down within days in the field.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Methomyl": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    2,
+    4,
+    6
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Fast contact and stomach kill with only a few days of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Carbofuran": {
+   "targets": [
+    "insect",
+    "nematode"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Granules in soil or paddy water move into the plant and protect for weeks.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Carbosulfan": {
+   "targets": [
+    "insect",
+    "nematode"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "A spray lasts about a week; as a seed treatment it guards seedlings longer.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Thiodicarb": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Larvae must eat it; about a week of cover, longer as a seed treatment.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Isoprocarb (MIPC)": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    2,
+    3,
+    5
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Quick hopper knockdown with very short cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Oxamyl": {
+   "targets": [
+    "insect",
+    "nematode",
+    "mite"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Moves up and down the plant; about ten days on pests and nematodes.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Propoxur": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    2,
+    4,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Quick contact kill that breaks down within days in the field.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Metolcarb": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    2,
+    3,
+    5
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Quick contact kill that breaks down within days in the field.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Benfuracarb": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil or seed applied; guards seedlings for a couple of weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Furathiocarb": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    28
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Seed treatment that guards young plants for their first weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Formetanate": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Quick contact kill that breaks down within days in the field.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Aldicarb": {
+   "targets": [
+    "insect",
+    "mite",
+    "nematode"
+   ],
+   "move": "soil",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil granule taken up by roots; protects for about six weeks.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Bendiocarb": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    7,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Mainly for buildings and stores, where surface deposits last longer.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Lambda cyhalothrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Quick contact kill with about a week of cover; can set off hopper outbreaks in rice.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Gamma cyhalothrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Alpha cypermethrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Beta cypermethrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Zeta cypermethrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Cypermethrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; sun and heat break it down within a week.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Deltamethrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Potent contact kill; sun and rain leave about five days of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Bifenthrin": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "One of the longest lasting pyrethroids on leaves and in soil.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Etofenprox": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Contact kill with low fish risk, used on rice hoppers; about five days of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Permethrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Esfenvalerate": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Fenvalerate": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Beta cyfluthrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Cyfluthrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Tetramethrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    1,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Household knockdown spray with almost no lasting effect.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Fenpropathrin": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Contact kill on insects and mites; about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Tau fluvalinate": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Cyhalothrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast knockdown on contact; strong sun breaks it down within a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Transfluthrin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    0,
+    1,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Vapor action in coils and indoor emitters; no field cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Silafluofen": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Contact kill with somewhat longer life than most of its kind.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Pyrethrins": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    1,
+    2
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Botanical knockdown that sunlight breaks down within a day.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Imidacloprid": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic; a spray guards about ten days, but rice brown planthopper now largely resists it.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Thiamethoxam": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    12,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Fast uptake; a spray guards sucking pests about ten to fourteen days.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Clothianidin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    12,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic and long lasting in its group; about two weeks on sucking pests.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Acetamiprid": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Systemic with shorter cover than its relatives, about a week.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Dinotefuran": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Very fast uptake; hoppers die within a day and cover lasts about ten days.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Thiacloprid": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic; about ten days of cover on sucking pests.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Nitenpyram": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Very fast acting but short lived; about five days of hopper control.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Sulfoxaflor": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic sap feeder control that still works where older groups fail.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Flupyradifurone": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    12,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic and gentle on bees; about ten to fourteen days on sucking pests.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Triflumezopyrim": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Systemic hopper control for about two weeks that spares spiders and predators.",
+   "conf": "med",
+   "src": [
+    "https://www.physiciansweekly.com/post/residue-dynamics-and-bio-efficacy-of-triflumezopyrim-against-nilaparvata-lugens-and-non-targeted-effect-on-natural-enemies-in-a-rice-ecosystem",
+    "https://epubs.icar.org.in/index.php/IJPP/article/view/106387"
+   ]
+  },
+  "Chlorantraniliprole": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    15,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Caterpillars stop feeding within hours; a spray guards about two weeks, granules up to a month.",
+   "conf": "high",
+   "src": [
+    "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10073179/",
+    "https://ag.fmc.com/ph/en/products/insecticides/ferterra-04g-insect-control",
+    "https://etd.repository.ugm.ac.id/home/detail_pencarian_downloadfiles/541228"
+   ]
+  },
+  "Cyantraniliprole": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    12,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Systemic diamide that also stops sucking pests; about ten to fourteen days of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Flubendiamide": {
+   "targets": [
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Holds in the waxy leaf surface; caterpillars stop eating fast; about two weeks of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Tetraniliprole": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Long lasting diamide; borers and caterpillars stay controlled about two weeks.",
+   "conf": "med",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Cyclaniliprole": {
+   "targets": [
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    12,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Diamide with about ten to fourteen days of cover on caterpillars.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Cyhalodiamide": {
+   "targets": [
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Diamide with about two weeks of cover on caterpillars.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Broflanilide": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "New group with long cover on chewing pests, about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Isocycloseram": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "New group; about two weeks on caterpillars, thrips and mites.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Abamectin": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Enters the leaf within hours; guards against mites and leafminers about a week.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Emamectin benzoate": {
+   "targets": [
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Soaks into the leaf and stops caterpillars fast; about a week of cover in the sun.",
+   "conf": "med",
+   "src": [
+    "https://etd.repository.ugm.ac.id/home/detail_pencarian_downloadfiles/541228",
+    "https://masujournal.org/111/MAJ-2024-_S12-FD.pdf"
+   ]
+  },
+  "Milbemectin": {
+   "targets": [
+    "mite",
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Enters the leaf; about ten days on mites and leafminers.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Spinosad": {
+   "targets": [
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Must be eaten or touched; sun limits it to about five days of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Spinetoram": {
+   "targets": [
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves into the leaf; caterpillars and thrips controlled about a week.",
+   "conf": "med",
+   "src": [
+    "https://etd.repository.ugm.ac.id/home/detail_pencarian_downloadfiles/541228",
+    "https://masujournal.org/111/MAJ-2024-_S12-FD.pdf"
+   ]
+  },
+  "Cartap hydrochloride": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Taken up by the plant; a spray protects about a week, granules in water longer.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Bensultap": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Turns into its active form in the plant; about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Thiocyclam": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Systemic with about a week of cover on borers and miners.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Thiosultap (dimehypo)": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Systemic with about a week of cover on rice borers.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Fipronil": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Long field life; granules in the paddy guard young rice for weeks.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Ethiprole": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Systemic hopper and bug control lasting about ten days.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Buprofezin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 2,
+   "days": [
+    14,
+    21,
+    28
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Kills hopper nymphs as they molt, so it works slowly but lasts about three weeks.",
+   "conf": "med",
+   "src": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC5717270",
+    "https://koreascience.kr/article/JAKO199211920241649.do"
+   ]
+  },
+  "Pymetrozine": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Hoppers stop feeding within hours but take days to die; cover lasts about two weeks.",
+   "conf": "high",
+   "src": [
+    "https://cpg.potatoes.wsu.edu/pesticide_guide/info/21",
+    "https://bioone.org/journals/journal-of-economic-entomology/volume-104/issue-6/EC11180/Influence-of-Pymetrozine-on-Feeding-Behaviors-of-Three-Rice-Planthoppers/10.1603/EC11180.full"
+   ]
+  },
+  "Pyriproxyfen": {
+   "targets": [
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 3,
+   "days": [
+    14,
+    21,
+    28
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stops eggs and young stages developing; slow to show but lasts about three weeks.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "S methoprene": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 3,
+   "days": [
+    14,
+    30,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Used on stored grain and water; keeps insects from reaching adulthood for weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Cyromazine": {
+   "targets": [
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 2,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Leafminer and fly larvae fail to molt; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Chlorfenapyr": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "translaminar",
+   "onset": 1,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Acts over a day or two; about a week of cover on caterpillars and mites.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Diafenthiuron": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 1,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Sunlight activates it on the leaf; whitefly and mites controlled about a week.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Indoxacarb": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Larvae stop feeding within hours after eating it; about a week of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Metaflumizone": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Larvae must eat it; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Lufenuron": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 2,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stops young larvae molting, so kill is slow but cover lasts about two weeks.",
+   "conf": "med",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Novaluron": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 2,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stops young larvae molting, so kill is slow but cover lasts about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Chlorfluazuron": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 2,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stops young larvae molting, so kill is slow but cover lasts about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Diflubenzuron": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 2,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stops young larvae molting, so kill is slow but cover lasts about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Teflubenzuron": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 2,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stops young larvae molting, so kill is slow but cover lasts about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Hexaflumuron": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 2,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Leaf sprays last about two weeks; in termite bait stations it works for months.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Flufenoxuron": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "stomach",
+   "onset": 2,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stops young larvae molting, so kill is slow but cover lasts about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Triflumuron": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 2,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stops young larvae molting, so kill is slow but cover lasts about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Tebufenozide": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 1,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Makes caterpillars molt too early and stop eating; about two weeks of cover.",
+   "conf": "med",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Methoxyfenozide": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 1,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Makes caterpillars molt too early and stop eating; about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Spirotetramat": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "systemic",
+   "onset": 3,
+   "days": [
+    14,
+    21,
+    28
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Moves up and down the plant; slow start but about three weeks on sucking pests.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Spiromesifen": {
+   "targets": [
+    "mite",
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 2,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Hits mite and whitefly young stages; slow start, about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Spirodiclofen": {
+   "targets": [
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 2,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Kills mite eggs and young; slow start but about three weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Flonicamid": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Aphids and hoppers stop feeding within an hour; about ten days of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Hydramethylnon": {
+   "targets": [
+    "insect"
+   ],
+   "move": "bait",
+   "onset": 2,
+   "days": [
+    14,
+    30,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Slow acting ant and roach bait that works as long as the bait stays dry.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Pyridalyl": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Contact and stomach action on caterpillars and thrips; about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Hexythiazox": {
+   "targets": [
+    "mite"
+   ],
+   "move": "translaminar",
+   "onset": 2,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Kills mite eggs and young, not adults; slow start but long cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Fenpyroximate": {
+   "targets": [
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Fast mite kill on contact with about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Tolfenpyrad": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Contact kill on thrips, caterpillars and mites; about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Fenazaquin": {
+   "targets": [
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Fast mite kill on contact with about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Pyridaben": {
+   "targets": [
+    "mite",
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Contact mite and whitefly kill with about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Afidopyropen": {
+   "targets": [
+    "insect"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Aphids and whiteflies stop feeding fast; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Flometoquin": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Fast thrips kill on contact; about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Etoxazole": {
+   "targets": [
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 2,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stops mite eggs and young developing; slow start but long cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Propargite": {
+   "targets": [
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Contact mite killer with about two weeks of cover; can scorch in heat.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Bifenazate": {
+   "targets": [
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Contact mite kill with about two weeks of cover, gentle on predators.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Piperonyl butoxide": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    1,
+    2
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Boosts a partner insecticide; on its own it controls nothing.",
+   "conf": "med",
+   "src": []
+  },
+  "Azadirachtin": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "stomach",
+   "onset": 1,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Neem repels and stunts pests rather than killing fast; sun breaks it down in days.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Matrine": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    4,
+    6
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Botanical contact and stomach action; a few days of cover.",
+   "conf": "low",
+   "src": []
+  },
+  "Sabadilla alkaloids": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    1,
+    2,
+    3
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Botanical that light breaks down within a few days.",
+   "conf": "low",
+   "src": []
+  },
+  "Rotenone": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    1,
+    2,
+    4
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Botanical that light breaks down within a few days.",
+   "conf": "low",
+   "src": []
+  },
+  "Potassium salts of fatty acids": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills only the soft bodied pests it wets; nothing is left once dry.",
+   "conf": "med",
+   "src": []
+  },
+  "Bacillus thuringiensis aizawai": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 0,
+   "days": [
+    2,
+    4,
+    6
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Caterpillars must eat it; sunlight kills it in a few days, so spray late afternoon.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Bacillus thuringiensis kurstaki": {
+   "targets": [
+    "insect"
+   ],
+   "move": "stomach",
+   "onset": 0,
+   "days": [
+    2,
+    4,
+    6
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Caterpillars must eat it; sunlight kills it in a few days, so spray late afternoon.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Beauveria bassiana": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "biological",
+   "onset": 3,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Living fungus that needs humid days; infected pests die in three to seven days.",
+   "conf": "med",
+   "src": []
+  },
+  "Metarhizium anisopliae": {
+   "targets": [
+    "insect"
+   ],
+   "move": "biological",
+   "onset": 4,
+   "days": [
+    10,
+    14,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Living fungus; in moist soil it can persist for weeks against grubs and hoppers.",
+   "conf": "low",
+   "src": []
+  },
+  "Paecilomyces fumosoroseus": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "biological",
+   "onset": 3,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Living fungus for whitefly and mites; needs humid weather to spread.",
+   "conf": "low",
+   "src": []
+  },
+  "Lecanicillium lecanii": {
+   "targets": [
+    "insect"
+   ],
+   "move": "biological",
+   "onset": 3,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Living fungus for aphids and whitefly; needs humid weather to spread.",
+   "conf": "low",
+   "src": []
+  },
+  "Nuclear polyhedrosis virus": {
+   "targets": [
+    "insect"
+   ],
+   "move": "biological",
+   "onset": 3,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Larvae must eat it and die in four to seven days; sunlight weakens it fast.",
+   "conf": "med",
+   "src": []
+  },
+  "Insect traits in seed": {
+   "targets": [
+    "insect"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    60,
+    80,
+    100
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Protection is inside the plant from emergence and weakens late in the season.",
+   "conf": "med",
+   "src": []
+  },
+  "Pheromone lure": {
+   "targets": [
+    "insect"
+   ],
+   "move": "bait",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "A lure keeps drawing moths for about a month; change it on time.",
+   "conf": "med",
+   "src": []
+  },
+  "Methyl eugenol": {
+   "targets": [
+    "insect"
+   ],
+   "move": "bait",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Draws male fruit flies to traps for about a month per charge.",
+   "conf": "low",
+   "src": []
+  },
+  "Niclosamide": {
+   "targets": [
+    "snail"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    2,
+    3,
+    5
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills snails in the water within a day or two, then breaks down; use at final harrowing.",
+   "conf": "med",
+   "src": [
+    "https://thaiscience.info/Journals/Article/SJST/10984535.pdf",
+    "https://www.usgs.gov/publications/environmental-fate-and-effects-lampricide-bayluscide-a-review-0"
+   ]
+  },
+  "Metaldehyde": {
+   "targets": [
+    "snail"
+   ],
+   "move": "bait",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pellets work until rain or soaked ground spoils them, usually about a week.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Saponin (tea seed)": {
+   "targets": [
+    "snail"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    1,
+    2,
+    3
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Tea seed powder kills snails in standing water within a day, then washes out.",
+   "conf": "low",
+   "src": []
+  },
+  "Zinc phosphide": {
+   "targets": [
+    "rat"
+   ],
+   "move": "bait",
+   "onset": 0,
+   "days": [
+    1,
+    2,
+    3
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Acute bait; rats die within a day, but bait spoils fast and survivors learn to avoid it.",
+   "conf": "med",
+   "src": [
+    "https://dpi.nsw.gov.au/__data/assets/pdf_file/0004/1396795/NSWROD-SOP2-Baiting-of-rodents-with-zinc-phosphide-in-crops.PDF",
+    "https://www.npic.orst.edu/factsheets/rodenticides.html",
+    "https://escholarship.org/uc/item/3w66d3ht"
+   ]
+  },
+  "Brodifacoum": {
+   "targets": [
+    "rat"
+   ],
+   "move": "bait",
+   "onset": 3,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "One feed can kill, but rats die after four to seven days; keep bait stations stocked.",
+   "conf": "med",
+   "src": [
+    "https://dpi.nsw.gov.au/__data/assets/pdf_file/0004/1396795/NSWROD-SOP2-Baiting-of-rodents-with-zinc-phosphide-in-crops.PDF",
+    "https://www.npic.orst.edu/factsheets/rodenticides.html",
+    "https://escholarship.org/uc/item/3w66d3ht"
+   ]
+  },
+  "Bromadiolone": {
+   "targets": [
+    "rat"
+   ],
+   "move": "bait",
+   "onset": 3,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "One feed can kill, but rats die after four to seven days; keep bait stations stocked.",
+   "conf": "med",
+   "src": [
+    "https://dpi.nsw.gov.au/__data/assets/pdf_file/0004/1396795/NSWROD-SOP2-Baiting-of-rodents-with-zinc-phosphide-in-crops.PDF",
+    "https://www.npic.orst.edu/factsheets/rodenticides.html",
+    "https://escholarship.org/uc/item/3w66d3ht"
+   ]
+  },
+  "Coumatetralyl": {
+   "targets": [
+    "rat"
+   ],
+   "move": "bait",
+   "onset": 4,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Rats must feed several times and die after about a week; keep bait out until feeding stops.",
+   "conf": "low",
+   "src": [
+    "https://dpi.nsw.gov.au/__data/assets/pdf_file/0004/1396795/NSWROD-SOP2-Baiting-of-rodents-with-zinc-phosphide-in-crops.PDF",
+    "https://www.npic.orst.edu/factsheets/rodenticides.html",
+    "https://escholarship.org/uc/item/3w66d3ht"
+   ]
+  },
+  "Diphacinone": {
+   "targets": [
+    "rat"
+   ],
+   "move": "bait",
+   "onset": 4,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Rats must feed several times and die after about a week; keep bait out until feeding stops.",
+   "conf": "low",
+   "src": [
+    "https://dpi.nsw.gov.au/__data/assets/pdf_file/0004/1396795/NSWROD-SOP2-Baiting-of-rodents-with-zinc-phosphide-in-crops.PDF",
+    "https://www.npic.orst.edu/factsheets/rodenticides.html",
+    "https://escholarship.org/uc/item/3w66d3ht"
+   ]
+  },
+  "Flocoumafen": {
+   "targets": [
+    "rat"
+   ],
+   "move": "bait",
+   "onset": 3,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "One feed can kill, but rats die after four to seven days; keep bait stations stocked.",
+   "conf": "low",
+   "src": [
+    "https://dpi.nsw.gov.au/__data/assets/pdf_file/0004/1396795/NSWROD-SOP2-Baiting-of-rodents-with-zinc-phosphide-in-crops.PDF",
+    "https://www.npic.orst.edu/factsheets/rodenticides.html",
+    "https://escholarship.org/uc/item/3w66d3ht"
+   ]
+  },
+  "Difenacoum": {
+   "targets": [
+    "rat"
+   ],
+   "move": "bait",
+   "onset": 3,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "One feed can kill, but rats die after four to seven days; keep bait stations stocked.",
+   "conf": "low",
+   "src": [
+    "https://dpi.nsw.gov.au/__data/assets/pdf_file/0004/1396795/NSWROD-SOP2-Baiting-of-rodents-with-zinc-phosphide-in-crops.PDF",
+    "https://www.npic.orst.edu/factsheets/rodenticides.html",
+    "https://escholarship.org/uc/item/3w66d3ht"
+   ]
+  },
+  "Aluminium phosphide": {
+   "targets": [
+    "insect",
+    "rat"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Gas works only while sealed in; no cover once the store is aired.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Magnesium phosphide": {
+   "targets": [
+    "insect"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Gas works only while sealed in; no cover once the store is aired.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Phosphine": {
+   "targets": [
+    "insect"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Gas works only while sealed in; no cover once the store is aired.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Methyl bromide": {
+   "targets": [
+    "insect",
+    "nematode",
+    "fungus",
+    "weed"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    1,
+    2,
+    3
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills during the sealed exposure only and leaves no lasting cover.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Chloropicrin": {
+   "targets": [
+    "nematode",
+    "fungus",
+    "insect"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Cleans the soil before planting; wait the label gap, then pests creep back over weeks.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Dazomet": {
+   "targets": [
+    "nematode",
+    "fungus",
+    "weed",
+    "insect"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Cleans the soil before planting; wait the label gap, then pests creep back over weeks.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Metam sodium": {
+   "targets": [
+    "nematode",
+    "fungus",
+    "weed",
+    "insect"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Cleans the soil before planting; wait the label gap, then pests creep back over weeks.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "1,3 dichloropropene": {
+   "targets": [
+    "nematode",
+    "insect"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Cleans the soil before planting; wait the label gap, then pests creep back over weeks.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Sulfuryl fluoride": {
+   "targets": [
+    "insect"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    0,
+    1,
+    2
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Gas works only while sealed in; no cover once the store is aired.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Ethyl formate": {
+   "targets": [
+    "insect"
+   ],
+   "move": "fumigant",
+   "onset": 0,
+   "days": [
+    0,
+    1,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Gas works only while sealed in; no cover once the store is aired.",
+   "conf": "low",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Mancozeb": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Sits on the leaf surface; rain and new growth wear it off within a week.",
+   "conf": "high",
+   "src": [
+    "https://extension.psu.edu/fungicides-and-rain",
+    "https://informahealthcare.com/doi/full/10.1081/PFC-100106189"
+   ]
+  },
+  "Maneb": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface protectant; rain and new growth wear it off within about a week.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Zineb": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface protectant; rain and new growth wear it off within about a week.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Propineb": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface protectant; rain and new growth wear it off within about a week.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Metiram": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface protectant; rain and new growth wear it off within about a week.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Thiram": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Mostly a seed dressing that guards the seedling for its first week or two.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Ziram": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface protectant; rain and new growth wear it off within about a week.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Chlorothalonil": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Binds tightly to the leaf once dry, but new leaves are bare; respray about weekly.",
+   "conf": "high",
+   "src": [
+    "https://extension.psu.edu/fungicides-and-rain"
+   ]
+  },
+  "Captan": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface protectant; rain and new growth wear it off within about a week.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Folpet": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface protectant; rain and new growth wear it off within about a week.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Bordeaux mixture": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 6,
+   "note": "Sticks better than other coppers; about ten days of cover between rains.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Copper hydroxide": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface copper guards leaves about a week; heavy rain and fast growth shorten it.",
+   "conf": "med",
+   "src": [
+    "https://extension.psu.edu/fungicides-and-rain"
+   ]
+  },
+  "Copper oxychloride": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface copper guards leaves about a week; heavy rain and fast growth shorten it.",
+   "conf": "med",
+   "src": [
+    "https://extension.psu.edu/fungicides-and-rain"
+   ]
+  },
+  "Cuprous oxide": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface copper guards leaves about a week; heavy rain and fast growth shorten it.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Copper sulfate": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Soluble copper acts fast but washes off easily; mostly used in mixes.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Copper gluconate": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Soluble copper with short cover; often sold more as a nutrient.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Thiodiazole copper": {
+   "targets": [
+    "bacteria",
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Copper with some movement into the plant; about a week on bacterial disease.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Copper (other)": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Surface copper guards leaves about a week; heavy rain and fast growth shorten it.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Lime sulfur": {
+   "targets": [
+    "fungus",
+    "mite",
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Burns off mites, scale and fungus; avoid hot midday sprays.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Sulfur": {
+   "targets": [
+    "fungus",
+    "mite"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Works as a vapor on the leaf surface; heat speeds it but can scorch leaves.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Iminoctadine": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Protectant with about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Dodine": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Protectant with some early cure; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Carbendazim": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Systemic with some cure; about ten days of cover, but resistance is common.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Benomyl": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Systemic with some cure; about ten days of cover, but resistance is common.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Thiophanate methyl": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Turns into its active form in the plant; about ten days of cover, resistance is common.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Thiabendazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Mainly a fruit dip after harvest, where it protects through storage.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Diethofencarb": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Systemic partner used against strains that resist the older group.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Azoxystrobin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves into the leaf and up the plant; best as a preventive, about two weeks.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Pyraclostrobin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Strong preventive; spray before disease builds; about ten days of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Trifloxystrobin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Spreads over and into the leaf surface; about ten days of preventive cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Kresoxim methyl": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Strong preventive; spray before disease builds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Picoxystrobin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Strong preventive; spray before disease builds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fluoxastrobin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Strong preventive; spray before disease builds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Metominostrobin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic rice blast protection for about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Famoxadone": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Surface protectant with about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fenamidone": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Strong preventive; spray before disease builds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Orysastrobin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Nursery box or granule use in rice; guards against blast for several weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Difenoconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Propiconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Tebuconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with some cure of early infections; protects about two weeks.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Hexaconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic; a common sheath blight choice with about two weeks of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Tetraconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Epoxiconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Flutriafol": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    28
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Very mobile and long lasting; can guard about three weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Triadimefon": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Triadimenol": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic; as a seed dressing it guards seedlings for their first weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Bitertanol": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Diniconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fenbuconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Mefentrifluconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Prothioconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Cyproconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Myclobutanil": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Metconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Ipconazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    28
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Seed dressing that guards the seedling for its first weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Flusilazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Prochloraz": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Field sprays last about ten days; as a fruit dip it guards through storage.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Imazalil": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Mostly a fruit dip after harvest that guards against storage rots.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Triflumizole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Triforine": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fenarimol": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with early cure; about two weeks of cover in field conditions.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Tridemorph": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with quick cure on mildew and leaf spot; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fenpropimorph": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with quick cure on mildew and leaf spot; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Spiroxamine": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with quick cure on mildew and leaf spot; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fenpropidin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic with quick cure on mildew and leaf spot; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Boscalid": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic preventive with about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fluopyram": {
+   "targets": [
+    "fungus",
+    "nematode"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic fungicide that also holds nematodes back when put into the soil.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fluxapyroxad": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic preventive with about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Isopyrazam": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic preventive with about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Pydiflumetofen": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic preventive with about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fluindapyr": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic preventive with about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Benzovindiflupyr": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic preventive with about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Thifluzamide": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    28
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Long lasting sheath blight control; about three weeks in rice.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Flutolanil": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    28
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Long lasting sheath blight control; about three weeks in rice.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Penflufen": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Seed dressing that guards seedlings against soil rots for weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Sedaxane": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Seed dressing that guards seedlings against soil rots for weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Cyclobutrifluram": {
+   "targets": [
+    "fungus",
+    "nematode"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Seed or soil use against nematodes and root rots for some weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Metalaxyl M": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves up through the plant; as a seed treatment it guards young corn about three weeks.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Metalaxyl": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves up through the plant; as a seed treatment it guards young corn about three weeks.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Benalaxyl M": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic against water molds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Cymoxanil": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    2,
+    4,
+    5
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Cures fresh infections within a day or two but lasts only days; pair with a protectant.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Dimethomorph": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves into the leaf against water molds; about ten days of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Mandipropamid": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Binds to the leaf wax and resists rain well; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Iprovalicarb": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic against water molds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Benthiavalicarb": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves into the leaf against water molds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Propamocarb": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic against damping off and water molds; about ten days.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fosetyl aluminium": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves both up and down the plant and lifts its defences; about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Phosphorous acid": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves both up and down the plant and lifts its defences; about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Potassium phosphonate": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves both up and down the plant and lifts its defences; about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fluazinam": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Surface protectant with about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Pyrimethanil": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves into the leaf; about ten days against gray mold and leaf spots.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Cyprodinil": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves into the leaf; about ten days against gray mold and leaf spots.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Iprodione": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Contact with some local movement; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Procymidone": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Some systemic movement; about ten days against molds.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fludioxonil": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Contact protectant often put on seed, where it guards seedlings for weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Cyazofamid": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Protectant against water molds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Amisulbrom": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Protectant against water molds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fenpicoxamid": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "translaminar",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Moves into the leaf with about two weeks of preventive cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fluopicolide": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic against water molds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Oxathiapiprolin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Very active systemic against water molds; about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Fluoxapiprolin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Very active systemic against water molds; about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Zoxamide": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Surface protectant against water molds; about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Ethaboxam": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Systemic against water molds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Ametoctradin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Protectant against water molds; about ten days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Tricyclazole": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    18
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Stops blast spores breaking in; spray before symptoms, cover lasts about two weeks.",
+   "conf": "med",
+   "src": [
+    "https://indofil.com/agro/fungicides/indofils-baan",
+    "https://hpmindia.com/product-fungicides2.php"
+   ]
+  },
+  "Isoprothiolane": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Systemic blast protection; granules in paddy water last longer than sprays.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Isotianil": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "systemic",
+   "onset": 3,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Raises the plant's own defence; nursery box use guards rice for weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Probenazole": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "systemic",
+   "onset": 5,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Granules in paddy water raise the plant's defence against blast for over a month.",
+   "conf": "med",
+   "src": [
+    "https://koreascience.or.kr/article/JAKO200411922293987.page?lang=en"
+   ]
+  },
+  "Acibenzolar S methyl": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "systemic",
+   "onset": 3,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Switches on the plant's own defence; a few days to start, about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Pencycuron": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Protectant against sheath blight and soil rots; about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Flusulfamide": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "soil",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Mixed into soil before planting; guards cabbage roots against clubroot for weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Hymexazol": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "soil",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil or seedbed drench against damping off; about two weeks.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Kasugamycin": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Systemic with short field life; works best right at the first signs.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Validamycin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Slows sheath blight spread rather than killing it; repeat if wet weather holds.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Streptomycin": {
+   "targets": [
+    "bacteria"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    4,
+    6,
+    8
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Short lived in sun and rain; guards against bacteria about five to seven days.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Oxytetracycline": {
+   "targets": [
+    "bacteria"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    4,
+    6,
+    8
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Short lived in sun and rain; guards against bacteria about five to seven days.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Natamycin": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Surface protectant with only a few days of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Reynoutria extract": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 1,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Plant extract that wakes the leaf's defences; about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Cerevisane": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "protectant",
+   "onset": 2,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Yeast wall extract that primes the plant's defence; needs a couple of days to start.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Heat killed Burkholderia": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Killed bacteria and their products work by contact and feeding; a few days of cover.",
+   "conf": "low",
+   "src": [
+    "https://irac-online.org/mode-of-action/classification-online/"
+   ]
+  },
+  "Bacillus subtilis": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "biological",
+   "onset": 1,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Living bacteria crowd out disease on leaves; sun and rain limit them to about a week.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Bacillus amyloliquefaciens": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "biological",
+   "onset": 1,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Living bacteria crowd out disease on leaves; sun and rain limit them to about a week.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Bacillus (other)": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "biological",
+   "onset": 1,
+   "days": [
+    5,
+    7,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Living bacteria crowd out disease on leaves; sun and rain limit them to about a week.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Trichoderma": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "biological",
+   "onset": 5,
+   "days": [
+    21,
+    30,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil fungus that settles on roots and guards them for weeks if the soil stays moist.",
+   "conf": "med",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Pseudomonas": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "biological",
+   "onset": 3,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Living bacteria that settle on roots and leaves; about two weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Lactobacillus": {
+   "targets": [
+    "bacteria",
+    "fungus"
+   ],
+   "move": "biological",
+   "onset": 1,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Living bacteria with short cover on leaves, a few days.",
+   "conf": "low",
+   "src": []
+  },
+  "Chitosan and oligosaccharides": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "protectant",
+   "onset": 2,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Primes the plant's defence; a couple of days to start, about a week of cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Potassium bicarbonate": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    1,
+    2,
+    3
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Burns off powdery mildew it touches; no lasting cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Sodium bicarbonate": {
+   "targets": [
+    "fungus"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    1,
+    2,
+    3
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Burns off powdery mildew it touches; no lasting cover.",
+   "conf": "low",
+   "src": [
+    "https://www.frac.info/"
+   ]
+  },
+  "Orthophenylphenol": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    1,
+    2
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Fruit wash and surface cleaner after harvest; no field cover.",
+   "conf": "low",
+   "src": []
+  },
+  "Glyphosate": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Kills what is green and growing, roots too, but nothing that sprouts later.",
+   "conf": "high",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Glufosinate ammonium": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    3,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Burns down green weeds with no soil life; new flushes come back in weeks.",
+   "conf": "high",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Paraquat": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Burns green tissue within hours; no soil life, and weeds regrow from roots.",
+   "conf": "high",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Diquat": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Burns green tissue within hours; no soil life, and weeds regrow from roots.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "2,4-D ester": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    14
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills broadleaves and sedges it reaches; the ester can drift as vapor in heat.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "2,4-D amine": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    14
+   ],
+   "fade": "sharp",
+   "rainfast": 6,
+   "note": "Kills broadleaves and sedges; little soil life, so cover is short.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "2,4-D": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    14
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Kills broadleaves and sedges; little soil life, so cover is short.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "MCPA": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 6,
+   "note": "Gentler on rice than 2,4 D; kills broadleaves and sedges with short soil life.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Triclopyr": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Kills woody and broadleaf weeds; some soil life of a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Picloram": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    60,
+    120,
+    180
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stays in soil for months; holds brush down but can harm the next crop.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Dicamba": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Kills broadleaves with a short soil life of a couple of weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Fluroxypyr": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Post emergence broadleaf killer with little soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Florpyrauxifen benzyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Post emergence rice herbicide on grass, sedge and broadleaf with little soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Quinclorac": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Kills young barnyard grass and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Cyhalofop butyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills emerged grasses only; no soil life, so new flushes need another plan.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Fenoxaprop P ethyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills emerged grasses only; no soil life, so new flushes need another plan.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Quizalofop P ethyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills emerged grasses only; no soil life, so new flushes need another plan.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Fluazifop P butyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills emerged grasses only; no soil life, so new flushes need another plan.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Haloxyfop R methyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills emerged grasses only; no soil life, so new flushes need another plan.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Metamifop": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills emerged grasses only; no soil life, so new flushes need another plan.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Propaquizafop": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills emerged grasses only; no soil life, so new flushes need another plan.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Clethodim": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills emerged grasses only; no soil life, so new flushes need another plan.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Sethoxydim": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills emerged grasses only; no soil life, so new flushes need another plan.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Profoxydim": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Kills emerged grasses only; no soil life, so new flushes need another plan.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Bensulfuron methyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Put into paddy water early; holds broadleaves and sedges down about a month.",
+   "conf": "med",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Pyrazosulfuron ethyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Put into paddy water early; holds broadleaves and sedges down about a month.",
+   "conf": "med",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Metsulfuron methyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Chlorimuron ethyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Ethoxysulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Post emergence on sedges and broadleaves, with a little soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Halosulfuron methyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Strong on nutsedge; kills tubers slowly and keeps a few weeks of soil activity.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Nicosulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Post emergence grass killer for corn; slow to act and short soil life.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Imazosulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Put into paddy water early; holds broadleaves and sedges down about a month.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Flazasulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Long soil life in cane and plantation crops; about six weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Propyrisulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Put into paddy water early; holds broadleaves and sedges down about a month.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Flucetosulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Azimsulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Cinosulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Foramsulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Post emergence grass killer for corn with short soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Rimsulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Trifloxysulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Orthosulfamuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Iodosulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Mesosulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Sulfometuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    60,
+    90,
+    120
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Non crop use; stays in soil for months.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Primisulfuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Bispyribac sodium": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    15
+   ],
+   "fade": "sharp",
+   "rainfast": 6,
+   "note": "Kills emerged grass and broadleaf weeds; little soil life, so later flushes come back.",
+   "conf": "med",
+   "src": [
+    "https://isws.org.in/IJWSn/File/2014_46_Issue-2_126-128.pdf",
+    "https://sitem.herts.ac.uk/aeru/iupac/Reports/83.htm"
+   ]
+  },
+  "Pyribenzoxim": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    10,
+    14
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Post emergence rice herbicide with little soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Penoxsulam": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Kills young weeds and holds new ones back in flooded soil for a few weeks.",
+   "conf": "med",
+   "src": [
+    "https://isws.org.in/IJWSn/File/2019_51_Issue-1_10-14.pdf"
+   ]
+  },
+  "Imazapic": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    45,
+    60,
+    90
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Long soil life; holds weeds about two months but can hurt the next crop.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Imazethapyr": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Soil and leaf action with about six weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Imazapyr": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    60,
+    120,
+    180
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Non crop use; stays in soil for months.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Thiencarbazone methyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Florasulam": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    5,
+    10,
+    14
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Post emergence broadleaf killer with short soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Pyriftalid": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Early rice use on barnyard grass with a few weeks of soil activity.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Triafamone": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Early rice use with about a month of soil activity.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Pyrithiobac": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Slow acting; kills young weeds and holds new ones back for a few weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Pyriminobac": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Early rice use on barnyard grass with about a month of soil activity.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Bispyribac": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    15
+   ],
+   "fade": "sharp",
+   "rainfast": 6,
+   "note": "Kills emerged grass and broadleaf weeds; little soil life, so later flushes come back.",
+   "conf": "med",
+   "src": [
+    "https://isws.org.in/IJWSn/File/2014_46_Issue-2_126-128.pdf",
+    "https://sitem.herts.ac.uk/aeru/iupac/Reports/83.htm"
+   ]
+  },
+  "Propanil": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 6,
+   "note": "Burns grass leaves on contact; no soil life, and it needs a dry day after.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Diuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    30,
+    60,
+    90
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Long soil residual used in cane and non crop land; months of cover at high rates.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Linuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Soil and leaf action with about six weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Isoproturon": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Soil and leaf action with about a month of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Tebuthiuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    90,
+    180,
+    365
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil residual with long life; months of cover at the higher rates.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Atrazine": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Soil residual in corn; warm wet soil breaks it down in about six weeks.",
+   "conf": "med",
+   "src": [
+    "https://figshare.utas.edu.au/articles/journal_contribution/Impact_of_climatic_and_soil_conditions_on_environmental_fate_of_atrazine_used_under_plantation_forestry_in_Australia/22879886",
+    "https://masujournal.org/store_file/archive/99-7-9-533-537.pdf"
+   ]
+  },
+  "Ametryn": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Pre and early post in corn and cane; about a month of soil cover.",
+   "conf": "med",
+   "src": [
+    "https://figshare.utas.edu.au/articles/journal_contribution/Impact_of_climatic_and_soil_conditions_on_environmental_fate_of_atrazine_used_under_plantation_forestry_in_Australia/22879886",
+    "https://masujournal.org/store_file/archive/99-7-9-533-537.pdf"
+   ]
+  },
+  "Simazine": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    45,
+    60,
+    90
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Long soil residual; about two months of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Prometryn": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    35,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Soil and leaf action with about a month of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Terbuthylazine": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil residual with about six weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Metribuzin": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Soil and leaf action with about a month of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Hexazinone": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    45,
+    60,
+    90
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Long soil residual in cane and plantations; about two months.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Bromacil": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    90,
+    180,
+    365
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil residual with long life; months of cover at the higher rates.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Bentazone": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 6,
+   "note": "Contact sedge and broadleaf killer with no soil life.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Butachlor": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pre emergence in rice; keeps grass and sedge seed from coming up about three weeks.",
+   "conf": "med",
+   "src": [
+    "https://link.springer.com/article/10.1007/s10661-023-11513-1",
+    "https://masujournal.org/store_file/archive/99-10-12-794-798.pdf",
+    "https://krishikosh.egranth.ac.in/items/abad070b-aa62-4720-90ef-0d9ed78b661d"
+   ]
+  },
+  "Pretilachlor": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pre emergence; with its safener it suits wet seeded rice, about three weeks of cover.",
+   "conf": "med",
+   "src": [
+    "https://link.springer.com/article/10.1007/s10661-023-11513-1",
+    "https://masujournal.org/store_file/archive/99-10-12-794-798.pdf",
+    "https://krishikosh.egranth.ac.in/items/abad070b-aa62-4720-90ef-0d9ed78b661d"
+   ]
+  },
+  "S metolachlor": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    25,
+    35,
+    50
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pre emergence grass control in corn; about five weeks in warm wet soil.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Acetochlor": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    25,
+    35,
+    50
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pre emergence grass control; about five weeks in warm wet soil.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Alachlor": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pre emergence grass control; about a month in warm wet soil.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Thiobencarb": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Early rice use on grass seedlings; about three weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Mefenacet": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Early rice use on grass seedlings; about a month of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Anilofos": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Early rice use on grass and sedge seedlings; about three weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Oxadiazon": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    30,
+    40,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Forms a treated soil layer; leave it undisturbed for about five weeks of cover.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Oxyfluorfen": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Forms a treated soil skin; working the soil breaks the cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Flumioxazin": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pre emergence with about a month of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Sulfentrazone": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pre emergence with about six weeks of cover, strong on sedges.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Carfentrazone ethyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast contact burndown of broadleaves; no soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Saflufenacil": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Fast burndown with a short soil life of a couple of weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Tiafenacil": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast contact burndown; no soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Pyraflufen ethyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Fast contact burndown of broadleaves; no soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Oxadiargyl": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pre emergence in rice; about a month of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Fomesafen": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Broadleaf control with long soil life; about six weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Lactofen": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    3,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 1,
+   "note": "Contact broadleaf burndown with little soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Mesotrione": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    30
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Bleaches weeds; some soil activity holds new broadleaves for a few weeks.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Tembotrione": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Bleaching post emergence corn herbicide with some soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Topramezone": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Post emergence bleaching herbicide for corn with little soil life.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Isoxaflutole": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    30,
+    45,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pre emergence in corn and cane; rain reactivates it for about six weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Tefuryltrione": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Early rice use with about a month of soil activity.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Tolpyralate": {
+   "targets": [
+    "weed"
+   ],
+   "move": "post",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 1,
+   "note": "Post emergence bleaching herbicide for corn with little soil life.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Benzobicyclon": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 2,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Needs flood water to activate; about a month of cover in rice.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Pendimethalin": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Stops weed seeds rooting; heat and sun shorten it to about a month.",
+   "conf": "med",
+   "src": [
+    "https://journals.sta.uwi.edu/ojs/index.php/ta/article/view/1525/0",
+    "https://www.isws.org.in/IJWSn/File/2014_46_Issue-4_373-376.pdf",
+    "https://pse.agriculturejournals.cz/artkey/pse-201511-0004_dissipation-kinetics-and-residues-analysis-of-pendimethalin-in-soil-and-maize-under-field-conditions.php"
+   ]
+  },
+  "Trifluralin": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    21,
+    35,
+    50
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Must be mixed into soil soon, or sun and heat lose it.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Clomazone": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    30,
+    40,
+    60
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Pre emergence bleaching herbicide with about six weeks of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Indaziflam": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    60,
+    90,
+    120
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Very long soil life in plantations; months of cover.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Tetflupyrolimet": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre",
+   "onset": 0,
+   "days": [
+    30,
+    40,
+    50
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "New pre emergence rice herbicide on grasses; about five weeks.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Cyclosulfamuron": {
+   "targets": [
+    "weed"
+   ],
+   "move": "pre_post",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    40
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Put into paddy water early; holds broadleaves and sedges down about a month.",
+   "conf": "low",
+   "src": [
+    "https://hracglobal.com/"
+   ]
+  },
+  "Safener": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Shields the crop from its partner herbicide; controls no weeds itself.",
+   "conf": "high",
+   "src": []
+  },
+  "Ethephon": {
+   "targets": [
+    "growth"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    3,
+    5,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 6,
+   "note": "Releases ethylene inside the plant within days; the effect is quick and short.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Paclobutrazol": {
+   "targets": [
+    "growth"
+   ],
+   "move": "soil",
+   "onset": 14,
+   "days": [
+    60,
+    90,
+    120
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "Soil drench slows shoot growth for months, used to bring mango into flower.",
+   "conf": "med",
+   "src": [
+    "https://sitem.herts.ac.uk/aeru/ppdb/en/"
+   ]
+  },
+  "Gibberellic acid": {
+   "targets": [
+    "growth"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    3,
+    7,
+    10
+   ],
+   "fade": "sharp",
+   "rainfast": 4,
+   "note": "Pushes cell growth within days; the effect fades in about a week.",
+   "conf": "low",
+   "src": []
+  },
+  "Aviglycine": {
+   "targets": [
+    "growth"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 6,
+   "note": "Holds back ripening for about ten days.",
+   "conf": "low",
+   "src": []
+  },
+  "Mepiquat chloride": {
+   "targets": [
+    "growth"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    10,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 6,
+   "note": "Slows stem growth for about two weeks.",
+   "conf": "low",
+   "src": []
+  },
+  "Chlormequat": {
+   "targets": [
+    "growth"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    14,
+    21,
+    28
+   ],
+   "fade": "gradual",
+   "rainfast": 6,
+   "note": "Shortens and firms stems for about three weeks.",
+   "conf": "low",
+   "src": []
+  },
+  "Flumetralin": {
+   "targets": [
+    "growth"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    21,
+    30,
+    45
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Stops tobacco suckers on contact for about a month.",
+   "conf": "low",
+   "src": []
+  },
+  "Forchlorfenuron": {
+   "targets": [
+    "growth"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    10,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Boosts fruit set and sizing for about ten days.",
+   "conf": "low",
+   "src": []
+  },
+  "Naphthalene acetic acid": {
+   "targets": [
+    "growth"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    5,
+    7,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Holds flowers and fruit on or roots cuttings; about a week of effect.",
+   "conf": "low",
+   "src": []
+  },
+  "2-(3-chlorophenoxy) propionic acid": {
+   "targets": [
+    "growth"
+   ],
+   "move": "systemic",
+   "onset": 0,
+   "days": [
+    7,
+    14,
+    21
+   ],
+   "fade": "gradual",
+   "rainfast": 4,
+   "note": "Pineapple fruit sizer acting over one to three weeks.",
+   "conf": "low",
+   "src": []
+  },
+  "Ripener (other)": {
+   "targets": [
+    "growth"
+   ],
+   "move": "systemic",
+   "onset": 7,
+   "days": [
+    14,
+    28,
+    42
+   ],
+   "fade": "gradual",
+   "rainfast": 6,
+   "note": "Cane ripeners act over several weeks before harvest.",
+   "conf": "low",
+   "src": []
+  },
+  "Mineral oil": {
+   "targets": [
+    "insect",
+    "mite",
+    "fungus"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    1,
+    3,
+    5
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Smothers soft pests and eggs and slows banana leaf spot; a few days of cover.",
+   "conf": "med",
+   "src": []
+  },
+  "Plant oil": {
+   "targets": [
+    "insect",
+    "mite"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    1,
+    2,
+    3
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Smothers soft pests it coats; a day or two of cover.",
+   "conf": "low",
+   "src": []
+  },
+  "Methylated seed oil": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Organosilicone surfactant": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Non ionic surfactant": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Anionic surfactant": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Sticker (terpene)": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Propylene glycol": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Water conditioner (EDTA)": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Sodium hexametaphosphate": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Citric acid": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Sulfamic acid": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Glycolic acid": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Lactic acid": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Malic acid": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Acetic acid": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Sodium hydroxide": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Sodium chloride": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Potassium silicate": {
+   "targets": [
+    "fungus",
+    "insect"
+   ],
+   "move": "protectant",
+   "onset": 2,
+   "days": [
+    5,
+    7,
+    14
+   ],
+   "fade": "gradual",
+   "rainfast": 2,
+   "note": "Silicon toughens leaves a little against fungus and sap feeders; mostly a spray helper.",
+   "conf": "low",
+   "src": []
+  },
+  "Calcium carbonate": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Aluminium potassium sulfate": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Ethanol or isopropanol": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Dye": {
+   "targets": [],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    0
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Helps the spray mix, spread or stick; gives no protection of its own.",
+   "conf": "high",
+   "src": []
+  },
+  "Masterbatch (bag film)": {
+   "targets": [
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    45,
+    60,
+    80
+   ],
+   "fade": "gradual",
+   "rainfast": null,
+   "note": "The treated bag guards the bunch from insects while it hangs.",
+   "conf": "low",
+   "src": []
+  },
+  "Plant essential oil": {
+   "targets": [
+    "fungus",
+    "insect"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    1,
+    2,
+    3
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Botanical oil with a day or two of contact action.",
+   "conf": "low",
+   "src": []
+  },
+  "Hydrogen peroxide": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills germs it touches on tools and surfaces; leaves no lasting cover.",
+   "conf": "med",
+   "src": []
+  },
+  "Peracetic acid": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills germs it touches on tools and surfaces; leaves no lasting cover.",
+   "conf": "med",
+   "src": []
+  },
+  "Peroxymonosulfate": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills germs it touches on tools and surfaces; leaves no lasting cover.",
+   "conf": "med",
+   "src": []
+  },
+  "Sodium percarbonate": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills germs it touches on tools and surfaces; leaves no lasting cover.",
+   "conf": "med",
+   "src": []
+  },
+  "Chlorine": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills germs it touches on tools and surfaces; leaves no lasting cover.",
+   "conf": "med",
+   "src": []
+  },
+  "Iodine": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills germs it touches on tools and surfaces; leaves no lasting cover.",
+   "conf": "med",
+   "src": []
+  },
+  "Silver": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    1,
+    3,
+    5
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Leaves a thin germ killing film for a few days.",
+   "conf": "low",
+   "src": []
+  },
+  "Quaternary ammonium": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills germs it touches on tools and surfaces; leaves no lasting cover.",
+   "conf": "med",
+   "src": []
+  },
+  "Aldehyde": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills germs it touches on tools and surfaces; leaves no lasting cover.",
+   "conf": "med",
+   "src": []
+  },
+  "Phenol": {
+   "targets": [
+    "fungus",
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    0,
+    0,
+    1
+   ],
+   "fade": "sharp",
+   "rainfast": null,
+   "note": "Kills germs it touches on tools and surfaces; leaves no lasting cover.",
+   "conf": "med",
+   "src": []
+  },
+  "Bronopol": {
+   "targets": [
+    "bacteria"
+   ],
+   "move": "contact",
+   "onset": 0,
+   "days": [
+    2,
+    4,
+    7
+   ],
+   "fade": "sharp",
+   "rainfast": 2,
+   "note": "Bactericide with a few days of contact cover.",
+   "conf": "low",
+   "src": []
+  }
+ }
+}

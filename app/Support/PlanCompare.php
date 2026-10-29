@@ -72,6 +72,7 @@ class PlanCompare
                 ['Variety Finder', 'Every registered variety, with days to harvest, yield and resistance', $gate('fieldHelpers'), 'variety-finder'],
                 ['Compatibility Checker', 'Which sprays and fertilizers go on together, the mixing order and the strength. Over 7,000 products ' . ($ph ? 'sold in the Philippines' : 'in the book'), $gate('fieldHelpers'), 'compatibility-checker'],
                 ['NPK Plus Calculator', 'Every nutrient in your fertilizer plan, against what your crop needs', $gate('npkPlus'), 'npk-plus'],
+                ['Range Effect calendar', 'How long every fertilizer and spray on the plan keeps working, against what each stage needs', $gate('fieldHelpers'), 'range-effect'],
                 // The chart is read on every plan; Anee reading photos of the leaves needs her.
                 ['LCC Checker', 'Rice: is it time for nitrogen, and how much urea', fn (array $t) => ! empty($t['aiAnalyses']) ? 'Chart and photos' : 'Your own chart', 'lcc-checker'],
                 ['Benta o Bilad Calculator', 'Sell the palay wet or dry it first: which leaves you more money', $gate('bentaBilad'), 'benta-o-bilad'],
