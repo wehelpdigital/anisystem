@@ -229,7 +229,7 @@
         --rx-try-bg: #fffdf3; --rx-try-line: #f0dfa0; --rx-field: #fff; --rx-field-line: #e3d9b0; --rx-res-icon: #f6f1dc; --rx-how-bg: #f6efd2; --rx-how-ink: #6e5a1c;
         --rx-saved-bg: #eef2ff; --rx-saved-line: #c7d2fe; --rx-saved-ink: #1e3a8a;
         --rx-done-bg: #dcfce7; --rx-done-ink: #14532d; --rx-tag-bg: #eef1ea;
-        --rx-badge: #1f3a10; --rx-badge-ink: #fff; --rx-today: #2563eb;
+        --rx-badge: #1f3a10; --rx-badge-ink: #fff; --rx-today: #2563eb; --rx-ap-off: #d9ddd3; --rx-ap-off-ink: #4f5a48;
         /* What an application is doing: in the soil, being taken up, strongest, easing, fading away. */
         --ph-soil: linear-gradient(180deg, #c99158, #8a5a2b); --ph-absorb: linear-gradient(180deg, #5fcfba, #12806f); --ph-strong: linear-gradient(180deg, #4f9030, #22500e);
         --ph-easing: linear-gradient(180deg, #a6d67c, #6aa843); --ph-fading: linear-gradient(180deg, #e9f5dc, #c6e3ab); }
@@ -244,7 +244,7 @@
         --rx-try-bg: #1c1a0e; --rx-try-line: #4d4421; --rx-field: #11170d; --rx-field-line: #4d4421; --rx-res-icon: #2a2614; --rx-how-bg: #2a2512; --rx-how-ink: #e3cf86;
         --rx-saved-bg: rgb(99 102 241 / .16); --rx-saved-line: rgb(129 140 248 / .42); --rx-saved-ink: #c7d2fe;
         --rx-done-bg: rgb(34 197 94 / .18); --rx-done-ink: #86efac; --rx-tag-bg: #26331d;
-        --rx-badge: #e3f1d6; --rx-badge-ink: #1f3a10; --rx-today: #60a5fa; }
+        --rx-badge: #e3f1d6; --rx-badge-ink: #1f3a10; --rx-today: #60a5fa; --rx-ap-off: #3a4433; --rx-ap-off-ink: #c3cdb9; }
     .rfx-sw { display: inline-block; flex: none; width: .9rem; height: .9rem; border-radius: .25rem; background: var(--ph-strong); vertical-align: -.1rem; }
     .rfx .is-soil { --ph: var(--ph-soil); } .rfx .is-absorb { --ph: var(--ph-absorb); } .rfx .is-strong { --ph: var(--ph-strong); } .rfx .is-easing { --ph: var(--ph-easing); } .rfx .is-fading { --ph: var(--ph-fading); }
     .rfx .rfx-sw[class*=is-] { background: var(--ph); }
@@ -526,6 +526,14 @@
     .rfx-ap i svg { width: .74rem; height: .74rem; fill: currentColor; }
     .rfx-ap i.is-plan { color: var(--rx-ink); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-ink), 0 0 0 1.5px var(--rx-card), 0 3px 6px -2px rgb(0 0 0 / .3); }
     .rfx-ap i.is-try { color: #5c4500; background: #f5c518; }
+    /* In the colour of the check the calendar shows when it acts on it, grey when it does not (2026-10-30, the owner:
+       "show all the applications but make the current selected nutrient target related a different color"). */
+    .rfx-ap i.is-rel { color: #fff; background: var(--sc, var(--rx-badge)); }
+    .rfx-ap i.is-other { color: var(--rx-ap-off-ink); background: var(--rx-ap-off); }
+    html.dark .rfx-ap i.is-rel { color: #111a0c; }
+    .rfx-ap i.is-plan.is-rel { color: var(--sc, var(--rx-ink)); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--sc, var(--rx-ink)), 0 0 0 1.5px var(--rx-card), 0 3px 6px -2px rgb(0 0 0 / .3); }
+    .rfx-ap i.is-plan.is-other { color: var(--rx-ap-off-ink); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-ap-off-ink), 0 0 0 1.5px var(--rx-card), 0 3px 6px -2px rgb(0 0 0 / .3); }
+    .rfx-ap i.is-try.is-rel, .rfx-ap i.is-try.is-other { box-shadow: 0 0 0 2px #f5c518, 0 3px 6px -2px rgb(0 0 0 / .45); }
     .rfx-ap b { margin-left: .1rem; padding: 0 .25rem; border-radius: 999px; font-size: .58rem; font-weight: 900; line-height: 1.05rem; color: var(--rx-ink); background: var(--rx-card); box-shadow: 0 0 0 1px var(--rx-line-2); }
     @media (max-width: 639.98px) { .rfx-ap { right: .12rem; bottom: .12rem; } .rfx-ap i { width: 1rem; height: 1rem; } .rfx-ap i svg { width: .62rem; height: .62rem; } }
     /* Side by side. */
@@ -1847,8 +1855,11 @@
     /* The calendar: month by month, each day filled to its coverage, with its criticality as dots. */
     const calHtml = (R) => {
         const byDay = Object.fromEntries(R.days.map((d) => [d.d, d]));
+        // Every product on the lot's tasks and every one added, those acting on the check first on their day.
         const appsOn = {};
-        R.apps.filter((a) => a.relevant).forEach((a) => { (appsOn[a.date] ||= []).push(a); });
+        R.apps.forEach((a) => { (appsOn[a.date] ||= []).push(a); });
+        Object.values(appsOn).forEach((l) => l.sort((a, b) => Number(b.relevant) - Number(a.relevant)));
+        const word = R.check.word;
         const first = D(R.days[0].d), last = D(R.days[R.days.length - 1].d);
         let html = '', k = 0;
         for (let m = new Date(first.getFullYear(), first.getMonth(), 1); m <= last; m = new Date(m.getFullYear(), m.getMonth() + 1, 1)) {
@@ -1863,7 +1874,7 @@
                 if (!d) { cells.push(`<span class="rfx-cell is-out"><span class="rfx-n" style="opacity:.35">${dd}</span></span>`); continue; }
                 crit += d.c >= 2 ? 1 : 0;
                 const here = appsOn[ds] || [];
-                const ap = here.slice(0, 2).map((a) => `<i class="${a.try ? 'is-try' : a.done ? '' : 'is-plan'}" title="${esc(a.as)}${a.try ? ', added by you' : a.done ? ', done' : ', planned'}"><svg><use href="#rfxI-${apMark(a)}"/></svg></i>`).join('')
+                const ap = here.slice(0, 2).map((a) => `<i class="${a.relevant ? 'is-rel' : 'is-other'}${a.try ? ' is-try' : a.done ? '' : ' is-plan'}" title="${esc(a.as)}${a.try ? ', added by you' : a.done ? ', done' : ', planned'}, ${a.relevant ? 'acts on ' : 'not on '}${esc(word)}"><svg><use href="#rfxI-${apMark(a)}"/></svg></i>`).join('')
                     + (here.length > 2 ? `<b>+${here.length - 2}</b>` : '');
                 // Text over the fill: the number when it is nearly full, the day count from about half; white on the
                 // deep fills, near black on the pale ones.
@@ -1878,7 +1889,7 @@
                 <div class="rfx-wk">${DOW.map((w) => `<span class="rfx-wd">${w}</span>`).join('')}${cells.join('')}</div></div>`;
         }
         const late = R.check.kind === 'nutrient' ? 'late' : 'extra';
-        return `<div class="rfx-card" data-fold="cal" style="--d:.14s"><div class="rfx-card-h">The calendar <small>tap a day</small></div><div class="rfx-cal">${html}</div>
+        return `<div class="rfx-card" data-fold="cal" style="--d:.14s;--sc:${colorOf(R.check.key)}"><div class="rfx-card-h">The calendar <small>tap a day</small></div><div class="rfx-cal">${html}</div>
             ${phaseLegend(R)}
             <div class="rfx-legend"><b class="rfx-leg-h">What it means for the crop</b>
               <span><i style="background:repeating-linear-gradient(135deg,var(--rx-gap-a) 0 3px,var(--rx-gap-edge) 3px 5px);box-shadow:inset 0 0 0 1.5px var(--rx-gap-edge)"></i>${STATE.gap[0]}</span>
@@ -1889,11 +1900,12 @@
               ${R.days.some((x) => x.h === 'n') ? '<span><span class="rfx-hm is-n" style="position:static">N</span>Nitrogen lush: pests and disease like it</span>' : ''}
               ${R.days.some((x) => x.h === 'k') ? '<span><span class="rfx-hm is-k" style="position:static">K</span>Potassium or silicon helping the crop hold out</span>' : ''}</div>
             <div class="rfx-legend rfx-leg-ap"><b class="rfx-leg-h">What went on</b>
-              <span><span class="rfx-ap"><i><svg><use href="#rfxI-gran"/></svg></i></span>Spread on the soil</span>
-              <span><span class="rfx-ap"><i><svg><use href="#rfxI-drop"/></svg></i></span>Sprayed or poured</span>
-              <span><span class="rfx-ap"><i><svg><use href="#rfxI-leaf"/></svg></i></span>Organic or biological</span>
-              <span><span class="rfx-ap"><i class="is-try"><svg><use href="#rfxI-star"/></svg></i></span>Added by you</span>
-              <span><span class="rfx-ap"><i class="is-plan"><svg><use href="#rfxI-gran"/></svg></i></span>Outlined: still planned</span></div></div>`;
+              <span><span class="rfx-ap"><i class="is-rel"><svg><use href="#rfxI-gran"/></svg></i></span>In this colour: acts on ${esc(word)}</span>
+              <span><span class="rfx-ap"><i class="is-other"><svg><use href="#rfxI-gran"/></svg></i></span>Grey: not on ${esc(word)}</span>
+              <span><span class="rfx-ap"><i class="is-rel"><svg><use href="#rfxI-drop"/></svg></i></span>Sprayed or poured</span>
+              <span><span class="rfx-ap"><i class="is-rel"><svg><use href="#rfxI-leaf"/></svg></i></span>Organic or biological</span>
+              <span><span class="rfx-ap"><i class="is-rel is-try"><svg><use href="#rfxI-star"/></svg></i></span>Added by you</span>
+              <span><span class="rfx-ap"><i class="is-rel is-plan"><svg><use href="#rfxI-gran"/></svg></i></span>Outlined: still planned</span></div></div>`;
     };
     // How a product went on, as its mark: a try's star, a spray's drop, organic's leaf, else granules.
     const apMark = (a) => a.try ? 'star' : ['foliar', 'drench'].includes(a.form) ? 'drop' : ['organic', 'bio'].includes(a.form) ? 'leaf' : 'gran';
