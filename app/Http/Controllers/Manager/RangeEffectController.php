@@ -41,7 +41,7 @@ class RangeEffectController extends BaseScheduleController
 
     public const SAVED = 'as_range_effects';
 
-    public const MAX_TRIES = 4;
+    public const MAX_TRIES = 8;
 
     private function gate()
     {
@@ -76,12 +76,18 @@ class RangeEffectController extends BaseScheduleController
         $this->gate();
         $schedule = $this->schedule($request->input('scheduleId'));
         try {
-            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request));
+            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request));
         } catch (\InvalidArgumentException $e) {
             return $this->jsonFail($e->getMessage(), 422);
         }
 
         return $this->jsonOk('ok', ['data' => $res]);
+    }
+
+    /** The other checks read beside the main one. */
+    private function also(Request $request): array
+    {
+        return array_values(array_filter(array_map(fn ($k) => mb_substr((string) $k, 0, 80), (array) $request->input('also', [])), fn ($k) => $k !== ''));
     }
 
     /** The tries as the engine reads them: a book product (by id) or a bare ingredient, a date, an amount. */
@@ -103,7 +109,8 @@ class RangeEffectController extends BaseScheduleController
             if (! $p) {
                 continue;
             }
-            $out[] = ['product' => $p, 'date' => (string) ($t['date'] ?? ''), 'qty' => max(0, (float) ($t['qty'] ?? 0)), 'unit' => mb_substr((string) ($t['unit'] ?? ''), 0, 20)];
+            $out[] = ['product' => $p, 'date' => (string) ($t['date'] ?? ''), 'qty' => max(0, (float) ($t['qty'] ?? 0)), 'unit' => mb_substr((string) ($t['unit'] ?? ''), 0, 20),
+                'method' => in_array($t['method'] ?? null, ['granular', 'foliar'], true) ? $t['method'] : null];
         }
 
         return $out;
@@ -151,11 +158,11 @@ class RangeEffectController extends BaseScheduleController
     {
         $this->gate();
         if (! $this->savedReady()) {
-            return $this->jsonFail('Saving is being set up. Please try again in a few minutes.', 503);
+            return $this->jsonFail('Saving is being set up. Please try again in a few minutes.', 422);
         }
         $schedule = $this->schedule($request->input('scheduleId'));
         try {
-            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request));
+            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request));
         } catch (\InvalidArgumentException $e) {
             return $this->jsonFail($e->getMessage(), 422);
         }
@@ -163,7 +170,7 @@ class RangeEffectController extends BaseScheduleController
         if ($title === '') {
             $title = $res['check']['label'] . ' · ' . $res['lot']['name'];
         }
-        $params = ['check' => $res['check']['key'], 'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'date', 'qty', 'unit', 'name'])),
+        $params = ['check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'date', 'qty', 'unit', 'name', 'method'])),
             array_slice((array) $request->input('tries', []), 0, self::MAX_TRIES)))];
         $id = DB::table(self::SAVED)->insertGetId([
             'userId' => Auth::id(), 'croppingScheduleId' => (int) $schedule->id, 'lotId' => (int) $res['lot']['id'], 'title' => mb_substr($title, 0, 190),

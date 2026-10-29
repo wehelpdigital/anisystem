@@ -62,6 +62,35 @@ class RangeEffect
 
     public const MAX_DAYS = 240;
 
+    /** How many checks can be read side by side. */
+    public const MAX_CHECKS = 6;
+
+    /**
+     * What an application is doing on a day (2026-10-30, the owner: "the absorption stage, the ammonization in soil
+     * stage, the effect stage and the color for strong effect to fading away"): still in the soil (urea turning into
+     * ammonium, a salt dissolving, manure breaking down), being taken up, at its strongest, easing, fading away.
+     */
+    public const PHASES = ['soil', 'absorb', 'strong', 'easing', 'fading'];
+
+    /** Days nitrogen spends in the soil before the roots can take it, [flooded, upland]: urea first turns into ammonium. */
+    private const N_SOIL_DAYS = ['urea' => [2, 3], 'inhibitor' => [5, 6], 'complete' => [1, 2], 'ammonium sulfate' => [1, 1], 'ammonium phosphate' => [1, 1], 'nitrate' => [0, 0]];
+
+    /**
+     * Fertilizer salts sold under their own names (a product the book holds without a grade, or an ingredient tried on
+     * its own): percent of each element in the salt, the oxides as NpkPlan names them, silicon as the element.
+     */
+    private const COMPOUNDS = [
+        'potassium silicate' => ['K2O' => 28, 'Si' => 33], 'calcium silicate' => ['Ca' => 30, 'Si' => 21], 'sodium silicate' => ['Si' => 28],
+        'silicic acid' => ['Si' => 29], 'potassium nitrate' => ['N' => 13, 'K2O' => 46], 'calcium nitrate' => ['N' => 15.5, 'Ca' => 19],
+        'potassium sulfate|sulfate of potash|sulphate of potash' => ['K2O' => 50, 'S' => 18], 'potassium chloride|muriate of potash' => ['K2O' => 60],
+        'mono ?potassium phosphate|\bmkp\b' => ['P2O5' => 52, 'K2O' => 34], 'magnesium sulfate|magnesium sulphate|epsom' => ['Mg' => 9.8, 'S' => 13],
+        'kieserite' => ['Mg' => 16, 'S' => 22], 'zinc sulfate|zinc sulphate' => ['Zn' => 33, 'S' => 16], 'zinc oxide' => ['Zn' => 78],
+        'borax' => ['B' => 11], 'boric acid' => ['B' => 17], 'solubor|disodium octaborate' => ['B' => 20.5], 'ferrous sulfate|iron sulfate' => ['Fe' => 20, 'S' => 11],
+        'manganese sulfate' => ['Mn' => 31, 'S' => 18], 'copper sulfate' => ['Cu' => 25, 'S' => 12.8], 'sodium molybdate' => ['Mo' => 39], 'ammonium molybdate' => ['Mo' => 54],
+        'calcium chloride' => ['Ca' => 27], 'gypsum|calcium sulfate' => ['Ca' => 23, 'S' => 18], 'dolomit' => ['Ca' => 21, 'Mg' => 12],
+        'calcium carbonate|agricultural lime|aglime' => ['Ca' => 38],
+    ];
+
     /** Units that say a line was sprayed or poured, not spread. */
     private const LIQUID_UNITS = ['l', 'liter', 'liters', 'litre', 'litres', 'lt', 'ltr', 'ml', 'g', 'gram', 'grams', 'gm', 'tbsp', 'tsp', 'sachet', 'sachets', 'pack', 'packs', 'bottle', 'bottles', 'cc'];
 
@@ -198,7 +227,7 @@ class RangeEffect
     /**
      * The calendar for one lot and one check. $tries: [{date: Y-m-d, product: product array (see productOf), qty, unit}].
      */
-    public static function run(AsCroppingSchedule $schedule, int $lotId, string $checkKey, array $tries = []): array
+    public static function run(AsCroppingSchedule $schedule, int $lotId, string $checkKey, array $tries = [], array $also = []): array
     {
         $schedule->loadMissing(['lots', 'activities.lots', 'activities.items.material']);
         $lot = $schedule->lots->firstWhere('id', $lotId);
@@ -218,10 +247,27 @@ class RangeEffect
                 $apps[] = $app;
             }
         }
+        // Other checks read beside this one (the owner, 2026-10-30: "allow multiple selections in check to see the
+        // relationship of each"): the same products and days, each check's own curves.
+        $alsoChecks = [];
+        foreach (array_slice(array_values(array_unique(array_map('strval', $also))), 0, self::MAX_CHECKS - 1) as $k) {
+            $ck = self::checkOf($k, $c['crop']);
+            if ($ck && $ck['key'] !== $check['key']) {
+                $alsoChecks[$ck['key']] = $ck;
+            }
+        }
         foreach ($apps as $i => &$a) {
             $a['i'] = $i;
             $a['curve'] = self::curveFor($a, $check, $c);
             $a['relevant'] = $a['curve'] !== null;
+            $a['curves'] = [];
+            $a['span'] = $a['curve']['hi'] ?? null;
+            foreach ($alsoChecks as $k => $ck) {
+                $a['curves'][$k] = self::curveFor($a, $ck, $c);
+                if ($a['curves'][$k]) {
+                    $a['span'] = max((int) ($a['span'] ?? 0), (int) $a['curves'][$k]['hi']);
+                }
+            }
         }
         unset($a);
 
@@ -232,21 +278,35 @@ class RangeEffect
         $lateNotes = $c['table'] ? RangeEffectBook::late($c['table']) : [];
         $days = [];
         $stages = [];
+        $info = [];
         $last = false;
         for ($d = $from->copy(); $d->lte($to); $d->addDay()) {
             [$stage, $dayLabel] = self::stageOn($c, $d);
+            $info[] = ['label' => $stage['label'] ?? null, 'in' => $stage !== null && ! ($c['harvest'] && $d->gt($c['harvest'])), 'date' => $d->copy()];
             [$lvl, $why] = self::critOf($crit, $stage['label'] ?? null, $check);
             $cov = 0.0;
             $tryCov = 0.0;
             $by = [];
+            // What the strongest one is doing that day, and whether another is still in the soil.
+            $phase = '';
+            $top = 0.0;
+            $inSoil = false;
             foreach ($apps as $a) {
                 if (! $a['curve']) {
                     continue;
                 }
                 $t = (int) $a['date']->diffInDays($d, false);
+                $ph = self::phaseOf($a['curve'], $t);
+                if ($ph === 'soil') {
+                    $inSoil = true;
+                }
                 $v = self::level($a['curve'], $t);
                 if ($v <= 0.01) {
                     continue;
+                }
+                if ($v > $top) {
+                    $top = $v;
+                    $phase = (string) $ph;
                 }
                 $by[] = $a['i'];
                 if ($check['kind'] === 'nutrient') {
@@ -277,7 +337,12 @@ class RangeEffect
                 }
             }
             $days[] = ['d' => $d->toDateString(), 'c' => $lvl, 'v' => round($cov, 2), 's' => $state, 'g' => count($stages) - 1, 'dl' => $dayLabel,
-                'a' => $by, 't' => $tryCov > 0.01 ? round($tryCov, 2) : 0];
+                'a' => $by, 't' => $tryCov > 0.01 ? round($tryCov, 2) : 0, 'p' => $phase ?: ($inSoil ? 'soil' : ''), 'sl' => $inSoil ? 1 : 0];
+        }
+        $relevant = array_filter($apps, fn ($a) => $a['curve'] !== null);
+        $series = [];
+        foreach ($alsoChecks as $k => $ck) {
+            $series[] = self::seriesOf($apps, $k, $ck, $days, $info, $stages, $crit, $lateNotes, $c);
         }
 
         return [
@@ -290,7 +355,77 @@ class RangeEffect
             'apps' => array_map(fn ($a) => self::appOut($a, $check), $apps),
             'summary' => self::summary($days, $stages, $apps, $check, $lateNotes, $c),
             'tables' => ['crit' => $c['table'], 'hasCrit' => (bool) $crit],
+            'phaseWords' => self::phaseWords($check, $relevant),
+            'series' => $series,
         ];
+    }
+
+    /**
+     * Another check over the same days, kept small for the side by side view: coverage, verdict, phase and how
+     * critical, one entry a day, with its own count of covered days.
+     */
+    private static function seriesOf(array $apps, string $key, array $check, array $days, array $info, array $stages, array $crit, array $lateNotes, array $c): array
+    {
+        $nut = $check['kind'] === 'nutrient';
+        $rows = [];
+        foreach ($days as $i => $day) {
+            [$lvl] = self::critOf($crit, $info[$i]['label'], $check);
+            $cov = 0.0;
+            $top = 0.0;
+            $phase = '';
+            $soil = false;
+            foreach ($apps as $a) {
+                $k = $a['curves'][$key] ?? null;
+                if (! $k) {
+                    continue;
+                }
+                $t = (int) $a['date']->diffInDays($info[$i]['date'], false);
+                $ph = self::phaseOf($k, $t);
+                $soil = $soil || $ph === 'soil';
+                $v = self::level($k, $t);
+                if ($v <= 0.01) {
+                    continue;
+                }
+                if ($v > $top) {
+                    $top = $v;
+                    $phase = (string) $ph;
+                }
+                $cov = $nut ? $cov + $v : max($cov, $v);
+            }
+            $cov = min(1.6, $cov);
+            $rows[] = ['d' => $day['d'], 'c' => $lvl, 'v' => round($cov, 2), 's' => self::stateOf($info[$i]['in'], $lvl, $cov, $nut), 'g' => $day['g'], 'p' => $phase ?: ($soil ? 'soil' : '')];
+        }
+        $mine = array_map(fn ($a) => ['curve' => $a['curves'][$key] ?? null, 'relevant' => ($a['curves'][$key] ?? null) !== null] + $a, $apps);
+        $sum = self::summary($rows, $stages, $mine, $check, $lateNotes, $c);
+        $gaps = array_map(fn ($r) => ['why' => self::critOf($crit, $stages[$r['g']]['label'] ?? null, $check)[1]] + $r, array_slice($sum['gaps'], 0, 3));
+
+        return [
+            'check' => array_diff_key($check, ['ai' => 1]), 'pct' => $sum['pct'], 'coveredDays' => $sum['coveredDays'], 'thinDays' => $sum['thinDays'], 'gapDays' => $sum['gapDays'],
+            'lateDays' => array_sum(array_column($sum['late'], 'n')), 'apps' => $sum['apps'], 'gaps' => $gaps,
+            'v' => array_column($rows, 'v'), 's' => array_column($rows, 's'), 'p' => array_column($rows, 'p'), 'c' => array_column($rows, 'c'),
+            'words' => self::phaseWords($check, array_filter($mine, fn ($a) => $a['curve'] !== null)),
+        ];
+    }
+
+    /**
+     * The calendar's names for the phases: one product's own word when every product shares it ("Breaking down in
+     * the soil" when all of it is manure), else the check's general one.
+     */
+    private static function phaseWords(array $check, array $relevant): array
+    {
+        $nut = $check['kind'] === 'nutrient';
+        $out = $nut
+            ? ['soil' => $check['nut'] === 'N' ? 'In the soil, turning into ammonium' : 'In the soil, dissolving', 'absorb' => 'Being taken up', 'strong' => 'Strong effect',
+                'easing' => 'Still working, easing', 'fading' => 'Fading away']
+            : ['soil' => 'Taking hold', 'absorb' => 'Moving into the plant', 'strong' => 'Strong protection', 'easing' => 'Still protecting, easing', 'fading' => 'Wearing off'];
+        foreach (['soil', 'absorb'] as $p) {
+            $words = array_unique(array_filter(array_map(fn ($a) => $a['curve']['words'][$p] ?? null, $relevant)));
+            if (count($words) === 1) {
+                $out[$p] = reset($words);
+            }
+        }
+
+        return $out;
     }
 
     /** The first and last day drawn. */
@@ -312,9 +447,10 @@ class RangeEffect
             $ends[] = $c['harvest']->copy()->addDays(7);
         }
         foreach ($apps as $a) {
-            if ($a['relevant'] ?? false) {
+            // Any product acting on any of the checks being compared.
+            if (($a['span'] ?? null) !== null) {
                 $starts[] = $a['date']->copy()->subDays(3);
-                $ends[] = $a['date']->copy()->addDays(min(60, (int) ($a['curve']['hi'] ?? 14)) + 3);
+                $ends[] = $a['date']->copy()->addDays(min(60, (int) $a['span']) + 3);
             }
         }
         if (! $starts) {
@@ -449,17 +585,19 @@ class RangeEffect
         if (! is_array($p) || ! $date) {
             return null;
         }
-        $a = self::read((string) ($p['b'] ?? $p['name'] ?? 'Product'), (float) ($t['qty'] ?? 0), (string) ($t['unit'] ?? ''), 1.0, $c, $date, $p);
+        // How the farmer will put it on (the owner, 2026-10-30: "application selection should be either granular or foliar").
+        $method = in_array($t['method'] ?? null, ['granular', 'foliar'], true) ? $t['method'] : null;
+        $a = self::read((string) ($p['b'] ?? $p['name'] ?? 'Product'), (float) ($t['qty'] ?? 0), (string) ($t['unit'] ?? ''), 1.0, $c, $date, $p, $method);
 
-        return $a ? $a + ['title' => 'If you apply it', 'done' => false, 'try' => true, 'tryIndex' => $i, 'shed' => false, 'activityId' => null] : null;
+        return $a ? $a + ['title' => 'If you apply it', 'done' => false, 'try' => true, 'tryIndex' => $i, 'shed' => false, 'activityId' => null, 'method' => $method] : null;
     }
 
     /**
      * One product line read: what it carries and what it protects against. $book: a product array from the book
      * (a try), else the line is matched by its name. Null when it is neither a fertilizer nor a crop protection
-     * product (labor, fuel, seed...).
+     * product (labor, fuel, seed...). $method: granular or foliar when the farmer said so (a try), else read from the line.
      */
-    private static function read(string $name, float $qty, string $unit, float $share, array $c, Carbon $date, ?array $book = null): ?array
+    private static function read(string $name, float $qty, string $unit, float $share, array $c, Carbon $date, ?array $book = null, ?string $method = null): ?array
     {
         // A name is looked up once per request (a season repeats its products, and every look is a database read).
         static $seen = [];
@@ -480,6 +618,12 @@ class RangeEffect
                 $k = $k === 'SiO2' ? 'Si' : $k;
                 $pct[$k] = (float) $v * ($k === 'Si' && isset($book['n']['SiO2']) ? 0.4675 : 1);
             }
+        }
+        $salt = false;
+        if (! $pct && ! ($npk['estimate'] ?? null)) {
+            // A salt under its own name carries what the salt is made of (potassium silicate: potassium and silicon).
+            $pct = self::compoundPct($name, $book, $u, $method);
+            $salt = (bool) $pct;
         }
         $nut = [];
         $doseKnown = false;
@@ -514,7 +658,7 @@ class RangeEffect
                 $ai[$d['name'] ?? $n] = true;
             }
         }
-        if (! $ai && ! $nut) {
+        if (! $ai && (! $nut || $salt)) {
             foreach (self::ingredientsIn($name) as $n) {
                 $ai[$n] = true;
             }
@@ -528,12 +672,15 @@ class RangeEffect
         // planting it is basal, after it a topdress).
         $cat = (string) ($npk['category'] ?? '');
         $low = mb_strtolower($name . ' ' . ($npk['slug'] ?? '') . ' ' . ($book['b'] ?? ''));
+        $soilForm = ($c['anchor'] && $date->lte($c['anchor']->copy()->addDays(3))) || (! $c['anchor']) ? 'basal' : 'topdress';
         $form = match (true) {
+            $method === 'foliar' => 'foliar',
             $cat === 'bio' || ($book['t'] ?? '') === 'biological' && $nut => 'bio',
             $cat === 'organic' || preg_match('/manure|compost|vermi|organic fert|ipot/u', $low) === 1 => 'organic',
             preg_match('/controlled|coated|slow.?release|polymer|\bscu\b|\bcrf\b/u', $low) === 1 => 'slow',
+            $method === 'granular' => $soilForm,
             $cat === 'foliar' || in_array($u, self::LIQUID_UNITS, true) || in_array((string) ($book['t'] ?? ''), ['foliar', 'soluble'], true) && ! in_array($u, ['kg', 'bag', 'bags', 'sack', 'sacks'], true) => 'foliar',
-            default => ($c['anchor'] && $date->lte($c['anchor']->copy()->addDays(3))) || (! $c['anchor']) ? 'basal' : 'topdress',
+            default => $soilForm,
         };
         $nsrc = match (true) {
             preg_match('/inhibitor|nbpt|agrotain|dcd|nitrapyrin/u', $low) === 1 => 'inhibitor',
@@ -550,6 +697,50 @@ class RangeEffect
 
         return ['date' => $date, 'name' => $name, 'as' => $label, 'company' => (string) ($book['c'] ?? ''), 'qty' => $qty, 'unit' => $unit, 'nut' => $nut, 'doseKnown' => $doseKnown,
             'ai' => $ai, 'form' => $form, 'nsrc' => $nsrc, 'kindWord' => $book ? (ProductLibrary::TYPES[$book['t'] ?? ''] ?? null) : ($npk ? 'Fertilizer' : null)];
+    }
+
+    /**
+     * Percent of each element in a product made of a known salt: the salt's own share, times how much of the product
+     * the salt is (its label amount; all of it for the bare salt, about a third for a bare liquid; a fifth for a
+     * brand that names the salt without an amount).
+     */
+    private static function compoundPct(string $name, ?array $book, string $u, ?string $method): array
+    {
+        $liquid = in_array($u, ['l', 'liter', 'liters', 'litre', 'litres', 'lt', 'ltr', 'ml', 'cc'], true);
+        $parts = [];
+        foreach ((array) ($book['ai'] ?? []) as $x) {
+            $n = (string) ($x['n'] ?? '');
+            if ($n === '') {
+                continue;
+            }
+            $amt = is_numeric($x['a'] ?? null) ? (float) $x['a'] : null;
+            $au = mb_strtolower((string) ($x['u'] ?? ''));
+            $parts[] = [$n, $amt === null ? null : (str_contains($au, '%') || ($au === '' && $amt <= 100) ? $amt : $amt / 10)];
+        }
+        $title = trim($name . ' ' . (($book['b'] ?? '') !== $name ? ($book['b'] ?? '') : ''));
+        if (! $parts) {
+            $parts[] = [$title, null];
+        }
+        $pct = [];
+        foreach ($parts as [$n, $share]) {
+            $low = mb_strtolower($n);
+            foreach (self::COMPOUNDS as $rx => $els) {
+                if (preg_match('/' . $rx . '/u', $low) !== 1) {
+                    continue;
+                }
+                if ($share === null) {
+                    $rest = preg_replace('/[^a-z]/', '', (string) preg_replace('/' . $rx . '/u', '', mb_strtolower($title)));
+                    $bare = strlen((string) $rest) < 4;
+                    $share = $bare ? ($liquid && $method !== 'granular' ? 30 : 100) : 20;
+                }
+                foreach ($els as $el => $v) {
+                    $pct[$el] = ($pct[$el] ?? 0) + $v * min(100, $share) / 100;
+                }
+                break;
+            }
+        }
+
+        return $pct;
     }
 
     /** Active ingredients written in a line ("Prevathon (chlorantraniliprole)"), by the dictionary's own patterns. */
@@ -584,21 +775,28 @@ class RangeEffect
             }
             $kgHa = $a['nut'][$check['el']];
             $ref = ($a['form'] === 'foliar' ? self::REF_FOLIAR : self::REF_SOIL)[$check['el']] ?? 1;
-            $amp = $kgHa === null ? 1.0 : max(0.15, min(1.6, $kgHa / $ref));
-            if ($kgHa !== null && $kgHa < $ref * 0.03) {
-                return null;   // a trace on the label, not a dose
+            $ratio = $kgHa === null ? 1.0 : $kgHa / $ref;
+            if ($kgHa !== null && $ratio < 0.03 && ! $a['try']) {
+                return null;   // a trace on the label, not a dose (a try is always shown, however little)
             }
+            $amp = max(0.05, min(1.6, $ratio));
             $prof = RangeEffectBook::nutrient($check['nut'], $a['form'], $c['water']);
             [$on, $pk, $days, $fade] = $prof ? [(int) ($prof['onset'] ?? 0), (int) ($prof['peak'] ?? 3), array_map('intval', (array) $prof['days']), (string) ($prof['fade'] ?? 'gradual')]
                 : self::nutrientFallback($check['nut'], $a['form']);
             if ($check['nut'] === 'N' && $a['nsrc']) {
                 $f = self::nFactor($a['nsrc'], $c['water']);
                 $days = array_map(fn ($x) => (int) max(1, round($x * $f)), $days);
+                // Urea spread on the soil or the water first turns into ammonium; ammonium salts only dissolve.
+                if (in_array($a['form'], ['basal', 'topdress'], true) && isset(self::N_SOIL_DAYS[$a['nsrc']])) {
+                    $on = self::N_SOIL_DAYS[$a['nsrc']][$c['water'] === 'flooded' ? 0 : 1];
+                }
             }
             [$lo, $typ, $hi] = self::days3($days);
+            $pk = max($pk, $on + ($on > 0 ? 2 : 0));
 
             return ['onset' => $on, 'peak' => max($on, min($pk, $typ)), 'typ' => $typ, 'hi' => max($typ, $hi), 'lo' => $lo, 'amp' => round($amp, 2), 'fade' => $fade,
-                'note' => (string) ($prof['note'] ?? ''), 'conf' => $prof ? 'book' : 'estimate', 'kgHa' => $kgHa];
+                'note' => (string) ($prof['note'] ?? ''), 'conf' => $prof ? 'book' : 'estimate', 'kgHa' => $kgHa, 'ref' => $ref, 'ratio' => round($ratio, 3),
+                'words' => self::nutrientWords($check['nut'], $a['form'], $a['nsrc'])];
         }
 
         // A threat or a named pest: the longest working of the line's ingredients that act on it.
@@ -625,12 +823,105 @@ class RangeEffect
             }
             [$lo, $typ, $hi] = self::days3(array_map('intval', (array) $days));
             if (! $best || $typ > $best['typ']) {
-                $best = ['onset' => $on, 'peak' => $on, 'typ' => $typ, 'hi' => max($typ, $hi), 'lo' => $lo, 'amp' => 1.0, 'fade' => $fade, 'move' => $move,
-                    'note' => (string) ($e['note'] ?? ''), 'conf' => $conf, 'by' => $n];
+                // A systemic spray takes a day or two to move through the plant; it guards most of the way from the start.
+                $rise = ['systemic' => 2, 'translaminar' => 1][$move] ?? 0;
+                $best = ['onset' => $on, 'peak' => max($on, min($on + $rise, $typ)), 'rise' => $rise ? 0.7 : 0, 'typ' => $typ, 'hi' => max($typ, $hi), 'lo' => $lo, 'amp' => 1.0,
+                    'fade' => $fade, 'move' => $move, 'note' => (string) ($e['note'] ?? ''), 'conf' => $conf, 'by' => $n, 'words' => self::threatWords((string) $move)];
             }
         }
 
         return $best;
+    }
+
+    /** A nutrient's own words for its first two phases (the rest read the same for every nutrient). */
+    private static function nutrientWords(string $nut, string $form, ?string $nsrc): array
+    {
+        $soil = match (true) {
+            $form === 'organic' => 'Breaking down in the soil',
+            $form === 'bio' => 'Microbes settling on the roots',
+            $form === 'slow' => 'The coating letting it out',
+            $form === 'drench' => 'Soaking down to the roots',
+            $form === 'foliar' => 'On the leaves, not in yet',
+            $nut === 'N' && $nsrc === 'urea' => 'Turning into ammonium in the soil',
+            $nut === 'N' && $nsrc === 'inhibitor' => 'Turning into ammonium slowly, held back by the inhibitor',
+            $nut === 'N' && in_array($nsrc, ['complete', 'ammonium sulfate', 'ammonium phosphate'], true) => 'Dissolving into ammonium in the soil',
+            default => 'Dissolving in the soil water',
+        };
+
+        return ['soil' => $soil, 'absorb' => $form === 'foliar' ? 'Leaves taking it in' : 'Roots taking it up', 'strong' => 'Strongest feeding', 'easing' => 'Still feeding, easing',
+            'fading' => 'Fading away'];
+    }
+
+    /** A spray's words for its phases, by how it moves. */
+    private static function threatWords(string $move): array
+    {
+        $soil = match ($move) {
+            'biological' => 'Settling in and spreading',
+            'bait' => 'Pests eating the bait, slow to act',
+            'systemic' => 'The plant switching it on',
+            'translaminar' => 'Soaking into the leaf',
+            'pre', 'pre_post', 'soil', 'fumigant' => 'Settling into the soil and water',
+            default => 'Slow start, taking hold',
+        };
+
+        return ['soil' => $soil, 'absorb' => $move === 'translaminar' ? 'Soaking into the leaf' : 'Moving through the plant', 'strong' => 'Strongest protection',
+            'easing' => 'Still protecting, easing', 'fading' => 'Wearing off'];
+    }
+
+    /** Where each phase starts and ends, in days after the application: [phase => [first, last]], empty phases left out. */
+    private static function phaseSpans(array $k): array
+    {
+        $on = (int) $k['onset'];
+        $pk = (int) $k['peak'];
+        $typ = (int) $k['typ'];
+        $hi = (int) $k['hi'];
+        // As level() draws it: full to 60% of the way from the peak to the usual end, easing to that end, then fading.
+        $sharp = ($k['fade'] ?? '') === 'sharp';
+        $edge = $sharp ? $typ : (int) floor($pk + ($typ - $pk) * 0.6);
+        $out = [];
+        foreach (['soil' => [0, $on - 1], 'absorb' => [$on, $pk - 1], 'strong' => [$pk, $edge], 'easing' => [$edge + 1, $typ], 'fading' => [$typ + 1, $hi]] as $p => [$a, $b]) {
+            if ($b >= $a) {
+                $out[$p] = [$a, $b];
+            }
+        }
+
+        return $out;
+    }
+
+    /** What an application is doing on day t after it went on, or null before it or after it is gone. */
+    public static function phaseOf(array $k, int $t): ?string
+    {
+        foreach (self::phaseSpans($k) as $p => [$a, $b]) {
+            if ($t >= $a && $t <= $b) {
+                return $p;
+            }
+        }
+
+        return null;
+    }
+
+    /** What a product acts on, as check keys with their names: the nutrients it carries and the threats its ingredients hit. */
+    private static function actsOf(array $a): array
+    {
+        $out = [];
+        foreach (array_keys($a['nut']) as $el) {
+            foreach (self::NUTRIENTS as $key => [$e, $nm]) {
+                if ($e === $el) {
+                    $out['n:' . $key] = $nm . ' (' . $key . ')';
+                }
+            }
+        }
+        foreach ($a['ai'] as $n) {
+            $e = RangeEffectBook::ingredient($n);
+            $targets = $e['targets'] ?? (self::KIND_DEFAULT[CompatBook::ingredient($n)['kind'] ?? ''][0] ?? []);
+            foreach ((array) $targets as $t) {
+                if (isset(self::THREATS[$t])) {
+                    $out['t:' . $t] = self::THREATS[$t][0];
+                }
+            }
+        }
+
+        return array_map(fn ($k, $v) => ['key' => $k, 'label' => $v], array_keys($out), $out);
     }
 
     /** [lo, typ, hi], sorted, never under a day. */
@@ -699,7 +990,8 @@ class RangeEffect
             return 0.0;
         }
         if ($t < $pk) {
-            $v = ($t - $on + 1) / ($pk - $on + 1);
+            $rise = (float) ($k['rise'] ?? 0);
+            $v = $rise + (1 - $rise) * ($t - $on + 1) / ($pk - $on + 1);
         } elseif ($t <= $typ) {
             // Full until most of its days have passed, easing as the end comes near.
             $edge = $pk + ($typ - $pk) * 0.6;
@@ -723,16 +1015,27 @@ class RangeEffect
         }
         $formWord = ['basal' => 'worked into the soil', 'topdress' => 'spread on the crop', 'foliar' => 'sprayed', 'drench' => 'poured at the roots', 'slow' => 'slow release',
             'organic' => 'organic', 'bio' => 'biological'][$a['form']] ?? '';
+        $phases = [];
+        if ($k) {
+            foreach (self::phaseSpans($k) as $p => [$s, $e]) {
+                $phases[] = ['p' => $p, 'from' => $a['date']->copy()->addDays($s)->toDateString(), 'to' => $a['date']->copy()->addDays($e)->toDateString(), 'n' => $e - $s + 1,
+                    'w' => $k['words'][$p] ?? ''];
+            }
+        }
+        $ratio = $k['ratio'] ?? null;
 
         return [
             'i' => $a['i'], 'date' => $a['date']->toDateString(), 'title' => $a['title'], 'name' => $a['name'], 'as' => $a['as'], 'company' => $a['company'], 'amount' => $amount,
             'done' => $a['done'], 'try' => $a['try'], 'tryIndex' => $a['tryIndex'] ?? null, 'shed' => $a['shed'], 'kindWord' => $a['kindWord'], 'form' => $a['form'], 'formWord' => $formWord,
-            'carries' => $carries, 'ai' => $a['ai'], 'relevant' => $a['relevant'],
+            'method' => $a['method'] ?? null, 'carries' => $carries, 'ai' => $a['ai'], 'relevant' => $a['relevant'],
+            // A try that misses the check says what it does act on, so the sheet can offer it.
+            'acts' => $a['try'] ? self::actsOf($a) : [],
             'effect' => $k ? [
                 'from' => $a['date']->copy()->addDays($k['onset'])->toDateString(), 'full' => $a['date']->copy()->addDays($k['typ'])->toDateString(),
                 'until' => $a['date']->copy()->addDays($k['hi'])->toDateString(), 'days' => [$k['lo'], $k['typ'], $k['hi']], 'amp' => $k['amp'],
-                'dose' => $check['kind'] === 'nutrient' ? ($a['doseKnown'] ? ($k['amp'] >= 1.25 ? 'heavy' : ($k['amp'] >= 0.75 ? 'full' : 'light')) : 'unknown') : null,
-                'note' => $k['note'], 'conf' => $k['conf'], 'by' => $k['by'] ?? null, 'move' => $k['move'] ?? null,
+                'dose' => $check['kind'] === 'nutrient' ? ($a['doseKnown'] ? ($ratio !== null && $ratio < 0.15 ? 'trace' : ($k['amp'] >= 1.25 ? 'heavy' : ($k['amp'] >= 0.75 ? 'full' : 'light'))) : 'unknown') : null,
+                'kgHa' => isset($k['kgHa']) ? round((float) $k['kgHa'], $k['kgHa'] < 1 ? 2 : 1) : null, 'ref' => $k['ref'] ?? null, 'el' => $check['el'] ?? null,
+                'note' => $k['note'], 'conf' => $k['conf'], 'by' => $k['by'] ?? null, 'move' => $k['move'] ?? null, 'phases' => $phases,
             ] : null,
         ];
     }
