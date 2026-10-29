@@ -101,6 +101,35 @@
         transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
     .pb-card:hover { border-color: #cfe3bd; }
     .pb-card.is-new { animation: pbIn .32s cubic-bezier(.22,1,.36,1); }
+    /* The filter: a chip a kind of work, in the kind's own colour; the tasks of other kinds and the notes step aside, the
+       dividers stay to say where the season is. Dragging waits until every task shows again. */
+    .pb-filter { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; margin: 0 0 .75rem; padding: .55rem .6rem; border-radius: 1rem; background: var(--color-white); border: 1px solid var(--color-gray-200); }
+    .pb-filter[hidden] { display: none; }
+    .pb-filter-h { margin-right: .15rem; font-size: .7rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--color-gray-500); }
+    .pb-fc { display: inline-flex; align-items: center; gap: .35rem; padding: .38rem .7rem .38rem .45rem; border-radius: 999px; font-size: .8rem; font-weight: 800; color: var(--color-gray-700);
+        background: var(--color-gray-50); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ty) 30%, transparent);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), transform .2s; }
+    .pb-fc:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--ty); }
+    .pb-fc i { display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 999px; font-style: normal; font-size: .8rem; background: color-mix(in srgb, var(--ty) 14%, transparent); transition: background-color .28s; }
+    .pb-fc em { min-width: 1.2rem; padding: 0 .35rem; border-radius: 999px; font-style: normal; font-size: .7rem; text-align: center; color: var(--color-gray-600); background: var(--color-white); box-shadow: inset 0 0 0 1px var(--color-gray-200); }
+    .pb-fc.is-on { color: #fff; background: var(--ty); box-shadow: 0 8px 18px -12px var(--ty); }
+    .pb-fc.is-on i { background: rgb(255 255 255 / .22); }
+    .pb-fc.is-on em { color: var(--ty); box-shadow: none; }
+    .pb-fc.is-all { --ty: #4a7c2a; }
+    .pb-filter-say { flex: 1 0 100%; display: flex; align-items: center; gap: .5rem; margin-top: .1rem; font-size: .78rem; font-weight: 600; color: var(--color-gray-500); }
+    .pb-filter-say button { flex: none; white-space: nowrap; font-weight: 800; color: var(--color-brand-700); text-decoration: underline; text-underline-offset: 3px; }
+    .pb-fcs { flex: 1 1 0; min-width: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+    /* A phone: one row that scrolls sideways, so the list starts right under it. */
+    @media (max-width: 639.98px) { .pb-fcs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: -.6rem; padding: .1rem .6rem .15rem .05rem; } .pb-fcs::-webkit-scrollbar { display: none; } .pb-fc { flex: none; } }
+    .pb-card.is-out { display: none; }
+    .pb-list.is-refilter .pb-card:not(.is-out) { animation: pbIn .32s cubic-bezier(.22,1,.36,1) both; }
+    .pb-list.is-filtered .pb-grip { visibility: hidden; }
+    .pb-list.is-filtered .pb-div { opacity: .75; }
+    html.dark .pb-filter { background: #151b12; border-color: #2b3a1c; }
+    html.dark .pb-fc { color: #d6e2cc; background: #1b2416; }
+    html.dark .pb-fc em { color: #b1c0a5; background: #151b12; box-shadow: inset 0 0 0 1px #2b3a1c; }
+    html.dark .pb-fc.is-on { color: #fff; }
+    @media (prefers-reduced-motion: reduce) { .pb-fc { transition: none; } .pb-list.is-refilter .pb-card { animation: none !important; } }
     @keyframes pbIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
     .pb-card.dragging { opacity: .32; outline: 2px dashed #b9c6a8; outline-offset: -2px; filter: grayscale(.5); }
     .pb-card.just-moved { box-shadow: 0 0 0 3px rgba(107,159,61,.35); }
@@ -695,6 +724,9 @@
 
     <div class="pb-panel" id="pbPanelTasks" data-panel="tasks" role="tabpanel">
     <div id="pbWarn"></div>
+    {{-- Show only some kinds of work (2026-10-30, the owner: "an option to filter to show only irrigation, land prep, things
+         like that for easier building. make it look good"). --}}
+    <div class="pb-filter" id="pbFilter" role="group" aria-label="Show only these kinds of task" hidden></div>
 
     <div class="pb-list" id="pbList"></div>
     <div class="rx-empty hidden" id="pbEmpty">
@@ -1560,15 +1592,56 @@
         </div>`;
     }
     let USE = { u: {}, w: {} };
+    /* ---- show only some kinds of work: kept per protocol on this device ---- */
+    const FILTER_KEY = 'anee-pb-filter-' + BOOT.id;
+    let FILTER = new Set();
+    try { FILTER = new Set(JSON.parse(localStorage.getItem(FILTER_KEY) || '[]')); } catch (_) { FILTER = new Set(); }
+    const keepFilter = () => { try { localStorage.setItem(FILTER_KEY, JSON.stringify([...FILTER])); } catch (_) { /* this device only */ } };
+    function renderFilter() {
+        const box = $id('pbFilter');
+        const n = {};
+        TASKS.filter(isTask).forEach((t) => { const k = t.type || 'other'; n[k] = (n[k] || 0) + 1; });
+        const kinds = Object.keys(OPT.types).filter((k) => n[k]).concat(n.other && !OPT.types.other ? ['other'] : []);
+        // A kind no task has any more is no filter.
+        [...FILTER].forEach((k) => { if (!n[k]) FILTER.delete(k); });
+        box.hidden = kinds.length < 2;
+        if (box.hidden) { FILTER.clear(); return; }
+        const total = TASKS.filter(isTask).length, shown = FILTER.size ? TASKS.filter((t) => isTask(t) && FILTER.has(t.type || 'other')).length : total;
+        box.innerHTML = '<span class="pb-filter-h">Show</span><div class="pb-fcs">'
+            + `<button type="button" class="pb-fc is-all ${FILTER.size ? '' : 'is-on'}" data-fk="" aria-pressed="${!FILTER.size}"><i aria-hidden="true">✨</i>All<em>${total}</em></button>`
+            + kinds.map((k) => `<button type="button" class="pb-fc ${FILTER.has(k) ? 'is-on' : ''}" data-fk="${esc(k)}" aria-pressed="${FILTER.has(k)}" style="--ty:${TYPE_COLOR[k] || TYPE_COLOR.other}"><i aria-hidden="true">${TYPE_ICON[k] || '📌'}</i>${esc(OPT.types[k] || 'Other')}<em>${n[k]}</em></button>`).join('') + '</div>'
+            + (FILTER.size ? `<span class="pb-filter-say">Showing ${shown} of ${total} tasks. The notes step aside and dragging waits until every task shows. <button type="button" data-fk="">Show every task</button></span>` : '');
+    }
+    $id('pbFilter').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-fk]');
+        if (!b) return;
+        const k = b.dataset.fk;
+        if (!k) FILTER.clear(); else if (FILTER.has(k)) FILTER.delete(k); else FILTER.add(k);
+        keepFilter();
+        render();
+        const list = $id('pbList');
+        list.classList.remove('is-refilter'); void list.offsetWidth; list.classList.add('is-refilter');
+        setTimeout(() => list.classList.remove('is-refilter'), 420);
+    });
+    function applyFilter(list) {
+        list.classList.toggle('is-filtered', FILTER.size > 0);
+        if (!FILTER.size) return;
+        list.querySelectorAll('.pb-card[data-id]').forEach((c) => {
+            const t = TASKS.find((x) => x.id === c.getAttribute('data-id'));
+            c.classList.toggle('is-out', !!t && (isNote(t) || (isTask(t) && !FILTER.has(t.type || 'other'))));
+        });
+    }
     function render() {
         USE = useOf(TASKS);
         renderHead();
         WARN = warningsFor(TASKS);
         renderWarnings();
+        renderFilter();
         const list = $id('pbList');
         RAIL_SEEN = new Set();
         list.innerHTML = TASKS.map(cardHtml).join('');
         RAIL_SEEN = null;
+        applyFilter(list);
         OPEN.forEach((id) => { const c = list.querySelector(`.pb-card[data-id="${CSS.escape(id)}"]`); if (c) c.classList.add('is-open'); });
         $id('pbEmpty').classList.toggle('hidden', TASKS.length > 0);
         $id('pbUndo').disabled = !HIST.undo.length;
