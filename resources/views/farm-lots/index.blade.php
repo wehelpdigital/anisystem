@@ -191,9 +191,11 @@
     const start = async () => {
         await load();
         // The bell's link: open that lot.
-        const want = Number(new URLSearchParams(location.search).get('lot'));
+        const qs = new URLSearchParams(location.search);
+        const want = Number(qs.get('lot'));
         const lot = want && ALL.find((l) => l.id === want);
-        if (lot) setTimeout(() => L().edit(lot, { ask: false }), 300);
+        // A season lot's "Field answers" opens the lot's answers, page by page (2026-10-30).
+        if (lot) setTimeout(() => (qs.get('answers') ? L().review(lot, {}) : L().edit(lot, { ask: false })), 300);
     };
     if (window.api && window.aneeLots) start(); else window.addEventListener('load', start, { once: true });
 })();

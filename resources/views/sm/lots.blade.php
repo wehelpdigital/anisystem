@@ -27,10 +27,17 @@
                  no button that would only be refused — the same way the
                  Workers module and "+ Version" are not drawn for them. --}}
             @unless (\App\Support\WorkerContext::inWorkerContext())
-                <button type="button" class="btn btn-primary w-full sm:w-auto shrink-0" data-add-lot>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
-                    Add Lot
-                </button>
+                <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                    {{-- The farm's lots (Global Lots) not in this season yet, put in with their answers (2026-10-30). --}}
+                    <button type="button" class="btn btn-white w-full sm:w-auto shrink-0" data-add-farm-lot>
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" class="w-5 h-5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 4l9 6.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg>
+                        Add from your lots
+                    </button>
+                    <button type="button" class="btn btn-primary w-full sm:w-auto shrink-0" data-add-lot>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m-7-7h14"/></svg>
+                        Add Lot
+                    </button>
+                </div>
             @endunless
         </div>
 
@@ -104,6 +111,29 @@
         </div>
         <div class="lmp-grid" id="lotMapPickGrid" aria-live="polite"></div>
         <p class="lmp-empty" id="lotMapPickEmpty" hidden></p>
+    </div>
+</div>
+
+{{-- ADD FROM YOUR LOTS (2026-10-30, the owner: the season's lots and Global Lots "should be synced including the
+     answers"). The farm's lots not in this season yet; the picked ones come in as lots of this season, linked to their
+     farm lot, so their soil and water answers come with them. A season lot always gets a share of the tasks that
+     name no lot, so nothing is added without being picked. --}}
+<div class="sheet hidden" id="farmLotSheet" style="--sheet-width:30rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <div class="min-w-0">
+            <h3 class="sheet-title">Add from your lots</h3>
+            <p class="text-xs text-gray-500">Your lots in Global Lots that are not in this season yet</p>
+        </div>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="flp-list" id="farmLotList" aria-live="polite"></div>
+        <p class="form-hint" id="farmLotHint">They come in with their place, size and field answers. A new lot gets its share of the tasks that name no lot.</p>
+    </div>
+    <div class="sheet-footer">
+        <a class="btn btn-ghost" href="{{ route('farmlots.index') }}">Open Global Lots</a>
+        <button type="button" class="btn btn-primary" id="farmLotAdd" disabled>Add to this season</button>
     </div>
 </div>
 
@@ -501,6 +531,32 @@
         .lmp-new, .lmp-card, .lmp-thumb img { transition: none; animation: none; }
         .lmp-skel { animation: none; }
     }
+    /* A season lot's farm lot, where its answers live. */
+    .lot-farm { display: flex; align-items: center; gap: .55rem; width: 100%; padding: .5rem .65rem; border-radius: .8rem; text-align: left; color: #2f5219; background: #f3f8ec; border: 1px solid #dcebc9;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), border-color .28s; }
+    .lot-farm:hover { background: #ebf4df; border-color: #b9d39c; transform: translateY(-1px); }
+    .lot-farm > svg { flex: none; width: 1.1rem; height: 1.1rem; }
+    .lot-farm span { flex: 1; min-width: 0; font-size: .78rem; line-height: 1.35; }
+    .lot-farm b { display: block; font-size: .8rem; font-weight: 800; color: #14210c; }
+    .lot-farm i { font-style: normal; color: #4b5563; }
+    .lot-farm em { flex: none; font-style: normal; font-size: .72rem; font-weight: 800; padding: .2rem .55rem; border-radius: 999px; color: #5c4500; background: #fde68a; }
+    .lot-farm.is-none em { color: #fff; background: #4a7c2a; }
+    html.dark .lot-farm { color: #cfe6b8; background: rgb(107 159 61 / .12); border-color: rgb(107 159 61 / .35); }
+    html.dark .lot-farm b { color: #eef5e8; } html.dark .lot-farm i { color: #b1c0a5; }
+    /* The farm's lots to pick from. */
+    .flp-list { display: grid; gap: .45rem; }
+    .flp-row { display: flex; align-items: center; gap: .7rem; padding: .7rem .8rem; border-radius: .9rem; border: 1.5px solid var(--color-gray-200); background: var(--color-white); cursor: pointer;
+        transition: border-color .28s cubic-bezier(.22,1,.36,1), background-color .28s, transform .28s cubic-bezier(.22,1,.36,1); animation: flpIn .32s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 40ms); }
+    @keyframes flpIn { from { opacity: 0; transform: translateY(6px); } }
+    .flp-row:hover { transform: translateY(-1px); border-color: #b9d39c; }
+    .flp-row.is-on { border-color: #4a7c2a; background: #f3f8ec; }
+    .flp-row input { width: 1.15rem; height: 1.15rem; accent-color: #4a7c2a; flex: none; }
+    .flp-row b { display: block; font-size: .92rem; color: var(--color-gray-900); }
+    .flp-row small { display: block; font-size: .76rem; color: var(--color-gray-500); line-height: 1.4; }
+    .flp-empty { padding: 1rem; text-align: center; font-size: .86rem; color: var(--color-gray-500); }
+    html.dark .flp-row { background: #151b12; border-color: #2b3a1c; } html.dark .flp-row.is-on { background: rgb(107 159 61 / .14); border-color: #6b9f3d; }
+    html.dark .flp-row b { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .lot-farm, .flp-row { transition: none; animation: none; } }
 </style>
 <style>
     /* A field that is still filling itself, saying so.
@@ -659,6 +715,8 @@
         'mapSaveId' => $l->mapSaveId,
         // Marked harvested from the board's Harvest sheet.
         'harvestedSays' => $l->harvestedAt?->format('M j, Y'),
+        // Its farm lot in Global Lots, where its field answers live (App\Support\LotSync).
+        'farmLot' => \App\Support\LotSync::card(($farmLots ?? [])[$l->id] ?? null),
     ])->values();
 @endphp
 <script>
@@ -969,6 +1027,18 @@ const __init = () => {
                     ${lot.notes ? `<p class="text-xs text-gray-500 line-clamp-2">${escapeHtml(lot.notes)}</p>` : ''}
                 </div>
 
+                ${lot.farmLot && MAY_EDIT_LOTS ? `
+                <a class="lot-farm ${lot.farmLot.got ? '' : 'is-none'}" href="${FARM_URL}?lot=${lot.farmLot.id}&answers=1" title="Its soil, water and last season answers, kept in Global Lots">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 4l9 6.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg>
+                    <span><b>${lot.farmLot.got ? 'Field answers' : 'No field answers yet'}</b><i>${lot.farmLot.got ? escapeHtml(lot.farmLot.got + ' answered in Global Lots' + (lot.farmLot.stale ? ', time to check them' : '')) : 'Answer its soil and water questions once, in Global Lots'}</i></span>
+                    <em>${lot.farmLot.got ? 'See' : 'Answer'}</em>
+                </a>` : (!lot.farmLot && MAY_EDIT_LOTS ? `
+                <button type="button" class="lot-farm is-none" data-to-farm="${lot.id}" title="Keep this lot in Global Lots, where its field answers live">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
+                    <span><b>Not in Global Lots</b><i>Add it to answer its soil and water once</i></span>
+                    <em>Add it</em>
+                </button>` : '')}
+
                 ${lot.pinned ? `
                 <a class="lot-pin-chip" href="${escapeHtml(lot.mapsHref)}" target="_blank" rel="noopener">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
@@ -1005,6 +1075,7 @@ const __init = () => {
        owner's, the same as adding: a worker who cannot add a lot has no
        business being offered a Delete beside every one of them. */
     const MAY_EDIT_LOTS = @json(! \App\Support\WorkerContext::inWorkerContext());
+    const FARM_URL = @json(route('farmlots.index'));
     // The board's pen — attaching or detaching a lot's map writes the lot,
     // and the server asks for this alongside the maps grant.
     const MAY_EDIT_BOARD = @json(\App\Support\WorkerContext::canEdit());
@@ -1177,9 +1248,72 @@ const __init = () => {
         fillTowns(prov, town);
     }
 
+    /* Add from your lots: the farm's lots not in this season, picked and put in. */
+    const farmPick = new Set();
+    const farmList = document.getElementById('farmLotList');
+    const farmAdd = document.getElementById('farmLotAdd');
+    const paintFarmAdd = () => {
+        farmAdd.disabled = farmPick.size === 0;
+        farmAdd.textContent = farmPick.size > 1 ? 'Add ' + farmPick.size + ' lots to this season' : 'Add to this season';
+    };
+    async function openFarmLots() {
+        farmPick.clear();
+        paintFarmAdd();
+        farmList.innerHTML = '<div class="lmp-skel"></div><div class="lmp-skel"></div>';
+        window.openSheet('farmLotSheet');
+        try {
+            const res = await api(`{{ route('sm.lots.farm') }}?scheduleId=${SCHEDULE_ID}`);
+            const rows = (res.data && res.data.lots) || [];
+            const unitSay = (l) => {
+                if (!l.areaHa) return '';
+                const ha = Number(l.areaHa);
+                return l.areaUnit === 'sqm' ? Math.round(ha * 10000).toLocaleString() + ' sq m' : (l.areaUnit === 'acre' ? (Math.round(ha / 0.40468564 * 100) / 100) + ' acres' : (Math.round(ha * 100) / 100) + ' ha');
+            };
+            farmList.innerHTML = rows.length ? rows.map((l, k) => `<label class="flp-row" style="--k:${k}"><input type="checkbox" value="${l.id}"><span><b>${escapeHtml(l.name)}</b><small>${escapeHtml([unitSay(l), l.place, l.got ? l.got + ' field answers' : 'no field answers yet'].filter(Boolean).join(' · '))}</small></span></label>`).join('')
+                : '<p class="flp-empty">Every one of your lots is already in this season.</p>';
+            document.getElementById('farmLotHint').hidden = !rows.length;
+        } catch (err) {
+            farmList.innerHTML = `<p class="flp-empty">${escapeHtml(err.message || 'Your lots could not be read.')}</p>`;
+        }
+    }
+    farmList.addEventListener('change', (e) => {
+        const box = e.target.closest('input[type=checkbox]');
+        if (!box) return;
+        if (box.checked) farmPick.add(Number(box.value)); else farmPick.delete(Number(box.value));
+        box.closest('.flp-row').classList.toggle('is-on', box.checked);
+        paintFarmAdd();
+    });
+    farmAdd.addEventListener('click', async () => {
+        if (!farmPick.size) return;
+        farmAdd.disabled = true;
+        try {
+            const res = await api(`{{ route('sm.lots.fromFarm') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { ids: [...farmPick] } });
+            ((res.data && res.data.lots) || []).forEach((d) => { upsertLot(d); tellBoard('sm:lot-saved', d); });
+            toast(res.message);
+            closeSheet('farmLotSheet');
+        } catch (err) {
+            toast(err.message, 'error');
+            paintFarmAdd();
+        }
+    });
+
     document.addEventListener('click', async (e) => {
         if (e.target.closest('[data-add-lot]')) {
             openLotSheet();
+            return;
+        }
+        if (e.target.closest('[data-add-farm-lot]')) {
+            openFarmLots();
+            return;
+        }
+        const toFarm = e.target.closest('[data-to-farm]');
+        if (toFarm) {
+            toFarm.disabled = true;
+            try {
+                const res = await api(`{{ route('sm.lots.toFarm') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { lotId: Number(toFarm.dataset.toFarm) } });
+                upsertLot(res.data);
+                toast(res.message);
+            } catch (err) { toast(err.message, 'error'); toFarm.disabled = false; }
             return;
         }
 
@@ -1628,6 +1762,7 @@ const __init = () => {
             fullAddress: composeAddress(d),
             dayType: d.dayType || 'DAT',
             notes: d.notes,
+            farmLot: d.farmLot || (LOTS.find((l) => String(l.id) === String(d.id)) || {}).farmLot || null,
         };
         const idx = LOTS.findIndex((l) => String(l.id) === String(saved.id));
         if (idx >= 0) LOTS[idx] = saved; else LOTS.push(saved);

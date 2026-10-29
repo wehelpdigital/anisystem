@@ -341,12 +341,12 @@ class NpkSeasonController extends BaseScheduleController
      */
     public static function withNeeds(AsCroppingSchedule $schedule, array $lots): array
     {
+        // Each lot's field answers, from its farm lot in Global Lots (App\Support\LotSync, 2026-10-30).
         $answers = [];
         try {
-            if (\Illuminate\Support\Facades\Schema::hasTable('as_field_profiles')) {
-                foreach (DB::table('as_field_profiles')->where('scheduleId', $schedule->id)->whereIn('lotId', array_column($lots, 'id'))->where('deleteStatus', 1)
-                    ->orderByDesc('updated_at')->get(['lotId', 'answers']) as $r) {
-                    $answers[(int) $r->lotId] ??= \App\Support\FieldProfile::normalize((array) (json_decode((string) $r->answers, true) ?: []));
+            if (\App\Support\FieldProfile::storeReady()) {
+                foreach ($schedule->lots()->whereIn('id', array_column($lots, 'id'))->get() as $lot) {
+                    $answers[(int) $lot->id] = \App\Support\LotSync::answersFor($schedule, $lot);
                 }
             }
         } catch (\Throwable $e) {

@@ -91,18 +91,8 @@ final class RangeEffectLogic
         if (isset($memo[$mk])) {
             return $memo[$mk];
         }
-        $answers = [];
-        try {
-            if (FieldProfile::storeReady()) {
-                $r = DB::table('as_field_profiles')->where('lotId', $lot->id)->where('deleteStatus', 1)
-                    ->where(fn ($q) => $q->where('scheduleId', $s->id)->orWhereNull('scheduleId'))->orderByDesc('updated_at')->first(['answers']);
-                if ($r) {
-                    $answers = FieldProfile::normalize((array) (json_decode((string) $r->answers, true) ?: []));
-                }
-            }
-        } catch (\Throwable $e) {
-            report($e);
-        }
+        // The lot's field answers, from its farm lot in Global Lots (LotSync), else a profile the season lot kept.
+        $answers = FieldProfile::storeReady() ? LotSync::answersFor($s, $lot) : [];
         $rice = $c['crop'] && str_starts_with((string) $c['crop'], 'rice');
         $method = $rice && $c['counter'] === 'DAS' ? 'direct_wet' : null;
         $key = NpkNeed::cropKey($c['crop'], $method);

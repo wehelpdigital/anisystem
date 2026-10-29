@@ -69,7 +69,7 @@ class RangeEffect
      * The way of counting, by date: a saved reading counted an older way is counted again when it is opened (the
      * owner, 2026-10-30: "i opened the saved file and the P is still at 78%"). Raise it whenever the numbers change.
      */
-    public const VERSION = '2026-10-30.4';
+    public const VERSION = '2026-10-30.5';
 
     /**
      * What an application is doing on a day (2026-10-30, the owner: "the absorption stage, the ammonization in soil

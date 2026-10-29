@@ -72,8 +72,13 @@ class LotController extends BaseScheduleController
             'pinned' => $lot->isPinned(),
             'mapsHref' => $lot->mapsHref(),
             'harvestedSays' => $lot->harvestedAt?->format('M j, Y'),
+            // Its farm lot in Global Lots, where its field answers live (App\Support\LotSync).
+            'farmLot' => $this->farmLot ?? null,
         ];
     }
+
+    /** The farm lot of the lot just saved, for its card. */
+    private ?array $farmLot = null;
 
     /**
      * Module page: GET /app/sm-lots?id={scheduleId}
@@ -81,9 +86,11 @@ class LotController extends BaseScheduleController
     public function page(Request $request)
     {
         $schedule = $this->schedule($request->query('id'));
+        // Every lot of the season is one of the farm's lots, with the answers kept there (2026-10-30, the owner).
+        $farmLots = \App\Support\LotSync::season($schedule);
         $schedule->load(['lots', 'defaultGroupings.lots']);
 
-        return view('sm.lots', compact('schedule'));
+        return view('sm.lots', compact('schedule', 'farmLots'));
     }
 
     /**
@@ -453,6 +460,7 @@ class LotController extends BaseScheduleController
         if ($request->has('tags')) {
             \App\Support\ScheduleTags::sync($schedule, 'lot', (int) $lot->id, $request->input('tags', []));
         }
+        $this->farmLot = \App\Support\LotSync::card(\App\Support\LotSync::afterSave($schedule, $lot->fresh()));
 
         return $this->jsonOk('Lot added.', ['data' => $this->lotPayload($lot)]);
     }
@@ -503,6 +511,7 @@ class LotController extends BaseScheduleController
         if ($request->has('tags')) {
             \App\Support\ScheduleTags::sync($schedule, 'lot', (int) $lot->id, $request->input('tags', []));
         }
+        $this->farmLot = \App\Support\LotSync::card(\App\Support\LotSync::afterSave($schedule, $lot->fresh()));
 
         return $this->jsonOk('Lot updated.', ['data' => $this->lotPayload($lot)]);
     }
@@ -517,6 +526,69 @@ class LotController extends BaseScheduleController
         $lot->update(['deleteStatus' => 0]);
 
         return $this->jsonOk('Lot deleted.');
+    }
+
+    /** A season lot with a name like "Lot 1" put into Global Lots when the farmer asks, from its card. */
+    public function toFarm(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return $this->jsonFail('The farm owner keeps the lots.', 403);
+        }
+        $lot = AsScheduleLot::active()->where('croppingScheduleId', $schedule->id)->where('id', (int) $request->input('lotId'))->first();
+        if (! $lot) {
+            return $this->jsonFail('Lot not found.', 404);
+        }
+        $this->farmLot = \App\Support\LotSync::card(\App\Support\LotSync::afterSave($schedule, $lot, true));
+        if (! $this->farmLot) {
+            return $this->jsonFail('It could not be added to Global Lots. Please try again.', 422);
+        }
+
+        return $this->jsonOk('Added to Global Lots.', ['data' => $this->lotPayload($lot->fresh())]);
+    }
+
+    /** The farm's lots not in this season yet, for "Add from your lots". */
+    public function farmChoices(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return $this->jsonFail('The farm owner adds lots.', 403);
+        }
+        $rows = array_map(fn ($f) => ['id' => (int) $f['id'], 'name' => (string) $f['name'], 'place' => (string) ($f['place'] ?? ''), 'areaHa' => $f['areaHa'] ?? null,
+            'areaUnit' => $f['areaUnit'] ?? 'ha', 'got' => \App\Support\LotSync::card($f)['got'] ?? 0], \App\Support\LotSync::notIn($schedule));
+
+        return $this->jsonOk('ok', ['data' => ['lots' => $rows]]);
+    }
+
+    /** Farm lots put into this season as lots of it, linked to their farm lot (and so to its answers). */
+    public function fromFarm(Request $request)
+    {
+        $schedule = $this->scheduleFromRequest($request);
+        if (\App\Support\WorkerContext::inWorkerContext()) {
+            return $this->jsonFail('The farm owner adds lots.', 403);
+        }
+        $ids = array_values(array_filter(array_map('intval', (array) $request->input('ids', []))));
+        if (! $ids) {
+            return $this->jsonFail('Pick at least one lot.', 422);
+        }
+        $lotCap = \App\Support\Tier::scheduleLimit($schedule, 'lotsPerSchedule');
+        $have = AsScheduleLot::active()->where('croppingScheduleId', $schedule->id)->count();
+        if ($lotCap !== null && $have + count($ids) > $lotCap) {
+            \App\Support\Tier::scheduleDenyFor($schedule, 'lotsPerSchedule', 'This plan allows up to ' . $lotCap . ' lot' . ($lotCap == 1 ? '' : 's') . ' per season. Move up to {plan} for more.');
+        }
+        // The new lots grow what this season's lots grow, counted the way they are counted.
+        $lots = AsScheduleLot::active()->where('croppingScheduleId', $schedule->id)->get(['crop', 'dayType']);
+        $crop = $lots->pluck('crop')->filter()->countBy()->sortDesc()->keys()->first() ?: \App\Support\CropStages::normalize($schedule->cropType);
+        $dayType = $lots->pluck('dayType')->filter()->countBy()->sortDesc()->keys()->first() ?: ($schedule->dayType ?: 'DAT');
+        $made = \App\Support\LotSync::addToSeason($schedule, $ids, $crop ?: null, $dayType);
+        $farm = \App\Support\LotSync::season($schedule);
+        $out = [];
+        foreach ($made as $lot) {
+            $this->farmLot = \App\Support\LotSync::card($farm[(int) $lot->id] ?? null);
+            $out[] = $this->lotPayload($lot->fresh());
+        }
+
+        return $this->jsonOk(count($out) === 1 ? 'Lot added.' : count($out) . ' lots added.', ['data' => ['lots' => $out]]);
     }
 
     /** Validation shared by store/update. */

@@ -1254,6 +1254,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
     // --- Lots ---
     Route::post('/app/sm-lots-store', [App\Http\Controllers\Manager\LotController::class, 'store'])->name('sm.lots.store');
+    // The farm's lots (Global Lots) not in a season yet, and putting them in (2026-10-30).
+    Route::get('/app/sm-lots-farm', [App\Http\Controllers\Manager\LotController::class, 'farmChoices'])->name('sm.lots.farm');
+    Route::post('/app/sm-lots-from-farm', [App\Http\Controllers\Manager\LotController::class, 'fromFarm'])->middleware('throttle:30,1')->name('sm.lots.fromFarm');
+    Route::post('/app/sm-lots-to-farm', [App\Http\Controllers\Manager\LotController::class, 'toFarm'])->middleware('throttle:30,1')->name('sm.lots.toFarm');
     Route::put('/app/sm-lots-update', [App\Http\Controllers\Manager\LotController::class, 'update'])->name('sm.lots.update');
     Route::delete('/app/sm-lots-delete', [App\Http\Controllers\Manager\LotController::class, 'destroy'])->name('sm.lots.destroy');
     // Where a lot is. Posted by the map the moment a pin goes down.
