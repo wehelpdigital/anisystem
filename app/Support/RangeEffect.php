@@ -920,7 +920,10 @@ class RangeEffect
                 // gap while its roots were taking it up): counted as covered from the first day of uptake, rising to
                 // full; slower for manure, coated and biological, which open up over weeks.
                 'rise' => in_array($a['form'], ['organic', 'slow', 'bio'], true) ? 0.35 : 0.75,
-                'pre' => in_array($a['form'], ['organic', 'slow', 'bio'], true) ? 0.0 : 0.4];
+                // While it is still in the soil: a phosphorus, potassium or micro salt placed at the roots dissolves within a
+                // day or two and counts as there (the owner, 2026-10-30: a P put on at DAS 0 must cover DAS 0); urea turning
+                // into ammonium is partly there; manure, coated and biological are not there yet.
+                'pre' => in_array($a['form'], ['organic', 'slow', 'bio'], true) ? 0.0 : ($check['nut'] === 'N' && in_array($a['nsrc'], ['urea', 'inhibitor', null], true) ? 0.4 : 0.75)];
         }
 
         // A threat or a named pest: the longest working of the line's ingredients that act on it.
