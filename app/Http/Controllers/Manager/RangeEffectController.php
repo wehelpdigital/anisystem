@@ -78,7 +78,7 @@ class RangeEffectController extends BaseScheduleController
         $this->gate();
         $schedule = $this->schedule($request->input('scheduleId'));
         try {
-            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request), $this->logic($request));
+            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request), $this->logic($request), $this->custom($request));
         } catch (\InvalidArgumentException $e) {
             return $this->jsonFail($e->getMessage(), 422);
         }
@@ -92,6 +92,14 @@ class RangeEffectController extends BaseScheduleController
         $in = (array) $request->input('logic', []);
 
         return array_intersect_key(array_map(fn ($v) => filter_var($v, FILTER_VALIDATE_BOOLEAN), $in), array_flip(\App\Support\RangeEffectLogic::OPTS));
+    }
+
+    /** A what-if lot sent with the reading (its name, place and field answers), or null. */
+    private function custom(Request $request): ?array
+    {
+        $c = $request->input('custom');
+
+        return is_array($c) && $c ? RangeEffect::customOf($c) : null;
     }
 
     /** The other checks read beside the main one. */
@@ -222,7 +230,7 @@ class RangeEffectController extends BaseScheduleController
         }
         $schedule = $this->schedule($request->input('scheduleId'));
         try {
-            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request), $this->logic($request));
+            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request), $this->logic($request), $this->custom($request));
         } catch (\InvalidArgumentException $e) {
             return $this->jsonFail($e->getMessage(), 422);
         }
@@ -232,6 +240,10 @@ class RangeEffectController extends BaseScheduleController
         }
         $params = ['check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'logic' => $res['logic']['opts'] ?? [], 'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'date', 'qty', 'unit', 'name', 'method', 't', 'line'])),
             array_slice((array) $request->input('tries', []), 0, self::MAX_TRIES)))];
+        // A what-if lot is kept with the reading only (it is never a lot of the season or of Global Lots).
+        if ($custom = $this->custom($request)) {
+            $params['custom'] = $custom;
+        }
         $row = ['lotId' => (int) $res['lot']['id'], 'title' => mb_substr($title, 0, 190),
             'params' => json_encode($params, JSON_UNESCAPED_UNICODE), 'result' => json_encode($res, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'updated_at' => now()];
         // A saved reading opened and changed is saved over itself (the owner, 2026-10-30: "if you are editing a saved

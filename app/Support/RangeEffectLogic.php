@@ -87,16 +87,18 @@ final class RangeEffectLogic
     public static function soil(AsCroppingSchedule $s, AsScheduleLot $lot, array $c): array
     {
         static $memo = [];
-        $mk = $s->id . ':' . $lot->id;
+        $custom = $c['custom'] ?? null;
+        $mk = $s->id . ':' . $lot->id . ($custom ? ':' . md5(json_encode($custom)) : '');
         if (isset($memo[$mk])) {
             return $memo[$mk];
         }
-        // The lot's field answers, from its farm lot in Global Lots (LotSync), else a profile the season lot kept.
-        $answers = FieldProfile::storeReady() ? LotSync::answersFor($s, $lot) : [];
+        // The lot's field answers, from its farm lot in Global Lots (LotSync), else a profile the season lot kept; a what-if
+        // lot's own answers and place instead.
+        $answers = $custom ? $custom['answers'] : (FieldProfile::storeReady() ? LotSync::answersFor($s, $lot) : []);
         $rice = $c['crop'] && str_starts_with((string) $c['crop'], 'rice');
         $method = $rice && $c['counter'] === 'DAS' ? 'direct_wet' : null;
         $key = NpkNeed::cropKey($c['crop'], $method);
-        $place = trim(implode(', ', array_filter([$lot->locBarangay, $lot->locTown, $lot->locProvince])));
+        $place = $custom && $custom['place'] !== '' ? $custom['place'] : trim(implode(', ', array_filter([$lot->locBarangay, $lot->locTown, $lot->locProvince])));
         $L = $answers ? FieldProfile::legacy($answers) : [];
         $in = null;
         if ($key) {
@@ -120,10 +122,10 @@ final class RangeEffectLogic
         $from = $answers ? (! empty($in['areaSoil']) ? 'both' : 'answers') : (! empty($in['areaSoil']) ? 'area' : 'none');
 
         // Its farm lot in Global Lots, and an answered one nearby when it has no answers of its own.
-        $farm = FarmLots::ready() ? LotSync::farmOf($s, $lot) : null;
+        $farm = ! $custom && FarmLots::ready() ? LotSync::farmOf($s, $lot) : null;
         $near = $farm && ! $answers ? LotSync::nearAnswered($s, $farm) : null;
 
-        return $memo[$mk] = ['in' => $in, 'key' => $key, 'f' => array_values($f), 'from' => $from,
+        return $memo[$mk] = ['in' => $in, 'key' => $key, 'f' => array_values($f), 'from' => $from, 'custom' => $custom ? $custom['name'] : null,
             'farm' => $farm ? ['id' => (int) $farm['id'], 'name' => (string) $farm['name']] : null,
             'near' => $near ? ['id' => (int) $near['id'], 'name' => (string) $near['name'], 'same' => $near['same']] : null,
             'facts' => ['say' => self::soilWords($texture, $ph, $f), 'from' => $from, 'texture' => $texture, 'ph' => $ph, 'factors' => array_values($f), 'place' => $place]];
@@ -293,6 +295,17 @@ final class RangeEffectLogic
         $farm = $soil['farm'] ?? null;
         $near = $soil['near'] ?? null;
         $name = $farm ? $farm['name'] : 'This lot';
+        // A what-if lot: its own answers, nothing to answer in Global Lots.
+        if (! empty($soil['custom'])) {
+            $text = match ($from) {
+                'answers' => 'From the answers of ' . $soil['custom'] . ', the what-if lot. It is not a lot of yours: only this reading uses it.',
+                'both' => 'From the answers of ' . $soil['custom'] . ', the what-if lot, with the area\'s typical soil where a question is open.',
+                'area' => $soil['custom'] . ' has no answers yet, so this is the area\'s typical soil. Answer its questions to see your own.',
+                default => $soil['custom'] . ' has no answers and its place has no soil record, so the soil is not counted.',
+            };
+
+            return ['k' => 'soil', 'icon' => '🧪', 'tone' => in_array($from, ['area', 'none'], true) ? 'warn' : 'info', 'title' => 'The what-if soil: ' . $soil['facts']['say'], 'text' => $text, 'acts' => []];
+        }
         // A lot with no answers says which lot in Global Lots to answer (2026-10-30, the owner read the area's pH 6.2 on a
         // lot believed answered: it was a lot new to Global Lots), and offers an answered lot nearby.
         $text = match ($from) {

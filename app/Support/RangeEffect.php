@@ -116,6 +116,9 @@ class RangeEffect
                 'id' => (int) $lot->id, 'name' => (string) ($lot->lotName ?: 'Lot ' . $lot->id), 'crop' => $c['cropLabel'], 'cropKey' => $c['crop'], 'icon' => CropStages::icon($c['crop']),
                 'variety' => (string) ($lot->variety ?: ''), 'counter' => $c['counter'], 'ha' => $c['ha'], 'anchor' => $c['anchor']?->toDateString(),
                 'harvest' => $c['harvest']?->toDateString(), 'hasDay' => $c['anchor'] !== null, 'threats' => self::threatsFor($c['crop']),
+                // For a what-if lot built on this one: its place, and its field answers to start from.
+                'place' => trim(implode(', ', array_filter([$lot->locBarangay, $lot->locTown, $lot->locProvince]))),
+                'answers' => (object) (FieldProfile::storeReady() ? LotSync::answersFor($schedule, $lot) : []),
             ];
         }
 
@@ -240,7 +243,12 @@ class RangeEffect
     /**
      * The calendar for one lot and one check. $tries: [{date: Y-m-d, product: product array (see productOf), qty, unit}].
      */
-    public static function run(AsCroppingSchedule $schedule, int $lotId, string $checkKey, array $tries = [], array $also = [], array $logic = []): array
+    /**
+     * $custom: a what-if lot (2026-10-30, the owner: "have a custom button just to see if what it will look in a custom
+     * soil ... this one will not be saved as a lot, only for experimentation reference that can be saved in that range
+     * effect modal reading"): the lot's crop, days and tasks with other field answers and place, {name, place, answers}.
+     */
+    public static function run(AsCroppingSchedule $schedule, int $lotId, string $checkKey, array $tries = [], array $also = [], array $logic = [], ?array $custom = null): array
     {
         $schedule->loadMissing(['lots', 'activities.lots', 'activities.items.material']);
         $lot = $schedule->lots->firstWhere('id', $lotId);
@@ -249,6 +257,9 @@ class RangeEffect
         }
         $anchors = LotCalendar::effectiveAnchors($schedule);
         $c = self::ctx($schedule, $lot, $anchors);
+        if ($custom) {
+            $c['custom'] = self::customOf($custom);
+        }
         $check = self::checkOf($checkKey, $c['crop']) ?? self::checkOf('n:N');
         $today = Carbon::now('Asia/Manila')->startOfDay();
         // The deeper reading (RangeEffectLogic): amounts, the soil, the links between nutrients, the crop's health.
@@ -379,7 +390,8 @@ class RangeEffect
         return [
             'lot' => ['id' => (int) $lot->id, 'name' => (string) ($lot->lotName ?: 'Lot ' . $lot->id), 'crop' => $c['cropLabel'], 'icon' => CropStages::icon($c['crop']),
                 'counter' => $c['counter'], 'ha' => $c['ha'], 'anchor' => $c['anchor']?->toDateString(), 'harvest' => $c['harvest']?->toDateString(), 'water' => $c['water'],
-                'hasDay' => $c['anchor'] !== null || $c['tree'], 'realign' => $realign, 'delay' => $c['tree'] ? 0 : max(0, (int) ($lot->delayDays ?? 0))],
+                'hasDay' => $c['anchor'] !== null || $c['tree'], 'realign' => $realign, 'delay' => $c['tree'] ? 0 : max(0, (int) ($lot->delayDays ?? 0)),
+                'custom' => isset($c['custom']) ? ['name' => $c['custom']['name'], 'place' => $c['custom']['place'], 'count' => count($c['custom']['answers'])] : null],
             'check' => array_diff_key($check, ['ai' => 1]),
             'from' => $from->toDateString(), 'to' => $to->toDateString(), 'today' => $today->toDateString(),
             'days' => $days, 'stages' => $stages,
@@ -1274,6 +1286,15 @@ class RangeEffect
             'lateNote' => $late, 'apps' => count($relevant), 'tries' => count(array_filter($relevant, fn ($a) => $a['try'])),
             'other' => count(array_filter($apps, fn ($a) => ! $a['relevant'])),
         ];
+    }
+
+    /** A what-if lot, cleaned: its name, its place (for the area's soil and weather) and its field answers. */
+    public static function customOf(array $in): array
+    {
+        $answers = is_array($in['answers'] ?? null) ? FieldProfile::normalize($in['answers'], null) : [];
+
+        return ['name' => mb_substr(trim((string) ($in['name'] ?? '')), 0, 80) ?: 'What if', 'place' => mb_substr(trim((string) ($in['place'] ?? '')), 0, 160),
+            'answers' => $answers];
     }
 
     /** A product the book holds, by id, as a try reads it. */

@@ -20,6 +20,8 @@
      Engine: App\Support\RangeEffect, book App\Support\RangeEffectBook, answers Manager\RangeEffectController.
      Prefix rfx-. Plain words, no dashes. --}}
 @include('sm.partials.anee-wait')
+{{-- The field questions, for a what-if lot's answers (its dialogs sit in the browser's top layer, over the sheet). --}}
+@include('partials.field-profile')
 @php
     $rfxU = [
         'options' => route('sm.effect') . '?scheduleId=' . $schedule->id,
@@ -190,6 +192,12 @@
                 </div>
                 <div class="rfx-pick-foot"><span data-rfx-pick-n></span><button type="button" class="rfx-btn is-go" data-rfx-try-x>Done</button></div>
             </div>
+        </div>
+        {{-- A what-if lot (the owner, 2026-10-30: "have a custom button just to see if what it will look in a custom soil"):
+             a lot's crop, days and tasks with its own name, place and every field question, never saved as a lot. --}}
+        <div class="rfx-edit rfx-whatm" data-rfx-what hidden>
+            <div class="rfx-edit-veil" data-rfx-what-x></div>
+            <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxWhatT" data-rfx-what-c></div>
         </div>
         {{-- The planned products onto the season's plan: what each would do first, then done. --}}
         <div class="rfx-edit rfx-applym" data-rfx-apply-box hidden>
@@ -369,6 +377,18 @@
     /* The products added, a group a kind, each kind by date. */
     .rfx-tries-b { display: flex; flex-wrap: wrap; gap: .45rem; }
     .rfx-add.is-plan { color: #fff; background: var(--rx-on); box-shadow: 0 8px 18px -10px rgb(47 82 25 / .9); }
+    /* The what-if lot: its chip, dashed until it is in use, and its sheet. */
+    .rfx-chip.is-what { box-shadow: inset 0 0 0 1.5px var(--rx-line-2); background: repeating-linear-gradient(135deg, var(--rx-card) 0 6px, var(--rx-soft) 6px 12px); }
+    .rfx-chip.is-what.is-on { color: #fff; background: #6d28d9; box-shadow: 0 8px 18px -10px rgb(109 40 217 / .8); }
+    .rfx-chip.is-what .rfx-pen { width: .8rem; height: .8rem; opacity: .8; }
+    .rfx-whatm .rfx-edit-c { width: min(100%, 36rem); padding-bottom: 0; }
+    .rfx-w-f { display: grid; gap: .3rem; font-size: .78rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-w-f i { font-style: normal; font-weight: 600; }
+    .rfx-w-f input { width: 100%; padding: .6rem .7rem; border-radius: .75rem; border: 1.5px solid var(--rx-field-line); font-size: .94rem; color: var(--rx-ink); background: var(--rx-field); }
+    .rfx-w-q { display: grid; gap: .55rem; padding: .75rem .8rem; border-radius: .95rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-w-q b { display: block; font-size: .9rem; color: var(--rx-ink); }
+    .rfx-w-q small { display: block; font-size: .78rem; line-height: 1.45; color: var(--rx-muted); }
+    .rfx-w-qb { display: flex; flex-wrap: wrap; gap: .4rem; }
     .rfx-add.is-plan:hover { background: #2f6a16; }
     html.dark .rfx-add.is-plan:hover { background: #5a9a33; }
     /* Onto the plan: each product, what it would do, then done. */
@@ -968,7 +988,7 @@
     // What the reading counts besides coverage (RangeEffectLogic): every part on until the farmer switches it off.
     const LOGIC_DEF = { amt: true, soil: true, links: true, health: true };
     const S = { opts: null, lot: null, check: 'n:N', checks: ['n:N'], tab: 'nut', tries: [], res: null, saved: null, picked: null, q: '', busy: false,
-        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '', recounted: null, hide: [] };
+        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '', recounted: null, hide: [], custom: null, useCustom: false };
     const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg>';
     const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>';
     const kgSay = (v) => { v = Number(v) || 0; return v >= 10 ? String(Math.round(v)) : v >= 1 ? String(Math.round(v * 10) / 10) : String(Math.round(v * 100) / 100); };
@@ -992,7 +1012,7 @@
     const keep = () => {
         if (!S.opts) return;
         try {
-            localStorage.setItem(KEEP, JSON.stringify({ lot: S.lot, check: S.check, checks: S.checks, tab: S.tab, tries: S.tries, logic: S.logic, hide: S.hide,
+            localStorage.setItem(KEEP, JSON.stringify({ lot: S.lot, check: S.check, checks: S.checks, tab: S.tab, tries: S.tries, logic: S.logic, hide: S.hide, custom: S.custom, useCustom: S.useCustom,
                 // A hidden sheet reads as scrolled to the top: keep where it was when it closed.
                 savedId: S.savedId, savedTitle: S.savedTitle, top: Math.round(M.hidden || !M.classList.contains('is-on') ? (S.lastTop || 0) : scroller().scrollTop), at: Date.now() }));
         } catch (_) {}
@@ -1035,7 +1055,9 @@
     });
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape' || M.hidden) return;
+        if (document.querySelector('dialog[open]')) return;   // the field questions close themselves
         if (!$('[data-rfx-stg]').hidden) closeStage();
+        else if (!whatBox.hidden) closeWhat();
         else if (!applyBox.hidden) closeApply();
         else if (!$('[data-rfx-edit]').hidden) closeEdit();
         else if (!tryBox.hidden) closePick();
@@ -1063,6 +1085,7 @@
                 S.tries = (Array.isArray(st.tries) ? st.tries : []).filter((t) => t && t.date && (t.productId || t.ai));
                 S.logic = { ...LOGIC_DEF, ...(st.logic || {}) };
                 S.hide = (Array.isArray(st.hide) ? st.hide : []).filter((k) => S.checks.includes(k));
+                if (st.custom && typeof st.custom === 'object') { S.custom = st.custom; S.useCustom = !!st.useCustom && S.custom.base === S.lot; }
                 if (st.savedId && (S.opts.saved || []).some((x) => x.id === st.savedId)) { S.savedId = st.savedId; S.savedTitle = st.savedTitle || ''; }
                 S.restoreTop = Number(st.top) || 0;
             }
@@ -1081,11 +1104,19 @@
     };
     const lotOf = () => (S.opts?.lots || []).find((l) => l.id === S.lot) || null;
     const paintLots = () => {
-        $('[data-rfx-lots]').innerHTML = (S.opts.lots || []).map((l) => `<button type="button" class="rfx-chip ${l.id === S.lot ? 'is-on' : ''}" data-lot="${l.id}">${esc(l.icon)} ${esc(l.name)} <small>${esc(l.crop.split(',')[0])}</small></button>`).join('');
+        const base = S.custom ? (S.opts.lots || []).find((l) => l.id === S.custom.base) : null;
+        $('[data-rfx-lots]').innerHTML = (S.opts.lots || []).map((l) => `<button type="button" class="rfx-chip ${!S.useCustom && l.id === S.lot ? 'is-on' : ''}" data-lot="${l.id}">${esc(l.icon)} ${esc(l.name)} <small>${esc(l.crop.split(',')[0])}</small></button>`).join('')
+            + `<button type="button" class="rfx-chip is-what ${S.useCustom ? 'is-on' : ''}" data-lot-what title="${S.custom ? 'A what-if lot: tap to use it, tap again to change it' : 'Try another soil and field, never saved as a lot'}">🧪 ${S.custom ? esc(S.custom.name) : 'What if'} <small>${S.custom ? esc((base ? 'on ' + base.name : '') + ' · ' + whatCount(S.custom.answers) + ' answers') : 'your own soil'}</small>${S.useCustom ? PEN_I : ''}</button>`;
     };
     $('[data-rfx-lots]').addEventListener('click', (e) => {
+        if (e.target.closest('[data-lot-what]')) {
+            // A what-if lot made already: the first tap uses it, a tap on it in use opens it to change.
+            if (S.custom && !S.useCustom) { S.useCustom = true; S.lot = S.custom.base; paintLots(); paintPicks(); run(); keep(); } else openWhat();
+            return;
+        }
         const b = e.target.closest('[data-lot]');
         if (!b) return;
+        S.useCustom = false;
         S.lot = Number(b.dataset.lot);
         // A named pest of one crop means nothing on another.
         const mine = (k) => !k.startsWith('p:') || (lotOf()?.threats || []).some((t) => 'p:' + t.slug === k);
@@ -1462,6 +1493,74 @@
         window.toast?.(`${p.name} is added. Pick another, or tap Done.`);
     });
 
+    /* ---------------- a what-if lot ---------------- */
+    /* Its own name, place and every field question, on the crop, days and tasks of a lot of the season; read like any
+       lot, saved with the reading only (the owner, 2026-10-30: "this one will not be saved as a lot, only for
+       experimentation reference that can be saved in that range effect modal reading"). */
+    const whatBox = $('[data-rfx-what]');
+    let W = null;
+    const whatCount = (a) => (window.aneeFieldProfile ? window.aneeFieldProfile.count(a || {}) : Object.keys(a || {}).length);
+    const whatHtml = () => {
+        const lots = S.opts.lots || [];
+        const base = lots.find((l) => l.id === W.base) || lots[0];
+        const n = whatCount(W.answers);
+        const from = base && whatCount(base.answers);
+        const words = n && window.aneeFieldProfile?.words ? window.aneeFieldProfile.words(W.answers) : '';
+        return `<div class="rfx-day-h"><div><b id="rfxWhatT">🧪 A what-if lot</b><small>Another soil and field on the same crop, days and tasks, to see what changes. It is never saved as a lot: it stays with this reading.</small></div><button type="button" class="rfx-x" data-rfx-what-x aria-label="Close">${'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>'}</button></div>
+            <label class="rfx-w-f"><span>Its name</span><input type="text" maxlength="80" data-w-name value="${esc(W.name)}" placeholder="Like Sandy and acid"></label>
+            <div class="rfx-w-f"><span>On the crop, days and tasks of</span><div class="rfx-chips is-wrap">${lots.map((l) => `<button type="button" class="rfx-chip ${l.id === W.base ? 'is-on' : ''}" data-w-base="${l.id}">${esc(l.icon)} ${esc(l.name)} <small>${esc(l.crop.split(',')[0])}</small></button>`).join('')}</div></div>
+            <label class="rfx-w-f"><span>Where it is <i>(the area's soil and rain fill what is not answered)</i></span><input type="text" maxlength="160" data-w-place value="${esc(W.place)}" placeholder="Town, province"></label>
+            <div class="rfx-w-q"><div><b>${n ? `${n} field answers` : 'No field answers yet'}</b><small>${words ? esc(words).slice(0, 180) : 'The soil, the water, the acidity, the land and the last season: every question a lot is asked.'}</small></div>
+                <div class="rfx-w-qb"><button type="button" class="rfx-btn is-go" data-w-ask>${n ? 'Change the answers' : 'Answer the questions'}</button>${from ? `<button type="button" class="rfx-btn is-ghost" data-w-copy>Start from ${esc(base.name)}'s answers</button>` : ''}${n ? '<button type="button" class="rfx-btn is-ghost" data-w-clear>Clear them</button>' : ''}</div></div>
+            <div class="rfx-pick-foot"><span>${S.custom && S.useCustom ? '<button type="button" class="rfx-btn is-ghost is-del" data-w-off>Back to the lot itself</button>' : ''}</span><span style="display:flex;gap:.4rem"><button type="button" class="rfx-btn is-ghost" data-rfx-what-x>Cancel</button><button type="button" class="rfx-btn is-go" data-w-use>Use this lot</button></span></div>`;
+    };
+    const paintWhat = () => { $('[data-rfx-what-c]').innerHTML = whatHtml(); };
+    const readWhat = () => {
+        const n = $('[data-w-name]'), p = $('[data-w-place]');
+        if (n) W.name = n.value.trim() || 'What if';
+        if (p) W.place = p.value.trim();
+    };
+    const openWhat = () => {
+        const lot = lotOf() || (S.opts.lots || [])[0];
+        W = S.custom ? JSON.parse(JSON.stringify(S.custom)) : { name: 'What if', base: lot?.id, place: lot?.place || '', answers: {} };
+        if (!(S.opts.lots || []).some((l) => l.id === W.base)) W.base = lot?.id;
+        paintWhat();
+        whatBox.hidden = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => whatBox.classList.add('is-on')));
+    };
+    const closeWhat = () => {
+        whatBox.classList.remove('is-on');
+        setTimeout(() => { if (!whatBox.classList.contains('is-on')) whatBox.hidden = true; }, calm ? 0 : 260);
+    };
+    whatBox.addEventListener('click', async (e) => {
+        if (e.target.closest('[data-rfx-what-x]')) { closeWhat(); return; }
+        const bb = e.target.closest('[data-w-base]');
+        if (bb) { readWhat(); W.base = Number(bb.dataset.wBase); const l = (S.opts.lots || []).find((x) => x.id === W.base); if (l && !W.place) W.place = l.place || ''; paintWhat(); return; }
+        if (e.target.closest('[data-w-copy]')) { readWhat(); const l = (S.opts.lots || []).find((x) => x.id === W.base); W.answers = JSON.parse(JSON.stringify(l?.answers || {})); paintWhat(); window.toast?.(`${l?.name || 'The lot'}'s answers are copied. Change what differs.`); return; }
+        if (e.target.closest('[data-w-clear]')) { readWhat(); W.answers = {}; paintWhat(); return; }
+        if (e.target.closest('[data-w-ask]')) {
+            readWhat();
+            const FP = window.aneeFieldProfile;
+            if (!FP || !FP.ask) { window.toast?.('The questions could not open. Please reload the page.', 'error'); return; }
+            const lot = (S.opts.lots || []).find((x) => x.id === W.base);
+            const got = await FP.ask({ all: true, crop: lot?.cropKey || null, value: W.answers || {}, title: W.name, sub: 'The what-if lot: change any answer, then save' });
+            if (got) { W.answers = got; paintWhat(); }
+            return;
+        }
+        if (e.target.closest('[data-w-off]')) { S.useCustom = false; closeWhat(); paintLots(); run(); keep(); return; }
+        if (e.target.closest('[data-w-use]')) {
+            readWhat();
+            S.custom = W;
+            S.useCustom = true;
+            S.lot = W.base;
+            closeWhat();
+            paintLots();
+            paintPicks();
+            run();
+            keep();
+        }
+    });
+
     /* ---------------- onto the plan ---------------- */
     /* The products planned here, put on the season's plan (the owner, 2026-10-30: "apply the product you plan to apply
        listed into the current activity plan (do not remove the exising items in the activities, and do not duplicate
@@ -1603,7 +1702,7 @@
         $('[data-rfx-body]').style.opacity = S.res ? '.55' : '1';
         if (!S.res) body('<div class="rfx-loading"><span></span><span></span><span></span></div>');
         try {
-            const r = await window.api(U.run, { method: 'POST', body: { scheduleId: SID, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic } });
+            const r = await window.api(U.run, { method: 'POST', body: { scheduleId: SID, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, custom: S.useCustom ? S.custom : null } });
             if (seq !== runSeq) return;
             S.res = r.data;
             paint();
@@ -2336,7 +2435,7 @@
         btns.forEach((b) => { b.disabled = true; });
         try {
             const id = asNew ? null : S.savedId;
-            const r = await window.api(U.save, { method: 'POST', body: { scheduleId: SID, id, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, title: id ? S.savedTitle : defaultTitle() } });
+            const r = await window.api(U.save, { method: 'POST', body: { scheduleId: SID, id, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, custom: S.useCustom ? S.custom : null, title: id ? S.savedTitle : defaultTitle() } });
             S.opts.saved = r.data.saved;
             S.savedId = r.data.id;
             S.savedTitle = r.data.title;
@@ -2435,6 +2534,8 @@
             S.check = d.params.check || d.result.check.key;
             S.checks = [S.check, ...(d.params.also || [])];
             S.tries = (d.params.tries || []).map((t) => ({ ...t, name: t.name || t.ai || 'Product' }));
+            // A reading kept with a what-if lot opens with it.
+            if (d.params.custom) { S.custom = { ...d.params.custom, base: S.lot }; S.useCustom = true; } else S.useCustom = false;
             S.tab = tabOf(S.check);
             S.logic = { ...LOGIC_DEF, ...(d.params.logic || {}) };
             paintLots(); paintPicks(); paintTries(); paintLogic();
