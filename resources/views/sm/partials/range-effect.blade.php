@@ -98,56 +98,12 @@
                     {{-- Called Fertilizers since 2026-10-30 (the owner: "change try to fertilizers"), with no limit on how many. --}}
                     <span class="rfx-label">Fertilizers</span>
                     <div class="rfx-tries">
-                        {{-- Its own button, first, so a long list of tries never pushes it away. --}}
-                        <button type="button" class="rfx-add" data-rfx-try-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>A product you plan to apply</button>
-                        <div class="rfx-chips is-wrap" data-rfx-tries></div>
-                    </div>
-                </div>
-                {{-- Trying a product: find it, give the day (and the amount, if you know it). --}}
-                <div class="rfx-try" data-rfx-try hidden>
-                    <div class="rfx-try-in">
-                        <label class="rfx-search">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/></svg>
-                            <input type="search" data-rfx-q placeholder="Product name, company or active ingredient" autocomplete="off">
-                        </label>
-                        <div class="rfx-results" data-rfx-results></div>
-                        <div class="rfx-picked" data-rfx-picked hidden>
-                            <div class="rfx-picked-p" data-rfx-picked-p></div>
-                            {{-- How it goes on (the owner, 2026-10-30): granular on the soil, or sprayed on the leaves. --}}
-                            <div class="rfx-how" role="radiogroup" aria-label="How you apply it" data-rfx-how data-on="granular">
-                                <i class="rfx-how-pill" aria-hidden="true"></i>
-                                <button type="button" role="radio" aria-checked="true" data-how="granular">
-                                    {!! $rfxHowG !!}
-                                    <span><b>Granular</b><small>Spread on the soil or the water</small></span>
-                                </button>
-                                <button type="button" role="radio" aria-checked="false" data-how="foliar">
-                                    {!! $rfxHowF !!}
-                                    <span><b>Foliar</b><small>Sprayed on the leaves</small></span>
-                                </button>
-                            </div>
-                            <div class="rfx-picked-f">
-                                <div class="rfx-when"><span>Apply on</span><button type="button" class="rfx-datetag" data-date-for="data-rfx-date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" d="M3.5 10h17M8 3v4M16 3v4"/></svg><b data-date-say>Pick a day</b><svg class="rfx-dt-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button><input type="date" class="rfx-date-in" data-rfx-date tabindex="-1" aria-label="Apply on"></div>
-                                <label><span>Amount for the lot <i data-rfx-ha>(optional)</i></span><span class="rfx-amt"><input type="number" min="0" step="any" inputmode="decimal" data-rfx-qty placeholder="e.g. 2"><select data-rfx-unit><option value="bags">bags</option><option value="kg">kg</option><option value="L">liters</option><option value="mL">mL</option><option value="g">grams</option></select></span></label>
-                            </div>
-                            <div class="rfx-picked-b">
-                                <button type="button" class="rfx-btn is-ghost" data-rfx-try-cancel>Cancel</button>
-                                <button type="button" class="rfx-btn is-go" data-rfx-try-add>See its effect</button>
-                            </div>
+                        {{-- Its own button, first, so a long list never pushes it away. It opens the picker. --}}
+                        <div class="rfx-tries-b">
+                            <button type="button" class="rfx-add" data-rfx-try-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>A product you plan to apply</button>
                         </div>
-                        {{-- Not in the book: Anee looks it up, once, for everyone. --}}
-                        <div class="rfx-look" data-rfx-look hidden>
-                            <img src="{{ \App\Support\AneeEmoji::url('thinking') }}" alt="" width="64" height="64">
-                            <div>
-                                <b>Not in our book yet?</b>
-                                <p>Tell Anee its name, its active ingredient, or both. She looks it up, and it stays in the book for every farmer after you.</p>
-                                <div class="rfx-look-f">
-                                    <input type="text" data-rfx-look-name placeholder="Product name" maxlength="120">
-                                    <input type="text" data-rfx-look-ai placeholder="Active ingredient" maxlength="160">
-                                </div>
-                                <button type="button" class="rfx-btn is-gold" data-rfx-look-go>Look it up</button>
-                                <small data-rfx-look-why></small>
-                            </div>
-                        </div>
+                        {{-- Grouped by kind, each kind by date (the owner, 2026-10-30). --}}
+                        <div class="rfx-tgs" data-rfx-tries></div>
                     </div>
                 </div>
             </section>
@@ -177,6 +133,60 @@
             <div class="rfx-drawer-h"><b>Saved readings</b><button type="button" class="rfx-x" data-rfx-saved-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
             <div class="rfx-drawer-b" data-rfx-saved></div>
         </div>
+        {{-- The picker (the owner, 2026-10-30: "when adding a fertilizer using the + a product you plan to apply, show a
+             module for the search of the fertilizer in the db and have already selected items in it and tabs on the type
+             for easier searching"): what is added so far, a tab a kind, the search, then the day, how and how much. --}}
+        <div class="rfx-edit rfx-pickm" data-rfx-try hidden>
+            <div class="rfx-edit-veil" data-rfx-try-x></div>
+            <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxPickT">
+                <div class="rfx-day-h"><div><b id="rfxPickT">Products you plan to apply</b><small>Find each one, pick its day, how it goes on and how much. Add as many as you like.</small></div><button type="button" class="rfx-x" data-rfx-try-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+                <div class="rfx-pick-added" data-rfx-pick-added></div>
+                <div class="rfx-ptabs" role="tablist" aria-label="Kinds of product" data-rfx-ptabs></div>
+                <label class="rfx-search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/></svg>
+                    <input type="search" data-rfx-q placeholder="Product name, company or active ingredient" autocomplete="off">
+                </label>
+                <div class="rfx-results" data-rfx-results></div>
+                <div class="rfx-picked" data-rfx-picked hidden>
+                    <div class="rfx-picked-p" data-rfx-picked-p></div>
+                    {{-- How it goes on (the owner, 2026-10-30): granular on the soil, or sprayed on the leaves. --}}
+                    <div class="rfx-how" role="radiogroup" aria-label="How you apply it" data-rfx-how data-on="granular">
+                        <i class="rfx-how-pill" aria-hidden="true"></i>
+                        <button type="button" role="radio" aria-checked="true" data-how="granular">
+                            {!! $rfxHowG !!}
+                            <span><b>Granular</b><small>Spread on the soil or the water</small></span>
+                        </button>
+                        <button type="button" role="radio" aria-checked="false" data-how="foliar">
+                            {!! $rfxHowF !!}
+                            <span><b>Foliar</b><small>Sprayed on the leaves</small></span>
+                        </button>
+                    </div>
+                    <div class="rfx-picked-f">
+                        <div class="rfx-when"><span>Apply on</span><button type="button" class="rfx-datetag" data-date-for="data-rfx-date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" d="M3.5 10h17M8 3v4M16 3v4"/></svg><b data-date-say>Pick a day</b><svg class="rfx-dt-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button><input type="date" class="rfx-date-in" data-rfx-date tabindex="-1" aria-label="Apply on"></div>
+                        <label><span>Amount for the lot <i data-rfx-ha>(optional)</i></span><span class="rfx-amt"><input type="number" min="0" step="any" inputmode="decimal" data-rfx-qty placeholder="e.g. 2"><select data-rfx-unit><option value="bags">bags</option><option value="kg">kg</option><option value="L">liters</option><option value="mL">mL</option><option value="g">grams</option></select></span></label>
+                    </div>
+                    <div class="rfx-picked-b">
+                        <button type="button" class="rfx-btn is-ghost" data-rfx-try-cancel>Back to the list</button>
+                        <button type="button" class="rfx-btn is-go" data-rfx-try-add>Add it</button>
+                    </div>
+                </div>
+                {{-- Not in the book: Anee looks it up, once, for everyone. --}}
+                <div class="rfx-look" data-rfx-look hidden>
+                    <img src="{{ \App\Support\AneeEmoji::url('thinking') }}" alt="" width="64" height="64">
+                    <div>
+                        <b>Not in our book yet?</b>
+                        <p>Tell Anee its name, its active ingredient, or both. She looks it up, and it stays in the book for every farmer after you.</p>
+                        <div class="rfx-look-f">
+                            <input type="text" data-rfx-look-name placeholder="Product name" maxlength="120">
+                            <input type="text" data-rfx-look-ai placeholder="Active ingredient" maxlength="160">
+                        </div>
+                        <button type="button" class="rfx-btn is-gold" data-rfx-look-go>Look it up</button>
+                        <small data-rfx-look-why></small>
+                    </div>
+                </div>
+                <div class="rfx-pick-foot"><span data-rfx-pick-n></span><button type="button" class="rfx-btn is-go" data-rfx-try-x>Done</button></div>
+            </div>
+        </div>
         {{-- One day, opened. --}}
         <div class="rfx-day" data-rfx-day hidden></div>
         {{-- One growth stage, opened from its mark over the season chart (the owner, 2026-10-30: "when that is clicked,
@@ -203,6 +213,7 @@
                     <label><span>Amount for the lot <i data-rfx-edit-ha>(optional)</i></span><span class="rfx-amt"><input type="number" min="0" step="any" inputmode="decimal" data-rfx-edit-qty placeholder="e.g. 2"><select data-rfx-edit-unit><option value="bags">bags</option><option value="kg">kg</option><option value="L">liters</option><option value="mL">mL</option><option value="g">grams</option></select></span></label>
                 </div>
                 <div class="rfx-edit-b">
+                    <button type="button" class="rfx-btn is-ghost" data-rfx-edit-dupe><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.4"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 8.5V6.6a2.1 2.1 0 00-2.1-2.1H6.6a2.1 2.1 0 00-2.1 2.1v6.8a2.1 2.1 0 002.1 2.1h1.9"/></svg>Make a copy</button>
                     <button type="button" class="rfx-btn is-ghost is-del" data-rfx-edit-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>Take it out</button>
                     <button type="button" class="rfx-btn is-ghost" data-rfx-edit-x>Cancel</button>
                     <button type="button" class="rfx-btn is-go" data-rfx-edit-save>Save changes</button>
@@ -328,8 +339,32 @@
     .rfx-picks .rfx-chip.is-on::after { content: '✓'; font-size: .78rem; font-weight: 900; }
     .rfx-hint { align-self: center; font-size: .78rem; font-weight: 600; color: var(--rx-faint); }
     .rfx-muted { font-size: .84rem; color: var(--rx-muted); }
-    .rfx-try { overflow: hidden; }
-    .rfx-try-in { display: grid; gap: .6rem; padding: .8rem; border-radius: 1.1rem; background: var(--rx-try-bg); box-shadow: inset 0 0 0 1.5px var(--rx-try-line); animation: rfxSlide .32s cubic-bezier(.22,1,.36,1) both; }
+    /* The picker: a sheet over the planner, the edit dialog over it in turn. */
+    .rfx-pickm .rfx-edit-c { gap: .65rem; width: min(100%, 42rem); padding-bottom: 0; }
+    .rfx-edit[data-rfx-edit] { z-index: 9; }
+    .rfx-ptabs { display: flex; gap: .35rem; overflow-x: auto; padding: .1rem .05rem .3rem; scrollbar-width: thin; }
+    .rfx-ptabs button { flex: none; padding: .42rem .8rem; border-radius: 999px; font-size: .82rem; font-weight: 800; white-space: nowrap; color: var(--rx-chip-ink); background: var(--rx-card);
+        box-shadow: inset 0 0 0 1.5px var(--rx-line-2); transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s, box-shadow .28s; }
+    .rfx-ptabs button:hover { box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-ptabs button.is-on { color: #fff; background: var(--rx-on); box-shadow: 0 6px 14px -10px rgb(47 82 25 / .8); }
+    .rfx-pickm .rfx-results { max-height: none; }
+    .rfx-res-n { flex: none; margin-left: auto; padding: .15rem .5rem; border-radius: 999px; font-style: normal; font-size: .7rem; font-weight: 900; color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px #f5c518; }
+    .rfx-pick-added { display: grid; gap: .45rem; padding: .65rem .7rem; border-radius: .95rem; background: var(--rx-try-bg); box-shadow: inset 0 0 0 1.5px var(--rx-try-line); }
+    .rfx-pick-added:empty { display: none; }
+    .rfx-pick-added.is-flash { animation: rfxGlow .7s cubic-bezier(.22,1,.36,1); }
+    @keyframes rfxGlow { 30% { box-shadow: inset 0 0 0 2px #f5c518, 0 0 0 5px rgb(245 197 24 / .3); } }
+    .rfx-pick-added > b { font-size: .8rem; color: var(--rx-ink); }
+    .rfx-pick-hint { padding: .4rem .2rem; font-size: .84rem; color: var(--rx-muted); }
+    .rfx-pick-foot { position: sticky; bottom: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin: 0 -1rem; padding: .7rem 1rem calc(.8rem + env(safe-area-inset-bottom));
+        font-size: .82rem; font-weight: 700; color: var(--rx-muted); background: var(--rx-card); box-shadow: 0 -1px 0 var(--rx-line); }
+    /* The products added, a group a kind, each kind by date. */
+    .rfx-tries-b { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .rfx-tgs { display: grid; gap: .45rem; width: 100%; }
+    .rfx-tgs:empty { display: none; }
+    .rfx-tg { display: grid; gap: .3rem; }
+    .rfx-tg-h { font-size: .72rem; font-weight: 900; letter-spacing: .04em; color: var(--rx-muted); }
+    .rfx-tg-h small { margin-left: .2rem; padding: 0 .4rem; border-radius: 999px; font-size: .68rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-chip.is-try [data-dupe] { margin-right: -.1rem; }
     @keyframes rfxSlide { from { opacity: 0; transform: translateY(-8px); } }
     .rfx-search { display: flex; align-items: center; gap: .5rem; padding: 0 .8rem; border-radius: .9rem; background: var(--rx-field); box-shadow: inset 0 0 0 1.5px var(--rx-field-line); }
     .rfx-search svg { width: 1.1rem; height: 1.1rem; color: #b8941c; flex: none; }
@@ -966,6 +1001,7 @@
         if (e.key !== 'Escape' || M.hidden) return;
         if (!$('[data-rfx-stg]').hidden) closeStage();
         else if (!$('[data-rfx-edit]').hidden) closeEdit();
+        else if (!tryBox.hidden) closePick();
         else if (!$('[data-rfx-day]').hidden) hideDay();
         else if ($('[data-rfx-drawer]').classList.contains('is-on')) $('[data-rfx-drawer]').classList.remove('is-on');
         else close();
@@ -1155,26 +1191,66 @@
         input.addEventListener('blur', () => btn.classList.remove('is-pop'));
     });
 
-    /* ---------------- tries: a product you plan to apply ---------------- */
+    /* ---------------- fertilizers: the products you plan to apply ---------------- */
     const tryBox = $('[data-rfx-try]');
-    const paintTries = () => {
-        $('[data-rfx-tries]').innerHTML = S.tries.map((t, i) => `<span class="rfx-chip is-try" data-try="${i}" role="button" tabindex="0" title="Tap to change it">${t.method === 'foliar' ? '💧' : '🟤'} ${esc(t.name)} <small>${esc(say(t.date))}${t.method ? ' · ' + t.method : ''}${t.qty ? ' · ' + t.qty + ' ' + esc(t.unit) : ''}</small><svg class="rfx-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg><button type="button" data-untry="${i}" aria-label="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`).join('');
+    // Each product's kind, as the picker's tabs and the groups read it (the book's types).
+    const PICK_TABS = [['all', '✨', 'All'], ['fert', '🟤', 'Granular fertilizers'], ['foliar', '💧', 'Foliar and soluble'], ['bio', '🌿', 'Organic and bio'],
+        ['insect', '🐛', 'Insecticides'], ['fungus', '🍄', 'Fungicides'], ['weed', '🌱', 'Herbicides'], ['other', '📦', 'Others']];
+    const TAB_OF = { granular: 'fert', amendment: 'fert', foliar: 'foliar', soluble: 'foliar', biological: 'bio', biostimulant: 'bio', insecticide: 'insect', acaricide: 'insect', fungicide: 'fungus', herbicide: 'weed' };
+    const TYPE_WORD = { 'granular fertilizer': 'granular', 'soil conditioner': 'amendment', 'foliar fertilizer': 'foliar', 'soluble fertilizer': 'soluble', biological: 'biological', biostimulant: 'biostimulant',
+        insecticide: 'insecticide', miticide: 'acaricide', fungicide: 'fungicide', herbicide: 'herbicide' };
+    // A product added before the kinds were kept reads its kind from its line ("Granular fertilizer · 46-0-0").
+    const kindOf = (t) => t.t || TYPE_WORD[String(t.line || '').split(' · ')[0].toLowerCase()] || '';
+    const groupOfTry = (t) => TAB_OF[kindOf(t)] || 'other';
+    const PEN_I = '<svg class="rfx-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg>';
+    const COPY_I = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.4"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 8.5V6.6a2.1 2.1 0 00-2.1-2.1H6.6a2.1 2.1 0 00-2.1 2.1v6.8a2.1 2.1 0 002.1 2.1h1.9"/></svg>';
+    const tryChip = (t, i) => `<span class="rfx-chip is-try" data-try="${i}" role="button" tabindex="0" title="Tap to change it">${t.method === 'foliar' ? '💧' : '🟤'} ${esc(t.name)} <small>${esc(say(t.date))}${t.method ? ' · ' + t.method : ''}${t.qty ? ' · ' + t.qty + ' ' + esc(t.unit) : ''}</small>${PEN_I}<button type="button" data-dupe="${i}" aria-label="Make a copy of ${esc(t.name)}" title="Make a copy">${COPY_I}</button><button type="button" data-untry="${i}" aria-label="Remove ${esc(t.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`;
+    // Grouped by kind (the owner, 2026-10-30: "group it by type while arranging per date"), each kind by its dates.
+    const triesGroupsHtml = () => {
+        const by = {};
+        S.tries.forEach((t, i) => { (by[groupOfTry(t)] ||= []).push(i); });
+        return PICK_TABS.filter(([g]) => by[g]).map(([g, ic, label]) => {
+            const list = by[g].sort((a, b) => String(S.tries[a].date || '').localeCompare(String(S.tries[b].date || '')) || String(S.tries[a].name).localeCompare(String(S.tries[b].name)));
+            return `<div class="rfx-tg"><span class="rfx-tg-h">${ic} ${esc(label)}<small>${list.length}</small></span><div class="rfx-chips is-wrap">${list.map((i) => tryChip(S.tries[i], i)).join('')}</div></div>`;
+        }).join('');
     };
-    $('[data-rfx-tries]').addEventListener('click', (e) => {
+    const paintTries = () => {
+        $('[data-rfx-tries]').innerHTML = triesGroupsHtml();
+        paintAdded();
+    };
+    const paintAdded = () => {
+        const box = $('[data-rfx-pick-added]');
+        box.innerHTML = S.tries.length ? `<b>Added so far · ${S.tries.length}</b>${triesGroupsHtml()}` : '';
+        $('[data-rfx-pick-n]').textContent = S.tries.length ? `${S.tries.length} added` : 'Nothing added yet';
+    };
+    // A copy, right after the one it copies, opened to change its day (the owner, 2026-10-30: "have a duplicate button").
+    const dupeTry = (i) => {
+        const t = S.tries[i];
+        if (!t) return;
+        S.tries.splice(i + 1, 0, { ...t });
+        paintTries();
+        if (tryBox.hidden) run(); else pickDirty = true;
+        openEdit(i + 1);
+        window.toast?.('A copy is made. Change its day or amount.');
+    };
+    const onTries = (e) => {
         const b = e.target.closest('[data-untry]');
         if (b) {
             S.tries.splice(Number(b.dataset.untry), 1);
             paintTries();
-            run();
+            if (tryBox.hidden) run(); else pickDirty = true;
             return;
         }
+        const d = e.target.closest('[data-dupe]');
+        if (d) { dupeTry(Number(d.dataset.dupe)); return; }
         const c = e.target.closest('[data-try]');
         if (c) openEdit(Number(c.dataset.try));
-    });
-    $('[data-rfx-tries]').addEventListener('keydown', (e) => {
+    };
+    const onTriesKey = (e) => {
         const c = e.target.closest('[data-try]');
-        if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openEdit(Number(c.dataset.try)); }
-    });
+        if (c && e.target === c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openEdit(Number(c.dataset.try)); }
+    };
+    ['[data-rfx-tries]', '[data-rfx-pick-added]'].forEach((sel) => { $(sel).addEventListener('click', onTries); $(sel).addEventListener('keydown', onTriesKey); });
     /* A try, opened to change it. */
     const editBox = $('[data-rfx-edit]');
     const editHow = $('[data-rfx-edit-how]');
@@ -1199,14 +1275,21 @@
         editBox.classList.remove('is-on');
         setTimeout(() => { if (editing < 0) editBox.hidden = true; }, calm ? 0 : 260);
     };
+    // A change made with the picker open is counted once the picker closes.
+    const changedTries = () => { paintTries(); if (tryBox.hidden) run(); else pickDirty = true; };
     editHow.addEventListener('click', (e) => { const b = e.target.closest('[data-how]'); if (b) setHow(b.dataset.how, true, editHow, $('[data-rfx-edit-unit]')); });
     editBox.addEventListener('click', (e) => {
         if (e.target.closest('[data-rfx-edit-x]')) { closeEdit(); return; }
         if (e.target.closest('[data-rfx-edit-del]') && editing >= 0) {
             S.tries.splice(editing, 1);
             closeEdit();
-            paintTries();
-            run();
+            changedTries();
+            return;
+        }
+        if (e.target.closest('[data-rfx-edit-dupe]') && editing >= 0) {
+            const i = editing;
+            closeEdit();
+            setTimeout(() => dupeTry(i), calm ? 0 : 280);
             return;
         }
         if (e.target.closest('[data-rfx-edit-save]') && editing >= 0) {
@@ -1214,18 +1297,45 @@
             if (!date) { window.toast?.('Pick the day you would apply it.', 'error'); return; }
             S.tries[editing] = { ...S.tries[editing], date, qty: Number($('[data-rfx-edit-qty]').value) || 0, unit: $('[data-rfx-edit-unit]').value, method: editHow.dataset.on || 'granular' };
             closeEdit();
-            paintTries();
-            run();
+            changedTries();
         }
     });
-    $('[data-rfx-try-open]').addEventListener('click', () => {
-        tryBox.hidden = !tryBox.hidden;
-        if (!tryBox.hidden) { resetTry(); setTimeout(() => $('[data-rfx-q]').focus(), 60); }
+    /* The picker: open, close (counted again only when something changed), its tabs. */
+    let pickDirty = false;
+    const openPick = () => {
+        resetTry();
+        paintAdded();
+        tryBox.hidden = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => tryBox.classList.add('is-on')));
+        findProducts();
+        if (matchMedia('(pointer: fine)').matches) setTimeout(() => $('[data-rfx-q]').focus({ preventScroll: true }), calm ? 0 : 220);
+    };
+    const closePick = () => {
+        tryBox.classList.remove('is-on');
+        setTimeout(() => { if (!tryBox.classList.contains('is-on')) tryBox.hidden = true; }, calm ? 0 : 260);
+        if (pickDirty) { pickDirty = false; run(); }
+    };
+    const paintPickTabs = () => {
+        $('[data-rfx-ptabs]').innerHTML = PICK_TABS.map(([k, ic, label]) => `<button type="button" role="tab" data-ptab="${k}" class="${S.ptab === k ? 'is-on' : ''}" aria-selected="${S.ptab === k}">${ic} ${esc(label)}</button>`).join('');
+    };
+    $('[data-rfx-try-open]').addEventListener('click', openPick);
+    tryBox.addEventListener('click', (e) => {
+        if (e.target.closest('[data-rfx-try-x]')) { closePick(); return; }
+        const tb = e.target.closest('[data-ptab]');
+        if (tb && tb.dataset.ptab !== S.ptab) {
+            S.ptab = tb.dataset.ptab;
+            paintPickTabs();
+            $('[data-rfx-picked]').hidden = true;
+            findProducts();
+        }
     });
     const resetTry = () => {
         S.picked = null;
+        S.ptab ||= 'fert';
+        paintPickTabs();
         $('[data-rfx-q]').value = '';
         $('[data-rfx-results]').innerHTML = '';
+        $('[data-rfx-results]').hidden = false;
         $('[data-rfx-picked]').hidden = true;
         $('[data-rfx-look]').hidden = true;
         setDate($('[data-rfx-date]'), iso(new Date()));
@@ -1244,29 +1354,37 @@
     };
     $('[data-rfx-how]').addEventListener('click', (e) => { const b = e.target.closest('[data-how]'); if (b) setHow(b.dataset.how); });
     const typeIcon = (t) => ({ insecticide: '🐛', fungicide: '🍄', herbicide: '🌿', molluscicide: '🐌', rodenticide: '🐀', nematicide: '🪱', acaricide: '🕷️', foliar: '💧', soluble: '💧', granular: '🧪', biostimulant: '🌱', biological: '🦠', amendment: '🪨' }[t] || '🧴');
-    let qTimer = 0;
-    $('[data-rfx-q]').addEventListener('input', () => {
+    let qTimer = 0, findSeq = 0;
+    // The products of the tab, or those matching what is typed within it; each one already added says so.
+    const findProducts = () => {
         clearTimeout(qTimer);
         const q = $('[data-rfx-q]').value.trim();
+        const tab = S.ptab || 'all';
+        const res = $('[data-rfx-results]');
         $('[data-rfx-picked]').hidden = true;
-        if (q.length < 2) { $('[data-rfx-results]').innerHTML = ''; $('[data-rfx-look]').hidden = true; return; }
+        res.hidden = false;
+        if (q.length < 2 && tab === 'all') { res.innerHTML = '<p class="rfx-pick-hint">Type a product, its company or its active ingredient, or pick a kind above to look along its shelf.</p>'; $('[data-rfx-look]').hidden = true; return; }
+        const seq = ++findSeq;
         qTimer = setTimeout(async () => {
             try {
                 const lot = lotOf();
-                const r = await window.api(U.products + '&q=' + encodeURIComponent(q) + '&crop=' + encodeURIComponent(lot?.cropKey || ''));
+                const r = await window.api(U.products + '&q=' + encodeURIComponent(q) + '&tab=' + encodeURIComponent(tab === 'all' ? '' : tab) + '&crop=' + encodeURIComponent(lot?.cropKey || ''));
+                if (seq !== findSeq) return;
                 const items = r.data.items || [];
                 const ing = r.data.ingredient;
-                let html = items.map((p, k) => `<button type="button" class="rfx-res" data-pid="${p.id}" style="--k:${k}"><em>${typeIcon(p.t)}</em><span><b>${esc(p.b)}</b><small>${esc([p.type, p.grade, (p.ai || []).join(' + '), p.c].filter(Boolean).join(' · '))}</small></span></button>`).join('');
+                const n = (pid) => S.tries.filter((t) => String(t.productId) === String(pid)).length;
+                let html = items.map((p, k) => { const c = n(p.id); return `<button type="button" class="rfx-res" data-pid="${p.id}" style="--k:${Math.min(k, 20)}"><em>${typeIcon(p.t)}</em><span><b>${esc(p.b)}</b><small>${esc([p.type, p.grade, (p.ai || []).join(' + '), p.c].filter(Boolean).join(' · '))}</small></span>${c ? `<i class="rfx-res-n">Added${c > 1 ? ' ×' + c : ''}</i>` : ''}</button>`; }).join('');
                 if (ing) html = `<button type="button" class="rfx-res" data-ai="${esc(ing.name)}"><em>⚗️</em><span><b>${esc(ing.name)}</b><small>The active ingredient on its own${ing.known ? '' : ' · days estimated from its group'}</small></span></button>` + html;
-                $('[data-rfx-results]').innerHTML = html || '<small class="rfx-muted" style="padding:.3rem">Nothing in our book by that name.</small>';
+                res.innerHTML = html || `<p class="rfx-pick-hint">${q.length >= 2 ? 'Nothing in our book by that name' + (tab !== 'all' ? ' under this kind. Try All.' : '.') : 'Nothing on this shelf yet.'}</p>`;
                 S.found = { items, ing };
                 const look = $('[data-rfx-look]');
-                look.hidden = false;
+                look.hidden = q.length < 2;
                 $('[data-rfx-look-name]').value = items.length ? '' : q;
                 paintLookWhy();
-            } catch (err) { $('[data-rfx-results]').innerHTML = `<small class="rfx-muted" style="color:var(--rx-gap-ink)">${esc(err.message)}</small>`; }
-        }, 260);
-    });
+            } catch (err) { res.innerHTML = `<small class="rfx-muted" style="color:var(--rx-gap-ink)">${esc(err.message)}</small>`; }
+        }, q.length >= 2 ? 260 : 0);
+    };
+    $('[data-rfx-q]').addEventListener('input', findProducts);
     $('[data-rfx-results]').addEventListener('click', (e) => {
         const b = e.target.closest('[data-pid], [data-ai]');
         if (!b) return;
@@ -1284,19 +1402,26 @@
         $('[data-rfx-unit]').value = p.granular || ['granular', 'amendment'].includes(p.t) ? 'bags' : (['insecticide', 'fungicide', 'herbicide', 'foliar', 'soluble'].includes(p.t) ? 'mL' : 'kg');
         // A spray or a leaf feed starts as foliar; fertilizer, salts, baits and anything else start as granular.
         setHow(p.method || (['insecticide', 'fungicide', 'herbicide', 'acaricide', 'nematicide', 'foliar', 'soluble', 'biostimulant', 'biological'].includes(p.t) && !p.granular ? 'foliar' : 'granular'), false);
-        $('[data-rfx-results]').innerHTML = '';
+        $('[data-rfx-results]').hidden = true;
         $('[data-rfx-look]').hidden = true;
         $('[data-rfx-picked]').hidden = false;
+        $('[data-rfx-picked]').scrollIntoView({ block: 'nearest', behavior: calm ? 'auto' : 'smooth' });
     };
-    $('[data-rfx-try-cancel]').addEventListener('click', () => { tryBox.hidden = true; });
+    // Back to the list, the search and the tab as they were.
+    $('[data-rfx-try-cancel]').addEventListener('click', () => { S.picked = null; findProducts(); });
     $('[data-rfx-try-add]').addEventListener('click', () => {
         const p = S.picked;
         const date = $('[data-rfx-date]').value;
         if (!p || !date) { window.toast?.('Pick the day you would apply it.', 'error'); return; }
-        S.tries.push({ productId: p.productId || null, ai: p.ai || null, name: p.name, line: p.line || '', date, qty: Number($('[data-rfx-qty]').value) || 0, unit: $('[data-rfx-unit]').value, method: p.method || 'granular' });
-        tryBox.hidden = true;
+        S.tries.push({ productId: p.productId || null, ai: p.ai || null, name: p.name, line: p.line || '', t: p.t || '', date, qty: Number($('[data-rfx-qty]').value) || 0, unit: $('[data-rfx-unit]').value, method: p.method || 'granular' });
+        pickDirty = true;
+        S.picked = null;
         paintTries();
-        run();
+        findProducts();
+        const box = $('[data-rfx-pick-added]');
+        if (!calm) { box.classList.remove('is-flash'); void box.offsetWidth; box.classList.add('is-flash'); }
+        box.scrollIntoView({ block: 'nearest', behavior: calm ? 'auto' : 'smooth' });
+        window.toast?.(`${p.name} is added. Pick another, or tap Done.`);
     });
 
     /* ---------------- Anee looks it up ---------------- */

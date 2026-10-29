@@ -556,6 +556,29 @@ final class ProductLibrary
         return array_slice($list, 0, $limit);
     }
 
+    /**
+     * A shelf looked along with nothing typed (the Coverage Planner's picker, 2026-10-30): the products of these types,
+     * the plain materials first ("Urea", "Muriate of potash"), then those labelled for the crop, by name.
+     */
+    public static function browse(array $types, ?string $crop = null, int $limit = 60): array
+    {
+        if (! $types || ! self::ready()) {
+            return [];
+        }
+        try {
+            $qb = self::db()->table(self::TABLE)->where('status', 1)->whereIn('type', $types)->orderByRaw("case when company = '' then 0 else 1 end");
+            if ($crop) {
+                $qb->orderByRaw('case when crops like ? then 0 else 1 end', ['%"' . str_replace(['%', '_', '"'], '', $crop) . '"%']);
+            }
+
+            return $qb->orderBy('brand')->limit($limit)->get()->map(fn ($r) => self::fromRow($r))->all();
+        } catch (\Throwable $e) {
+            report($e);
+
+            return [];
+        }
+    }
+
     /** One product shaped for a search row or a card: what it is, in a line or two, and the rate its label gives for the crop. */
     public static function card(array $p, ?string $crop = null): array
     {

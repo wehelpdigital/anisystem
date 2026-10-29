@@ -126,15 +126,28 @@ class RangeEffectController extends BaseScheduleController
         return $out;
     }
 
+    /** The picker's tabs (the owner, 2026-10-30: "tabs on the type for easier searching"): each a set of the book's types. */
+    public const PICK_TABS = [
+        'fert' => ['granular', 'amendment'], 'foliar' => ['foliar', 'soluble'], 'bio' => ['biological', 'biostimulant'],
+        'insect' => ['insecticide', 'acaricide'], 'fungus' => ['fungicide'], 'weed' => ['herbicide'],
+        'other' => ['molluscicide', 'nematicide', 'rodenticide', 'pgr', 'adjuvant', 'chemical', 'other'],
+    ];
+
     public function products(Request $request)
     {
         $this->gate();
         $q = trim((string) $request->query('q', ''));
-        if (mb_strlen($q) < 2) {
-            return $this->jsonOk('ok', ['data' => ['items' => []]]);
-        }
+        $types = self::PICK_TABS[(string) $request->query('tab', '')] ?? null;
         $crop = FieldCatalogue::cropKey((string) $request->query('crop', ''));
-        $items = array_map(fn ($p) => ProductLibrary::card($p, $crop), ProductLibrary::search($q, null, $crop, 20));
+        if (mb_strlen($q) < 2) {
+            // A tab with nothing typed: its shelf, the plain materials first, then those labelled for the crop.
+            return $this->jsonOk('ok', ['data' => ['items' => $types ? array_map(fn ($p) => ProductLibrary::card($p, $crop), ProductLibrary::browse($types, $crop, 80)) : []]]);
+        }
+        $found = ProductLibrary::search($q, null, $crop, $types ? 200 : 30);
+        if ($types) {
+            $found = array_slice(array_values(array_filter($found, fn ($p) => in_array($p['t'] ?? '', $types, true))), 0, 40);
+        }
+        $items = array_map(fn ($p) => ProductLibrary::card($p, $crop), $found);
         // An ingredient typed on its own can be tried as it is.
         $ing = CompatBook::ingredient($q);
 
@@ -181,7 +194,7 @@ class RangeEffectController extends BaseScheduleController
         if ($title === '') {
             $title = $res['check']['label'] . ' · ' . $res['lot']['name'];
         }
-        $params = ['check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'logic' => $res['logic']['opts'] ?? [], 'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'date', 'qty', 'unit', 'name', 'method'])),
+        $params = ['check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'logic' => $res['logic']['opts'] ?? [], 'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'date', 'qty', 'unit', 'name', 'method', 't', 'line'])),
             array_slice((array) $request->input('tries', []), 0, self::MAX_TRIES)))];
         $row = ['lotId' => (int) $res['lot']['id'], 'title' => mb_substr($title, 0, 190),
             'params' => json_encode($params, JSON_UNESCAPED_UNICODE), 'result' => json_encode($res, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'updated_at' => now()];
