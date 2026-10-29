@@ -802,14 +802,41 @@
     }).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
 
     /* ---------------- open and close ---------------- */
+    /* Where the farmer left off (the owner, 2026-10-30: "if i click the close, and click open again ... i'll just
+       continue where i left off"): the lot, the checks and their tab, the tries, the logic switches, the saved reading
+       being edited and how far down the sheet was, kept per season on this device; closed and opened again on the same
+       page, nothing is even counted again. */
+    const KEEP = 'rfx-left-' + SID;
+    const scroller = () => $('[data-rfx-scroll]');
+    const keep = () => {
+        if (!S.opts) return;
+        try {
+            localStorage.setItem(KEEP, JSON.stringify({ lot: S.lot, check: S.check, checks: S.checks, tab: S.tab, tries: S.tries, logic: S.logic,
+                // A hidden sheet reads as scrolled to the top: keep where it was when it closed.
+                savedId: S.savedId, savedTitle: S.savedTitle, top: Math.round(M.hidden || !M.classList.contains('is-on') ? (S.lastTop || 0) : scroller().scrollTop), at: Date.now() }));
+        } catch (_) {}
+    };
+    const leftOff = () => {
+        try {
+            const st = JSON.parse(localStorage.getItem(KEEP) || 'null');
+            // A month later the season has moved on: start fresh.
+            return st && Date.now() - (st.at || 0) < 30 * 864e5 ? st : null;
+        } catch (_) { return null; }
+    };
+    let keepTimer = 0;
+    scroller().addEventListener('scroll', () => { clearTimeout(keepTimer); keepTimer = setTimeout(keep, 400); }, { passive: true });
+    window.addEventListener('pagehide', keep);
     const open = async () => {
         M.hidden = false;
         document.documentElement.classList.add('rfx-lock');
         requestAnimationFrame(() => requestAnimationFrame(() => M.classList.add('is-on')));
         if (!S.opts) await boot();
         else if (!S.res) run();
+        else if (S.lastTop) requestAnimationFrame(() => { scroller().scrollTop = S.lastTop; });
     };
     const close = () => {
+        S.lastTop = scroller().scrollTop;
+        keep();
         M.classList.remove('is-on');
         document.documentElement.classList.remove('rfx-lock');
         setTimeout(() => { M.hidden = true; }, calm ? 0 : 320);
@@ -837,9 +864,27 @@
             const r = await window.api(U.options);
             S.opts = r.data;
             S.lot = (S.opts.lots[0] || {}).id || null;
+            // Pick up where the farmer left off, as far as it still fits this season.
+            const st = leftOff();
+            const lot = st ? (S.opts.lots || []).find((l) => l.id === st.lot) : null;
+            if (lot) {
+                const fits = (k) => typeof k === 'string' && k !== '' && (!k.startsWith('p:') || (lot.threats || []).some((t) => 'p:' + t.slug === k));
+                S.lot = lot.id;
+                S.checks = (Array.isArray(st.checks) ? st.checks : []).filter(fits).slice(0, SERIES.length);
+                if (!S.checks.length) S.checks = [fits(st.check) ? st.check : 'n:N'];
+                S.check = S.checks.includes(st.check) ? st.check : S.checks[0];
+                S.tab = ['nut', 'micro', 'prot', 'pest'].includes(st.tab) ? st.tab : tabOf(S.check);
+                S.tries = (Array.isArray(st.tries) ? st.tries : []).filter((t) => t && t.date && (t.productId || t.ai)).slice(0, MAX_TRIES);
+                S.logic = { ...LOGIC_DEF, ...(st.logic || {}) };
+                if (st.savedId && (S.opts.saved || []).some((x) => x.id === st.savedId)) { S.savedId = st.savedId; S.savedTitle = st.savedTitle || ''; }
+                S.restoreTop = Number(st.top) || 0;
+            }
             paintSavedCount();
             paintLots();
             paintPicks();
+            paintTries();
+            paintLogic();
+            paintFoot();
             if (!S.lot) { body(empty('Add a lot first', 'The calendar reads one lot at a time: its crop, its planting day and the products on its tasks.')); return; }
             run();
         } catch (err) {
@@ -1191,6 +1236,9 @@
             if (seq !== runSeq) return;
             S.res = r.data;
             paint();
+            keep();
+            // Back to where the sheet was scrolled, once, after the first reading is drawn.
+            if (S.restoreTop) { const t = S.restoreTop; S.restoreTop = 0; requestAnimationFrame(() => requestAnimationFrame(() => { scroller().scrollTop = t; })); }
         } catch (err) {
             if (seq !== runSeq) return;
             body(empty('The calendar could not be read', err.message || 'Please try again.'));
