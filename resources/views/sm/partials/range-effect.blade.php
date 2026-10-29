@@ -787,7 +787,7 @@
     // What the reading counts besides coverage (RangeEffectLogic): every part on until the farmer switches it off.
     const LOGIC_DEF = { amt: true, soil: true, links: true, health: true };
     const S = { opts: null, lot: null, check: 'n:N', checks: ['n:N'], tab: 'nut', tries: [], res: null, saved: null, picked: null, q: '', busy: false,
-        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '' };
+        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '', recounted: null };
     const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg>';
     const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>';
     const kgSay = (v) => { v = Number(v) || 0; return v >= 10 ? String(Math.round(v)) : v >= 1 ? String(Math.round(v * 10) / 10) : String(Math.round(v * 100) / 100); };
@@ -1179,10 +1179,11 @@
     const body = (html) => { $('[data-rfx-body]').innerHTML = html; };
     const empty = (h, p) => `<div class="rfx-card rfx-empty"><img src="{{ \App\Support\AneeEmoji::url('thinking') }}" alt=""><b>${esc(h)}</b><p>${esc(p)}</p></div>`;
     let runSeq = 0;
-    const run = async () => {
+    const run = async (keepNote = false) => {
         if (!S.lot) return;
         const seq = ++runSeq;
         S.saved = null;
+        if (!keepNote) S.recounted = null;
         $('[data-rfx-body]').style.opacity = S.res ? '.55' : '1';
         if (!S.res) body('<div class="rfx-loading"><span></span><span></span><span></span></div>');
         try {
@@ -1208,6 +1209,7 @@
         const parts = [];
         // A saved reading shows its numbers as they were when it was saved (the owner, 2026-10-30: "i don't get the
         // idea of the read it with today's plan button"): the button counts it again with the tasks on the board now.
+        if (S.recounted) parts.push(`<div class="rfx-banner is-saved"><span>📌 <b>${esc(S.recounted.title)}</b>, saved ${esc(S.recounted.at)}, was counted again just now: the way Range Effect counts has improved since, and your tasks may have changed. Your lot, checks and tries are as you saved them. Tap <b>Update saved reading</b> to keep these numbers.</span></div>`);
         if (S.saved) parts.push(`<div class="rfx-banner is-saved"><span>📌 <b>${esc(S.saved.title)}</b>, saved ${esc(S.saved.at)}. These are its numbers from that day: tasks you added or changed since, and app updates, are not in them.</span><button type="button" class="rfx-btn is-ghost" data-rfx-rerun>Recount with my tasks now</button></div>`);
         if (!R.lot.hasDay) parts.push(`<div class="rfx-banner">📅 This lot has no planting day yet, so the stages and what matters when cannot be shown. Set its day zero in Lots, then open this again.</div>`);
         // A guide only (the owner, 2026-10-30): said every time, above the numbers.
@@ -1822,12 +1824,18 @@
             S.tab = tabOf(S.check);
             S.logic = { ...LOGIC_DEF, ...(d.params.logic || {}) };
             paintLots(); paintPicks(); paintTries(); paintLogic();
-            S.saved = { title: d.title, at: d.at };
             S.savedId = d.id;
             S.savedTitle = d.title;
             paintFoot();
-            paint();
             $('[data-rfx-drawer]').classList.remove('is-on');
+            if ((d.result.version || '') !== d.current) {
+                // Saved with an older way of counting: counted again now, with the lot, checks and tries as saved.
+                S.recounted = { title: d.title, at: d.at };
+                run(true);
+            } else {
+                S.saved = { title: d.title, at: d.at };
+                paint();
+            }
             $('[data-rfx-scroll]').scrollTo({ top: 0, behavior: calm ? 'auto' : 'smooth' });
         } catch (err) { window.toast?.(err.message, 'error'); }
     });

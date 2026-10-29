@@ -225,7 +225,8 @@ class RangeEffectController extends BaseScheduleController
         }
 
         return $this->jsonOk('ok', ['data' => ['id' => (int) $r->id, 'title' => (string) $r->title, 'params' => json_decode((string) $r->params, true) ?: [],
-            'result' => json_decode((string) $r->result, true) ?: [], 'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A')]]);
+            'result' => json_decode((string) $r->result, true) ?: [], 'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A'),
+            'current' => RangeEffect::VERSION]]);
     }
 
     public function delete(Request $request, int $id)
