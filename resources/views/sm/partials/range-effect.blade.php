@@ -85,7 +85,9 @@
             <section class="rfx-controls">
                 <div class="rfx-row">
                     <span class="rfx-label">{{ $rfxPb ? 'Its lot' : 'Lot' }}</span>
-                    <div class="rfx-chips" data-rfx-lots></div>
+                    {{-- One tag for the lot read, a window to pick another (the owner, 2026-10-30: "lot selection is cut off in
+                         desktop if its too long lots of lots to select. make it a taglike button with modal box to select lot"). --}}
+                    <div class="rfx-lotpick" data-rfx-lots></div>
                 </div>
                 @if ($rfxPb)
                 {{-- The protocol's days on the calendar: its day zero (and the transplant of a DAT protocol), and the area its
@@ -242,6 +244,19 @@
         <div class="rfx-edit rfx-whatm" data-rfx-what hidden>
             <div class="rfx-edit-veil" data-rfx-what-x></div>
             <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxWhatT" data-rfx-what-c></div>
+        </div>
+        {{-- The lots, to pick the one read: a search once there are many, then the what-if lot. --}}
+        <div class="rfx-edit rfx-lotm" data-rfx-lotm hidden>
+            <div class="rfx-edit-veil" data-rfx-lotm-x></div>
+            <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxLotT">
+                <div class="rfx-day-h"><div><b id="rfxLotT">{{ $rfxPb ? 'The lot it is for' : 'Pick a lot' }}</b><small>{{ $rfxPb ? 'Its soil, water and place are what the reading counts from. A lot of Global Lots, no lot, or a what-if lot of your own.' : 'The calendar reads one lot at a time: its crop, its days, its soil and the products on its tasks.' }}</small></div><button type="button" class="rfx-x" data-rfx-lotm-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+                <label class="rfx-search" data-rfx-lot-s hidden>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M20 20l-3.5-3.5"/></svg>
+                    <input type="search" data-rfx-lot-q placeholder="Find a lot by its name, crop or place" autocomplete="off" aria-label="Find a lot">
+                </label>
+                <div class="rfx-lotl" data-rfx-lotl></div>
+                <div class="rfx-lotw" data-rfx-lotw></div>
+            </div>
         </div>
         {{-- The planned products onto the season's plan: what each would do first, then done. --}}
         <div class="rfx-edit rfx-applym" data-rfx-apply-box hidden>
@@ -456,6 +471,42 @@
     .rfx-chip.is-what.is-on { color: #fff; background: #6d28d9; box-shadow: 0 8px 18px -10px rgb(109 40 217 / .8); }
     .rfx-chip.is-what .rfx-pen { width: .8rem; height: .8rem; opacity: .8; }
     .rfx-whatm .rfx-edit-c { width: min(100%, 36rem); padding-bottom: 0; }
+    /* The lot: a tag, and its window. */
+    .rfx-lotpick { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; min-width: 0; }
+    .rfx-lottag { display: inline-flex; align-items: center; gap: .55rem; max-width: 100%; min-width: 0; padding: .4rem .85rem .4rem .45rem; border-radius: 999px; text-align: left; color: var(--rx-ink);
+        background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-hover), 0 6px 14px -10px rgb(47 82 25 / .7);
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-lottag:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 2px var(--rx-on), 0 10px 18px -10px rgb(47 82 25 / .85); }
+    .rfx-lottag em { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px; font-style: normal; font-size: 1.05rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-lottag > span { display: grid; min-width: 0; }
+    .rfx-lottag b { font-size: .95rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rfx-lottag small { font-size: .74rem; color: var(--rx-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rfx-lottag .rfx-dt-c { flex: none; width: .95rem; height: .95rem; margin-left: .1rem; opacity: .7; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-lottag.is-pop .rfx-dt-c { transform: rotate(180deg); }
+    .rfx-lottag.is-what { box-shadow: inset 0 0 0 1.5px #8b5cf6, 0 6px 14px -10px rgb(109 40 217 / .8); }
+    .rfx-lottag.is-what em { background: rgb(139 92 246 / .16); box-shadow: none; }
+    .rfx-lotm .rfx-edit-c { width: min(100%, 34rem); }
+    .rfx-lotl { display: grid; gap: .35rem; max-height: min(52vh, 26rem); overflow: auto; padding: .15rem; margin: -.15rem; }
+    .rfx-lotr { display: flex; align-items: center; gap: .65rem; width: 100%; min-width: 0; padding: .6rem .7rem; border-radius: .9rem; text-align: left; color: var(--rx-text); background: var(--rx-card);
+        box-shadow: inset 0 0 0 1px var(--rx-line); transition: box-shadow .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), background-color .28s;
+        animation: rfxPop .3s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 22ms); }
+    .rfx-lotr:hover { box-shadow: inset 0 0 0 1.5px var(--rx-hover); transform: translateX(2px); }
+    .rfx-lotr.is-on { background: var(--rx-soft); box-shadow: inset 0 0 0 2px var(--rx-on); }
+    .rfx-lotr em { flex: none; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: .7rem; font-style: normal; font-size: 1.1rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-lotr > span { flex: 1; min-width: 0; }
+    .rfx-lotr b { display: block; font-size: .92rem; color: var(--rx-ink); overflow-wrap: anywhere; }
+    .rfx-lotr small { display: block; font-size: .76rem; line-height: 1.35; color: var(--rx-muted); }
+    .rfx-lotr i { flex: none; display: grid; place-items: center; width: 1.35rem; height: 1.35rem; border-radius: 999px; color: #fff; background: var(--rx-on); opacity: 0; transform: scale(.5);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-lotr i svg { width: .8rem; height: .8rem; }
+    .rfx-lotr.is-on i { opacity: 1; transform: none; }
+    .rfx-lotw { display: flex; align-items: stretch; gap: .4rem; padding-top: .65rem; border-top: 1px dashed var(--rx-line-2); }
+    .rfx-lotw .rfx-lotr { flex: 1; animation: none; background: repeating-linear-gradient(135deg, var(--rx-card) 0 6px, var(--rx-soft) 6px 12px); }
+    .rfx-lotw .rfx-lotr em { background: rgb(139 92 246 / .16); box-shadow: none; }
+    .rfx-lotw .rfx-lotr.is-on { box-shadow: inset 0 0 0 2px #8b5cf6; }
+    .rfx-lotw .rfx-lotr.is-on i { background: #7c3aed; }
+    .rfx-lotw .rfx-btn { flex: none; align-self: center; }
+    @media (prefers-reduced-motion: reduce) { .rfx-lotr { animation: none; } }
     .rfx-w-f { display: grid; gap: .3rem; font-size: .78rem; font-weight: 800; color: var(--rx-muted); }
     .rfx-w-f i { font-style: normal; font-weight: 600; }
     .rfx-w-f input { width: 100%; padding: .6rem .7rem; border-radius: .75rem; border: 1.5px solid var(--rx-field-line); font-size: .94rem; color: var(--rx-ink); background: var(--rx-field); }
@@ -1168,7 +1219,8 @@
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape' || M.hidden) return;
         if (document.querySelector('dialog[open]')) return;   // the field questions close themselves
-        if (!$('[data-rfx-stg]').hidden) closeStage();
+        if (!lotBox.hidden) closeLots();
+        else if (!$('[data-rfx-stg]').hidden) closeStage();
         else if (!whatBox.hidden) closeWhat();
         else if (!watBox.hidden) closeWat();
         else if (!applyBox.hidden) closeApply();
@@ -1223,22 +1275,81 @@
         }
     };
     const lotOf = () => (S.opts?.lots || []).find((l) => l.id === S.lot) || null;
+    // A lot in a line: its crop (or, in a protocol, its answers), its place, its days, its size.
+    const lotSmall = (l) => (PB ? (l.id ? (whatCount(l.answers) ? whatCount(l.answers) + ' answers' : 'no answers yet') : 'soil not counted') : l.crop.split(',')[0]);
+    const lotMeta = (l) => (PB
+        ? [lotSmall(l), l.place, l.ha ? Math.round(l.ha * 100) / 100 + ' ha' : '']
+        : [l.crop.split(',')[0], l.variety, l.hasDay ? (l.anchor ? `${l.counter} 0 on ${say(l.anchor)}` : '') : 'no planting day yet', l.ha ? Math.round(l.ha * 100) / 100 + ' ha' : '']).filter(Boolean).join(' · ');
+    const CHEV = '<svg class="rfx-dt-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>';
+    const TICK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
     const paintLots = () => {
-        const base = S.custom ? (S.opts.lots || []).find((l) => l.id === S.custom.base) : null;
-        const lotSmall = (l) => (PB ? (l.id ? (whatCount(l.answers) ? whatCount(l.answers) + ' answers' : 'no answers yet') : 'soil not counted') : l.crop.split(',')[0]);
-        $('[data-rfx-lots]').innerHTML = (S.opts.lots || []).map((l) => `<button type="button" class="rfx-chip ${!S.useCustom && l.id === S.lot ? 'is-on' : ''}" data-lot="${l.id}">${esc(l.icon)} ${esc(l.name)} <small>${esc(lotSmall(l))}</small></button>`).join('')
-            + `<button type="button" class="rfx-chip is-what ${S.useCustom ? 'is-on' : ''}" data-lot-what title="${S.custom ? 'A what-if lot: tap to use it, tap again to change it' : 'Try another soil and field, never saved as a lot'}">🧪 ${S.custom ? esc(S.custom.name) : 'What if'} <small>${S.custom ? esc((base ? 'on ' + base.name : '') + ' · ' + whatCount(S.custom.answers) + ' answers') : 'your own soil'}</small>${S.useCustom ? PEN_I : ''}</button>`;
+        const lots = S.opts.lots || [];
+        const base = S.custom ? lots.find((l) => l.id === S.custom.base) : null;
+        const l = lotOf();
+        const what = S.useCustom && S.custom;
+        const n = lots.filter((x) => !PB || x.id).length;
+        $('[data-rfx-lots]').innerHTML = `<button type="button" class="rfx-lottag ${what ? 'is-what' : ''}" data-rfx-lot-open aria-haspopup="dialog" title="${lots.length > 1 || PB ? 'Pick another lot' : 'This lot'}">
+            <em aria-hidden="true">${what ? '🧪' : esc(l?.icon || '🗺️')}</em><span><b>${esc(what ? S.custom.name : (l?.name || 'Pick a lot'))}</b><small>${esc(what ? 'What if' + (base ? ' on ' + base.name : '') + ' · ' + whatCount(S.custom.answers) + ' answers' : (l ? lotSmall(l) : '') + (n > 1 ? ` · ${n} lots` : ''))}</small></span>${CHEV}</button>`
+            + (what ? `<button type="button" class="rfx-chip is-what" data-lot-what-edit>${PEN_I} Change the what-if lot</button>` : '');
+        if (!lotBox.hidden) paintLotList();
     };
+    /* The lots, in their own window: a search once there are many, each with its crop, days and size, the one read
+       ticked, then the what-if lot. */
+    const lotBox = $('[data-rfx-lotm]');
+    let lotQ = '';
+    const paintLotList = () => {
+        const lots = S.opts.lots || [];
+        const q = lotQ.trim().toLowerCase();
+        const shown = lots.filter((l) => !q || [l.name, l.crop, l.place, l.variety].filter(Boolean).join(' ').toLowerCase().includes(q));
+        $('[data-rfx-lotl]').innerHTML = shown.map((l, k) => `<button type="button" class="rfx-lotr ${!S.useCustom && l.id === S.lot ? 'is-on' : ''}" data-lot="${l.id}" style="--k:${Math.min(k, 16)}" aria-pressed="${!S.useCustom && l.id === S.lot}"><em aria-hidden="true">${esc(l.icon)}</em><span><b>${esc(l.name)}</b><small>${esc(lotMeta(l))}</small></span><i>${TICK}</i></button>`).join('')
+            || '<p class="rfx-pick-hint">No lot by that name. Try part of it, its crop or its place.</p>';
+        const base = S.custom ? lots.find((l) => l.id === S.custom.base) : null;
+        $('[data-rfx-lotw]').innerHTML = S.custom
+            ? `<button type="button" class="rfx-lotr ${S.useCustom ? 'is-on' : ''}" data-lot-what-use aria-pressed="${!!S.useCustom}"><em aria-hidden="true">🧪</em><span><b>${esc(S.custom.name)}</b><small>${esc(['A what-if lot', base ? 'on ' + base.name : '', whatCount(S.custom.answers) + ' answers'].filter(Boolean).join(' · '))}</small></span><i>${TICK}</i></button><button type="button" class="rfx-btn is-ghost" data-lot-what-edit>${PEN_I} Change it</button>`
+            : `<button type="button" class="rfx-lotr" data-lot-what-new><em aria-hidden="true">🧪</em><span><b>What if</b><small>Another soil and field on the same crop, days and tasks. Never saved as a lot.</small></span></button>`;
+    };
+    const openLots = () => {
+        lotQ = '';
+        const many = (S.opts?.lots || []).length > 6;
+        $('[data-rfx-lot-s]').hidden = !many;
+        $('[data-rfx-lot-q]').value = '';
+        paintLotList();
+        $('[data-rfx-lot-open]')?.classList.add('is-pop');
+        lotBox.hidden = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => lotBox.classList.add('is-on')));
+        setTimeout(() => {
+            if (many && matchMedia('(pointer: fine)').matches) $('[data-rfx-lot-q]').focus({ preventScroll: true });
+            else (lotBox.querySelector('.rfx-lotr.is-on') || lotBox.querySelector('.rfx-lotr'))?.focus({ preventScroll: true });
+            lotBox.querySelector('.rfx-lotr.is-on')?.scrollIntoView({ block: 'nearest' });
+        }, calm ? 0 : 200);
+    };
+    const closeLots = () => {
+        lotBox.classList.remove('is-on');
+        $('[data-rfx-lot-open]')?.classList.remove('is-pop');
+        setTimeout(() => { if (!lotBox.classList.contains('is-on')) lotBox.hidden = true; }, calm ? 0 : 260);
+    };
+    $('[data-rfx-lot-q]').addEventListener('input', (e) => { lotQ = e.target.value; paintLotList(); });
     $('[data-rfx-lots]').addEventListener('click', (e) => {
-        if (e.target.closest('[data-lot-what]')) {
-            // A what-if lot made already: the first tap uses it, a tap on it in use opens it to change.
-            if (S.custom && !S.useCustom) { S.useCustom = true; S.lot = S.custom.base; paintLots(); paintPicks(); run(); keep(); } else openWhat();
+        if (e.target.closest('[data-lot-what-edit]')) { openWhat(); return; }
+        if (e.target.closest('[data-rfx-lot-open]')) openLots();
+    });
+    lotBox.addEventListener('click', (e) => {
+        if (e.target.closest('[data-rfx-lotm-x]')) { closeLots(); return; }
+        if (e.target.closest('[data-lot-what-edit]') || e.target.closest('[data-lot-what-new]')) { closeLots(); setTimeout(openWhat, calm ? 0 : 200); return; }
+        if (e.target.closest('[data-lot-what-use]')) {
+            closeLots();
+            if (!S.useCustom) { S.useCustom = true; S.lot = S.custom.base; paintLots(); paintPicks(); run(); keep(); }
             return;
         }
         const b = e.target.closest('[data-lot]');
         if (!b) return;
+        closeLots();
+        if (!S.useCustom && Number(b.dataset.lot) === S.lot) return;
+        pickLot(Number(b.dataset.lot));
+    });
+    const pickLot = (id) => {
         S.useCustom = false;
-        S.lot = Number(b.dataset.lot);
+        S.lot = id;
         // A named pest of one crop means nothing on another.
         const mine = (k) => !k.startsWith('p:') || (lotOf()?.threats || []).some((t) => 'p:' + t.slug === k);
         S.checks = S.checks.filter(mine);
@@ -1247,7 +1358,7 @@
         paintLots();
         paintPicks();
         run();
-    });
+    };
     const paintPicks = () => {
         const o = S.opts;
         $$('[data-rfx-tabs] button').forEach((b) => b.classList.toggle('is-on', b.dataset.tab === S.tab));
