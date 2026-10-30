@@ -25,7 +25,7 @@
 @php
     // In the Protocol Builder (2026-10-30, the owner: "this module should also be in the protocol builder"): the same sheet
     // on a protocol, @include('sm.partials.range-effect', ['schedule' => null, 'rfxProtocol' => $protocol]); its lots are
-    // the farm's lots in Global Lots, its days a day zero picked here, and nothing is saved or put on a season.
+    // the farm's lots in Global Lots, its days a day zero picked here; its readings are saved with the protocol (no season).
     $rfxPb = $rfxProtocol ?? null;
     $rfxSid = $rfxPb ? 'pb' . (int) $rfxPb['id'] : (int) $schedule->id;
     $rfxU = $rfxPb ? [
@@ -36,7 +36,8 @@
         'products' => route('sm.effect.products') . '?pb=1',
         'lookup' => route('sm.effect.lookup'),
         'job' => url('/app/sm-range-effect/lookup') . '/',
-        'save' => null, 'saved' => null, 'copyAnswers' => null, 'applyCheck' => null, 'apply' => null,
+        'save' => route('pb.coverage.save', (int) $rfxPb['id']), 'saved' => url('/app/protocol-builder/' . (int) $rfxPb['id'] . '/coverage/saved') . '/',
+        'copyAnswers' => null, 'applyCheck' => null, 'apply' => null,
     ] : [
         'options' => route('sm.effect') . '?scheduleId=' . $schedule->id,
         'run' => route('sm.effect.run') . '?scheduleId=' . $schedule->id,
@@ -446,7 +447,6 @@
     .rfx-tries-b { display: flex; flex-wrap: wrap; gap: .45rem; }
     .rfx-add.is-plan { color: #fff; background: var(--rx-on); box-shadow: 0 8px 18px -10px rgb(47 82 25 / .9); }
     /* In the Protocol Builder: no saved readings (a protocol is not a season), its days and area in their own row. */
-    .rfx.is-pb [data-rfx-saved-open], .rfx.is-pb [data-rfx-save], .rfx.is-pb [data-rfx-save-new], .rfx.is-pb [data-rfx-editing] { display: none !important; }
     .rfx-pbdays { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .6rem 1rem; }
     .rfx-pbha { display: grid; gap: .25rem; font-size: .78rem; font-weight: 800; color: var(--rx-muted); }
     .rfx-pbha > span:last-child { display: inline-flex; align-items: center; gap: .35rem; font-size: .9rem; color: var(--rx-ink); }
@@ -1929,6 +1929,13 @@
     const body = (html) => { $('[data-rfx-body]').innerHTML = html; };
     const empty = (h, p) => `<div class="rfx-card rfx-empty"><img src="{{ \App\Support\AneeEmoji::url('thinking') }}" alt=""><b>${esc(h)}</b><p>${esc(p)}</p></div>`;
     let runSeq = 0;
+    // What a reading is counted from: the lot (or a protocol's tasks, days and basis lot), the checks, the tries, the logic.
+    const readingBody = () => {
+        const base = { check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, custom: S.useCustom ? S.custom : null };
+        if (!PB) return { scheduleId: SID, lotId: S.lot, ...base };
+        const src = window.pbCoverage ? window.pbCoverage.source() : null;
+        return { basis: S.lot, start: S.pb.start, transplant: S.pb.transplant, ha: S.pb.ha, tasks: src ? src.tasks : undefined, materials: src ? src.materials : undefined, ...base };
+    };
     const run = async (keepNote = false) => {
         if (S.lot === null || S.lot === undefined) return;
         const seq = ++runSeq;
@@ -1937,11 +1944,7 @@
         $('[data-rfx-body]').style.opacity = S.res ? '.55' : '1';
         if (!S.res) body('<div class="rfx-loading"><span></span><span></span><span></span></div>');
         try {
-            const src = PB && window.pbCoverage ? window.pbCoverage.source() : null;
-            const r = await window.api(U.run, { method: 'POST', body: PB
-                ? { basis: S.lot, start: S.pb.start, transplant: S.pb.transplant, ha: S.pb.ha, tasks: src ? src.tasks : undefined, materials: src ? src.materials : undefined,
-                    check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, custom: S.useCustom ? S.custom : null }
-                : { scheduleId: SID, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, custom: S.useCustom ? S.custom : null } });
+            const r = await window.api(U.run, { method: 'POST', body: readingBody() });
             if (seq !== runSeq) return;
             S.res = r.data;
             paint();
@@ -2752,7 +2755,7 @@
         b.textContent = n;
     };
     // A saved reading opened (or just saved) is the one Save puts the changes over (the owner, 2026-10-30).
-    const defaultTitle = () => [S.res.check.label, ...(S.res.series || []).map((x) => x.check.label)].join(', ') + ` · ${S.res.lot.name}` + (S.tries.length ? ` · with ${S.tries.map((t) => t.name).join(', ')}` : '');
+    const defaultTitle = () => [S.res.check.label, ...(S.res.series || []).map((x) => x.check.label)].join(', ') + ` · ${PB ? (lotOf()?.name && S.lot ? lotOf().name : 'no lot') + ', from ' + say(S.pb.start) : S.res.lot.name}` + (S.tries.length ? ` · with ${S.tries.map((t) => t.name).join(', ')}` : '');
     const paintFoot = () => {
         const ed = !!S.savedId;
         $('[data-rfx-editing]').hidden = !ed;
@@ -2768,7 +2771,7 @@
         btns.forEach((b) => { b.disabled = true; });
         try {
             const id = asNew ? null : S.savedId;
-            const r = await window.api(U.save, { method: 'POST', body: { scheduleId: SID, id, lotId: S.lot, check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, custom: S.useCustom ? S.custom : null, title: id ? S.savedTitle : defaultTitle() } });
+            const r = await window.api(U.save, { method: 'POST', body: { ...readingBody(), id, title: id ? S.savedTitle : defaultTitle() } });
             S.opts.saved = r.data.saved;
             S.savedId = r.data.id;
             S.savedTitle = r.data.title;
@@ -2863,7 +2866,8 @@
             const r = await window.api(U.saved + b.dataset.openSaved + '?scheduleId=' + SID);
             const d = r.data;
             S.res = d.result;
-            S.lot = d.result.lot.id;
+            S.lot = PB ? Number((d.params.pb || {}).basis ?? 0) : d.result.lot.id;
+            if (PB && d.params.pb && d.params.pb.start) { S.pb = { start: d.params.pb.start, transplant: d.params.pb.transplant || addDays(d.params.pb.start, 21), ha: Number(d.params.pb.ha) > 0 ? Number(d.params.pb.ha) : 1 }; paintPbDays(); }
             S.check = d.params.check || d.result.check.key;
             S.checks = [S.check, ...(d.params.also || [])];
             S.tries = (d.params.tries || []).map((t) => ({ ...t, name: t.name || t.ai || 'Product' }));
@@ -2872,6 +2876,7 @@
             S.tab = tabOf(S.check);
             S.logic = { ...LOGIC_DEF, ...(d.params.logic || {}) };
             paintLots(); paintPicks(); paintTries(); paintLogic();
+            if (PB && !(S.opts.lots || []).some((l) => l.id === S.lot)) S.lot = 0;
             S.savedId = d.id;
             S.savedTitle = d.title;
             paintFoot();

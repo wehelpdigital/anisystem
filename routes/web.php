@@ -1195,6 +1195,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // The Coverage Planner on a protocol (2026-10-30): the farm's lots as its basis, nothing saved.
     Route::get('/app/protocol-builder/{id}/coverage', [App\Http\Controllers\ProtocolEffectController::class, 'options'])->whereNumber('id')->name('pb.coverage');
     Route::post('/app/protocol-builder/{id}/coverage/run', [App\Http\Controllers\ProtocolEffectController::class, 'run'])->whereNumber('id')->middleware('throttle:60,1')->name('pb.coverage.run');
+    Route::post('/app/protocol-builder/{id}/coverage/save', [App\Http\Controllers\ProtocolEffectController::class, 'save'])->whereNumber('id')->middleware('throttle:30,1')->name('pb.coverage.save');
+    Route::get('/app/protocol-builder/{id}/coverage/saved/{rid}', [App\Http\Controllers\ProtocolEffectController::class, 'saved'])->whereNumber('id')->whereNumber('rid')->name('pb.coverage.saved');
+    Route::delete('/app/protocol-builder/{id}/coverage/saved/{rid}', [App\Http\Controllers\ProtocolEffectController::class, 'delete'])->whereNumber('id')->whereNumber('rid')->name('pb.coverage.delete');
+    Route::post('/app/protocol-builder/{id}/coverage/saved/{rid}/name', [App\Http\Controllers\ProtocolEffectController::class, 'rename'])->whereNumber('id')->whereNumber('rid')->middleware('throttle:30,1')->name('pb.coverage.rename');
     Route::post('/app/protocol-builder/port', [App\Http\Controllers\ProtocolBuilderController::class, 'port'])->name('pb.port');
     // Versions of a protocol, each with its own tasks, materials, rules & notes and files.
     Route::post('/app/protocol-builder/{id}/versions', [App\Http\Controllers\ProtocolBuilderController::class, 'versionStore'])->whereNumber('id')->name('pb.versions.store');

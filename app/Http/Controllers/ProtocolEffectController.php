@@ -16,6 +16,8 @@ use App\Support\WorkerContext;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * The Coverage Planner in the Protocol Builder (2026-10-30, the owner: "this module should also be in the protocol builder
@@ -23,7 +25,12 @@ use Illuminate\Support\Facades\Auth;
  * lot where it will be applied to as a basis)"). The same sheet (sm.partials.range-effect, protocol mode) and engine,
  * on the protocol built in memory (RangeEffectProtocol): the lots offered are the farm's lots in Global Lots, whose soil
  * and place the reading takes, or a what-if lot; the days are a day zero (and a transplant) the farmer picks. The
- * product search and Anee's look up are the planner's own (sm.effect.products, sm.effect.lookup). Nothing is saved.
+ * product search and Anee's look up are the planner's own (sm.effect.products, sm.effect.lookup).
+ *
+ * Readings are saved too (2026-10-30, the owner: "i don't see a save button in the coverage planner in protocol
+ * builder"): in the season's own table (as_range_effects), with no season (croppingScheduleId 0) and the protocol in
+ * its params (protocolId), with the days picked and the lot taken as the basis; the protocol's tasks as they stood
+ * live in the result, so a saved reading shows its numbers as they were.
  */
 class ProtocolEffectController extends Controller
 {
@@ -78,7 +85,7 @@ class ProtocolEffectController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
-            'lots' => $this->lots($p), 'nutrients' => $nutrients, 'threats' => $threats, 'water' => \App\Support\RangeEffectWater::options(), 'saved' => [],
+            'lots' => $this->lots($p), 'nutrients' => $nutrients, 'threats' => $threats, 'water' => \App\Support\RangeEffectWater::options(), 'saved' => $this->savedList((int) $p->id),
             'lookup' => app(RangeEffectController::class)->lookupInfo(),
             'protocol' => ['id' => (int) $p->id, 'title' => (string) $p->title, 'dayType' => strtoupper((string) $p->dayType), 'readable' => RangeEffectProtocol::readable($p),
                 'crop' => CropStages::label($p->crop) ?: (string) $p->crop],
@@ -92,6 +99,21 @@ class ProtocolEffectController extends Controller
         if (! RangeEffectProtocol::readable($p)) {
             return response()->json(['success' => false, 'message' => 'The Coverage Planner reads protocols of seasonal crops counted in DAS, DAT or DAP. A tree protocol counts its days another way.'], 422);
         }
+        try {
+            $res = $this->reading($request, $p)['res'];
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+        }
+
+        return response()->json(['success' => true, 'message' => 'ok', 'data' => $res]);
+    }
+
+    /**
+     * The protocol read on the days picked: the result, and what a saved reading keeps to open again (the what-if lot
+     * as the farmer made it, the days, the area and the lot taken as the basis).
+     */
+    private function reading(Request $request, AsProtocol $p): array
+    {
         // The builder's own tasks and materials as they stand on the page (nothing here is written), else the version kept.
         $tasks = $request->input('tasks');
         $materials = $request->input('materials');
@@ -117,16 +139,124 @@ class ProtocolEffectController extends Controller
         $name = $custom ? $custom['name'] : 'This protocol';
         $season = RangeEffectProtocol::season($p, $tasks, $materials, $start, $transplant, $ha, $name);
         $tries = app(RangeEffectController::class)->triesOf($request);
+        $res = RangeEffect::run($season, 0, (string) $request->input('check', 'n:N'), $tries,
+            array_values(array_filter(array_map(fn ($k) => mb_substr((string) $k, 0, 80), (array) $request->input('also', [])), fn ($k) => $k !== '')),
+            array_intersect_key(array_map(fn ($v) => filter_var($v, FILTER_VALIDATE_BOOLEAN), (array) $request->input('logic', [])), array_flip(\App\Support\RangeEffectLogic::OPTS)),
+            $custom ?? ['name' => 'This protocol', 'place' => '', 'answers' => []]);
+        $res['protocol'] = ['start' => $start, 'transplant' => strtoupper((string) $p->dayType) === 'DAT' ? $transplant : null, 'ha' => $ha, 'basis' => $farm ? (int) $farm['id'] : 0];
+
+        return ['res' => $res, 'whatIf' => is_array($request->input('custom')) && $request->input('custom') ? RangeEffect::customOf($request->input('custom')) : null,
+            'pb' => ['start' => $start, 'transplant' => $res['protocol']['transplant'], 'ha' => $ha, 'basis' => $basisId]];
+    }
+
+    /* =============================================================== saved readings */
+
+    private function savedReady(): bool
+    {
         try {
-            $res = RangeEffect::run($season, 0, (string) $request->input('check', 'n:N'), $tries,
-                array_values(array_filter(array_map(fn ($k) => mb_substr((string) $k, 0, 80), (array) $request->input('also', [])), fn ($k) => $k !== '')),
-                array_intersect_key(array_map(fn ($v) => filter_var($v, FILTER_VALIDATE_BOOLEAN), (array) $request->input('logic', [])), array_flip(\App\Support\RangeEffectLogic::OPTS)),
-                $custom ?? ['name' => 'This protocol', 'place' => '', 'answers' => []]);
+            return Schema::hasTable(RangeEffectController::SAVED);
+        } catch (\Throwable $e) {
+            return false;
+        }
+    }
+
+    /** The farmer's saved readings of this protocol (no season; the protocol in the params). */
+    private function savedQuery(int $protocolId)
+    {
+        return DB::table(RangeEffectController::SAVED)->where('userId', (int) Auth::id())->where('croppingScheduleId', 0)->where('deleteStatus', 1)
+            ->where('params->protocolId', $protocolId);
+    }
+
+    private function savedList(int $protocolId): array
+    {
+        if (! $this->savedReady()) {
+            return [];
+        }
+
+        return $this->savedQuery($protocolId)->orderByDesc('updated_at')->orderByDesc('id')->limit(30)->get(['id', 'title', 'lotId', 'created_at', 'updated_at'])
+            ->map(fn ($r) => ['id' => (int) $r->id, 'title' => (string) $r->title, 'lotId' => (int) $r->lotId,
+                'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A'),
+                'edited' => $r->updated_at && $r->updated_at !== $r->created_at ? Carbon::parse($r->updated_at)->timezone('Asia/Manila')->format('M j, Y g:i A') : null])->all();
+    }
+
+    public function save(Request $request, int $id)
+    {
+        $this->gate();
+        $p = $this->mine($id);
+        if (! $this->savedReady()) {
+            return response()->json(['success' => false, 'message' => 'Saving is being set up. Please try again in a few minutes.'], 422);
+        }
+        if (! RangeEffectProtocol::readable($p)) {
+            return response()->json(['success' => false, 'message' => 'A tree protocol cannot be read here, so it cannot be saved.'], 422);
+        }
+        try {
+            $r = $this->reading($request, $p);
         } catch (\InvalidArgumentException $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
         }
-        $res['protocol'] = ['start' => $start, 'transplant' => strtoupper((string) $p->dayType) === 'DAT' ? $transplant : null, 'ha' => $ha, 'basis' => $farm ? (int) $farm['id'] : 0];
+        $res = $r['res'];
+        $title = mb_substr(trim((string) $request->input('title', '')) ?: $res['check']['label'] . ' · ' . $p->title, 0, 190);
+        $params = ['protocolId' => (int) $p->id, 'check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'logic' => $res['logic']['opts'] ?? [],
+            'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'water', 'date', 'qty', 'unit', 'name', 'method', 't', 'line'])),
+                array_slice(array_values(array_filter((array) $request->input('tries', []), 'is_array')), 0, RangeEffectController::MAX_TRIES))),
+            'pb' => $r['pb']];
+        if ($r['whatIf']) {
+            $params['custom'] = $r['whatIf'];
+        }
+        $row = ['lotId' => (int) $r['pb']['basis'], 'title' => $title, 'params' => json_encode($params, JSON_UNESCAPED_UNICODE),
+            'result' => json_encode($res, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'updated_at' => now()];
+        // A saved reading opened and changed is saved over itself; "Save as new" sends no id.
+        $rid = (int) $request->input('id', 0);
+        $have = $rid ? $this->savedQuery((int) $p->id)->where('id', $rid)->first() : null;
+        if ($have) {
+            DB::table(RangeEffectController::SAVED)->where('id', $have->id)->update($row);
+            $rid = (int) $have->id;
+        } else {
+            $rid = DB::table(RangeEffectController::SAVED)->insertGetId($row + ['userId' => (int) Auth::id(), 'croppingScheduleId' => 0, 'deleteStatus' => 1, 'created_at' => now()]);
+        }
 
-        return response()->json(['success' => true, 'message' => 'ok', 'data' => $res]);
+        return response()->json(['success' => true, 'message' => $have ? 'Updated.' : 'Saved.',
+            'data' => ['id' => $rid, 'title' => $title, 'updated' => (bool) $have, 'saved' => $this->savedList((int) $p->id)]]);
+    }
+
+    public function saved(Request $request, int $id, int $rid)
+    {
+        $this->gate();
+        $p = $this->mine($id);
+        $r = $this->savedReady() ? $this->savedQuery((int) $p->id)->where('id', $rid)->first() : null;
+        if (! $r) {
+            return response()->json(['success' => false, 'message' => 'That saved reading is gone.'], 404);
+        }
+
+        return response()->json(['success' => true, 'message' => 'ok', 'data' => ['id' => (int) $r->id, 'title' => (string) $r->title,
+            'params' => json_decode((string) $r->params, true) ?: [], 'result' => json_decode((string) $r->result, true) ?: [],
+            'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A'), 'current' => RangeEffect::VERSION]]);
+    }
+
+    public function rename(Request $request, int $id, int $rid)
+    {
+        $this->gate();
+        $p = $this->mine($id);
+        $title = mb_substr(trim((string) $request->input('title', '')), 0, 190);
+        if ($title === '') {
+            return response()->json(['success' => false, 'message' => 'Give it a name.'], 422);
+        }
+        $n = $this->savedReady() ? $this->savedQuery((int) $p->id)->where('id', $rid)->update(['title' => $title]) : 0;
+        if (! $n && ! ($this->savedReady() && $this->savedQuery((int) $p->id)->where('id', $rid)->exists())) {
+            return response()->json(['success' => false, 'message' => 'That saved reading is gone.'], 404);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Renamed.', 'data' => ['id' => $rid, 'title' => $title, 'saved' => $this->savedList((int) $p->id)]]);
+    }
+
+    public function delete(Request $request, int $id, int $rid)
+    {
+        $this->gate();
+        $p = $this->mine($id);
+        if ($this->savedReady()) {
+            $this->savedQuery((int) $p->id)->where('id', $rid)->update(['deleteStatus' => 0, 'updated_at' => now()]);
+        }
+
+        return response()->json(['success' => true, 'message' => 'Removed.', 'data' => ['saved' => $this->savedList((int) $p->id)]]);
     }
 }
