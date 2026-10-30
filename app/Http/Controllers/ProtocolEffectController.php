@@ -78,7 +78,7 @@ class ProtocolEffectController extends Controller
         }
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
-            'lots' => $this->lots($p), 'nutrients' => $nutrients, 'threats' => $threats, 'saved' => [],
+            'lots' => $this->lots($p), 'nutrients' => $nutrients, 'threats' => $threats, 'water' => \App\Support\RangeEffectWater::options(), 'saved' => [],
             'lookup' => app(RangeEffectController::class)->lookupInfo(),
             'protocol' => ['id' => (int) $p->id, 'title' => (string) $p->title, 'dayType' => strtoupper((string) $p->dayType), 'readable' => RangeEffectProtocol::readable($p),
                 'crop' => CropStages::label($p->crop) ?: (string) $p->crop],

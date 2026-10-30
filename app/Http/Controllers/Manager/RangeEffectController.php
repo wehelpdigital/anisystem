@@ -68,7 +68,7 @@ class RangeEffectController extends BaseScheduleController
         }
 
         return $this->jsonOk('ok', ['data' => [
-            'lots' => RangeEffect::lots($schedule), 'nutrients' => $nutrients, 'threats' => $threats,
+            'lots' => RangeEffect::lots($schedule), 'nutrients' => $nutrients, 'threats' => $threats, 'water' => \App\Support\RangeEffectWater::options(),
             'saved' => $this->savedList((int) $schedule->id), 'lookup' => $this->lookupInfo(),
         ]]);
     }
@@ -120,6 +120,13 @@ class RangeEffectController extends BaseScheduleController
         $out = [];
         foreach (array_slice((array) $request->input('tries', []), 0, self::MAX_TRIES) as $t) {
             if (! is_array($t)) {
+                continue;
+            }
+            // A watering planned here (2026-10-30): its day, how much (cm or mm, none fills the root zone) and how it goes on.
+            if (! empty($t['water'])) {
+                $out[] = ['water' => 'irrigate', 'date' => (string) ($t['date'] ?? ''), 'qty' => max(0, min(1000, (float) ($t['qty'] ?? 0))),
+                    'unit' => ($t['unit'] ?? '') === 'mm' ? 'mm' : 'cm', 'method' => isset(\App\Support\RangeEffectWater::METHODS[$t['method'] ?? '']) ? $t['method'] : null];
+
                 continue;
             }
             $p = null;
@@ -197,9 +204,13 @@ class RangeEffectController extends BaseScheduleController
         }
         $out = \App\Support\RangeEffectApply::run($schedule, $lot, $tries, $write);
         $m = $out['made'];
+        $wet = (int) ($m['water'] ?? 0);
+        $prod = $m['lines'] - $wet;
         $say = ! $write ? 'ok' : ($m['lines']
-            ? ($m['lines'] === 1 ? 'One product is on the plan' : $m['lines'] . ' products are on the plan') . ($m['tasks'] ? ', in ' . ($m['tasks'] === 1 ? 'a new task' : $m['tasks'] . ' new tasks') : '') . '.'
+            ? implode(' and ', array_filter([$prod ? ($prod === 1 ? 'One product' : $prod . ' products') : '', $wet ? ($wet === 1 ? 'one watering' : $wet . ' waterings') : '']))
+                . ($m['lines'] === 1 ? ' is' : ' are') . ' on the plan' . ($m['tasks'] ? ', in ' . ($m['tasks'] === 1 ? 'a new task' : $m['tasks'] . ' new tasks') : '') . '.'
             : 'Everything was on the plan already.');
+        $say = ucfirst($say);
 
         return $this->jsonOk($say, ['data' => $out]);
     }
@@ -244,7 +255,7 @@ class RangeEffectController extends BaseScheduleController
         if ($title === '') {
             $title = $res['check']['label'] . ' · ' . $res['lot']['name'];
         }
-        $params = ['check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'logic' => $res['logic']['opts'] ?? [], 'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'date', 'qty', 'unit', 'name', 'method', 't', 'line'])),
+        $params = ['check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'logic' => $res['logic']['opts'] ?? [], 'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'water', 'date', 'qty', 'unit', 'name', 'method', 't', 'line'])),
             array_slice((array) $request->input('tries', []), 0, self::MAX_TRIES)))];
         // A what-if lot is kept with the reading only (it is never a lot of the season or of Global Lots).
         if ($custom = $this->custom($request)) {

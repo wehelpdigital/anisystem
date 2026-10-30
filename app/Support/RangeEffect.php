@@ -72,7 +72,7 @@ class RangeEffect
      * The way of counting, by date: a saved reading counted an older way is counted again when it is opened (the
      * owner, 2026-10-30: "i opened the saved file and the P is still at 78%"). Raise it whenever the numbers change.
      */
-    public const VERSION = '2026-10-30.8';
+    public const VERSION = '2026-10-30.9';
 
     /**
      * What an application is doing on a day (2026-10-30, the owner: "the absorption stage, the ammonization in soil
@@ -203,6 +203,10 @@ class RangeEffect
         if ($k === 't' && isset(self::THREATS[$v])) {
             return ['key' => $key, 'kind' => 'threat', 'cat' => $v, 'label' => self::THREATS[$v][0], 'short' => self::THREATS[$v][0], 'word' => mb_strtolower(self::THREATS[$v][0]), 'icon' => self::THREATS[$v][1]];
         }
+        // Water (2026-10-30): the soil's water against the crop's stress line, from the waterings and the rain.
+        if ($k === 'w') {
+            return RangeEffectWater::check($v);
+        }
         if ($k === 'p' && $v !== '') {
             foreach (['pests', 'diseases'] as $sec) {
                 $e = FieldCatalogue::problem($sec, $v);
@@ -261,6 +265,10 @@ class RangeEffect
             $c['custom'] = self::customOf($custom);
         }
         $check = self::checkOf($checkKey, $c['crop']) ?? self::checkOf('n:N');
+        // A water check reads how much each stage suffers from its own table (RangeEffectWater::critOf).
+        if ($check['kind'] === 'water') {
+            $check['table'] = $c['table'];
+        }
         $today = Carbon::now('Asia/Manila')->startOfDay();
         // The deeper reading (RangeEffectLogic): amounts, the soil, the links between nutrients, the crop's health.
         $opts = RangeEffectLogic::opts($logic);
@@ -281,7 +289,17 @@ class RangeEffect
         foreach (array_slice(array_values(array_unique(array_map('strval', $also))), 0, self::MAX_CHECKS - 1) as $k) {
             $ck = self::checkOf($k, $c['crop']);
             if ($ck && $ck['key'] !== $check['key']) {
+                if ($ck['kind'] === 'water') {
+                    $ck['table'] = $c['table'];
+                }
                 $alsoChecks[$ck['key']] = $ck;
+            }
+        }
+        // The lot's waterings (its irrigation tasks and those planned here) take part only when water is checked.
+        $waterOn = $check['kind'] === 'water' || array_filter($alsoChecks, fn ($ck) => $ck['kind'] === 'water');
+        if ($waterOn) {
+            foreach (RangeEffectWater::events($schedule, $c, $tries) as $e) {
+                $apps[] = $e;
             }
         }
         foreach ($apps as $i => &$a) {
@@ -308,9 +326,25 @@ class RangeEffect
         $stages = [];
         $info = [];
         $last = false;
+        // Each day's stage first: the water count runs over the whole stretch before the days are read.
+        $dayStage = [];
         for ($d = $from->copy(); $d->lte($to); $d->addDay()) {
             [$stage, $dayLabel] = self::stageOn($c, $d);
+            $dayStage[] = [$stage, $dayLabel];
             $info[] = ['label' => $stage['label'] ?? null, 'in' => $stage !== null && ! ($c['harvest'] && $d->gt($c['harvest'])), 'date' => $d->copy()];
+        }
+        $water = [];
+        if ($waterOn) {
+            foreach (array_merge([$check], array_values($alsoChecks)) as $ck) {
+                if ($ck['kind'] === 'water') {
+                    $water[$ck['mode']] ??= RangeEffectWater::run($c, $apps, $info, $soil, $ck['mode']);
+                }
+            }
+        }
+        $wRun = $check['kind'] === 'water' ? $water[$check['mode']] : null;
+        foreach ($info as $ix => $day) {
+            $d = $day['date'];
+            [$stage, $dayLabel] = $dayStage[$ix];
             [$lvl, $why] = self::critOf($crit, $stage['label'] ?? null, $check);
             $cov = 0.0;
             $tryCov = 0.0;
@@ -319,7 +353,15 @@ class RangeEffect
             $phase = '';
             $top = 0.0;
             $inSoil = false;
-            foreach ($apps as $a) {
+            if ($wRun) {
+                // Water: the day as the count left it, carried by the last watering until rain or stress takes over.
+                $row = $wRun['rows'][$ix];
+                $cov = (float) $row['v'];
+                $phase = $row['p'];
+                $by = $row['by'];
+                $tryCov = (float) $row['t'];
+            }
+            foreach ($wRun ? [] : $apps as $a) {
                 if (! $a['curve']) {
                     continue;
                 }
@@ -375,10 +417,23 @@ class RangeEffect
         $relevant = array_filter($apps, fn ($a) => $a['curve'] !== null);
         $series = [];
         foreach ($alsoChecks as $k => $ck) {
-            $series[] = self::seriesOf($apps, $k, $ck, $days, $info, $stages, $crit, $lateNotes, $c);
+            $series[] = self::seriesOf($apps, $k, $ck, $days, $info, $stages, $crit, $lateNotes, $c, $water[$ck['mode'] ?? ''] ?? null);
         }
         $deep = RangeEffectLogic::read($days, $apps, $check, $c, $soil, $opts, $info);
-        if ($opts['health'] && $check['kind'] !== 'nutrient') {
+        // Water: each watering's days as the count found them, and the reading's own numbers and notes.
+        $wSum = null;
+        if ($wRun) {
+            foreach ($apps as &$a) {
+                if (isset($a['water']) && $a['curve']) {
+                    $a['wfx'] = $wRun['effects'][$a['i']] ?? null;
+                }
+            }
+            unset($a);
+            $wSum = RangeEffectWater::summary($wRun, $days, $info, $apps, $c, $soil, $check);
+            $deep['notes'] = $wSum['notes'];
+            unset($wSum['notes']);
+        }
+        if ($opts['health'] && ! in_array($check['kind'], ['nutrient', 'water'], true)) {
             [$marks, $healthNotes] = self::health($apps, $check, $c, $days, $info, $crit);
             foreach ($days as $i => &$day) {
                 $day['h'] = $marks[$i] ?? '';
@@ -398,9 +453,10 @@ class RangeEffect
             'apps' => array_map(fn ($a) => self::appOut($a, $check), $apps),
             'summary' => self::summary($days, $stages, $apps, $check, $lateNotes, $c),
             'tables' => ['crit' => $c['table'], 'hasCrit' => (bool) $crit],
-            'phaseWords' => self::phaseWords($check, $relevant),
+            'phaseWords' => $check['kind'] === 'water' ? RangeEffectWater::words($c) : self::phaseWords($check, $relevant),
             'series' => $series,
             'logic' => ['opts' => $opts, 'soil' => $soil['facts'], 'amt' => $deep['amt'], 'notes' => $deep['notes'], 'others' => $deep['others']],
+            'water' => $wSum,
             'version' => self::VERSION,
         ];
     }
@@ -541,7 +597,7 @@ class RangeEffect
      * Another check over the same days, kept small for the side by side view: coverage, verdict, phase and how
      * critical, one entry a day, with its own count of covered days.
      */
-    private static function seriesOf(array $apps, string $key, array $check, array $days, array $info, array $stages, array $crit, array $lateNotes, array $c): array
+    private static function seriesOf(array $apps, string $key, array $check, array $days, array $info, array $stages, array $crit, array $lateNotes, array $c, ?array $wRun = null): array
     {
         $nut = $check['kind'] === 'nutrient';
         $rows = [];
@@ -551,7 +607,11 @@ class RangeEffect
             $top = 0.0;
             $phase = '';
             $soil = false;
-            foreach ($apps as $a) {
+            if ($wRun) {
+                $cov = (float) $wRun['rows'][$i]['v'];
+                $phase = $wRun['rows'][$i]['p'];
+            }
+            foreach ($wRun ? [] : $apps as $a) {
                 $k = $a['curves'][$key] ?? null;
                 if (! $k) {
                     continue;
@@ -580,7 +640,7 @@ class RangeEffect
             'check' => array_diff_key($check, ['ai' => 1]), 'pct' => $sum['pct'], 'coveredDays' => $sum['coveredDays'], 'thinDays' => $sum['thinDays'], 'gapDays' => $sum['gapDays'],
             'lateDays' => array_sum(array_column($sum['late'], 'n')), 'apps' => $sum['apps'], 'gaps' => $gaps,
             'v' => array_column($rows, 'v'), 's' => array_column($rows, 's'), 'p' => array_column($rows, 'p'), 'c' => array_column($rows, 'c'),
-            'words' => self::phaseWords($check, array_filter($mine, fn ($a) => $a['curve'] !== null)),
+            'words' => $wRun ? RangeEffectWater::words($c) : self::phaseWords($check, array_filter($mine, fn ($a) => $a['curve'] !== null)),
         ];
     }
 
@@ -681,6 +741,9 @@ class RangeEffect
     /** [level 0 to 3, why] for a stage and a check, from the book. */
     private static function critOf(array $crit, ?string $stage, array $check): array
     {
+        if ($check['kind'] === 'water') {
+            return RangeEffectWater::critOf($check['table'] ?? null, $stage);
+        }
         if ($stage === null || ! isset($crit[$stage])) {
             return [0, ''];
         }
@@ -953,6 +1016,9 @@ class RangeEffect
      */
     private static function curveFor(array $a, array $check, array $c): ?array
     {
+        if (isset($a['water']) || $check['kind'] === 'water') {
+            return isset($a['water']) && $check['kind'] === 'water' && RangeEffectWater::counts($check, $a) ? RangeEffectWater::curve() : null;
+        }
         if ($check['kind'] === 'nutrient') {
             if (! array_key_exists($check['el'], $a['nut'])) {
                 return null;
@@ -1100,6 +1166,9 @@ class RangeEffect
     /** What a product acts on, as check keys with their names: the nutrients it carries and the threats its ingredients hit. */
     private static function actsOf(array $a): array
     {
+        if (isset($a['water'])) {
+            return [['key' => 'w:usual', 'label' => 'Water']];
+        }
         $out = [];
         foreach (array_keys($a['nut']) as $el) {
             foreach (self::NUTRIENTS as $key => [$e, $nm]) {
@@ -1208,6 +1277,18 @@ class RangeEffect
     /** One application as the page draws it. */
     private static function appOut(array $a, array $check): array
     {
+        if (isset($a['water'])) {
+            $w = $a['water'];
+
+            return [
+                'i' => $a['i'], 'date' => $a['date']->toDateString(), 'title' => $a['title'], 'name' => $a['name'], 'as' => $a['as'], 'company' => null,
+                'amount' => $w['mm'] !== null ? RangeEffectWater::cm((float) $w['mm']) : '', 'done' => $a['done'], 'try' => $a['try'], 'tryIndex' => $a['tryIndex'] ?? null,
+                'shed' => false, 'kindWord' => 'Watering', 'form' => 'water', 'formWord' => $w['method'] ? mb_strtolower(RangeEffectWater::METHODS[$w['method']][0]) : '',
+                'method' => $w['method'], 'carries' => [], 'ai' => [], 'relevant' => $a['relevant'], 'acts' => $a['try'] ? self::actsOf($a) : [],
+                'water' => ['task' => $w['task'], 'mm' => $w['mm'], 'method' => $w['method']],
+                'effect' => $a['relevant'] ? ($a['wfx'] ?? null) : null,
+            ];
+        }
         $k = $a['curve'];
         $amount = $a['qty'] > 0 ? rtrim(rtrim(number_format($a['qty'], 3, '.', ''), '0'), '.') . ' ' . trim($a['unit']) : '';
         $carries = [];

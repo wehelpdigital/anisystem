@@ -79,6 +79,8 @@ class RangeEffectProtocol
             }
             $a = new AsScheduleActivity();
             $a->forceFill(['id' => --$n, 'croppingScheduleId' => 0, 'activityTitle' => mb_substr((string) ($t['title'] ?? 'Task'), 0, 255),
+                // A watering's words say its depth and how it goes on ("Irrigate 3 to 5 cm"), for the water check.
+                'subtitle' => mb_substr((string) ($t['subtitle'] ?? ''), 0, 255), 'description' => mb_substr(strip_tags((string) ($t['description'] ?? '')), 0, 2000),
                 'targetDate' => $base->copy()->addDays($day)->toDateString(), 'activityType' => (string) ($t['type'] ?? 'other'),
                 'isDayZero' => $day === 0 && ($t['counter'] ?? '') !== 'DAT', 'isTransplant' => $day === 0 && ($t['counter'] ?? '') === 'DAT' && $isDat,
                 'isDraft' => false, 'isHidden' => false, 'isDone' => false, 'deleteStatus' => 1]);

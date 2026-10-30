@@ -60,6 +60,9 @@
         <symbol id="rfxI-drop" viewBox="0 0 16 16"><path d="M8 1.5c2.8 3.6 4.5 5.9 4.5 8.1a4.5 4.5 0 01-9 0c0-2.2 1.7-4.5 4.5-8.1z"/></symbol>
         <symbol id="rfxI-leaf" viewBox="0 0 16 16"><path d="M2.5 13.5C2.5 7 6.6 3 13.8 2.2 13.4 9.4 9.4 13.5 2.5 13.5zm1.6-1.1c2.4-2.6 4.6-4.6 7.1-6.3-2.9 1.3-5.2 3.4-7.1 6.3z" fill-rule="evenodd"/></symbol>
         <symbol id="rfxI-star" viewBox="0 0 16 16"><path d="M8 1.3l2 4.3 4.6.5-3.5 3.1 1 4.6L8 11.5l-4.1 2.3 1-4.6L1.4 6.1 6 5.6z"/></symbol>
+        {{-- A watering (a drop over the water), and the rain of a day. --}}
+        <symbol id="rfxI-wave" viewBox="0 0 16 16"><path d="M8 1c2 2.6 3.2 4.3 3.2 5.9a3.2 3.2 0 01-6.4 0C4.8 5.3 6 3.6 8 1zM1 12.2c1.2-.8 2.3-.8 3.5 0s2.3.8 3.5 0 2.3-.8 3.5 0 2.3.8 3.5 0v2.3c-1.2.8-2.3.8-3.5 0s-2.3-.8-3.5 0-2.3.8-3.5 0-2.3-.8-3.5 0z"/></symbol>
+        <symbol id="rfxI-rain" viewBox="0 0 16 16"><path d="M4.4 9.6a3 3 0 01.2-6 4 4 0 017.6 1.3 2.4 2.4 0 01-.4 4.7zM5.3 11h1.3l-1.1 3H4.2zM8.7 11H10l-1.1 3H7.6zM12.1 11h1.3l-1.1 3H11z"/></symbol>
     </svg>
     <div class="rfx-veil" data-rfx-close></div>
     <div class="rfx-box">
@@ -104,6 +107,8 @@
                         <button type="button" role="tab" data-tab="micro">✨ Micros</button>
                         <button type="button" role="tab" data-tab="prot">🛡️ Protection</button>
                         <button type="button" role="tab" data-tab="pest">🐛 A pest or disease</button>
+                        {{-- Water (2026-10-30, the owner: "add range coverage for irrigation where plant gets stress days after irrigating"). --}}
+                        <button type="button" role="tab" data-tab="water">💧 Water</button>
                     </div>
                 </div>
                 <div class="rfx-row is-sub">
@@ -138,6 +143,16 @@
                         </div>
                         {{-- Grouped by kind, each kind by date (the owner, 2026-10-30). --}}
                         <div class="rfx-tgs" data-rfx-tries></div>
+                    </div>
+                </div>
+                {{-- The waterings planned here, shown while water is checked: each on its day, how much and how it goes on. --}}
+                <div class="rfx-row is-sub" data-rfx-wrow hidden>
+                    <span class="rfx-label">Watering</span>
+                    <div class="rfx-tries">
+                        <div class="rfx-tries-b">
+                            <button type="button" class="rfx-add is-water" data-rfx-wat-open><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>A watering you plan</button>
+                        </div>
+                        <div class="rfx-chips is-wrap" data-rfx-wtries></div>
                     </div>
                 </div>
             </section>
@@ -232,6 +247,25 @@
             <div class="rfx-edit-veil" data-rfx-apply-x></div>
             <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxApplyT" data-rfx-apply-c></div>
         </div>
+        {{-- A watering planned here: its day, how much, and how it goes on (a paddy is flooded). --}}
+        <div class="rfx-edit rfx-watm" data-rfx-wat hidden>
+            <div class="rfx-edit-veil" data-rfx-wat-x></div>
+            <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxWatT">
+                <div class="rfx-day-h"><div><b id="rfxWatT" data-rfx-wat-t>A watering you plan</b><small>Pick its day, how much and how it goes on. The planner counts how long it keeps the crop out of stress.</small></div><button type="button" class="rfx-x" data-rfx-wat-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+                <div class="rfx-picked-f">
+                    <div class="rfx-when"><span>Water on</span><button type="button" class="rfx-datetag" data-date-for="data-rfx-wat-date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" d="M3.5 10h17M8 3v4M16 3v4"/></svg><b data-date-say>Pick a day</b><svg class="rfx-dt-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button><input type="date" class="rfx-date-in" data-rfx-wat-date tabindex="-1" aria-label="Water on"></div>
+                    <label><span data-rfx-wat-ql>How much water <i>(optional)</i></span><span class="rfx-amt"><input type="number" min="0" step="any" inputmode="decimal" data-rfx-wat-qty placeholder="e.g. 5"><select data-rfx-wat-unit><option value="cm">cm</option><option value="mm">mm</option></select></span></label>
+                </div>
+                <div class="rfx-wmeth" role="radiogroup" aria-label="How the water goes on" data-rfx-wat-how></div>
+                <p class="rfx-pick-hint" data-rfx-wat-hint></p>
+                <div class="rfx-edit-b">
+                    <button type="button" class="rfx-btn is-ghost" data-rfx-wat-dupe hidden>Make a copy</button>
+                    <button type="button" class="rfx-btn is-ghost is-del" data-rfx-wat-del hidden>Take it out</button>
+                    <button type="button" class="rfx-btn is-ghost" data-rfx-wat-x>Cancel</button>
+                    <button type="button" class="rfx-btn is-go" data-rfx-wat-save>Add it</button>
+                </div>
+            </div>
+        </div>
         {{-- One day, opened. --}}
         <div class="rfx-day" data-rfx-day hidden></div>
         {{-- One growth stage, opened from its mark over the season chart (the owner, 2026-10-30: "when that is clicked,
@@ -287,9 +321,13 @@
         --rx-saved-bg: #eef2ff; --rx-saved-line: #c7d2fe; --rx-saved-ink: #1e3a8a;
         --rx-done-bg: #dcfce7; --rx-done-ink: #14532d; --rx-tag-bg: #eef1ea;
         --rx-badge: #1f3a10; --rx-badge-ink: #fff; --rx-today: #2563eb; --rx-ap-off: #d9ddd3; --rx-ap-off-ink: #4f5a48;
+        --rx-rain: #5aa9e6; --rx-rain-ink: #175a92; --rx-water-bg: #e8f3fc; --rx-water-line: #a9d0f0; --rx-water-ink: #134a78;
         /* What an application is doing: in the soil, being taken up, strongest, easing, fading away. */
         --ph-soil: linear-gradient(180deg, #c99158, #8a5a2b); --ph-absorb: linear-gradient(180deg, #5fcfba, #12806f); --ph-strong: linear-gradient(180deg, #4f9030, #22500e);
-        --ph-easing: linear-gradient(180deg, #a6d67c, #6aa843); --ph-fading: linear-gradient(180deg, #e9f5dc, #c6e3ab); }
+        --ph-easing: linear-gradient(180deg, #a6d67c, #6aa843); --ph-fading: linear-gradient(180deg, #e9f5dc, #c6e3ab);
+        /* Water in the soil: standing or fresh, moist, drying, too dry. */
+        --ph-wet: linear-gradient(180deg, #4fb0ee, #1769b8); --ph-moist: linear-gradient(180deg, #86c9ee, #3d8fc6);
+        --ph-drying: linear-gradient(180deg, #d6eaf6, #a4cde6); --ph-dry: linear-gradient(180deg, #f4dcaa, #d8a65a); }
     html.dark .rfx {
         --rx-bg: #0d120a; --rx-card: #151c11; --rx-soft: #1b2416; --rx-line: #2c3b22; --rx-line-2: #3d5230; --rx-hover: #6b8f50;
         --rx-ink: #eef5e8; --rx-text: #d6e2cc; --rx-muted: #b1c0a5; --rx-faint: #93a487; --rx-accent: #a9d982;
@@ -301,10 +339,12 @@
         --rx-try-bg: #1c1a0e; --rx-try-line: #4d4421; --rx-field: #11170d; --rx-field-line: #4d4421; --rx-res-icon: #2a2614; --rx-how-bg: #2a2512; --rx-how-ink: #e3cf86;
         --rx-saved-bg: rgb(99 102 241 / .16); --rx-saved-line: rgb(129 140 248 / .42); --rx-saved-ink: #c7d2fe;
         --rx-done-bg: rgb(34 197 94 / .18); --rx-done-ink: #86efac; --rx-tag-bg: #26331d;
-        --rx-badge: #e3f1d6; --rx-badge-ink: #1f3a10; --rx-today: #60a5fa; --rx-ap-off: #3a4433; --rx-ap-off-ink: #c3cdb9; }
+        --rx-badge: #e3f1d6; --rx-badge-ink: #1f3a10; --rx-today: #60a5fa; --rx-ap-off: #3a4433; --rx-ap-off-ink: #c3cdb9;
+        --rx-rain: #4a9ad8; --rx-rain-ink: #9fd0f7; --rx-water-bg: rgb(59 130 246 / .14); --rx-water-line: rgb(96 165 250 / .42); --rx-water-ink: #bfdcf7; }
     .rfx-sw { display: inline-block; flex: none; width: .9rem; height: .9rem; border-radius: .25rem; background: var(--ph-strong); vertical-align: -.1rem; }
     .rfx .is-soil { --ph: var(--ph-soil); } .rfx .is-absorb { --ph: var(--ph-absorb); } .rfx .is-strong { --ph: var(--ph-strong); } .rfx .is-easing { --ph: var(--ph-easing); } .rfx .is-fading { --ph: var(--ph-fading); }
     .rfx .rfx-sw[class*=is-] { background: var(--ph); }
+    .rfx .is-wet { --ph: var(--ph-wet); } .rfx .is-moist { --ph: var(--ph-moist); } .rfx .is-drying { --ph: var(--ph-drying); } .rfx .is-dry { --ph: var(--ph-dry); }
     .rfx[hidden] { display: none; }
     .rfx-veil { position: absolute; inset: 0; background: var(--rx-veil); backdrop-filter: blur(3px); opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
     .rfx-box { position: relative; display: flex; flex-direction: column; width: 100%; height: 100%; color: var(--rx-text); background: var(--rx-bg); overflow: hidden;
@@ -424,6 +464,22 @@
     .rfx-w-q small { display: block; font-size: .78rem; line-height: 1.45; color: var(--rx-muted); }
     .rfx-w-qb { display: flex; flex-wrap: wrap; gap: .4rem; }
     .rfx-add.is-plan:hover { background: #2f6a16; }
+    .rfx-add.is-water { color: #fff; background: #1f78c4; box-shadow: 0 8px 18px -10px rgb(23 90 146 / .9); }
+    .rfx-add.is-water:hover { background: #17619f; }
+    html.dark .rfx-add.is-water { color: #0b1d2e; background: #6fb6ee; }
+    html.dark .rfx-add.is-water:hover { background: #8cc6f3; }
+    .rfx-chip.is-try.is-wat { color: var(--rx-water-ink); background: var(--rx-water-bg); box-shadow: inset 0 0 0 1.5px var(--rx-water-line); }
+    .rfx-chip.is-try.is-wat:hover { box-shadow: inset 0 0 0 2px #3d8fc6, 0 8px 16px -10px rgb(23 90 146 / .7); }
+    /* How the water goes on, in the watering sheet. */
+    .rfx-wmeth { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.2rem, 1fr)); gap: .4rem; margin-top: .85rem; }
+    .rfx-wmeth[hidden] { display: none; }
+    .rfx-wmeth button { display: grid; gap: .1rem; padding: .55rem .7rem; border-radius: .85rem; text-align: left; color: var(--rx-text); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line);
+        transition: box-shadow .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1), transform .2s cubic-bezier(.22,1,.36,1); }
+    .rfx-wmeth button:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--rx-water-line); }
+    .rfx-wmeth button b { font-size: .86rem; color: var(--rx-ink); }
+    .rfx-wmeth button small { font-size: .74rem; color: var(--rx-muted); }
+    .rfx-wmeth button.is-on { background: var(--rx-water-bg); box-shadow: inset 0 0 0 2px #3d8fc6; }
+    .rfx-watm .rfx-edit-c { max-width: 34rem; }
     html.dark .rfx-add.is-plan:hover { background: #5a9a33; }
     /* Onto the plan: each product, what it would do, then done. */
     .rfx-applym .rfx-edit-c { width: min(100%, 38rem); padding-bottom: 0; }
@@ -581,6 +637,10 @@
     .rfx-chart .grid { stroke: var(--rx-line); stroke-width: 1; }
     .rfx-chart .base { stroke: var(--rx-line-2); stroke-width: 1.2; }
     .rfx-chart .dose { stroke: var(--rx-faint); stroke-width: 1; stroke-dasharray: 2 4; }
+    /* Rain, hanging from the top of the season chart on a water check. */
+    .rfx-chart .rain { fill: var(--rx-rain); opacity: .5; transform-box: fill-box; transform-origin: top; animation: rfxDrip .7s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(.2s + var(--k, 0) * 4ms); }
+    @keyframes rfxDrip { from { transform: scaleY(0); } }
+    @media (prefers-reduced-motion: reduce) { .rfx-chart .rain { animation: none; } }
     .rfx-chart .stg { font-size: 12px; font-weight: 800; fill: var(--rx-muted); }
     .rfx-chart .mo { font-size: 12px; font-weight: 800; fill: var(--rx-faint); }
     .rfx-chart .today { stroke: var(--rx-today); stroke-width: 1.5; stroke-dasharray: 3 3; }
@@ -614,6 +674,17 @@
     .rfx-cell[data-p=strong] .rfx-fill { background: var(--ph-strong); }
     .rfx-cell[data-p=easing] .rfx-fill { background: var(--ph-easing); }
     .rfx-cell[data-p=fading] .rfx-fill { background: var(--ph-fading); }
+    .rfx-cell[data-p=wet] .rfx-fill { background: var(--ph-wet); }
+    .rfx-cell[data-p=moist] .rfx-fill { background: var(--ph-moist); }
+    .rfx-cell[data-p=drying] .rfx-fill { background: var(--ph-drying); }
+    .rfx-cell[data-p=dry] .rfx-fill { background: var(--ph-dry); }
+    .rfx-cell[data-p=wet] .rfx-fill::before { content: ''; position: absolute; left: 0; right: 0; top: -100%; height: 300%;
+        background: linear-gradient(0deg, transparent 40%, rgb(255 255 255 / .32) 50%, transparent 60%); animation: rfxRise 3.2s linear infinite; }
+    /* The rain of a day, at the cell's foot. */
+    .rfx-rn { position: absolute; z-index: 2; left: .25rem; bottom: .22rem; display: inline-flex; align-items: center; gap: .08rem; padding: 0 .22rem; border-radius: .35rem;
+        font-size: .58rem; font-weight: 900; line-height: 1rem; color: var(--rx-rain-ink); background: var(--rx-card); box-shadow: 0 0 0 1px var(--rx-water-line); }
+    .rfx-rn svg { width: .68rem; height: .68rem; fill: currentColor; }
+    @media (max-width: 639.98px) { .rfx-rn { left: .12rem; bottom: .12rem; padding: 0 .12rem; font-size: .5rem; line-height: .85rem; } .rfx-rn svg { width: .55rem; height: .55rem; } }
     .rfx-cell[data-p=absorb] .rfx-fill::before { content: ''; position: absolute; left: 0; right: 0; top: -100%; height: 300%;
         background: linear-gradient(0deg, transparent 38%, rgb(255 255 255 / .38) 50%, transparent 62%); animation: rfxRise 2.4s linear infinite; }
     @keyframes rfxRise { from { transform: translateY(33%); } to { transform: translateY(-33%); } }
@@ -1017,11 +1088,15 @@
     const STATE = { ok: ['Covered', '#4a7c2a'], thin: ['Thin', '#f59e0b'], gap: ['Gap: critical, not covered', '#dc2626'], late: ['Late: the crop no longer takes it', '#8b5cf6'],
         extra: ['Covered when it matters little', '#8b5cf6'], watch: ['Worth watching', '#86c25a'], pre: ['Before the crop', '#86c25a'], none: ['Nothing needed', '#d1d5db'] };
     const CRIT = ['Not needed now', 'Low', 'Matters', 'Critical'];
+    // The same states said for water: covered is well watered, a gap is a stress day.
+    const WSTATE = { ok: 'Well watered', thin: 'Drying: water soon', gap: 'Stress: too dry when it matters', watch: 'Dry, worth watching', extra: 'Wet when it matters little',
+        pre: 'Before the crop', none: 'Nothing needed', late: 'Wet when it matters little' };
+    const stName = (s, kind) => kind === 'water' ? (WSTATE[s] || '') : (STATE[s] ? STATE[s][0] : '');
     // What an application is doing, in its order, and each phase's colour where CSS cannot reach (the chart's SVG).
-    const PH_ORDER = ['soil', 'absorb', 'strong', 'easing', 'fading'];
-    const PHC = { soil: '#a8723f', absorb: '#22b09a', strong: '#3b7a1f', easing: '#86c25a', fading: '#cfe8b8' };
+    const PH_ORDER = ['soil', 'absorb', 'strong', 'easing', 'fading', 'wet', 'moist', 'drying', 'dry'];
+    const PHC = { soil: '#a8723f', absorb: '#22b09a', strong: '#3b7a1f', easing: '#86c25a', fading: '#cfe8b8', wet: '#2b86d1', moist: '#62aedd', drying: '#b9d9ee', dry: '#e0b264' };
     const EL = { P2O5: 'P₂O₅', K2O: 'K₂O' };
-    const tabOf = (key) => key.startsWith('t:') ? 'prot' : key.startsWith('p:') ? 'pest' : ((S.opts?.nutrients || []).find((n) => n.key === key) || {}).micro ? 'micro' : 'nut';
+    const tabOf = (key) => key.startsWith('w:') ? 'water' : key.startsWith('t:') ? 'prot' : key.startsWith('p:') ? 'pest' : ((S.opts?.nutrients || []).find((n) => n.key === key) || {}).micro ? 'micro' : 'nut';
     // What the reading counts besides coverage (RangeEffectLogic): every part on until the farmer switches it off.
     const LOGIC_DEF = { amt: true, soil: true, links: true, health: true };
     const S = { opts: null, lot: null, check: 'n:N', checks: ['n:N'], tab: 'nut', tries: [], res: null, saved: null, picked: null, q: '', busy: false,
@@ -1095,6 +1170,7 @@
         if (document.querySelector('dialog[open]')) return;   // the field questions close themselves
         if (!$('[data-rfx-stg]').hidden) closeStage();
         else if (!whatBox.hidden) closeWhat();
+        else if (!watBox.hidden) closeWat();
         else if (!applyBox.hidden) closeApply();
         else if (!$('[data-rfx-edit]').hidden) closeEdit();
         else if (!tryBox.hidden) closePick();
@@ -1123,8 +1199,8 @@
                 S.checks = (Array.isArray(st.checks) ? st.checks : []).filter(fits);
                 if (!S.checks.length) S.checks = [fits(st.check) ? st.check : 'n:N'];
                 S.check = S.checks.includes(st.check) ? st.check : S.checks[0];
-                S.tab = ['nut', 'micro', 'prot', 'pest'].includes(st.tab) ? st.tab : tabOf(S.check);
-                S.tries = (Array.isArray(st.tries) ? st.tries : []).filter((t) => t && t.date && (t.productId || t.ai));
+                S.tab = ['nut', 'micro', 'prot', 'pest', 'water'].includes(st.tab) ? st.tab : tabOf(S.check);
+                S.tries = (Array.isArray(st.tries) ? st.tries : []).filter((t) => t && t.date && (t.productId || t.ai || t.water));
                 S.logic = { ...LOGIC_DEF, ...(st.logic || {}) };
                 S.hide = (Array.isArray(st.hide) ? st.hide : []).filter((k) => S.checks.includes(k));
                 if (st.custom && typeof st.custom === 'object') { S.custom = st.custom; S.useCustom = !!st.useCustom && S.custom.base === S.lot; }
@@ -1178,6 +1254,9 @@
         let html = '';
         if (S.tab === 'nut' || S.tab === 'micro') {
             html = o.nutrients.filter((n) => (S.tab === 'micro') === n.micro).map((n, k) => `<button type="button" class="rfx-chip ${on(n.key)}" data-check="${n.key}" aria-pressed="${S.checks.includes(n.key)}" style="--k:${k}"><b>${esc(n.short)}</b> <small>${esc(n.name)}</small></button>`).join('');
+        } else if (S.tab === 'water') {
+            // Water: a usual year, a dry year, or the rain alone; compare them side by side to see what the waterings add.
+            html = (o.water || []).map((w, k) => `<button type="button" class="rfx-chip ${on(w.key)}" data-check="${w.key}" aria-pressed="${S.checks.includes(w.key)}" style="--k:${k}" title="${esc(w.about)}">${w.icon} ${esc(w.name)} <small>${esc(w.about)}</small></button>`).join('');
         } else if (S.tab === 'prot') {
             html = o.threats.map((t, k) => `<button type="button" class="rfx-chip ${on(t.key)}" data-check="${t.key}" aria-pressed="${S.checks.includes(t.key)}" style="--k:${k}">${t.icon} ${esc(t.name)}</button>`).join('');
         } else {
@@ -1216,10 +1295,13 @@
         if (n) return n.short === n.name ? n.name : `${n.short} ${n.name}`;
         const t = (o.threats || []).find((x) => x.key === key);
         if (t) return `${t.icon} ${t.name}`;
+        const w = (o.water || []).find((x) => x.key === key);
+        if (w) return `${w.icon} ${w.short}`;
         const p = (lotOf()?.threats || []).find((x) => 'p:' + x.slug === key);
         return p ? p.name : key;
     };
     const paintSel = () => {
+        paintWrow();
         const row = $('[data-rfx-sel-row]');
         row.hidden = S.checks.length < 2;
         if (row.hidden) return;
@@ -1355,21 +1437,29 @@
     // Grouped by kind (the owner, 2026-10-30: "group it by type while arranging per date"), each kind by its dates.
     const triesGroupsHtml = () => {
         const by = {};
-        S.tries.forEach((t, i) => { (by[groupOfTry(t)] ||= []).push(i); });
+        S.tries.forEach((t, i) => { if (!t.water) (by[groupOfTry(t)] ||= []).push(i); });
         return PICK_TABS.filter(([g]) => by[g]).map(([g, ic, label]) => {
             const list = by[g].sort((a, b) => String(S.tries[a].date || '').localeCompare(String(S.tries[b].date || '')) || String(S.tries[a].name).localeCompare(String(S.tries[b].name)));
             return `<div class="rfx-tg"><span class="rfx-tg-h">${ic} ${esc(label)}<small>${list.length}</small></span><div class="rfx-chips is-wrap">${list.map((i) => tryChip(S.tries[i], i)).join('')}</div></div>`;
         }).join('');
     };
+    // A watering planned here, as its chip says it.
+    const watName = (t) => 'Watering' + (Number(t.qty) > 0 ? `, ${t.qty} ${t.unit === 'mm' ? 'mm' : 'cm'}` : '') + (t.method && t.method !== 'flood' && !isPaddy() ? ` by ${t.method}` : '');
+    const watChip = (t, i) => `<span class="rfx-chip is-try is-wat" data-try="${i}" role="button" tabindex="0" title="Tap to change it">💧 ${esc(watName(t))} <small>${esc(say(t.date))}</small>${PEN_I}<button type="button" data-dupe="${i}" aria-label="Make a copy of this watering" title="Make a copy">${COPY_I}</button><button type="button" data-untry="${i}" aria-label="Remove this watering"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`;
+    // The Watering row shows while water is checked, or while waterings are planned.
+    const paintWrow = () => { $('[data-rfx-wrow]').hidden = !(S.checks.some((k) => k.startsWith('w:')) || S.tries.some((t) => t.water)); };
     const paintTries = () => {
         $('[data-rfx-tries]').innerHTML = triesGroupsHtml();
+        $('[data-rfx-wtries]').innerHTML = S.tries.map((t, i) => [t, i]).filter(([t]) => t.water).sort((a, b) => String(a[0].date).localeCompare(String(b[0].date))).map(([t, i]) => watChip(t, i)).join('');
         $('[data-rfx-apply]').hidden = !S.tries.length || !(U.apply || (PB && window.pbCoverage));
+        paintWrow();
         paintAdded();
     };
     const paintAdded = () => {
         const box = $('[data-rfx-pick-added]');
-        box.innerHTML = S.tries.length ? `<b>Added so far · ${S.tries.length}</b>${triesGroupsHtml()}` : '';
-        $('[data-rfx-pick-n]').textContent = S.tries.length ? `${S.tries.length} added` : 'Nothing added yet';
+        const n = S.tries.filter((t) => !t.water).length;
+        box.innerHTML = n ? `<b>Added so far · ${n}</b>${triesGroupsHtml()}` : '';
+        $('[data-rfx-pick-n]').textContent = n ? `${n} added` : 'Nothing added yet';
     };
     // A copy, right after the one it copies, opened to change its day (the owner, 2026-10-30: "have a duplicate button").
     const dupeTry = (i) => {
@@ -1378,7 +1468,7 @@
         S.tries.splice(i + 1, 0, { ...t });
         paintTries();
         if (tryBox.hidden) run(); else pickDirty = true;
-        openEdit(i + 1);
+        if (t.water) openWat(i + 1); else openEdit(i + 1);
         window.toast?.('A copy is made. Change its day or amount.');
     };
     const onTries = (e) => {
@@ -1392,13 +1482,14 @@
         const d = e.target.closest('[data-dupe]');
         if (d) { dupeTry(Number(d.dataset.dupe)); return; }
         const c = e.target.closest('[data-try]');
-        if (c) openEdit(Number(c.dataset.try));
+        if (c) openTry(Number(c.dataset.try));
     };
+    const openTry = (i) => { if (S.tries[i]?.water) openWat(i); else openEdit(i); };
     const onTriesKey = (e) => {
         const c = e.target.closest('[data-try]');
-        if (c && e.target === c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openEdit(Number(c.dataset.try)); }
+        if (c && e.target === c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openTry(Number(c.dataset.try)); }
     };
-    ['[data-rfx-tries]', '[data-rfx-pick-added]'].forEach((sel) => { $(sel).addEventListener('click', onTries); $(sel).addEventListener('keydown', onTriesKey); });
+    ['[data-rfx-tries]', '[data-rfx-pick-added]', '[data-rfx-wtries]'].forEach((sel) => { $(sel).addEventListener('click', onTries); $(sel).addEventListener('keydown', onTriesKey); });
     /* A try, opened to change it. */
     const editBox = $('[data-rfx-edit]');
     const editHow = $('[data-rfx-edit-how]');
@@ -1445,6 +1536,70 @@
             if (!date) { window.toast?.('Pick the day you would apply it.', 'error'); return; }
             S.tries[editing] = { ...S.tries[editing], date, qty: Number($('[data-rfx-edit-qty]').value) || 0, unit: $('[data-rfx-edit-unit]').value, method: editHow.dataset.on || 'granular' };
             closeEdit();
+            changedTries();
+        }
+    });
+    /* ---------------- waterings: the ones you plan ---------------- */
+    const watBox = $('[data-rfx-wat]');
+    const watHow = $('[data-rfx-wat-how]');
+    let watEditing = -1;
+    const METH = [['furrow', 'Furrows', 'Water down the rows'], ['flood', 'Flooding', 'Basins or the whole field'], ['sprinkler', 'Sprinklers', 'Rain from above'],
+        ['drip', 'Drip lines', 'A little at each plant'], ['hose', 'Hose or can', 'By hand, plant by plant']];
+    const isPaddy = () => (S.res?.lot?.water || '') === 'flooded';
+    const paintMeth = () => { $$('[data-meth]', watHow).forEach((b) => { const on = b.dataset.meth === watHow.dataset.on; b.classList.toggle('is-on', on); b.setAttribute('aria-checked', String(on)); }); };
+    const openWat = (i = -1) => {
+        watEditing = i;
+        const last = S.tries.filter((t) => t.water).map((t) => t.date).sort().pop();
+        const t = i >= 0 && S.tries[i] ? S.tries[i] : { date: last ? addDays(last, 7) : (S.res?.today || iso(new Date())), qty: 0, unit: 'cm', method: null };
+        const paddy = isPaddy();
+        $('[data-rfx-wat-t]').textContent = i >= 0 ? 'Change this watering' : 'A watering you plan';
+        setDate($('[data-rfx-wat-date]'), t.date);
+        $('[data-rfx-wat-qty]').value = Number(t.qty) > 0 ? t.qty : '';
+        $('[data-rfx-wat-unit]').value = t.unit === 'mm' ? 'mm' : 'cm';
+        $('[data-rfx-wat-ql]').innerHTML = paddy ? 'Standing water it leaves <i>(optional)</i>' : 'How much water <i>(optional)</i>';
+        $('[data-rfx-wat-hint]').textContent = paddy
+            ? 'A paddy is flooded. Leave it empty for about 5 cm of standing water.'
+            : 'Leave it empty to fill the root zone, as far as one watering of that kind can. Given, it counts the share that reaches the roots.';
+        watHow.hidden = paddy;
+        watHow.dataset.on = t.method && t.method !== 'flood' ? t.method : (t.method || 'furrow');
+        watHow.innerHTML = METH.map(([k, n, w]) => `<button type="button" role="radio" data-meth="${k}" aria-checked="false"><b>${esc(n)}</b><small>${esc(w)}</small></button>`).join('');
+        paintMeth();
+        $('[data-rfx-wat-del]').hidden = i < 0;
+        $('[data-rfx-wat-dupe]').hidden = i < 0;
+        $('[data-rfx-wat-save]').textContent = i >= 0 ? 'Save changes' : 'Add it';
+        watBox.hidden = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => watBox.classList.add('is-on')));
+        setTimeout(() => $('[data-date-for="data-rfx-wat-date"]').focus({ preventScroll: true }), calm ? 0 : 200);
+    };
+    const closeWat = () => {
+        watEditing = -1;
+        watBox.classList.remove('is-on');
+        setTimeout(() => { if (!watBox.classList.contains('is-on')) watBox.hidden = true; }, calm ? 0 : 260);
+    };
+    $('[data-rfx-wat-open]').addEventListener('click', () => openWat(-1));
+    watBox.addEventListener('click', (e) => {
+        if (e.target.closest('[data-rfx-wat-x]')) { closeWat(); return; }
+        const m = e.target.closest('[data-meth]');
+        if (m) { watHow.dataset.on = m.dataset.meth; paintMeth(); return; }
+        if (e.target.closest('[data-rfx-wat-del]') && watEditing >= 0) {
+            S.tries.splice(watEditing, 1);
+            closeWat();
+            changedTries();
+            return;
+        }
+        if (e.target.closest('[data-rfx-wat-dupe]') && watEditing >= 0) {
+            const i = watEditing;
+            closeWat();
+            setTimeout(() => dupeTry(i), calm ? 0 : 280);
+            return;
+        }
+        if (e.target.closest('[data-rfx-wat-save]')) {
+            const date = $('[data-rfx-wat-date]').value;
+            if (!date) { window.toast?.('Pick the day you would water.', 'error'); return; }
+            const t = { water: 'irrigate', name: 'Watering', t: 'water', date, qty: Number($('[data-rfx-wat-qty]').value) || 0, unit: $('[data-rfx-wat-unit]').value === 'mm' ? 'mm' : 'cm',
+                method: isPaddy() ? 'flood' : (watHow.dataset.on || 'furrow') };
+            if (watEditing >= 0 && S.tries[watEditing]) S.tries[watEditing] = { ...S.tries[watEditing], ...t }; else S.tries.push(t);
+            closeWat();
             changedTries();
         }
     });
@@ -1655,6 +1810,7 @@
         const go = rows.filter((r) => r.status === 'new' || r.status === 'join').length;
         const amt = (r) => {
             const t = S.tries[r.i];
+            if (t && t.water) return `<span class="rfx-ap-q">${Number(t.qty) > 0 ? esc(String(t.qty)) + ' ' + esc(t.unit || 'cm') : (isPaddy() ? 'about 5 cm' : 'fills the root zone')}</span>`;
             if (!t || !['new', 'join'].includes(r.status)) return r.qty ? `<span class="rfx-ap-q">${esc(String(r.qty))} ${esc(r.unit)}</span>` : '';
             if (Number(t.qty) > 0) return `<span class="rfx-ap-q">${esc(String(t.qty))} ${esc(t.unit)}</span>`;
             const u = UNITS_OPT.includes(t.unit) ? t.unit : 'kg';
@@ -1663,8 +1819,8 @@
         $('[data-rfx-apply-c]').innerHTML = applyHead()
             + `<ul class="rfx-ap-list">${rows.map((r, k) => `<li class="rfx-ap-row is-${r.status}" style="--k:${Math.min(k, 20)}"><span class="rfx-ap-d">${r.date ? esc(say(r.date)) : ''}</span>
                 <span class="rfx-ap-n"><b>${esc(r.name)}</b><small><span class="rfx-ap-tag">${AP_SAY[r.status] || ''}</span>${esc(r.task || '')}${r.note ? '. ' + esc(r.note) : ''}</small></span>${amt(r)}</li>`).join('')}</ul>`
-            + (rows.some((r) => ['new', 'join'].includes(r.status) && !(Number(S.tries[r.i]?.qty) > 0)) ? '<p class="rfx-pick-hint">A product with no amount goes on as one usual dose, as its label says; type the amount to put it in now.</p>' : '')
-            + `<div class="rfx-pick-foot"><span>${go ? `${go} to put on the plan` : 'Nothing new to put on'}</span><span style="display:flex;gap:.4rem"><button type="button" class="rfx-btn is-ghost" data-rfx-apply-x>Cancel</button><button type="button" class="rfx-btn is-go" data-rfx-apply-go ${go ? '' : 'disabled'}>Put ${go || ''} on the plan</button></span></div>`;
+            + (rows.some((r) => ['new', 'join'].includes(r.status) && !S.tries[r.i]?.water && !(Number(S.tries[r.i]?.qty) > 0)) ? '<p class="rfx-pick-hint">A product with no amount goes on as one usual dose, as its label says; type the amount to put it in now.</p>' : '')
+            + `<div class="rfx-pick-foot"><span>${go ? `${go} to put ${PB ? 'in the protocol' : 'on the plan'}` : 'Nothing new to put in'}</span><span style="display:flex;gap:.4rem"><button type="button" class="rfx-btn is-ghost" data-rfx-apply-x>Cancel</button><button type="button" class="rfx-btn is-go" data-rfx-apply-go ${go ? '' : 'disabled'}>Put ${go || ''} ${PB ? 'in the protocol' : 'on the plan'}</button></span></div>`;
     };
     const openApply = async () => {
         if (!S.tries.length || applyBusy) return;
@@ -1807,6 +1963,8 @@
         const sm = R.summary;
         const ck = R.check;
         const isNut = ck.kind === 'nutrient';
+        const isW = ck.kind === 'water';
+        const WF = (R.water && R.water.facts) || {};
         const parts = [];
         // A saved reading shows its numbers as they were when it was saved (the owner, 2026-10-30: "i don't get the
         // idea of the read it with today's plan button"): the button counts it again with the tasks on the board now.
@@ -1823,23 +1981,30 @@
         const pct = sm.pct;
         const ringCol = pct === null ? '#9ca3af' : pct >= 80 ? (isDark() ? '#7cc24f' : '#4a7c2a') : pct >= 50 ? '#f59e0b' : (isDark() ? '#f87171' : '#dc2626');
         const head = pct === null ? `Nothing in this season is critical for ${esc(ck.word)} yet.`
+            : isW ? (pct >= 80 ? 'The crop has water when it matters.' : pct >= 50 ? 'The crop has water on most critical days, with dry spells.' : 'The crop runs dry when it needs water most.')
             : pct >= 80 ? `${esc(ck.short)} is well covered when it matters.`
             : pct >= 50 ? `${esc(ck.short)} is covered on most critical days, with gaps.`
             : (isNut ? `${esc(ck.short)} runs short when the crop needs it most.` : `The crop is unguarded against ${esc(ck.word)} on most critical days.`);
-        const sub = isNut
+        const sub = isW
+            ? (ck.mode === 'rain'
+                ? `What the rain alone gives this lot, with no watering: about ${WF.rain ?? 0} mm of rain in the season against ${WF.use ?? 0} mm the crop drinks.`
+                : `${WF.waterings ? `${WF.waterings === 1 ? 'One watering' : WF.waterings + ' waterings'} on this lot${WF.tries ? `, ${WF.tries} of them added by you` : ''}` : 'No watering on this lot yet'}, and about ${WF.rain ?? 0} mm of rain in the season against ${WF.use ?? 0} mm the crop drinks. Each watering fills the soil; the crop and the heat empty it until the next one, or a good rain.`)
+            : isNut
             ? `${sm.apps} application${sm.apps === 1 ? '' : 's'} carry ${esc(ck.word)} on this lot${sm.tries ? `, ${sm.tries} of them added by you` : ''}. Each keeps feeding the crop for a while, then fades.`
             : `${sm.apps} application${sm.apps === 1 ? '' : 's'} act on ${esc(ck.word)}${sm.tries ? `, ${sm.tries} of them added by you` : ''}. Protection is only needed when the pest shows up: on a gap, scout first and spray only when you find it.`;
-        parts.push(`<div class="rfx-card" data-fold="sum" style="--d:0s"><div class="rfx-card-h">At a glance <small>${pct === null ? 'nothing critical yet' : pct + '% of critical days covered'}${sm.gapDays ? ' · ' + sm.gapDays + ' gap day' + (sm.gapDays === 1 ? '' : 's') : ''}</small></div><div class="rfx-sum">
+        const gapWord = isW ? 'stress day' : 'gap day';
+        parts.push(`<div class="rfx-card" data-fold="sum" style="--d:0s"><div class="rfx-card-h">At a glance <small>${pct === null ? 'nothing critical yet' : pct + (isW ? '% of critical days well watered' : '% of critical days covered')}${sm.gapDays ? ' · ' + sm.gapDays + ' ' + gapWord + (sm.gapDays === 1 ? '' : 's') : ''}</small></div><div class="rfx-sum">
             <div class="rfx-ring"><svg viewBox="0 0 120 120"><circle class="t" cx="60" cy="60" r="52"/><circle class="v" cx="60" cy="60" r="52" stroke="${ringCol}" data-pct="${pct ?? 0}"/></svg>
-              <div class="rfx-ring-n"><b data-count="${pct ?? 0}">${pct === null ? '–' : '0'}</b><small>${pct === null ? 'no critical days' : '% of critical days covered'}</small></div></div>
+              <div class="rfx-ring-n"><b data-count="${pct ?? 0}">${pct === null ? '–' : '0'}</b><small>${pct === null ? 'no critical days' : isW ? '% of critical days well watered' : '% of critical days covered'}</small></div></div>
             <div class="rfx-say"><h3>${head}</h3><p>${sub}</p>
               <div class="rfx-counts">
-                <span><i style="background:#4a7c2a"></i>${sm.coveredDays} covered</span>
-                <span><i style="background:#f59e0b"></i>${sm.thinDays} thin</span>
-                <span><i style="background:#dc2626"></i>${sm.gapDays} gap</span>
+                <span><i style="background:${isW ? '#2b86d1' : '#4a7c2a'}"></i>${sm.coveredDays} ${isW ? 'well watered' : 'covered'}</span>
+                <span><i style="background:#f59e0b"></i>${sm.thinDays} ${isW ? 'drying' : 'thin'}</span>
+                <span><i style="background:#dc2626"></i>${sm.gapDays} ${isW ? 'stress' : 'gap'}</span>
+                ${isW && WF.stress > sm.gapDays ? `<span><i style="background:#e0b264"></i>${WF.stress - sm.gapDays} dry, less critical</span>` : ''}
                 ${isNut ? `<span><i style="background:#8b5cf6"></i>${(sm.late || []).reduce((a, r) => a + r.n, 0)} late</span>` : ''}
               </div>${amountLine(R)}${soilLine(R)}</div></div>
-            ${runsHtml(sm, isNut)}</div>`);
+            ${runsHtml(sm, isNut, ck.kind)}</div>`);
         if ((R.series || []).length) parts.push(compareHtml(R));
         parts.push(logicHtml(R));
         parts.push(amountsHtml(R));
@@ -1862,7 +2027,7 @@
     };
     /* The tries, one card: what each misses or gives too little of. */
     const triesHtml = (R, ck) => {
-        const tries = R.apps.filter((a) => a.try);
+        const tries = R.apps.filter((a) => a.try && !a.water);
         const miss = tries.filter((a) => !a.relevant);
         const trace = tries.filter((a) => a.relevant && a.effect && a.effect.dose === 'trace');
         if (!miss.length && !trace.length) return '';
@@ -1970,7 +2135,7 @@
             <div class="rfx-legend"><span><i style="background:${PHC.strong}"></i>Given, coloured by what it is doing</span><span><i style="background:none;border-top:2.5px dashed ${tok('--rx-ink')};height:0;border-radius:0"></i>Needed</span><span><i style="background:rgb(220 38 38 / .25)"></i>Short on a day that matters</span><span><i style="background:rgb(245 158 11 / .25)"></i>A little short</span></div></div>`;
     };
     /* How it connects: the soil, the links between products and nutrients, amounts and the crop's health, in words. */
-    const GROUPS = [['soil', '🪨', 'Your soil'], ['links', '🔗', 'How your products connect'], ['amt', '⚖️', 'Amounts'], ['health', '🛡️', 'Crop health']];
+    const GROUPS = [['soil', '🪨', 'Your soil'], ['water', '💧', 'Water'], ['links', '🔗', 'How your products connect'], ['amt', '⚖️', 'Amounts'], ['health', '🛡️', 'Crop health']];
     const logicHtml = (R) => {
         const L = R.logic;
         if (!L) return '';
@@ -1994,18 +2159,19 @@
         const step = (t) => { const k = Math.min(1, (t - t0) / 1100); el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); };
         requestAnimationFrame(step);
     };
-    const runsHtml = (sm, isNut) => {
+    const runsHtml = (sm, isNut, kind = '') => {
         const rows = [];
-        (sm.gaps || []).slice(0, 4).forEach((r, k) => rows.push(`<div class="rfx-run" data-jump="${r.from}" style="--d:${.1 + k * .05}s"><em>🔴</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>, ${esc(r.stage)}: ${isNut ? 'not covered' : 'not protected'} while it is ${r.c >= 3 ? 'critical' : 'needed'}. ${esc(r.why)}</span></div>`));
-        (sm.thin || []).slice(0, 2).forEach((r, k) => rows.push(`<div class="rfx-run is-thin" data-jump="${r.from}" style="--d:${.25 + k * .05}s"><em>🟠</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>, ${esc(r.stage)}: only partly covered.</span></div>`));
+        const isW = kind === 'water';
+        (sm.gaps || []).slice(0, 4).forEach((r, k) => rows.push(`<div class="rfx-run" data-jump="${r.from}" style="--d:${.1 + k * .05}s"><em>🔴</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>, ${esc(r.stage)}: ${isW ? 'too dry' : isNut ? 'not covered' : 'not protected'} while it is ${r.c >= 3 ? 'critical' : 'needed'}. ${esc(r.why)}${isW ? ' Water a day or two before.' : ''}</span></div>`));
+        (sm.thin || []).slice(0, 2).forEach((r, k) => rows.push(`<div class="rfx-run is-thin" data-jump="${r.from}" style="--d:${.25 + k * .05}s"><em>🟠</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>, ${esc(r.stage)}: ${isW ? 'drying, water soon.' : 'only partly covered.'}</span></div>`));
         if (isNut) (sm.late || []).slice(0, 2).forEach((r, k) => rows.push(`<div class="rfx-run is-late" data-jump="${r.from}" style="--d:${.35 + k * .05}s"><em>🟣</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>, ${esc(r.stage)}: still working when the crop no longer needs it. ${esc(sm.lateNote || '')}</span></div>`));
         return rows.length ? `<div class="rfx-runs">${rows.join('')}</div>` : '';
     };
 
     /* Every picked check, in the order picked: a ring each, then one lane each over the same days. */
-    const allChecks = (R) => [{ key: R.check.key, label: R.check.label, short: R.check.short, pct: R.summary.pct, gap: R.summary.gapDays, words: R.phaseWords || {}, main: true,
+    const allChecks = (R) => [{ key: R.check.key, kind: R.check.kind, label: R.check.label, short: R.check.short, pct: R.summary.pct, gap: R.summary.gapDays, words: R.phaseWords || {}, main: true,
             v: R.days.map((d) => d.v), s: R.days.map((d) => d.s), p: R.days.map((d) => d.p), c: R.days.map((d) => d.c) }]
-        .concat((R.series || []).map((x) => ({ key: x.check.key, label: x.check.label, short: x.check.short, pct: x.pct, gap: x.gapDays, words: x.words || {}, v: x.v, s: x.s, p: x.p, c: x.c })))
+        .concat((R.series || []).map((x) => ({ key: x.check.key, kind: x.check.kind, label: x.check.label, short: x.check.short, pct: x.pct, gap: x.gapDays, words: x.words || {}, v: x.v, s: x.s, p: x.p, c: x.c })))
         .sort((a, b) => S.checks.indexOf(a.key) - S.checks.indexOf(b.key));
     const compareHtml = (R) => {
         const all = allChecks(R);
@@ -2014,7 +2180,7 @@
         const hi = R.lot.harvest ? R.days.findIndex((d) => d.d === R.lot.harvest) : -1;
         const rings = all.map((x, k) => `<button type="button" class="rfx-mini ${x.main ? 'is-on' : ''}" data-focus="${esc(x.key)}" style="--sc:${colorOf(x.key)};--k:${k}" ${x.main ? 'aria-current="true"' : ''}>
             <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" class="t"/><circle cx="22" cy="22" r="18" class="v" stroke="${colorOf(x.key)}" data-pct="${x.pct ?? 0}"/></svg>
-            <span><b>${x.pct === null ? '–' : x.pct + '%'}</b><span>${esc(x.label)}</span><small>${x.pct === null ? 'nothing critical yet' : x.gap ? x.gap + ' gap day' + (x.gap === 1 ? '' : 's') : 'no gaps'}</small></span></button>`).join('');
+            <span><b>${x.pct === null ? '–' : x.pct + '%'}</b><span>${esc(x.label)}</span><small>${x.pct === null ? 'nothing critical yet' : x.gap ? x.gap + (x.kind === 'water' ? ' stress day' : ' gap day') + (x.gap === 1 ? '' : 's') : (x.kind === 'water' ? 'no stress' : 'no gaps')}</small></span></button>`).join('');
         // One lane: a tick on top where the stage needs it, pink where it is a gap, and each day filled to its
         // coverage in the colour of what the product is doing.
         const gapFill = tok('--rx-gap-line') || '#fecaca';
@@ -2171,9 +2337,10 @@
             const by = {};
             ds.forEach((d) => { by[d.s] = (by[d.s] || 0) + 1; });
             const bits = [];
-            if (by.ok) bits.push(`<span class="is-ok">${plural(by.ok, 'day')} covered</span>`);
-            if (by.thin) bits.push(`<span class="is-thin">${by.thin} partly</span>`);
-            if (by.gap) bits.push(`<span class="is-gap">${plural(by.gap, 'gap day')}</span>`);
+            const isW = R.check.kind === 'water';
+            if (by.ok) bits.push(`<span class="is-ok">${plural(by.ok, 'day')} ${isW ? 'well watered' : 'covered'}</span>`);
+            if (by.thin) bits.push(`<span class="is-thin">${by.thin} ${isW ? 'drying' : 'partly'}</span>`);
+            if (by.gap) bits.push(`<span class="is-gap">${plural(by.gap, isW ? 'stress day' : 'gap day')}</span>`);
             if (by.late) bits.push(`<span>${by.late} still working, not needed</span>`);
             h += `<div class="rfx-stg-crit c${g.crit || 0}"><b>${CRIT_SAY[g.crit || 0]} for ${esc(R.check.word)}</b>${g.why ? `<p>${esc(g.why)}</p>` : ''}${bits.length ? `<div class="rfx-stg-cov">${bits.join('')}</div>` : ''}</div>`;
         }
@@ -2263,26 +2430,38 @@
         const hi = R.lot.harvest ? days.findIndex((d) => d.d === R.lot.harvest) : -1;
         const harv = hi >= 0 ? `<line class="harv" x1="${x(hi)}" x2="${x(hi)}" y1="${top}" y2="${base}"/><text class="mo t-harv" x="${x(hi) - 4}" y="${top + 12}" text-anchor="end">Harvest</text>` : '';
         const full = y(1);
+        // Water: the rain of each day hangs from the top, the deepest day about a third of the way down.
+        let rain = '';
+        const isW = R.check.kind === 'water' && R.water;
+        if (isW) {
+            const mx = Math.max(30, ...R.water.r);
+            let rk = 0;
+            R.water.r.forEach((r, i) => {
+                if (r < 0.5) return;
+                const h = Math.max(1.5, r / mx * (base - top) * 0.34);
+                rain += `<rect class="rain" style="--k:${rk++}" x="${(x(i) - (W / n) * 0.42).toFixed(1)}" y="${top}" width="${Math.max(1, (W / n) * 0.84).toFixed(1)}" height="${h.toFixed(1)}"><title>${say(days[i].d)}: rain ${Math.round(r)} mm${R.water.k[i] ? ', as it fell' : ''}</title></rect>`;
+            });
+        }
         let dots = '';
         R.apps.filter((a) => a.relevant).forEach((a) => {
             const i = days.findIndex((d) => d.d === a.date);
             if (i < 0) return;
             dots += `<circle class="app ${a.try ? 'is-try' : a.done ? 'is-done' : 'is-plan'}" cx="${x(i).toFixed(1)}" cy="${base + 32}" r="5.5" data-jump="${a.date}"><title>${esc(a.as)} · ${say(a.date)}</title></circle>`;
         });
-        return `<div class="rfx-card" data-fold="chart" style="--d:.08s"><div class="rfx-card-h">The season <small>coverage of ${esc(R.check.word)}, day by day</small></div>${lnRowHtml(R)}<div class="rfx-chart"><div class="rfx-chart-w"><div class="rfx-chart-in">
+        return `<div class="rfx-card" data-fold="chart" style="--d:.08s"><div class="rfx-card-h">The season <small>${isW ? 'water for the roots, day by day' : `coverage of ${esc(R.check.word)}, day by day`}</small></div>${lnRowHtml(R)}<div class="rfx-chart"><div class="rfx-chart-w"><div class="rfx-chart-in">
             <div class="rfx-sbar" role="group" aria-label="Growth stages: tap one to see its dates">${marks}</div>
             <svg viewBox="0 -4 ${W} ${H + 26}" aria-label="Coverage over the season">
               <defs><linearGradient id="rfxPhG" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="${W}" y2="0">${stops}</linearGradient>
                 <linearGradient id="rfxCovV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity=".12"/></linearGradient>
                 <mask id="rfxCovM" maskUnits="userSpaceOnUse" x="0" y="0" width="${W}" height="${base + 1}"><rect x="0" y="0" width="${W}" height="${base + 1}" fill="url(#rfxCovV)"/></mask></defs>
-              ${bands}
-              <line class="dose" x1="0" x2="${W}" y1="${full.toFixed(1)}" y2="${full.toFixed(1)}"/><text class="mo" x="2" y="${(full - 4).toFixed(1)}">one full dose</text>
+              ${bands}${rain}
+              <line class="dose" x1="0" x2="${W}" y1="${full.toFixed(1)}" y2="${full.toFixed(1)}"/><text class="mo" x="2" y="${(full - 4).toFixed(1)}">${isW ? (R.water.facts.paddy ? 'standing water' : 'a full root zone') : 'one full dose'}</text>
               <g class="reveal"><path class="ln${offMain}" data-ln="${mk}" d="${area}" fill="url(#rfxPhG)" mask="url(#rfxCovM)"/>${others}<path class="cov-l ln${offMain}" data-ln="${mk}" d="${line}" ${cmp ? `style="stroke:${colorOf(R.check.key)};stroke-width:2.6"` : ''}/>${tryLine ? `<path class="try-l ln${offMain}" data-ln="${mk}" d="${tryLine}"/>` : ''}</g>
               <line class="base" x1="0" x2="${W}" y1="${base}" y2="${base}"/>
               <g class="ln${offMain}" data-ln="${mk}">${ribbon}</g>${months}${today}${harv}${dots}
             </svg></div></div></div>
             ${phaseLegend(R)}
-            <div class="rfx-legend"><span><i class="rfx-leg-band is-crit"></i>Critical stage</span><span><i class="rfx-leg-band is-mid"></i>Matters</span>${R.days.some((d) => d.t) ? '<span><i style="background:#f5c518"></i>Added by you</span>' : ''}<span><i class="rfx-leg-dot is-done"></i>Done</span><span><i class="rfx-leg-dot is-plan"></i>Planned</span></div></div>`;
+            <div class="rfx-legend"><span><i class="rfx-leg-band is-crit"></i>Critical stage</span><span><i class="rfx-leg-band is-mid"></i>Matters</span>${isW ? '<span><i style="background:var(--rx-rain);opacity:.6"></i>Rain, from the top</span>' : ''}${R.days.some((d) => d.t) ? '<span><i style="background:#f5c518"></i>Added by you</span>' : ''}<span><i class="rfx-leg-dot is-done"></i>Done</span><span><i class="rfx-leg-dot is-plan"></i>Planned</span></div></div>`;
     };
     /* The phases this reading shows, in the order one application lives them. */
     const phaseLegend = (R, all = null) => {
@@ -2290,10 +2469,11 @@
         R.days.forEach((d) => { if (d.p) used.add(d.p); if (d.sl) used.add('soil'); });
         (all || []).forEach((x) => x.p.forEach((p) => { if (p) used.add(p); }));
         // Side by side, the checks may be nutrients and sprays at once: plain names that fit both.
-        const words = all ? { soil: 'In the soil, or taking hold', absorb: 'Being taken in', strong: 'Strongest', easing: 'Easing', fading: 'Fading away' } : (R.phaseWords || {});
+        const words = all ? { soil: 'In the soil, or taking hold', absorb: 'Being taken in', strong: 'Strongest', easing: 'Easing', fading: 'Fading away', wet: 'Wet', moist: 'Moist', drying: 'Drying', dry: 'Too dry' } : (R.phaseWords || {});
         const items = PH_ORDER.filter((p) => used.has(p));
         if (!items.length) return '';
-        return `<div class="rfx-legend rfx-flow"><b class="rfx-leg-h">What each product is doing</b>${items.map((p, k) => `${k ? '<em aria-hidden="true">›</em>' : ''}<span style="--k:${k}"><i class="rfx-sw is-${p}"></i>${esc(words[p] || p)}</span>`).join('')}</div>`;
+        const onlyW = items.every((p) => ['wet', 'moist', 'drying', 'dry'].includes(p));
+        return `<div class="rfx-legend rfx-flow"><b class="rfx-leg-h">${onlyW ? 'The water in the soil' : 'What each product is doing'}</b>${items.map((p, k) => `${k ? '<em aria-hidden="true">›</em>' : ''}<span style="--k:${k}"><i class="rfx-sw is-${p}"></i>${esc(words[p] || p)}</span>`).join('')}</div>`;
     };
 
     /* The calendar: month by month, each day filled to its coverage, with its criticality as dots. */
@@ -2304,6 +2484,8 @@
         R.apps.forEach((a) => { (appsOn[a.date] ||= []).push(a); });
         Object.values(appsOn).forEach((l) => l.sort((a, b) => Number(b.relevant) - Number(a.relevant)));
         const word = R.check.word;
+        const isW = R.check.kind === 'water' && R.water;
+        const ixOf = isW ? Object.fromEntries(R.days.map((d, i) => [d.d, i])) : {};
         const first = D(R.days[0].d), last = D(R.days[R.days.length - 1].d);
         let html = '', k = 0;
         for (let m = new Date(first.getFullYear(), first.getMonth(), 1); m <= last; m = new Date(m.getFullYear(), m.getMonth() + 1, 1)) {
@@ -2318,16 +2500,19 @@
                 if (!d) { cells.push(`<span class="rfx-cell is-out"><span class="rfx-n" style="opacity:.35">${dd}</span></span>`); continue; }
                 crit += d.c >= 2 ? 1 : 0;
                 const here = appsOn[ds] || [];
-                const ap = here.slice(0, 2).map((a) => `<i class="${a.relevant ? 'is-rel' : 'is-other'}${a.try ? ' is-try' : a.done ? '' : ' is-plan'}" title="${esc(a.as)}${a.try ? ', added by you' : a.done ? ', done' : ', planned'}, ${a.relevant ? 'acts on ' : 'not on '}${esc(word)}"><svg><use href="#rfxI-${apMark(a)}"/></svg></i>`).join('')
+                const ap = here.slice(0, 2).map((a) => `<i class="${a.relevant ? 'is-rel' : 'is-other'}${a.try ? ' is-try' : a.done ? '' : ' is-plan'}" title="${esc(a.as)}${a.try ? ', added by you' : a.done ? ', done' : ', planned'}, ${a.water ? (a.relevant ? 'a watering' : 'left out here') : (a.relevant ? 'acts on ' : 'not on ') + esc(word)}"><svg><use href="#rfxI-${apMark(a)}"/></svg></i>`).join('')
                     + (here.length > 2 ? `<b>+${here.length - 2}</b>` : '');
                 // Text over the fill: the number when it is nearly full, the day count from about half; white on the
                 // deep fills, near black on the pale ones.
                 const full = d.v >= 0.7 && d.s !== 'gap';
                 const half = !full && d.v >= 0.42 && d.s !== 'gap';
-                const pale = (full || half) && ['easing', 'fading'].includes(d.p);
+                const pale = (full || half) && ['easing', 'fading', 'drying', 'dry'].includes(d.p);
+                // Water: the day's rain at its foot, from 5 mm.
+                const rv = isW ? R.water.r[ixOf[ds]] : 0;
+                const rn = rv >= 5 ? `<span class="rfx-rn" title="Rain ${Math.round(rv)} mm${R.water.k[ixOf[ds]] ? ', as it fell' : ', from the year counted'}"><svg aria-hidden="true"><use href="#rfxI-rain"/></svg>${Math.round(rv)}</span>` : '';
                 cells.push(`<button type="button" class="rfx-cell ${ds === R.today ? 'is-today' : ''} ${full ? 'is-full' : ''} ${half ? 'is-half' : ''} ${pale ? 'is-lt' : ''}" data-day="${ds}" data-s="${d.s}" data-p="${d.p || ''}" data-t="${d.t ? 1 : 0}" style="--k:${k++};--h:${Math.round(Math.min(1, d.v) * 100)}%">
                     <span class="rfx-fill"></span>${d.sl ? '<span class="rfx-soil"></span>' : ''}<span class="rfx-n">${dd}</span>${d.dl ? `<span class="rfx-dl">${esc(d.dl)}</span>` : ''}
-                    ${d.c ? `<span class="rfx-crit c${d.c}" aria-label="${CRIT[d.c]}"><i></i><i></i><i></i></span>` : ''}${ap ? `<span class="rfx-ap">${ap}</span>` : ''}${d.h ? `<span class="rfx-hm is-${d.h}" title="${d.h === 'n' ? 'Nitrogen is lush: scout more often' : 'Potassium or silicon is helping the crop hold out'}">${d.h === 'n' ? 'N' : 'K'}</span>` : ''}</button>`);
+                    ${d.c ? `<span class="rfx-crit c${d.c}" aria-label="${CRIT[d.c]}"><i></i><i></i><i></i></span>` : ''}${ap ? `<span class="rfx-ap">${ap}</span>` : ''}${rn}${d.h ? `<span class="rfx-hm is-${d.h}" title="${d.h === 'n' ? 'Nitrogen is lush: scout more often' : 'Potassium or silicon is helping the crop hold out'}">${d.h === 'n' ? 'N' : 'K'}</span>` : ''}</button>`);
             }
             html += `<div class="rfx-month"><div class="rfx-month-h"><b>${MON[m.getMonth()]} ${m.getFullYear()}</b>${crit ? `<small>${crit} critical day${crit === 1 ? '' : 's'}</small>` : ''}</div>
                 <div class="rfx-wk">${DOW.map((w) => `<span class="rfx-wd">${w}</span>`).join('')}${cells.join('')}</div></div>`;
@@ -2336,28 +2521,36 @@
         return `<div class="rfx-card" data-fold="cal" style="--d:.14s;--sc:${colorOf(R.check.key)}"><div class="rfx-card-h">The calendar <small>tap a day</small></div><div class="rfx-cal">${html}</div>
             ${phaseLegend(R)}
             <div class="rfx-legend"><b class="rfx-leg-h">What it means for the crop</b>
-              <span><i style="background:repeating-linear-gradient(135deg,var(--rx-gap-a) 0 3px,var(--rx-gap-edge) 3px 5px);box-shadow:inset 0 0 0 1.5px var(--rx-gap-edge)"></i>${STATE.gap[0]}</span>
-              <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px #f59e0b"></i>${STATE.thin[0]}, only partly covered</span>
-              <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px #a78bfa;background:repeating-linear-gradient(135deg,rgb(124 58 237 / .45) 0 2px,#fff 2px 5px)"></i>${STATE[late][0]}</span>
+              <span><i style="background:repeating-linear-gradient(135deg,var(--rx-gap-a) 0 3px,var(--rx-gap-edge) 3px 5px);box-shadow:inset 0 0 0 1.5px var(--rx-gap-edge)"></i>${stName('gap', R.check.kind)}</span>
+              <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px #f59e0b"></i>${isW ? stName('thin', 'water') : STATE.thin[0] + ', only partly covered'}</span>
+              <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px #a78bfa;background:repeating-linear-gradient(135deg,rgb(124 58 237 / .45) 0 2px,#fff 2px 5px)"></i>${stName(late, R.check.kind)}</span>
               <span><span class="rfx-crit c3" style="position:static"><i></i><i></i><i></i></span>&nbsp;How critical the stage is</span>
               <span><i class="rfx-leg-cell" style="box-shadow:inset 0 0 0 2px var(--rx-today)"></i>Today</span>
               ${R.days.some((x) => x.h === 'n') ? '<span><span class="rfx-hm is-n" style="position:static">N</span>Nitrogen lush: pests and disease like it</span>' : ''}
               ${R.days.some((x) => x.h === 'k') ? '<span><span class="rfx-hm is-k" style="position:static">K</span>Potassium or silicon helping the crop hold out</span>' : ''}</div>
             <div class="rfx-legend rfx-leg-ap"><b class="rfx-leg-h">What went on</b>
+              ${isW ? `<span><span class="rfx-ap"><i class="is-rel"><svg><use href="#rfxI-wave"/></svg></i></span>A watering or a drain, in this colour</span>
+              <span><span class="rfx-ap"><i class="is-other"><svg><use href="#rfxI-gran"/></svg></i></span>Grey: a product, not water</span>
+              <span><span class="rfx-rn" style="position:static"><svg aria-hidden="true"><use href="#rfxI-rain"/></svg>12</span>Rain that day, mm</span>
+              <span><span class="rfx-ap"><i class="is-rel is-try"><svg><use href="#rfxI-wave"/></svg></i></span>Added by you</span>
+              <span><span class="rfx-ap"><i class="is-rel is-plan"><svg><use href="#rfxI-wave"/></svg></i></span>Outlined: still planned</span>` : `
               <span><span class="rfx-ap"><i class="is-rel"><svg><use href="#rfxI-gran"/></svg></i></span>In this colour: acts on ${esc(word)}</span>
               <span><span class="rfx-ap"><i class="is-other"><svg><use href="#rfxI-gran"/></svg></i></span>Grey: not on ${esc(word)}</span>
               <span><span class="rfx-ap"><i class="is-rel"><svg><use href="#rfxI-drop"/></svg></i></span>Sprayed or poured</span>
               <span><span class="rfx-ap"><i class="is-rel"><svg><use href="#rfxI-leaf"/></svg></i></span>Organic or biological</span>
               <span><span class="rfx-ap"><i class="is-rel is-try"><svg><use href="#rfxI-star"/></svg></i></span>Added by you</span>
-              <span><span class="rfx-ap"><i class="is-rel is-plan"><svg><use href="#rfxI-gran"/></svg></i></span>Outlined: still planned</span></div></div>`;
+              <span><span class="rfx-ap"><i class="is-rel is-plan"><svg><use href="#rfxI-gran"/></svg></i></span>Outlined: still planned</span>`}</div></div>`;
     };
     // How a product went on, as its mark: a try's star, a spray's drop, organic's leaf, else granules.
-    const apMark = (a) => a.try ? 'star' : ['foliar', 'drench'].includes(a.form) ? 'drop' : ['organic', 'bio'].includes(a.form) ? 'leaf' : 'gran';
+    const apMark = (a) => a.water ? 'wave' : a.try ? 'star' : ['foliar', 'drench'].includes(a.form) ? 'drop' : ['organic', 'bio'].includes(a.form) ? 'leaf' : 'gran';
 
     /* The products, each with how long it keeps working. */
     const appsHtml = (R) => {
+        const isW = R.check.kind === 'water';
+        if (isW) return watersHtml(R);
         const rel = R.apps.filter((a) => a.relevant);
-        const other = R.apps.filter((a) => !a.relevant);
+        // The waterings act on water only: they stay out of a product's list.
+        const other = R.apps.filter((a) => !a.relevant && !a.water);
         const span = R.days.length;
         const first = D(R.days[0].d).getTime();
         const pos = (s) => Math.max(0, Math.min(100, ((D(s).getTime() - first) / 864e5) / Math.max(1, span - 1) * 100));
@@ -2384,6 +2577,37 @@
         const none = !rel.length ? `<div class="rfx-empty" style="padding:1.2rem"><p>Nothing on this lot's tasks acts on ${esc(R.check.word)} yet. Add it to a task, or add a product under Fertilizers above to see what it would do.</p></div>` : '';
         const oth = other.length ? `<details class="rfx-other"><summary>${other.length} other product${other.length === 1 ? '' : 's'} on this lot do not act on ${esc(R.check.word)}</summary><ul>${other.map((a) => `<li>${say(a.date)} · ${esc(a.as)}${a.carries.length ? ' (' + esc(a.carries.join(', ')) + ')' : a.ai.length ? ' (' + esc(a.ai.join(' + ')) + ')' : ''}</li>`).join('')}</ul></details>` : '';
         return `<div class="rfx-card" data-fold="apps" style="--d:.2s"><div class="rfx-card-h">What is working <small>${rel.length} product${rel.length === 1 ? '' : 's'}</small></div><div class="rfx-apps">${rows}${none}</div>${oth}</div>`;
+    };
+
+    /* The waterings, each with how long it keeps the crop out of stress (a water check). */
+    const watersHtml = (R) => {
+        const rel = R.apps.filter((a) => a.relevant && a.water).sort((a, b) => a.date.localeCompare(b.date));
+        const out = R.apps.filter((a) => !a.relevant && a.water);
+        const span = R.days.length;
+        const first = D(R.days[0].d).getTime();
+        const pos = (s) => Math.max(0, Math.min(100, ((D(s).getTime() - first) / 864e5) / Math.max(1, span - 1) * 100));
+        const dayW = 100 / Math.max(1, span - 1);
+        const rows = rel.map((a, k) => {
+            const e = a.effect || {};
+            const w = e.water || {};
+            const d = D(a.date);
+            const phs = e.phases || [];
+            const segs = phs.map((ph) => `<i class="is-${ph.p}" style="left:${pos(ph.from)}%;width:${Math.max(.6, pos(ph.to) - pos(ph.from) + dayW).toFixed(2)}%"></i>`).join('');
+            const phRow = phs.length ? `<div class="rfx-phs">${phs.map((ph) => `<span><i class="rfx-sw is-${ph.p}"></i>${esc(ph.w)} <small>${ph.n} day${ph.n === 1 ? '' : 's'}</small></span>`).join('')}</div>` : '';
+            const line = w.task === 'drain'
+                ? (w.stress ? `The soil dries from <b>${say(a.date)}</b>: short of water from <b>${say(w.stress)}</b> unless rain or a watering comes.` : 'The soil stays safe until the next watering or rain.')
+                : (e.days ? `Keeps the crop out of stress until about <b>${say(e.full)}</b> (${e.days[1]} day${e.days[1] === 1 ? '' : 's'})${w.stress ? `, short of water from <b>${say(w.stress)}</b>` : ''}.` : '');
+            return `<div class="rfx-app ${a.try ? 'is-try' : ''}" style="--d:${.18 + Math.min(k, 10) * .04}s">
+                <span class="rfx-app-d"><small>${MON[d.getMonth()]}</small><b>${d.getDate()}</b></span>
+                <div class="rfx-app-t"><b>${esc(a.as)}</b>${a.try ? '<span class="rfx-tag is-try">Added by you</span>' : a.done ? '<span class="rfx-tag is-done">Done</span>' : '<span class="rfx-tag">Planned</span>'}
+                  <small>${esc([a.title !== 'If you water' ? a.title : '', w.net ? `about ${w.net} mm into the ${R.water && R.water.facts.paddy ? 'paddy' : 'root zone'}` : ''].filter(Boolean).join(' · '))}</small>
+                  ${line ? `<small>${line}</small>` : ''}
+                  <div class="rfx-bar"><span class="rfx-segs">${segs}</span></div>${phRow}
+                  ${e.note ? `<div class="rfx-app-n">${esc(e.note)}</div>` : ''}</div></div>`;
+        }).join('');
+        const none = !rel.length ? `<div class="rfx-empty" style="padding:1.2rem"><p>${R.check.mode === 'rain' ? 'Rain only: the waterings are left out of this reading, so you see what the rain gives by itself.' : 'No watering on this lot\'s tasks yet. Add one under Watering above to see how long it keeps the crop out of stress.'}</p></div>` : '';
+        const oth = out.length ? `<details class="rfx-other"><summary>${out.length} watering${out.length === 1 ? '' : 's'} left out of this reading</summary><ul>${out.map((a) => `<li>${say(a.date)} · ${esc(a.as)}</li>`).join('')}</ul></details>` : '';
+        return `<div class="rfx-card" data-fold="apps" style="--d:.2s"><div class="rfx-card-h">Your waterings <small>${rel.length} on this reading</small></div><div class="rfx-apps">${rows}${none}</div>${oth}</div>`;
     };
 
     /* One day, opened. */
@@ -2465,6 +2689,7 @@
         const pct = Math.round(d.v * 100);
         const col = d.p ? `var(--ph-${d.p})` : (STATE[d.s] ? STATE[d.s][1] : '#86c25a');
         const cmpOn = (R.series || []).length > 0;
+        if (R.check.kind === 'water' && R.water) { waterDay(R, d, g, apps, phaseOn); return; }
         dayBox.innerHTML = `<div class="rfx-day-h"><div><b>${DOW[D(ds).getDay()]}, ${sayY(ds)}</b><small>${esc([d.dl, g.label].filter(Boolean).join(' · '))}</small></div><button type="button" class="rfx-x" data-rfx-day-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
             <div class="rfx-meter"><i style="width:0;background:${col}" data-w="${Math.min(100, pct)}"></i></div>
             <p>${cmpOn ? `<b style="color:${colorOf(R.check.key)}">${esc(R.check.label)}</b>: ` : ''}<b>${STATE[d.s] ? STATE[d.s][0] : ''}</b>. Coverage ${pct}% of one full dose. ${d.c ? 'This stage: ' + CRIT[d.c].toLowerCase() + '.' : ''} ${esc(g.why || '')}</p>
@@ -2486,13 +2711,38 @@
             const i = R.days.indexOf(d);
             dayBox.insertAdjacentHTML('beforeend', `<div class="rfx-day-cmp">${R.series.map((sr) => {
                 const p = sr.p[i], st = sr.s[i];
-                return `<div style="--sc:${colorOf(sr.check.key)}"><i></i><b>${esc(sr.check.label)}</b><span class="rfx-meter"><i style="width:${Math.min(100, Math.round(sr.v[i] * 100))}%;background:${p ? `var(--ph-${p})` : 'var(--rx-dot)'}"></i></span><small>${Math.round(sr.v[i] * 100)}% · ${esc(STATE[st] ? STATE[st][0].split(':')[0] : '')}${p ? ' · ' + esc((sr.words || {})[p] || '') : ''}</small></div>`;
+                return `<div style="--sc:${colorOf(sr.check.key)}"><i></i><b>${esc(sr.check.label)}</b><span class="rfx-meter"><i style="width:${Math.min(100, Math.round(sr.v[i] * 100))}%;background:${p ? `var(--ph-${p})` : 'var(--rx-dot)'}"></i></span><small>${Math.round(sr.v[i] * 100)}% · ${esc(stName(st, sr.check.kind).split(':')[0])}${p ? ' · ' + esc((sr.words || {})[p] || '') : ''}</small></div>`;
             }).join('')}</div>`);
         }
         dayBox.hidden = false;
         requestAnimationFrame(() => { const m = dayBox.querySelector('[data-w]'); if (m) m.style.width = m.dataset.w + '%'; });
     };
     dayBox.addEventListener('click', (e) => { if (e.target.closest('[data-rfx-day-x]')) hideDay(); });
+    /* A day of a water check: the water left for the roots, the rain, what the crop drank, the watering carrying it. */
+    const waterDay = (R, d, g, apps, phaseOn) => {
+        const W = R.water, F = W.facts || {};
+        const i = R.days.indexOf(d);
+        const lv = W.lv[i], r = W.r[i], e = W.e[i], gi = W.g[i];
+        const col = d.p ? `var(--ph-${d.p})` : '#86c25a';
+        const level = F.paddy
+            ? (lv >= 5 ? `About ${Math.round(lv / 10 * 10) / 10} cm of standing water.` : lv > -3 ? 'Soaked, with no standing water.' : `The water is about ${Math.max(1, Math.round(-lv * 0.6))} cm below the surface; rice is safe down to about 15 cm.`)
+            : `About ${Math.round(lv)} of ${Math.round(W.top[i])} mm left for the roots; the crop suffers below ${Math.round(W.line[i])} mm.`;
+        const cmpOn = (R.series || []).length > 0;
+        const ws = apps.filter((a) => a.water);
+        dayBox.innerHTML = `<div class="rfx-day-h"><div><b>${DOW[D(d.d).getDay()]}, ${sayY(d.d)}</b><small>${esc([d.dl, g.label].filter(Boolean).join(' · '))}</small></div><button type="button" class="rfx-x" data-rfx-day-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+            <div class="rfx-meter"><i style="width:0;background:${col}" data-w="${Math.min(100, Math.round(d.v * 100))}"></i></div>
+            <p>${cmpOn ? `<b style="color:${colorOf(R.check.key)}">${esc(R.check.label)}</b>: ` : ''}<b>${esc(stName(d.s, 'water'))}</b>. ${esc(level)} ${d.c ? 'This stage: ' + CRIT[d.c].toLowerCase() + '.' : ''} ${esc(g.why || '')}</p>
+            <div class="rfx-day-amt">🌧️ <b>Rain</b> ${r >= 0.5 ? `about ${Math.round(r)} mm${W.k[i] ? ', as it fell' : ', from the year counted'}` : 'none'} · 🌱 <b>The crop drank</b> about ${Math.round(e * 10) / 10} mm${gi >= 0.5 ? ` · 🚿 <b>Watering</b> about ${Math.round(gi)} mm` : ''}</div>
+            ${ws.length ? `<ul>${ws.map((a) => { const ph = phaseOn(a), st = a.effect?.water?.stress; return `<li><i class="rfx-sw is-${ph ? ph.p : 'moist'}"></i> <b>${esc(a.as)}</b> (${say(a.date)}${a.try ? ', added by you' : ''}): ${st ? 'short of water from ' + say(st) : 'enough until about ' + say(a.effect?.full || a.date)}</li>`; }).join('')}</ul>` : `<p style="color:var(--rx-muted)">${r >= 10 ? 'The rain carries the crop on this day.' : 'No recent watering carries this day.'}</p>`}`;
+        if (cmpOn) {
+            dayBox.insertAdjacentHTML('beforeend', `<div class="rfx-day-cmp">${R.series.map((sr) => {
+                const p = sr.p[i], st = sr.s[i];
+                return `<div style="--sc:${colorOf(sr.check.key)}"><i></i><b>${esc(sr.check.label)}</b><span class="rfx-meter"><i style="width:${Math.min(100, Math.round(sr.v[i] * 100))}%;background:${p ? `var(--ph-${p})` : 'var(--rx-dot)'}"></i></span><small>${Math.round(sr.v[i] * 100)}% · ${esc(stName(st, sr.check.kind).split(':')[0])}${p ? ' · ' + esc((sr.words || {})[p] || '') : ''}</small></div>`;
+            }).join('')}</div>`);
+        }
+        dayBox.hidden = false;
+        requestAnimationFrame(() => { const m = dayBox.querySelector('[data-w]'); if (m) m.style.width = m.dataset.w + '%'; });
+    };
 
     /* ---------------- save, and saved ---------------- */
     const paintSavedCount = () => {

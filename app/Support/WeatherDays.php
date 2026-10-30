@@ -95,6 +95,28 @@ final class WeatherDays
     }
 
     /**
+     * Only the days already kept for the square around a point, $from to $to:
+     * nothing is read from the archive. For a reader that runs while a page
+     * waits (the Coverage Planner's water check, 2026-10-30) and counts the
+     * days it lacks from the climate shelf instead. [] when none are kept.
+     */
+    public static function kept(float $lat, float $lng, string $from, string $to): array
+    {
+        $to = min(Carbon::parse($to)->toDateString(), now('Asia/Manila')->subDay()->toDateString());
+        $from = Carbon::parse($from)->toDateString();
+        if ($from > $to || ! self::ready()) {
+            return [];
+        }
+        try {
+            return self::rows(ClimateStore::cellKey($lat, $lng), $from, $to);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return [];
+        }
+    }
+
+    /**
      * Keep days the climate shelf already read (its archive answer, the
      * DAILY variables by name): the last KEEP_RECENT of them. Returns the
      * days written.

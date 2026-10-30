@@ -126,6 +126,8 @@ final class RangeEffectLogic
         $near = $farm && ! $answers ? LotSync::nearAnswered($s, $farm) : null;
 
         return $memo[$mk] = ['in' => $in, 'key' => $key, 'f' => array_values($f), 'from' => $from, 'custom' => $custom ? $custom['name'] : null, 'customFarm' => $custom && ! empty($custom['farm']),
+            // The answers themselves, for the water count (RangeEffectWater): texture, depth, hard layer, drainage, sun, slope.
+            'answers' => $answers,
             'farm' => $farm ? ['id' => (int) $farm['id'], 'name' => (string) $farm['name']] : null,
             'near' => $near ? ['id' => (int) $near['id'], 'name' => (string) $near['name'], 'same' => $near['same']] : null,
             'facts' => ['say' => self::soilWords($texture, $ph, $f), 'from' => $from, 'texture' => $texture, 'ph' => $ph, 'factors' => array_values($f), 'place' => $place]];
@@ -289,7 +291,7 @@ final class RangeEffectLogic
     }
 
     /** The soil in a note: what it is and where the app learned it. */
-    private static function soilFactNote(array $soil): array
+    public static function soilFactNote(array $soil): array
     {
         $from = $soil['from'];
         $farm = $soil['farm'] ?? null;

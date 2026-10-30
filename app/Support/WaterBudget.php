@@ -72,16 +72,16 @@ final class WaterBudget
     ];
 
     /** The share of the rain that reaches the roots. */
-    private const RAIN_EFF = 0.8;
+    public const RAIN_EFF = 0.8;
 
     /** ET0 a day when the place has no kept history, mm, by month (lowland Philippines). */
-    private const ET0_MONTH = [1 => 3.6, 4.2, 5.0, 5.4, 5.0, 4.2, 3.8, 3.7, 3.7, 3.7, 3.4, 3.3];
+    public const ET0_MONTH = [1 => 3.6, 4.2, 5.0, 5.4, 5.0, 4.2, 3.8, 3.7, 3.7, 3.7, 3.4, 3.3];
 
     /** The water that reaches a paddy of what leaves the pump or the canal gate. */
-    private const PADDY_EFF = 0.85;
+    public const PADDY_EFF = 0.85;
 
     /** Water the soil gives up as a paddy's water drops 15 cm below the surface, mm (safe wetting and drying). */
-    private const AWD_LOW = 25;
+    public const AWD_LOW = 25;
 
     /** The share of the roots' depth a watering refills: most of what a crop drinks comes from there. */
     private const MANAGED = 0.7;

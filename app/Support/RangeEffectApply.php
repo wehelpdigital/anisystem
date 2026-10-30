@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\DB;
 class RangeEffectApply
 {
     public const TITLES = ['fertilizer' => 'Fertilizer application', 'foliar_spray' => 'Foliar spray', 'herbicide' => 'Herbicide spray',
-        'pesticide' => 'Insecticide spray', 'fungicide' => 'Fungicide spray', 'microbial' => 'Microbial application', 'other' => 'Application'];
+        'pesticide' => 'Insecticide spray', 'fungicide' => 'Fungicide spray', 'microbial' => 'Microbial application', 'other' => 'Application', 'irrigation' => 'Irrigation'];
 
     /** The kind of task a product goes on as, from the book's type and how the farmer puts it on. */
     public static function taskType(string $t, ?string $method): string
@@ -54,6 +54,17 @@ class RangeEffectApply
         $want = [];
         foreach (array_values($tries) as $i => $t) {
             $date = (string) ($t['date'] ?? '');
+            // A watering planned in the planner (2026-10-30): an irrigation task of its own that day, never a line.
+            if (! empty($t['water'])) {
+                $q = max(0, (float) ($t['qty'] ?? 0));
+                $mm = $q > 0 ? $q * (($t['unit'] ?? 'cm') === 'mm' ? 1 : 10) : null;
+                $method = isset(RangeEffectWater::METHODS[$t['method'] ?? '']) ? (string) $t['method'] : null;
+                $want[] = ['i' => $i, 'name' => 'Watering' . ($mm ? ', ' . RangeEffectWater::cm($mm) : '') . ($method && $method !== 'flood' ? ' ' . RangeEffectWater::METHODS[$method][1] : ''),
+                    'date' => $date, 'water' => true, 'mm' => $mm, 'method' => $method, 'type' => 'irrigation', 'qty' => $q, 'unit' => ($t['unit'] ?? '') === 'mm' ? 'mm' : 'cm',
+                    'status' => preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) ? null : 'bad', 'task' => '', 'note' => preg_match('/^\d{4}-\d{2}-\d{2}$/', $date) ? '' : 'It has no day.'];
+
+                continue;
+            }
             $p = ! empty($t['productId']) ? RangeEffect::productOf((int) $t['productId']) : null;
             $ai = trim((string) ($t['ai'] ?? ''));
             $ing = $ai !== '' ? CompatBook::ingredient($ai) : null;
@@ -121,6 +132,22 @@ class RangeEffectApply
             if ($w['status'] !== null) {
                 continue;
             }
+            if (! empty($w['water'])) {
+                // One watering a day: an irrigation task the lot already has that day is it.
+                if (isset($seen[$w['date'] . '|water'])) {
+                    $w['status'] = 'twice';
+                    $w['note'] = 'Another watering of yours is on this day: it goes on once.';
+
+                    continue;
+                }
+                $seen[$w['date'] . '|water'] = true;
+                $on = collect($byDate[$w['date']] ?? [])->first(fn ($a) => $a->activityType === 'irrigation'
+                    && ! in_array(RangeEffectWater::taskOf($a->waterTask, (string) $a->activityTitle), ['drain', 'no_irrigation', 'let_subside'], true));
+                $w['status'] = $on ? 'there' : 'new';
+                $w['task'] = $on ? (string) $on->activityTitle : self::TITLES['irrigation'];
+
+                continue;
+            }
             $sk = $w['date'] . '|' . ($w['pid'] ?: implode(',', $w['keys']));
             if (isset($seen[$sk])) {
                 $w['status'] = 'twice';
@@ -156,7 +183,7 @@ class RangeEffectApply
         }
         unset($w);
 
-        $made = ['tasks' => 0, 'lines' => 0, 'there' => 0, 'twice' => 0, 'bad' => 0];
+        $made = ['tasks' => 0, 'lines' => 0, 'there' => 0, 'twice' => 0, 'bad' => 0, 'water' => 0];
         foreach ($want as $w) {
             if (isset($made[$w['status']])) {
                 $made[$w['status']]++;
@@ -169,6 +196,25 @@ class RangeEffectApply
                 $stamp = now('Asia/Manila');
                 foreach ($want as &$w) {
                     if (! in_array($w['status'], ['join', 'new'], true)) {
+                        continue;
+                    }
+                    if (! empty($w['water'])) {
+                        $countOn[$w['date']] = ($countOn[$w['date']] ?? 0) + 1;
+                        $how = $w['method'] && $w['method'] !== 'flood' ? ' ' . RangeEffectWater::METHODS[$w['method']][1] : '';
+                        $a = AsScheduleActivity::create([
+                            'croppingScheduleId' => $s->id, 'versionId' => $v->id, 'activityTitle' => self::TITLES['irrigation'], 'targetDate' => $w['date'],
+                            'priority' => 'medium', 'activityType' => 'irrigation', 'waterTask' => 'irrigate', 'timeRequired' => 'n/a',
+                            'description' => HtmlSanitizer::rich('<p>' . e($w['mm'] ? 'Water about ' . RangeEffectWater::cm($w['mm']) . $how . '.' : 'Water until the root zone is full' . $how . '.')
+                                . ' Put on the plan from the Coverage Planner.</p>'),
+                            'isDayZero' => false, 'isTransplant' => false, 'isDraft' => false, 'isHidden' => false, 'isDone' => false,
+                            'workerChecklist' => false, 'workerSelfCheck' => false, 'sequenceOrder' => ($countOn[$w['date']] - 1) * 10, 'deleteStatus' => 1,
+                        ]);
+                        $a->lots()->attach($lot->id);
+                        $w['task'] = (string) $a->activityTitle;
+                        $made['tasks']++;
+                        $made['lines']++;
+                        $made['water']++;
+
                         continue;
                     }
                     if ($w['status'] === 'join') {
@@ -208,6 +254,6 @@ class RangeEffectApply
         $made['new'] = count(array_filter($want, fn ($w) => $w['status'] === 'new'));
         $made['join'] = count(array_filter($want, fn ($w) => $w['status'] === 'join'));
 
-        return ['rows' => array_map(fn ($w) => array_intersect_key($w, array_flip(['i', 'name', 'date', 'status', 'task', 'note', 'qty', 'unit'])), $want), 'made' => $made];
+        return ['rows' => array_map(fn ($w) => array_intersect_key($w, array_flip(['i', 'name', 'date', 'status', 'task', 'note', 'qty', 'unit', 'water'])), $want), 'made' => $made];
     }
 }

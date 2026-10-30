@@ -1670,6 +1670,16 @@
         const rows = (tries || []).map((t, i) => {
             const base = { i, name: t.name || 'A product', date: t.date || '', qty: Number(t.qty) || 0, unit: t.unit || '', task: '', note: '' };
             if (!/^\d{4}-\d{2}-\d{2}$/.test(base.date) || !o || !o.start) return { ...base, status: 'bad', note: 'It has no day.' };
+            // A watering planned in the planner: an irrigation task of its own on its day; one there already is it.
+            if (t.water) {
+                const when = covDay(base.date, o);
+                const sk = when.counter + ':' + when.day + ':water';
+                const name = 'Watering' + (base.qty > 0 ? `, ${base.qty} ${base.unit === 'mm' ? 'mm' : 'cm'}` : '') + (t.method && t.method !== 'flood' ? ' by ' + t.method : '');
+                if (seen.has(sk)) return { ...base, ...when, name, type: 'irrigation', water: true, status: 'twice', note: 'Another watering of yours is on this day: it goes in once.' };
+                seen.add(sk);
+                const there = TASKS.find((x) => isTask(x) && x.counter === when.counter && Number(x.day) === when.day && x.type === 'irrigation' && !/drain|no (irrigation|water)|subside/i.test(x.title || ''));
+                return { ...base, ...when, name, type: 'irrigation', water: true, status: there ? 'there' : 'new', task: there ? there.title : 'Irrigation' };
+            }
             const when = covDay(base.date, o), type = covType(t.t || '', t.method || null), key = covKey(base.name);
             const sk = when.counter + ':' + when.day + ':' + (t.productId || key);
             if (seen.has(sk)) return { ...base, ...when, type, key, status: 'twice', note: 'It is in your list twice on this day: it goes in once.' };
@@ -1696,6 +1706,18 @@
                 let pos = TASKS.reduce((m, x) => Math.max(m, Number(x.pos) || 0), 0);
                 go.forEach((r) => {
                     const t = tries[r.i];
+                    if (r.water) {
+                        pos += 10;
+                        const how = t.method && t.method !== 'flood' ? ' by ' + t.method : '';
+                        const task = { id: uid('t'), counter: r.counter, day: r.day, title: 'Irrigation', subtitle: '',
+                            description: (r.qty > 0 ? `Water about ${r.qty} ${r.unit === 'mm' ? 'mm' : 'cm'}${how}.` : `Water until the root zone is full${how}.`) + ' Put in from the Coverage Planner.',
+                            type: 'irrigation', groups: [], note: '', priority: 'medium', workers: null, pos };
+                        TASKS.push(task);
+                        plan.made.tasks++;
+                        plan.made.water = (plan.made.water || 0) + 1;
+                        flash(task.id);
+                        return;
+                    }
                     const line = { id: uid('i'), name: r.name, kind: covKind(t.t || ''), amount: r.qty > 0 ? `${r.qty} ${r.unit}`.trim() : '', materialId: null, qty: null };
                     let task = r.joinId ? TASKS.find((x) => x.id === r.joinId) : null;
                     if (!task) {
@@ -1716,7 +1738,9 @@
                 });
             });
             const m = plan.made;
-            return { data: plan, message: (m.lines === 1 ? 'One product is in the protocol' : m.lines + ' products are in the protocol') + (m.tasks ? ', in ' + (m.tasks === 1 ? 'a new task' : m.tasks + ' new tasks') : '') + '.' };
+            const wat = m.water || 0;
+            const said = [m.lines ? (m.lines === 1 ? 'One product' : m.lines + ' products') : '', wat ? (m.lines ? (wat === 1 ? 'one watering' : wat + ' waterings') : (wat === 1 ? 'One watering' : wat + ' waterings')) : ''].filter(Boolean).join(' and ');
+            return { data: plan, message: said + (m.lines + wat === 1 ? ' is' : ' are') + ' in the protocol' + (m.tasks ? ', in ' + (m.tasks === 1 ? 'a new task' : m.tasks + ' new tasks') : '') + '.' };
         },
     };
 
