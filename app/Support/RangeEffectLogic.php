@@ -356,7 +356,7 @@ final class RangeEffectLogic
                     'text' => 'So this field needs about ' . (int) round(abs($m - 1) * 100) . ' percent ' . ($m > 1 ? 'more' : 'less') . ' ' . $word . ' from the bag than an average field.'];
             }
             if (isset($base['need'][$el])) {
-                $out[] = ['k' => 'soil', 'icon' => '🎯', 'tone' => 'info', 'title' => 'This field needs about ' . self::kg((float) $base['need'][$el]) . ' kg ' . $say . ' a hectare from the bag this season',
+                $out[] = ['k' => 'soil', 'icon' => '🎯', 'tone' => 'info', 'title' => 'This field needs about ' . self::mass((float) $base['need'][$el]) . ' ' . $say . ' a hectare from the bag this season',
                     'text' => 'Counted the NPK Plus way for this crop' . (! empty($base['goal']['Y']) ? ', a goal of about ' . self::kg((float) $base['goal']['Y']) . ' t a hectare (' . $base['goal']['why'] . ')' : '')
                         . ' and this soil. The soil gives the rest on its own.'];
             }
@@ -367,7 +367,7 @@ final class RangeEffectLogic
         if ($mm && ($s = NpkNeed::soilSay($mm)) !== '') {
             $need = (float) ($mm['need'] ?? 0);
             $out[] = ['k' => 'soil', 'icon' => $need > 0 ? '🔒' : '🌱', 'tone' => $need > 0 ? 'warn' : 'good',
-                'title' => $need > 0 ? ucfirst($word) . ' may run short here: about ' . self::kg($need) . ' kg ' . $say . ' a hectare from the bag' : 'The soil likely gives the ' . $word . ' this crop needs',
+                'title' => $need > 0 ? ucfirst($word) . ' may run short here: about ' . self::mass($need) . ' ' . $say . ' a hectare from the bag' : 'The soil likely gives the ' . $word . ' this crop needs',
                 'text' => $s];
         } elseif (! empty(NpkModel::ELEMENTS[$el]['beneficial'])) {
             $out[] = ['k' => 'soil', 'icon' => '🌱', 'tone' => 'info', 'title' => ucfirst($word) . ' helps but is not required', 'text' => 'This crop does well without it on most soils.'];
@@ -423,7 +423,7 @@ final class RangeEffectLogic
         $needP = self::needOf($plan, $el);
         $delta = $needB !== null && $needP !== null ? $needP - $needB : 0.0;
         $shift = abs($delta) >= max(0.05, 0.03 * max(1.0, (float) $needB))
-            ? ' Counted here: about ' . self::kg(abs($delta)) . ' kg ' . (self::SAY[$el] ?? $el) . ' a hectare ' . ($delta > 0 ? 'more' : 'less') . ' from the bag.' : '';
+            ? ' Counted here: about ' . self::mass(abs($delta)) . ' ' . (self::SAY[$el] ?? $el) . ' a hectare ' . ($delta > 0 ? 'more' : 'less') . ' from the bag.' : '';
 
         // The acid of ammonium fertilizers (and urea once it turns to ammonium) around the roots.
         if ($kinds['acid'] && $u > 0.02) {
@@ -554,7 +554,12 @@ final class RangeEffectLogic
         $n = count($days);
         $need = self::needOf($base, $el);
         $needPlan = $plan ? self::needOf($plan, $el) : $need;
-        $out = ['el' => $el, 'say' => $say, 'word' => $word, 'known' => $need !== null];
+        // A trace element (cobalt, molybdenum) is weighed in grams (2026-10-30): in kilos its need and each day's
+        // share of it round to nothing, and a day's figure falls under what the day is judged by.
+        $sc = max((float) $need, (float) $needPlan, (float) (RangeEffect::REF_SOIL[$el] ?? 1)) < 0.5 ? 1000.0 : 1.0;
+        $need = $need !== null ? $need * $sc : null;
+        $needPlan = $needPlan !== null ? $needPlan * $sc : null;
+        $out = ['el' => $el, 'say' => $say, 'word' => $word, 'known' => $need !== null, 'unit' => $sc > 1 ? 'g' : 'kg'];
         // What each product gives a day.
         $give = array_fill(0, $n, 0.0);
         $applied = 0.0;
@@ -569,7 +574,7 @@ final class RangeEffectLogic
                 // Carried, amount not read: one usual dose.
                 $kg = ($a['form'] === 'foliar' ? RangeEffect::REF_FOLIAR : RangeEffect::REF_SOIL)[$el] ?? 0;
             }
-            $kg = (float) $kg;
+            $kg = (float) $kg * $sc;
             if ($kg <= 0) {
                 continue;
             }
@@ -673,7 +678,8 @@ final class RangeEffectLogic
     private static function foliarNotes(array $rel, string $el, string $say, ?array $amt, array $c): array
     {
         $out = [];
-        $need = (float) ($amt['needBook'] ?? 0);
+        // The amounts block counts a trace element in grams; the products carry kilos.
+        $need = (float) ($amt['needBook'] ?? 0) / (($amt['unit'] ?? 'kg') === 'g' ? 1000 : 1);
         foreach ($rel as $a) {
             if ($a['form'] !== 'foliar' || ! isset($a['nut'][$el])) {
                 continue;
@@ -681,11 +687,11 @@ final class RangeEffectLogic
             $kg = $a['nut'][$el] === null ? (RangeEffect::REF_FOLIAR[$el] ?? 0) : (float) $a['nut'][$el];
             $rice = $c['crop'] && str_starts_with((string) $c['crop'], 'rice');
             if ($el === 'Si') {
-                $text = 'A silicon spray (' . $a['as'] . ', ' . $a['date']->format('M j') . ') gives about ' . self::kg($kg) . ' kg a hectare, taken in by the leaves and gone in a week or two. '
+                $text = 'A silicon spray (' . $a['as'] . ', ' . $a['date']->format('M j') . ') gives about ' . self::mass($kg) . ' a hectare, taken in by the leaves and gone in a week or two. '
                     . ($rice ? 'Rice takes a lot of silicon from the soil over a season, far more than any spray can carry; silicon from the soil (rice straw or hull ash put back, or calcium silicate) is what fills it. ' : '')
                     . 'A spray mostly toughens the leaves for a while against blast and sucking pests.';
             } elseif ($need > 0 && $kg < 0.15 * $need) {
-                $text = 'A leaf spray (' . $a['as'] . ', ' . $a['date']->format('M j') . ') gives about ' . self::kg($kg) . ' kg ' . $say . ' a hectare, against the field\'s ' . self::kg($need)
+                $text = 'A leaf spray (' . $a['as'] . ', ' . $a['date']->format('M j') . ') gives about ' . self::mass($kg) . ' ' . $say . ' a hectare, against the field\'s ' . self::mass($need)
                     . ' for the season. The leaves take it in within a day or two and it is gone in about a week: it tops the crop up, it cannot carry it. The bulk has to come through the soil.';
             } else {
                 $text = 'A leaf spray (' . $a['as'] . ', ' . $a['date']->format('M j') . ') acts within a day or two and fades in about a week; granules in the soil feed for weeks. Time sprays to the days that matter.';
@@ -697,6 +703,18 @@ final class RangeEffectLogic
         }
 
         return $out;
+    }
+
+    /** An amount in kilos, said with its unit: "120 kg", "3.5 kg"; under a tenth of a kilo in grams ("4 g", "0.5 g"). */
+    public static function mass(float $v): string
+    {
+        if ($v > 0 && $v < 0.1) {
+            $g = $v * 1000;
+
+            return ($g >= 10 ? (string) (int) round($g) : rtrim(rtrim(number_format($g, 1, '.', ''), '0'), '.')) . ' g';
+        }
+
+        return self::kg($v) . ' kg';
     }
 
     /** A kilo figure said short: "120", "3.5", "0.4". */

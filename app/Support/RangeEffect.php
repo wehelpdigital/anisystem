@@ -34,9 +34,11 @@ class RangeEffect
         'N' => ['N', 'Nitrogen'], 'P' => ['P2O5', 'Phosphorus'], 'K' => ['K2O', 'Potassium'],
         'Ca' => ['Ca', 'Calcium'], 'Mg' => ['Mg', 'Magnesium'], 'S' => ['S', 'Sulfur'], 'Zn' => ['Zn', 'Zinc'], 'B' => ['B', 'Boron'],
         'Fe' => ['Fe', 'Iron'], 'Mn' => ['Mn', 'Manganese'], 'Cu' => ['Cu', 'Copper'], 'Mo' => ['Mo', 'Molybdenum'], 'Si' => ['Si', 'Silicon'],
+        // Cobalt (2026-10-30): beneficial, for the nodules of legumes; NPK Plus already counts it (NpkModel 'Co').
+        'Co' => ['Co', 'Cobalt'],
     ];
 
-    public const MICROS = ['Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si'];
+    public const MICROS = ['Ca', 'Mg', 'S', 'Zn', 'B', 'Fe', 'Mn', 'Cu', 'Mo', 'Si', 'Co'];
 
     /** Threat key => [name, icon]. */
     public const THREATS = [
@@ -45,9 +47,9 @@ class RangeEffect
     ];
 
     /** One usual application, kg of the element a hectare: on the soil, and sprayed on the leaves. Coverage 1 = one of these at work. */
-    public const REF_SOIL = ['N' => 30, 'P2O5' => 25, 'K2O' => 25, 'Ca' => 25, 'Mg' => 10, 'S' => 10, 'Zn' => 2.5, 'B' => 0.6, 'Fe' => 2, 'Mn' => 2, 'Cu' => 1, 'Mo' => 0.1, 'Si' => 40];
+    public const REF_SOIL = ['N' => 30, 'P2O5' => 25, 'K2O' => 25, 'Ca' => 25, 'Mg' => 10, 'S' => 10, 'Zn' => 2.5, 'B' => 0.6, 'Fe' => 2, 'Mn' => 2, 'Cu' => 1, 'Mo' => 0.1, 'Si' => 40, 'Co' => 0.004];
 
-    public const REF_FOLIAR = ['N' => 2, 'P2O5' => 1.2, 'K2O' => 2, 'Ca' => 0.6, 'Mg' => 0.5, 'S' => 0.5, 'Zn' => 0.25, 'B' => 0.1, 'Fe' => 0.25, 'Mn' => 0.2, 'Cu' => 0.1, 'Mo' => 0.02, 'Si' => 1];
+    public const REF_FOLIAR = ['N' => 2, 'P2O5' => 1.2, 'K2O' => 2, 'Ca' => 0.6, 'Mg' => 0.5, 'S' => 0.5, 'Zn' => 0.25, 'B' => 0.1, 'Fe' => 0.25, 'Mn' => 0.2, 'Cu' => 0.1, 'Mo' => 0.02, 'Si' => 1, 'Co' => 0.002];
 
     /** A catalogue entry's kind => the threat it falls under. */
     public const KIND_CAT = ['Insect' => 'insect', 'Mite' => 'mite', 'Snail' => 'snail', 'Rodent' => 'rat', 'Fungus' => 'fungus', 'Water mold' => 'fungus',
@@ -72,7 +74,7 @@ class RangeEffect
      * The way of counting, by date: a saved reading counted an older way is counted again when it is opened (the
      * owner, 2026-10-30: "i opened the saved file and the P is still at 78%"). Raise it whenever the numbers change.
      */
-    public const VERSION = '2026-10-30.9';
+    public const VERSION = '2026-10-30.10';
 
     /**
      * What an application is doing on a day (2026-10-30, the owner: "the absorption stage, the ammonization in soil
@@ -96,6 +98,8 @@ class RangeEffect
         'kieserite' => ['Mg' => 16, 'S' => 22], 'zinc sulfate|zinc sulphate' => ['Zn' => 33, 'S' => 16], 'zinc oxide' => ['Zn' => 78],
         'borax' => ['B' => 11], 'boric acid' => ['B' => 17], 'solubor|disodium octaborate' => ['B' => 20.5], 'ferrous sulfate|iron sulfate' => ['Fe' => 20, 'S' => 11],
         'manganese sulfate' => ['Mn' => 31, 'S' => 18], 'copper sulfate' => ['Cu' => 25, 'S' => 12.8], 'sodium molybdate' => ['Mo' => 39], 'ammonium molybdate' => ['Mo' => 54],
+        'cobalt sulfate mono|cobalt sulphate mono' => ['Co' => 33, 'S' => 18], 'cobalt sulfate|cobalt sulphate|cobaltous sulfate' => ['Co' => 21, 'S' => 11.4],
+        'cobalt chloride' => ['Co' => 24.8], 'cobalt nitrate' => ['Co' => 20, 'N' => 9.6],
         'calcium chloride' => ['Ca' => 27], 'gypsum|calcium sulfate' => ['Ca' => 23, 'S' => 18], 'dolomit' => ['Ca' => 21, 'Mg' => 12],
         'calcium carbonate|agricultural lime|aglime' => ['Ca' => 38],
     ];
@@ -807,8 +811,10 @@ class RangeEffect
                 }
                 // A task the farmer called a foliar spray was sprayed, whatever unit its lines are in (2026-10-30: the
                 // planner's own products put on the plan as foliar keep reading as foliar).
+                // A seed treatment coats the seed: its nutrients are read as a dose at planting (cobalt and molybdenum on
+                // legume seed last the season), not as a leaf spray however few grams it is.
                 $a = self::read($name, (float) $it->quantity, (string) ($it->unitOfMeasure ?: $it->displayUnit() ?: ''), $share, $c, Carbon::parse($act->targetDate)->startOfDay(),
-                    null, $act->activityType === 'foliar_spray' ? 'foliar' : null);
+                    null, $act->activityType === 'foliar_spray' ? 'foliar' : ($act->activityType === 'seed_treatment' ? 'granular' : null));
                 if (! $a) {
                     continue;
                 }
@@ -1293,7 +1299,8 @@ class RangeEffect
         $amount = $a['qty'] > 0 ? rtrim(rtrim(number_format($a['qty'], 3, '.', ''), '0'), '.') . ' ' . trim($a['unit']) : '';
         $carries = [];
         foreach ($a['nut'] as $n => $v) {
-            $carries[] = $n . ($v !== null ? ' ' . (round($v, $v < 1 ? 2 : 1)) . ' kg/ha' : '');
+            // Grams for a trace (cobalt, molybdenum): in kilos it reads as nothing.
+            $carries[] = $n . ($v !== null ? ' ' . RangeEffectLogic::mass((float) $v) . '/ha' : '');
         }
         $formWord = ['basal' => 'worked into the soil', 'topdress' => 'spread on the crop', 'foliar' => 'sprayed', 'drench' => 'poured at the roots', 'slow' => 'slow release',
             'organic' => 'organic', 'bio' => 'biological'][$a['form']] ?? '';
@@ -1316,7 +1323,7 @@ class RangeEffect
                 'from' => $a['date']->copy()->addDays($k['onset'])->toDateString(), 'full' => $a['date']->copy()->addDays($k['typ'])->toDateString(),
                 'until' => $a['date']->copy()->addDays($k['hi'])->toDateString(), 'days' => [$k['lo'], $k['typ'], $k['hi']], 'amp' => $k['amp'],
                 'dose' => $check['kind'] === 'nutrient' ? ($a['doseKnown'] ? ($ratio !== null && $ratio < 0.15 ? 'trace' : ($k['amp'] >= 1.25 ? 'heavy' : ($k['amp'] >= 0.75 ? 'full' : 'light'))) : 'unknown') : null,
-                'kgHa' => isset($k['kgHa']) ? round((float) $k['kgHa'], $k['kgHa'] < 1 ? 2 : 1) : null, 'ref' => $k['ref'] ?? null, 'el' => $check['el'] ?? null,
+                'kgHa' => isset($k['kgHa']) ? round((float) $k['kgHa'], $k['kgHa'] < 0.1 ? 5 : ($k['kgHa'] < 1 ? 2 : 1)) : null, 'ref' => $k['ref'] ?? null, 'el' => $check['el'] ?? null,
                 'note' => $k['note'], 'conf' => $k['conf'], 'by' => $k['by'] ?? null, 'move' => $k['move'] ?? null, 'phases' => $phases,
             ] : null,
         ];

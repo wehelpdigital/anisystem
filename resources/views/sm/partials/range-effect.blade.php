@@ -1155,6 +1155,8 @@
     const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg>';
     const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>';
     const kgSay = (v) => { v = Number(v) || 0; return v >= 10 ? String(Math.round(v)) : v >= 1 ? String(Math.round(v * 10) / 10) : String(Math.round(v * 100) / 100); };
+    // Kilos said with their unit; under a tenth of a kilo in grams (cobalt, molybdenum).
+    const massSay = (v) => { v = Number(v) || 0; return v > 0 && v < 0.1 ? kgSay(v * 1000) + ' g' : kgSay(v) + ' kg'; };
 
     // The app's theme flipped while the sheet is open: the drawings carry colours, so paint them again.
     let wasDark = document.documentElement.classList.contains('dark');
@@ -2150,7 +2152,7 @@
         const rows = miss.map((a) => {
             const acts = a.acts || [];
             return `<div class="rfx-trow"><span>✨ <b>${esc(a.as)}</b> does not act on ${esc(ck.word)}.${acts.length ? ' It acts on:' : ' We could not read what it carries or guards against. Try its active ingredient, or let Anee look it up.'}</span>${acts.length ? `<span class="rfx-acts">${acts.map((x) => `<button type="button" class="rfx-chip" data-goto="${esc(x.key)}">${esc(x.label)}</button>`).join('')}</span>` : ''}</div>`;
-        }).concat(trace.map((a) => `<div class="rfx-trow"><span>✨ <b>${esc(a.as)}</b>${a.amount ? ' at ' + esc(a.amount) : ''} gives very little ${esc(ck.word)}: about ${a.effect.kgHa} kg of ${EL[a.effect.el] || esc(a.effect.el)} a hectare, where one usual ${a.form === 'foliar' ? 'leaf spray gives' : 'dose on the soil gives'} about ${a.effect.ref}. Its days still show, faintly.</span></div>`));
+        }).concat(trace.map((a) => `<div class="rfx-trow"><span>✨ <b>${esc(a.as)}</b>${a.amount ? ' at ' + esc(a.amount) : ''} gives very little ${esc(ck.word)}: about ${massSay(a.effect.kgHa)} of ${EL[a.effect.el] || esc(a.effect.el)} a hectare, where one usual ${a.form === 'foliar' ? 'leaf spray gives' : 'dose on the soil gives'} about ${massSay(a.effect.ref)}. Its days still show, faintly.</span></div>`));
         return `<div class="rfx-card" data-fold="tries" style="--d:0s"><div class="rfx-card-h">Your fertilizers <small>${meta}</small></div><div class="rfx-trows">${rows.join('')}</div></div>`;
     };
     /* Folding sections (the owner, 2026-10-30: "make that part expandable contractable including the other sections below
@@ -2204,10 +2206,10 @@
         const A = R.logic?.amt;
         if (!A) return '';
         if (!A.known) return '<div class="rfx-amtline"><span>⚖️ This crop has no numbers in NPK Plus yet, so the amounts cannot be weighed.</span></div>';
-        if (A.soilGives) return `<div class="rfx-amtline"><span>⚖️ The soil likely gives all the ${esc(A.word)} this crop needs, so none has to come from the bag${A.applied ? `. The season puts on about ${kgSay(A.applied)} kg ${esc(A.say)} a hectare anyway` : ''}.</span></div>`;
+        if (A.soilGives) return `<div class="rfx-amtline"><span>⚖️ The soil likely gives all the ${esc(A.word)} this crop needs, so none has to come from the bag${A.applied ? `. The season puts on about ${kgSay(A.applied)} ${A.unit || 'kg'} ${esc(A.say)} a hectare anyway` : ''}.</span></div>`;
         const pct = A.pct ?? 0;
         const col = pct >= 90 ? '#3f9a26' : pct >= 60 ? '#f59e0b' : '#dc2626';
-        return `<div class="rfx-amtline"><span>⚖️ Over the season your products give about <b>${kgSay(A.given)} of the ${kgSay(A.need)} kg ${esc(A.say)}</b> a hectare this field needs from the bag (<b>${pct}%</b>).</span>
+        return `<div class="rfx-amtline"><span>⚖️ Over the season your products give about <b>${kgSay(A.given)} of the ${kgSay(A.need)} ${A.unit || 'kg'} ${esc(A.say)}</b> a hectare this field needs from the bag (<b>${pct}%</b>).</span>
             <div class="rfx-amtbar" title="The line is the need"><i data-w="${Math.min(100, pct / 1.5).toFixed(1)}" style="background:${col}"></i><em style="left:${(100 / 1.5).toFixed(1)}%"></em></div></div>`;
     };
     /* How much, day by day: what each day gets against what it takes, and the two added up. */
@@ -2222,7 +2224,7 @@
             const x = i * bw;
             if (d.c >= 2 && (A.s[i] === 'short' || A.s[i] === 'low')) bg += `<rect x="${x.toFixed(1)}" y="${top}" width="${(bw + 0.4).toFixed(1)}" height="${base - top}" fill="${A.s[i] === 'short' ? 'rgb(220 38 38 / .13)' : 'rgb(245 158 11 / .12)'}"/>`;
             const g = A.g[i];
-            if (g > 0.0005) bars += `<rect class="bar" style="--k:${k++}" x="${(x + bw * 0.1).toFixed(2)}" y="${yD(g).toFixed(1)}" width="${(bw * 0.8).toFixed(2)}" height="${(base - yD(g)).toFixed(1)}" fill="${PHC[d.p] || PHC.strong}"><title>${say(d.d)}: gives ${kgSay(g)} kg, the crop needs ${kgSay(A.n[i])}</title></rect>`;
+            if (g > 0.0005) bars += `<rect class="bar" style="--k:${k++}" x="${(x + bw * 0.1).toFixed(2)}" y="${yD(g).toFixed(1)}" width="${(bw * 0.8).toFixed(2)}" height="${(base - yD(g)).toFixed(1)}" fill="${PHC[d.p] || PHC.strong}"><title>${say(d.d)}: gives ${kgSay(g)} ${A.unit || 'kg'}, the crop needs ${kgSay(A.n[i])}</title></rect>`;
         });
         const line = (arr, y) => arr.map((v, i) => (i ? 'L' : 'M') + ((i + 0.5) * bw).toFixed(1) + ' ' + y(v).toFixed(1)).join(' ');
         let mo = '';
@@ -2240,10 +2242,10 @@
         const axis = `<line x1="0" x2="${W}" y1="${base}" y2="${base}" stroke="${tok('--rx-line-2')}"/>${mo}`;
         const runs = (A.short || []).map((r, i) => `<div class="rfx-run" data-jump="${r.from}" style="--d:${0.1 + i * 0.05}s"><em>⚖️</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>: the products give under half of what the crop takes these days.</span></div>`).join('')
             + (A.low || []).map((r, i) => `<div class="rfx-run is-thin" data-jump="${r.from}" style="--d:${0.25 + i * 0.05}s"><em>⚖️</em><span><b>${say(r.from)}${r.to !== r.from ? ' to ' + say(r.to) : ''}</b>: a little under what the crop takes.</span></div>`).join('');
-        return `<div class="rfx-card" data-fold="amt" style="--d:.1s"><div class="rfx-card-h">How much, day by day <small>${A.pct !== null && A.pct !== undefined ? `${kgSay(A.given)} of ${kgSay(A.need)} kg ${esc(A.say)} a hectare (${A.pct}%)` : `kg of ${esc(A.say)} a hectare`}</small></div>
+        return `<div class="rfx-card" data-fold="amt" style="--d:.1s"><div class="rfx-card-h">How much, day by day <small>${A.pct !== null && A.pct !== undefined ? `${kgSay(A.given)} of ${kgSay(A.need)} ${A.unit || 'kg'} ${esc(A.say)} a hectare (${A.pct}%)` : `${A.unit === 'g' ? 'grams' : 'kg'} of ${esc(A.say)} a hectare`}</small></div>
             <div class="rfx-amt-g">
-              <div><h4>Each day <small>bars: what your products give · dashes: what the crop takes</small></h4><div class="rfx-chart-w"><svg viewBox="0 -4 ${W} ${H + 8}" style="min-width:28rem" aria-label="What each day gets against what it takes">${bg}${bars}<path class="needl" d="${line(A.n, yD)}"/>${todayL}${axis}<text class="ax" x="2" y="${top - 2}">${kgSay(maxD / 1.12)} kg a day</text></svg></div></div>
-              <div><h4>Adding up <small>given so far against needed so far</small></h4><div class="rfx-chart-w"><svg viewBox="0 -4 ${W} ${H + 8}" style="min-width:28rem" aria-label="Given and needed, added up"><path class="givea" d="${area}"/><path class="givel" d="${line(CG, yC)}"/><path class="needl" d="${line(CN, yC)}"/>${todayL}${nowSay}${axis}<text class="ax" x="2" y="${top - 2}">${kgSay(maxC / 1.1)} kg</text></svg></div></div>
+              <div><h4>Each day <small>bars: what your products give · dashes: what the crop takes</small></h4><div class="rfx-chart-w"><svg viewBox="0 -4 ${W} ${H + 8}" style="min-width:28rem" aria-label="What each day gets against what it takes">${bg}${bars}<path class="needl" d="${line(A.n, yD)}"/>${todayL}${axis}<text class="ax" x="2" y="${top - 2}">${kgSay(maxD / 1.12)} ${A.unit || 'kg'} a day</text></svg></div></div>
+              <div><h4>Adding up <small>given so far against needed so far</small></h4><div class="rfx-chart-w"><svg viewBox="0 -4 ${W} ${H + 8}" style="min-width:28rem" aria-label="Given and needed, added up"><path class="givea" d="${area}"/><path class="givel" d="${line(CG, yC)}"/><path class="needl" d="${line(CN, yC)}"/>${todayL}${nowSay}${axis}<text class="ax" x="2" y="${top - 2}">${kgSay(maxC / 1.1)} ${A.unit || 'kg'}</text></svg></div></div>
             </div>
             ${runs ? `<div class="rfx-runs">${runs}</div>` : ''}
             <div class="rfx-legend"><span><i style="background:${PHC.strong}"></i>Given, coloured by what it is doing</span><span><i style="background:none;border-top:2.5px dashed ${tok('--rx-ink')};height:0;border-radius:0"></i>Needed</span><span><i style="background:rgb(220 38 38 / .25)"></i>Short on a day that matters</span><span><i style="background:rgb(245 158 11 / .25)"></i>A little short</span></div></div>`;
@@ -2679,7 +2681,7 @@
             const segs = phs.length ? phs.map((ph) => `<i class="is-${ph.p}" style="left:${pos(ph.from)}%;width:${Math.max(.6, pos(ph.to) - pos(ph.from) + dayW).toFixed(2)}%"></i>`).join('')
                 : `<i class="is-strong" style="left:${pos(e.from)}%;width:${Math.max(1.5, pos(e.until) - pos(e.from))}%"></i>`;
             const phRow = phs.length ? `<div class="rfx-phs">${phs.map((ph) => `<span><i class="rfx-sw is-${ph.p}"></i>${esc(ph.w)} <small>${ph.n} day${ph.n === 1 ? '' : 's'}</small></span>`).join('')}</div>` : '';
-            const trace = e.dose === 'trace' && e.kgHa !== null ? `<small class="rfx-trace">Very little at this amount: about ${e.kgHa} kg of ${EL[e.el] || esc(e.el)} a hectare, where one usual ${a.form === 'foliar' ? 'leaf spray' : 'dose on the soil'} gives about ${e.ref}.</small>` : '';
+            const trace = e.dose === 'trace' && e.kgHa !== null ? `<small class="rfx-trace">Very little at this amount: about ${massSay(e.kgHa)} of ${EL[e.el] || esc(e.el)} a hectare, where one usual ${a.form === 'foliar' ? 'leaf spray' : 'dose on the soil'} gives about ${massSay(e.ref)}.</small>` : '';
             return `<div class="rfx-app ${a.try ? 'is-try' : ''}" style="--d:${.18 + Math.min(k, 10) * .04}s">
                 <span class="rfx-app-d"><small>${MON[d.getMonth()]}</small><b>${d.getDate()}</b></span>
                 <div class="rfx-app-t"><b>${esc(a.as)}</b>${a.try ? '<span class="rfx-tag is-try">Added by you</span>' : a.done ? '<span class="rfx-tag is-done">Done</span>' : '<span class="rfx-tag">Planned</span>'}${e.conf === 'estimate' || e.conf === 'low' ? '<span class="rfx-tag is-est">Estimated</span>' : ''}
@@ -2816,7 +2818,7 @@
             let cg = 0, cn = 0;
             for (let j = 0; j <= ix; j++) { if (!A.in || A.in[j]) { cg += A.g[j]; cn += A.n[j]; } }
             const g = A.g[ix], nd = A.n[ix];
-            more += `<div class="rfx-day-amt">⚖️ <b>That day</b> your products give about ${kgSay(g)} kg ${esc(A.say)} a hectare; the crop takes about ${kgSay(nd)}${nd > 0.0005 ? ` (${Math.round(g / nd * 100)}%)` : ''}. <b>So far</b>: ${kgSay(cg)} of ${kgSay(cn)} kg.</div>`;
+            more += `<div class="rfx-day-amt">⚖️ <b>That day</b> your products give about ${kgSay(g)} ${A.unit || 'kg'} ${esc(A.say)} a hectare; the crop takes about ${kgSay(nd)}${nd > 0.0005 ? ` (${Math.round(g / nd * 100)}%)` : ''}. <b>So far</b>: ${kgSay(cg)} of ${kgSay(cn)} ${A.unit || 'kg'}.</div>`;
         }
         if (d.h) more += `<div class="rfx-day-amt">${d.h === 'n' ? '🌿 <b>Nitrogen is lush</b> on this day: soft leaves draw pests and disease. Scout more often.' : '🛡️ <b>Potassium or silicon</b> is working on this day, helping the crop hold out.'}</div>`;
         if (more) dayBox.insertAdjacentHTML('beforeend', more);

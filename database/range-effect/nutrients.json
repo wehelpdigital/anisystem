@@ -1952,6 +1952,104 @@
     "note": "Silicon freeing microbes help roots reach soil silicon over several weeks.",
     "src": []
    }
+  },
+  "Co": {
+   "basal": {
+    "flooded": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      45,
+      70,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 3,
+     "peak": 14,
+     "days": [
+      45,
+      70,
+      100
+     ],
+     "fade": "gradual"
+    },
+    "note": "A seed coating or a small soil dose of cobalt carries the nodules through the season.",
+    "src": []
+   },
+   "foliar": {
+    "flooded": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      10,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 0,
+     "peak": 2,
+     "days": [
+      10,
+      14,
+      21
+     ],
+     "fade": "gradual"
+    },
+    "note": "A cobalt spray lasts two to three weeks; grams are enough.",
+    "src": []
+   },
+   "drench": {
+    "flooded": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 1,
+     "peak": 5,
+     "days": [
+      14,
+      21,
+      30
+     ],
+     "fade": "gradual"
+    },
+    "note": "Dissolved cobalt at the roots feeds the nodules for about three weeks.",
+    "src": []
+   },
+   "organic": {
+    "flooded": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "upland": {
+     "onset": 7,
+     "peak": 30,
+     "days": [
+      30,
+      60,
+      90
+     ],
+     "fade": "gradual"
+    },
+    "note": "Manure and compost add traces of cobalt through the season.",
+    "src": []
+   }
   }
  },
  "sources": {
