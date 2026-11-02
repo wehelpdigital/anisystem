@@ -144,7 +144,17 @@
                             {{-- Onto the plan (the owner, 2026-10-30): each one on its day, into the lot's tasks, never twice. --}}
                             <button type="button" class="rfx-add is-plan" data-rfx-apply hidden>@if ($rfxPb)<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" d="M3.5 10h17M8 3v4M16 3v4"/></svg>Put them in the protocol @else<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.5 10h17M8 3v4M16 3v4M8.5 15l2.3 2.3 4.7-4.6"/></svg>Put them on the plan @endif</button>
                         </div>
-                        {{-- Grouped by kind, each kind by date (the owner, 2026-10-30). --}}
+                        {{-- How the list is grouped (the owner, 2026-10-30: "have options to group by date of application, group
+                             by fertilizer type, or group by fertilizer"), shown once there are two to group. --}}
+                        <div class="rfx-gby" role="radiogroup" aria-label="Group them by" data-rfx-gby data-on="type" hidden>
+                            <span class="rfx-gby-l">Group by</span>
+                            <span class="rfx-gby-s"><i class="rfx-gby-pill" aria-hidden="true"></i>
+                                <button type="button" role="radio" data-gby="date" aria-checked="false">📅 Date applied</button>
+                                <button type="button" role="radio" data-gby="type" aria-checked="true">🧺 Type</button>
+                                <button type="button" role="radio" data-gby="name" aria-checked="false">🏷️ Fertilizer</button>
+                            </span>
+                        </div>
+                        {{-- Grouped by kind, each kind by date (the owner, 2026-10-30); or by the day, or by the product. --}}
                         <div class="rfx-tgs" data-rfx-tries></div>
                     </div>
                 </div>
@@ -455,6 +465,23 @@
     .rfx-pick-added.is-flash { animation: rfxGlow .7s cubic-bezier(.22,1,.36,1); }
     @keyframes rfxGlow { 30% { box-shadow: inset 0 0 0 2px #f5c518, 0 0 0 5px rgb(245 197 24 / .3); } }
     .rfx-pick-added > b { font-size: .8rem; color: var(--rx-ink); }
+    /* Added so far folds (the owner, 2026-10-30: "make the added so far contractable expandable with smooth animation to
+       avoid the modal to be too long"): a line with the count and the first names, the list below it. */
+    .rfx-pick-added { gap: 0; }
+    .rfx-pa-h { display: flex; align-items: center; gap: .5rem; width: 100%; min-width: 0; text-align: left; border-radius: .6rem; }
+    .rfx-pa-h b { flex: none; font-size: .82rem; color: var(--rx-ink); }
+    .rfx-pa-h > small { flex: none; padding: 0 .45rem; border-radius: 999px; font-size: .7rem; font-weight: 900; color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px #f5c518; }
+    .rfx-pa-peek { flex: 1; min-width: 0; font-size: .78rem; color: var(--rx-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .25s ease; }
+    .rfx-pa-h .rfx-dt-c { flex: none; width: 1rem; height: 1rem; margin-left: auto; color: var(--rx-muted); transition: transform .3s cubic-bezier(.22,1,.36,1); }
+    .rfx-pick-added.is-open .rfx-pa-h .rfx-dt-c { transform: rotate(180deg); }
+    .rfx-pick-added.is-open .rfx-pa-peek { opacity: 0; }
+    .rfx-pa-b { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .34s cubic-bezier(.22,1,.36,1); }
+    .rfx-pick-added.is-open .rfx-pa-b { grid-template-rows: 1fr; }
+    .rfx-pa-in { display: grid; gap: .45rem; min-height: 0; overflow: hidden; opacity: 0; transition: opacity .22s ease; }
+    .rfx-pick-added.is-open .rfx-pa-in { padding-top: .55rem; opacity: 1; transition: opacity .3s ease .08s; }
+    /* A long list scrolls inside, so the search below stays in reach. */
+    .rfx-pa-sc { display: grid; gap: .45rem; max-height: min(38vh, 17rem); overflow: auto; overscroll-behavior: contain; padding-right: .15rem; }
+    @media (prefers-reduced-motion: reduce) { .rfx-pa-b, .rfx-pa-in, .rfx-pa-h .rfx-dt-c { transition: none; } }
     .rfx-pick-hint { padding: .4rem .2rem; font-size: .84rem; color: var(--rx-muted); }
     .rfx-pick-foot { position: sticky; bottom: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin: 0 -1rem; padding: .7rem 1rem calc(.8rem + env(safe-area-inset-bottom));
         font-size: .82rem; font-weight: 700; color: var(--rx-muted); background: var(--rx-card); box-shadow: 0 -1px 0 var(--rx-line); }
@@ -558,6 +585,20 @@
     .rfx-tgs:empty { display: none; }
     .rfx-tg { display: grid; gap: .3rem; }
     .rfx-tg-h { font-size: .72rem; font-weight: 900; letter-spacing: .04em; color: var(--rx-muted); }
+    .rfx-tg-h em { margin-left: .3rem; font-style: normal; font-weight: 700; letter-spacing: 0; color: var(--rx-faint); }
+    /* Group by: date applied, type, or the fertilizer itself; a pill slides under the one picked. */
+    .rfx-gby { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .55rem; }
+    .rfx-gby[hidden] { display: none; }
+    .rfx-gby-l { font-size: .72rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; color: var(--rx-faint); }
+    .rfx-gby-s { position: relative; display: inline-grid; grid-template-columns: repeat(3, auto); padding: .2rem; border-radius: 999px; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-gby-s button { position: relative; z-index: 1; padding: .35rem .75rem; border-radius: 999px; font-size: .8rem; font-weight: 800; white-space: nowrap; color: var(--rx-muted); transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-gby-s button:hover { color: var(--rx-ink); }
+    .rfx-gby-s button[aria-checked=true] { color: var(--rx-ink); }
+    .rfx-gby-pill { position: absolute; z-index: 0; top: .2rem; bottom: .2rem; left: 0; width: 0; border-radius: 999px; background: var(--rx-card);
+        box-shadow: 0 0 0 1.5px var(--rx-hover), 0 4px 10px -6px rgb(0 0 0 / .35); transition: transform .28s cubic-bezier(.22,1,.36,1), width .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-tgs.is-regroup .rfx-tg { animation: rfxPop .3s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 30ms); }
+    @media (max-width: 479.98px) { .rfx-gby-s button { padding: .35rem .55rem; font-size: .76rem; } }
+    @media (prefers-reduced-motion: reduce) { .rfx-gby-pill { transition: none; } .rfx-tgs.is-regroup .rfx-tg { animation: none; } }
     .rfx-tg-h small { margin-left: .2rem; padding: 0 .4rem; border-radius: 999px; font-size: .68rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
     .rfx-chip.is-try [data-dupe] { margin-right: -.1rem; }
     @keyframes rfxSlide { from { opacity: 0; transform: translateY(-8px); } }
@@ -1546,16 +1587,64 @@
     const groupOfTry = (t) => TAB_OF[kindOf(t)] || 'other';
     const PEN_I = '<svg class="rfx-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg>';
     const COPY_I = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.4"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 8.5V6.6a2.1 2.1 0 00-2.1-2.1H6.6a2.1 2.1 0 00-2.1 2.1v6.8a2.1 2.1 0 002.1 2.1h1.9"/></svg>';
-    const tryChip = (t, i) => `<span class="rfx-chip is-try" data-try="${i}" role="button" tabindex="0" title="Tap to change it">${t.method === 'foliar' ? '💧' : '🟤'} ${esc(t.name)} <small>${esc(say(t.date))}${t.method ? ' · ' + t.method : ''}${t.qty ? ' · ' + t.qty + ' ' + esc(t.unit) : ''}</small>${PEN_I}<button type="button" data-dupe="${i}" aria-label="Make a copy of ${esc(t.name)}" title="Make a copy">${COPY_I}</button><button type="button" data-untry="${i}" aria-label="Remove ${esc(t.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`;
-    // Grouped by kind (the owner, 2026-10-30: "group it by type while arranging per date"), each kind by its dates.
+    // A chip leaves out what its group already says: the day under a day, the name under a fertilizer.
+    const tryChip = (t, i, drop = '') => `<span class="rfx-chip is-try" data-try="${i}" role="button" tabindex="0" title="Tap to change it">${t.method === 'foliar' ? '💧' : '🟤'} ${drop === 'name' ? `<b>${esc(say(t.date))}</b>` : esc(t.name)} <small>${esc([drop === 'date' || drop === 'name' ? '' : say(t.date), t.method || '', t.qty ? t.qty + ' ' + t.unit : ''].filter(Boolean).join(' · '))}</small>${PEN_I}<button type="button" data-dupe="${i}" aria-label="Make a copy of ${esc(t.name)}" title="Make a copy">${COPY_I}</button><button type="button" data-untry="${i}" aria-label="Remove ${esc(t.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`;
+    // Grouped by kind (the owner, 2026-10-30: "group it by type while arranging per date"), each kind by its dates; or by
+    // the day it goes on, or by the fertilizer itself ("group by date of application ... or group by fertilizer").
+    let GBY = 'type';
+    try { const g = localStorage.getItem('rfx-gby'); if (['date', 'type', 'name'].includes(g)) GBY = g; } catch (_) {}
+    const byDate = (a, b) => String(S.tries[a].date || '').localeCompare(String(S.tries[b].date || '')) || String(S.tries[a].name).localeCompare(String(S.tries[b].name));
+    const tryKey = (t) => t.productId ? 'p' + t.productId : 'n' + String(t.ai || t.name || '').trim().toLowerCase();
+    const tgHtml = (head, list, drop, k) => `<div class="rfx-tg" style="--k:${k}"><span class="rfx-tg-h">${head}<small>${list.length}</small></span><div class="rfx-chips is-wrap">${list.map((i) => tryChip(S.tries[i], i, drop)).join('')}</div></div>`;
     const triesGroupsHtml = () => {
+        const idx = S.tries.map((t, i) => i).filter((i) => !S.tries[i].water);
+        if (GBY === 'date') {
+            // A day each, in order, with the count the board uses that day when the reading has it.
+            const by = {};
+            idx.forEach((i) => { (by[S.tries[i].date || ''] ||= []).push(i); });
+            return Object.keys(by).sort().map((d, k) => {
+                const dl = d && S.res ? (S.res.days.find((x) => x.d === d) || {}).dl : '';
+                const head = d ? `📅 ${esc(DOW[D(d).getDay()] + ', ' + sayY(d))}${dl ? `<em>${esc(dl)}</em>` : ''}` : '📅 No day yet';
+                return tgHtml(head, by[d].sort((a, b) => String(groupOfTry(S.tries[a])).localeCompare(String(groupOfTry(S.tries[b]))) || String(S.tries[a].name).localeCompare(String(S.tries[b].name))), 'date', k);
+            }).join('');
+        }
+        if (GBY === 'name') {
+            // A fertilizer each, by name, its days in order under it.
+            const by = {};
+            idx.forEach((i) => { (by[tryKey(S.tries[i])] ||= []).push(i); });
+            return Object.values(by).sort((a, b) => String(S.tries[a[0]].name).localeCompare(String(S.tries[b[0]].name))).map((list, k) => {
+                const t = S.tries[list[0]];
+                const tab = PICK_TABS.find(([g]) => g === groupOfTry(t)) || PICK_TABS[0];
+                return tgHtml(`${tab[1]} ${esc(t.name)}`, list.sort(byDate), 'name', k);
+            }).join('');
+        }
         const by = {};
-        S.tries.forEach((t, i) => { if (!t.water) (by[groupOfTry(t)] ||= []).push(i); });
-        return PICK_TABS.filter(([g]) => by[g]).map(([g, ic, label]) => {
-            const list = by[g].sort((a, b) => String(S.tries[a].date || '').localeCompare(String(S.tries[b].date || '')) || String(S.tries[a].name).localeCompare(String(S.tries[b].name)));
-            return `<div class="rfx-tg"><span class="rfx-tg-h">${ic} ${esc(label)}<small>${list.length}</small></span><div class="rfx-chips is-wrap">${list.map((i) => tryChip(S.tries[i], i)).join('')}</div></div>`;
-        }).join('');
+        idx.forEach((i) => { (by[groupOfTry(S.tries[i])] ||= []).push(i); });
+        return PICK_TABS.filter(([g]) => by[g]).map(([g, ic, label], k) => tgHtml(`${ic} ${esc(label)}`, by[g].sort(byDate), '', k)).join('');
     };
+    const gbyBox = $('[data-rfx-gby]');
+    // The pill slides under the one picked; measured, since the three words differ in width.
+    const paintGby = () => {
+        gbyBox.dataset.on = GBY;
+        $$('[data-gby]', gbyBox).forEach((b) => b.setAttribute('aria-checked', String(b.dataset.gby === GBY)));
+        const b = $(`[data-gby="${GBY}"]`, gbyBox);
+        const pill = $('.rfx-gby-pill', gbyBox);
+        if (b && b.offsetWidth) { pill.style.width = b.offsetWidth + 'px'; pill.style.transform = `translateX(${b.offsetLeft}px)`; }
+    };
+    // Measured again when the sheet opens or its width changes (the words change width with the font and the screen).
+    if (typeof ResizeObserver === 'function') new ResizeObserver(() => { if (!gbyBox.hidden) paintGby(); }).observe(gbyBox);
+    gbyBox.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-gby]');
+        if (!b || b.dataset.gby === GBY) return;
+        GBY = b.dataset.gby;
+        try { localStorage.setItem('rfx-gby', GBY); } catch (_) {}
+        paintGby();
+        const box = $('[data-rfx-tries]');
+        box.classList.remove('is-regroup');
+        paintTries();
+        void box.offsetWidth;
+        box.classList.add('is-regroup');
+    });
     // A watering planned here, as its chip says it.
     const watName = (t) => 'Watering' + (Number(t.qty) > 0 ? `, ${t.qty} ${t.unit === 'mm' ? 'mm' : 'cm'}` : '') + (t.method && t.method !== 'flood' && !isPaddy() ? ` by ${t.method}` : '');
     const watChip = (t, i) => `<span class="rfx-chip is-try is-wat" data-try="${i}" role="button" tabindex="0" title="Tap to change it">💧 ${esc(watName(t))} <small>${esc(say(t.date))}</small>${PEN_I}<button type="button" data-dupe="${i}" aria-label="Make a copy of this watering" title="Make a copy">${COPY_I}</button><button type="button" data-untry="${i}" aria-label="Remove this watering"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`;
@@ -1563,17 +1652,36 @@
     const paintWrow = () => { $('[data-rfx-wrow]').hidden = !(S.checks.some((k) => k.startsWith('w:')) || S.tries.some((t) => t.water)); };
     const paintTries = () => {
         $('[data-rfx-tries]').innerHTML = triesGroupsHtml();
+        // Grouping is offered once there are two fertilizers to group.
+        gbyBox.hidden = S.tries.filter((t) => !t.water).length < 2;
+        if (!gbyBox.hidden) requestAnimationFrame(paintGby);
         $('[data-rfx-wtries]').innerHTML = S.tries.map((t, i) => [t, i]).filter(([t]) => t.water).sort((a, b) => String(a[0].date).localeCompare(String(b[0].date))).map(([t, i]) => watChip(t, i)).join('');
         $('[data-rfx-apply]').hidden = !S.tries.length || !(U.apply || (PB && window.pbCoverage));
         paintWrow();
         paintAdded();
     };
+    // Added so far, folded to a line by default so the picker stays short; opened or closed, it is remembered here.
+    let addedOpen = false;
+    try { addedOpen = localStorage.getItem('rfx-added-open') === '1'; } catch (_) {}
     const paintAdded = () => {
         const box = $('[data-rfx-pick-added]');
-        const n = S.tries.filter((t) => !t.water).length;
-        box.innerHTML = n ? `<b>Added so far · ${n}</b>${triesGroupsHtml()}` : '';
+        const list = S.tries.filter((t) => !t.water);
+        const n = list.length;
+        const names = [...new Set(list.map((t) => t.name))];
+        const peek = names.slice(0, 3).join(', ') + (names.length > 3 ? ` and ${names.length - 3} more` : '');
+        box.classList.toggle('is-open', addedOpen);
+        box.innerHTML = n ? `<button type="button" class="rfx-pa-h" data-rfx-pa-t aria-expanded="${addedOpen}"><b>Added so far</b><small>${n}</small><span class="rfx-pa-peek">${esc(peek)}</span><svg class="rfx-dt-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg></button>
+            <div class="rfx-pa-b"><div class="rfx-pa-in"><div class="rfx-pa-sc">${triesGroupsHtml()}</div></div></div>` : '';
         $('[data-rfx-pick-n]').textContent = n ? `${n} added` : 'Nothing added yet';
     };
+    $('[data-rfx-pick-added]').addEventListener('click', (e) => {
+        const t = e.target.closest('[data-rfx-pa-t]');
+        if (!t) return;
+        addedOpen = !addedOpen;
+        try { localStorage.setItem('rfx-added-open', addedOpen ? '1' : '0'); } catch (_) {}
+        $('[data-rfx-pick-added]').classList.toggle('is-open', addedOpen);
+        t.setAttribute('aria-expanded', String(addedOpen));
+    });
     // A copy, right after the one it copies, opened to change its day (the owner, 2026-10-30: "have a duplicate button").
     const dupeTry = (i) => {
         const t = S.tries[i];
