@@ -19,6 +19,13 @@
          refused by hand, and touch-action drops the browser's double-tap
          zoom while leaving pan and element-level pinch alone. --}}
     <style>html { touch-action: manipulation; }</style>
+    {{-- The scrollbar's room is kept on a desk whether or not the page shows
+         one (the owner, 2026-11-02: "the screen moves a little bit to the left
+         (or right)" when the loading veil came up). Every veil and window
+         locks the page with overflow:hidden, and a page short enough to need
+         no bar sat wider than a long one, so the page jumped sideways on each.
+         Phones draw their bars over the page and are not touched. --}}
+    <style>html { scrollbar-gutter: stable; }</style>
     <script>
         document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
         document.addEventListener('gesturechange', function (e) { e.preventDefault(); });

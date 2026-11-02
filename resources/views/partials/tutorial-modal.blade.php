@@ -79,9 +79,9 @@
        scroll went through to the page behind, which slid along and put
        its scrollbar up the edge of the screen -- on a phone the one thing
        that says "this is not a modal". The page is locked while the card
-       is up; on a desk the width its scrollbar took is kept as a gutter
-       (measured the moment the card opens), so nothing shifts sideways
-       when the bar goes. */
+       is up. The layout keeps the scrollbar's room already (scrollbar-gutter);
+       on a browser without that, the padding below makes up the bar's width,
+       measured the moment the card opens. Nothing shifts sideways either way. */
     html.tutv-lock, html.tutv-lock body { overflow: hidden !important; }
     html.tutv-lock { padding-right: var(--tutv-gutter, 0px); }
     .tutv-wrap[hidden] { display: none; }
@@ -491,10 +491,12 @@
         wrap.hidden = false;
         wrap.setAttribute('aria-hidden', 'false');
         document.documentElement.classList.add('modal-open');
-        // The page stops scrolling under the card. The scrollbar's width is
-        // read before the lock takes it away, and kept as a gutter.
+        // The page stops scrolling under the card. A stable gutter keeps the
+        // scrollbar's room by itself; only a browser without one has the
+        // bar's width read before the lock takes it away, and kept as padding.
         if (!document.documentElement.classList.contains('tutv-lock')) {
-            document.documentElement.style.setProperty('--tutv-gutter', Math.max(0, window.innerWidth - document.documentElement.clientWidth) + 'px');
+            const kept = /stable/.test(getComputedStyle(document.documentElement).scrollbarGutter || '');
+            document.documentElement.style.setProperty('--tutv-gutter', kept ? '0px' : Math.max(0, window.innerWidth - document.documentElement.clientWidth) + 'px');
             document.documentElement.classList.add('tutv-lock');
         }
         window.registerOverlay?.('tutorial', () => close());
