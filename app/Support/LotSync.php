@@ -274,7 +274,7 @@ final class LotSync
      * Farm lots put into a season as new season lots: name, size and place from the farm lot, linked to it. The
      * crop and its day count are the season's own (its crop type, the counter it already uses). Returns the new lots.
      */
-    public static function addToSeason(AsCroppingSchedule $s, array $farmIds, ?string $crop = null, ?string $dayType = null): array
+    public static function addToSeason(AsCroppingSchedule $s, array $farmIds, ?string $crop = null, ?string $dayType = null, ?string $variety = null): array
     {
         $farm = self::farmLots(self::ownerOf($s));
         $by = [];
@@ -294,7 +294,7 @@ final class LotSync
                 'croppingScheduleId' => $s->id, 'lotName' => (string) ($f['name'] ?? 'Lot'), 'lotSize' => $size,
                 'lotSizeUnit' => $unit === 'sqm' ? 'sqm' : ($unit === 'acre' ? 'acre' : 'hectare'),
                 'locBarangay' => $f['barangay'] ?? null, 'locTown' => $f['town'] ?? null, 'locProvince' => $f['province'] ?? null,
-                'crop' => $crop, 'dayType' => $dayType ?: 'DAT', 'deleteStatus' => 1,
+                'crop' => $crop, 'variety' => $variety ?: null, 'dayType' => $dayType ?: 'DAT', 'deleteStatus' => 1,
             ];
             if (self::ready()) {
                 $row['farmLotId'] = (int) $f['id'];
@@ -330,6 +330,81 @@ final class LotSync
             report($e);
 
             return null;
+        }
+    }
+
+    /** What a season lot says of the ground, before an edit, for pushToFarm(). */
+    public static function snapshot(AsScheduleLot $lot): array
+    {
+        return ['lotName' => trim((string) $lot->lotName), 'lotSize' => (float) $lot->lotSize, 'lotSizeUnit' => (string) $lot->lotSizeUnit,
+            'locProvince' => trim((string) $lot->locProvince), 'locTown' => trim((string) $lot->locTown), 'locBarangay' => trim((string) $lot->locBarangay)];
+    }
+
+    /**
+     * A season lot edited in the season's Lots page carries the change into its farm lot (2026-11-03, the owner:
+     * "updating these lots in the cropping schedule should also update it in the global level and auto save it in the
+     * global level"): the name, the size and the place, and only what this edit changed, so a size kept in Global Lots
+     * is not overwritten by a save that only touched the notes. Never the crop or the variety: those are the season's
+     * own (the owner, the same day). The place moves as one (a new town with the old barangay would be no place), and
+     * a place cleared here is not cleared there. The six month check is not restarted (updated_at stays, as with the
+     * pin and the boundary). Returns [farm lot or null, what was carried, a note when the name could not follow].
+     */
+    public static function pushToFarm(AsCroppingSchedule $s, AsScheduleLot $lot, array $before): array
+    {
+        $owner = self::ownerOf($s);
+        if ($owner <= 0 || ! FarmLots::ready()) {
+            return [null, [], null];
+        }
+        try {
+            // Found by its link, else by the name it had before this edit.
+            $probe = clone $lot;
+            $probe->lotName = $before['lotName'];
+            $f = self::farmLotOf($probe, self::farmLots($owner));
+            if (! $f) {
+                return [null, [], null];
+            }
+            $now = self::snapshot($lot);
+            $row = [];
+            $note = null;
+            if ($now['lotName'] !== '' && $now['lotName'] !== $before['lotName'] && $now['lotName'] !== trim((string) ($f['name'] ?? ''))) {
+                $name = mb_substr($now['lotName'], 0, 120);
+                $taken = DB::table('as_field_profiles')->where('userId', $owner)->where('deleteStatus', 1)->where('id', '!=', (int) $f['id'])
+                    ->pluck('name')->contains(fn ($n) => mb_strtolower(trim((string) $n)) === mb_strtolower($name));
+                if ($taken) {
+                    // Two farm lots of one name would be one lot to the farmer; the link holds whatever the names.
+                    $note = 'Global Lots already has a lot named ' . $name . ', so it stays ' . ($f['name'] ?? 'as it was') . ' there.';
+                } else {
+                    $row['name'] = $name;
+                }
+            }
+            if ($now['lotSize'] !== $before['lotSize'] || $now['lotSizeUnit'] !== $before['lotSizeUnit']) {
+                [$ha, $unit] = self::size($lot);
+                if ($ha) {
+                    $row['areaHa'] = round(min($ha, 100000), 6);
+                    if (FarmLots::unitReady()) {
+                        $row['areaUnit'] = $unit;
+                    }
+                }
+            }
+            $place = ['province' => [$now['locProvince'], 120], 'town' => [$now['locTown'], 120], 'barangay' => [$now['locBarangay'], 160]];
+            $moved = $now['locProvince'] !== $before['locProvince'] || $now['locTown'] !== $before['locTown'] || $now['locBarangay'] !== $before['locBarangay'];
+            if ($moved && ($now['locProvince'] !== '' || $now['locTown'] !== '' || $now['locBarangay'] !== '')) {
+                foreach ($place as $k => [$v, $max]) {
+                    $row[$k] = $v !== '' ? mb_substr($v, 0, $max) : null;
+                }
+            }
+            if ($row) {
+                DB::table('as_field_profiles')->where('id', (int) $f['id'])->where('userId', $owner)->update($row);
+            }
+            if (self::ready() && (int) ($lot->farmLotId ?? 0) !== (int) $f['id']) {
+                DB::table('as_schedule_lots')->where('id', $lot->id)->update(['farmLotId' => (int) $f['id']]);
+            }
+
+            return [$f, array_keys($row), $note];
+        } catch (\Throwable $e) {
+            report($e);
+
+            return [null, [], null];
         }
     }
 

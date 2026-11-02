@@ -129,7 +129,22 @@
     </div>
     <div class="sheet-body">
         <div class="flp-list" id="farmLotList" aria-live="polite"></div>
-        <p class="form-hint" id="farmLotHint">They come in with their place, size and field answers. A new lot gets its share of the tasks that name no lot.</p>
+        {{-- What they grow this season (2026-11-03, the owner: the crop and the variety are the season's, never
+             Global Lots'). Filled with what this season's lots grow; each lot can be changed later with Edit. --}}
+        <div class="flp-grow" id="farmLotGrow" hidden>
+            <p class="form-label">This season they grow</p>
+            <button type="button" class="crop-tag" id="farmCropBtn">
+                <span class="crop-tag-e" id="farmCropIcon">🌱</span>
+                <span class="crop-tag-t is-none" id="farmCropNow">Choose a crop</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <button type="button" class="crop-tag" id="farmVarBtn">
+                <span class="crop-tag-e" id="farmVarIcon">🧬</span>
+                <span class="crop-tag-t is-none" id="farmVarNow">Variety (optional)</span>
+                <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+            </button>
+        </div>
+        <p class="form-hint" id="farmLotHint">They come in with their place, size and field answers. The crop and variety are for this season only. A new lot gets its share of the tasks that name no lot.</p>
     </div>
     <div class="sheet-footer">
         <a class="btn btn-ghost" href="{{ route('farmlots.index') }}">Open Global Lots</a>
@@ -205,13 +220,13 @@
             <p class="form-hint">This sets the growth stages for this lot.</p>
         </div>
 
-        {{-- Said here rather than discovered later.
-             The edit form simply does not offer the crop or the day counter,
-             which answers the question only for somebody who has already gone
-             looking. This is the moment it is worth knowing. --}}
+        {{-- Where each answer is kept (2026-11-03, the owner): the crop and
+             the variety are this season's; the name, size and place are the
+             ground's, kept in Global Lots too. The words follow the lot
+             (lotFixedSummary). --}}
         <p class="lot-once" id="lotOnceNote">
-            <span class="lot-once-e">🔒</span>
-            <span>Choose the crop and day counter with care. You cannot change them after you save.</span>
+            <span class="lot-once-e">🌾</span>
+            <span id="lotOnceSay">The crop and variety are for this season only. Global Lots keeps the ground: its name, size, place and field answers.</span>
         </p>
 
         {{-- HOW LONG, or HOW OLD — never both.
@@ -556,6 +571,18 @@
     .flp-empty { padding: 1rem; text-align: center; font-size: .86rem; color: var(--color-gray-500); }
     html.dark .flp-row { background: #151b12; border-color: #2b3a1c; } html.dark .flp-row.is-on { background: rgb(107 159 61 / .14); border-color: #6b9f3d; }
     html.dark .flp-row b { color: #e8efe1; }
+    .flp-grow { display: grid; gap: .45rem; margin-top: .9rem; padding-top: .8rem; border-top: 1px solid var(--color-gray-100); }
+    .flp-grow .form-label { margin-bottom: 0; }
+    html.dark .flp-grow { border-color: #2b3a1c; }
+    /* A lot with no crop (or no variety) says so on its card, and the chip opens its Edit. */
+    .lot-set { display: inline-flex; align-items: center; gap: .25rem; padding: .15rem .55rem; border-radius: 999px; font-size: .72rem; font-weight: 700;
+        color: #3d6823; background: transparent; border: 1.5px dashed #b9d39c; cursor: pointer; transition: background .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .lot-set:hover { background: #f3f8ec; border-color: #4a7c2a; }
+    .lot-set.is-crop { color: #5c4500; border-color: #f0d27a; }
+    .lot-set.is-crop:hover { background: #fdf8ec; border-color: #d9a400; }
+    html.dark .lot-set { color: #cfe6b8; border-color: rgb(107 159 61 / .45); }
+    html.dark .lot-set.is-crop { color: #f0d98a; border-color: #6b5a24; }
+    @media (prefers-reduced-motion: reduce) { .lot-set { transition: none; } }
     @media (prefers-reduced-motion: reduce) { .lot-farm, .flp-row { transition: none; animation: none; } }
 </style>
 <style>
@@ -583,8 +610,8 @@
     .crop-tag-c { width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); }
     html.dark .crop-tag { background: #1c2416; border-color: #2b3a1c; }
 
-    /* SETTLED NOW — a quiet line, not a warning. Nothing has gone wrong; a
-       fact about the form is simply being stated before it matters. */
+    /* WHERE IT IS KEPT — a quiet line, not a warning. Nothing has gone
+       wrong; a fact about the form is simply being stated before it matters. */
     .lot-once { display: flex; align-items: flex-start; gap: .45rem;
         margin-top: -.35rem; padding: .5rem .6rem; border-radius: .6rem;
         font-size: .78rem; line-height: 1.45;
@@ -642,10 +669,10 @@
     html.dark .crop-row-t b { color: #e8efe1; }
     @media (prefers-reduced-motion: reduce) { .crop-tag, .crop-row { transition: none; } }
     /* The variety tag (partials/variety-pick): a bump when it changes, and its record's facts under it. */
-    #lotVarBtn.is-bump { animation: lotVarBump .4s cubic-bezier(.22,1,.36,1); }
+    #lotVarBtn.is-bump, #farmVarBtn.is-bump, #farmCropBtn.is-bump { animation: lotVarBump .4s cubic-bezier(.22,1,.36,1); }
     @keyframes lotVarBump { 40% { transform: scale(1.02); } }
     #lotVarFact[hidden] { display: none; }
-    @media (prefers-reduced-motion: reduce) { #lotVarBtn.is-bump { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { #lotVarBtn.is-bump, #farmVarBtn.is-bump, #farmCropBtn.is-bump { animation: none; } }
 
     /* HOW OLD — two numbers that mean one thing, so they share a line. */
     .tree-age { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
@@ -706,6 +733,10 @@
         'locProvince' => $l->locProvince,
         'fullAddress' => $l->full_address,
         'dayType' => $l->dayType ?: 'DAT',
+        // The edit sheet shows them now (the crop can be set on a lot that exists), so it sends what is stored.
+        'daysToMaturity' => $l->daysToMaturity,
+        'treeAgeMonths' => $l->treeAgeMonths(),
+        'treePlantedAt' => $l->treePlantedAt?->format('Y-m-d'),
         'notes' => $l->notes,
         // Where it is on the ground, as against what it is called. The card
         // uses these to decide whether to offer a way there.
@@ -724,6 +755,8 @@
 const __init = () => {
     const SCHEDULE_ID = {{ $schedule->id }};
     const DAY_TYPE = @json($schedule->dayType);
+    // The season's own crop word, for "Add from your lots" when no lot has a crop yet.
+    const SEASON_CROP = @json(\App\Support\CropStages::normalize($schedule->cropType));
     let LOTS = @json($jsLots);
     /* The Activities board in this same shell keeps its own lists of the
        ground and the crew (the activity sheet's chips, the day counts, the
@@ -998,11 +1031,20 @@ const __init = () => {
         const cropBadge = lot.cropLabel
             ? `<span class="badge badge-green lot-crop-badge"><span>${lot.cropIcon || '🌱'}</span>${escapeHtml(lot.cropLabel)}</span>`
             : '';
-        const variety = lot.variety ? `
+        let variety = lot.variety ? `
             <span class="badge badge-green">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 21c0-7 4-13 14-16-1 10-6 15-13 15m-1 1c2-5 5-8 9-10"/></svg>
                 ${escapeHtml(lot.variety)}
             </span>` : '';
+        /* No crop, or no variety: said on the card, and the chip opens Edit
+           (2026-11-03, the owner: "i don't see the option to add or set a
+           crop and variety on existing lots"). */
+        let setCrop = '';
+        if (MAY_EDIT_LOTS && !lot.cropLabel) {
+            setCrop = `<button type="button" class="lot-set is-crop" data-edit-lot="${lot.id}" data-edit-focus="crop">🌱 ${lot.variety ? 'Set the crop' : 'Set the crop and variety'}</button>`;
+        } else if (MAY_EDIT_LOTS && !lot.variety) {
+            variety = `<button type="button" class="lot-set" data-edit-lot="${lot.id}" data-edit-focus="variety">＋ Variety</button>`;
+        }
         // Three answers, the same three the sheet offers. Saying "DAS → DAT"
         // for anything that was not DAP is how a lot the grower had just
         // changed to direct seeding went on claiming it transplants.
@@ -1022,7 +1064,7 @@ const __init = () => {
                 </div>
 
                 <div class="min-w-0 grow space-y-1.5">
-                    <div class="flex flex-wrap gap-1.5">${lot.harvestedSays ? `<span class="badge badge-green">✓ Harvested ${escapeHtml(lot.harvestedSays)}</span>` : ''}${cropBadge}${variety}${dayTypeBadge}</div>
+                    <div class="flex flex-wrap gap-1.5">${lot.harvestedSays ? `<span class="badge badge-green">✓ Harvested ${escapeHtml(lot.harvestedSays)}</span>` : ''}${cropBadge}${setCrop}${variety}${dayTypeBadge}</div>
                     ${lot.fullAddress ? `<p class="text-xs text-gray-500 flex items-start gap-1.5"><svg class="w-3.5 h-3.5 mt-px shrink-0 text-gray-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span>${escapeHtml(lot.fullAddress)}</span></p>` : ''}
                     ${lot.notes ? `<p class="text-xs text-gray-500 line-clamp-2">${escapeHtml(lot.notes)}</p>` : ''}
                 </div>
@@ -1169,35 +1211,21 @@ const __init = () => {
     /* ---------------- Sheet open / fill ---------------- */
 
     /**
-     * The three that are settled when a lot is made.
+     * Where each answer is kept, said under the crop.
      *
-     * Hidden on an existing lot rather than offered: they are what the whole
-     * plan was derived from, so changing one would not move the plan, it
-     * would change what the plan means. Still FILLED — the crop decides which
-     * timing question exists, and the save reads these fields.
+     * The crop, the day counter and the timing question are offered on every
+     * lot now, a lot that exists too (2026-11-03, the owner). Changing them on
+     * a lot that has tasks is asked about at Save (the server says how many).
+     * Which timing question shows is the crop's, settled by sayCropTiming.
      */
     function lotFixedSummary(lot) {
-        const editing = !!lot;
-        // The crop and the counter: asked while the lot is being made, gone
-        // once it exists.
-        [
-            document.getElementById('lotCropBtn')?.closest('div'),
-            document.getElementById('lotDayTypeWrap'),
-            document.getElementById('lotOnceNote'),
-        ].forEach((w) => w && w.classList.toggle('hidden', editing));
-
-        /* The two timing questions are not ours to show.
-         *
-         * Which of them applies follows from the crop, and sayCropTiming has
-         * just settled it. Toggling them here on `editing` un-hid BOTH on a
-         * fresh lot — days-to-maturity and how-old-are-the-trees on screen
-         * together, which is exactly the pair that must never both be asked.
-         * So: taken away on an existing lot, and otherwise left as the crop
-         * left them. */
-        if (editing) {
-            document.getElementById('lotMaturityWrap').classList.add('hidden');
-            document.getElementById('lotTreeWrap').classList.add('hidden');
-        }
+        const say = document.getElementById('lotOnceSay');
+        if (!say) return;
+        say.textContent = !lot
+            ? 'The crop and variety are for this season only. Global Lots keeps the ground: its name, size, place and field answers.'
+            : (lot.farmLot
+                ? 'A change to the name, size or place is saved in Global Lots too. The crop and variety stay with this season.'
+                : 'The crop and variety are for this season only.');
     }
 
     async function openLotSheet(lot = null) {
@@ -1218,6 +1246,9 @@ const __init = () => {
         setLotCrop(lot ? (lot.crop || '') : '', lot ? (lot.dayType || 'DAT') : '');
         document.getElementById('lotMaturity').value = lot && lot.daysToMaturity ? lot.daysToMaturity : '';
         treeAge(lot && lot.treeAgeMonths ? Number(lot.treeAgeMonths) : 0);
+        // The stored day the trees went in, not one worked back from whole months, so a save that did not touch the
+        // age does not move it.
+        if (lot && lot.treePlantedAt) document.getElementById('lotTreePlanted').value = lot.treePlantedAt;
         // After the filling, so what it says is what the fields now hold.
         lotFixedSummary(lot);
         document.getElementById('lotBarangay').value = lot ? (lot.locBarangay || '') : '';
@@ -1256,9 +1287,59 @@ const __init = () => {
         farmAdd.disabled = farmPick.size === 0;
         farmAdd.textContent = farmPick.size > 1 ? 'Add ' + farmPick.size + ' lots to this season' : 'Add to this season';
     };
+    /* What the farm's lots grow this season, asked in the sheet: filled
+       with what this season's lots grow most, the season's own crop word
+       when none has one, and the variety most of them have for that crop. */
+    const FARM_GROW = { crop: '', variety: '', rec: null };
+    const mostOf = (list) => {
+        const n = {};
+        list.filter(Boolean).forEach((v) => { n[v] = (n[v] || 0) + 1; });
+        return Object.keys(n).sort((a, b) => n[b] - n[a])[0] || '';
+    };
+    function paintFarmGrow(bump) {
+        const row = cropRow(FARM_GROW.crop);
+        const now = document.getElementById('farmCropNow');
+        now.textContent = row ? row.querySelector('b').textContent.trim() : 'Choose a crop';
+        now.classList.toggle('is-none', !row);
+        document.getElementById('farmCropIcon').textContent = row ? row.querySelector('.crop-row-e').textContent.trim() : '🌱';
+        const v = document.getElementById('farmVarNow');
+        v.textContent = FARM_GROW.variety || 'Variety (optional)';
+        v.classList.toggle('is-none', !FARM_GROW.variety);
+        document.getElementById('farmVarIcon').textContent = FARM_GROW.rec ? '📗' : '🧬';
+        if (bump) { bump.classList.remove('is-bump'); void bump.offsetWidth; bump.classList.add('is-bump'); }
+    }
+    function setFarmCrop(key) {
+        FARM_GROW.crop = matchCrop(key);
+        // A variety of another crop does not belong to this one.
+        if (FARM_GROW.rec && FARM_GROW.rec.crop !== (FARM_GROW.crop || null)) { FARM_GROW.variety = ''; FARM_GROW.rec = null; }
+        paintFarmGrow(document.getElementById('farmCropBtn'));
+    }
+    document.getElementById('farmCropBtn')?.addEventListener('click', () => {
+        cropFor = 'farm';
+        tickCrops(FARM_GROW.crop);
+        openSheet('cropPickSheet');
+        if (!window.matchMedia('(hover: none)').matches) setTimeout(() => document.getElementById('cropSearch')?.focus(), 280);
+    });
+    document.getElementById('farmVarBtn')?.addEventListener('click', async () => {
+        if (!window.aneeVarietyPick) { window.toast?.('The variety list could not open. Please reload the page.', 'error'); return; }
+        const crop = FARM_GROW.crop || '';
+        const label = crop ? document.getElementById('farmCropNow').textContent.trim() : '';
+        const res = await window.aneeVarietyPick.open({ crop, cropLabel: label.split(' (')[0].split(' — ')[0], location: '',
+            value: { name: FARM_GROW.variety, record: FARM_GROW.rec }, ownNote: 'Not on record. The name is kept as you typed it.' });
+        if (!res) return;
+        FARM_GROW.variety = String(res.name || '').trim().slice(0, 255);
+        FARM_GROW.rec = res.record ? Object.assign({ crop: FARM_GROW.crop || null }, res.record) : null;
+        paintFarmGrow(document.getElementById('farmVarBtn'));
+    });
+
     async function openFarmLots() {
         farmPick.clear();
         paintFarmAdd();
+        FARM_GROW.crop = matchCrop(mostOf(LOTS.map((l) => l.crop)) || SEASON_CROP || '');
+        FARM_GROW.variety = mostOf(LOTS.filter((l) => (l.crop || '') === FARM_GROW.crop).map((l) => l.variety));
+        FARM_GROW.rec = null;
+        paintFarmGrow();
+        document.getElementById('farmLotGrow').hidden = true;
         farmList.innerHTML = '<div class="lmp-skel"></div><div class="lmp-skel"></div>';
         window.openSheet('farmLotSheet');
         try {
@@ -1272,6 +1353,7 @@ const __init = () => {
             farmList.innerHTML = rows.length ? rows.map((l, k) => `<label class="flp-row" style="--k:${k}"><input type="checkbox" value="${l.id}"><span><b>${escapeHtml(l.name)}</b><small>${escapeHtml([unitSay(l), l.place, l.got ? l.got + ' field answers' : 'no field answers yet'].filter(Boolean).join(' · '))}</small></span></label>`).join('')
                 : '<p class="flp-empty">Every one of your lots is already in this season.</p>';
             document.getElementById('farmLotHint').hidden = !rows.length;
+            document.getElementById('farmLotGrow').hidden = !rows.length;
         } catch (err) {
             farmList.innerHTML = `<p class="flp-empty">${escapeHtml(err.message || 'Your lots could not be read.')}</p>`;
         }
@@ -1287,7 +1369,7 @@ const __init = () => {
         if (!farmPick.size) return;
         farmAdd.disabled = true;
         try {
-            const res = await api(`{{ route('sm.lots.fromFarm') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { ids: [...farmPick] } });
+            const res = await api(`{{ route('sm.lots.fromFarm') }}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: { ids: [...farmPick], crop: FARM_GROW.crop || '', variety: FARM_GROW.variety || '' } });
             ((res.data && res.data.lots) || []).forEach((d) => { upsertLot(d); tellBoard('sm:lot-saved', d); });
             toast(res.message);
             closeSheet('farmLotSheet');
@@ -1320,7 +1402,15 @@ const __init = () => {
         const editBtn = e.target.closest('[data-edit-lot]');
         if (editBtn) {
             const lot = LOTS.find((l) => String(l.id) === editBtn.getAttribute('data-edit-lot'));
-            if (lot) openLotSheet(lot);
+            if (!lot) return;
+            await openLotSheet(lot);
+            // From a card's "Set the crop" or "+ Variety": that field is brought into view and nudged.
+            const focus = editBtn.getAttribute('data-edit-focus');
+            const field = focus === 'crop' ? document.getElementById('lotCropBtn') : (focus === 'variety' ? document.getElementById('lotVarBtn') : null);
+            if (field) {
+                field.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+                field.classList.remove('is-bump'); void field.offsetWidth; field.classList.add('is-bump');
+            }
             return;
         }
 
@@ -1531,13 +1621,19 @@ const __init = () => {
         say.classList.toggle('is-none', !row);
         emoji.textContent = row ? row.querySelector('.crop-row-e').textContent.trim() : '🌱';
 
+        tickCrops(want);
+        sayCropTiming(row, keepDayType);
+    }
+
+    /* The one crop sheet serves the lot sheet and "Add from your lots";
+       cropFor says which asked, and the ticks show that one's crop. */
+    let cropFor = 'lot';
+    function tickCrops(want) {
         document.querySelectorAll('#cropPickSheet .crop-row').forEach((b) => {
             const on = b.getAttribute('data-crop') === want;
             b.classList.toggle('is-on', on);
             b.querySelector('.crop-row-tick')?.classList.toggle('hidden', !on);
         });
-
-        sayCropTiming(row, keepDayType);
     }
 
     /** Show the one question this crop is actually asked, and hide the rest. */
@@ -1622,6 +1718,8 @@ const __init = () => {
     }
 
     document.getElementById('lotCropBtn')?.addEventListener('click', () => {
+        cropFor = 'lot';
+        tickCrops(document.getElementById('lotCrop').value || '');
         openSheet('cropPickSheet');
         // Straight into the search box on a keyboard; on a phone the field is
         // left alone so the list is not immediately hidden behind one.
@@ -1665,9 +1763,17 @@ const __init = () => {
     document.getElementById('cropPickSheet')?.addEventListener('click', (e) => {
         const row = e.target.closest('.crop-row');
         if (!row) return;
+        if (cropFor === 'farm') {
+            setFarmCrop(row.getAttribute('data-crop') || '');
+            closeSheet('cropPickSheet');
+            return;
+        }
+        const was = document.getElementById('lotCrop').value || '';
         setLotCrop(row.getAttribute('data-crop') || '');
-        // A variety from another crop's records does not belong to this one.
-        if (lotVarRecord && lotVarRecord.crop !== (document.getElementById('lotCrop').value || null)) lotVarSet('', null);
+        const now = document.getElementById('lotCrop').value || '';
+        // A variety from another crop's records does not belong to this one, nor does one kept for the crop the
+        // lot had before (a lot without a crop keeps what it was given).
+        if ((lotVarRecord && lotVarRecord.crop !== (now || null)) || (was && was !== now && document.getElementById('lotVariety').value)) lotVarSet('', null);
         closeSheet('cropPickSheet');
     });
 
@@ -1732,7 +1838,17 @@ const __init = () => {
 
         btn.disabled = true;
         try {
-            const res = await api(url, { method: id ? 'PUT' : 'POST', body });
+            let res;
+            try {
+                res = await api(url, { method: id ? 'PUT' : 'POST', body });
+            } catch (err) {
+                // The crop, counter or days changed on a lot with tasks: the server says what that means, once.
+                const ask = err.status === 409 && err.data && err.data.confirm;
+                if (!ask) throw err;
+                const ok = await confirmAction({ title: ask.title, message: ask.message, confirmText: ask.confirmText || 'Change it', confirmClass: 'btn-primary' });
+                if (!ok) return;
+                res = await api(url, { method: 'PUT', body: Object.assign({}, body, { confirmTiming: 1 }) });
+            }
             toast(res.message);
             upsertLot(res.data);
             tellBoard('sm:lot-saved', res.data);
@@ -1746,7 +1862,10 @@ const __init = () => {
 
     /** A saved lot, as this list keeps one. */
     function upsertLot(d) {
+        const old = LOTS.find((l) => String(l.id) === String(d.id)) || {};
         const saved = {
+            // What this save does not speak of (its pin, its map, its harvest) stays as it was.
+            ...old,
             id: d.id,
             lotName: d.lotName,
             lotSize: d.lotSize,
@@ -1761,9 +1880,13 @@ const __init = () => {
             locProvince: d.locProvince,
             fullAddress: composeAddress(d),
             dayType: d.dayType || 'DAT',
+            daysToMaturity: d.daysToMaturity ?? null,
+            treeAgeMonths: d.treeAgeMonths ?? null,
+            treePlantedAt: d.treePlantedAt ? String(d.treePlantedAt).slice(0, 10) : null,
             notes: d.notes,
-            farmLot: d.farmLot || (LOTS.find((l) => String(l.id) === String(d.id)) || {}).farmLot || null,
+            farmLot: d.farmLot || old.farmLot || null,
         };
+        ['pinned', 'pinLabel', 'mapsHref', 'mapSaveId', 'harvestedSays'].forEach((k) => { if (k in d) saved[k] = d[k]; });
         const idx = LOTS.findIndex((l) => String(l.id) === String(saved.id));
         if (idx >= 0) LOTS[idx] = saved; else LOTS.push(saved);
         renderList();

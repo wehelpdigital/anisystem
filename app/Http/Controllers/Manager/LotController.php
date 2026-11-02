@@ -478,22 +478,36 @@ class LotController extends BaseScheduleController
             return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
-        /* What the lot IS was settled when it was made.
+        /* The crop, the day counter and the days to maturity can be set on a
+         * lot that exists (2026-11-03, the owner: "i don't see the option to
+         * add or set a crop and variety on existing lots"). They used to be
+         * settled once, when the lot was made, which left a lot put in from
+         * Global Lots without a crop for good.
          *
-         * cropTiming() answers four things and three of them — the crop, the
-         * day counter and the days to maturity — are what every date on this
-         * season's board was derived from. Changing one now would not move the
-         * plan; it would quietly change what the plan means, mid-season, on
-         * work already done. So they are not read here.
+         * Every stage on the board is read from them, so on a lot that
+         * already had a crop and has tasks, a change is asked about first
+         * (confirmTiming): the tasks keep their days, and the growth stages
+         * are read for the new crop. A lot with no crop yet just takes one.
          *
-         * The trees' age is the exception and is kept: nobody knows the day an
-         * orchard went in, and correcting it moves nothing that was planned in
-         * days.
-         *
-         * Ignored rather than refused — a client posting the whole form it has
-         * is not misbehaving, and failing the save over a field nobody meant to
-         * touch is the worse answer. The reply carries what is really stored.
+         * Only what changed is written, so a crop kept as old free text (an
+         * import) is not wiped by a form that could not show it. The trees'
+         * age is corrected as before: nobody knows the day an orchard went in.
          */
+        $timing = $this->cropTiming($request);
+        $had = \App\Support\CropStages::normalize($lot->crop);
+        $was = ['crop' => $had, 'dayType' => self::dayType($lot->dayType ?: 'DAT'), 'daysToMaturity' => (int) ($lot->daysToMaturity ?? 0) ?: null];
+        $changed = array_values(array_filter(['crop', 'dayType', 'daysToMaturity'], fn ($k) => $timing[$k] !== $was[$k]));
+        if ($changed && $had && ! $request->boolean('confirmTiming') && ($tasks = $this->tasksOn($schedule, (int) $lot->id)) > 0) {
+            $what = in_array('crop', $changed, true) ? 'the crop' : (in_array('dayType', $changed, true) ? 'the day counter' : 'the days to maturity');
+
+            return $this->jsonFail('Asked first.', 409, ['data' => ['confirm' => [
+                'title' => 'Change ' . $what . ' of ' . ($lot->lotName ?: 'this lot') . '?',
+                'message' => 'This season has ' . $tasks . ' task' . ($tasks === 1 ? '' : 's') . ' for this lot. They keep their days. The growth stages on the board will be read for '
+                    . (in_array('crop', $changed, true) ? ($timing['crop'] ? \App\Support\CropStages::label($timing['crop']) : 'no crop') : 'the new count') . '.',
+                'confirmText' => 'Change it',
+            ]]]);
+        }
+        $before = \App\Support\LotSync::snapshot($lot);
         $lot->update(array_merge(
             [
                 'lotName'     => $request->lotName,
@@ -502,18 +516,35 @@ class LotController extends BaseScheduleController
                 'variety'     => $request->filled('variety') ? trim($request->variety) : null,
                 'notes'       => $request->notes,
             ],
-            \App\Support\CropStages::isPerennial($lot->crop) && $request->filled('treePlantedAt')
-                ? ['treePlantedAt' => $request->input('treePlantedAt')]
-                : [],
+            $changed
+                ? $timing
+                : (\App\Support\CropStages::isPerennial($lot->crop) && $request->filled('treePlantedAt')
+                    ? ['treePlantedAt' => $request->input('treePlantedAt')]
+                    : []),
             $this->addressFields($request)
         ));
 
         if ($request->has('tags')) {
             \App\Support\ScheduleTags::sync($schedule, 'lot', (int) $lot->id, $request->input('tags', []));
         }
+        // The name, size and place go to its farm lot in Global Lots too; the crop and the variety stay the season's.
+        [, $carried, $note] = \App\Support\LotSync::pushToFarm($schedule, $lot, $before);
         $this->farmLot = \App\Support\LotSync::card(\App\Support\LotSync::afterSave($schedule, $lot->fresh()));
+        $say = $carried && $this->farmLot ? 'Lot updated, in Global Lots too.' : 'Lot updated.';
 
-        return $this->jsonOk('Lot updated.', ['data' => $this->lotPayload($lot)]);
+        return $this->jsonOk($note ? $say . ' ' . $note : $say, ['data' => $this->lotPayload($lot->fresh())]);
+    }
+
+    /** The tasks a lot has on the board: the ones that name it and the ones that name no lot (which every lot shares). */
+    private function tasksOn($schedule, int $lotId): int
+    {
+        try {
+            return (int) $schedule->activities()->where(fn ($q) => $q->whereHas('lots', fn ($l) => $l->where('as_schedule_lots.id', $lotId))->orWhereDoesntHave('lots'))->count();
+        } catch (\Throwable $e) {
+            report($e);
+
+            return 0;
+        }
     }
 
     public function destroy(Request $request)
@@ -576,11 +607,18 @@ class LotController extends BaseScheduleController
         if ($lotCap !== null && $have + count($ids) > $lotCap) {
             \App\Support\Tier::scheduleDenyFor($schedule, 'lotsPerSchedule', 'This plan allows up to ' . $lotCap . ' lot' . ($lotCap == 1 ? '' : 's') . ' per season. Move up to {plan} for more.');
         }
-        // The new lots grow what this season's lots grow, counted the way they are counted.
+        // The new lots grow what the sheet says they grow this season (2026-11-03, the owner: the crop and the
+        // variety are the season's, never Global Lots'); an older page sends none, and they grow what this season's
+        // lots grow. Counted the way this season counts, when that fits the crop.
         $lots = AsScheduleLot::active()->where('croppingScheduleId', $schedule->id)->get(['crop', 'dayType']);
-        $crop = $lots->pluck('crop')->filter()->countBy()->sortDesc()->keys()->first() ?: \App\Support\CropStages::normalize($schedule->cropType);
-        $dayType = $lots->pluck('dayType')->filter()->countBy()->sortDesc()->keys()->first() ?: ($schedule->dayType ?: 'DAT');
-        $made = \App\Support\LotSync::addToSeason($schedule, $ids, $crop ?: null, $dayType);
+        $crop = $request->has('crop')
+            ? \App\Support\CropStages::normalize((string) $request->input('crop'))
+            : (\App\Support\CropStages::normalize($lots->pluck('crop')->filter()->countBy()->sortDesc()->keys()->first()) ?: \App\Support\CropStages::normalize($schedule->cropType));
+        $usual = $lots->pluck('dayType')->filter()->countBy()->sortDesc()->keys()->first() ?: ($schedule->dayType ?: 'DAT');
+        $fits = \App\Support\CropCatalog::countersFor($crop);
+        $dayType = in_array($usual, $fits, true) ? $usual : ($crop ? ($fits[0] ?? 'DAT') : $usual);
+        $variety = $request->filled('variety') ? mb_substr(trim((string) $request->input('variety')), 0, 255) : null;
+        $made = \App\Support\LotSync::addToSeason($schedule, $ids, $crop ?: null, $dayType, $variety);
         $farm = \App\Support\LotSync::season($schedule);
         $out = [];
         foreach ($made as $lot) {

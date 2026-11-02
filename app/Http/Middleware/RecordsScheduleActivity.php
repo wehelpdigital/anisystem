@@ -169,7 +169,7 @@ class RecordsScheduleActivity
         'sm.activities.update' => [\App\Models\AsScheduleActivity::class, ['activityTitle', 'targetDate', 'activityType', 'priority', 'timeRequired', 'isDone', 'isHidden', 'isDraft']],
         'sm.activities.destroy' => [\App\Models\AsScheduleActivity::class, ['activityTitle', 'targetDate', 'activityType']],
         'sm.activities.toggle-done' => [\App\Models\AsScheduleActivity::class, ['activityTitle', 'isDone']],
-        'sm.lots.update' => [\App\Models\AsScheduleLot::class, ['lotName', 'lotSize', 'lotSizeUnit', 'variety']],
+        'sm.lots.update' => [\App\Models\AsScheduleLot::class, ['lotName', 'lotSize', 'lotSizeUnit', 'crop', 'variety', 'dayType', 'daysToMaturity']],
         'sm.lots.destroy' => [\App\Models\AsScheduleLot::class, ['lotName', 'lotSize', 'lotSizeUnit']],
         'sm.workers.update' => [\App\Models\AsScheduleWorker::class, ['workerName', 'email', 'phone', 'costPerHalfDay']],
         'sm.workers.destroy' => [\App\Models\AsScheduleWorker::class, ['workerName']],
