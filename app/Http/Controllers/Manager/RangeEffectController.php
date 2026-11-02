@@ -78,7 +78,7 @@ class RangeEffectController extends BaseScheduleController
         $this->gate();
         $schedule = $this->schedule($request->input('scheduleId'));
         try {
-            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request), $this->logic($request), $this->custom($request));
+            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request), $this->logic($request), $this->custom($request), self::planOf($request));
         } catch (\InvalidArgumentException $e) {
             return $this->jsonFail($e->getMessage(), 422);
         }
@@ -106,6 +106,41 @@ class RangeEffectController extends BaseScheduleController
     private function also(Request $request): array
     {
         return array_values(array_filter(array_map(fn ($k) => mb_substr((string) $k, 0, 80), (array) $request->input('also', [])), fn ($k) => $k !== ''));
+    }
+
+    /**
+     * The plan's own lines changed or taken out in this reading (the owner, 2026-11-02), by key (RangeEffect::planKey):
+     * {drop} or {date, qty, unit, method}. $kept adds what each one was ("o"), so a saved reading lists the ones taken out.
+     */
+    public static function planOf(Request $request, bool $kept = false): array
+    {
+        $out = [];
+        $in = $request->input('plan', []);
+        foreach (array_slice(is_array($in) ? $in : [], 0, 400, true) as $pk => $ch) {
+            $pk = (string) $pk;
+            if (! is_array($ch) || ! preg_match('/^[A-Za-z0-9_:.\-]{2,130}$/', $pk)) {
+                continue;
+            }
+            if (filter_var($ch['drop'] ?? false, FILTER_VALIDATE_BOOLEAN)) {
+                $row = ['drop' => true];
+            } else {
+                $date = (string) ($ch['date'] ?? '');
+                if (! preg_match('/^\d{4}-\d{2}-\d{2}$/', $date)) {
+                    continue;
+                }
+                $row = ['date' => $date, 'qty' => max(0, min(1000000, (float) ($ch['qty'] ?? 0))), 'unit' => mb_substr((string) ($ch['unit'] ?? ''), 0, 20),
+                    'method' => in_array($ch['method'] ?? null, ['granular', 'foliar'], true) ? $ch['method'] : null];
+            }
+            if ($kept && is_array($ch['o'] ?? null)) {
+                $o = $ch['o'];
+                $row['o'] = ['name' => mb_substr((string) ($o['name'] ?? ''), 0, 190), 'date' => preg_match('/^\d{4}-\d{2}-\d{2}$/', (string) ($o['date'] ?? '')) ? (string) $o['date'] : '',
+                    'amount' => mb_substr((string) ($o['amount'] ?? ''), 0, 40), 'qty' => max(0, (float) ($o['qty'] ?? 0)), 'unit' => mb_substr((string) ($o['unit'] ?? ''), 0, 20),
+                    'form' => mb_substr((string) ($o['form'] ?? ''), 0, 20), 'kindWord' => mb_substr((string) ($o['kindWord'] ?? ''), 0, 40), 'carries' => ! empty($o['carries']), 'done' => ! empty($o['done'])];
+            }
+            $out[$pk] = $row;
+        }
+
+        return $out;
     }
 
     /** The tries as the engine reads them, for the Protocol Builder's planner too (ProtocolEffectController). */
@@ -247,7 +282,7 @@ class RangeEffectController extends BaseScheduleController
         }
         $schedule = $this->schedule($request->input('scheduleId'));
         try {
-            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request), $this->logic($request), $this->custom($request));
+            $res = RangeEffect::run($schedule, (int) $request->input('lotId'), (string) $request->input('check', 'n:N'), $this->tries($request), $this->also($request), $this->logic($request), $this->custom($request), self::planOf($request));
         } catch (\InvalidArgumentException $e) {
             return $this->jsonFail($e->getMessage(), 422);
         }
@@ -256,7 +291,7 @@ class RangeEffectController extends BaseScheduleController
             $title = $res['check']['label'] . ' · ' . $res['lot']['name'];
         }
         $params = ['check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'logic' => $res['logic']['opts'] ?? [], 'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'water', 'date', 'qty', 'unit', 'name', 'method', 't', 'line'])),
-            array_slice((array) $request->input('tries', []), 0, self::MAX_TRIES)))];
+            array_slice((array) $request->input('tries', []), 0, self::MAX_TRIES))), 'plan' => self::planOf($request, true)];
         // A what-if lot is kept with the reading only (it is never a lot of the season or of Global Lots).
         if ($custom = $this->custom($request)) {
             $params['custom'] = $custom;

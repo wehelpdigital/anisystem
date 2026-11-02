@@ -58,8 +58,8 @@ class RangeEffectProtocol
             $base = ($t['counter'] ?? '') === 'DAT' && $isDat && $transplant ? Carbon::parse($transplant) : Carbon::parse($start);
             $day = (int) ($t['day'] ?? 0);
             $items = [];
-            foreach ((array) ($t['groups'] ?? []) as $g) {
-                foreach ((array) ($g['items'] ?? []) as $it) {
+            foreach ((array) ($t['groups'] ?? []) as $gi => $g) {
+                foreach ((array) ($g['items'] ?? []) as $ii => $it) {
                     if (! is_array($it)) {
                         continue;
                     }
@@ -71,8 +71,10 @@ class RangeEffectProtocol
                     }
                     [$qty, $unit] = $use !== null ? [$use, (string) ($m['unit'] ?? '')] : self::amount((string) ($it['amount'] ?? ''));
                     $line = new AsScheduleActivityItem();
+                    // Its key in the planner (RangeEffect::planKey): the task's id and the line's, the same at every count.
                     $line->forceFill(['id' => 0, 'activityId' => $n - 1, 'itemType' => 'custom', 'itemName' => mb_substr($name, 0, 255), 'quantity' => $qty,
-                        'unitOfMeasure' => $unit !== '' ? $unit : null, 'inventoryItemId' => null, 'deleteStatus' => 1]);
+                        'unitOfMeasure' => $unit !== '' ? $unit : null, 'inventoryItemId' => null, 'deleteStatus' => 1,
+                        'planKey' => 't' . mb_substr((string) ($t['id'] ?? $n), 0, 60) . ':' . mb_substr((string) ($it['id'] ?? ($gi . '.' . $ii)), 0, 60)]);
                     $line->setRelation('material', null);
                     $items[] = $line;
                 }

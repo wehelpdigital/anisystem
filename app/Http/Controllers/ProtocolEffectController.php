@@ -142,7 +142,7 @@ class ProtocolEffectController extends Controller
         $res = RangeEffect::run($season, 0, (string) $request->input('check', 'n:N'), $tries,
             array_values(array_filter(array_map(fn ($k) => mb_substr((string) $k, 0, 80), (array) $request->input('also', [])), fn ($k) => $k !== '')),
             array_intersect_key(array_map(fn ($v) => filter_var($v, FILTER_VALIDATE_BOOLEAN), (array) $request->input('logic', [])), array_flip(\App\Support\RangeEffectLogic::OPTS)),
-            $custom ?? ['name' => 'This protocol', 'place' => '', 'answers' => []]);
+            $custom ?? ['name' => 'This protocol', 'place' => '', 'answers' => []], RangeEffectController::planOf($request));
         $res['protocol'] = ['start' => $start, 'transplant' => strtoupper((string) $p->dayType) === 'DAT' ? $transplant : null, 'ha' => $ha, 'basis' => $farm ? (int) $farm['id'] : 0];
 
         return ['res' => $res, 'whatIf' => is_array($request->input('custom')) && $request->input('custom') ? RangeEffect::customOf($request->input('custom')) : null,
@@ -199,7 +199,7 @@ class ProtocolEffectController extends Controller
         $params = ['protocolId' => (int) $p->id, 'check' => $res['check']['key'], 'also' => array_map(fn ($sr) => $sr['check']['key'], $res['series']), 'logic' => $res['logic']['opts'] ?? [],
             'tries' => array_values(array_map(fn ($t) => array_intersect_key((array) $t, array_flip(['productId', 'ai', 'water', 'date', 'qty', 'unit', 'name', 'method', 't', 'line'])),
                 array_slice(array_values(array_filter((array) $request->input('tries', []), 'is_array')), 0, RangeEffectController::MAX_TRIES))),
-            'pb' => $r['pb']];
+            'plan' => RangeEffectController::planOf($request, true), 'pb' => $r['pb']];
         if ($r['whatIf']) {
             $params['custom'] = $r['whatIf'];
         }

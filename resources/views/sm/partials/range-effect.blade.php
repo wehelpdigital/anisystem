@@ -310,7 +310,7 @@
         <div class="rfx-edit" data-rfx-edit hidden>
             <div class="rfx-edit-veil" data-rfx-edit-x></div>
             <div class="rfx-edit-c" role="dialog" aria-modal="true" aria-labelledby="rfxEditT">
-                <div class="rfx-day-h"><div><b id="rfxEditT">Change this fertilizer</b><small>Its day, how it goes on, and how much</small></div><button type="button" class="rfx-x" data-rfx-edit-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+                <div class="rfx-day-h"><div><b id="rfxEditT">Change this fertilizer</b><small data-rfx-edit-sub>Its day, how it goes on, and how much</small></div><button type="button" class="rfx-x" data-rfx-edit-x aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></div>
                 <div class="rfx-picked-p" data-rfx-edit-p></div>
                 <div class="rfx-how" role="radiogroup" aria-label="How you apply it" data-rfx-edit-how data-on="granular">
                     <i class="rfx-how-pill" aria-hidden="true"></i>
@@ -323,7 +323,7 @@
                 </div>
                 <div class="rfx-edit-b">
                     <button type="button" class="rfx-btn is-ghost" data-rfx-edit-dupe><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.4"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 8.5V6.6a2.1 2.1 0 00-2.1-2.1H6.6a2.1 2.1 0 00-2.1 2.1v6.8a2.1 2.1 0 002.1 2.1h1.9"/></svg>Make a copy</button>
-                    <button type="button" class="rfx-btn is-ghost is-del" data-rfx-edit-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>Take it out</button>
+                    <button type="button" class="rfx-btn is-ghost is-del" data-rfx-edit-del><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg><span data-rfx-edit-del-t>Take it out</span></button>
                     <button type="button" class="rfx-btn is-ghost" data-rfx-edit-x>Cancel</button>
                     <button type="button" class="rfx-btn is-go" data-rfx-edit-save>Save changes</button>
                 </div>
@@ -607,6 +607,25 @@
     .rfx-pl-note { font-size: .78rem; line-height: 1.45; color: var(--rx-muted); }
     .rfx-chip.is-plan { cursor: default; font-weight: 700; }
     .rfx-chip.is-plan:hover { transform: none; box-shadow: inset 0 0 0 1.5px var(--rx-line-2); }
+    /* Changed or taken out in this reading (the owner, 2026-11-02): a line of the plan opens to change, x takes it out,
+       the arrow puts it back as the plan has it. */
+    .rfx-chip.is-plan.is-edit { cursor: pointer; }
+    .rfx-chip.is-plan.is-edit:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-chip.is-plan .rfx-pen { width: .8rem; height: .8rem; opacity: .6; }
+    .rfx-chip.is-plan button { display: grid; place-items: center; width: 1.25rem; height: 1.25rem; border-radius: 999px; background: rgb(128 128 128 / .2); transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-chip.is-plan button:hover { background: rgb(128 128 128 / .34); }
+    .rfx-chip.is-plan button:last-child { margin-right: -.3rem; }
+    .rfx-chip.is-plan button svg { width: .68rem; height: .68rem; }
+    .rfx-chip.is-plan.is-changed { color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1.5px #f5c518; }
+    .rfx-chip.is-plan.is-out { opacity: .62; background: transparent; box-shadow: inset 0 0 0 1.5px var(--rx-line); }
+    .rfx-chip.is-plan.is-out s { text-decoration-thickness: 1.5px; }
+    /* A chip's words in one piece: a long name wraps as a line of text (never inside "46-0-0"), its buttons stay at the end. */
+    .rfx-ct { min-width: 0; }
+    .rfx-ct .rfx-pl-tag, .rfx-ct .rfx-pl-done { margin-left: .3rem; white-space: nowrap; }
+    .rfx-nw { white-space: nowrap; }
+    .rfx-pl-tag { font-style: normal; padding: 0 .4rem; border-radius: 999px; font-size: .66rem; font-weight: 900; letter-spacing: .02em; color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px #f5c518; }
+    .rfx-chip.is-out .rfx-pl-tag { color: var(--rx-muted); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line-2); }
+    .rfx-plan .rfx-pa-h > small.is-ch { color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px #f5c518; white-space: nowrap; }
     .rfx-pl-done { font-style: normal; font-size: .7rem; font-weight: 800; color: var(--rx-muted); }
     @media (max-width: 479.98px) { .rfx-gby-s button { padding: .35rem .55rem; font-size: .76rem; } }
     @media (prefers-reduced-motion: reduce) { .rfx-gby-pill { transition: none; } .rfx-tgs.is-regroup .rfx-tg, .rfx-plan.is-regroup .rfx-tg { animation: none; } }
@@ -1203,7 +1222,10 @@
     // What the reading counts besides coverage (RangeEffectLogic): every part on until the farmer switches it off.
     const LOGIC_DEF = { amt: true, soil: true, links: true, health: true };
     const S = { opts: null, lot: null, check: 'n:N', checks: ['n:N'], tab: 'nut', tries: [], res: null, saved: null, picked: null, q: '', busy: false,
-        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '', recounted: null, hide: [], custom: null, useCustom: false, pb: null };
+        logic: { ...LOGIC_DEF }, savedId: null, savedTitle: '', recounted: null, hide: [], custom: null, useCustom: false, pb: null,
+        // The plan's own lines changed or taken out in this reading only, by key: {drop} or {date, qty, unit, method}, each
+        // with what it was (o) so one taken out can still be listed and brought back.
+        plan: {} };
     const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg>';
     const TRASH = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>';
     const kgSay = (v) => { v = Number(v) || 0; return v >= 10 ? String(Math.round(v)) : v >= 1 ? String(Math.round(v * 10) / 10) : String(Math.round(v * 100) / 100); };
@@ -1229,7 +1251,7 @@
     const keep = () => {
         if (!S.opts) return;
         try {
-            localStorage.setItem(KEEP, JSON.stringify({ lot: S.lot, check: S.check, checks: S.checks, tab: S.tab, tries: S.tries, logic: S.logic, hide: S.hide, custom: S.custom, useCustom: S.useCustom, pb: S.pb,
+            localStorage.setItem(KEEP, JSON.stringify({ lot: S.lot, check: S.check, checks: S.checks, tab: S.tab, tries: S.tries, plan: S.plan, logic: S.logic, hide: S.hide, custom: S.custom, useCustom: S.useCustom, pb: S.pb,
                 // A hidden sheet reads as scrolled to the top: keep where it was when it closed.
                 savedId: S.savedId, savedTitle: S.savedTitle, top: Math.round(M.hidden || !M.classList.contains('is-on') ? (S.lastTop || 0) : scroller().scrollTop), at: Date.now() }));
         } catch (_) {}
@@ -1307,6 +1329,7 @@
                 S.check = S.checks.includes(st.check) ? st.check : S.checks[0];
                 S.tab = ['nut', 'micro', 'prot', 'pest', 'water'].includes(st.tab) ? st.tab : tabOf(S.check);
                 S.tries = (Array.isArray(st.tries) ? st.tries : []).filter((t) => t && t.date && (t.productId || t.ai || t.water));
+                S.plan = planIn(st.plan);
                 S.logic = { ...LOGIC_DEF, ...(st.logic || {}) };
                 S.hide = (Array.isArray(st.hide) ? st.hide : []).filter((k) => S.checks.includes(k));
                 if (st.custom && typeof st.custom === 'object') { S.custom = st.custom; S.useCustom = !!st.useCustom && S.custom.base === S.lot; }
@@ -1403,6 +1426,7 @@
     });
     const pickLot = (id) => {
         S.useCustom = false;
+        if (!PB && id !== S.lot) S.plan = {};
         S.lot = id;
         // A named pest of one crop means nothing on another.
         const mine = (k) => !k.startsWith('p:') || (lotOf()?.threats || []).some((t) => 'p:' + t.slug === k);
@@ -1598,8 +1622,10 @@
     const groupOfTry = (t) => TAB_OF[kindOf(t)] || 'other';
     const PEN_I = '<svg class="rfx-pen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4l10.5-10.5a2.8 2.8 0 00-4-4L4 16v4z"/></svg>';
     const COPY_I = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2.4"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.5 8.5V6.6a2.1 2.1 0 00-2.1-2.1H6.6a2.1 2.1 0 00-2.1 2.1v6.8a2.1 2.1 0 002.1 2.1h1.9"/></svg>';
+    // A name on a chip breaks between its words, never inside a grade ("46-0-0").
+    const nmHtml = (n) => esc(n).split(' ').map((w) => (w.includes('-') ? `<span class="rfx-nw">${w}</span>` : w)).join(' ');
     // A chip leaves out what its group already says: the day under a day, the name under a fertilizer.
-    const tryChip = (t, i, drop = '') => `<span class="rfx-chip is-try" data-try="${i}" role="button" tabindex="0" title="Tap to change it">${t.method === 'foliar' ? '💧' : '🟤'} ${drop === 'name' ? `<b>${esc(say(t.date))}</b>` : esc(t.name)} <small>${esc([drop === 'date' || drop === 'name' ? '' : say(t.date), t.method || '', t.qty ? t.qty + ' ' + t.unit : ''].filter(Boolean).join(' · '))}</small>${PEN_I}<button type="button" data-dupe="${i}" aria-label="Make a copy of ${esc(t.name)}" title="Make a copy">${COPY_I}</button><button type="button" data-untry="${i}" aria-label="Remove ${esc(t.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`;
+    const tryChip = (t, i, drop = '') => `<span class="rfx-chip is-try" data-try="${i}" role="button" tabindex="0" title="Tap to change it">${t.method === 'foliar' ? '💧' : '🟤'} <span class="rfx-ct">${drop === 'name' ? `<b>${esc(say(t.date))}</b>` : nmHtml(t.name)} <small>${esc([drop === 'date' || drop === 'name' ? '' : say(t.date), t.method || '', t.qty ? t.qty + ' ' + t.unit : ''].filter(Boolean).join(' · '))}</small></span>${PEN_I}<button type="button" data-dupe="${i}" aria-label="Make a copy of ${esc(t.name)}" title="Make a copy">${COPY_I}</button><button type="button" data-untry="${i}" aria-label="Remove ${esc(t.name)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg></button></span>`;
     // Grouped by kind (the owner, 2026-10-30: "group it by type while arranging per date"), each kind by its dates; or by
     // the day it goes on, or by the fertilizer itself ("group by date of application ... or group by fertilizer").
     let GBY = 'type';
@@ -1642,19 +1668,53 @@
     const planKind = (a) => {
         const w = String(a.kindWord || '').toLowerCase();
         if (TYPE_WORD[w]) return TYPE_WORD[w];
-        return /fertili/.test(w) || (!w && (a.carries || []).length) ? (a.form === 'foliar' ? 'foliar' : 'granular') : '';
+        return /fertili/.test(w) || (!w && (Array.isArray(a.carries) ? a.carries.length : a.carries)) ? (a.form === 'foliar' ? 'foliar' : 'granular') : '';
     };
+    // Each line of the plan once, by its key; then those taken out here, from what they were, so they can come back.
     const planItems = () => {
         const seen = new Set();
-        return ((S.res && S.res.apps) || []).filter((a) => {
-            if (a.try || a.water || a.form === 'water') return false;
-            const key = a.date + '|' + a.name + '|' + (a.amount || '');
-            if (seen.has(key)) return false;
-            seen.add(key);
-            return true;
-        }).map((a, i) => ({ t: a, i, g: TAB_OF[planKind(a)] || 'other', k: 'n' + String(a.name || '').trim().toLowerCase() }));
+        const out = [];
+        const item = (t, pk, ch) => ({ t, pk, ch, g: TAB_OF[planKind(t)] || 'other', k: 'n' + String(t.name || '').trim().toLowerCase() });
+        ((S.res && S.res.apps) || []).forEach((a) => {
+            if (a.try || a.water || a.form === 'water') return;
+            const pk = a.pk || 'x' + a.date + '|' + a.name + '|' + (a.amount || '');
+            if (seen.has(pk)) return;
+            seen.add(pk);
+            const ch = a.pk ? S.plan[a.pk] || null : null;
+            out.push(item(ch && ch.drop && ch.o ? { ...a, ...ch.o } : a, pk, ch));
+        });
+        Object.entries(S.plan).forEach(([pk, ch]) => { if (ch && ch.drop && ch.o && !seen.has(pk)) { seen.add(pk); out.push(item({ ...ch.o }, pk, ch)); } });
+        return out;
     };
-    const planChip = (x, drop) => `<span class="rfx-chip is-plan">${x.t.form === 'foliar' ? '💧' : '🟤'} ${drop === 'name' ? `<b>${esc(say(x.t.date))}</b>` : esc(x.t.name)} <small>${esc([drop ? '' : say(x.t.date), x.t.amount || ''].filter(Boolean).join(' · '))}</small>${x.t.done ? '<em class="rfx-pl-done">✓ done</em>' : ''}</span>`;
+    const UNDO_I = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 14L4 9l5-5M4 9h10.5a5.5 5.5 0 010 11H11"/></svg>';
+    const X_I = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>';
+    // A line of the plan: tapped, it is changed in this reading; x takes it out; the arrow puts it back as the plan has it.
+    // An old saved reading's lines have no key and are only listed.
+    const planChip = (x, drop) => {
+        const t = x.t, ch = x.ch, out = !!(ch && ch.drop), can = !!t.pk || !!(ch && ch.o), nm = esc(t.name);
+        const head = drop === 'name' ? `<b>${esc(say(t.date))}</b>` : (out ? `<s>${nmHtml(t.name)}</s>` : nmHtml(t.name));
+        const tag = out ? '<em class="rfx-pl-tag">taken out</em>' : ch ? '<em class="rfx-pl-tag">changed</em>' : (t.done ? '<em class="rfx-pl-done">✓ done</em>' : '');
+        const pk = esc(x.pk);
+        return `<span class="rfx-chip is-plan${out ? ' is-out' : ''}${ch && !out ? ' is-changed' : ''}${can && !out ? ' is-edit' : ''}"${can && !out ? ` data-plan="${pk}" role="button" tabindex="0" title="Tap to change it in this reading"` : ''}>${t.form === 'foliar' ? '💧' : '🟤'} <span class="rfx-ct">${head} <small>${esc([drop ? '' : say(t.date), t.amount || ''].filter(Boolean).join(' · '))}</small>${tag}</span>`
+            + (can && !out ? PEN_I : '')
+            + (can && ch ? `<button type="button" data-plan-back="${pk}" aria-label="${out ? 'Bring back' : 'Put back as it was'} ${nm}" title="${out ? 'Bring it back' : 'Back as it was'}">${UNDO_I}</button>` : '')
+            + (can && !out ? `<button type="button" data-plan-out="${pk}" aria-label="Take ${nm} out of this reading" title="Take it out of this reading">${X_I}</button>` : '')
+            + '</span>';
+    };
+    // What a line was before it was changed here: kept with the change, so it is listed (and compared) as it was.
+    const planOrig = (pk) => {
+        if (S.plan[pk] && S.plan[pk].o) return S.plan[pk].o;
+        const a = ((S.res && S.res.apps) || []).find((x) => x.pk === pk);
+        if (!a) return null;
+        const share = Number(a.share) > 0 ? Number(a.share) : 1;
+        return { name: a.name, date: a.date, amount: a.amount || '', qty: Math.round((Number(a.qty) || 0) * share * 1000) / 1000, unit: a.unit || '', form: a.form || '', kindWord: a.kindWord || '',
+            carries: !!(a.carries || []).length, done: !!a.done };
+    };
+    // The area the amounts are for: the lot's on a season; on a protocol, the hectares its amounts are written for.
+    const areaHa = () => (PB ? Number(S.pb?.ha) || 1 : lotOf()?.ha);
+    // Kept plan changes from a saved reading or this device: an object of keys, never a list.
+    function planIn(v) { return v && typeof v === 'object' && !Array.isArray(v) ? v : {}; }
+    const planChanged = () => { paintPlan(); run(); };
     let planOpen = false;
     try { planOpen = localStorage.getItem('rfx-plan-open') === '1'; } catch (_) {}
     // Painted again with every reading; the same list is left alone, so its chips do not pop at each count.
@@ -1663,8 +1723,9 @@
         const items = planItems();
         const names = [...new Set(items.map((x) => x.t.name))];
         const peek = names.slice(0, 3).join(', ') + (names.length > 3 ? ` and ${names.length - 3} more` : '');
-        const html = items.length ? `<button type="button" class="rfx-pa-h" data-rfx-plan-t aria-expanded="false"><b>${PB ? 'Already in the protocol' : 'Already on the plan'}</b><small>${items.length}</small><span class="rfx-pa-peek">${esc(peek)}</span>${CHEV}</button>
-            <div class="rfx-pa-b"><div class="rfx-pa-in"><p class="rfx-pl-note">${PB ? 'Tasks of the protocol, counted in the reading with the ones you add. Change or remove them in the protocol.' : 'Tasks of this lot, counted in the reading with the ones you add. Change or remove them in Activities.'}</p><div class="rfx-pa-sc">${groupsHtml(items, planChip)}</div></div></div>` : '';
+        const nCh = items.filter((x) => x.ch).length;
+        const html = items.length ? `<button type="button" class="rfx-pa-h" data-rfx-plan-t aria-expanded="false"><b>${PB ? 'Already in the protocol' : 'Already on the plan'}</b><small>${items.length}</small>${nCh ? `<small class="is-ch">${nCh} changed here</small>` : ''}<span class="rfx-pa-peek">${esc(peek)}</span>${CHEV}</button>
+            <div class="rfx-pa-b"><div class="rfx-pa-in"><p class="rfx-pl-note">${PB ? 'Tasks of the protocol, counted in the reading. Tap one to change its day or amount, or take it out, and see what it does: the protocol itself stays as it is.' : 'Tasks of this lot, counted in the reading. Tap one to change its day or amount, or take it out, and see what it does: your tasks in Activities stay as they are.'}</p><div class="rfx-pa-sc">${groupsHtml(items, planChip)}</div></div></div>` : '';
         box.classList.toggle('is-open', planOpen);
         if (box.__html !== html) { box.innerHTML = html; box.__html = html; }
         box.querySelector('[data-rfx-plan-t]')?.setAttribute('aria-expanded', String(planOpen));
@@ -1695,12 +1756,27 @@
         boxes.forEach((box) => { void box.offsetWidth; box.classList.add('is-regroup'); });
     });
     $('[data-rfx-plan]').addEventListener('click', (e) => {
+        const back = e.target.closest('[data-plan-back]');
+        if (back) { delete S.plan[back.dataset.planBack]; planChanged(); return; }
+        const out = e.target.closest('[data-plan-out]');
+        if (out) {
+            const pk = out.dataset.planOut;
+            const o = planOrig(pk);
+            if (o) { S.plan[pk] = { drop: true, o }; planChanged(); }
+            return;
+        }
+        const chip = e.target.closest('[data-plan]');
+        if (chip) { openPlanEdit(chip.dataset.plan); return; }
         const t = e.target.closest('[data-rfx-plan-t]');
         if (!t) return;
         planOpen = !planOpen;
         try { localStorage.setItem('rfx-plan-open', planOpen ? '1' : '0'); } catch (_) {}
         $('[data-rfx-plan]').classList.toggle('is-open', planOpen);
         t.setAttribute('aria-expanded', String(planOpen));
+    });
+    $('[data-rfx-plan]').addEventListener('keydown', (e) => {
+        const c = e.target.closest('[data-plan]');
+        if (c && e.target === c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openPlanEdit(c.dataset.plan); }
     });
     // A watering planned here, as its chip says it.
     const watName = (t) => 'Watering' + (Number(t.qty) > 0 ? `, ${t.qty} ${t.unit === 'mm' ? 'mm' : 'cm'}` : '') + (t.method && t.method !== 'flood' && !isPaddy() ? ` by ${t.method}` : '');
@@ -1770,15 +1846,49 @@
     const editBox = $('[data-rfx-edit]');
     const editHow = $('[data-rfx-edit-how]');
     let editing = -1;
+    // The window says what is being changed: a product added here, or a line of the plan changed in this reading only.
+    const editFor = (plan) => {
+        $('#rfxEditT', editBox).textContent = plan ? 'Change it in this reading' : 'Change this fertilizer';
+        $('[data-rfx-edit-sub]').textContent = plan ? (PB ? 'Its day, how it goes on and how much. The protocol itself stays as it is.' : 'Its day, how it goes on and how much. Your task in Activities stays as it is.') : 'Its day, how it goes on, and how much';
+        $('[data-rfx-edit-dupe]').hidden = !!plan;
+        $('[data-rfx-edit-del-t]').textContent = plan ? 'Take it out of this reading' : 'Take it out';
+    };
+    // An amount's unit as the window offers it; one it does not offer is added for this line.
+    const UNIT_OF = { bag: 'bags', bags: 'bags', sack: 'bags', sacks: 'bags', kg: 'kg', kgs: 'kg', kilo: 'kg', kilos: 'kg', l: 'L', liter: 'L', liters: 'L', litre: 'L', ml: 'mL', g: 'g', gram: 'g', grams: 'g' };
+    const setUnit = (sel, u) => {
+        const v = UNIT_OF[String(u || '').toLowerCase()] || String(u || '').trim() || 'kg';
+        $$('option[data-extra]', sel).forEach((o) => { if (o.value !== v) o.remove(); });
+        if (![...sel.options].some((o) => o.value === v)) { const o = document.createElement('option'); o.value = v; o.textContent = v; o.dataset.extra = '1'; sel.appendChild(o); }
+        sel.value = v;
+    };
+    const openPlanEdit = (pk) => {
+        const a = ((S.res && S.res.apps) || []).find((x) => x.pk === pk);
+        const o = planOrig(pk);
+        if (!a || !o) return;
+        const ch = S.plan[pk] && !S.plan[pk].drop ? S.plan[pk] : null;
+        editing = 'p:' + pk;
+        editFor(true);
+        $('[data-rfx-edit-p]').innerHTML = `<em>${a.form === 'foliar' ? '💧' : '🟤'}</em><span><b>${esc(a.name)}</b><small>${esc((PB ? 'In the protocol' : 'On the plan') + ': ' + [o.date ? say(o.date) : '', o.amount].filter(Boolean).join(' · ') + (ch ? ' · changed here' : ''))}</small></span>`;
+        setDate($('[data-rfx-edit-date]'), ch ? ch.date : o.date);
+        $('[data-rfx-edit-qty]').value = ch ? (ch.qty || '') : (o.qty || '');
+        setUnit($('[data-rfx-edit-unit]'), ch ? ch.unit : o.unit);
+        const ha = areaHa();
+        $('[data-rfx-edit-ha]').textContent = ha ? `(${Math.round(ha * 100) / 100} ha, optional)` : '(optional)';
+        setHow(ch && ch.method ? ch.method : (o.form === 'foliar' ? 'foliar' : 'granular'), false, editHow, $('[data-rfx-edit-unit]'));
+        editBox.hidden = false;
+        requestAnimationFrame(() => requestAnimationFrame(() => editBox.classList.add('is-on')));
+        setTimeout(() => $('[data-date-for="data-rfx-edit-date"]').focus({ preventScroll: true }), calm ? 0 : 200);
+    };
     const openEdit = (i) => {
         const t = S.tries[i];
         if (!t) return;
         editing = i;
+        editFor(false);
+        setUnit($('[data-rfx-edit-unit]'), t.unit || 'kg');
         $('[data-rfx-edit-p]').innerHTML = `<em>${t.method === 'foliar' ? '💧' : '🟤'}</em><span><b>${esc(t.name)}</b><small>${esc(t.line || (t.ai && !t.productId ? 'The active ingredient on its own' : 'Added by you'))}</small></span>`;
         setDate($('[data-rfx-edit-date]'), t.date);
         $('[data-rfx-edit-qty]').value = t.qty || '';
-        $('[data-rfx-edit-unit]').value = t.unit || 'kg';
-        const ha = lotOf()?.ha;
+        const ha = areaHa();
         $('[data-rfx-edit-ha]').textContent = ha ? `(${Math.round(ha * 100) / 100} ha, optional)` : '(optional)';
         setHow(t.method || 'granular', false, editHow, $('[data-rfx-edit-unit]'));
         editBox.hidden = false;
@@ -1795,6 +1905,23 @@
     editHow.addEventListener('click', (e) => { const b = e.target.closest('[data-how]'); if (b) setHow(b.dataset.how, true, editHow, $('[data-rfx-edit-unit]')); });
     editBox.addEventListener('click', (e) => {
         if (e.target.closest('[data-rfx-edit-x]')) { closeEdit(); return; }
+        // A line of the plan: taken out, or changed, in this reading only. Changed back to what it was, it is the plan's again.
+        if (typeof editing === 'string') {
+            const pk = editing.slice(2);
+            const o = planOrig(pk);
+            if (!o) { closeEdit(); return; }
+            if (e.target.closest('[data-rfx-edit-del]')) { S.plan[pk] = { drop: true, o }; closeEdit(); planChanged(); return; }
+            if (e.target.closest('[data-rfx-edit-save]')) {
+                const date = $('[data-rfx-edit-date]').value;
+                if (!date) { window.toast?.('Pick the day you would apply it.', 'error'); return; }
+                const ch = { date, qty: Number($('[data-rfx-edit-qty]').value) || 0, unit: $('[data-rfx-edit-unit]').value, method: editHow.dataset.on || 'granular' };
+                const same = ch.date === o.date && Math.abs(ch.qty - (Number(o.qty) || 0)) < 1e-9 && (UNIT_OF[String(o.unit).toLowerCase()] || o.unit) === ch.unit && ch.method === (o.form === 'foliar' ? 'foliar' : 'granular');
+                if (same) delete S.plan[pk]; else S.plan[pk] = { ...ch, o };
+                closeEdit();
+                planChanged();
+            }
+            return;
+        }
         if (e.target.closest('[data-rfx-edit-del]') && editing >= 0) {
             S.tries.splice(editing, 1);
             closeEdit();
@@ -1919,7 +2046,7 @@
         $('[data-rfx-look]').hidden = true;
         setDate($('[data-rfx-date]'), iso(new Date()));
         $('[data-rfx-qty]').value = '';
-        const ha = lotOf()?.ha;
+        const ha = areaHa();
         $('[data-rfx-ha]').textContent = ha ? `(${Math.round(ha * 100) / 100} ha, optional)` : '(optional)';
     };
     // Granular or foliar: the pill slides to the pick; a unit that cannot go with it changes too.
@@ -2207,7 +2334,7 @@
     let runSeq = 0;
     // What a reading is counted from: the lot (or a protocol's tasks, days and basis lot), the checks, the tries, the logic.
     const readingBody = () => {
-        const base = { check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, logic: S.logic, custom: S.useCustom ? S.custom : null };
+        const base = { check: S.check, also: S.checks.filter((k) => k !== S.check), tries: S.tries, plan: S.plan, logic: S.logic, custom: S.useCustom ? S.custom : null };
         if (!PB) return { scheduleId: SID, lotId: S.lot, ...base };
         const src = window.pbCoverage ? window.pbCoverage.source() : null;
         return { basis: S.lot, start: S.pb.start, transplant: S.pb.transplant, ha: S.pb.ha, tasks: src ? src.tasks : undefined, materials: src ? src.materials : undefined, ...base };
@@ -3148,6 +3275,7 @@
             S.check = d.params.check || d.result.check.key;
             S.checks = [S.check, ...(d.params.also || [])];
             S.tries = (d.params.tries || []).map((t) => ({ ...t, name: t.name || t.ai || 'Product' }));
+            S.plan = planIn(d.params.plan);
             // A reading kept with a what-if lot opens with it.
             if (d.params.custom) { S.custom = { ...d.params.custom, base: S.lot }; S.useCustom = true; } else S.useCustom = false;
             S.tab = tabOf(S.check);

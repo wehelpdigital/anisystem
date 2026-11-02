@@ -74,7 +74,7 @@ class RangeEffect
      * The way of counting, by date: a saved reading counted an older way is counted again when it is opened (the
      * owner, 2026-10-30: "i opened the saved file and the P is still at 78%"). Raise it whenever the numbers change.
      */
-    public const VERSION = '2026-10-30.10';
+    public const VERSION = '2026-11-02.1';
 
     /**
      * What an application is doing on a day (2026-10-30, the owner: "the absorption stage, the ammonization in soil
@@ -256,7 +256,7 @@ class RangeEffect
      * soil ... this one will not be saved as a lot, only for experimentation reference that can be saved in that range
      * effect modal reading"): the lot's crop, days and tasks with other field answers and place, {name, place, answers}.
      */
-    public static function run(AsCroppingSchedule $schedule, int $lotId, string $checkKey, array $tries = [], array $also = [], array $logic = [], ?array $custom = null): array
+    public static function run(AsCroppingSchedule $schedule, int $lotId, string $checkKey, array $tries = [], array $also = [], array $logic = [], ?array $custom = null, array $plan = []): array
     {
         $schedule->loadMissing(['lots', 'activities.lots', 'activities.items.material']);
         $lot = $schedule->lots->firstWhere('id', $lotId);
@@ -279,7 +279,8 @@ class RangeEffect
         $soil = RangeEffectLogic::soil($schedule, $lot, $c);
         $c['soilF'] = $opts['soil'] ? $soil['f'] : [];
 
-        // Every product line on this lot's tasks, read once; then the tries.
+        // Every product line on this lot's tasks, read once (as changed or taken out in this reading); then the tries.
+        $c['plan'] = $plan;
         $apps = self::applications($schedule, $c);
         foreach (array_values($tries) as $i => $t) {
             $app = self::fromTry($t, $c, $i);
@@ -809,6 +810,24 @@ class RangeEffect
                 if ($name === '' || $name === 'Item') {
                     continue;
                 }
+                // Changed or taken out in this reading only (the owner, 2026-11-02: "already in the protocol should be
+                // editable and removable to edit the current coverage planner"): the task itself stays as it is. A
+                // changed line is this lot's own amount, on its own day and way.
+                $pk = self::planKey($act, $it);
+                $ch = $c['plan'][$pk] ?? null;
+                if ($ch && ! empty($ch['drop'])) {
+                    continue;
+                }
+                if ($ch) {
+                    $a = self::read($name, (float) $ch['qty'], (string) $ch['unit'], 1.0, $c, Carbon::parse($ch['date'])->startOfDay(), null,
+                        $ch['method'] ?? ($act->activityType === 'foliar_spray' ? 'foliar' : ($act->activityType === 'seed_treatment' ? 'granular' : null)));
+                    if ($a) {
+                        $out[] = $a + ['title' => trim((string) $act->activityTitle) ?: 'Task', 'done' => false, 'try' => false,
+                            'shed' => (bool) $it->inventoryItemId, 'activityId' => (int) $act->id, 'pk' => $pk, 'share' => 1.0, 'changed' => true];
+                    }
+
+                    continue;
+                }
                 // A task the farmer called a foliar spray was sprayed, whatever unit its lines are in (2026-10-30: the
                 // planner's own products put on the plan as foliar keep reading as foliar).
                 // A seed treatment coats the seed: its nutrients are read as a dose at planting (cobalt and molybdenum on
@@ -819,11 +838,20 @@ class RangeEffect
                     continue;
                 }
                 $out[] = $a + ['title' => trim((string) $act->activityTitle) ?: 'Task', 'done' => (int) ($act->isDone ?? 0) === 1, 'try' => false,
-                    'shed' => (bool) $it->inventoryItemId, 'activityId' => (int) $act->id];
+                    'shed' => (bool) $it->inventoryItemId, 'activityId' => (int) $act->id, 'pk' => $pk, 'share' => $share];
             }
         }
 
         return $out;
+    }
+
+    /**
+     * A product line's key, the same at every count: its task and line on a season ("a12:34"), the protocol's task id
+     * and line on a protocol (RangeEffectProtocol::season keeps it as planKey).
+     */
+    public static function planKey($act, $it): string
+    {
+        return (string) ($it->getAttributes()['planKey'] ?? ('a' . $act->id . ':' . $it->id));
     }
 
     /** A try: a product the farmer is thinking of, on a date. */
@@ -1319,6 +1347,8 @@ class RangeEffect
             'i' => $a['i'], 'date' => $a['date']->toDateString(), 'title' => $a['title'], 'name' => $a['name'], 'as' => $a['as'], 'company' => $a['company'], 'amount' => $amount,
             'done' => $a['done'], 'try' => $a['try'], 'tryIndex' => $a['tryIndex'] ?? null, 'shed' => $a['shed'], 'kindWord' => $a['kindWord'], 'form' => $a['form'], 'formWord' => $formWord,
             'method' => $a['method'] ?? null, 'carries' => $carries, 'ai' => $a['ai'], 'relevant' => $a['relevant'],
+            // A line of the plan: its key, its own amount and the lot's part of it, to be changed in the reading.
+            'pk' => $a['pk'] ?? null, 'qty' => $a['qty'], 'unit' => $a['unit'], 'share' => isset($a['share']) ? round((float) $a['share'], 4) : null, 'changed' => ! empty($a['changed']),
             // A try that misses the check says what it does act on, so the sheet can offer it.
             'acts' => $a['try'] ? self::actsOf($a) : [],
             'effect' => $k ? [
