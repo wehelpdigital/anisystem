@@ -1378,7 +1378,9 @@
             REV = res.data.rev; FAILS = 0;
             say('saved');
         } catch (err) {
-            if (err.status === 409 || (err.data && err.data.stale)) {
+            if (err.data && err.data.deleted) {
+                gone();
+            } else if (err.status === 409 || (err.data && err.data.stale)) {
                 STALE = true; say('stale');
                 window.noticeSheet({ title: 'Changed somewhere else', message: 'This protocol was saved on another tab or device. Your last change here was not saved. Reload the page to get the latest copy.', okText: 'OK' });
             } else {
@@ -1390,6 +1392,17 @@
             if (AGAIN) { AGAIN = false; markDirty(); }
         }
     }
+    /* Deleted while this page was open (2026-11-02, the owner: "it is saying its not mine even though i created it"):
+       another tab, or this page brought back with the Back button after the delete. It says so once, and leads back
+       to the list; nothing more is sent from here. */
+    let GONE_SAID = false;
+    function gone() {
+        STALE = true; DIRTY = false; say('stale');
+        if (GONE_SAID) return;
+        GONE_SAID = true;
+        window.noticeSheet({ title: 'This protocol was deleted', message: 'It was deleted on another tab or a moment ago, so nothing here can be saved. It is in the Trash for 30 days, where you can bring it back.', okText: 'Back to my protocols' })
+            .then(() => { window.location.href = U.list; });
+    }
     async function flushSave() { clearTimeout(saveTimer); if (DIRTY && !BUSY) await runSave(); else if (BUSY) { await new Promise((r) => setTimeout(r, 400)); if (DIRTY) await runSave(); } }
     window.pbFlushSave = flushSave;   // NPK Plus reads what is on screen
     window.addEventListener('beforeunload', (e) => { if (((DIRTY || BUSY) && !STALE) || R_DIRTY || R_BUSY) { e.preventDefault(); e.returnValue = ''; } });
@@ -1400,6 +1413,7 @@
                 body: JSON.stringify(body) });
         } catch (_) {}
     };
+    window.addEventListener('pageshow', (e) => { if (e.persisted) window.location.reload(); });
     window.addEventListener('pagehide', () => {
         if (DIRTY && !STALE) beacon(U.base + '/save', { versionId: VER.id, rev: REV, tasks: TASKS, materials: MATS, history: HIST });
         if (R_DIRTY) beacon(U.ver(VER.id) + '/notes', { entries: payload() });
@@ -3257,7 +3271,8 @@
         if (!ok) return;
         try {
             await api(U.base + '/delete', { method: 'POST', body: {} });
-            STALE = true; DIRTY = false;
+            // Deleted (or deleted already): nothing on this page is kept, so leaving it asks nothing.
+            STALE = true; DIRTY = false; R_DIRTY = false; R_BUSY = false; clearTimeout(R_TIMER);
             window.location.href = U.list;
         } catch (err) { toast(err.message, 'error'); }
     });

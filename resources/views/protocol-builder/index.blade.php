@@ -342,6 +342,8 @@
         } catch (err) { toast(err.message, 'error'); }
     }
     $id('pbSearch').addEventListener('input', paint);
+    // Back to this list from a protocol just deleted: the browser's kept copy still shows it, so the list is read again.
+    window.addEventListener('pageshow', (e) => { if (e.persisted) load(); });
     $id('pbRows').addEventListener('click', (e) => {
         const more = e.target.closest('[data-more]');
         if (more) {

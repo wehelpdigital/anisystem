@@ -188,7 +188,7 @@ class ProtocolBuilderController extends Controller
     {
         $p = $this->mine($id);
         if (! $p) {
-            return $this->json(false, 'That protocol is not yours.', [], 404);
+            return $this->gone($id);
         }
         $v = Validator::make($request->all(), [
             'versionId' => 'nullable|integer',
@@ -229,7 +229,7 @@ class ProtocolBuilderController extends Controller
     {
         $p = $this->mine($id);
         if (! $p) {
-            return $this->json(false, 'That protocol is not yours.', [], 404);
+            return $this->gone($id);
         }
         $v = Validator::make($request->all(), [
             'title' => 'required|string|max:190',
@@ -325,7 +325,7 @@ class ProtocolBuilderController extends Controller
     {
         $p = $this->mine($id);
         if (! $p) {
-            return $this->json(false, 'That protocol is not yours.', [], 404);
+            return $this->gone($id);
         }
         $copy = AsProtocol::create([
             'userId' => (int) Auth::id(),
@@ -362,7 +362,7 @@ class ProtocolBuilderController extends Controller
         $p = $this->mine($id);
         $ver = $p ? $this->versionOf($p, $vid) : null;
         if (! $ver) {
-            return $this->json(false, 'That version is not yours.', [], 404);
+            return $p ? $this->json(false, 'That version is gone: it was deleted somewhere else. Reload the page to keep working.', ['stale' => true], 404) : $this->gone($id);
         }
         $p->forceFill(['versionId' => $ver->id])->save();
 
@@ -377,7 +377,7 @@ class ProtocolBuilderController extends Controller
     {
         $p = $this->mine($id);
         if (! $p) {
-            return $this->json(false, 'That protocol is not yours.', [], 404);
+            return $this->gone($id);
         }
         $v = Validator::make($request->all(), [
             'name' => 'required|string|max:80',
@@ -406,7 +406,7 @@ class ProtocolBuilderController extends Controller
         $p = $this->mine($id);
         $ver = $p ? $this->versionOf($p, $vid) : null;
         if (! $ver) {
-            return $this->json(false, 'That version is not yours.', [], 404);
+            return $p ? $this->json(false, 'That version is gone: it was deleted somewhere else. Reload the page to keep working.', ['stale' => true], 404) : $this->gone($id);
         }
         $name = $this->text($request->input('name'), 80);
         if ($name === null) {
@@ -423,7 +423,7 @@ class ProtocolBuilderController extends Controller
         $p = $this->mine($id);
         $ver = $p ? $this->versionOf($p, $vid) : null;
         if (! $ver) {
-            return $this->json(false, 'That version is not yours.', [], 404);
+            return $p ? $this->json(false, 'That version is gone: it was deleted somewhere else. Reload the page to keep working.', ['stale' => true], 404) : $this->gone($id);
         }
         $rows = $this->versions($p);
         if ($rows->count() <= 1) {
@@ -460,7 +460,7 @@ class ProtocolBuilderController extends Controller
         $p = $this->mine($id);
         $ver = $p ? $this->versionOf($p, $vid) : null;
         if (! $ver) {
-            return $this->json(false, 'That version is not yours.', [], 404);
+            return $p ? $this->json(false, 'That version is gone: it was deleted somewhere else. Reload the page to keep working.', ['stale' => true], 404) : $this->gone($id);
         }
         $v = Validator::make($request->all(), ['rules' => 'nullable|string|max:300000']);
         if ($v->fails()) {
@@ -506,7 +506,7 @@ class ProtocolBuilderController extends Controller
         $p = $this->mine($id);
         $ver = $p ? $this->versionOf($p, $vid) : null;
         if (! $ver) {
-            return $this->json(false, 'That version is not yours.', [], 404);
+            return $p ? $this->json(false, 'That version is gone: it was deleted somewhere else. Reload the page to keep working.', ['stale' => true], 404) : $this->gone($id);
         }
         $v = Validator::make($request->all(), ['entries' => 'present|array|max:' . ProtocolNotes::MAX]);
         if ($v->fails()) {
@@ -546,7 +546,7 @@ class ProtocolBuilderController extends Controller
         $p = $this->mine($id);
         $ver = $p ? $this->versionOf($p, $vid) : null;
         if (! $ver) {
-            return $this->json(false, 'That version is not yours.', [], 404);
+            return $p ? $this->json(false, 'That version is gone: it was deleted somewhere else. Reload the page to keep working.', ['stale' => true], 404) : $this->gone($id);
         }
         $v = Validator::make($request->all(), [
             'file' => 'required|file|max:10240|mimes:jpg,jpeg,png,gif,webp,pdf,doc,docx,txt,csv,xls,xlsx,ppt,pptx',
@@ -604,7 +604,7 @@ class ProtocolBuilderController extends Controller
         $p = $this->mine($id);
         $ver = $p ? $this->versionOf($p, $vid) : null;
         if (! $ver) {
-            return $this->json(false, 'That version is not yours.', [], 404);
+            return $p ? $this->json(false, 'That version is gone: it was deleted somewhere else. Reload the page to keep working.', ['stale' => true], 404) : $this->gone($id);
         }
         $files = array_values((array) ($ver->files ?? []));
         $gone = null;
@@ -636,7 +636,12 @@ class ProtocolBuilderController extends Controller
     {
         $p = $this->mine($id);
         if (! $p) {
-            return $this->json(false, 'That protocol is not yours.', [], 404);
+            // Deleted already (another tab, or a page brought back with the Back button): it is done, and says where it is.
+            if ($this->deletedMine($id)) {
+                return $this->json(true, 'This protocol was already deleted. It is in the Trash for 30 days.', ['already' => true]);
+            }
+
+            return $this->gone($id);
         }
         $p->forceFill(['deleteStatus' => 0])->save();
 
@@ -657,7 +662,7 @@ class ProtocolBuilderController extends Controller
         $this->guardTier();
         $p = $this->mine($id);
         if (! $p) {
-            return $this->json(false, 'That protocol is not yours.', [], 404);
+            return $this->gone($id);
         }
         $payer = $this->payer();
         $settings = AiSetting::current();
@@ -783,7 +788,7 @@ class ProtocolBuilderController extends Controller
     {
         $p = $this->mine($id);
         if (! $p) {
-            return $this->json(false, 'That protocol is not yours.', [], 404);
+            return $this->gone($id);
         }
         if ($p->analysisStatus === 'pending') {
             if ($this->dead($p)) {
@@ -840,7 +845,7 @@ class ProtocolBuilderController extends Controller
     {
         $p = $this->mine($id);
         if (! $p) {
-            return $this->json(false, 'That protocol is not yours.', [], 404);
+            return $this->gone($id);
         }
 
         return $this->json(true, 'ok', ['analyses' => $this->analysisRows($p)]);
@@ -1268,7 +1273,8 @@ PROMPT;
         foreach ($lotsIn as $n => $l) {
             $proto = $protocols->get((int) $l['protocolId']);
             if (! $proto) {
-                return $this->json(false, 'Lot ' . ($n + 1) . ' points at a protocol that is not yours.', [], 422);
+                return $this->json(false, 'Lot ' . ($n + 1) . ($this->deletedMine((int) $l['protocolId'])
+                    ? ' points at a protocol that was deleted. Reload the page and pick another.' : ' points at a protocol that is not yours.'), [], 422);
             }
             // Which version runs the lot: the one the sheet confirmed, or
             // the one in use when the protocol has only that.
@@ -1656,6 +1662,26 @@ PROMPT;
     private function mine(int $id): ?AsProtocol
     {
         return AsProtocol::active()->where('userId', (int) Auth::id())->where('id', $id)->first();
+    }
+
+    /** One of this person's protocols that is deleted (in the Trash, or gone from it). */
+    private function deletedMine(int $id): bool
+    {
+        return AsProtocol::where('userId', (int) Auth::id())->where('id', $id)->where('deleteStatus', '!=', 1)->exists();
+    }
+
+    /**
+     * Why a protocol cannot be worked on (2026-11-02, the owner: "i am trying to delete a protocol but it is saying its
+     * not mine even though i created it"): a page left open on one already deleted said "not yours" to its own maker.
+     * Deleted: said so, with where it went. Only another person's is "not yours".
+     */
+    private function gone(int $id)
+    {
+        if ($this->deletedMine($id)) {
+            return $this->json(false, 'This protocol was deleted. It is in the Trash for 30 days, where you can bring it back.', ['deleted' => true, 'stale' => true], 410);
+        }
+
+        return $this->json(false, AsProtocol::where('id', $id)->exists() ? 'That protocol is not yours.' : 'That protocol is gone.', [], 404);
     }
 
     private function payer(): User
