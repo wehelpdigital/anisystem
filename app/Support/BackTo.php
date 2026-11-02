@@ -53,7 +53,7 @@ final class BackTo
                 'schedules' => route('sm.index'),
                 'tags' => route('tags.global'),
                 'hub' => $sid > 0 ? route('sm.hub', ['id' => $sid]) : null,
-                'reports' => $sid > 0 ? route('sm.reports', ['id' => $sid]) : null,
+                'reports' => $sid > 0 ? self::shell($sid, 'reports') : null,
                 default => null,
             };
             // Never a back arrow that points at the page it is on.
@@ -159,6 +159,21 @@ final class BackTo
 
         return rtrim($u['path'] ?? '/', '/') === rtrim('/' . ltrim(request()->path(), '/'), '/')
             && (string) ($q['id'] ?? '') === (string) request()->query('id', '');
+    }
+
+    /**
+     * A season module inside the season's shell (the Activities page with its
+     * Modules menu), as a same-site path: where a page opened from a module
+     * goes back to. The module's own address is a cut-off page whose Back
+     * leads to the season's dashboard, so it is never the way back from one
+     * of its own pages (2026-11-03, the owner: "please make sure the back of
+     * these modules work correctly").
+     */
+    public static function shell(int $scheduleId, string $module = 'activities'): string
+    {
+        $q = ['id' => $scheduleId] + ($module !== 'activities' ? ['module' => $module] : []);
+
+        return route('sm.activities', $q, false);
     }
 
     /** `$url` with this request's origin added, when it has one. */

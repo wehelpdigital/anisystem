@@ -5076,6 +5076,24 @@
      */
     let backTo = null;          // a module key inside this shell
     let enteredByLink = false;  // the shell opened straight into a module
+    /* The module on screen and the one under it, kept for this tab, so a
+       module come back to without its history entry (a reload while a sheet
+       was open, a page walked back to that the browser had to load again)
+       still knows it was opened from inside the season. */
+    const TRAIL_KEY = 'sm-trail:' + @json((int) $schedule->id);
+    const keepTrail = (key) => {
+        try {
+            if (key === 'activities') { sessionStorage.removeItem(TRAIL_KEY); return; }
+            const prev = (backTo && MODULES[backTo] && backTo !== key) ? backTo : (enteredByLink ? null : 'activities');
+            sessionStorage.setItem(TRAIL_KEY, JSON.stringify({ m: key, p: prev }));
+        } catch (_) { /* private mode: the history entry still carries it */ }
+    };
+    const readTrail = (key) => {
+        try {
+            const t = JSON.parse(sessionStorage.getItem(TRAIL_KEY) || 'null');
+            return t && t.m === key && t.p && MODULES[t.p] ? t.p : null;
+        } catch (_) { return null; }
+    };
     /* Two moves must not leave a trail behind them: the first paint of a deep
      * link, because `current` says 'activities' before anything has been
      * shown and the reader has not seen it; and a press of Back itself,
@@ -5269,6 +5287,7 @@
         }
 
         current = key;
+        keepTrail(key);
         // Gentle fade-in on the module that just became visible.
         const shownEl = key === 'activities' ? activitiesRoot : (loaded.get(key) || host);
         if (shownEl) {
@@ -5333,7 +5352,11 @@
         // Tell the module it is on screen — a kept pane may want to refresh
         // what it shows (the Maps shelf re-reads its saved maps, for one).
         document.dispatchEvent(new CustomEvent('sm:module-shown', { detail: { key } }));
-        if (push) { history.pushState({ module: key }, '', shellUrl(key)); pushDepth++; }
+        // The entry says how deep it is and which module was under it, so a
+        // reload on it (or a page left and walked back to) still knows the way
+        // back (2026-11-03, the owner: Back from Lots went to the season's
+        // dashboard instead of Activities).
+        if (push) { pushDepth++; history.pushState({ module: key, depth: pushDepth, prev: backTo && MODULES[backTo] ? backTo : 'activities' }, '', shellUrl(key)); }
         // Returning to Activities restores your prior scroll; other modules start at the top.
         if (key === 'activities') {
             const y = activitiesScrollY;
@@ -6281,7 +6304,8 @@
            module's own entry is the one we just landed on. */
         const target = (e.state && e.state.module) || 'activities';
         if (target === current) return;
-        if (pushDepth > 0) pushDepth--;
+        // The entry knows its own depth; one without (an older page) counts down.
+        pushDepth = e.state && Number.isInteger(e.state.depth) ? e.state.depth : Math.max(0, pushDepth - 1);
         showModule(target, false);
     });
 
@@ -6292,22 +6316,25 @@
        (which, for a hub tile that deep-linked into a module, is the hub). */
     document.getElementById('appBackLink')?.addEventListener('click', (e) => {
         if (pushDepth > 0) { e.preventDefault(); history.back(); return; }
-        /* While the technician has the screen, the chevron makes the SAME
-         * decision aiBackArrow painted on it: back to the module that was
-         * showing, or to the board when the board is genuinely where you
-         * were. Deep-linked straight in from the hub tile there is no such
-         * screen — the handler stands down and the anchor's own href (the
-         * cropping schedule's page) does the walking. This branch used to
-         * force the board unconditionally, which sent hub arrivals to a
-         * screen they had never seen while the arrow's title promised the
-         * schedule. */
-        if (document.documentElement.classList.contains('sm-ai-open')) {
-            const home = (backTo && MODULES[backTo]) ? backTo : (enteredByLink ? null : 'activities');
+        /* No entry of ours under this one, and a module showing: the chevron
+         * makes the SAME decision aiBackArrow and the module's own back
+         * button make, back to the module that was showing, or to the board
+         * when the board is genuinely where you were (2026-11-03, the owner:
+         * Back from Lots, after a reload, went to the season's page instead
+         * of Activities). It takes the place of this entry rather than adding
+         * one, so the Back after it leaves the season as it should. Deep-
+         * linked straight in from the hub tile there is no such screen: the
+         * handler stands down and the anchor's own href (the cropping
+         * schedule's page) does the walking. */
+        if (current && current !== 'activities') {
+            const home = (backTo && MODULES[backTo] && backTo !== current) ? backTo : (enteredByLink ? null : 'activities');
             if (home) {
                 e.preventDefault();
                 backTo = null;
                 noTrail = true;
-                showModule(home);
+                Promise.resolve(showModule(home, false)).finally(() => {
+                    if (current === home) history.replaceState({ module: home, depth: 0 }, '', shellUrl(home));
+                });
             }
         }
     });
@@ -6341,6 +6368,17 @@
     // script but has by DOMContentLoaded.
     const applyDeepLink = () => {
         const wanted = new URLSearchParams(location.search).get('module');
+        /* A module entry this shell pushed, come back to by a reload or by
+           walking back from a page it opened: the board is underneath it in
+           this tab's history, so Back goes there and not out to the season's
+           page. Only a link straight into a module has nothing under it. */
+        const st = history.state;
+        const kept = !!(st && st.module === wanted && Number.isInteger(st.depth) && st.depth > 0);
+        // The tab's note counts only for a reload or a walk back, never for a link opened fresh (the hub's Lots tile).
+        let arrived = '';
+        try { arrived = (performance.getEntriesByType('navigation')[0] || {}).type || ''; } catch (_) {}
+        const under = kept ? (MODULES[st.prev] ? st.prev : 'activities')
+            : (wanted && (arrived === 'reload' || arrived === 'back_forward') ? readTrail(wanted) : null);
         // The replaceStates below scrub the query to the shell's clean form,
         // and the board's own deep links (?highlight=, ?day= — a tag's
         // activity, the day an expense lives on) would be scrubbed with it.
@@ -6351,9 +6389,20 @@
                board — "back to Activities" would send them somewhere new, and
                the shell's own starting value would otherwise record it as a
                screen they had been on. */
-            enteredByLink = true;
             noTrail = true;
-            history.replaceState({ module: wanted }, '', shellUrl(wanted));
+            if (kept) {
+                // Our entries are under this one: Back walks them.
+                pushDepth = st.depth;
+                backTo = under;
+                history.replaceState(st, '', shellUrl(wanted));
+            } else if (under) {
+                // No entry of ours under it, but this tab says which module was: Back shows that one.
+                backTo = under;
+                history.replaceState({ module: wanted, depth: 0, prev: under }, '', shellUrl(wanted));
+            } else {
+                enteredByLink = true;
+                history.replaceState({ module: wanted, depth: 0 }, '', shellUrl(wanted));
+            }
             // module-booting kept the server-painted board out of sight; lift
             // it only once the module has actually landed, so Activities never
             // shows on the way in. setActivitiesChrome has re-hidden the
@@ -6363,7 +6412,7 @@
         } else {
             // Unknown or absent key: this IS the Activities view — unhide it.
             document.body.classList.remove('module-booting');
-            history.replaceState({ module: 'activities' }, '', shellUrl('activities'));
+            history.replaceState({ module: 'activities', depth: 0 }, '', shellUrl('activities'));
         }
     };
     if (document.readyState === 'loading') {

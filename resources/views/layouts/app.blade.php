@@ -1024,6 +1024,31 @@
             // should raise it too rather than leave the page looking idle.
             window.addEventListener('beforeunload', () => { try { sessionStorage.setItem('nav.going', String(Date.now())); } catch (_) {} });
         })();
+
+        /* THE BACK ARROW WALKS BACK when it names the page we came from
+         * (2026-11-03, the owner: "please make sure the back of these modules
+         * work correctly"). Following its link opened that page as a new
+         * visit: Lots, left for its map, came back as a page of its own and
+         * the next Back went to the season's dashboard instead of Activities.
+         * Going back returns the page as it was left, its own trail with it.
+         * Its `from` is not part of the question; a page that handles the
+         * arrow itself (the season shell) claims the click first. */
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest && e.target.closest('#appBackLink');
+            if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            if (history.length < 2 || !document.referrer) return;
+            let to, ref;
+            try { to = new URL(a.href, location.href); ref = new URL(document.referrer); } catch (_) { return; }
+            const key = (u) => {
+                const q = new URLSearchParams(u.search);
+                q.delete('from');
+                q.sort();
+                return u.origin + u.pathname.replace(/\/+$/, '') + '?' + q.toString();
+            };
+            if (key(to) !== key(ref) || key(to) === key(new URL(location.href))) return;
+            e.preventDefault();
+            history.back();
+        });
     </script>
 
     {{-- Messenger dock — community pages + the dashboard (which shows the

@@ -123,7 +123,7 @@ class LotController extends BaseScheduleController
         $from = (string) $request->query('from', '');
         $backTo = (str_starts_with($from, '/') && ! str_starts_with($from, '//'))
             ? $from
-            : route('sm.lots', ['id' => $schedule->id]);
+            : \App\Support\BackTo::shell((int) $schedule->id, 'lots');
 
         return view('sm.lot-map', [
             'backTo' => $backTo,

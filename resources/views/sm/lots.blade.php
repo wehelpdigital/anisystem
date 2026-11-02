@@ -147,7 +147,7 @@
         <p class="form-hint" id="farmLotHint">They come in with their place, size and field answers. The crop and variety are for this season only. A new lot gets its share of the tasks that name no lot.</p>
     </div>
     <div class="sheet-footer">
-        <a class="btn btn-ghost" href="{{ route('farmlots.index') }}">Open Global Lots</a>
+        <a class="btn btn-ghost" href="{{ route('farmlots.index', ['from' => \App\Support\BackTo::shell((int) $schedule->id, 'lots')]) }}">Open Global Lots</a>
         <button type="button" class="btn btn-primary" id="farmLotAdd" disabled>Add to this season</button>
     </div>
 </div>
@@ -715,6 +715,8 @@
 
 @push('scripts')
 @php
+    // Where this page is, for the pages it opens (see HERE below).
+    $lotsHere = request()->boolean('partial') ? \App\Support\BackTo::shell((int) $schedule->id, 'lots') : route('sm.lots', ['id' => $schedule->id], false);
     $jsLots = $schedule->lots->map(fn ($l) => [
         'id' => $l->id,
         'lotName' => $l->lotName,
@@ -932,6 +934,11 @@ const __init = () => {
      * of it — same module, different chrome, and a hamburger that no longer
      * opened the modules sheet. */
     const MAP_URL = @json(route('sm.lots.map', ['id' => $schedule->id]))
+    /* Where this page is, for the pages it opens to come back to: the shell's
+       address while it is in the shell, its own otherwise. Said by the server:
+       the cards are drawn before the shell has moved the address bar here. */
+    const HERE = @json($lotsHere);
+    const HERE_FROM = () => 'from=' + encodeURIComponent(HERE);
         + '&from=' + encodeURIComponent(location.pathname + location.search);
     // The lot's map doors follow the MAPS grant: 'view' may open a map that
     // exists, only 'edit' may attach, detach or start one.
@@ -976,7 +983,7 @@ const __init = () => {
     async function openMapPick(lot) {
         mapPickLot = lot;
         document.getElementById('lotMapPickFor').textContent = 'For ' + (lot.lotName || 'this lot');
-        document.getElementById('lotMapPickNew').href = `${MAP_URL}&lot=${lot.id}`;
+        document.getElementById('lotMapPickNew').href = `${MAP_URL}&lot=${lot.id}&${HERE_FROM()}`;
         const search = document.getElementById('lotMapPickSearch');
         if (search) search.value = '';
         // What was fetched last time shows at once; the fresh list replaces it.
@@ -1070,7 +1077,7 @@ const __init = () => {
                 </div>
 
                 ${lot.farmLot && MAY_EDIT_LOTS ? `
-                <a class="lot-farm ${lot.farmLot.got ? '' : 'is-none'}" href="${FARM_URL}?lot=${lot.farmLot.id}&answers=1" title="Its soil, water and last season answers, kept in Global Lots">
+                <a class="lot-farm ${lot.farmLot.got ? '' : 'is-none'}" href="${FARM_URL}?lot=${lot.farmLot.id}&answers=1&${HERE_FROM()}" title="Its soil, water and last season answers, kept in Global Lots">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 4l9 6.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg>
                     <span><b>${lot.farmLot.got ? 'Field answers' : 'No field answers yet'}</b><i>${lot.farmLot.got ? escapeHtml(lot.farmLot.got + ' answered in Global Lots' + (lot.farmLot.stale ? ', time to check them' : '')) : 'Answer its soil and water questions once, in Global Lots'}</i></span>
                     <em>${lot.farmLot.got ? 'See' : 'Answer'}</em>
@@ -1099,7 +1106,7 @@ const __init = () => {
                     if (MAY_EDIT_LOTS) btns.push(`<button type="button" class="btn btn-white btn-sm" data-edit-lot="${lot.id}">Edit</button>`);
                     const mayAttach = MAPS_ACCESS === 'edit' && MAY_EDIT_BOARD;
                     if (lot.mapSaveId && MAPS_ACCESS !== 'none') {
-                        btns.push(`<a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}">Open map</a>`);
+                        btns.push(`<a class="btn btn-white btn-sm" href="${MAP_URL}&lot=${lot.id}&${HERE_FROM()}">Open map</a>`);
                     } else if (!lot.mapSaveId && mayAttach) {
                         // New, or one of the maps you already have: asked in a sheet.
                         btns.push(`<button type="button" class="btn btn-white btn-sm" data-attach-map="${lot.id}">Attach a map</button>`);

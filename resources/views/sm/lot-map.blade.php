@@ -10,7 +10,7 @@
 @section('help-key', 'lots')
 {{-- Back to whatever opened this: the Activities shell with the Lots pane
      showing, or the Lots page on its own. --}}
-@section('back', $backTo ?? route('sm.lots', ['id' => $schedule->id]))
+@section('back', $backTo ?? \App\Support\BackTo::shell((int) $schedule->id, 'lots'))
 
 @push('head')
 <style>

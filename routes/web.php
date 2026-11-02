@@ -273,6 +273,10 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             'observationsGrant' => isset(\App\Models\WorkerGrant::MODULES['observations']),
             // Set as harvested on the Harvest sheet, and the Season Report per lot (2026-10-22).
             'lotHarvest' => \Illuminate\Support\Facades\Route::has('sm.lots.harvest'),
+            // A season lot's crop set any time, its edits carried to Global Lots (2026-11-03).
+            'lotCropEdit' => method_exists(\App\Support\LotSync::class, 'pushToFarm'),
+            // A module's Back walks the season's own trail, a reload or a page walked back to included (2026-11-03).
+            'shellTrail' => method_exists(\App\Support\BackTo::class, 'shell'),
             // The Crop Protocol's recommended program carries its own top ups and meets the need (2026-10-22).
             'protoMeetsNeed' => method_exists(\App\Http\Controllers\CropProtocolController::class, 'withTopUps'),
             // A worker login's switches for the home screen tools (2026-10-22; true once its column is in).

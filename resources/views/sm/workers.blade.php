@@ -87,13 +87,13 @@
              worked another season joins this one in a tap, with their pay,
              skills and weekdays off. --}}
         <div id="workerMinePane" class="wa-pane space-y-3" hidden data-waiting="{{ (int) $gwWaiting }}">
-            <p class="text-sm text-gray-500">Everyone in <a href="{{ route('workers.global') }}" class="font-bold text-brand-700 underline">Global Workers</a> who is not in this season yet. Tap one to add them here; they bring their pay, skills and weekdays off.</p>
+            <p class="text-sm text-gray-500">Everyone in <a href="{{ route('workers.global', ['from' => \App\Support\BackTo::shell((int) $schedule->id, 'workers')]) }}" class="font-bold text-brand-700 underline">Global Workers</a> who is not in this season yet. Tap one to add them here; they bring their pay, skills and weekdays off.</p>
             <div id="gwList" class="gw-pick"></div>
         </div>
 
         <div id="workerNewPane" class="wa-pane space-y-4">
             {{-- Every card is a person of Global Workers (AsGlobalWorker::forCard), said where it is made. --}}
-            <p class="text-sm text-gray-500" id="workerNewRoster">Someone new is added to <a href="{{ route('workers.global') }}" class="font-bold text-brand-700 underline">Global Workers</a> too, so next season you pick them in a tap instead of typing them again.</p>
+            <p class="text-sm text-gray-500" id="workerNewRoster">Someone new is added to <a href="{{ route('workers.global', ['from' => \App\Support\BackTo::shell((int) $schedule->id, 'workers')]) }}" class="font-bold text-brand-700 underline">Global Workers</a> too, so next season you pick them in a tap instead of typing them again.</p>
         <div>
             <label for="workerName" class="form-label">Worker Name <span class="text-red-500">*</span></label>
             <input type="text" id="workerName" maxlength="255" class="form-input" placeholder="e.g. Juan Dela Cruz">
@@ -170,7 +170,7 @@
                 <span class="wl-acc-t"><b id="wlAccTitle">Login</b><small id="wlAccSay"></small></span>
             </div>
             <p class="wl-acc-sum" id="wlAccSum" hidden></p>
-            <a class="btn btn-white btn-sm w-full justify-center mt-3" id="wlAccGo" href="{{ route('workers.global') }}">Manage in Global Workers</a>
+            <a class="btn btn-white btn-sm w-full justify-center mt-3" id="wlAccGo" href="{{ route('workers.global', ['from' => \App\Support\BackTo::shell((int) $schedule->id, 'workers')]) }}">Manage in Global Workers</a>
         </div>
         @endif
         </div>

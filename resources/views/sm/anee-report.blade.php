@@ -11,7 +11,7 @@
 @section('title', $pageName . ': ' . $schedule->title)
 @section('page-title', $pageName)
 @section('page-subtitle', $schedule->title)
-@section('back', \App\Support\BackTo::url(route('sm.reports', ['id' => $schedule->id]), $schedule->id))
+@section('back', \App\Support\BackTo::url(\App\Support\BackTo::shell((int) $schedule->id, 'reports'), $schedule->id))
 
 @push('head')
 @include('partials.tag-sheet-css')
