@@ -948,7 +948,9 @@ class RangeEffect
         $label = $npk ? ($npk['name'] . (! empty($npk['local']) && preg_match('/^\d/', (string) $npk['local']) ? ' ' . $npk['local'] : '')) : ($book['b'] ?? $name);
 
         return ['date' => $date, 'name' => $name, 'as' => $label, 'company' => (string) ($book['c'] ?? ''), 'qty' => $qty, 'unit' => $unit, 'nut' => $nut, 'doseKnown' => $doseKnown,
-            'ai' => $ai, 'form' => $form, 'nsrc' => $nsrc, 'kindWord' => $book ? (ProductLibrary::TYPES[$book['t'] ?? ''] ?? null) : ($npk ? 'Fertilizer' : null),
+            // A product known only by its ingredient (a protocol's "Atrazine 90 WG") is the kind its ingredient is.
+            'ai' => $ai, 'form' => $form, 'nsrc' => $nsrc, 'kindWord' => $book ? (ProductLibrary::TYPES[$book['t'] ?? ''] ?? null)
+                : ($npk ? 'Fertilizer' : ($ai ? (ProductLibrary::TYPES[CompatBook::ingredient((string) $ai[0])['kind'] ?? ''] ?? null) : null)),
             'pct' => $pct, 'slug' => (string) ($npk['slug'] ?? ''), 'prodKgHa' => $prodKgHa];
     }
 

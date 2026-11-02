@@ -156,6 +156,10 @@
                         </div>
                         {{-- Grouped by kind, each kind by date (the owner, 2026-10-30); or by the day, or by the product. --}}
                         <div class="rfx-tgs" data-rfx-tries></div>
+                        {{-- What the plan puts on already (the owner, 2026-11-02: a saved reading opened with its fertilizers in
+                             the results and none listed here): the protocol's or the season's own, folded, so this list says
+                             everything the reading counts. Changed where they live, not here. --}}
+                        <div class="rfx-pick-added rfx-plan" data-rfx-plan></div>
                     </div>
                 </div>
                 {{-- The waterings planned here, shown while water is checked: each on its day, how much and how it goes on. --}}
@@ -596,9 +600,16 @@
     .rfx-gby-s button[aria-checked=true] { color: var(--rx-ink); }
     .rfx-gby-pill { position: absolute; z-index: 0; top: .2rem; bottom: .2rem; left: 0; width: 0; border-radius: 999px; background: var(--rx-card);
         box-shadow: 0 0 0 1.5px var(--rx-hover), 0 4px 10px -6px rgb(0 0 0 / .35); transition: transform .28s cubic-bezier(.22,1,.36,1), width .28s cubic-bezier(.22,1,.36,1); }
-    .rfx-tgs.is-regroup .rfx-tg { animation: rfxPop .3s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 30ms); }
+    .rfx-tgs.is-regroup .rfx-tg, .rfx-plan.is-regroup .rfx-tg { animation: rfxPop .3s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 30ms); }
+    /* The plan's own, in a plain box under the added ones: read here, changed in the protocol or in Activities. */
+    .rfx-plan { justify-self: stretch; width: 100%; background: var(--rx-soft); box-shadow: inset 0 0 0 1.5px var(--rx-line); }
+    .rfx-plan .rfx-pa-h > small { color: var(--rx-ink); background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line-2); }
+    .rfx-pl-note { font-size: .78rem; line-height: 1.45; color: var(--rx-muted); }
+    .rfx-chip.is-plan { cursor: default; font-weight: 700; }
+    .rfx-chip.is-plan:hover { transform: none; box-shadow: inset 0 0 0 1.5px var(--rx-line-2); }
+    .rfx-pl-done { font-style: normal; font-size: .7rem; font-weight: 800; color: var(--rx-muted); }
     @media (max-width: 479.98px) { .rfx-gby-s button { padding: .35rem .55rem; font-size: .76rem; } }
-    @media (prefers-reduced-motion: reduce) { .rfx-gby-pill { transition: none; } .rfx-tgs.is-regroup .rfx-tg { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .rfx-gby-pill { transition: none; } .rfx-tgs.is-regroup .rfx-tg, .rfx-plan.is-regroup .rfx-tg { animation: none; } }
     .rfx-tg-h small { margin-left: .2rem; padding: 0 .4rem; border-radius: 999px; font-size: .68rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
     .rfx-chip.is-try [data-dupe] { margin-right: -.1rem; }
     @keyframes rfxSlide { from { opacity: 0; transform: translateY(-8px); } }
@@ -1593,34 +1604,73 @@
     // the day it goes on, or by the fertilizer itself ("group by date of application ... or group by fertilizer").
     let GBY = 'type';
     try { const g = localStorage.getItem('rfx-gby'); if (['date', 'type', 'name'].includes(g)) GBY = g; } catch (_) {}
-    const byDate = (a, b) => String(S.tries[a].date || '').localeCompare(String(S.tries[b].date || '')) || String(S.tries[a].name).localeCompare(String(S.tries[b].name));
     const tryKey = (t) => t.productId ? 'p' + t.productId : 'n' + String(t.ai || t.name || '').trim().toLowerCase();
-    const tgHtml = (head, list, drop, k) => `<div class="rfx-tg" style="--k:${k}"><span class="rfx-tg-h">${head}<small>${list.length}</small></span><div class="rfx-chips is-wrap">${list.map((i) => tryChip(S.tries[i], i, drop)).join('')}</div></div>`;
-    const triesGroupsHtml = () => {
-        const idx = S.tries.map((t, i) => i).filter((i) => !S.tries[i].water);
+    // One grouping for every list of products here: the ones added, and the plan's own. Each item is { t, i, g: its kind
+    // tab, k: the product }; chip() draws it, told what its group already says.
+    const groupsHtml = (items, chip) => {
+        const nm = (x) => String(x.t.name || '');
+        const byDay = (a, b) => String(a.t.date || '').localeCompare(String(b.t.date || '')) || nm(a).localeCompare(nm(b));
+        const tg = (head, list, drop, k) => `<div class="rfx-tg" style="--k:${k}"><span class="rfx-tg-h">${head}<small>${list.length}</small></span><div class="rfx-chips is-wrap">${list.map((x) => chip(x, drop)).join('')}</div></div>`;
         if (GBY === 'date') {
             // A day each, in order, with the count the board uses that day when the reading has it.
             const by = {};
-            idx.forEach((i) => { (by[S.tries[i].date || ''] ||= []).push(i); });
+            items.forEach((x) => { (by[x.t.date || ''] ||= []).push(x); });
             return Object.keys(by).sort().map((d, k) => {
-                const dl = d && S.res ? (S.res.days.find((x) => x.d === d) || {}).dl : '';
+                const dl = d && S.res ? (S.res.days.find((y) => y.d === d) || {}).dl : '';
                 const head = d ? `📅 ${esc(DOW[D(d).getDay()] + ', ' + sayY(d))}${dl ? `<em>${esc(dl)}</em>` : ''}` : '📅 No day yet';
-                return tgHtml(head, by[d].sort((a, b) => String(groupOfTry(S.tries[a])).localeCompare(String(groupOfTry(S.tries[b]))) || String(S.tries[a].name).localeCompare(String(S.tries[b].name))), 'date', k);
+                return tg(head, by[d].sort((a, b) => a.g.localeCompare(b.g) || nm(a).localeCompare(nm(b))), 'date', k);
             }).join('');
         }
         if (GBY === 'name') {
             // A fertilizer each, by name, its days in order under it.
             const by = {};
-            idx.forEach((i) => { (by[tryKey(S.tries[i])] ||= []).push(i); });
-            return Object.values(by).sort((a, b) => String(S.tries[a[0]].name).localeCompare(String(S.tries[b[0]].name))).map((list, k) => {
-                const t = S.tries[list[0]];
-                const tab = PICK_TABS.find(([g]) => g === groupOfTry(t)) || PICK_TABS[0];
-                return tgHtml(`${tab[1]} ${esc(t.name)}`, list.sort(byDate), 'name', k);
+            items.forEach((x) => { (by[x.k] ||= []).push(x); });
+            return Object.values(by).sort((a, b) => nm(a[0]).localeCompare(nm(b[0]))).map((list, k) => {
+                const tab = PICK_TABS.find(([g]) => g === list[0].g) || PICK_TABS[0];
+                return tg(`${tab[1]} ${esc(list[0].t.name)}`, list.sort(byDay), 'name', k);
             }).join('');
         }
         const by = {};
-        idx.forEach((i) => { (by[groupOfTry(S.tries[i])] ||= []).push(i); });
-        return PICK_TABS.filter(([g]) => by[g]).map(([g, ic, label], k) => tgHtml(`${ic} ${esc(label)}`, by[g].sort(byDate), '', k)).join('');
+        items.forEach((x) => { (by[x.g] ||= []).push(x); });
+        return PICK_TABS.filter(([g]) => by[g]).map(([g, ic, label], k) => tg(`${ic} ${esc(label)}`, by[g].sort(byDay), '', k)).join('');
+    };
+    const tryItems = () => S.tries.map((t, i) => ({ t, i, g: groupOfTry(t), k: tryKey(t) })).filter((x) => !x.t.water);
+    const triesGroupsHtml = () => groupsHtml(tryItems(), (x, drop) => tryChip(x.t, x.i, drop));
+    /* What the plan puts on already: the protocol's own tasks, or the season's, as the reading on screen counts them
+       (a saved reading's own, as it was saved). Not the ones added here, not the waterings. */
+    // Its kind as the book says it; a fertilizer the book does not know goes by how it goes on, anything else under Others.
+    const planKind = (a) => {
+        const w = String(a.kindWord || '').toLowerCase();
+        if (TYPE_WORD[w]) return TYPE_WORD[w];
+        return /fertili/.test(w) || (!w && (a.carries || []).length) ? (a.form === 'foliar' ? 'foliar' : 'granular') : '';
+    };
+    const planItems = () => {
+        const seen = new Set();
+        return ((S.res && S.res.apps) || []).filter((a) => {
+            if (a.try || a.water || a.form === 'water') return false;
+            const key = a.date + '|' + a.name + '|' + (a.amount || '');
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        }).map((a, i) => ({ t: a, i, g: TAB_OF[planKind(a)] || 'other', k: 'n' + String(a.name || '').trim().toLowerCase() }));
+    };
+    const planChip = (x, drop) => `<span class="rfx-chip is-plan">${x.t.form === 'foliar' ? '💧' : '🟤'} ${drop === 'name' ? `<b>${esc(say(x.t.date))}</b>` : esc(x.t.name)} <small>${esc([drop ? '' : say(x.t.date), x.t.amount || ''].filter(Boolean).join(' · '))}</small>${x.t.done ? '<em class="rfx-pl-done">✓ done</em>' : ''}</span>`;
+    let planOpen = false;
+    try { planOpen = localStorage.getItem('rfx-plan-open') === '1'; } catch (_) {}
+    // Painted again with every reading; the same list is left alone, so its chips do not pop at each count.
+    const paintPlan = () => {
+        const box = $('[data-rfx-plan]');
+        const items = planItems();
+        const names = [...new Set(items.map((x) => x.t.name))];
+        const peek = names.slice(0, 3).join(', ') + (names.length > 3 ? ` and ${names.length - 3} more` : '');
+        const html = items.length ? `<button type="button" class="rfx-pa-h" data-rfx-plan-t aria-expanded="false"><b>${PB ? 'Already in the protocol' : 'Already on the plan'}</b><small>${items.length}</small><span class="rfx-pa-peek">${esc(peek)}</span>${CHEV}</button>
+            <div class="rfx-pa-b"><div class="rfx-pa-in"><p class="rfx-pl-note">${PB ? 'Tasks of the protocol, counted in the reading with the ones you add. Change or remove them in the protocol.' : 'Tasks of this lot, counted in the reading with the ones you add. Change or remove them in Activities.'}</p><div class="rfx-pa-sc">${groupsHtml(items, planChip)}</div></div></div>` : '';
+        box.classList.toggle('is-open', planOpen);
+        if (box.__html !== html) { box.innerHTML = html; box.__html = html; }
+        box.querySelector('[data-rfx-plan-t]')?.setAttribute('aria-expanded', String(planOpen));
+        // Grouping is offered once there are two to group, added or the plan's own.
+        gbyBox.hidden = tryItems().length + items.length < 2;
+        if (!gbyBox.hidden) requestAnimationFrame(paintGby);
     };
     const gbyBox = $('[data-rfx-gby]');
     // The pill slides under the one picked; measured, since the three words differ in width.
@@ -1639,11 +1689,18 @@
         GBY = b.dataset.gby;
         try { localStorage.setItem('rfx-gby', GBY); } catch (_) {}
         paintGby();
-        const box = $('[data-rfx-tries]');
-        box.classList.remove('is-regroup');
+        const boxes = [$('[data-rfx-tries]'), $('[data-rfx-plan]')];
+        boxes.forEach((box) => box.classList.remove('is-regroup'));
         paintTries();
-        void box.offsetWidth;
-        box.classList.add('is-regroup');
+        boxes.forEach((box) => { void box.offsetWidth; box.classList.add('is-regroup'); });
+    });
+    $('[data-rfx-plan]').addEventListener('click', (e) => {
+        const t = e.target.closest('[data-rfx-plan-t]');
+        if (!t) return;
+        planOpen = !planOpen;
+        try { localStorage.setItem('rfx-plan-open', planOpen ? '1' : '0'); } catch (_) {}
+        $('[data-rfx-plan]').classList.toggle('is-open', planOpen);
+        t.setAttribute('aria-expanded', String(planOpen));
     });
     // A watering planned here, as its chip says it.
     const watName = (t) => 'Watering' + (Number(t.qty) > 0 ? `, ${t.qty} ${t.unit === 'mm' ? 'mm' : 'cm'}` : '') + (t.method && t.method !== 'flood' && !isPaddy() ? ` by ${t.method}` : '');
@@ -1652,9 +1709,7 @@
     const paintWrow = () => { $('[data-rfx-wrow]').hidden = !(S.checks.some((k) => k.startsWith('w:')) || S.tries.some((t) => t.water)); };
     const paintTries = () => {
         $('[data-rfx-tries]').innerHTML = triesGroupsHtml();
-        // Grouping is offered once there are two fertilizers to group.
-        gbyBox.hidden = S.tries.filter((t) => !t.water).length < 2;
-        if (!gbyBox.hidden) requestAnimationFrame(paintGby);
+        paintPlan();
         $('[data-rfx-wtries]').innerHTML = S.tries.map((t, i) => [t, i]).filter(([t]) => t.water).sort((a, b) => String(a[0].date).localeCompare(String(b[0].date))).map(([t, i]) => watChip(t, i)).join('');
         $('[data-rfx-apply]').hidden = !S.tries.length || !(U.apply || (PB && window.pbCoverage));
         paintWrow();
@@ -2183,6 +2238,7 @@
     const paint = () => {
         // A day opened on the reading being replaced would speak of the old one.
         hideDay();
+        paintPlan();
         const R = S.res;
         const sm = R.summary;
         const ck = R.check;
