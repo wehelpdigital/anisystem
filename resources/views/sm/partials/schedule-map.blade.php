@@ -1277,7 +1277,7 @@
         cancelExtend();
         extending = { id: o.id, index: i, marker, color: o.color || '#f5c518', at: Date.now() };
         marker.setIcon(pinIcon(extending.color, 1.6));
-        marker.setZIndex(9999);
+        marker.setZIndex(Z_LIVE);
         if (!quiet && window.toast) toast('Drawing from this point. Tap the map to add, or tap another point to close.');
     }
     function cancelExtend() {
@@ -1440,6 +1440,26 @@
         return (kind === 'rect' || kind === 'area') ? insideCenter(pts) : alongMid(pts);
     }
 
+    /* WHAT IS NEWEST IS ON TOP (2026-11-03, the owner: "latest update or
+       drawing should always be on top and not behind or under"). The vector
+       map does not stack shapes in the order they were drawn, so each one is
+       given its place: a number that only climbs, taken when a shape is
+       drawn, loaded (the server sends them oldest change first), changed,
+       or picked up to be changed. Pins and written labels climb the same way
+       among the markers. The shape being drawn, and a teammate's live trace,
+       sit above every kept one. */
+    let zTop = 0;
+    const Z_LIVE = 1000000;
+    const Z_MARK = 900;
+    function raise(part) {
+        const z = ++zTop;
+        try {
+            if (part instanceof G().Marker) part.setZIndex(Z_MARK + z);
+            else if (part.setOptions) part.setOptions({ zIndex: z });
+        } catch (_) {}
+        return z;
+    }
+
     /* One renderer for local, remote and loaded shapes — measurements are
        recomputed from the points, so every viewer reads identical numbers. */
     function renderObject(o) {
@@ -1449,7 +1469,8 @@
         // The numbers this shape can show, gathered so one badge can reveal
         // or hide them all together.
         const mlabels = [];
-        const style = { map, strokeColor: o.color || '#f5c518', strokeWeight: o.width || 3, clickable: true };
+        const z = ++zTop;
+        const style = { map, strokeColor: o.color || '#f5c518', strokeWeight: o.width || 3, clickable: true, zIndex: z };
         const pts = o.points;
         if (o.kind === 'pen' || o.kind === 'line' || o.kind === 'path' || o.kind === 'arrow') {
             parts.push(new (G().Polyline)({ ...style, path: pts.map(LL),
@@ -1517,7 +1538,7 @@
                     labelOrigin: new (G().Point)(13, -9),
                 },
                 title: o.label || 'Pinned place',
-                zIndex: 900,
+                zIndex: Z_MARK + z,
             });
             if (o.label) {
                 pm.setLabel({ text: o.label, className: 'cmap-pin-name',
@@ -1530,6 +1551,7 @@
             parts.push(pm);
         } else if (o.kind === 'text') {
             const tm = textMark(pts[0], o.label || '', 'cmap-txt-g', '#111827');
+            tm.setZIndex(Z_MARK + z);
             // Its own face and its own size, for whoever is looking: the
             // person who typed it, a teammate it arrived at over Echo, and
             // this same screen after a reload — all three land here.
@@ -1975,7 +1997,7 @@
     }
     function previewTemp(closed) {
         if (tempShape) tempShape.setMap(null);
-        const opts = { map, strokeColor: color, strokeWeight: width, clickable: false };
+        const opts = { map, strokeColor: color, strokeWeight: width, clickable: false, zIndex: Z_LIVE };
         tempShape = closed
             ? new (G().Polygon)({ ...opts, paths: tempPts.map(LL), fillColor: color, fillOpacity: .06 })
             : new (G().Polyline)({ ...opts, path: tempPts.map(LL), icons: tool === 'arrow' ? [ARROW_HEAD(color)] : null });
@@ -2554,6 +2576,9 @@
         if (editing && editing.o.id === o.id) return;
         endEdit();
         const first = parts[0];
+        // The shape in hand is the one being changed, so it is on top of
+        // whatever it overlaps while it is moved and reshaped.
+        raise(first);
         if (first.setOptions) {
             first.setOptions({
                 draggable: true,
@@ -2655,7 +2680,7 @@
         if (!ll) return;
         sizeHandleFor = { o, mark };
         sizeHandle = new (G().Marker)({
-            map, position: ll, draggable: true, crossOnDrag: false, zIndex: 70,
+            map, position: ll, draggable: true, crossOnDrag: false, zIndex: Z_LIVE,
             title: 'Drag to size this label',
             // Bigger than it looks it needs to be: this is dragged one-handed,
             // outdoors, by somebody holding something else in the other hand.
@@ -3014,7 +3039,7 @@
         dropGhost(p.userId);
         if (p.done || !Array.isArray(p.points) || !p.points.length) return;
         const closed = (p.kind === 'rect' || p.kind === 'area');
-        const opts = { map, strokeColor: p.color || hue(p.userId), strokeWeight: 3, strokeOpacity: .55, clickable: false };
+        const opts = { map, strokeColor: p.color || hue(p.userId), strokeWeight: 3, strokeOpacity: .55, clickable: false, zIndex: Z_LIVE - 1 };
         const shape = closed
             ? new (G().Polygon)({ ...opts, paths: p.points.map(LL), fillColor: opts.strokeColor, fillOpacity: .05 })
             : new (G().Polyline)({ ...opts, path: p.points.map(LL) });

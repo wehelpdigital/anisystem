@@ -121,8 +121,10 @@ class ScheduleMapController extends BaseScheduleController
     {
         $schedule = $this->canvas($request);
 
+        // Oldest change first: the map stacks each shape over the ones before
+        // it, so the latest drawn or changed is on top (2026-11-03, the owner).
         $rows = $this->canvasQuery($schedule)
-            ->orderBy('id')
+            ->orderBy('updated_at')->orderBy('id')
             ->limit(2000)
             ->get();
 
@@ -566,8 +568,9 @@ class ScheduleMapController extends BaseScheduleController
             return $this->jsonFail($validator->errors()->first(), 422);
         }
 
+        // In the order they stack on the map, so the picture shows what the screen does.
         $objects = $this->canvasQuery($schedule)
-            ->orderBy('id')
+            ->orderBy('updated_at')->orderBy('id')
             ->limit(2000)
             ->get()
             ->map(fn ($o) => $o->shaped())
