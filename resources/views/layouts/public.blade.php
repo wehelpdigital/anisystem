@@ -252,6 +252,20 @@
         @media (min-width: 480px) { .fo-two { gap: 1.4rem; } }
         @media (max-width: 479.98px) { .fo-two .fo-list { font-size: .8rem; gap: .5rem; } .fo-two .fo-h { font-size: .95rem; } }
         .fo-note { font-size: .72rem; line-height: 1.5; color: #6b7280; }
+        /* Night, on the pages that wear the app's theme (2026-11-03, the owner:
+           the footer's logos and words could not be read). The app's night
+           palette turns bg-gray-900 near white, which put the white logo, the
+           headings and the tech marks on white. The footer is a dark band by
+           day already, so it keeps its day greys on a deeper ground; the light
+           band of links above it goes dark with the page, as the header does. */
+        html.dark .pub-foot { --color-gray-300: #d1d5db; --color-gray-400: #9ca3af; --color-gray-500: #6b7280; --color-gray-800: #1f2937; --color-gray-900: #0b0e09; border-top: 1px solid #1c2416; }
+        html.dark .pf { background: linear-gradient(180deg, #161c13 0%, #11160e 100%); border-top-color: #222b1a; }
+        html.dark .pf-h { color: #e8efe1; }
+        html.dark .pf-h svg { background: #1c2416; color: #a5c97e; box-shadow: 0 0 0 1px #2b3a1c; }
+        html.dark .pf-list a { color: #c3cdb8; }
+        html.dark .pf-list a:hover, html.dark .pf-list .pf-all { color: #a5d382; }
+        html.dark .pf-grid.has-guides .pf-col { border-bottom-color: #222b1a; }
+        html.dark .pf-grid.has-guides .pf-plus::before, html.dark .pf-grid.has-guides .pf-plus::after { background: #a5c97e; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col bg-white">
@@ -519,7 +533,7 @@
     </section>
     @endif
 
-    <footer class="bg-gray-900 text-gray-300">
+    <footer class="pub-foot bg-gray-900 text-gray-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-10 grid gap-8 items-start fo-grid">
             <div class="max-w-xl">
                 {{-- Its own shape at any width: a squeezed column used to
