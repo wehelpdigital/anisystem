@@ -3016,6 +3016,17 @@
                thing the note above says a button is not. */
             #actToolbar > #modulesBtn,
             #actToolbar > #activityActionsBtn { flex: 0 1 auto; min-width: 0; overflow: hidden; }
+            /* Modules gives way whole, never by squeezing its icon (2026-11-05,
+               the owner: the word sat off centre, worse on some phones). When
+               the row was short of room the hamburger shrank to a dot or to
+               nothing, and the gap after it still pushed the word right. Now
+               the icon keeps its size, and fitModulesBtn() drops the icon when
+               icon and word do not both fit, and the word when even it does
+               not, so what is left is always centred. */
+            #actToolbar > #modulesBtn > svg { flex-shrink: 0; }
+            #modulesBtn.mb-wordonly > svg { display: none; }
+            #modulesBtn.mb-icononly > #currentModuleLabel { display: none; }
+            #actToolbar > #modulesBtn.mb-icononly { width: 2.25rem; padding-left: 0; padding-right: 0; }
             #actHeaderBar > .btn,
             #actHeaderBar > .icon-btn,
             #actHeaderBar > #addActivityWrap { flex: 0 0 auto; }
@@ -6251,6 +6262,25 @@
         ['pointerdown', 'dragstart', 'submit'].forEach((type) => {
             body.addEventListener(type, (e) => { e.stopPropagation(); }, true);
         });
+    })();
+
+    /* Modules on a phone whose row is short of room: icon and word, else the
+       word alone, else the icon alone, whichever fits whole (see the CSS by
+       #actToolbar > #modulesBtn). Asked again whenever the row changes width. */
+    (() => {
+        const btn = document.getElementById('modulesBtn');
+        const row = document.getElementById('actToolbar');
+        if (!btn || !row || !('ResizeObserver' in window)) return;
+        const over = () => btn.scrollWidth > btn.clientWidth + 1;
+        const fitModulesBtn = () => {
+            btn.classList.remove('mb-wordonly', 'mb-icononly');
+            if (!btn.clientWidth || !over()) return;
+            btn.classList.add('mb-wordonly');
+            if (!over()) return;
+            btn.classList.replace('mb-wordonly', 'mb-icononly');
+        };
+        new ResizeObserver(() => requestAnimationFrame(fitModulesBtn)).observe(row);
+        fitModulesBtn();
     })();
 
     document.getElementById('modulesBtn')?.addEventListener('click', () => {
