@@ -2801,7 +2801,7 @@
     /* ---------- turning a box ----------
      *
      * (2026-11-04, the owner: "add a rotate functionality for the box shape".)
-     * A box in hand grows a second handle past the middle of its top side.
+     * A box in hand grows a second handle past the middle of its highest side.
      * Drag it round and the box turns about its own centre, corner pins,
      * sides and numbers with it, then saves for the team on release, one undo
      * step. The turning is done on the map's flat plane, where a right angle
@@ -2820,13 +2820,19 @@
         parts[0].getPath().forEach((v) => pts.push([v.lat(), v.lng()]));
         return pts.slice(0, 4);
     }
-    /** The box's centre and corners on the flat plane, and where its handle stands. */
+    /** The box's centre and corners on the flat plane, and where its handle
+        stands: past the side highest on the screen, whichever way the box was
+        drawn (a box's corners go round from wherever the drag began). */
     function turnSpot(ring) {
         if (ring.length < 4) return null;
         const w = ring.map(worldOf);
         if (w.some((p) => !p)) return null;
         const cx = (w[0].x + w[1].x + w[2].x + w[3].x) / 4, cy = (w[0].y + w[1].y + w[2].y + w[3].y) / 4;
-        const mx = (w[2].x + w[3].x) / 2, my = (w[2].y + w[3].y) / 2;
+        let mx = 0, my = Infinity;
+        for (let i = 0; i < 4; i++) {
+            const a = w[i], b = w[(i + 1) % 4];
+            if ((a.y + b.y) / 2 < my) { mx = (a.x + b.x) / 2; my = (a.y + b.y) / 2; }
+        }
         const d = Math.hypot(mx - cx, my - cy);
         if (!(d > 0)) return null;
         // A thumb's width past the side at any zoom: the gap is screen pixels.
@@ -3073,7 +3079,7 @@
     };
     /** A shape as the corners you can see. An upright box is two corners in
         the row, its bounds; a turned one keeps all four as they stand, in the
-        same order (bottom left, bottom right, top right, top left as drawn). */
+        order they go round. */
     function ringOf(o) {
         if (o.kind !== 'rect' || (o.points || []).length < 2) return o.points || [];
         if (o.points.length >= 4) return o.points.slice(0, 4);
