@@ -1,4 +1,5 @@
 import './bootstrap';
+import './phone-camera';
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
