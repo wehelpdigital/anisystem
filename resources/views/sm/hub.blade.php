@@ -272,6 +272,10 @@
             background: #e4efd4; color: #3d6823; }
         .sched-state-completed { background: #fde68a; color: #78350f; }
         .sched-facts { display: flex; flex-wrap: wrap; gap: .35rem; padding: .65rem 1.1rem 0; }
+        /* A worker's card has no button row under the facts, so the facts end
+           the card: without room below, the last chip sat on the bottom edge
+           and the rounded corner cut it off (2026-11-05). */
+        .sched-facts:last-child { padding-bottom: 1.05rem; }
         .sched-fact { display: inline-flex; align-items: center; gap: .3rem; font-size: .72rem; font-weight: 700;
             padding: .24rem .6rem; border-radius: 999px;
             background: var(--color-gray-50, #f9fafb); border: 1px solid var(--color-gray-200, #e5e7eb);
