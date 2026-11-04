@@ -62,7 +62,7 @@
     ];
 
     $title = 'Easy to Use: Made by Filipino Farmers, for Filipino Farmers';
-    $desc = 'anee.io is easy to use and easy to understand: a short video on every screen, Taglish help tags on the technical words, Anee in Tagalog, Bisaya, Ilocano or English, and offline mode for the field. Made and designed by Filipino farmers for Filipino farmers.';
+    $desc = 'Easy to use, made by Filipino farmers: a video on every screen, Taglish help tags, Anee in Tagalog, Bisaya, Ilocano or English, and offline mode.';
 @endphp
 
 @section('title', $title)

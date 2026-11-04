@@ -85,8 +85,8 @@
         ['How much is Anee Auto?', 'Anee Auto is priced per lot for the whole season, and the app shows the price before you start. Its credits cover the planning, the daily checks and your questions all season.'],
     ];
 
-    $title = 'Anee Auto: Your Whole Season Planned, Then Re-Planned Every Morning';
-    $desc = 'With Anee Auto you answer a few questions about your farm once. Anee reads the weather, your soil and your variety, writes the whole season, checks it again at 5:00 every morning, and tells you and your workers what to do each day.';
+    $title = 'Anee Auto: Your Season Planned, Then Updated Every Morning';
+    $desc = 'Answer a few questions about your farm once. Anee reads the weather, your soil and your variety, writes the whole season and checks it every morning.';
 @endphp
 
 @section('title', $title)

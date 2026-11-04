@@ -172,7 +172,7 @@
     ];
 
     $title = 'Anee vs Now: Your Farm Today and Your Farm With anee.io';
-    $desc = 'See your season done the way you farm now and with Anee, your smart farm technician: nine jobs side by side, what guessing can cost a hectare beside a year of a plan, and what credits and Anee Auto do for you.';
+    $desc = 'Your farming season done the usual way and with Anee, side by side: nine jobs, what guessing can cost a hectare, and what Anee Auto does for you.';
     // The field film's files (2026-10-29): each address carries the file's time, so a new cut reaches every browser.
     $avnFilm = function (string $f) {
         $path = public_path('videos/site/' . $f);
