@@ -76,10 +76,23 @@ final class Seo
         return self::publicIndexable() && self::isPublicPage($request) ? 'index, follow' : 'noindex, nofollow';
     }
 
-    /** Behind the login, or a door of its own: closed to every crawler. */
-    private const CLOSED = ['/app/', '/admin/', '/account', '/purchase', '/notifications', '/login', '/signup', '/auth/',
+    /**
+     * Behind the login, or a door of its own: closed to every crawler.
+     * Prefixes, as robots.txt reads them: '/app' shuts the dashboard at /app
+     * itself as well as everything under it ('/app/' alone left the dashboard
+     * open), and '/admin' the same. Checked against every GET route on
+     * 2026-11-05: what is not here is a public page, robots.txt, the
+     * sitemap, a redirect, or a file the public pages draw with.
+     */
+    private const CLOSED = ['/app', '/admin', '/account', '/purchase', '/checkout', '/notifications', '/login', '/signup', '/auth/',
         '/forgot-password', '/reset-password', '/verify-email', '/verify-notice', '/pw/', '/s/', '/worker-invite/',
-        '/ads/', '/storage/', '/broadcasting/', '/blog-preview', '/site-preview', '/deploy-check', '/up', '/ask-anee/answer/',
+        '/ads/', '/storage/', '/broadcasting/', '/blog-preview', '/site-preview', '/deploy-check', '/up',
+        // A visitor's own question and answer at Try and Ask Anee.
+        '/ask-anee/question/', '/ask-anee/answer/',
+        // Machine doors: the mother app's, the scheduler's, the satellites'.
+        '/mother-api/', '/cron/', '/svc/',
+        // The installed app's own screens (public/launch.html, offline.html).
+        '/launch.html', '/offline.html',
         // The flag's switch: it sets a cookie and redirects, never a page.
         '/face/'];
 
