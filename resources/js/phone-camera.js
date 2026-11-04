@@ -6,14 +6,17 @@
  * file due to low memory", on a phone with 8 GB of RAM and most of 256 GB free.
  *
  * Those words are the browser's own ("Unable to complete previous operation
- * due to low memory"), and they are not about storage. A photo input with
- * `capture` sends the person out to the phone's camera app. While that app is
- * open the phone may close the browser behind it to give the camera room
- * (many makers do this whatever the RAM), and the photo then comes back to a
- * page that is gone. Some camera apps also just come back empty handed.
+ * due to low memory"), and they are not about storage. An input with `capture`
+ * sends the person out to the phone's camera app, and the picture or clip has
+ * to travel back from that app into the browser. While the camera is open the
+ * phone may close the browser behind it to give the camera room (many makers
+ * do this whatever the RAM), and the hand back then lands on a page that is
+ * gone. Some camera apps also just come back empty handed, and a clip is a
+ * far bigger thing to hand back than a photo.
  *
- * So every photo input with `capture` is watched from here, and none of the
- * pages that own one had to change:
+ * So every photo or video input with `capture` is watched from here, and none
+ * of the pages that own one had to change (Quick Capture, Quick Record, Notes,
+ * Activities, the chats, Reels, Anee Auto):
  *
  *   - The phone's camera app stays the first choice. Its pictures are sharper
  *     than a web page's (focus, HDR, the full sensor), see quick-capture.
@@ -22,18 +25,24 @@
  *     camera was out: this phone switches to the camera inside the app, and
  *     says why.
  *   - A trip that comes back with nothing offers the camera inside the app.
- *   - The camera inside the app never leaves the page. Its photo goes into the
- *     same input with a change event, exactly as the camera app's would have,
- *     so every page takes it the way it always took a photo. A button in it
- *     goes back to the phone's camera app.
+ *   - The camera inside the app never leaves the page, so nothing has to come
+ *     back across. Its photo or clip goes into the same input with a change
+ *     event, exactly as the camera app's would have, so every page takes it
+ *     the way it always did. A button in it goes back to the phone's camera.
  *
- * Videos still go to the phone's camera app: only photo inputs come here.
+ * A clip is filmed as MP4 (H.264) where the browser can: a WebM straight off
+ * the recorder carries no length, and the pages that measure a clip before
+ * they take it would see "forever". One minute at most, the app's clip rule.
  */
 
 const MODE = 'anee.camera';          // 'app' once this phone uses the camera inside the app
-const AWAY = 'anee.camera.away';     // when the last trip out to the camera app began
+const AWAY = 'anee.camera.away';     // "<when>:<photo|video>", the last trip out to the camera app
 const FRESH_MS = 10 * 60 * 1000;     // a closed page older than this is not the camera's doing
-const SILENT_MS = 4000;              // back on the page, and still no photo and no "cancel"
+// Back on the page, and still nothing and no "cancel". A clip takes longer to
+// copy across from the camera app than a photo does.
+const SILENT_MS = { photo: 4000, video: 15000 };
+const CLIP_SECONDS = 60;
+const CLIP_BITS = 2500000;           // about 19 MB a minute: kind to a farm's data
 
 const store = {
     get(k) { try { return localStorage.getItem(k); } catch (_) { return null; } },
@@ -45,15 +54,26 @@ const isPhone = () => {
     try { return window.matchMedia('(pointer: coarse)').matches && navigator.maxTouchPoints > 0; } catch (_) { return false; }
 };
 const canStream = () => !!(window.isSecureContext && navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-const isPhotoCapture = (el) => el instanceof HTMLInputElement && el.type === 'file' && el.hasAttribute('capture')
-    && /image/i.test(el.accept || '') && !/video/i.test(el.accept || '');
+const canRecord = () => canStream() && typeof window.MediaRecorder === 'function';
+/** 'photo' or 'video' for a camera input this file looks after, else null. */
+function kindOf(el) {
+    if (!(el instanceof HTMLInputElement) || el.type !== 'file' || !el.hasAttribute('capture')) return null;
+    const a = el.accept || '';
+    const photo = /image/i.test(a), video = /video/i.test(a);
+    if (photo && !video) return 'photo';
+    if (video && !photo) return 'video';
+    return null;
+}
+const canServe = (kind) => (kind === 'video' ? canRecord() : canStream());
 const usesAppCamera = () => store.get(MODE) === 'app';
 const reduced = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+const clock = (s) => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
 
 const ICON = {
     x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>',
     flip: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20 11a8 8 0 00-14.9-3M4 13a8 8 0 0014.9 3M4 4v4h4M20 20v-4h-4"/></svg>',
     phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2"/><path stroke-linecap="round" d="M11 18.5h2"/></svg>',
+    again: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg>',
 };
 
 /* ---- the look, written once on first use ---- */
@@ -69,7 +89,7 @@ dialog.pcam::backdrop { background: #000; }
 .pcam-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; background: #000;
     opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
 .pcam-video.is-live { opacity: 1; }
-.pcam.is-user .pcam-video { transform: scaleX(-1); }
+.pcam.is-user:not(.is-review) .pcam-video { transform: scaleX(-1); }
 .pcam-flash { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
 .pcam-flash.is-on { animation: pcamFlash .28s cubic-bezier(.22,1,.36,1); }
 @keyframes pcamFlash { from { opacity: .75; } to { opacity: 0; } }
@@ -79,25 +99,40 @@ dialog.pcam::backdrop { background: #000; }
     justify-content: center; background: rgb(0 0 0 / .4); color: #fff; cursor: pointer; }
 .pcam-round svg { width: 1.35rem; height: 1.35rem; }
 .pcam-round[hidden] { display: none; }
-.pcam-warn { flex: 0 1 auto; min-width: 0; text-align: center; font-size: .78rem; font-weight: 700; line-height: 1.3;
+.pcam.is-rec [data-pcam="flip"], .pcam.is-review [data-pcam="flip"] { visibility: hidden; }
+.pcam-mid { flex: 0 1 auto; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: .35rem; }
+.pcam-warn, .pcam-clock { text-align: center; font-size: .78rem; font-weight: 700; line-height: 1.3;
     padding: .4rem .75rem; border-radius: 999px; background: rgb(0 0 0 / .6); }
-.pcam-warn[hidden] { display: none; }
+.pcam-warn[hidden], .pcam-clock[hidden] { display: none; }
+.pcam-clock { font-variant-numeric: tabular-nums; display: inline-flex; align-items: center; gap: .4rem; }
+/* The red dot only while it is actually recording. */
+.pcam-clock i { display: none; width: .55rem; height: .55rem; border-radius: 999px; background: #ef4444; }
+.pcam.is-rec .pcam-clock i { display: block; animation: pcamBlink 1s steps(2, start) infinite; }
+@keyframes pcamBlink { to { visibility: hidden; } }
 .pcam-bottom { position: absolute; left: 0; right: 0; bottom: 0; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: .75rem;
     padding: 1.25rem 1rem calc(1.25rem + env(safe-area-inset-bottom)); background: linear-gradient(transparent, rgb(0 0 0 / .6)); }
-.pcam-side { justify-self: start; display: inline-flex; flex-direction: column; align-items: center; gap: .2rem; padding: .25rem;
-    border: 0; background: none; color: #fff; font-size: .7rem; font-weight: 700; cursor: pointer; }
-.pcam-side svg { width: 1.6rem; height: 1.6rem; }
+.pcam-left { justify-self: start; }
 .pcam-right { justify-self: end; }
+.pcam-side { display: inline-flex; flex-direction: column; align-items: center; gap: .2rem; padding: .25rem;
+    border: 0; background: none; color: #fff; font-size: .7rem; font-weight: 700; cursor: pointer; }
+.pcam-side[hidden] { display: none; }
+.pcam-side svg { width: 1.6rem; height: 1.6rem; }
+.pcam.is-rec [data-pcam="phone"] { visibility: hidden; }
 .pcam-shutter { width: 4.5rem; height: 4.5rem; border-radius: 999px; border: 4px solid #fff; background: transparent; padding: 0;
     display: flex; align-items: center; justify-content: center; cursor: pointer; }
 .pcam-shutter span { width: 3.4rem; height: 3.4rem; border-radius: 999px; background: #fff;
-    transition: transform .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    transition: transform .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), border-radius .28s cubic-bezier(.22,1,.36,1); }
 .pcam-shutter:active span { transform: scale(.86); }
 .pcam.is-busy .pcam-shutter span { transform: scale(.7); opacity: .55; }
 .pcam.is-off .pcam-shutter { opacity: .35; pointer-events: none; }
-.pcam-done { display: inline-flex; align-items: center; gap: .45rem; padding: .3rem .8rem .3rem .3rem; border: 0; border-radius: 999px;
+.pcam.is-video .pcam-shutter span { background: #ef4444; }
+.pcam.is-rec .pcam-shutter span { border-radius: .55rem; transform: scale(.5); }
+.pcam.is-review .pcam-shutter { visibility: hidden; }
+.pcam-done, .pcam-use { display: inline-flex; align-items: center; gap: .45rem; border: 0; border-radius: 999px;
     background: #f5c518; color: #1f2937; font-size: .85rem; font-weight: 800; cursor: pointer; animation: pcamIn .28s cubic-bezier(.22,1,.36,1); }
-.pcam-done[hidden] { display: none; }
+.pcam-done { padding: .3rem .8rem .3rem .3rem; }
+.pcam-use { padding: .75rem 1.1rem; }
+.pcam-done[hidden], .pcam-use[hidden] { display: none; }
 .pcam-done img { width: 2.2rem; height: 2.2rem; border-radius: .55rem; object-fit: cover; display: block; }
 @keyframes pcamIn { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: none; } }
 .pcam-say { position: absolute; left: 1.5rem; right: 1.5rem; top: 50%; transform: translateY(-50%); text-align: center;
@@ -116,7 +151,7 @@ dialog.pcam::backdrop { background: #000; }
 .pcam-note .is-quiet { background: rgb(255 255 255 / .12); color: #fff; }
 @media (prefers-reduced-motion: reduce) {
     dialog.pcam, .pcam-video, .pcam-shutter span, .pcam-note { transition: none; }
-    .pcam-flash.is-on, .pcam-done, .pcam-say { animation: none; }
+    .pcam-flash.is-on, .pcam-done, .pcam-use, .pcam-say, .pcam.is-rec .pcam-clock i { animation: none; }
 }`;
     document.head.appendChild(s);
 }
@@ -159,8 +194,9 @@ function closeNote(now = false) {
 }
 
 /* ---- the camera itself ---- */
-let dlg = null, stream = null, target = null, facing = 'environment', busy = false;
+let dlg = null, stream = null, target = null, kind = 'photo', facing = 'environment', busy = false;
 let shots = [], armedUntil = 0, warnTimer = null, closeTimer = null, startTok = 0;
+let recorder = null, chunks = [], recAt = 0, clockTimer = null, capTimer = null, clip = null, clipUrl = null;
 const $ = (sel) => dlg.querySelector(sel);
 
 function build() {
@@ -175,13 +211,19 @@ function build() {
         <div class="pcam-say" hidden><p></p><button type="button" data-pcam="retry">Try again</button></div>
         <div class="pcam-top">
             <button type="button" class="pcam-round" data-pcam="close" aria-label="Close the camera">${ICON.x}</button>
-            <span class="pcam-warn" hidden></span>
+            <div class="pcam-mid"><span class="pcam-clock" hidden><i></i><b></b></span><span class="pcam-warn" hidden></span></div>
             <button type="button" class="pcam-round" data-pcam="flip" aria-label="Switch to the other camera" hidden>${ICON.flip}</button>
         </div>
         <div class="pcam-bottom">
-            <button type="button" class="pcam-side" data-pcam="phone" title="Take it with the phone's own camera app">${ICON.phone}<span>Phone camera</span></button>
+            <div class="pcam-left">
+                <button type="button" class="pcam-side" data-pcam="phone" title="Use the phone's own camera app">${ICON.phone}<span>Phone camera</span></button>
+                <button type="button" class="pcam-side" data-pcam="again" hidden>${ICON.again}<span>Record again</span></button>
+            </div>
             <button type="button" class="pcam-shutter" data-pcam="snap" aria-label="Take the photo"><span></span></button>
-            <div class="pcam-right"><button type="button" class="pcam-done" data-pcam="done" hidden><img alt=""><b></b></button></div>
+            <div class="pcam-right">
+                <button type="button" class="pcam-done" data-pcam="done" hidden><img alt=""><b></b></button>
+                <button type="button" class="pcam-use" data-pcam="use" hidden>Use video</button>
+            </div>
         </div>`;
     document.body.appendChild(dlg);
     // Escape, and the phone's back gesture on a modal dialog.
@@ -190,9 +232,11 @@ function build() {
         const b = e.target.closest('[data-pcam]');
         if (!b) return;
         const act = b.getAttribute('data-pcam');
-        if (act === 'snap') snap();
+        if (act === 'snap') (kind === 'video' ? toggleRecording() : snap());
         else if (act === 'close') leave();
         else if (act === 'done') hand(shots.map((s) => s.file));
+        else if (act === 'use') useClip();
+        else if (act === 'again') { dropClip(); showLive(); }
         else if (act === 'retry') start();
         else if (act === 'flip') { facing = facing === 'user' ? 'environment' : 'user'; start(); }
         else if (act === 'phone') toPhoneCamera();
@@ -204,9 +248,16 @@ async function open(input) {
     closeNote(true);
     clearTimeout(closeTimer);
     target = input;
+    kind = kindOf(input) || 'photo';
     clearShots();
+    dropClip();
     armedUntil = 0;
     warn(null);
+    dlg.classList.toggle('is-video', kind === 'video');
+    dlg.classList.remove('is-rec', 'is-review', 'is-busy');
+    $('[data-pcam="snap"]').setAttribute('aria-label', kind === 'video' ? 'Start recording' : 'Take the photo');
+    $('.pcam-clock').hidden = kind !== 'video';
+    paintClock(0);
     facing = input.getAttribute('capture') === 'user' ? 'user' : 'environment';
     if (!dlg.open) dlg.showModal();
     requestAnimationFrame(() => dlg.classList.add('is-open'));
@@ -220,27 +271,36 @@ async function start() {
     dlg.classList.add('is-off');
     dlg.classList.toggle('is-user', facing === 'user');
     const v = $('.pcam-video');
-    // With a still camera to ask, the preview only has to be good enough to
-    // aim with. Without one, the photo IS a preview frame, so ask for the most.
-    const big = !('ImageCapture' in window);
-    let s;
+    // A photo with a still camera to ask only needs a preview to aim with; a
+    // photo without one IS a preview frame, so it asks for the most. A clip
+    // is filmed at 720p: plenty to see a leaf by, and light on a farm's data.
+    const big = kind === 'photo' && !('ImageCapture' in window);
+    const video = {
+        facingMode: { ideal: facing },
+        width: { ideal: kind === 'video' ? 1280 : (big ? 3840 : 1920) },
+        height: { ideal: kind === 'video' ? 720 : (big ? 2160 : 1080) },
+    };
+    let s = null, mute = false;
     try {
-        s = await navigator.mediaDevices.getUserMedia({ audio: false, video: {
-            facingMode: { ideal: facing },
-            width: { ideal: big ? 3840 : 1920 },
-            height: { ideal: big ? 2160 : 1080 },
-        } });
+        s = await navigator.mediaDevices.getUserMedia({ audio: kind === 'video', video });
     } catch (err) {
-        if (tok !== startTok) return;
-        const blocked = err && (err.name === 'NotAllowedError' || err.name === 'SecurityError');
-        say(blocked
-            ? 'The camera is blocked for this site. Allow it in the browser\'s site settings and try again, or use the phone camera.'
-            : 'The camera could not start. Another app may be using it. Try again, or use the phone camera.');
-        return;
+        // A clip with the microphone refused can still be a silent clip.
+        if (kind === 'video') {
+            try { s = await navigator.mediaDevices.getUserMedia({ audio: false, video }); mute = true; } catch (_) { s = null; }
+        }
+        if (!s) {
+            if (tok !== startTok) return;
+            const blocked = err && (err.name === 'NotAllowedError' || err.name === 'SecurityError');
+            say(blocked
+                ? 'The camera is blocked for this site. Allow it in the browser\'s site settings and try again, or use the phone camera.'
+                : 'The camera could not start. Another app may be using it. Try again, or use the phone camera.');
+            return;
+        }
     }
     // Closed, or turned around again, while this camera was still starting.
     if (!dlg.open || tok !== startTok) { s.getTracks().forEach((t) => t.stop()); return; }
     stream = s;
+    if (mute) warn('The microphone is blocked, so this clip will have no sound.', 4000);
     v.srcObject = s;
     v.addEventListener('loadeddata', () => { v.classList.add('is-live'); dlg.classList.remove('is-off'); }, { once: true });
     try { await v.play(); } catch (_) { /* autoplay holds it, muted */ }
@@ -251,8 +311,17 @@ async function start() {
 }
 
 function stop() {
+    if (recorder) {
+        // Shut mid take: the clip is thrown away, not handed on.
+        recorder.onstop = null;
+        try { if (recorder.state !== 'inactive') recorder.stop(); } catch (_) { /* already stopped */ }
+        recorder = null;
+    }
+    clearInterval(clockTimer);
+    clearTimeout(capTimer);
     if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
     if (!dlg) return;
+    dlg.classList.remove('is-rec');
     const v = $('.pcam-video');
     v.srcObject = null;
     v.classList.remove('is-live');
@@ -271,6 +340,8 @@ function warn(text, ms = 0) {
     if (text) w.textContent = text;
     if (text && ms) warnTimer = setTimeout(() => { w.hidden = true; }, ms);
 }
+
+/* ---- photos ---- */
 
 /**
  * The picture. A still camera first (ImageCapture: the full sensor and its own
@@ -317,6 +388,11 @@ function frame(v) {
     return new Promise((res) => c.toBlob(res, 'image/jpeg', 0.92));
 }
 
+function stamp() {
+    const d = new Date(), two = (n) => String(n).padStart(2, '0');
+    return d.getFullYear() + two(d.getMonth() + 1) + two(d.getDate()) + '_' + two(d.getHours()) + two(d.getMinutes()) + two(d.getSeconds());
+}
+
 async function snap() {
     if (busy || !stream) return;
     const v = $('.pcam-video');
@@ -333,9 +409,7 @@ async function snap() {
     if (!blob) { warn('The photo did not take. Please try again.', 3000); return; }
     const type = blob.type || 'image/jpeg';
     const ext = type === 'image/png' ? 'png' : 'jpg';
-    const d = new Date(), two = (n) => String(n).padStart(2, '0');
-    const stamp = d.getFullYear() + two(d.getMonth() + 1) + two(d.getDate()) + '_' + two(d.getHours()) + two(d.getMinutes()) + two(d.getSeconds());
-    const file = new File([blob], `photo_${stamp}_${shots.length + 1}.${ext}`, { type, lastModified: Date.now() });
+    const file = new File([blob], `photo_${stamp()}_${shots.length + 1}.${ext}`, { type, lastModified: Date.now() });
     if (!target.multiple) { hand([file]); return; }
     shots.push({ file, url: URL.createObjectURL(blob) });
     paintShots();
@@ -355,7 +429,108 @@ function clearShots() {
     if (dlg) paintShots();
 }
 
-/** The photos go into the input the page gave us, as if the camera app sent them. */
+/* ---- clips ---- */
+
+/** MP4 first: it says how long it is, and every phone plays H.264. */
+function clipType() {
+    const opts = ['video/mp4;codecs=avc1,mp4a.40.2', 'video/mp4;codecs=avc1', 'video/webm;codecs=vp9,opus', 'video/webm;codecs=vp8,opus', 'video/webm', 'video/mp4'];
+    for (const m of opts) { try { if (MediaRecorder.isTypeSupported(m)) return m; } catch (_) { /* next */ } }
+    return '';
+}
+
+function paintClock(secs) {
+    if (!dlg) return;
+    $('.pcam-clock b').textContent = clock(secs) + ' of ' + clock(CLIP_SECONDS);
+}
+
+function toggleRecording() {
+    if (recorder) { if (recorder.state === 'recording') recorder.stop(); return; }
+    if (!stream || clip) return;
+    const type = clipType();
+    let rec;
+    try { rec = new MediaRecorder(stream, Object.assign({ videoBitsPerSecond: CLIP_BITS }, type ? { mimeType: type } : {})); }
+    catch (_) {
+        try { rec = new MediaRecorder(stream); } catch (__) { warn('This phone cannot record here. Use the phone camera.', 4000); return; }
+    }
+    chunks = [];
+    rec.ondataavailable = (e) => { if (e.data && e.data.size) chunks.push(e.data); };
+    rec.onstop = () => recorded(rec);
+    try { rec.start(1000); } catch (_) { warn('This phone cannot record here. Use the phone camera.', 4000); return; }
+    recorder = rec;
+    recAt = Date.now();
+    dlg.classList.add('is-rec');
+    $('[data-pcam="snap"]').setAttribute('aria-label', 'Stop recording');
+    paintClock(0);
+    clockTimer = setInterval(() => paintClock((Date.now() - recAt) / 1000), 250);
+    // The app's clip rule is a minute: the take ends there rather than being
+    // refused afterwards.
+    capTimer = setTimeout(() => {
+        if (recorder && recorder.state === 'recording') {
+            recorder.stop();
+            warn('Clips can be up to one minute, so recording stopped there.', 4000);
+        }
+    }, CLIP_SECONDS * 1000);
+}
+
+function recorded(rec) {
+    clearInterval(clockTimer);
+    clearTimeout(capTimer);
+    recorder = null;
+    if (!dlg.open) return;
+    dlg.classList.remove('is-rec');
+    $('[data-pcam="snap"]').setAttribute('aria-label', 'Start recording');
+    const type = (rec.mimeType || chunks[0]?.type || 'video/webm').split(';')[0];
+    const blob = new Blob(chunks, { type });
+    chunks = [];
+    if (!blob.size) { warn('Nothing was recorded. Please try again.', 3000); return; }
+    clip = blob;
+    clipUrl = URL.createObjectURL(blob);
+    // Watched back here before it goes, the way a camera app shows its take.
+    const v = $('.pcam-video');
+    v.srcObject = null;
+    v.src = clipUrl;
+    v.muted = false;
+    v.loop = true;
+    v.controls = true;
+    v.classList.add('is-live');
+    v.play?.().catch(() => { /* the controls are there */ });
+    dlg.classList.add('is-review');
+    $('[data-pcam="phone"]').hidden = true;
+    $('[data-pcam="again"]').hidden = false;
+    $('[data-pcam="use"]').hidden = false;
+}
+
+/** Back to the live picture, for another take. */
+function showLive() {
+    const v = $('.pcam-video');
+    v.pause?.();
+    v.removeAttribute('src');
+    v.controls = false;
+    v.loop = false;
+    v.muted = true;
+    if (stream) { v.srcObject = stream; v.play?.().catch(() => {}); } else start();
+    paintClock(0);
+}
+
+function dropClip() {
+    if (clipUrl) URL.revokeObjectURL(clipUrl);
+    clip = null; clipUrl = null;
+    if (!dlg) return;
+    dlg.classList.remove('is-review');
+    $('[data-pcam="phone"]').hidden = false;
+    $('[data-pcam="again"]').hidden = true;
+    $('[data-pcam="use"]').hidden = true;
+}
+
+function useClip() {
+    if (!clip) return;
+    const ext = clip.type.includes('mp4') ? 'mp4' : 'webm';
+    hand([new File([clip], `video_${stamp()}.${ext}`, { type: clip.type, lastModified: Date.now() })]);
+}
+
+/* ---- handing over, and leaving ---- */
+
+/** The photos or the clip go into the input the page gave us, as if the camera app sent them. */
 function hand(files) {
     const input = target;
     shut();
@@ -365,18 +540,20 @@ function hand(files) {
         files.forEach((f) => dt.items.add(f));
         input.files = dt.files;
     } catch (_) {
-        window.toast?.('This browser cannot pass the photo on. Use the phone camera instead.', 'error');
+        window.toast?.('This browser cannot pass it on. Use the phone camera instead.', 'error');
         return;
     }
     input.dispatchEvent(new Event('input', { bubbles: true }));
     input.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
-/** Closed with nothing taken: the page hears "cancel", as from the camera app. */
+/** Closed with nothing kept: the page hears "cancel", as from the camera app. */
 function leave() {
-    if (shots.length && Date.now() > armedUntil) {
+    const held = shots.length ? shots.length + (shots.length === 1 ? ' photo' : ' photos')
+        : (clip || recorder) ? 'this clip' : '';
+    if (held && Date.now() > armedUntil) {
         armedUntil = Date.now() + 3000;
-        warn('Tap ✕ again to throw away ' + shots.length + (shots.length === 1 ? ' photo' : ' photos'), 3000);
+        warn('Tap ✕ again to throw away ' + held, 3000);
         return;
     }
     const input = target;
@@ -389,7 +566,14 @@ function shut(now = false) {
     clearShots();
     target = null;
     busy = false;
-    if (!dlg || !dlg.open) return;
+    if (!dlg) return;
+    const v = $('.pcam-video');
+    v.pause?.();
+    v.removeAttribute('src');
+    v.controls = false;
+    v.muted = true;
+    dropClip();
+    if (!dlg.open) return;
     dlg.classList.remove('is-open', 'is-busy');
     const done = () => { try { dlg.close(); } catch (_) { /* already closed */ } };
     clearTimeout(closeTimer);
@@ -413,8 +597,11 @@ let awayFrom = null;      // the input whose trip is under way
 let silentTimer = null;
 
 function offer(input) {
-    if (!canStream() || !input.isConnected) return;
-    note('No photo came back from the camera. If it could not save the photo, take it with the camera inside anee.io instead.', {
+    const k = kindOf(input);
+    if (!k || !canServe(k) || !input.isConnected) return;
+    note(k === 'video'
+        ? 'No video came back from the camera. If it could not pass the clip back, record it with the camera inside anee.io instead.'
+        : 'No photo came back from the camera. If it could not save the photo, take it with the camera inside anee.io instead.', {
         quiet: 'Not now',
         go: 'Use the app camera',
         onGo: () => { store.set(MODE, 'app'); open(input); },
@@ -424,12 +611,13 @@ function offer(input) {
 
 document.addEventListener('click', (e) => {
     const input = e.target;
-    if (!isPhotoCapture(input) || !isPhone()) return;
+    const k = kindOf(input);
+    if (!k || !isPhone()) return;
     if (input === passThrough) passThrough = null;
-    else if (usesAppCamera() && canStream()) { e.preventDefault(); open(input); return; }
+    else if (usesAppCamera() && canServe(k)) { e.preventDefault(); open(input); return; }
     awayFrom = input;
     clearTimeout(silentTimer);
-    store.set(AWAY, String(Date.now()));
+    store.set(AWAY, Date.now() + ':' + k);
 }, true);
 
 document.addEventListener('change', (e) => {
@@ -437,7 +625,7 @@ document.addEventListener('change', (e) => {
     awayFrom = null;
     clearTimeout(silentTimer);
     store.drop(AWAY);
-    closeNote();   // a slow photo that arrived after the offer went up
+    closeNote();   // a slow photo or clip that arrived after the offer went up
 }, true);
 
 document.addEventListener('cancel', (e) => {
@@ -449,7 +637,7 @@ document.addEventListener('cancel', (e) => {
     offer(input);
 }, true);
 
-// Back on the page, and the page lived: wipe the mark. If neither a photo nor
+// Back on the page, and the page lived: wipe the mark. If neither a file nor
 // a "cancel" follows, the browser lost the camera's answer on the way back.
 document.addEventListener('visibilitychange', () => {
     if (document.visibilityState !== 'visible' || !awayFrom) return;
@@ -460,7 +648,7 @@ document.addEventListener('visibilitychange', () => {
         if (awayFrom !== input) return;
         awayFrom = null;
         offer(input);
-    }, SILENT_MS);
+    }, SILENT_MS[kindOf(input)] || SILENT_MS.photo);
 });
 
 // Leaving the page the ordinary way is not the phone closing it.
@@ -468,15 +656,17 @@ window.addEventListener('pagehide', () => { if (awayFrom) store.drop(AWAY); });
 
 /* A page that opens with a fresh mark was closed while the camera was out. */
 function closedWhileAway() {
-    const at = Number(store.get(AWAY) || 0);
-    if (!at) return;
+    const [at, k] = String(store.get(AWAY) || '').split(':');
+    if (!Number(at)) return;
     store.drop(AWAY);
-    if (Date.now() - at > FRESH_MS || !isPhone() || !canStream()) return;
+    if (Date.now() - Number(at) > FRESH_MS || !isPhone() || !canServe(k === 'video' ? 'video' : 'photo')) return;
     store.set(MODE, 'app');
-    note('The phone closed anee.io while its camera was open, so that photo was lost. From now on this phone takes photos with the camera inside anee.io, which keeps the app open. Please take the photo again.');
+    note(k === 'video'
+        ? 'The phone closed anee.io while its camera was open, so that clip was lost. From now on this phone films with the camera inside anee.io, which keeps the app open. Please record it again.'
+        : 'The phone closed anee.io while its camera was open, so that photo was lost. From now on this phone takes photos with the camera inside anee.io, which keeps the app open. Please take the photo again.');
 }
 if (document.readyState === 'complete') setTimeout(closedWhileAway, 400);
 else window.addEventListener('load', () => setTimeout(closedWhileAway, 400), { once: true });
 
 // For a probe, and for any page that wants to open it on purpose.
-window.aneeCamera = { open: (input) => isPhotoCapture(input) && canStream() && open(input), usesAppCamera };
+window.aneeCamera = { open: (input) => !!kindOf(input) && canServe(kindOf(input)) && open(input), usesAppCamera };
