@@ -58,7 +58,7 @@
             return ($m && $y) ? floor((1 - $y / ($m * 12)) * 100 + 1e-9) : 0;
         })->max();
     @endphp
-    <section class="py-16 sm:py-20 bg-gray-50 bg-drift pd-section" x-data="pdDeck()">
+    <section class="py-16 sm:py-20 bg-gray-50 bg-drift pd-section" x-data="pdDeck()" data-track-section="plans">
         <div class="pd-scope max-w-6xl mx-auto px-4 sm:px-6">
             <div class="pd-head reveal">
                 <div class="pd-seg pd-bill" role="group" aria-label="Billing period">

@@ -29,7 +29,8 @@
             ? 'Mag-register nang libre sa anee.io para mabasa ang buong pahina, pati ang bawat gabay sa pananim at paghahanda ng lupa.'
             : 'Register for free on anee.io to read the whole page, and every guide on crops and land preparation.'));
 @endphp
-<div class="sp-gate-card" @if ($cardId) id="{{ $cardId }}" @endif data-gate-card>
+<div class="sp-gate-card" @if ($cardId) id="{{ $cardId }}" @endif data-gate-card
+     data-track-section="content_gate" data-track-view="content_gate_view" data-track-gate_for="{{ $member ? 'member' : 'guest' }}">
     @if ($G::previewing())
         <div class="sp-gate-as">{{ $tl ? 'Ganito ito nakikita ng bisita.' : 'This is what a guest sees.' }}
             <a href="{{ url($here) }}">{{ $tl ? 'Bumalik sa buong pahina ›' : 'Back to the full page ›' }}</a></div>

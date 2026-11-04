@@ -7,6 +7,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- A broken link is worth seeing in the reports. --}}
+    @include('partials.site-analytics', ['bare' => true])
     <title>@yield('code') · {{ config('app.name', 'anee.io') }}</title>
     {{-- Match the app's theme before first paint (same key the app writes). --}}
     <script>

@@ -592,6 +592,7 @@
             }, 'ask_farm');
             token = res.data.token;
             email = mail;
+            window.aneeTrack?.('generate_lead', { lead_source: 'ask_anee', crop: state.crop });
             $('akHi').textContent = `Hi ${res.data.first}! What would you like to ask?`;
             const crop = state.cropLabel.split(' (')[0];
             const sizeWords = (+size.toFixed(2)) + ' ' + (state.unit === 'sqm' ? 'sq. meters' : (size === 1 ? 'hectare' : 'hectares'));
@@ -635,10 +636,12 @@
             }
             if (d.pending) throw new Error('Anee is taking a long time to read that. Please try again.');
             say(d.reply, !d.agri);
+            window.aneeTrack?.('ask_anee_question', { about_farming: d.agri ? 'yes' : 'no' });
             if (d.agri) {
                 await new Promise((r) => setTimeout(r, 1600));
                 await prepare();
                 const sent = (await post(URLS.send, { token }, 'ask_send')).data || {};
+                window.aneeTrack?.('ask_anee_answer_sent');
                 $('akSentTo').textContent = email;
                 $('akSentQ').textContent = '“' + q + '”';
                 $('akNext').textContent = 'One free question a week.' + (sent.next ? ' Your next one opens on ' + when(sent.next) + '.' : '');
@@ -739,6 +742,7 @@
     };
     let shutTimer = null;
     function refuse(d) {
+        window.aneeTrack?.('ask_anee_refused', { reason: d.refused || 'week' });
         const w = WHY[d.refused] || WHY.week;
         $('akModalIc').textContent = w.ic;
         $('akModalT').textContent = w.t;

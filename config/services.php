@@ -66,6 +66,12 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
     ],
 
+    // Google Analytics on the public site (App\Support\SiteAnalytics): the live address only.
+    'analytics' => [
+        'container' => env('ANALYTICS_CONTAINER', 'GTM-NSBBVB84'),
+        'hosts' => explode(',', (string) env('ANALYTICS_HOSTS', 'anee.io,www.anee.io')),
+    ],
+
     // Community GIF search. The key stays server-side; the app proxies searches.
     'giphy' => [
         'key' => env('GIPHY_API_KEY'),

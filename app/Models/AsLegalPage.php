@@ -47,7 +47,7 @@ class AsLegalPage extends BaseModel
     public const DEFAULTS_DATE = '2026-09-25';
 
     /** A page whose standard wording came later than the rest. */
-    private const DEFAULT_DATES = ['eula' => '2026-10-28'];
+    private const DEFAULT_DATES = ['eula' => '2026-10-28', 'privacy' => '2026-11-05', 'cookies' => '2026-11-05'];
 
     public function scopePublished($q)
     {

@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     {{-- First in the head: some verifiers read only the top of a page. --}}
     @include('partials.site-verification')
+    @include('partials.site-analytics')
     @include('partials.boot-veil-css')
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     {{-- Page pinch-zoom is off app-wide, on the owner's ask: the two places
