@@ -8,9 +8,11 @@
 {{-- A tool page: no bottom tab bar on a phone and no footer (2026-10-15, the owner). --}}
 @section('body-class', 'hide-tabbar no-footer')
 @section('page-title', 'Maps')
-@section('page-subtitle', 'Your farm maps, for every season')
+{{-- Opened from a season's Maps tile (?season=): that season's maps and your
+     own, and the way back is the season (ScheduleMapController::seasonDoor). --}}
+@section('page-subtitle', ! empty($season) ? $season->title : 'Your farm maps, for every season')
 @section('help-key', 'maps')
-@section('back', \App\Support\BackTo::url(route('app.dashboard')))
+@section('back', ! empty($season) ? route('sm.hub', ['id' => $season->id]) : \App\Support\BackTo::url(route('app.dashboard')))
 
 @push('head')
     <style>
@@ -258,7 +260,7 @@
                  heading, because this page's own header already says Maps and
                  a second line saying "Team map" above the tools was the same
                  sentence twice. --}}
-            @include('sm.partials.schedule-map', ['schedule' => null, 'mapChrome' => 'maps'])
+            @include('sm.partials.schedule-map', ['schedule' => null, 'mapChrome' => 'maps', 'linkSeason' => ! empty($season) ? (int) $season->id : null])
         </div>
     </div>
 

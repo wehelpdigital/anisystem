@@ -7,9 +7,11 @@
 {{-- A tool page: no bottom tab bar on a phone and no footer (2026-10-15, the owner). --}}
 @section('body-class', 'hide-tabbar no-footer')
 @section('page-title', 'Draw')
-@section('page-subtitle', 'Your drawings, from every season')
+{{-- Opened from a season's Draw tile (?season=): that season's drawings, a
+     new one filed in its notebook, and the way back is the season. --}}
+@section('page-subtitle', ! empty($season) ? $season->title : 'Your drawings, from every season')
 @section('help-key', 'draw')
-@section('back', \App\Support\BackTo::url(route('app.dashboard')))
+@section('back', ! empty($season) ? route('sm.hub', ['id' => $season->id]) : \App\Support\BackTo::url(route('app.dashboard')))
 
 @push('head')
     <style>
@@ -218,11 +220,21 @@
             // farm: a view-level Draw grant reads them, the pad and the bin
             // belong to 'edit'. The server refuses their writes regardless —
             // this keeps the shelf from offering doors that only refuse.
-            const SEASON_MAY_WRITE = @json(\App\Support\WorkerContext::canWriteModule('draw') && \App\Support\WorkerContext::canEdit());
-            const mayWrite = (d) => !d || !d.scheduleId || SEASON_MAY_WRITE;
-            const NEW_TILE = '<button type="button" class="dr-new" data-new>'
+            // The Draw pen alone, as the server asks (2026-11-05): the plan's
+            // pen as well shut a worker the owner had given Draw.
+            const SEASON_MAY_WRITE = @json(\App\Support\WorkerContext::canWriteModule('draw'));
+            // The season this page was opened for, else 0: a new drawing is
+            // filed in its notebook rather than your own.
+            const SEASON_ID = @json(! empty($season) ? (int) $season->id : 0);
+            // Where a drawing lives (a new one: this page's season, else your
+            // own shelf); your own are always yours to change.
+            const mayWrite = (d) => {
+                const sid = d && d.scheduleId ? d.scheduleId : (d && d.noteId ? 0 : SEASON_ID);
+                return !sid || SEASON_MAY_WRITE;
+            };
+            const NEW_TILE = mayWrite(null) ? '<button type="button" class="dr-new" data-new>'
                 + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>'
-                + '<span>New drawing</span></button>';
+                + '<span>New drawing</span></button>' : '';
 
             function card(d, i) {
                 const tags = [];
@@ -345,8 +357,9 @@
                         editable: !!objects,
                         noteId: over ? seed.noteId : null,
                         index: over ? (seed.index || 0) : 0,
-                        // Saved over: back where it lives. New: your own.
-                        scheduleId: over ? (seed.scheduleId || 0) : 0,
+                        // Saved over: back where it lives. New: your own, or
+                        // the season's whose page this is.
+                        scheduleId: over ? (seed.scheduleId || 0) : SEASON_ID,
                         // Which shelf the note lives on — board and day notes
                         // hold drawings too, and a save-over must land there.
                         source: over ? (seed.source || 'note') : 'note',
@@ -376,11 +389,11 @@
                     overwriteLabel: seed.title ? `“${seed.title}”` : 'the one you opened',
                     // Lights the pad's "From the gallery" door: the drawing's
                     // own season, else every season's pictures.
-                    scheduleId: seed.scheduleId || null,
+                    scheduleId: seed.scheduleId || SEASON_ID || null,
                     allSchedules: true,
                     // A drawing of your own keeps its undo history on your
                     // own shelf.
-                    undoGlobal: !seed.scheduleId,
+                    undoGlobal: !(seed.scheduleId || SEASON_ID),
                 });
             }
 

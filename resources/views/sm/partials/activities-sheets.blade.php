@@ -912,6 +912,7 @@
                 'growth' => 'plant.png',
                 'gallery' => 'gallery.png',
                 'maps' => 'location-marker.png',
+                'draw' => 'writting.png',
                 'reports' => 'pie-chart.png',
             ];
             $modNav = [
@@ -925,6 +926,10 @@
                 ['notes', 'Notes', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'],
                 ['tags', 'Tags', 'M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-5 5a2 2 0 01-2.828 0l-7-7A2 2 0 013 11V5a2 2 0 012-2h2z'],
                 ['gallery', 'Gallery', 'M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4'],
+                // Maps and Draw are pages of their own (/app/maps, /app/draw),
+                // opened for this season: links, not panes of the shell.
+                ['maps', 'Maps', 'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2'],
+                ['draw', 'Draw', 'M15.232 5.232l3.536 3.536M9 13l6.232-6.232a2.5 2.5 0 113.536 3.536L12.536 16.536 8 18l1-4.464z'],
                 ['growth', 'Growth Stages', 'M12 21c0-4 1-7 4-9M12 21c0-5-2-8-6-9m6 9V8m0 0c0-2.5 1.5-4 4-4 0 2.5-1.5 4-4 4zm0 0C12 5.5 10.5 4 6.5 4c0 2.5 1.5 4 5.5 4z'],
                 ['weather', 'Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z'],
                 ['reports', 'Reports', 'M11 3.055A9.001 9.001 0 1020.945 13H11V3.055zM20.488 9H15V3.512A9.025 9.025 0 0120.488 9z'],
@@ -943,6 +948,7 @@
                 'tags' => $may('activities'),
                 'notes' => $may('notes'),
                 'maps' => $may('maps'),
+                'draw' => $may('draw'),
                 'reports' => $may('reports'),
                 'ai' => $may('ai'),
             ];
@@ -954,13 +960,28 @@
             </span>
             All seasons
         </a>
-        @php $tierShut = fn (string $k) => in_array($k, ['workers', 'inventory'], true) && ! \App\Support\Tier::scheduleCan($schedule, $k); @endphp
+        @php
+            $tierShut = fn (string $k) => in_array($k, ['workers', 'inventory', 'maps'], true) && ! \App\Support\Tier::scheduleCan($schedule, $k);
+            $navHref = fn (string $k) => match ($k) {
+                'maps' => route('maps.page', ['season' => $schedule->id]),
+                'draw' => route('draw.page', ['season' => $schedule->id]),
+                default => null,
+            };
+            $navSay = fn (string $k) => match ($k) {
+                'workers' => 'Workers come with {plan}. Track the crew, their days and their pay on every activity.',
+                'maps' => 'Maps come with {plan}. Draw your fields, measure them and pin your lots.',
+                default => 'The Inventory comes with {plan}. Track your stock and what each activity uses.',
+            };
+        @endphp
         @foreach ($modNav as [$key, $label, $icon])
             {{-- A module the farm's plan lacks keeps its row, locked: the tap
                  opens the upgrade sheet instead of the module. --}}
-            <button type="button" class="module-nav-row w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50"
+            {{-- A page of its own is a plain link (module-nav-go, not
+                 module-nav-row, so the shell does not try to swap it in). --}}
+            @php $rowTag = $navHref($key) ? 'a' : 'button'; @endphp
+            <{{ $rowTag }} @if ($navHref($key)) href="{{ $navHref($key) }}" @unless ($tierShut($key)) data-nav-loader @endunless class="module-nav-go @else type="button" class="module-nav-row @endif w-full flex items-center gap-3 rounded-xl px-3 py-3 text-left font-semibold text-gray-700 hover:bg-gray-50"
                     data-module="{{ $key }}"
-                    @if ($tierShut($key)) data-tier-lock="{{ \App\Support\Tier::scheduleUnlocksAt($schedule, $key) }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule, $key), $key === 'workers' ? 'Workers come with {plan}. Track the crew, their days and their pay on every activity.' : 'The Inventory comes with {plan}. Track your stock and what each activity uses.') }}" @endif>
+                    @if ($tierShut($key)) data-tier-lock="{{ \App\Support\Tier::scheduleUnlocksAt($schedule, $key) }}" data-lock-say="{{ \App\Support\Tier::say(\App\Support\Tier::scheduleUnlocksAt($schedule, $key), $navSay($key)) }}" @endif>
                 <span class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
                     @if ($key === 'ai')
                         <img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="" class="w-6 h-6 rounded-full object-cover">
@@ -973,7 +994,7 @@
                 <span class="grow {{ $tierShut($key) ? 'tl-dim' : '' }}">{{ $label }}</span>
                 @if ($tierShut($key))<span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg></span>@endif
                 <svg class="w-4 h-4 text-gray-300 module-nav-check hidden" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-            </button>
+            </{{ $rowTag }}>
         @endforeach
     </div>
 </div>

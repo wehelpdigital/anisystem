@@ -33,6 +33,15 @@ class ScheduleDrawController extends BaseScheduleController
     public function page(Request $request)
     {
         $me = (int) \Illuminate\Support\Facades\Auth::id();
+        // Opened from a season's Draw tile (?season=, 2026-11-05): only that
+        // season's drawings, and a new one is filed in its notebook. The
+        // owner grants Draw per season, and a worker given it had no door to
+        // it inside the season.
+        $season = null;
+        if ((int) $request->query('season') > 0) {
+            $season = $this->schedule((int) $request->query('season'));
+            abort_unless(\App\Support\WorkerContext::canUseModule('draw'), 403);
+        }
         $drawings = [];
         $collect = function ($holder, int $scheduleId, ?string $season, string $source, string $title, string $words, ?string $noteHref) use (&$drawings) {
             foreach ($this->mediaOf($holder) as $i => $m) {
@@ -79,8 +88,8 @@ class ScheduleDrawController extends BaseScheduleController
             }
         };
 
-        // Your own drawings.
-        foreach (AsScheduleNote::active()->where('croppingScheduleId', 0)->where('userId', $me)
+        // Your own drawings (not on a season's page: those are the season's).
+        foreach ($season ? [] : AsScheduleNote::active()->where('croppingScheduleId', 0)->where('userId', $me)
             ->where('media', 'like', '%"drawing"%')->orderByDesc('id')->limit(300)->get() as $note) {
             $collect($note, 0, null, 'note', (string) $note->title, trim(strip_tags((string) $note->body)),
                 route('notes.hub', ['open' => $note->id]));
@@ -88,9 +97,11 @@ class ScheduleDrawController extends BaseScheduleController
 
         // And the ones drawn inside the seasons you work in, where they stay.
         if (\App\Support\WorkerContext::canView() && \App\Support\WorkerContext::canUseModule('draw')) {
-            $seasons = \App\Models\AsCroppingSchedule::active()
-                ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
-                ->pluck('title', 'id');
+            $seasons = $season
+                ? collect([$season->id => $season->title])
+                : \App\Models\AsCroppingSchedule::active()
+                    ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
+                    ->pluck('title', 'id');
             $ids = $seasons->keys()->all();
             if ($ids) {
                 foreach (AsScheduleNote::active()->whereIn('croppingScheduleId', $ids)->orderByDesc('id')->limit(300)->get() as $note) {
@@ -116,6 +127,7 @@ class ScheduleDrawController extends BaseScheduleController
 
         return view('sm.draw', [
             'schedule' => null,
+            'season' => $season,
             'drawings' => $drawings,
         ]);
     }
@@ -232,9 +244,13 @@ class ScheduleDrawController extends BaseScheduleController
     public function save(Request $request)
     {
         // A season's drawing is written back where it lives, by someone who
-        // may write there; a new one is always a note of your own.
+        // may write there; a new one is a note of your own, or of the season
+        // whose Draw page it was made on.
         $sid = (int) $request->query('scheduleId');
-        $schedule = $sid > 0 ? $this->scheduleFromRequest($request) : null;
+        // The Draw pen writes a season's drawings (or the notebook's): asking
+        // for the plan's pen as well refused a worker the owner had given
+        // Draw, and the route already asks for draw:edit (2026-11-05).
+        $schedule = $sid > 0 ? $this->scheduleForNoteMedia($request, ['draw']) : null;
         $me = (int) \Illuminate\Support\Facades\Auth::id();
 
         $validator = Validator::make($request->all(), [
@@ -309,8 +325,10 @@ class ScheduleDrawController extends BaseScheduleController
                 \App\Support\MediaStore::delete($oldThumb);
             }
         } else {
+            // A new drawing is your own, or, from a season's Draw page, the
+            // season's: filed in its notebook where its team can see it.
             $note = AsScheduleNote::create([
-                'croppingScheduleId' => 0,
+                'croppingScheduleId' => $schedule?->id ?? 0,
                 'userId' => $me,
                 'title' => (string) $request->input('title'),
                 'body' => $this->drawingBody((string) $request->input('note')),
@@ -403,7 +421,8 @@ class ScheduleDrawController extends BaseScheduleController
     {
         $sid = (int) $request->query('scheduleId');
         if ($sid > 0) {
-            $schedule = $writing ? $this->scheduleFromRequest($request) : $this->schedule($sid);
+            // Writing (saving over, deleting) takes the Draw pen, as save() does.
+            $schedule = $writing ? $this->scheduleForNoteMedia($request, ['draw']) : $this->schedule($sid);
             $sid = $schedule->id;
         }
         $source = (string) ($request->input('source') ?? $request->query('source'));

@@ -45,13 +45,38 @@ class ScheduleMapController extends BaseScheduleController
      */
     public function page(Request $request)
     {
+        $season = $this->seasonDoor($request);
+
         return view('sm.maps', [
             'schedule' => null,
-            'saves' => MapAccess::rows(MapAccess::shelf()->orderByDesc('id')->limit(200)->get()),
+            // Opened from a season (?season=, the season's Maps tile): the maps
+            // it uses and your own; a map saved here is linked to it.
+            'season' => $season,
+            'saves' => MapAccess::rows(($season ? MapAccess::choices($season->id) : MapAccess::shelf())
+                ->orderByDesc('id')->limit(200)->get()),
             // Whether your canvas holds anything worth going back to.
             'liveCount' => $this->canvasQuery(null)->count(),
             'attachLot' => null,
         ]);
+    }
+
+    /**
+     * The season a Maps page was opened for (2026-11-05): a season's Maps
+     * tile opens this page with ?season=, because the owner grants Maps per
+     * season and a worker given it had no door to it inside the season.
+     * Reached through the season like every module (its access, its rights),
+     * and only with the Maps pen there.
+     */
+    private function seasonDoor(Request $request): ?\App\Models\AsCroppingSchedule
+    {
+        $sid = (int) $request->query('season');
+        if ($sid <= 0) {
+            return null;
+        }
+        $season = $this->schedule($sid);
+        abort_unless(\App\Support\WorkerContext::canUseModule('maps'), 403);
+
+        return $season;
     }
 
     /**
@@ -754,6 +779,15 @@ class ScheduleMapController extends BaseScheduleController
                 MapAccess::link((int) $saveId, $schedule->id);
                 if ($request->has('tags')) {
                     \App\Support\ScheduleTags::sync($schedule, 'map', (int) $saveId, $request->input('tags', []));
+                }
+            } elseif ((int) $request->input('linkSeason') > 0) {
+                // Saved on the Maps page opened from a season's tile: that
+                // season uses it, so its owner and team see it there. Only
+                // with the Maps pen in that season; without it the map is
+                // simply your own.
+                $linkTo = $this->schedule((int) $request->input('linkSeason'));
+                if (\App\Support\WorkerContext::canWriteModule('maps')) {
+                    MapAccess::link((int) $saveId, $linkTo->id);
                 }
             }
 

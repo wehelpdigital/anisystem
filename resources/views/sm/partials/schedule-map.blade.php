@@ -929,6 +929,9 @@
      * there; measure it; save the whole thing. The errand narrows what the
      * screen ASKS for, not what it allows. */
     const ATTACH = @json($attachLot ?? null);
+    // The season the Maps page was opened for (its Maps tile): a map saved
+    // here is linked to it, so its owner and team see it (2026-11-05).
+    const LINK_SEASON = @json($linkSeason ?? null);
     // 'team' or 'lot' — see the note at the top of this file. The engine is
     // the same either way; what changes is who it thinks it is talking to.
     const CHROME = @json($mapChrome);
@@ -4052,6 +4055,7 @@
                 mode: saveMode,
                 // Which file to write into. Absent means a new one.
                 saveId: replace && LOADED_SAVE ? LOADED_SAVE.id : null,
+                linkSeason: LINK_SEASON,
                 // Drawn with the team or drawn alone: the same tool, but not
                 // the same thing to whoever loads it later.
                 source: @json(request()->routeIs('sm.collab') ? 'team' : 'solo'),

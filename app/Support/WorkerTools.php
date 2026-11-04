@@ -109,6 +109,12 @@ class WorkerTools
     public static function forRequest(string $routeName, Request $request): array
     {
         $isPage = $request->isMethodSafe() && ! $request->wantsJson() && ! $request->boolean('json');
+        // A season's Maps or Draw tile opens these pages with ?season=, and
+        // that door follows the season's Maps and Draw, not the dashboard's
+        // switch (2026-11-05). The page itself asks the season's pen.
+        if ((int) $request->query('season') > 0 && in_array($routeName, ['maps.page', 'draw.page'], true)) {
+            $isPage = false;
+        }
         $hit = [];
         foreach (self::all() as $key => [, , , $routes, $pages]) {
             foreach ($routes as $pattern) {

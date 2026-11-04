@@ -103,9 +103,15 @@
         // could remember which one a photo had gone into.
         ['Gallery', 'gallery', (int) $mediaCount,
             'M4 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM8 14l2.5-3 2 2.5L15 10l3 4'],
-        // Maps and Draw left the season (2026-09-30): they are the grower's
-        // own tools in Global and Quick Tools, and a season uses a map by
-        // linking it (a lot, an activity, a day, the Collab Room).
+        // Maps and Draw left the season on 2026-09-30 for Global and Quick
+        // Tools, and with them the only door a worker had: the owner grants
+        // both per season, so a worker given them saw nothing here
+        // (2026-11-05). The tiles open those pages for THIS season: its maps
+        // and drawings, and what is made there is filed in it (see $tileHref).
+        ['Maps', 'maps', null,
+            'M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2'],
+        ['Draw', 'draw', null,
+            'M15.232 5.232l3.536 3.536M9 13l6.232-6.232a2.5 2.5 0 113.536 3.536L12.536 16.536 8 18l1-4.464z'],
         // "Chat Anee": on this shelf the tile beside it is a drawing
         // pad and the one above it is a map, and "AI" named the machinery
         // rather than the person you talk to. The person is Anee.
@@ -535,9 +541,22 @@
             @php
                 $tileLocked = in_array($moduleKey, ['workers', 'inventory', 'maps'], true) && ! \App\Support\Tier::scheduleCan($schedule, $moduleKey);
                 $tileRung = $tileLocked ? \App\Support\Tier::scheduleUnlocksAt($schedule, $moduleKey) : '';
+                // Maps and Draw are pages of their own, not panes of the
+                // Activities shell: opened with ?season they show this
+                // season's maps and drawings and file new ones in it.
+                $tileHref = match ($moduleKey) {
+                    'maps' => route('maps.page', ['season' => $schedule->id]),
+                    'draw' => route('draw.page', ['season' => $schedule->id]),
+                    default => route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]),
+                };
+                $tileSay = match ($moduleKey) {
+                    'workers' => 'Workers come with {plan}. Track your crew, their days and their pay.',
+                    'maps' => 'Maps come with {plan}. Draw your fields, measure them and pin your lots.',
+                    default => 'Inventory comes with {plan}. Track your stock and what each activity uses.',
+                };
             @endphp
-            <a href="{{ route('sm.activities', ['id' => $schedule->id, 'module' => $moduleKey]) }}" @unless ($tileLocked) data-nav-loader @endunless class="card card-hover block"
-               @if ($tileLocked) data-tier-lock="{{ $tileRung }}" data-lock-say="{{ \App\Support\Tier::say($tileRung, $moduleKey === 'workers' ? 'Workers come with {plan}. Track your crew, their days and their pay.' : 'Inventory comes with {plan}. Track your stock and what each activity uses.') }}" @endif>
+            <a href="{{ $tileHref }}" @unless ($tileLocked) data-nav-loader @endunless class="card card-hover block"
+               @if ($tileLocked) data-tier-lock="{{ $tileRung }}" data-lock-say="{{ \App\Support\Tier::say($tileRung, $tileSay) }}" @endif>
                 <div class="p-4 flex flex-col gap-3">
                     <div class="flex items-start justify-between">
                         <div class="w-11 h-11 rounded-xl bg-brand-50 flex items-center justify-center {{ $tileLocked ? 'tl-dim' : '' }}">
