@@ -132,7 +132,7 @@
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="rect" data-short="Box">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1.5"/></svg>
-                    <span>Box: drag to measure sides and area</span>
+                    <span>Box: drag to measure sides and area. Select it to turn it</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="area" data-short="Area">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 6-3 10H7L4 9l8-6z"/></svg>
@@ -233,13 +233,27 @@
                 </button>
             </div>
             <div class="sheet-body cmap-swatches" style="padding-bottom:1.1rem">
+                {{-- Fifteen colours and any other (2026-11-04, the owner: "add more
+                     colors"). Bright first, because they are drawn over a
+                     satellite picture of green fields. --}}
                 <button type="button" class="cmap-swatch is-active" data-mcolor="#f5c518" style="--c:#f5c518" aria-label="Yellow"></button>
-                <button type="button" class="cmap-swatch" data-mcolor="#ffffff" style="--c:#ffffff" aria-label="White"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#f97316" style="--c:#f97316" aria-label="Orange"></button>
                 <button type="button" class="cmap-swatch" data-mcolor="#ef4444" style="--c:#ef4444" aria-label="Red"></button>
-                <button type="button" class="cmap-swatch" data-mcolor="#22c55e" style="--c:#22c55e" aria-label="Green"></button>
-                <button type="button" class="cmap-swatch" data-mcolor="#3b82f6" style="--c:#3b82f6" aria-label="Blue"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#ec4899" style="--c:#ec4899" aria-label="Pink"></button>
                 <button type="button" class="cmap-swatch" data-mcolor="#a855f7" style="--c:#a855f7" aria-label="Purple"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#6366f1" style="--c:#6366f1" aria-label="Indigo"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#3b82f6" style="--c:#3b82f6" aria-label="Blue"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#0ea5e9" style="--c:#0ea5e9" aria-label="Sky blue"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#14b8a6" style="--c:#14b8a6" aria-label="Teal"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#22c55e" style="--c:#22c55e" aria-label="Green"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#84cc16" style="--c:#84cc16" aria-label="Lime"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#a16207" style="--c:#a16207" aria-label="Brown"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#9ca3af" style="--c:#9ca3af" aria-label="Grey"></button>
+                <button type="button" class="cmap-swatch" data-mcolor="#ffffff" style="--c:#ffffff" aria-label="White"></button>
                 <button type="button" class="cmap-swatch" data-mcolor="#111827" style="--c:#111827" aria-label="Black"></button>
+                <label class="cmap-swatch cmap-swatch-any" title="Any colour">
+                    <input type="color" id="cmapColorAny" value="#f5c518" aria-label="Choose any colour">
+                </label>
             </div>
         </div>
         <div class="sheet hidden" id="cmapSavesSheet" style="--sheet-width:26rem">
@@ -665,6 +679,10 @@
     .cmap-swatch { width: 2.1rem; height: 2.1rem; border-radius: 999px; background: var(--c);
         border: 2px solid rgb(0 0 0 / .08); transition: transform .15s ease, box-shadow .15s ease; }
     .cmap-swatch.is-active { box-shadow: 0 0 0 3px var(--color-white), 0 0 0 5px var(--color-brand-500); transform: scale(1.05); }
+    /* Any colour: the rainbow until one is picked, then that colour inside a rainbow ring. */
+    .cmap-swatch-any { position: relative; overflow: hidden; cursor: pointer;
+        background: radial-gradient(circle, var(--c, transparent) 0 46%, transparent 47%), conic-gradient(#ef4444, #f5c518, #22c55e, #0ea5e9, #6366f1, #ec4899, #ef4444); }
+    .cmap-swatch-any input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; border: 0; padding: 0; }
     .cmap-finish { background: var(--color-brand-600); color: #fff; width: auto; padding: 0 .6rem; gap: .3rem; font-size: .78rem; font-weight: 800; }
     .cmap-finish:hover { background: var(--color-brand-700); color: #fff; }
     .cmap-danger { color: #dc2626; }
@@ -1504,9 +1522,8 @@
                     { kind: o.kind, closed: false, segs, total: tot, pts });
             }
         } else if (o.kind === 'rect') {
-            const b = new (G().LatLngBounds)(LL(pts[0]), LL(pts[1]));
-            const sw = b.getSouthWest(), ne = b.getNorthEast();
-            const c = [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]];
+            // Its four corners as they stand, turned or upright (see ringOf).
+            const c = ringOf(o);
             parts.push(new (G().Polygon)({ ...style, paths: c.map(LL), fillColor: style.strokeColor, fillOpacity: .08 }));
             vertexPins(parts, o, c, style.strokeColor);
             const segs = segLabels(parts, c, true, mlabels);
@@ -2566,6 +2583,8 @@
         }
         const pts = [];
         first.getPath().forEach((v) => pts.push([v.lat(), v.lng()]));
+        // A turned box moves as its four corners: its bounds would set it upright.
+        if (o.kind === 'rect' && (o.points || []).length >= 4) return pts.slice(0, 4);
         if (o.kind === 'rect') {
             const b = new (G().LatLngBounds)();
             pts.forEach((p) => b.extend(LL(p)));
@@ -2667,6 +2686,7 @@
         // bar, same Done — it is one more thing this shape can be dragged by,
         // not a second way of picking something up.
         if (o.kind === 'text') showSizeHandle(o, parts);
+        if (o.kind === 'rect') showTurnHandle(o, parts);
     }
     function endEdit() {
         if (!editing) return;
@@ -2683,6 +2703,7 @@
         editing = null;
         clearSelVertex();
         dropSizeHandle();
+        dropTurnHandle();
         const bar = document.getElementById('cmapEditBar');
         if (bar) bar.classList.add('hidden');
     }
@@ -2776,6 +2797,132 @@
         // every zoom, since its offset is only true in screen pixels.
         editing.listeners.push(mark.addListener('drag', placeSizeHandle));
         editing.listeners.push(map.addListener('idle', placeSizeHandle));
+    }
+    /* ---------- turning a box ----------
+     *
+     * (2026-11-04, the owner: "add a rotate functionality for the box shape".)
+     * A box in hand grows a second handle past the middle of its top side.
+     * Drag it round and the box turns about its own centre, corner pins,
+     * sides and numbers with it, then saves for the team on release, one undo
+     * step. The turning is done on the map's flat plane, where a right angle
+     * stays one, so the box is still a box at any angle. A turned box keeps
+     * its four corners as they stand; turned square again it goes back to
+     * the two corners of its bounds, the way every upright box is kept. It
+     * snaps square within 3 degrees, because straight is the angle wanted
+     * back most often and the hardest one to find with a thumb. While it
+     * turns, the handle says the angle. */
+    const TURN_GAP = 34, TURN_SNAP = 3 * Math.PI / 180;
+    let turnHandle = null, turnFor = null, turnDragging = false;
+    const worldOf = (q) => { const pr = map && map.getProjection(); return pr ? pr.fromLatLngToPoint(LL(q)) : null; };
+    const fromWorld = (x, y) => { const ll = map.getProjection().fromPointToLatLng(new (G().Point)(x, y)); return [ll.lat(), ll.lng()]; };
+    function ringNow(parts) {
+        const pts = [];
+        parts[0].getPath().forEach((v) => pts.push([v.lat(), v.lng()]));
+        return pts.slice(0, 4);
+    }
+    /** The box's centre and corners on the flat plane, and where its handle stands. */
+    function turnSpot(ring) {
+        if (ring.length < 4) return null;
+        const w = ring.map(worldOf);
+        if (w.some((p) => !p)) return null;
+        const cx = (w[0].x + w[1].x + w[2].x + w[3].x) / 4, cy = (w[0].y + w[1].y + w[2].y + w[3].y) / 4;
+        const mx = (w[2].x + w[3].x) / 2, my = (w[2].y + w[3].y) / 2;
+        const d = Math.hypot(mx - cx, my - cy);
+        if (!(d > 0)) return null;
+        // A thumb's width past the side at any zoom: the gap is screen pixels.
+        const gap = TURN_GAP / Math.pow(2, map.getZoom() || 0);
+        return { cx, cy, w, x: mx + (mx - cx) / d * gap, y: my + (my - cy) / d * gap };
+    }
+    function placeTurnHandle() {
+        // Never under the finger: the map settling would pull it away.
+        if (!turnHandle || !turnFor || turnDragging) return;
+        const s = turnSpot(ringNow(turnFor.parts));
+        if (s) turnHandle.setPosition(LL(fromWorld(s.x, s.y)));
+    }
+    function dropTurnHandle() {
+        if (turnHandle) { turnHandle.setMap(null); turnHandle = null; }
+        turnFor = null;
+        turnDragging = false;
+    }
+    function showTurnHandle(o, parts) {
+        dropTurnHandle();
+        const shape = parts && parts[0];
+        if (!shape || !shape.getPath || !map.getProjection()) return;
+        const s = turnSpot(ringNow(parts));
+        if (!s) return;
+        turnFor = { o, parts, spot: null, ring: null, square: false, turn: 0 };
+        turnHandle = new (G().Marker)({
+            map, position: LL(fromWorld(s.x, s.y)), draggable: true, crossOnDrag: false, zIndex: Z_LIVE,
+            title: 'Drag to turn this box',
+            icon: { path: G().SymbolPath.CIRCLE, scale: 14, fillColor: '#111827',
+                fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2.5 },
+            label: handleFace('\u21bb', 16),
+        });
+        turnHandle.addListener('dragstart', () => {
+            if (!turnFor) return;
+            turnDragging = true;
+            turnFor.spot = turnSpot(ringNow(turnFor.parts));
+            turnFor.ring = null;
+        });
+        turnHandle.addListener('drag', (ev) => {
+            const f = turnFor, s = f && f.spot;
+            if (!s) return;
+            const p = map.getProjection().fromLatLngToPoint(ev.latLng);
+            let a = Math.atan2(p.y - s.cy, p.x - s.cx) - Math.atan2(s.y - s.cy, s.x - s.cx);
+            // The bottom side's heading, before and after: square is a multiple of a right angle.
+            const th0 = Math.atan2(s.w[1].y - s.w[0].y, s.w[1].x - s.w[0].x);
+            const q = Math.PI / 2, near = Math.round((th0 + a) / q) * q;
+            f.square = Math.abs(th0 + a - near) < TURN_SNAP;
+            if (f.square) a = near - th0;
+            const cos = Math.cos(a), sin = Math.sin(a);
+            f.ring = s.w.map((v) => {
+                const dx = v.x - s.cx, dy = v.y - s.cy;
+                return fromWorld(s.cx + dx * cos - dy * sin, s.cy + dx * sin + dy * cos);
+            });
+            f.turn = a;
+            f.parts[0].setPath(f.ring.map(LL));
+            f.parts.filter((m) => m.__pin).forEach((m, i) => { if (f.ring[i]) m.setPosition(LL(f.ring[i])); });
+            trackMeasure(f.o.id);
+            const deg = ((Math.round((th0 + a) * 180 / Math.PI) % 360) + 360) % 360;
+            turnHandle.setLabel(handleFace(deg + '\u00b0', 11));
+        });
+        turnHandle.addListener('dragend', () => {
+            turnDragging = false;
+            const f = turnFor;
+            if (!f) return;
+            turnHandle.setLabel(handleFace('\u21bb', 16));
+            const ring = f.ring, square = f.square, turned = Math.abs(f.turn) > 1e-9;
+            f.ring = null; f.turn = 0;
+            placeTurnHandle();
+            if (ring && turned) commitTurn(f.o, ring, square);
+        });
+        if (!editing) return;
+        // The handle follows the box when the box is dragged, and every zoom.
+        editing.listeners.push(shape.addListener('drag', placeTurnHandle));
+        editing.listeners.push(map.addListener('idle', placeTurnHandle));
+    }
+    async function commitTurn(o, ring, square) {
+        const cur = objIndex.get(o.id) || o;
+        let pts = ring;
+        if (square) {
+            const b = new (G().LatLngBounds)();
+            ring.forEach((p) => b.extend(LL(p)));
+            pts = [[b.getSouthWest().lat(), b.getSouthWest().lng()], [b.getNorthEast().lat(), b.getNorthEast().lng()]];
+        }
+        try {
+            const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: o.id, points: pts } });
+            // Cleared or swapped for another map while the save was out: see scheduleSave.
+            if (!objIndex.has(o.id)) return;
+            pushHist({ type: 'update', id: o.id, before: cur.points, after: res.data.object.points });
+            endEdit();
+            dropObject(o.id);
+            renderObject(res.data.object);
+            beginEdit(res.data.object, layers.get(res.data.object.id));
+        } catch (e) {
+            if (window.toast) toast(e.message, 'error');
+            // Back the way it was: the screen should not show a turn nobody kept.
+            if (objIndex.has(o.id)) { endEdit(); dropObject(o.id); renderObject(cur); }
+        }
     }
     async function commitTextSize(o, px) {
         const cur = objIndex.get(o.id) || o;
@@ -2924,9 +3071,12 @@
         const r = el.getBoundingClientRect();
         return { x: e.clientX - r.left, y: e.clientY - r.top };
     };
-    /** A shape as the corners you can see — a box is two corners in the row. */
+    /** A shape as the corners you can see. An upright box is two corners in
+        the row, its bounds; a turned one keeps all four as they stand, in the
+        same order (bottom left, bottom right, top right, top left as drawn). */
     function ringOf(o) {
         if (o.kind !== 'rect' || (o.points || []).length < 2) return o.points || [];
+        if (o.points.length >= 4) return o.points.slice(0, 4);
         const b = new (G().LatLngBounds)(LL(o.points[0]), LL(o.points[1]));
         const sw = b.getSouthWest(), ne = b.getNorthEast();
         return [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]];
@@ -3561,13 +3711,7 @@
 
         [...objIndex.values()].forEach((o) => {
             const colour = o.color || '#f5c518';
-            const pts = o.kind === 'rect' && o.points.length >= 2
-                ? (() => {
-                    const b = new (g.LatLngBounds)(LL(o.points[0]), LL(o.points[1]));
-                    const sw = b.getSouthWest(), ne = b.getNorthEast();
-                    return [[sw.lat(), sw.lng()], [sw.lat(), ne.lng()], [ne.lat(), ne.lng()], [ne.lat(), sw.lng()]];
-                })()
-                : o.points;
+            const pts = o.kind === 'rect' ? ringOf(o) : o.points;
             const closed = (o.kind === 'rect' || o.kind === 'area');
 
             if (o.kind === 'text') { plate(pts[0], o); return; }
@@ -4288,12 +4432,12 @@
             stepHist(histRedo, histUndo);
         });
         document.getElementById('cmapColorBtn').addEventListener('click', () => window.openSheet?.('cmapColorSheet'));
-        document.querySelectorAll('#cmapColorSheet .cmap-swatch').forEach((b) => b.addEventListener('click', () => {
-            color = b.dataset.mcolor;
+        const pickColor = (c, b, close) => {
+            color = c;
             document.querySelectorAll('#cmapColorSheet .cmap-swatch').forEach((x) => x.classList.toggle('is-active', x === b));
             const dotEl = document.getElementById('cmapColorDot');
             if (dotEl) dotEl.style.background = color;
-            window.closeSheet?.('cmapColorSheet');
+            if (close) window.closeSheet?.('cmapColorSheet');
             // A half-drawn shape repaints on the spot, dots included — and the
             // badge, which is coloured to match the shape it belongs to.
             if (tempPts.length) {
@@ -4303,7 +4447,17 @@
                     fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2,
                     labelOrigin: new (G().Point)(0, BADGE_DROP) });
             }
-        }));
+        };
+        document.querySelectorAll('#cmapColorSheet .cmap-swatch[data-mcolor]').forEach((b) => b.addEventListener('click', () => pickColor(b.dataset.mcolor, b, true)));
+        // Any colour: it follows the picker while it is open, and the sheet
+        // closes once the picker does.
+        const anyColor = document.getElementById('cmapColorAny');
+        if (anyColor) {
+            const any = anyColor.closest('.cmap-swatch');
+            const take = (close) => { any.style.setProperty('--c', anyColor.value); pickColor(anyColor.value, any, close); };
+            anyColor.addEventListener('input', () => take(false));
+            anyColor.addEventListener('change', () => take(true));
+        }
         document.getElementById('cmapSearchBtn').addEventListener('click', () => {
             window.openSheet?.('cmapSearchSheet');
             // Search means typing — focusing here is the point, not a nuisance.

@@ -295,9 +295,14 @@
         font-size:.7rem; font-weight:800; padding:.15rem .5rem; border-radius:999px;
         background:var(--color-gray-100); color:var(--color-gray-500); white-space:nowrap; }
     .draw-div { width:1px; align-self:stretch; background:var(--color-gray-200); margin:.15rem .15rem; }
-    .draw-colors { display:flex; gap:.25rem; }
-    .draw-colors button { width:1.5rem; height:1.5rem; border-radius:999px; border:2px solid transparent; cursor:pointer; }
-    .draw-colors button.is-active { border-color:var(--color-gray-900); transform:scale(1.12); }
+    .draw-colors { display:flex; flex-wrap:wrap; gap:.25rem; }
+    .draw-colors button, .draw-any { width:1.5rem; height:1.5rem; border-radius:999px; border:2px solid transparent; cursor:pointer;
+        transition:transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1); }
+    .draw-colors button.is-active, .draw-any.is-active { border-color:var(--color-gray-900); transform:scale(1.12); }
+    .draw-any { position:relative; overflow:hidden; flex-shrink:0;
+        background:radial-gradient(circle, var(--c, transparent) 0 42%, transparent 43%), conic-gradient(#dc2626, #facc15, #16a34a, #0891b2, #4f46e5, #db2777, #dc2626); }
+    .draw-any input { position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; border:0; padding:0; }
+    @media (prefers-reduced-motion: reduce) { .draw-colors button, .draw-any { transition:none; } }
     .draw-size { display:flex; align-items:center; gap:.35rem; font-size:.72rem; color:var(--color-gray-500); font-weight:700; }
     .draw-size input { width:5.5rem; }
     .draw-tool { display:inline-flex; align-items:center; justify-content:center; min-width:2rem; height:2rem;
@@ -384,7 +389,9 @@
     if (window.__drawPadBound) return;
     window.__drawPadBound = true;
 
-    const COLORS = ['#111827', '#dc2626', '#ea580c', '#ca8a04', '#16a34a', '#2563eb', '#7c3aed', '#db2777', '#ffffff'];
+    // Sixteen and any other (2026-11-04, the owner: "add more colors"). Black stays first: it is the pen's own.
+    const COLORS = ['#111827', '#6b7280', '#dc2626', '#ea580c', '#facc15', '#ca8a04', '#84cc16', '#16a34a',
+        '#0d9488', '#0891b2', '#2563eb', '#4f46e5', '#7c3aed', '#db2777', '#92400e', '#ffffff'];
     const modal = document.getElementById('drawModal');
     const canvas = document.getElementById('drawCanvas');
     const stage = document.getElementById('drawStage');
@@ -457,17 +464,34 @@
         b.type = 'button'; b.style.background = c; b.setAttribute('data-color', c);
         if (i === 0) b.classList.add('is-active');
         if (c === '#ffffff') b.style.border = '2px solid #d1d5db';
+        b.setAttribute('aria-label', 'Colour ' + c);
         colorsWrap.appendChild(b);
     });
+    // Any colour, after the sixteen: the rainbow until one is picked, then that colour in a rainbow ring.
+    const anyWrap = document.createElement('label');
+    anyWrap.className = 'draw-any';
+    anyWrap.title = 'Any colour';
+    anyWrap.innerHTML = '<input type="color" value="#111827" aria-label="Choose any colour">';
+    colorsWrap.appendChild(anyWrap);
+    const anyInput = anyWrap.querySelector('input');
+    function pickColor(c, el) {
+        color = c;
+        colorsWrap.querySelectorAll('button, .draw-any').forEach((x) => x.classList.toggle('is-active', x === el));
+    }
+    // Recolour a live selection so the swatch also acts as a "fill".
+    function paintSelection() {
+        if (selected.size) { pushUndo(); objects.forEach((o) => { if (selected.has(o.id)) o.color = color; }); render(); }
+    }
     colorsWrap.addEventListener('click', (e) => {
         const b = e.target.closest('[data-color]');
         if (!b) return;
-        color = b.getAttribute('data-color');
-        colorsWrap.querySelectorAll('button').forEach((x) => x.classList.remove('is-active'));
-        b.classList.add('is-active');
-        // Recolour a live selection so the swatch also acts as a "fill".
-        if (selected.size) { pushUndo(); objects.forEach((o) => { if (selected.has(o.id)) o.color = color; }); render(); }
+        pickColor(b.getAttribute('data-color'), b);
+        paintSelection();
     });
+    // The picker follows the hand while it is open; the selection is painted
+    // once, when it closes, so a drag across the picker is one undo step.
+    anyInput.addEventListener('input', () => { anyWrap.style.setProperty('--c', anyInput.value); pickColor(anyInput.value, anyWrap); });
+    anyInput.addEventListener('change', () => { anyWrap.style.setProperty('--c', anyInput.value); pickColor(anyInput.value, anyWrap); paintSelection(); });
     toolsWrap.addEventListener('click', (e) => {
         const b = e.target.closest('[data-tool]');
         if (!b) return;

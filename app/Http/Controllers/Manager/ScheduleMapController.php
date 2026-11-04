@@ -973,7 +973,10 @@ class ScheduleMapController extends BaseScheduleController
                     . round($pts[0][0], 6) . ',' . round($pts[0][1], 6));
             } else {
                 $keep = $pts;
-                if ($o['kind'] === 'rect' && count($pts) >= 2) {
+                if ($o['kind'] === 'rect' && count($pts) >= 4) {
+                    // A turned box keeps its four corners (2026-11-04).
+                    $keep = [$pts[0], $pts[1], $pts[2], $pts[3], $pts[0]];
+                } elseif ($o['kind'] === 'rect' && count($pts) >= 2) {
                     [$sw, $ne] = [$pts[0], $pts[1]];
                     $keep = [[$sw[0], $sw[1]], [$sw[0], $ne[1]], [$ne[0], $ne[1]], [$ne[0], $sw[1]], [$sw[0], $sw[1]]];
                 } else {
