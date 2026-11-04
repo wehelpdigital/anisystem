@@ -179,6 +179,7 @@ class RegisterController extends Controller
 
         if ($user->status === 'pending') {
             NewMemberWelcome::activate($user);
+            \App\Support\SiteAnalytics::report('email_confirmed', [], \App\Support\SiteAnalytics::visitor($request), (int) $user->id);
         } elseif ($user->status !== 'active') {
             return redirect()->route('login')->with('error', 'Your account is disabled.');
         }

@@ -69,6 +69,9 @@ return [
     // Google Analytics on the public site (App\Support\SiteAnalytics): the live address only.
     'analytics' => [
         'container' => env('ANALYTICS_CONTAINER', 'GTM-NSBBVB84'),
+        'measurement' => env('ANALYTICS_MEASUREMENT', 'G-373SEEW76Y'),
+        // Set on the live server only: the events told from the server stay off without it.
+        'api_secret' => env('ANALYTICS_API_SECRET'),
         'hosts' => explode(',', (string) env('ANALYTICS_HOSTS', 'anee.io,www.anee.io')),
     ],
 

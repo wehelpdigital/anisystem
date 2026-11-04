@@ -89,6 +89,7 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
         }, '', false) ?: 'unknown'), 0, 7),
         // When the build ran: Composer writes the autoloader then.
         'builtAt' => (string) (env('RAILWAY_DEPLOYMENT_ID') ?: (is_file(base_path('vendor/composer/autoload_real.php')) ? date('c', (int) filemtime(base_path('vendor/composer/autoload_real.php'))) : 'unknown')),
+        'analytics' => ['container' => config('services.analytics.container'), 'serverEvents' => filled(config('services.analytics.api_secret'))],
         'markers' => [
             'eyeFilterButton' => str_contains($source, 'id="viewFilterBtn"'),
             'dragGrip' => str_contains($source, 'A grip says the card can be dragged'),

@@ -85,6 +85,7 @@ class CheckoutController extends Controller
         } catch (RuntimeException $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 409);
         }
+        \App\Support\SiteAnalytics::orderOpened($order, $request);
 
         return response()->json(['success' => true, 'data' => $this->payload($order)]);
     }
