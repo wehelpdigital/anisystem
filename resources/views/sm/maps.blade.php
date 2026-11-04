@@ -107,6 +107,7 @@
         #smapStageWrap .cmap-bar .cmap-div { display: none; }
         #smapStageWrap .cmap-bar #cmapGps { order: 1; }
         #smapStageWrap .cmap-bar #cmapLayer { order: 2; }
+        #smapStageWrap .cmap-bar #cmapPins { order: 2; }
         #smapStageWrap .cmap-bar #cmapClear { order: 3; }
         #smapStageWrap .cmap-bar #cmapFindMe { order: 4; }
         #smapStageWrap .cmap-bar #cmapUndo { order: 5; }

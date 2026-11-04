@@ -378,6 +378,12 @@
         <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Switch between map and satellite" aria-label="Switch between map and satellite view" aria-pressed="true">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
         </button>
+        {{-- The pins away and back, for this screen only (see setPinsShown).
+             A way of reading the map, like the satellite beside it, so it is
+             there for anyone who can see the map, drawing or not. --}}
+        <button type="button" class="cmap-tool is-active" id="cmapPins" title="Hide the pins" aria-label="Hide the pins" aria-pressed="true">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/><path class="cmap-pins-x" stroke-linecap="round" d="M4 3.5l16 17"/></svg>
+        </button>
         @if ($cmapOwn || \App\Support\WorkerContext::canEdit())
         <button type="button" class="cmap-tool cmap-danger" id="cmapClear" title="{{ $cmapOwn ? 'Clear the map' : 'Clear the whole map for the team' }}" aria-label="{{ $cmapOwn ? 'Clear the map' : 'Clear the map for the team' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
@@ -590,6 +596,10 @@
     .cmap-tool.is-active,
     html.dark .cmap-tool.is-active { background: var(--color-brand-100); color: var(--color-brand-800); }
     .cmap-tool:disabled { opacity: .35; pointer-events: none; }
+    /* The pins button: a slash drawn through the pin while they are away. */
+    .cmap-pins-x { stroke-dasharray: 24; stroke-dashoffset: 24; transition: stroke-dashoffset .28s cubic-bezier(.22,1,.36,1); }
+    #cmapPins:not(.is-active) .cmap-pins-x { stroke-dashoffset: 0; }
+    @media (prefers-reduced-motion: reduce) { .cmap-pins-x { transition: none; } }
     /* Waiting on a satellite, which on a phone under trees is a real wait. The
        pulse is on the icon rather than the button so the button keeps its shape
        in the row, and it overrides the :disabled dimming — a control that is
@@ -908,6 +918,8 @@
     const LOT_LINK_URL = @json(route('sm.lots.map.link'));
 
     let map = null, proj = null, satOn = true;
+    // Whether the pins are away on this screen (see setPinsShown).
+    let pinsHidden = false, pinsFade = 0;
     let tool = 'pan', color = '#f5c518', width = 3;
     let tempPts = [], tempShape = null;
     /* Corners taken back off a shape that is still being tapped out, waiting
@@ -1194,9 +1206,10 @@
     function vertexPins(parts, o, pts, colorStr) {
         pts.forEach((p, i) => {
             const m = new (G().Marker)({
-                map, position: LL(p), draggable: true, crossOnDrag: false,
+                map: pinMap(), position: LL(p), draggable: true, crossOnDrag: false,
                 icon: pinIcon(colorStr, 1.2),
             });
+            m.__pin = true;
             m.addListener('drag', (ev) => {
                 const path = parts[0].getPath ? parts[0].getPath() : null;
                 if (path) path.setAt(i, ev.latLng);
@@ -1520,7 +1533,7 @@
                moving it, not deleting it and starting again. Its tip is the
                point, so what you grab is exactly what you placed. */
             const pm = new (G().Marker)({
-                map, position: LL(pts[0]), draggable: true, clickable: true,
+                map: pinMap(), position: LL(pts[0]), draggable: true, clickable: true,
                 /* The drawn pin, not a stroked symbol.
                  *
                  * labelOrigin puts the name ABOVE the head rather than
@@ -1548,6 +1561,7 @@
                 if (editing && editing.o.id === o.id) return;
                 commitPinMove(o, ev.latLng);
             });
+            pm.__pin = true;
             parts.push(pm);
         } else if (o.kind === 'text') {
             const tm = textMark(pts[0], o.label || '', 'cmap-txt-g', '#111827');
@@ -1861,6 +1875,47 @@
        and half-made shapes keep the stroked symbol below: those are controls,
        and a control should wear the colour it is drawing in. */
     const PIN_IMG = @json(asset('images/map-pin.png'));
+    /* THE PINS AWAY AND BACK (2026-11-04, the owner: "have a button to hide
+       the pins"). Every pin on the map answers to it: the teardrop on each
+       corner of a line, a path, a box or an area, and the pinned places. The
+       shapes, their names and their numbers stay where they are. It changes
+       this screen only: the team's maps, the saved file and its picture keep
+       every pin. A shape drawn or arriving while they are away arrives without
+       them, so the map never shows half its pins. They fade rather than blink,
+       from wherever a fade still running left them. */
+    const pinMap = () => (pinsHidden ? null : map);
+    function setPinsShown(on) {
+        pinsHidden = !on;
+        const btn = document.getElementById('cmapPins');
+        if (btn) {
+            const say = on ? 'Hide the pins' : 'Show the pins';
+            btn.classList.toggle('is-active', on);
+            btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+            btn.title = say;
+            btn.setAttribute('aria-label', say);
+        }
+        if (!map) return;
+        const pins = [];
+        layers.forEach((parts) => parts.forEach((p) => { if (p.__pin) pins.push(p); }));
+        const run = ++pinsFade;
+        const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (calm) { pins.forEach((p) => { p.setOpacity(1); p.setMap(on ? map : null); }); return; }
+        const from = pins.map((p) => {
+            if (!p.getMap()) { p.setOpacity(0); if (on) p.setMap(map); return 0; }
+            const a = p.getOpacity();
+            return a == null ? 1 : a;
+        });
+        const t0 = performance.now(), D = 280;
+        const step = (now) => {
+            if (run !== pinsFade) return;
+            const k = Math.min(1, (now - t0) / D);
+            const e = 1 - Math.pow(1 - k, 3);
+            pins.forEach((p, i) => p.setOpacity(from[i] + ((on ? 1 : 0) - from[i]) * e));
+            if (k < 1) { requestAnimationFrame(step); return; }
+            if (!on) pins.forEach((p) => { p.setMap(null); p.setOpacity(1); });
+        };
+        requestAnimationFrame(step);
+    }
     const pinIcon = (c, sc) => ({ path: PIN, scale: sc || 1.35, anchor: new (G().Point)(12, 22),
         fillColor: c || color, fillOpacity: 1, strokeColor: '#fff', strokeWeight: 1.5 });
     const ARROW_HEAD = (c) => ({ icon: { path: G().SymbolPath.FORWARD_CLOSED_ARROW, scale: 3.4,
@@ -2066,6 +2121,8 @@
         tool = t;
         clearTemp();
         cancelExtend();
+        // Pinning a place with the pins away would drop one nobody can see.
+        if (t === 'pin' && pinsHidden) setPinsShown(true);
         document.querySelectorAll('[data-mtool]').forEach((b) => b.classList.toggle('is-active', b.dataset.mtool === t));
         const row = document.querySelector('.cmap-mrow[data-mtool="' + t + '"]');
         const lab = document.getElementById('cmapToolLabel');
@@ -4302,6 +4359,7 @@
             e.currentTarget.classList.toggle('is-active', satOn);
             e.currentTarget.setAttribute('aria-pressed', satOn ? 'true' : 'false');
         });
+        document.getElementById('cmapPins')?.addEventListener('click', () => setPinsShown(pinsHidden));
         document.getElementById('cmapFindMe')?.addEventListener('click', (e) => findMe(e.currentTarget));
         document.getElementById('cmapGps')?.addEventListener('click', (e) => toggleGps(e.currentTarget));
         document.getElementById('cmapClear')?.addEventListener('click', async () => {
