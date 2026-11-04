@@ -131,6 +131,7 @@
          both modes. Safe to repeat: its script binds once and by id, so a copy
          another module already injected simply wins. --}}
     @include('sm.partials.media-picker')
+    @include('sm.partials.to-season-sheet')
 
     <div class="sheet hidden" id="drSaveSheet" style="--sheet-width:26rem">
         <div class="sheet-handle"></div>
@@ -273,6 +274,9 @@
                             <button type="button" class="dr-act" data-edit title="${d.team ? 'Draw over a copy' : 'Open and edit'}" aria-label="Edit">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1 10-10-3-3L5 16l-1 4z"/></svg>
                             </button>
+                            ${!d.scheduleId && !d.team ? `<button type="button" class="dr-act" data-to-season title="Add to a cropping schedule" aria-label="Add to a cropping schedule">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 9h16M5 6h14a1 1 0 011 1v12a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1zm7 6v5m-2.5-2.5h5"/></svg>
+                            </button>` : ''}
                             <button type="button" class="dr-act is-danger" data-del title="Delete" aria-label="Delete">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/></svg>
                             </button>
@@ -422,6 +426,18 @@
                 if (!d) return;
 
                 if (e.target.closest('[data-edit]')) { edit(d); return; }
+
+                // One of your own, added to a cropping schedule: a copy goes
+                // into that season's notebook (sm/partials/to-season-sheet).
+                if (e.target.closest('[data-to-season]')) {
+                    window.toSeason?.open({
+                        what: 'drawing', title: d.title || 'Drawing',
+                        listUrl: @json(route('sm.draw.seasons')) + '?noteId=' + d.noteId + '&index=' + d.index,
+                        addUrl: @json(route('sm.draw.season.add')),
+                        body: { noteId: d.noteId, index: d.index },
+                    });
+                    return;
+                }
 
                 if (e.target.closest('[data-del]')) {
                     const ok = (typeof confirmAction === 'function')

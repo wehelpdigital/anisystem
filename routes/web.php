@@ -1417,6 +1417,11 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::post('/app/sm-map-save', [App\Http\Controllers\Manager\ScheduleMapController::class, 'saveMap'])->name('sm.map.save');
     Route::post('/app/sm-map-save-meta', [App\Http\Controllers\Manager\ScheduleMapController::class, 'saveMeta'])->name('sm.map.save.meta');
     Route::post('/app/sm-map-load', [App\Http\Controllers\Manager\ScheduleMapController::class, 'loadSave'])->name('sm.map.load');
+    // A map or drawing of your own, added to a cropping schedule (2026-11-05).
+    Route::get('/app/sm-map-seasons', [App\Http\Controllers\Manager\ScheduleMapController::class, 'seasons'])->name('sm.map.seasons');
+    Route::post('/app/sm-map-season-add', [App\Http\Controllers\Manager\ScheduleMapController::class, 'addToSeason'])->name('sm.map.season.add');
+    Route::get('/app/sm-draw-seasons', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'seasons'])->name('sm.draw.seasons');
+    Route::post('/app/sm-draw-season-add', [App\Http\Controllers\Manager\ScheduleDrawController::class, 'addToSeason'])->name('sm.draw.season.add');
     // Drawing sessions: a fresh page 1 per session, past drawings kept as drafts.
     Route::post('/app/sm-board-open', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'open'])->name('sm.board.open');
     Route::post('/app/sm-board-heartbeat', [App\Http\Controllers\Manager\ScheduleBoardController::class, 'heartbeat'])->name('sm.board.heartbeat');

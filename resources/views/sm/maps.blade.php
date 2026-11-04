@@ -44,6 +44,8 @@
             transition: color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
         .mp-pen:hover { color: var(--color-brand-700); background: var(--color-brand-50); }
         .mp-pen svg { width: .85rem; height: .85rem; }
+        /* Its second button (Add to a cropping schedule) stands right beside the pencil. */
+        .mp-pen + .mp-pen { margin-left: .15rem; }
         html.dark .mp-pen:hover { background: rgb(107 159 61 / .18); color: #a5c97e; }
         .mp-tags { display: flex; flex-wrap: wrap; gap: .25rem; }
         .mp-innote { display: inline-flex; align-items: center; gap: .2rem; text-decoration: none; }
@@ -281,6 +283,20 @@
             const hint = document.getElementById('mpStageHint');
 
             const MAP_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5-2V6l5 2m0 12l6-2m-6 2V8m6 10l5 2V8l-5-2m0 12V6M9 8l6-2"/></svg>';
+            // A calendar with a plus: add this map to a cropping schedule.
+            const SEASON_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 3v3m8-3v3M4 9h16M5 6h14a1 1 0 011 1v12a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1zm7 6v5m-2.5-2.5h5"/></svg>';
+            /* Add one of your maps to a cropping schedule (2026-11-05): the
+               season uses the same map (sm/partials/to-season-sheet). */
+            function toSeason(id) {
+                const sv = saves.find((s) => s.id === id);
+                if (!sv || !window.toSeason) return;
+                window.toSeason.open({
+                    what: 'map', title: sv.title || 'Map',
+                    listUrl: @json(route('sm.map.seasons')) + '?saveId=' + id,
+                    addUrl: @json(route('sm.map.season.add')),
+                    body: { saveId: id },
+                });
+            }
             // What the shelf may offer this pair of hands (see $mpMayWrite).
             const MAY_WRITE = @json($mpMayWrite);
             const NEW_TILE = MAY_WRITE
@@ -317,6 +333,7 @@
                             ${MAY_WRITE && sv.mine !== false ? `<button type="button" class="mp-pen" data-edit-save="${sv.id}" title="Edit name and description" aria-label="Edit ${esc(sv.title || 'Map')}">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                             </button>` : ''}
+                            ${MAY_WRITE && sv.mine !== false ? `<button type="button" class="mp-pen" data-to-season="${sv.id}" title="Add to a cropping schedule" aria-label="Add ${esc(sv.title || 'Map')} to a cropping schedule">${SEASON_ICON}</button>` : ''}
                         </span>
                         <div class="mp-tags">
                             <span class="badge ${sv.mine === false ? 'badge-blue' : 'badge-green'}">${sv.mine === false ? 'Farm map' : 'My map'}</span>
@@ -494,6 +511,8 @@
                 // The pencil edits the card; it must not also open the map.
                 const pen = e.target.closest('[data-edit-save]');
                 if (pen) { openMeta(parseInt(pen.getAttribute('data-edit-save'), 10)); return; }
+                const add = e.target.closest('[data-to-season]');
+                if (add) { toSeason(parseInt(add.getAttribute('data-to-season'), 10)); return; }
                 if (e.target.closest('[data-new]')) { enterStage('blank'); return; }
                 if (e.target.closest('[data-current]')) { enterStage(null); return; }
                 const c = e.target.closest('.mp-card[data-save]');
@@ -535,6 +554,12 @@
                         toast(res.message || 'Map deleted.');
                     } catch (err) { toast(err.message, 'error'); }
                     finally { del.disabled = false; }
+                    return;
+                }
+                if (e.target.closest('#mpMetaToSeason') && metaSave) {
+                    const id = metaSave.id;
+                    closeSheet('mpMetaSheet');
+                    setTimeout(() => toSeason(id), 220);
                     return;
                 }
                 const btn = e.target.closest('#mpMetaSave');
@@ -675,6 +700,7 @@
 @endsection
 
 @push('sheets')
+@include('sm.partials.to-season-sheet')
 {{-- Edit a saved map's name and what it was for, or throw it away. --}}
 <div class="sheet hidden" id="mpMetaSheet" style="--sheet-width:28rem">
     <div class="sheet-handle"></div>
@@ -692,6 +718,11 @@
             <textarea id="mpMetaDesc" class="form-textarea" rows="3" maxlength="2000"></textarea>
             <p class="form-hint">This also updates the note that holds this map.</p>
         </div>
+        {{-- The same door as the calendar on the card. --}}
+        <button type="button" class="dt-row" id="mpMetaToSeason">
+            <span class="dt-row-e">🌱</span>
+            <span class="dt-row-body"><b>Add to a cropping schedule</b><i>The season's team sees it on the season's Maps.</i></span>
+        </button>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost text-red-600 mr-auto" id="mpMetaDelete">Delete</button>

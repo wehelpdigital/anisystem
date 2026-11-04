@@ -209,6 +209,29 @@ abstract class BaseScheduleController extends Controller
     }
 
     /**
+     * The cropping schedules a map or drawing of your own may be added to
+     * (2026-11-05): the open seasons of the farm you are standing in, and for
+     * a worker only those where the owner gave them that pen at edit.
+     * Newest first. A closed or archived season takes nothing new.
+     */
+    protected function seasonsToAddTo(string $pen): \Illuminate\Support\Collection
+    {
+        if (! \App\Support\WorkerContext::canView()) {
+            return collect();
+        }
+        // Null for an owner: every season of their own.
+        $ids = \App\Support\WorkerContext::seasonIdsWith($pen, 'edit');
+
+        return AsCroppingSchedule::active()
+            ->forClient(\App\Support\WorkerContext::effectiveOwnerId())
+            ->when($ids !== null, fn ($q) => $q->whereIn('id', $ids ?: [0]))
+            ->orderByDesc('id')
+            ->get(['id', 'title', 'status'])
+            ->reject(fn ($s) => $s->isLocked())
+            ->values();
+    }
+
+    /**
      * Best-effort broadcast of an activities-board change to the schedule's
      * Collab Room members (live per-change merge). Persistence has already
      * happened; a transport error never breaks the request, and the client's

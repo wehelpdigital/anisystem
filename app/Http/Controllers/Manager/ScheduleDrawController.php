@@ -132,6 +132,126 @@ class ScheduleDrawController extends BaseScheduleController
         ]);
     }
 
+    /**
+     * One of your own drawings (Global Notes), by note and index, or null.
+     * Only your own: a season's drawing already lives in its season.
+     */
+    private function ownDrawing(Request $request): ?array
+    {
+        $note = AsScheduleNote::active()->where('croppingScheduleId', 0)
+            ->where('userId', (int) \Illuminate\Support\Facades\Auth::id())
+            ->find((int) $request->input('noteId'));
+        $index = (int) $request->input('index');
+        $m = $note ? ($this->mediaOf($note)[$index] ?? null) : null;
+
+        return ($m && ($m['type'] ?? '') === 'drawing') ? [$note, $index, $m] : null;
+    }
+
+    /**
+     * What a copy in a season says it was copied from, so it is added once.
+     * A word of its own ("n12-0") so a LIKE finds it however the database
+     * spaces the JSON around it.
+     */
+    private static function fromKey(int $noteId, int $index): string
+    {
+        return 'n' . $noteId . '-' . $index;
+    }
+
+    /**
+     * The seasons one of your drawings can be added to, each saying whether a
+     * copy is already there (2026-11-05, the owner: "an option to add a map
+     * or drawing that is in the global level to a cropping schedule level").
+     */
+    public function seasons(Request $request)
+    {
+        $found = $this->ownDrawing($request);
+        if (! $found) {
+            return $this->jsonFail('That drawing is not there any more.', 404);
+        }
+        [$note, $index] = $found;
+        $seasons = $this->seasonsToAddTo('draw');
+        $in = AsScheduleNote::active()->whereIn('croppingScheduleId', $seasons->pluck('id'))
+            ->where('media', 'like', '%"' . self::fromKey((int) $note->id, $index) . '"%')->pluck('croppingScheduleId')
+            ->map(fn ($id) => (int) $id)->unique()->all();
+
+        return $this->jsonOk('ok', ['data' => ['seasons' => $seasons
+            ->map(fn ($s) => ['id' => (int) $s->id, 'title' => $s->title, 'in' => in_array((int) $s->id, $in, true)])
+            ->all()]]);
+    }
+
+    /**
+     * Add a drawing of your own to a season: a copy goes into that season's
+     * notebook (its own picture files, strokes and words), where the season's
+     * team sees it on Notes and Draw. Yours stays where it is. A drawing is a
+     * note's attachment, not a shared file like a map, so the season gets
+     * its own: deleting one never takes the other's picture with it.
+     */
+    public function addToSeason(Request $request)
+    {
+        $found = $this->ownDrawing($request);
+        if (! $found) {
+            return $this->jsonFail('That drawing is not there any more.', 404);
+        }
+        [$note, $index, $m] = $found;
+        $season = $this->schedule((int) $request->input('seasonId'));
+        $ctx = \App\Support\WorkerContext::class;
+        if (! $ctx::canWriteModule('draw') && ! $ctx::canAddNotes()) {
+            return $this->jsonFail('You cannot add drawings to this season.', 403);
+        }
+        $this->assertUnlocked($season);
+
+        $from = self::fromKey((int) $note->id, $index);
+        if (AsScheduleNote::active()->where('croppingScheduleId', $season->id)->where('media', 'like', '%"' . $from . '"%')->exists()) {
+            return $this->jsonOk('It is already in ' . $season->title . '.', ['data' => ['seasonId' => (int) $season->id]]);
+        }
+
+        // The season's own files: the picture as kept, else painted again
+        // from the strokes (a file lost in a host move), and its stamp.
+        $read = function (?string $path): ?string {
+            $local = \App\Support\MediaStore::localCopy($path);
+            if (! $local) {
+                return null;
+            }
+            $bin = @file_get_contents($local);
+            if (\App\Support\MediaStore::isRemote($path) || config('filesystems.disks.public.driver') !== 'local') {
+                @unlink($local);
+            }
+
+            return $bin === false ? null : $bin;
+        };
+        $strokes = $m['strokes'] ?? null;
+        $picture = $read($m['path'] ?? null) ?? ($strokes ? \App\Support\DrawThumb::png($strokes, 2400, 2400) : null);
+        if ($picture === null) {
+            return $this->jsonFail('Could not read that drawing\'s picture. Open it once and save it, then try again.', 422);
+        }
+        $path = \App\Support\MediaStore::putBinary($picture, 'drawings', 'png', $season->id);
+        if ($path === null) {
+            return $this->jsonFail('Could not copy that drawing.', 500);
+        }
+        $thumbBin = \App\Support\ImageThumb::png($picture, 480, 360);
+        $thumb = $thumbBin ? \App\Support\MediaStore::putBinary($thumbBin, 'drawings', 'png', $season->id, 'thumb-') : null;
+
+        $copy = AsScheduleNote::create([
+            'croppingScheduleId' => $season->id,
+            'userId' => (int) \Illuminate\Support\Facades\Auth::id(),
+            'title' => (string) ($note->title ?: 'Drawing'),
+            'body' => $note->body,
+            'media' => [array_filter([
+                'type' => 'drawing',
+                'path' => $path,
+                'thumb' => $thumb,
+                'strokes' => $strokes,
+                'from' => $from,
+            ], fn ($v) => $v !== null)],
+            'deleteStatus' => 1,
+        ]);
+
+        return $this->jsonOk('Added to ' . $season->title . '. It is in the season\'s Notes and Draw now.', ['data' => [
+            'seasonId' => (int) $season->id,
+            'noteHref' => route('sm.notes', ['id' => $season->id, 'open' => $copy->id]),
+        ]]);
+    }
+
     /** The season Draw module's old address: the global page, same drawing. */
     public function legacyPage(Request $request)
     {

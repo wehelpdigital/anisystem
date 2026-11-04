@@ -80,6 +80,50 @@ class ScheduleMapController extends BaseScheduleController
     }
 
     /**
+     * The seasons one of your maps can be added to, each saying whether it
+     * already uses it (2026-11-05, the owner: "an option to add a map or
+     * drawing that is in the global level to a cropping schedule level").
+     */
+    public function seasons(Request $request)
+    {
+        $save = MapAccess::viewable($request->query('saveId'));
+        if (! $save) {
+            return $this->jsonFail('That map is not there any more.', 404);
+        }
+        $in = MapAccess::seasonIds($save);
+
+        return $this->jsonOk('ok', ['data' => ['seasons' => $this->seasonsToAddTo('maps')
+            ->map(fn ($s) => ['id' => (int) $s->id, 'title' => $s->title, 'in' => in_array((int) $s->id, $in, true)])
+            ->all()]]);
+    }
+
+    /**
+     * Add a map to a season: the season uses it from now on (a link, the same
+     * one drawing it in the Collab Room or giving it to a lot makes), so its
+     * owner and team see it on the season's Maps. The map stays one map,
+     * yours, wherever it is used. Its owner, or someone who may change it,
+     * holding Maps edit in that season.
+     */
+    public function addToSeason(Request $request)
+    {
+        $save = MapAccess::viewable($request->input('saveId'));
+        if (! $save) {
+            return $this->jsonFail('That map is not there any more.', 404);
+        }
+        if (! MapAccess::canEdit($save)) {
+            return $this->jsonFail('Only someone who may change this map can add it to a season.', 403);
+        }
+        $season = $this->schedule((int) $request->input('seasonId'));
+        if (! \App\Support\WorkerContext::canWriteModule('maps')) {
+            return $this->jsonFail('You cannot add maps to this season.', 403);
+        }
+        $this->assertUnlocked($season);
+        MapAccess::link((int) $save->id, (int) $season->id);
+
+        return $this->jsonOk('Added to ' . $season->title . '. It is on the season\'s Maps now.', ['data' => ['seasonId' => (int) $season->id]]);
+    }
+
+    /**
      * The season Maps module's old address. A season no longer has maps of
      * its own; a link to one still lands -- on the map it named, or on a
      * lot's own map when it came from a lot.
