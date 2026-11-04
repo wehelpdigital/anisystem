@@ -2296,6 +2296,12 @@ document.addEventListener('pointerdown', (e) => {
 
     async function warm(force, loud) {
         if (!on() || !navigator.onLine || !('serviceWorker' in navigator)) return;
+        /* The app's own pages only (the app layout carries the anee-offline
+           meta). On the public site a guest's first page asked for the app's
+           manifest (a 401) and then fetched every picture on the page at
+           once, the lazy ones too, on a farmer's mobile data and in every
+           crawler's render (2026-11-05). */
+        if (!document.querySelector('meta[name="anee-offline"]')) return;
         try {
             if (!force) {
                 const at = Number(sessionStorage.getItem('anee-offline-warmed') || 0);

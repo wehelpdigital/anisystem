@@ -100,6 +100,11 @@
     @endif
     @stack('head')
     <style>
+        /* A drifting decoration or an animation caught midway must never let a
+           phone slide the page sideways (2026-11-05: the home page measured 392
+           wide on a 390 screen). clip, not hidden: no scroll box, so the sticky
+           header still holds. */
+        body { overflow-x: clip; }
         /* The phone menu (layouts/public). */
         /* Only the root is locked: a locked body would become the scroll box and
            carry the sticky header away with the page. */
