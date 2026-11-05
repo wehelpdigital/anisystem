@@ -63,7 +63,7 @@
              grain dust drifts up through it; a gold halo turns behind the frame. --}}
         <span class="hb-photo-halo" aria-hidden="true"></span>
         <span class="hb-photo" aria-hidden="true">
-            <img src="{{ asset('images/site/photos/golden-palay-1080.webp') }}" srcset="{{ asset('images/site/photos/golden-palay-1080.webp') }} 1080w, {{ asset('images/site/photos/golden-palay.webp') }} 1620w" sizes="(min-width: 640px) 30rem, 23rem" alt="" width="1620" height="912" decoding="async" loading="lazy">
+            <img src="{{ asset('images/site/photos/golden-palay-1080.webp') }}" srcset="{{ asset('images/site/photos/golden-palay-800.webp') }} 800w, {{ asset('images/site/photos/golden-palay-1080.webp') }} 1080w, {{ asset('images/site/photos/golden-palay.webp') }} 1620w" sizes="(min-width: 640px) 30rem, 23rem" alt="" width="1620" height="912" decoding="async" loading="lazy">
             <span class="hb-sun"></span>
             <span class="hb-glint"></span>
             @for ($i = 0; $i < 14; $i++)

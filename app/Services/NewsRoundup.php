@@ -985,7 +985,7 @@ class NewsRoundup
             'metaDescription' => PageWriter::cut($c($d['metaDescription'] ?? ''), 156),
             'focusKeyword' => Str::limit($focus, 120, ''),
             'mainKeywords' => array_values(array_slice(array_filter(array_map($c, (array) ($d['mainKeywords'] ?? []))), 0, 2)),
-            'keywords' => array_values(array_slice(array_unique(array_filter(array_map($c, array_merge((array) ($d['mainKeywords'] ?? []), (array) ($d['keywordsUsed'] ?? []))))), 0, 12)),
+            'keywords' => array_values(array_slice(array_unique(array_filter(array_map($c, array_merge((array) ($d['mainKeywords'] ?? []), (array) ($d['keywordsUsed'] ?? []))), fn ($k) => $k !== '' && ! \App\Support\PriceHomes::ownsPhrase($k))), 0, 12)),
             'excerpt' => $c($d['excerpt'] ?? ''),
             'category' => 'Agriculture News',
             'heroImage' => $hero,
