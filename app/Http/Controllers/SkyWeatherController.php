@@ -614,13 +614,13 @@ class SkyWeatherController extends Controller
     {
         $page = max(1, (int) $request->query('page', 1));
         $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')
-            ->orderByDesc('id')->skip(($page - 1) * 20)->take(21)->get(['id', 'title', 'report', 'created_at']);
+            ->orderByDesc('id')->skip(($page - 1) * 20)->take(21)->get(['id', 'userId', 'title', 'report', 'created_at']);
 
         return $this->json(true, 'ok', ['hasMore' => $rows->count() > 20, 'rows' => $rows->take(20)->map(function ($r) {
             $rep = json_decode((string) $r->report, true) ?: [];
 
             return ['id' => $r->id, 'title' => $r->title, 'risk' => $rep['anee']['risk'] ?? null, 'headline' => $rep['anee']['headline'] ?? '',
-                'at' => \Illuminate\Support\Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, g:i A')];
+                'at' => \App\Support\FarmShelf::dated($r->userId ?? null, \Illuminate\Support\Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, g:i A'))];
         })->values()]);
     }
 

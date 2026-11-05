@@ -598,6 +598,7 @@
                      place beside the price and says what it is. An account
                      that rides free shows the sign for it rather than a
                      number that never moves. --}}
+                @includeWhen(\App\Support\FarmShelf::stamp(), 'ai.partials.owner-can-read')
                 @if ($aiPayerIsMe)<a href="{{ route('ai.credits') }}" class="ai-bal" data-ai-bal style="margin-top:0" title="{{ $aiPayerIsMe ? 'Credits left in your wallet' : 'Credits of the farm you work on. The owner pays for answers here.' }}" aria-label="Credits left"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</a>@else<span class="ai-bal" data-ai-bal style="margin-top:0" title="{{ $aiPayerIsMe ? 'Credits left in your wallet' : 'Credits of the farm you work on. The owner pays for answers here.' }}" aria-label="Credits left"><svg class="ai-coin" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.2" fill="#f0b429" stroke="#c98a12" stroke-width="1.6"/><circle cx="12" cy="12" r="5" fill="none" stroke="#c98a12" stroke-width="1.3" opacity=".75"/></svg> @if ($aiUnlimited)<b title="Unlimited">&#8734;</b>@else<b>{{ number_format((int) floor((float) $balance)) }}</b>@endif</span>@endif
         </div>
     </div>

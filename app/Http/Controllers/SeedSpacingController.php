@@ -147,7 +147,7 @@ class SeedSpacingController extends Controller
     {
         $per = 12;
         $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
-            ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'title', 'report', 'params', 'created_at']);
+            ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'userId', 'title', 'report', 'params', 'created_at']);
 
         return [
             'history' => $rows->take($per)->map(function ($r) {
@@ -157,7 +157,7 @@ class SeedSpacingController extends Controller
 
                 return ['id' => (int) $r->id, 'title' => (string) $r->title, 'status' => $rep['status'] ?? 'good', 'mode' => $p['mode'] ?? 'seeds',
                     'crop' => $p['crop'] ?? null, 'standHa' => $rep['standHa'] ?? null,
-                    'day' => $at->format('j'), 'month' => $at->format('M'), 'at' => $at->format('M j, Y g:i A')];
+                    'day' => $at->format('j'), 'month' => $at->format('M'), 'at' => \App\Support\FarmShelf::dated($r->userId ?? null, $at->format('M j, Y g:i A'))];
             })->values()->all(),
             'hasMore' => $rows->count() > $per,
             'page' => $page,

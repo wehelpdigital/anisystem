@@ -342,10 +342,10 @@ class ProtocolNpkController extends Controller
     public function list(int $id)
     {
         $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
-            ->where('params', 'like', '{"protocolId":' . $id . ',%')->orderByDesc('id')->limit(20)->get(['id', 'title', 'created_at']);
+            ->where('params', 'like', '{"protocolId":' . $id . ',%')->orderByDesc('id')->limit(20)->get(['id', 'userId', 'title', 'created_at']);
 
         return $this->json(true, 'ok', ['rows' => $rows->map(fn ($r) => ['id' => (int) $r->id, 'title' => $r->title,
-            'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A')])->values()]);
+            'at' => \App\Support\FarmShelf::dated($r->userId ?? null, Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A'))])->values()]);
     }
 
     private function mine(int $id): ?AsProtocol

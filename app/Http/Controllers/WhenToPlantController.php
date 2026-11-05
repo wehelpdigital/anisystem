@@ -485,7 +485,7 @@ class WhenToPlantController extends Controller
             
             ->when($q !== '', fn ($w) => $w->where(fn ($x) => $x->where('title', 'like', '%' . $q . '%')->orWhere('description', 'like', '%' . $q . '%')->orWhere('tags', 'like', '%' . $q . '%')))
             ->skip(($page - 1) * $per)->take($per + 1)
-->get(['id', 'title', 'description', 'tags', 'credits', 'created_at']);
+->get(['id', 'userId', 'title', 'description', 'tags', 'credits', 'created_at']);
 
         $hasMore = $rows->count() > $per;
         $rows = $rows->take($per);
@@ -496,7 +496,7 @@ class WhenToPlantController extends Controller
             'description' => $r->description,
             'tags' => array_values(array_filter((array) (json_decode((string) ($r->tags ?? ''), true) ?: []), 'is_string')),
             'credits' => (float) $r->credits,
-            'at' => \Illuminate\Support\Carbon::parse($r->created_at)->format('M j, Y'),
+            'at' => \App\Support\FarmShelf::dated($r->userId ?? null, \Illuminate\Support\Carbon::parse($r->created_at)->format('M j, Y')),
         ])->values()]);
     }
 

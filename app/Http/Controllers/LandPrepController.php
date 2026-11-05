@@ -1388,7 +1388,7 @@ PROMPT;
     {
         return ['id' => (int) $r->id, 'title' => $r->title, 'description' => $r->description, 'params' => json_decode((string) $r->params, true) ?: [],
             // A plan saved before 2026-10-17 may still name an agency as its source: shown without it.
-            'report' => LP::plainReport(json_decode((string) $r->report, true) ?: []), 'credits' => (float) $r->credits, 'at' => Carbon::parse($r->created_at)->format('M j, Y')];
+            'report' => LP::plainReport(json_decode((string) $r->report, true) ?: []), 'credits' => (float) $r->credits, 'at' => \App\Support\FarmShelf::dated($r->userId ?? null, Carbon::parse($r->created_at)->format('M j, Y'))];
     }
 
     public function list(Request $request)
@@ -1398,7 +1398,7 @@ PROMPT;
         $per = 12;
         $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')
             ->when($q !== '', fn ($w) => $w->where(fn ($x) => $x->where('title', 'like', '%' . $q . '%')->orWhere('description', 'like', '%' . $q . '%')))
-            ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'title', 'description', 'params', 'credits', 'created_at']);
+            ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'userId', 'title', 'description', 'params', 'credits', 'created_at']);
         $more = $rows->count() > $per;
 
         return $this->json(true, 'ok', ['page' => $page, 'hasMore' => $more, 'rows' => $rows->take($per)->map(function ($r) {
@@ -1409,7 +1409,7 @@ PROMPT;
 
             return [
                 'id' => (int) $r->id, 'title' => $r->title, 'description' => $r->description, 'credits' => (float) $r->credits,
-                'at' => Carbon::parse($r->created_at)->format('M j, Y'),
+                'at' => \App\Support\FarmShelf::dated($r->userId ?? null, Carbon::parse($r->created_at)->format('M j, Y')),
                 'crop' => $p['crop'] ?? null, 'icon' => FieldCatalogue::crops()[$p['crop'] ?? ''][2] ?? '🌱',
                 'method' => isset($p['crop'], $p['method']) ? (LP::methodsFor($p['crop'])[$p['method']][0] ?? '') : '',
                 'lots' => count($lots), 'area' => round(array_sum(array_column($lots, 'area')), 2),
@@ -1455,13 +1455,13 @@ PROMPT;
     /** The member's own protocols, for "add to one of mine". */
     public function protocols()
     {
-        $rows = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->orderByDesc('updated_at')->limit(200)->get(['id', 'title', 'crop', 'dayType', 'updated_at']);
+        $rows = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->orderByDesc('updated_at')->limit(200)->get(['id', 'userId', 'title', 'crop', 'dayType', 'updated_at']);
 
         return $this->json(true, 'ok', ['rows' => $rows->map(fn ($p) => [
             'id' => (int) $p->id, 'title' => $p->title, 'crop' => $p->crop,
             'cropLabel' => $p->crop ? (FieldCatalogue::crops()[$p->crop][1] ?? str_replace(' — ', ', ', (string) \App\Support\CropStages::label($p->crop))) : null,
             'cropIcon' => $p->crop ? \App\Support\CropStages::icon($p->crop) : '🌱',
-            'dayType' => $p->dayType, 'updated' => Carbon::parse($p->updated_at)->format('M j, Y'),
+            'dayType' => $p->dayType, 'updated' => \App\Support\FarmShelf::dated($p->userId ?? null, Carbon::parse($p->updated_at)->format('M j, Y')),
         ])->values()]);
     }
 

@@ -649,6 +649,7 @@
              up to the switch row, where the things that change the price
              are. --}}
         <p class="ai-hint" id="aiHint" data-idle="{{ $aiHintIdle }}">{{ $aiHintIdle }}</p>
+        @includeWhen(\App\Support\FarmShelf::stamp(), 'ai.partials.owner-can-read')
     </div>
 </div>
 </div>

@@ -329,11 +329,11 @@ class NpkPlusController extends Controller
         $page = max(1, (int) $request->query('page', 1));
         $rows = DB::table('as_npk_calcs')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)
             ->when($q !== '', fn ($w) => $w->where('title', 'like', '%' . $q . '%'))
-            ->orderByDesc('updated_at')->skip(($page - 1) * 20)->take(21)->get(['id', 'title', 'crop', 'areaHa', 'result', 'analysisId', 'updated_at']);
+            ->orderByDesc('updated_at')->skip(($page - 1) * 20)->take(21)->get(['id', 'userId', 'title', 'crop', 'areaHa', 'result', 'analysisId', 'updated_at']);
 
         return $this->json(true, 'ok', ['hasMore' => $rows->count() > 20, 'rows' => $rows->take(20)->map(fn ($r) => [
             'id' => $r->id, 'title' => $r->title, 'npk' => (json_decode((string) $r->result, true) ?: [])['npkPerHa'] ?? null, 'analyzed' => (bool) $r->analysisId,
-            'at' => \Illuminate\Support\Carbon::parse($r->updated_at)->timezone('Asia/Manila')->format('M j, Y'),
+            'at' => \App\Support\FarmShelf::dated($r->userId ?? null, \Illuminate\Support\Carbon::parse($r->updated_at)->timezone('Asia/Manila')->format('M j, Y')),
         ])->values()]);
     }
 

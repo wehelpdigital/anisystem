@@ -337,7 +337,7 @@
         // What they do, then where they are — the town and province first,
         // because that is what a farmer scanning the book is matching on.
         const where = [c.town, c.province].filter(Boolean).join(', ') || c.address || '';
-        const subBits = [c.company, where].filter(Boolean).join(' · ');
+        const subBits = [c.by ? 'By ' + c.by : '', c.company, where].filter(Boolean).join(' · ');
         const moreNums = Math.max(0, (c.phones || []).length - 1);
         el.innerHTML = `
             <span class="ct-face" style="background:hsl(${hueOf(c.name)} 45% 42%)">${esc(initials(c.name))}</span>

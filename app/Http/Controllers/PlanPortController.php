@@ -205,13 +205,13 @@ class PlanPortController extends Controller
         if ($no = $this->refusal()) {
             return $no;
         }
-        $rows = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->orderByDesc('updated_at')->limit(200)->get(['id', 'title', 'crop', 'dayType', 'updated_at']);
+        $rows = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->orderByDesc('updated_at')->limit(200)->get(['id', 'userId', 'title', 'crop', 'dayType', 'updated_at']);
 
         return $this->json(true, 'ok', ['rows' => $rows->map(fn ($p) => [
             'id' => (int) $p->id, 'title' => $p->title, 'crop' => $p->crop,
             'cropLabel' => $p->crop ? str_replace(' — ', ', ', (string) CropStages::label($p->crop)) : null,
             'cropIcon' => $p->crop ? CropStages::icon($p->crop) : '🌱',
-            'dayType' => $p->dayType, 'updated' => Carbon::parse($p->updated_at)->format('M j, Y'),
+            'dayType' => $p->dayType, 'updated' => \App\Support\FarmShelf::dated($p->userId ?? null, Carbon::parse($p->updated_at)->format('M j, Y')),
         ])->values()]);
     }
 

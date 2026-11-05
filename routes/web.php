@@ -1503,6 +1503,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
     // --- Agricultural AI Technician + AI Credits ---
     Route::get('/app/ai', [App\Http\Controllers\AiController::class, 'index'])->name('ai.index');
+    // What workers asked Anee from their worker accounts, for the owner to read. Named ai.* so a worker is refused.
+    Route::get('/app/ai/worker-chats', [App\Http\Controllers\WorkerChatController::class, 'index'])->name('ai.worker-chats');
+    Route::get('/app/ai/worker-chats/{id}', [App\Http\Controllers\WorkerChatController::class, 'show'])->whereNumber('id')->name('ai.worker-chats.show');
     Route::post('/app/ai-ask', [App\Http\Controllers\AiController::class, 'ask'])->name('ai.ask');
     // Where a question stands: the page polls this until the answer lands.
     Route::get('/app/ai-ask-job/{id}', [App\Http\Controllers\AiController::class, 'askJob'])->whereNumber('id')->name('ai.ask.job');

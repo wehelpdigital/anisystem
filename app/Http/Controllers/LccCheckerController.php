@@ -483,7 +483,7 @@ class LccCheckerController extends Controller
     {
         $per = 12;
         $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
-            ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'title', 'credits', 'report', 'params', 'created_at']);
+            ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'userId', 'title', 'credits', 'report', 'params', 'created_at']);
 
         return [
             'history' => $rows->take($per)->map(fn ($r) => self::card($r))->values()->all(),
@@ -507,7 +507,7 @@ class LccCheckerController extends Controller
             'verdict' => self::verdict($d),
             'day' => $at->format('j'),
             'month' => $at->format('M'),
-            'at' => $at->format('M j, Y g:i A'),
+            'at' => \App\Support\FarmShelf::dated($r->userId ?? null, $at->format('M j, Y g:i A')),
             'days' => isset($p['days']) && is_numeric($p['days']) ? (int) $p['days'] : null,
             'dayWord' => ($p['method'] ?? 'tpr') === 'dsr' ? 'DAS' : 'DAT',
             'ureaPerHa' => $d['ureaPerHa'] ?? null,

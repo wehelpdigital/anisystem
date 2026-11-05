@@ -1764,7 +1764,7 @@ PROMPT;
                 'url' => route('sm.hub', ['id' => (int) $p->portedScheduleId]),
                 'title' => optional(AsCroppingSchedule::find($p->portedScheduleId))->title,
             ] : null,
-            'updated' => Carbon::parse(max((string) $p->updated_at, (string) $versions->max('updated_at')))->format('M j, Y'),
+            'updated' => \App\Support\FarmShelf::dated($p->userId, Carbon::parse(max((string) $p->updated_at, (string) $versions->max('updated_at')))->format('M j, Y')),
             'versionId' => (int) $ver->id,
             'versionName' => $ver->name,
             'versions' => $this->versionRows($versions),

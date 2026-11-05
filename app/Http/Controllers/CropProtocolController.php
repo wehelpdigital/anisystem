@@ -2803,7 +2803,7 @@ PROMPT;
         $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('kind', 'protocol')
             ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
-            ->get(['id', 'title', 'description', 'tags', 'credits', 'created_at']);
+            ->get(['id', 'userId', 'title', 'description', 'tags', 'credits', 'created_at']);
 
         return $this->json(true, 'ok', ['rows' => $rows->map(fn ($r) => [
             'id' => $r->id,
@@ -2811,7 +2811,7 @@ PROMPT;
             'description' => $r->description,
             'tags' => array_values(array_filter((array) (json_decode((string) ($r->tags ?? ''), true) ?: []), 'is_string')),
             'credits' => (float) $r->credits,
-            'at' => \Illuminate\Support\Carbon::parse($r->created_at)->format('M j, Y'),
+            'at' => \App\Support\FarmShelf::dated($r->userId ?? null, \Illuminate\Support\Carbon::parse($r->created_at)->format('M j, Y')),
         ])->values()]);
     }
 

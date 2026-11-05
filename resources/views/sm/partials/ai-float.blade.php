@@ -171,6 +171,7 @@
                 </button>
             </div>
             {{-- What the question carries, said out loud and off by default. --}}
+            @includeWhen(\App\Support\FarmShelf::stamp(), 'ai.partials.owner-can-read')
             <div class="aif-sees" role="group" aria-label="What {{ $aiFloatSettings->assistantName }} can see">
                 <button type="button" class="aif-see" id="aiFloatUsePlan" aria-pressed="false"
                         title="Send this season's crop, variety and lots with the question">

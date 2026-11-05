@@ -4,11 +4,18 @@ namespace App\Models;
 
 class AiConversation extends BaseModel
 {
+    use Concerns\HeldByFarm;
+
     protected $table = 'anisystem_ai_conversations';
 
     protected $fillable = ['userId', 'croppingScheduleId', 'linkedDate', 'linkedActivityId', 'title', 'deleteStatus'];
 
     protected $casts = ['deleteStatus' => 'integer', 'linkedDate' => 'date'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'userId');
+    }
 
     public function messages()
     {

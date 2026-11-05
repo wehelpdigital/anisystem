@@ -50,6 +50,14 @@ class FarmShelf
         };
     }
 
+    /** A list's date line, saying whose it is when it is someone else's. A rename box never reads this line. */
+    public static function dated($authorId, string $date): string
+    {
+        $by = self::by($authorId);
+
+        return $by ? 'By ' . $by . ' · ' . $date : $date;
+    }
+
     /** The first name to show on someone else's save, or null when it is the viewer's own. */
     public static function by($authorId): ?string
     {

@@ -142,6 +142,7 @@ class ContactListController extends Controller
         return [
             'id' => $c->id,
             'name' => $c->name,
+            'by' => \App\Support\FarmShelf::by($c->userId),
             // The singulars are what a row's Call / Text / Email buttons use,
             // and they are the first of each list by construction.
             'phone' => $c->phone,

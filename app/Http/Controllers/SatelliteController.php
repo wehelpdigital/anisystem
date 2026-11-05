@@ -405,7 +405,7 @@ class SatelliteController extends Controller
         return $this->json(true, 'Analysis ready.', [
             'status' => 'ready', 'savedId' => (int) $r->id, 'title' => $r->title,
             'report' => json_decode($r->report, true), 'params' => json_decode($r->params, true),
-            'charged' => (float) $r->credits, 'at' => \Illuminate\Support\Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A'),
+            'charged' => (float) $r->credits, 'at' => \App\Support\FarmShelf::dated($r->userId ?? null, \Illuminate\Support\Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A')),
             'balance' => round($this->credits->balance($this->payer()->id), 2),
         ]);
     }
@@ -419,7 +419,7 @@ class SatelliteController extends Controller
             ->where('deleteStatus', 1)->where('status', 'ready')
             ->when($q !== '', fn ($w) => $w->where(fn ($x) => $x->where('title', 'like', '%' . $q . '%')->orWhere('description', 'like', '%' . $q . '%')))
             ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)
-            ->get(['id', 'title', 'description', 'credits', 'created_at', 'report']);
+            ->get(['id', 'userId', 'title', 'description', 'credits', 'created_at', 'report']);
         $more = $rows->count() > $per;
 
         return $this->json(true, 'ok', ['page' => $page, 'hasMore' => $more, 'rows' => $rows->take($per)->map(function ($r) {
@@ -427,7 +427,7 @@ class SatelliteController extends Controller
 
             return [
                 'id' => $r->id, 'title' => $r->title, 'description' => $r->description, 'credits' => (float) $r->credits,
-                'at' => \Illuminate\Support\Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y'),
+                'at' => \App\Support\FarmShelf::dated($r->userId ?? null, \Illuminate\Support\Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y')),
                 'score' => $rep['anee']['healthScore'] ?? null, 'word' => $rep['anee']['healthWord'] ?? null,
                 'ndvi' => $rep['satellite']['sentinel2']['ndvi']['mean'] ?? null, 'mode' => $rep['satellite']['mode'] ?? null,
             ];

@@ -268,9 +268,9 @@ class RangeEffectController extends BaseScheduleController
         }
 
         return DB::table(self::SAVED)->where('croppingScheduleId', $scheduleId)->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)
-            ->orderByDesc('updated_at')->orderByDesc('id')->limit(30)->get(['id', 'title', 'lotId', 'created_at', 'updated_at'])
+            ->orderByDesc('updated_at')->orderByDesc('id')->limit(30)->get(['id', 'userId', 'title', 'lotId', 'created_at', 'updated_at'])
             ->map(fn ($r) => ['id' => (int) $r->id, 'title' => (string) $r->title, 'lotId' => (int) $r->lotId,
-                'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A'),
+                'at' => \App\Support\FarmShelf::dated($r->userId ?? null, Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A')),
                 'edited' => $r->updated_at && $r->updated_at !== $r->created_at ? Carbon::parse($r->updated_at)->timezone('Asia/Manila')->format('M j, Y g:i A') : null])->all();
     }
 
@@ -362,7 +362,7 @@ class RangeEffectController extends BaseScheduleController
         }
 
         return $this->jsonOk('ok', ['data' => ['id' => (int) $r->id, 'title' => (string) $r->title, 'params' => json_decode((string) $r->params, true) ?: [],
-            'result' => json_decode((string) $r->result, true) ?: [], 'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A'),
+            'result' => json_decode((string) $r->result, true) ?: [], 'at' => \App\Support\FarmShelf::dated($r->userId ?? null, Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A')),
             'current' => RangeEffect::VERSION]]);
     }
 

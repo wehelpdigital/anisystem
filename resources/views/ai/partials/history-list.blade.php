@@ -8,6 +8,16 @@
     <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
     Start a new question
 </button>
+@php
+    $wcCount = \App\Support\WorkerContext::inWorkerContext() ? 0
+        : \App\Models\AiConversation::active()->where('farmOwnerId', auth()->id())->count();
+@endphp
+@if ($wcCount)
+    <a href="{{ route('ai.worker-chats') }}" class="ai-newq" style="margin-top:.4rem" data-nav-loader>
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-5-3.87M9 20H2v-2a4 4 0 015-3.87m6-5.13a4 4 0 11-8 0 4 4 0 018 0zm6 3a3 3 0 100-6 3 3 0 000 6z"/></svg>
+        Workers' chats ({{ $wcCount }})
+    </a>
+@endif
 @foreach ($conversations as $c)
     <div class="ai-hrow {{ $conversation && $conversation->id === $c->id ? 'is-active' : '' }}">
         <a href="{{ route('ai.index', ['c' => $c->id]) }}">
