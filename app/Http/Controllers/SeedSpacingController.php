@@ -105,6 +105,7 @@ class SeedSpacingController extends Controller
         $res['trial'] = SeedSpacing::trial($c['crop'], $c['variety'], SeedSpacing::varietyYield($c));
         $title = mb_substr(SeedSpacing::title($c, $res, $ctx['lot']['name'] ?? null), 0, 190);
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => $title,
             'params' => json_encode($c), 'report' => json_encode($res), 'credits' => 0, 'status' => 'ready', 'deleteStatus' => 1,
             'created_at' => now(), 'updated_at' => now(),
@@ -117,7 +118,7 @@ class SeedSpacingController extends Controller
     public function one(int $id)
     {
         $this->gate();
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)
             ->where('status', 'ready')->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That calculation is gone.', [], 404);
@@ -136,7 +137,7 @@ class SeedSpacingController extends Controller
     public function destroy(int $id)
     {
         $this->gate();
-        DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
+        DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.', $this->shelf(1));
     }
@@ -145,7 +146,7 @@ class SeedSpacingController extends Controller
     private function shelf(int $page): array
     {
         $per = 12;
-        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
+        $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
             ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'title', 'report', 'params', 'created_at']);
 
         return [

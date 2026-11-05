@@ -79,7 +79,9 @@ class ScheduleDrawController extends BaseScheduleController
                     'thumb' => $team
                         ? \App\Support\MediaStore::url($m['thumb'] ?? $path)
                         : route('sm.draw.thumb', ['scheduleId' => $scheduleId, 'source' => $source, 'noteId' => (int) $holder->id, 'index' => (int) $i, 'v' => $holder->updated_at?->timestamp]),
-                    'when' => $holder->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
+                    // A worker's drawing on the owner's own shelf says whose it is.
+                    'when' => (($scheduleId === 0 && ($by = \App\Support\FarmShelf::by($holder->userId))) ? 'By ' . $by . ' · ' : '')
+                        . $holder->updated_at?->timezone('Asia/Manila')->format('M j, Y'),
                     'sortKey' => $holder->updated_at?->timestamp ?? 0,
                     // Every drawing lives in a note; this is the way back to
                     // the words that say why it was drawn.
@@ -89,7 +91,7 @@ class ScheduleDrawController extends BaseScheduleController
         };
 
         // Your own drawings (not on a season's page: those are the season's).
-        foreach ($season ? [] : AsScheduleNote::active()->where('croppingScheduleId', 0)->where('userId', $me)
+        foreach ($season ? [] : AsScheduleNote::active()->where('croppingScheduleId', 0)->where(\App\Support\FarmShelf::mine($me))
             ->where('media', 'like', '%"drawing"%')->orderByDesc('id')->limit(300)->get() as $note) {
             $collect($note, 0, null, 'note', (string) $note->title, trim(strip_tags((string) $note->body)),
                 route('notes.hub', ['open' => $note->id]));
@@ -139,7 +141,7 @@ class ScheduleDrawController extends BaseScheduleController
     private function ownDrawing(Request $request): ?array
     {
         $note = AsScheduleNote::active()->where('croppingScheduleId', 0)
-            ->where('userId', (int) \Illuminate\Support\Facades\Auth::id())
+            ->where(\App\Support\FarmShelf::mine())
             ->find((int) $request->input('noteId'));
         $index = (int) $request->input('index');
         $m = $note ? ($this->mediaOf($note)[$index] ?? null) : null;

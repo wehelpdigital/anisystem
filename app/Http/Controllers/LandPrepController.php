@@ -275,7 +275,7 @@ class LandPrepController extends Controller
         $roster = $owner ? AsGlobalWorker::where('userId', $me)->where('deleteStatus', 1)->orderBy('workerName')->limit(300)->get()
             ->map(fn ($g) => ['id' => (int) $g->id, 'name' => (string) $g->workerName, 'phone' => (string) ($g->phone ?? ''),
                 'halfDay' => (float) $g->costPerHalfDay, 'off' => array_values(array_map('intval', (array) ($g->offWeekdays ?: [])))])->all() : [];
-        $contacts = AsContact::active()->where('userId', $me)->orderBy('name')->limit(500)->get()
+        $contacts = AsContact::active()->where(\App\Support\FarmShelf::mine($me))->orderBy('name')->limit(500)->get()
             ->map(fn ($c) => ['id' => (int) $c->id, 'name' => (string) $c->name, 'phone' => (string) ($c->phone ?? ''),
                 'company' => mb_substr((string) ($c->company ?? ''), 0, 80), 'town' => (string) ($c->town ?? ''), 'tags' => array_values((array) $c->tags)])->all();
 
@@ -354,6 +354,7 @@ class LandPrepController extends Controller
             $this->rememberWorkers($case['crew']['workers']);
         }
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($this->title($case), 0, 190),
             'params' => json_encode($case), 'report' => json_encode(new \stdClass), 'credits' => 0,
             'status' => 'pending', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
@@ -1358,7 +1359,7 @@ PROMPT;
 
     public function jobState(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', $id)->where('kind', self::KIND)->where('deleteStatus', 1)->first();
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('id', $id)->where('kind', self::KIND)->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That plan is gone.', [], 404);
         }
@@ -1395,7 +1396,7 @@ PROMPT;
         $q = trim((string) $request->query('q', ''));
         $page = max(1, (int) $request->query('page', 1));
         $per = 12;
-        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')
+        $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')
             ->when($q !== '', fn ($w) => $w->where(fn ($x) => $x->where('title', 'like', '%' . $q . '%')->orWhere('description', 'like', '%' . $q . '%')))
             ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'title', 'description', 'params', 'credits', 'created_at']);
         $more = $rows->count() > $per;
@@ -1419,7 +1420,7 @@ PROMPT;
 
     public function one(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', $id)->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')->first();
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('id', $id)->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
             return $this->json(false, 'That plan is gone.', [], 404);
         }
@@ -1433,7 +1434,7 @@ PROMPT;
         if ($title === '' || mb_strlen($title) > 191) {
             return $this->json(false, 'Give it a name up to 191 characters.', [], 422);
         }
-        $ok = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', (int) $request->input('id'))->where('deleteStatus', 1)
+        $ok = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', (int) $request->input('id'))->where('deleteStatus', 1)
             ->update(['title' => $title, 'updated_at' => now()]);
         if (! $ok) {
             return $this->json(false, 'That plan is not in your list.', [], 404);
@@ -1444,7 +1445,7 @@ PROMPT;
 
     public function destroy(int $id)
     {
-        DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', $id)->where('kind', self::KIND)->update(['deleteStatus' => 0, 'updated_at' => now()]);
+        DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('id', $id)->where('kind', self::KIND)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.');
     }
@@ -1454,7 +1455,7 @@ PROMPT;
     /** The member's own protocols, for "add to one of mine". */
     public function protocols()
     {
-        $rows = AsProtocol::active()->where('userId', (int) Auth::id())->orderByDesc('updated_at')->limit(200)->get(['id', 'title', 'crop', 'dayType', 'updated_at']);
+        $rows = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->orderByDesc('updated_at')->limit(200)->get(['id', 'title', 'crop', 'dayType', 'updated_at']);
 
         return $this->json(true, 'ok', ['rows' => $rows->map(fn ($p) => [
             'id' => (int) $p->id, 'title' => $p->title, 'crop' => $p->crop,
@@ -1478,7 +1479,7 @@ PROMPT;
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), [], 422);
         }
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', (int) $request->input('id'))->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')->first();
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('id', (int) $request->input('id'))->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
             return $this->json(false, 'That plan is gone.', [], 404);
         }
@@ -1505,7 +1506,7 @@ PROMPT;
 
             return $this->json(true, 'A new protocol was made with ' . (count($tasks) - 1) . ' steps.', ['protocolId' => (int) $p->id, 'url' => route('pb.open', ['id' => $p->id]), 'added' => count($tasks) - 1, 'title' => $p->title]);
         }
-        $p = AsProtocol::active()->where('userId', (int) Auth::id())->where('id', (int) $request->input('protocolId'))->first();
+        $p = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->where('id', (int) $request->input('protocolId'))->first();
         if (! $p) {
             return $this->json(false, 'That protocol is not yours.', [], 404);
         }
@@ -1562,7 +1563,7 @@ PROMPT;
             $limit = $user->scheduleLimit();
             Tier::denyFor('schedulesActive', 'Your plan allows ' . ($limit === 0 ? 'no' : 'up to ' . $limit) . ' active ' . ($limit === 1 ? 'season' : 'seasons') . '. Finish or archive one, or move up to {plan} for more.');
         }
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', (int) $request->input('id'))->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')->first();
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('id', (int) $request->input('id'))->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
             return $this->json(false, 'That plan is gone.', [], 404);
         }

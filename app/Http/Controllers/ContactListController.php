@@ -33,7 +33,7 @@ class ContactListController extends Controller
         $page = max(1, (int) $request->query('page', 1));
         $per = 30;
 
-        $base = AsContact::active()->where('userId', $userId);
+        $base = AsContact::active()->where(\App\Support\FarmShelf::mine($userId));
 
         if ($q !== '') {
             $base->where(function ($w) use ($q) {
@@ -72,7 +72,7 @@ class ContactListController extends Controller
         // it — the chips row. Aggregated in PHP: a phonebook is hundreds of
         // rows at most, and JSON columns don't group in MySQL without acrobatics.
         $tagCounts = [];
-        foreach (AsContact::active()->where('userId', $userId)->pluck('tags') as $tags) {
+        foreach (AsContact::active()->where(\App\Support\FarmShelf::mine($userId))->pluck('tags') as $tags) {
             foreach ((array) $tags as $t) {
                 $tagCounts[$t] = ($tagCounts[$t] ?? 0) + 1;
             }
@@ -86,7 +86,7 @@ class ContactListController extends Controller
                 'hasMore' => $hasMore,
                 'page' => $page,
                 'tags' => $tagCounts,
-                'total' => AsContact::active()->where('userId', $userId)->count(),
+                'total' => AsContact::active()->where(\App\Support\FarmShelf::mine($userId))->count(),
             ],
         ]);
     }
@@ -109,7 +109,7 @@ class ContactListController extends Controller
     public function update(Request $request, int $id)
     {
         $contact = AsContact::active()
-            ->where('userId', (int) Auth::id())
+            ->where(\App\Support\FarmShelf::mine((int) Auth::id()))
             ->findOrFail($id);
 
         $contact->fill($this->validated($request))->save();
@@ -124,7 +124,7 @@ class ContactListController extends Controller
     public function destroy(Request $request, int $id)
     {
         $contact = AsContact::active()
-            ->where('userId', (int) Auth::id())
+            ->where(\App\Support\FarmShelf::mine((int) Auth::id()))
             ->findOrFail($id);
 
         // Soft: the row steps out of every list but stays recoverable by hand.

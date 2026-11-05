@@ -479,6 +479,7 @@ class SkyWeatherController extends Controller
         $p = ['lat' => round($lat, 5), 'lng' => round($lng, 5), 'place' => mb_substr(trim((string) $request->input('place', '')), 0, 160), 'lotId' => $lot?->id, 'lot' => $lotFacts];
         $title = 'Weather · ' . ($p['place'] ?: 'my farm') . ($lotFacts ? ' · ' . $lotFacts['name'] : '') . ' · ' . now('Asia/Manila')->format('M j, g:i A');
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($title, 0, 190), 'params' => json_encode($p),
             'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
         ]);
@@ -582,7 +583,7 @@ class SkyWeatherController extends Controller
 
     public function jobState(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That reading is gone.', [], 404);
         }
@@ -612,7 +613,7 @@ class SkyWeatherController extends Controller
     public function list(Request $request)
     {
         $page = max(1, (int) $request->query('page', 1));
-        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')
+        $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('deleteStatus', 1)->where('status', 'ready')
             ->orderByDesc('id')->skip(($page - 1) * 20)->take(21)->get(['id', 'title', 'report', 'created_at']);
 
         return $this->json(true, 'ok', ['hasMore' => $rows->count() > 20, 'rows' => $rows->take(20)->map(function ($r) {
@@ -630,7 +631,7 @@ class SkyWeatherController extends Controller
 
     public function destroy(int $id)
     {
-        DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
+        DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.');
     }

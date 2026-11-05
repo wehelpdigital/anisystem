@@ -347,6 +347,7 @@ class WhatToPlantController extends Controller
         $title = 'What to plant · ' . \Illuminate\Support\Carbon::parse($p['startMonth'] . '-01')->format('M Y')
             . ' · ' . $p['location'] . ($p['country'] !== \App\Support\Region::code() ? ', ' . \App\Support\Region::name($p['country']) : '');
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(),
             'kind' => 'what',
             'title' => mb_substr($title, 0, 190),
@@ -504,7 +505,7 @@ class WhatToPlantController extends Controller
 
     public function jobState(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('id', $id)->where('kind', 'what')->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That analysis is gone.', [], 404);
@@ -556,7 +557,7 @@ class WhatToPlantController extends Controller
         $q = trim((string) $request->query('q', ''));
         $page = max(1, (int) $request->query('page', 1));
         $per = 20;
-        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('kind', 'what')
             ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
             ->when($q !== '', fn ($w) => $w->where(fn ($x) => $x->where('title', 'like', '%' . $q . '%')->orWhere('description', 'like', '%' . $q . '%')->orWhere('tags', 'like', '%' . $q . '%')))
@@ -577,7 +578,7 @@ class WhatToPlantController extends Controller
 
     public function one(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('id', $id)->where('kind', 'what')
             ->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
@@ -704,7 +705,7 @@ class WhatToPlantController extends Controller
     /** What Anee reads when a what-to-plant report is attached. */
     public static function contextFor(int $id, int $userId): ?array
     {
-        $r = DB::table('as_plant_analyses')->where('userId', $userId)
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine($userId))
             ->where('id', $id)->where('kind', 'what')
             ->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
@@ -743,7 +744,7 @@ class WhatToPlantController extends Controller
 
     public function destroy(int $id)
     {
-        DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', $id)
+        DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('id', $id)
             ->where('kind', 'what')
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
@@ -759,7 +760,7 @@ class WhatToPlantController extends Controller
         }
         $description = trim((string) $request->input('description'));
         $updated = DB::table('as_plant_analyses')
-            ->where('userId', Auth::id())
+            ->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('kind', 'what')
             ->where('id', (int) $request->input('id'))
             ->where('deleteStatus', 1)

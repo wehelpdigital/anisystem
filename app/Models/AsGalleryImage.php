@@ -5,6 +5,8 @@ namespace App\Models;
 /** One picture in an album. It belongs to exactly one, so moving it is a field. */
 class AsGalleryImage extends BaseModel
 {
+    use Concerns\HeldByFarm;
+
     protected $table = 'as_gallery_images';
 
     protected $fillable = ['albumId', 'croppingScheduleId', 'userId', 'path', 'caption', 'description', 'isTeam', 'sortOrder', 'deleteStatus'];

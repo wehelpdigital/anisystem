@@ -218,6 +218,7 @@ class NpkSeasonController extends BaseScheduleController
         $p = ['scheduleId' => (int) $schedule->id, 'lotIds' => $want->all(), 'notes' => $notes];
         $title = 'NPK Plus · ' . Str::limit((string) $schedule->title, 80, '') . ' · ' . (count($lots) === 1 ? $lots[0]['name'] : count($lots) . ' lots');
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($title, 0, 190), 'params' => json_encode($p),
             'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
         ]);

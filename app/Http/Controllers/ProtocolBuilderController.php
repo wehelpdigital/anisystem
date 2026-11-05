@@ -134,7 +134,7 @@ class ProtocolBuilderController extends Controller
 
     public function list()
     {
-        $rows = AsProtocol::active()->where('userId', (int) Auth::id())
+        $rows = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))
             ->orderByDesc('updated_at')->limit(300)->get();
         // Every version of every listed protocol in one query — the port
         // sheet asks which version a lot runs.
@@ -892,7 +892,7 @@ class ProtocolBuilderController extends Controller
     public static function contextFor(int $aid, int $userId): ?array
     {
         $a = AsProtocolAnalysis::where('id', $aid)->where('deleteStatus', 1)->first();
-        $p = $a ? AsProtocol::active()->where('id', $a->protocolId)->where('userId', $userId)->first() : null;
+        $p = $a ? AsProtocol::active()->where('id', $a->protocolId)->where(\App\Support\FarmShelf::mine($userId))->first() : null;
         if (! $a || ! $p || ! is_array($a->analysis)) {
             return null;
         }
@@ -1260,7 +1260,7 @@ PROMPT;
         if ($cap !== null && count($lotsIn) > (int) $cap) {
             Tier::denyFor('lotsPerSchedule', 'Your plan allows ' . (int) $cap . ' ' . ((int) $cap === 1 ? 'lot' : 'lots') . ' in a season. Move up to {plan} for more room.');
         }
-        $protocols = AsProtocol::active()->where('userId', (int) Auth::id())
+        $protocols = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))
             ->whereIn('id', array_map(fn ($l) => (int) $l['protocolId'], $lotsIn))->get()->keyBy('id');
         // The versions of those protocols, fenced to the member like the protocols.
         $versionsBy = $protocols->isEmpty() ? collect() : AsProtocolVersion::active()->where('userId', (int) Auth::id())
@@ -1661,13 +1661,13 @@ PROMPT;
 
     private function mine(int $id): ?AsProtocol
     {
-        return AsProtocol::active()->where('userId', (int) Auth::id())->where('id', $id)->first();
+        return AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->where('id', $id)->first();
     }
 
     /** One of this person's protocols that is deleted (in the Trash, or gone from it). */
     private function deletedMine(int $id): bool
     {
-        return AsProtocol::where('userId', (int) Auth::id())->where('id', $id)->where('deleteStatus', '!=', 1)->exists();
+        return AsProtocol::where(\App\Support\FarmShelf::mine((int) Auth::id()))->where('id', $id)->where('deleteStatus', '!=', 1)->exists();
     }
 
     /**

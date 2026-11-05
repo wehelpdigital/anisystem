@@ -68,8 +68,9 @@ class NotesHubController extends Controller
         // Maps are their owners' now, and each one's picture note is a note
         // of your own: its chip opens the map itself.
         $ownSavesByNote = \App\Support\MapAccess::owned($userId)->whereNotNull('noteId')->orderByDesc('id')->pluck('id', 'noteId');
-        foreach (AsScheduleNote::active()->where('userId', $userId)->where('croppingScheduleId', self::GLOBAL_SCHEDULE_ID)->orderByDesc('id')->get() as $n) {
-            $row = $this->row($n->id, 'global', $n->title, $n->body, $n->imagePath, 'Global note', null, $n->updated_at, $n->media, null, $ownSavesByNote[$n->id] ?? null);
+        foreach (AsScheduleNote::active()->where(\App\Support\FarmShelf::mine($userId))->where('croppingScheduleId', self::GLOBAL_SCHEDULE_ID)->orderByDesc('id')->get() as $n) {
+            $noteBy = \App\Support\FarmShelf::by($n->userId);
+            $row = $this->row($n->id, 'global', $n->title, $n->body, $n->imagePath, $noteBy ? 'Global note · by ' . $noteBy : 'Global note', null, $n->updated_at, $n->media, null, $ownSavesByNote[$n->id] ?? null);
             $row['tags'] = array_values(array_filter((array) ($n->tags ?? []), 'is_string'));
             $items->push($row);
         }
@@ -314,7 +315,7 @@ class NotesHubController extends Controller
         $id = (int) $request->query('id');
         $note = AsScheduleNote::active()
             ->where('id', $id)
-            ->where('userId', (int) Auth::id())
+            ->where(\App\Support\FarmShelf::mine())
             ->where('croppingScheduleId', self::GLOBAL_SCHEDULE_ID)
             ->first();
         if (! $note) {

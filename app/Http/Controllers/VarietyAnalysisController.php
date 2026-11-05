@@ -236,6 +236,7 @@ class VarietyAnalysisController extends Controller
         $title = 'Varieties · ' . $crop['label'] . ' · ' . (! empty($p['month']) ? self::monthWords($p['month']) . ' planting' : \App\Support\Region::seasonTitle($p['season'], (int) $p['year'], $p['country'])) . ' · '
             . ($p['lotName'] ? $p['lotName'] . ', ' : '') . $p['location'];
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(),
             'kind' => 'variety',
             'title' => mb_substr($title, 0, 190),
@@ -443,7 +444,7 @@ class VarietyAnalysisController extends Controller
     /** Where a job stands — polled by the page until ready or failed. */
     public function jobState(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('id', $id)->where('kind', 'variety')->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That analysis is gone.', [], 404);
@@ -492,7 +493,7 @@ class VarietyAnalysisController extends Controller
 
     public function list()
     {
-        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('kind', 'variety')
             ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
             ->get(['id', 'title', 'description', 'tags', 'credits', 'created_at']);
@@ -509,7 +510,7 @@ class VarietyAnalysisController extends Controller
 
     public function one(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('id', $id)->where('kind', 'variety')
             ->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
@@ -724,7 +725,7 @@ class VarietyAnalysisController extends Controller
     /** What Anee reads when a variety analysis is attached to a chat. */
     public static function contextFor(int $id, int $userId): ?array
     {
-        $r = DB::table('as_plant_analyses')->where('userId', $userId)
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine($userId))
             ->where('id', $id)->where('kind', 'variety')
             ->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
@@ -759,7 +760,7 @@ class VarietyAnalysisController extends Controller
 
     public function destroy(int $id)
     {
-        DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', $id)
+        DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('id', $id)
             ->where('kind', 'variety')
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
@@ -775,7 +776,7 @@ class VarietyAnalysisController extends Controller
         }
         $description = trim((string) $request->input('description'));
         $updated = DB::table('as_plant_analyses')
-            ->where('userId', Auth::id())
+            ->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('kind', 'variety')
             ->where('id', (int) $request->input('id'))
             ->where('deleteStatus', 1)

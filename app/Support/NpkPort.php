@@ -29,7 +29,7 @@ final class NpkPort
 {
     public static function row(int $id, int $userId): ?object
     {
-        return DB::table('as_npk_calcs')->where('userId', $userId)->where('id', $id)->where('deleteStatus', 1)->first();
+        return DB::table('as_npk_calcs')->where(\App\Support\FarmShelf::mine($userId))->where('id', $id)->where('deleteStatus', 1)->first();
     }
 
     private static function e($s): string

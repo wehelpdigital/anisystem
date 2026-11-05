@@ -27,6 +27,9 @@ use Illuminate\Support\Str;
  *         season -- a lot's map is the farm's, and whoever may draw lots
  *         may draw it.
  *
+ * A map a worker saved from their worker account is also the farm's: it sits
+ * on the owner's shelf as well as theirs (App\Support\FarmShelf).
+ *
  * Nothing else decides this; every endpoint that reads or writes a save
  * asks here.
  */
@@ -38,7 +41,7 @@ class MapAccess
     /** The maps a person owns. */
     public static function owned(int $userId): Builder
     {
-        return ScheduleMapSave::active()->where('scheduleId', self::GLOBAL)->where('userId', $userId);
+        return ScheduleMapSave::active()->where('scheduleId', self::GLOBAL)->where(FarmShelf::mine($userId));
     }
 
     /** The maps a season uses. */
@@ -59,7 +62,7 @@ class MapAccess
 
         return ScheduleMapSave::active()->where(function ($q) use ($scheduleId, $userId) {
             $q->whereIn('id', DB::table('as_schedule_map_links')->where('scheduleId', $scheduleId)->select('saveId'))
-                ->orWhere(fn ($w) => $w->where('scheduleId', self::GLOBAL)->where('userId', $userId));
+                ->orWhere(fn ($w) => $w->where('scheduleId', self::GLOBAL)->where(FarmShelf::mine($userId)));
         });
     }
 
@@ -74,7 +77,7 @@ class MapAccess
         $farm = self::farmSeasonIds();
 
         return ScheduleMapSave::active()->where(function ($q) use ($userId, $farm) {
-            $q->where(fn ($w) => $w->where('scheduleId', self::GLOBAL)->where('userId', $userId));
+            $q->where(fn ($w) => $w->where('scheduleId', self::GLOBAL)->where(FarmShelf::mine($userId)));
             if ($farm) {
                 $q->orWhereIn('id', DB::table('as_schedule_map_links')->whereIn('scheduleId', $farm)->select('saveId'));
             }
@@ -103,7 +106,12 @@ class MapAccess
     {
         $userId ??= (int) Auth::id();
 
-        return (int) $save->scheduleId === self::GLOBAL && (int) $save->userId === $userId;
+        if ((int) $save->scheduleId !== self::GLOBAL) {
+            return false;
+        }
+
+        return (int) $save->userId === $userId
+            || (! WorkerContext::inWorkerContext() && (int) $save->farmOwnerId === $userId);
     }
 
     public static function canView(ScheduleMapSave $save): bool
@@ -231,7 +239,7 @@ class MapAccess
                 'title' => $r->title,
                 'description' => $words,
                 'by' => (string) Str::of(optional($users->get($r->userId))->full_name ?? 'Someone')->explode(' ')->first(),
-                'mine' => (int) $r->userId === $me,
+                'mine' => (int) $r->userId === $me || self::isOwner($r),
                 'when' => $r->created_at?->timezone('Asia/Manila')->format('M j, Y g:ia'),
                 'count' => count(json_decode((string) $r->objects, true) ?: []),
                 // Drawn in a Collab Room (the team's) or on your own.

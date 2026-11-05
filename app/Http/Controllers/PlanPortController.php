@@ -205,7 +205,7 @@ class PlanPortController extends Controller
         if ($no = $this->refusal()) {
             return $no;
         }
-        $rows = AsProtocol::active()->where('userId', (int) Auth::id())->orderByDesc('updated_at')->limit(200)->get(['id', 'title', 'crop', 'dayType', 'updated_at']);
+        $rows = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->orderByDesc('updated_at')->limit(200)->get(['id', 'title', 'crop', 'dayType', 'updated_at']);
 
         return $this->json(true, 'ok', ['rows' => $rows->map(fn ($p) => [
             'id' => (int) $p->id, 'title' => $p->title, 'crop' => $p->crop,
@@ -843,7 +843,7 @@ class PlanPortController extends Controller
             return $this->json(true, 'A new protocol was made with ' . $n . ' steps' . ($matN ? ', ' . $matN . ($matN === 1 ? ' material' : ' materials') : '') . ($recs !== '' ? ' and the recommendations in Rules & notes' : '') . '.',
                 ['protocolId' => (int) $p->id, 'url' => route('pb.open', ['id' => $p->id]), 'added' => $n, 'materials' => $matN, 'title' => $p->title]);
         }
-        $p = AsProtocol::active()->where('userId', (int) Auth::id())->where('id', (int) $request->input('protocolId'))->first();
+        $p = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->where('id', (int) $request->input('protocolId'))->first();
         if (! $p) {
             return $this->json(false, 'That protocol is not yours.', [], 404);
         }

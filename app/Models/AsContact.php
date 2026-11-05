@@ -9,6 +9,8 @@ namespace App\Models;
  */
 class AsContact extends BaseModel
 {
+    use Concerns\HeldByFarm;
+
     protected $table = 'as_contacts';
 
     protected $fillable = [

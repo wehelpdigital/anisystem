@@ -314,10 +314,10 @@ class NpkPlusController extends Controller
         $row = ['title' => mb_substr($title, 0, 190), 'crop' => $crop, 'areaHa' => (float) $request->input('areaHa'), 'targetYield' => $request->input('targetYield'),
             'lines' => json_encode($request->input('lines')), 'soil' => json_encode($request->input('soil')), 'result' => json_encode($result), 'updated_at' => now()];
         $id = (int) $request->input('id');
-        if ($id && DB::table('as_npk_calcs')->where('id', $id)->where('userId', Auth::id())->where('deleteStatus', 1)->exists()) {
+        if ($id && DB::table('as_npk_calcs')->where('id', $id)->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)->exists()) {
             DB::table('as_npk_calcs')->where('id', $id)->update($row);
         } else {
-            $id = DB::table('as_npk_calcs')->insertGetId($row + ['userId' => Auth::id(), 'deleteStatus' => 1, 'created_at' => now()]);
+            $id = DB::table('as_npk_calcs')->insertGetId($row + ['farmOwnerId' => \App\Support\FarmShelf::stamp(), 'userId' => Auth::id(), 'deleteStatus' => 1, 'created_at' => now()]);
         }
 
         return $this->json(true, 'Saved.', ['id' => $id, 'title' => $row['title']]);
@@ -327,7 +327,7 @@ class NpkPlusController extends Controller
     {
         $q = trim((string) $request->query('q', ''));
         $page = max(1, (int) $request->query('page', 1));
-        $rows = DB::table('as_npk_calcs')->where('userId', Auth::id())->where('deleteStatus', 1)
+        $rows = DB::table('as_npk_calcs')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)
             ->when($q !== '', fn ($w) => $w->where('title', 'like', '%' . $q . '%'))
             ->orderByDesc('updated_at')->skip(($page - 1) * 20)->take(21)->get(['id', 'title', 'crop', 'areaHa', 'result', 'analysisId', 'updated_at']);
 
@@ -339,11 +339,11 @@ class NpkPlusController extends Controller
 
     public function one(int $id)
     {
-        $r = DB::table('as_npk_calcs')->where('id', $id)->where('userId', Auth::id())->where('deleteStatus', 1)->first();
+        $r = DB::table('as_npk_calcs')->where('id', $id)->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That calculation is gone.', [], 404);
         }
-        $analysis = $r->analysisId ? DB::table('as_plant_analyses')->where('id', $r->analysisId)->where('userId', Auth::id())->where('status', 'ready')->first() : null;
+        $analysis = $r->analysisId ? DB::table('as_plant_analyses')->where('id', $r->analysisId)->where(\App\Support\FarmShelf::mine(Auth::id()))->where('status', 'ready')->first() : null;
 
         return $this->json(true, 'ok', ['id' => $r->id, 'title' => $r->title, 'crop' => $r->crop, 'areaHa' => (float) $r->areaHa, 'targetYield' => $r->targetYield !== null ? (float) $r->targetYield : null,
             'lines' => json_decode((string) $r->lines, true), 'soil' => json_decode((string) $r->soil, true), 'result' => json_decode((string) $r->result, true),
@@ -352,7 +352,7 @@ class NpkPlusController extends Controller
 
     public function destroy(int $id)
     {
-        DB::table('as_npk_calcs')->where('id', $id)->where('userId', Auth::id())->update(['deleteStatus' => 0, 'updated_at' => now()]);
+        DB::table('as_npk_calcs')->where('id', $id)->where(\App\Support\FarmShelf::mine(Auth::id()))->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.');
     }
@@ -382,7 +382,7 @@ class NpkPlusController extends Controller
         if ($v->fails()) {
             return $this->json(false, $v->errors()->first(), [], 422);
         }
-        $calc = DB::table('as_npk_calcs')->where('id', (int) $request->input('calcId'))->where('userId', Auth::id())->where('deleteStatus', 1)->first();
+        $calc = DB::table('as_npk_calcs')->where('id', (int) $request->input('calcId'))->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)->first();
         if (! $calc) {
             return $this->json(false, 'Save the calculation first.', [], 404);
         }
@@ -415,6 +415,7 @@ class NpkPlusController extends Controller
             FieldProfile::keepFor((int) $payer->id, (array) ($p['fieldProfile'] ?? []), $p['location'], $calc->crop ?: null, $request->input('fieldProfileFrom'));
         }
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr('NPK Plus · ' . $calc->title, 0, 190), 'params' => json_encode($p),
             'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
         ]);
@@ -669,7 +670,7 @@ class NpkPlusController extends Controller
 
     public function jobState(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That reading is gone.', [], 404);
         }

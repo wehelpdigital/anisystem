@@ -245,6 +245,7 @@ class WhenToPlantController extends Controller
         $crop = CropCatalog::CROPS[$p['crop']];
         $title = CropCatalog::label($p['crop']) . ' · ' . self::whenTitle($p) . ' · ' . $p['location'];
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(),
             'title' => mb_substr($title, 0, 190),
             'params' => json_encode($p),
@@ -396,7 +397,7 @@ class WhenToPlantController extends Controller
 
     public function jobState(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('id', $id)->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That analysis is gone.', [], 404);
@@ -459,6 +460,7 @@ class WhenToPlantController extends Controller
         $title = ($crop['label'] ?? 'Crop') . ' · ' . self::whenTitle($p) . ' · ' . ($p['location'] ?? '');
 
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(),
             'title' => mb_substr($title, 0, 190),
             'params' => json_encode($p),
@@ -477,7 +479,7 @@ class WhenToPlantController extends Controller
         $q = trim((string) $request->query('q', ''));
         $page = max(1, (int) $request->query('page', 1));
         $per = 20;
-        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('kind', 'when')
             ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
             
@@ -500,7 +502,7 @@ class WhenToPlantController extends Controller
 
     public function one(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('id', $id)->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
             return $this->json(false, 'That analysis is gone.', [], 404);
@@ -648,7 +650,7 @@ class WhenToPlantController extends Controller
      */
     public static function contextFor(int $id, int $userId): ?array
     {
-        $r = DB::table('as_plant_analyses')->where('userId', $userId)
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine($userId))
             ->where('id', $id)->where('kind', 'when')
             ->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
@@ -698,7 +700,7 @@ class WhenToPlantController extends Controller
 
     public function destroy(int $id)
     {
-        DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', $id)
+        DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('id', $id)
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.');
@@ -713,7 +715,7 @@ class WhenToPlantController extends Controller
         }
         $description = trim((string) $request->input('description'));
         $updated = DB::table('as_plant_analyses')
-            ->where('userId', Auth::id())
+            ->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('kind', 'when')
             ->where('id', (int) $request->input('id'))
             ->where('deleteStatus', 1)

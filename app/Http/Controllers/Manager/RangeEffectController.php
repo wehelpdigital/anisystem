@@ -267,7 +267,7 @@ class RangeEffectController extends BaseScheduleController
             return [];
         }
 
-        return DB::table(self::SAVED)->where('croppingScheduleId', $scheduleId)->where('userId', Auth::id())->where('deleteStatus', 1)
+        return DB::table(self::SAVED)->where('croppingScheduleId', $scheduleId)->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)
             ->orderByDesc('updated_at')->orderByDesc('id')->limit(30)->get(['id', 'title', 'lotId', 'created_at', 'updated_at'])
             ->map(fn ($r) => ['id' => (int) $r->id, 'title' => (string) $r->title, 'lotId' => (int) $r->lotId,
                 'at' => Carbon::parse($r->created_at)->timezone('Asia/Manila')->format('M j, Y g:i A'),
@@ -301,12 +301,12 @@ class RangeEffectController extends BaseScheduleController
         // A saved reading opened and changed is saved over itself (the owner, 2026-10-30: "if you are editing a saved
         // file, clicking save should update it, not save a new one"); "Save as new" sends no id.
         $id = (int) $request->input('id', 0);
-        $have = $id ? DB::table(self::SAVED)->where('id', $id)->where('croppingScheduleId', $schedule->id)->where('userId', Auth::id())->where('deleteStatus', 1)->first() : null;
+        $have = $id ? DB::table(self::SAVED)->where('id', $id)->where('croppingScheduleId', $schedule->id)->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)->first() : null;
         if ($have) {
             DB::table(self::SAVED)->where('id', $have->id)->update($row);
             $id = (int) $have->id;
         } else {
-            $id = DB::table(self::SAVED)->insertGetId($row + ['userId' => Auth::id(), 'croppingScheduleId' => (int) $schedule->id, 'deleteStatus' => 1, 'created_at' => now()]);
+            $id = DB::table(self::SAVED)->insertGetId($row + ['farmOwnerId' => \App\Support\FarmShelf::stamp(), 'userId' => Auth::id(), 'croppingScheduleId' => (int) $schedule->id, 'deleteStatus' => 1, 'created_at' => now()]);
         }
 
         return $this->jsonOk($have ? 'Updated.' : 'Saved.', ['data' => ['id' => $id, 'title' => $row['title'], 'updated' => (bool) $have, 'saved' => $this->savedList((int) $schedule->id)]]);
@@ -343,9 +343,9 @@ class RangeEffectController extends BaseScheduleController
         if ($title === '') {
             return $this->jsonFail('Give it a name.', 422);
         }
-        $n = $this->savedReady() ? DB::table(self::SAVED)->where('id', $id)->where('croppingScheduleId', $schedule->id)->where('userId', Auth::id())->where('deleteStatus', 1)
+        $n = $this->savedReady() ? DB::table(self::SAVED)->where('id', $id)->where('croppingScheduleId', $schedule->id)->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)
             ->update(['title' => $title]) : 0;
-        if (! $n && ! DB::table(self::SAVED)->where('id', $id)->where('userId', Auth::id())->where('deleteStatus', 1)->exists()) {
+        if (! $n && ! DB::table(self::SAVED)->where('id', $id)->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)->exists()) {
             return $this->jsonFail('That saved reading is gone.', 404);
         }
 
@@ -356,7 +356,7 @@ class RangeEffectController extends BaseScheduleController
     {
         $this->gate();
         $schedule = $this->schedule($request->query('scheduleId'));
-        $r = $this->savedReady() ? DB::table(self::SAVED)->where('id', $id)->where('croppingScheduleId', $schedule->id)->where('userId', Auth::id())->where('deleteStatus', 1)->first() : null;
+        $r = $this->savedReady() ? DB::table(self::SAVED)->where('id', $id)->where('croppingScheduleId', $schedule->id)->where(\App\Support\FarmShelf::mine(Auth::id()))->where('deleteStatus', 1)->first() : null;
         if (! $r) {
             return $this->jsonFail('That saved reading is gone.', 404);
         }
@@ -371,7 +371,7 @@ class RangeEffectController extends BaseScheduleController
         $this->gate();
         $schedule = $this->schedule($request->query('scheduleId'));
         if ($this->savedReady()) {
-            DB::table(self::SAVED)->where('id', $id)->where('croppingScheduleId', $schedule->id)->where('userId', Auth::id())->update(['deleteStatus' => 0, 'updated_at' => now()]);
+            DB::table(self::SAVED)->where('id', $id)->where('croppingScheduleId', $schedule->id)->where(\App\Support\FarmShelf::mine(Auth::id()))->update(['deleteStatus' => 0, 'updated_at' => now()]);
         }
 
         return $this->jsonOk('Removed.', ['data' => ['saved' => $this->savedList((int) $schedule->id)]]);
@@ -439,6 +439,7 @@ class RangeEffectController extends BaseScheduleController
         }
         $case = ['name' => $name, 'ai' => $ai, 'scheduleId' => (int) ($schedule?->id ?? 0)];
         $rid = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr('Coverage Planner look up · ' . ($name !== '' ? $name : $ai), 0, 190),
             'params' => json_encode($case, JSON_UNESCAPED_UNICODE), 'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1,
             'created_at' => now(), 'updated_at' => now(),
@@ -589,7 +590,7 @@ class RangeEffectController extends BaseScheduleController
 
     public function job(Request $request, int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->jsonFail('That look up is gone.', 404);
         }

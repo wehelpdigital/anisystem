@@ -9,6 +9,8 @@ namespace App\Models;
  */
 class AsScheduleNote extends BaseModel
 {
+    use Concerns\HeldByFarm;
+
     protected $table = 'as_schedule_notes';
 
     protected $fillable = [

@@ -238,6 +238,7 @@ class LccCheckerController extends Controller
             'at' => now('Asia/Manila')->format('M j, Y g:i A')];
         $title = mb_substr($this->title($case), 0, 190);
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => $title,
             'params' => json_encode($case), 'report' => json_encode($report), 'credits' => 0, 'status' => 'ready', 'deleteStatus' => 1,
             'created_at' => now(), 'updated_at' => now(),
@@ -291,6 +292,7 @@ class LccCheckerController extends Controller
         ];
         $image = ['mime' => 'image/' . $m[1], 'data' => $m[2]];
         $rid = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => 'Leaf color check · ' . now('Asia/Manila')->format('M j'), 'params' => json_encode($case),
             'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
         ]);
@@ -403,7 +405,7 @@ class LccCheckerController extends Controller
 
     public function job(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That reading is gone.', [], 404);
         }
@@ -433,7 +435,7 @@ class LccCheckerController extends Controller
     /** One saved check, to open again in the full screen view. */
     public function one(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)
             ->where('status', 'ready')->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That check is gone.', [], 404);
@@ -456,7 +458,7 @@ class LccCheckerController extends Controller
         if ($title === '' || mb_strlen($title) > 120) {
             return $this->json(false, 'Give it a name of up to 120 letters.', [], 422);
         }
-        $n = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', (int) $request->input('id'))
+        $n = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', (int) $request->input('id'))
             ->where('deleteStatus', 1)->update(['title' => $title, 'updated_at' => now()]);
         if (! $n) {
             return $this->json(false, 'That check is not in your list.', [], 404);
@@ -467,7 +469,7 @@ class LccCheckerController extends Controller
 
     public function destroy(int $id)
     {
-        DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
+        DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.', $this->shelf(1));
     }
@@ -480,7 +482,7 @@ class LccCheckerController extends Controller
     private function shelf(int $page): array
     {
         $per = 12;
-        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
+        $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
             ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)->get(['id', 'title', 'credits', 'report', 'params', 'created_at']);
 
         return [

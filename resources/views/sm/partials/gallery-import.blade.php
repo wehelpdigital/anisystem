@@ -81,7 +81,7 @@
                     <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                 </button>
                 <select id="giSeason" class="hidden" aria-hidden="true" tabindex="-1">
-                    <option value="0" data-e="🖼️" data-sub="Not tied to a cropping schedule. Only you can see it.">Global Gallery only</option>
+                    <option value="0" data-e="🖼️" data-sub="{{ \App\Support\FarmShelf::stamp() ? 'Not tied to a cropping schedule. You and the farm owner can see it.' : 'Not tied to a cropping schedule. Only you can see it.' }}">Global Gallery only</option>
                     @foreach ($giSeasons as $s)
                         <option value="{{ $s->id }}" data-e="🌾">{{ $s->title }}</option>
                     @endforeach

@@ -14,6 +14,8 @@ namespace App\Models;
  */
 class ScheduleMapSave extends BaseModel
 {
+    use Concerns\HeldByFarm;
+
     protected $table = 'as_schedule_map_saves';
 
     protected $fillable = [

@@ -13,6 +13,8 @@ namespace App\Models;
  */
 class AsProtocol extends BaseModel
 {
+    use Concerns\HeldByFarm;
+
     protected $table = 'as_protocols';
 
     protected $fillable = [

@@ -372,6 +372,7 @@ class CompatController extends Controller
         $case = ['ctx' => $ctx, 'items' => array_map(fn ($it) => array_diff_key($it, ['product' => 1]), $items), 'look' => array_slice($look, 0, 6)];
         $title = 'Mix check · ' . implode(' + ', array_slice(array_map(fn ($it) => $it['name'], $items), 0, 3)) . (count($items) > 3 ? ' and more' : '');
         $rid = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($title, 0, 190), 'params' => json_encode($case, JSON_UNESCAPED_UNICODE),
             'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
         ]);
@@ -609,7 +610,7 @@ class CompatController extends Controller
 
     public function job(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That check is gone.', [], 404);
         }

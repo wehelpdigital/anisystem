@@ -18,8 +18,9 @@ use Illuminate\Http\Request;
  * they have ever kept without first remembering which season it belonged to.
  *
  * It also holds the one thing with no season at all: what Import from phone was
- * told to keep here (as_gallery_images with croppingScheduleId 0, albumId 0 and
- * the person's userId, so only they see it). A row's file can be gone while the
+ * told to keep here (as_gallery_images with croppingScheduleId 0, albumId 0 and the
+ * person's userId, so only they see it, and their boss when it was saved from a worker
+ * account: App\Support\FarmShelf). A row's file can be gone while the
  * row stays, and a tile for nothing is not shown: see stillThere().
  */
 class GalleryHubController extends Controller
@@ -147,7 +148,7 @@ class GalleryHubController extends Controller
     public function destroyOwn(Request $request)
     {
         $row = \App\Models\AsGalleryImage::where('croppingScheduleId', 0)
-            ->where('userId', \Illuminate\Support\Facades\Auth::id())
+            ->where(\App\Support\FarmShelf::mine())
             ->where('deleteStatus', 1)
             ->find((int) $request->input('id'));
         if (! $row) {
@@ -389,7 +390,7 @@ class GalleryHubController extends Controller
         $meId = (int) \Illuminate\Support\Facades\Auth::id();
         if ($meId) {
             $globals = \App\Models\AsScheduleNote::active()
-                ->where('userId', $meId)
+                ->where(\App\Support\FarmShelf::mine($meId))
                 ->where('croppingScheduleId', 0)
                 ->orderByDesc('id')
                 ->limit(300)
@@ -418,7 +419,8 @@ class GalleryHubController extends Controller
                         'url' => MediaStore::url($m['path']),
                         'posterUrl' => ! empty($m['poster']) ? MediaStore::url($m['poster']) : null,
                         'title' => $title ?: 'Untitled',
-                        'source' => $kind === 'map' ? 'Maps' : ($kind === 'drawing' ? 'Draw' : 'Global note'),
+                        'source' => ($kind === 'map' ? 'Maps' : ($kind === 'drawing' ? 'Draw' : 'Global note'))
+                            . (($noteBy = \App\Support\FarmShelf::by($gn->userId)) ? ' · by ' . $noteBy : ''),
                         'href' => match (true) {
                             $kind === 'map' && isset($ownSaveByNote[$gn->id]) => \App\Support\MapAccess::url((int) $ownSaveByNote[$gn->id]),
                             $kind === 'drawing' => route('draw.page', ['open' => $gn->id . ':' . $i]),
@@ -437,7 +439,7 @@ class GalleryHubController extends Controller
          * to ask Anee a question is also a loose row, and is not shown here. */
         if ($meId) {
             $own = \App\Models\AsGalleryImage::where('croppingScheduleId', 0)
-                ->where('userId', $meId)
+                ->where(\App\Support\FarmShelf::mine($meId))
                 ->where('deleteStatus', 1)
                 ->where('path', 'not like', '%ai-photos/%')
                 ->orderByDesc('id')
@@ -463,7 +465,7 @@ class GalleryHubController extends Controller
                     'url' => MediaStore::url($g->path),
                     'posterUrl' => $posterUrl,
                     'title' => $title,
-                    'source' => 'Imported',
+                    'source' => ($imageBy = \App\Support\FarmShelf::by($g->userId)) ? 'By ' . $imageBy : 'Imported',
                     'href' => null,
                     'when' => $g->created_at?->timezone('Asia/Manila')->format('M j, Y'),
                     'scheduleId' => 0,

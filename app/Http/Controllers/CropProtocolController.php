@@ -739,6 +739,7 @@ class CropProtocolController extends Controller
         // What only the request can read (the climate shelf as kept, the forecast): read now.
         $ctx = $this->context($case);
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(),
             'kind' => 'protocol',
             'title' => mb_substr(self::titleOf($case), 0, 190),
@@ -2751,7 +2752,7 @@ PROMPT;
      */
     public function jobState(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('id', $id)->where('kind', 'protocol')->where(fn ($q) => $q->where('deleteStatus', 1)->orWhere('status', 'failed'))->first();
         if (! $r) {
             return $this->json(false, 'That protocol is gone.', [], 404);
@@ -2799,7 +2800,7 @@ PROMPT;
 
     public function list()
     {
-        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('kind', 'protocol')
             ->where('deleteStatus', 1)->where('status', 'ready')->orderByDesc('id')
             ->get(['id', 'title', 'description', 'tags', 'credits', 'created_at']);
@@ -2816,7 +2817,7 @@ PROMPT;
 
     public function one(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('id', $id)->where('kind', 'protocol')
             ->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
@@ -2865,7 +2866,7 @@ PROMPT;
     /** What Anee reads when a protocol is attached to a chat. */
     public static function contextFor(int $id, int $userId): ?array
     {
-        $r = DB::table('as_plant_analyses')->where('userId', $userId)
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine($userId))
             ->where('id', $id)->where('kind', 'protocol')
             ->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
@@ -2969,7 +2970,7 @@ PROMPT;
 
     public function destroy(int $id)
     {
-        DB::table('as_plant_analyses')->where('userId', Auth::id())->where('id', $id)
+        DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('id', $id)
             ->where('kind', 'protocol')
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
@@ -2985,7 +2986,7 @@ PROMPT;
         }
         $description = trim((string) $request->input('description'));
         $updated = DB::table('as_plant_analyses')
-            ->where('userId', Auth::id())
+            ->where(\App\Support\FarmShelf::mine(Auth::id()))
             ->where('kind', 'protocol')
             ->where('id', (int) $request->input('id'))
             ->where('deleteStatus', 1)

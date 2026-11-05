@@ -206,6 +206,7 @@ class ProtocolNpkController extends Controller
             'soilConditions' => SoilConditions::normalize($request->input('soilConditions', [])), 'phValue' => SoilConditions::phValue($request->input('phValue')),
             'water' => (string) ($request->input('water') ?: ''), 'notes' => trim((string) $request->input('notes', ''))];
         $rid = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr('NPK Plus · ' . $p->title, 0, 190), 'params' => json_encode($ask),
             'report' => json_encode(new \stdClass), 'credits' => 0, 'status' => 'pending', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
         ]);
@@ -310,7 +311,7 @@ class ProtocolNpkController extends Controller
 
     public function job(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That reading is gone.', [], 404);
         }
@@ -340,7 +341,7 @@ class ProtocolNpkController extends Controller
     /** This protocol's earlier readings, newest first. */
     public function list(int $id)
     {
-        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
+        $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('status', 'ready')->where('deleteStatus', 1)
             ->where('params', 'like', '{"protocolId":' . $id . ',%')->orderByDesc('id')->limit(20)->get(['id', 'title', 'created_at']);
 
         return $this->json(true, 'ok', ['rows' => $rows->map(fn ($r) => ['id' => (int) $r->id, 'title' => $r->title,
@@ -349,7 +350,7 @@ class ProtocolNpkController extends Controller
 
     private function mine(int $id): ?AsProtocol
     {
-        return AsProtocol::active()->where('userId', (int) Auth::id())->where('id', $id)->first();
+        return AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->where('id', $id)->first();
     }
 
     private function payer(): User

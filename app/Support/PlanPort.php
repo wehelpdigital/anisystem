@@ -59,7 +59,7 @@ class PlanPort
             return NpkPort::row($id, $userId);
         }
 
-        return DB::table('as_plant_analyses')->where('userId', $userId)->where('id', $id)->where('kind', $source)
+        return DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine($userId))->where('id', $id)->where('kind', $source)
             ->where('deleteStatus', 1)->where('status', 'ready')->first();
     }
 

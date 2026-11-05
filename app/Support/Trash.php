@@ -143,6 +143,8 @@ class Trash
                 $scheduleId = (int) $row->id;
             }
         }
+        // A worker's save for a farm (App\Support\FarmShelf) is the owner's to restore, whoever deleted it.
+        $owner = (int) ($row->farmOwnerId ?? 0) ?: $owner;
         if (! $owner) {
             return;
         }

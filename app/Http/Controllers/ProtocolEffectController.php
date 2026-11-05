@@ -44,7 +44,7 @@ class ProtocolEffectController extends Controller
 
     private function mine(int $id): AsProtocol
     {
-        $p = AsProtocol::active()->where('userId', (int) Auth::id())->where('id', $id)->first();
+        $p = AsProtocol::active()->where(\App\Support\FarmShelf::mine((int) Auth::id()))->where('id', $id)->first();
         if (! $p) {
             abort(response()->json(['success' => false, 'message' => 'That protocol is gone.'], 404));
         }
@@ -163,7 +163,7 @@ class ProtocolEffectController extends Controller
     /** The farmer's saved readings of this protocol (no season; the protocol in the params). */
     private function savedQuery(int $protocolId)
     {
-        return DB::table(RangeEffectController::SAVED)->where('userId', (int) Auth::id())->where('croppingScheduleId', 0)->where('deleteStatus', 1)
+        return DB::table(RangeEffectController::SAVED)->where(\App\Support\FarmShelf::mine((int) Auth::id()))->where('croppingScheduleId', 0)->where('deleteStatus', 1)
             ->where('params->protocolId', $protocolId);
     }
 
@@ -212,7 +212,7 @@ class ProtocolEffectController extends Controller
             DB::table(RangeEffectController::SAVED)->where('id', $have->id)->update($row);
             $rid = (int) $have->id;
         } else {
-            $rid = DB::table(RangeEffectController::SAVED)->insertGetId($row + ['userId' => (int) Auth::id(), 'croppingScheduleId' => 0, 'deleteStatus' => 1, 'created_at' => now()]);
+            $rid = DB::table(RangeEffectController::SAVED)->insertGetId($row + ['farmOwnerId' => \App\Support\FarmShelf::stamp(), 'userId' => (int) Auth::id(), 'croppingScheduleId' => 0, 'deleteStatus' => 1, 'created_at' => now()]);
         }
 
         return response()->json(['success' => true, 'message' => $have ? 'Updated.' : 'Saved.',

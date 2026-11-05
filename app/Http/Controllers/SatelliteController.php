@@ -227,6 +227,7 @@ class SatelliteController extends Controller
         }
         $title = str_replace(' — ', ', ', CropCatalog::label($p['crop'])) . ' · ' . ($p['lotName'] ? $p['lotName'] . ', ' : '') . $p['location'] . ' · ' . now('Asia/Manila')->format('M j, Y');
         $id = DB::table('as_plant_analyses')->insertGetId([
+            'farmOwnerId' => \App\Support\FarmShelf::stamp(),
             'userId' => Auth::id(), 'kind' => self::KIND, 'title' => mb_substr($title, 0, 190),
             'params' => json_encode($p), 'report' => json_encode(new \stdClass), 'credits' => 0,
             'status' => 'pending', 'deleteStatus' => 1, 'created_at' => now(), 'updated_at' => now(),
@@ -374,7 +375,7 @@ class SatelliteController extends Controller
 
     public function jobState(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)
             ->where('id', $id)->where('deleteStatus', 1)->first();
         if (! $r) {
             return $this->json(false, 'That analysis is gone.', [], 404);
@@ -414,7 +415,7 @@ class SatelliteController extends Controller
         $q = trim((string) $request->query('q', ''));
         $page = max(1, (int) $request->query('page', 1));
         $per = 20;
-        $rows = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)
+        $rows = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)
             ->where('deleteStatus', 1)->where('status', 'ready')
             ->when($q !== '', fn ($w) => $w->where(fn ($x) => $x->where('title', 'like', '%' . $q . '%')->orWhere('description', 'like', '%' . $q . '%')))
             ->orderByDesc('id')->skip(($page - 1) * $per)->take($per + 1)
@@ -441,7 +442,7 @@ class SatelliteController extends Controller
     /** Fresh tile URLs for a saved report (Earth Engine map ids expire). */
     public function tiles(int $id)
     {
-        $r = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)
             ->where('id', $id)->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
             return $this->json(false, 'That analysis is gone.', [], 404);
@@ -531,7 +532,7 @@ class SatelliteController extends Controller
 
     public function destroy(int $id)
     {
-        DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)->where('id', $id)
+        DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)->where('id', $id)
             ->update(['deleteStatus' => 0, 'updated_at' => now()]);
 
         return $this->json(true, 'Moved to the Trash. Restore it from the Trash for 30 days.');
@@ -543,7 +544,7 @@ class SatelliteController extends Controller
         if ($title === '' || mb_strlen($title) > 190) {
             return $this->json(false, 'Give it a name up to 190 characters.', [], 422);
         }
-        $ok = DB::table('as_plant_analyses')->where('userId', Auth::id())->where('kind', self::KIND)
+        $ok = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine(Auth::id()))->where('kind', self::KIND)
             ->where('id', (int) $request->input('id'))->where('deleteStatus', 1)
             ->update(['title' => $title, 'description' => trim((string) $request->input('description')) ?: null, 'updated_at' => now()]);
 
@@ -553,7 +554,7 @@ class SatelliteController extends Controller
     /** The analysis as chat context, when it is attached to a question for Anee. */
     public static function contextFor(int $id, int $userId): ?array
     {
-        $r = DB::table('as_plant_analyses')->where('userId', $userId)->where('id', $id)->where('kind', self::KIND)
+        $r = DB::table('as_plant_analyses')->where(\App\Support\FarmShelf::mine($userId))->where('id', $id)->where('kind', self::KIND)
             ->where('deleteStatus', 1)->where('status', 'ready')->first();
         if (! $r) {
             return null;
