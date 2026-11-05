@@ -198,14 +198,16 @@
 
                  One lot, because those answers have to come from somewhere.
                  Two lots on different crops keep different counters, and a
-                 single "DAS day" field cannot mean both. An activity that
-                 covers the whole farm is still possible — that is what
-                 picking none means. --}}
+                 single "DAS day" field cannot mean both. A task that is not
+                 about any lot, like getting the equipment ready, says N/A:
+                 that is where a new activity starts (the owner, 2026-11-06),
+                 and it saves as no lot. --}}
             <div id="activityLotsWrap">
                 <span class="form-label">Lot
-                    <span class="text-gray-400 font-normal">(pick none for the whole farm)</span>
+                    <span class="text-gray-400 font-normal">(N/A when the task is not about a lot, like preparing equipment)</span>
                 </span>
                 <div id="activityLotsContainer" class="flex flex-wrap gap-2">
+                    <button type="button" class="chip is-selected" id="activityLotNa" aria-pressed="true" data-chip-manual title="Not applicable">N/A</button>
                     {{-- The name alone. The variety made every chip a sentence,
                          and a row of sentences is not a row you can scan. It is
                          on the tooltip for anyone who needs it. --}}
@@ -223,9 +225,6 @@
                 {{-- Said only when it matters: an activity already saved
                      against several lots is about to become one. --}}
                 <p class="form-hint act-lot-warn hidden" id="activityLotNarrow"></p>
-                {{-- What the form is waiting for, where the answer will go. --}}
-                <p class="form-hint" id="activityWhenWaiting">Pick the lot first. The date options below
-                    depend on it.</p>
                 {{-- A lot made here is the same lot the Lots module makes.
 
                      It used to ask four things — name, variety, size, unit —
@@ -326,13 +325,10 @@
             </div>
 
 
-            {{-- WHEN, once there is a lot to count from.
-                 The By-DAS tab is a lens over a particular lot's calendar, so
-                 offering it before one is chosen is offering a lens over
-                 nothing. Hidden until the question above is answered — and
-                 shown at once for the N/A case, because "everywhere" is an
-                 answer too. --}}
-            <div class="keep-on-workers" id="activityWhenWrap" hidden>
+            {{-- WHEN. Open from the start: a new activity already says N/A above,
+                 and a task on no lot still happens on a day. With no lot picked,
+                 By-DAS counts from any lot that has a Day 0. --}}
+            <div class="keep-on-workers" id="activityWhenWrap">
                 <div class="when-tabs" id="whenTabs" role="tablist">
                     <button type="button" class="when-tab is-active" id="whenTabDate" aria-selected="true">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>

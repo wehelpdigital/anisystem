@@ -549,14 +549,14 @@
             <h2>Workers</h2>
             @php $skillsCatalog = \App\Models\AsScheduleWorker::SKILLS; @endphp
             <table class="worker-table">
-                <thead><tr><th>Priority</th><th>Name</th><th>Pay per half day</th><th>Skills</th><th>Notes</th></tr></thead>
+                <thead><tr><th>Priority</th><th>Name</th>@unless (\App\Support\MoneyView::hidden())<th>Pay per half day</th>@endunless<th>Skills</th><th>Notes</th></tr></thead>
                 <tbody>
                     @foreach($schedule->workers->sortBy('priority') as $w)
                         @php $wSkills = is_array($w->skills) ? $w->skills : []; @endphp
                         <tr>
                             <td>#{{ $w->priority }}</td>
                             <td><strong>{{ $w->workerName }}</strong></td>
-                            <td>{{ \App\Support\Region::money($w->costPerHalfDay) }}</td>
+                            @unless (\App\Support\MoneyView::hidden())<td>{{ \App\Support\Region::money($w->costPerHalfDay) }}</td>@endunless
                             <td>
                                 @if(count($wSkills) === 0)
                                     <span style="color:#9aa0a6;">None</span>

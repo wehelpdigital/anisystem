@@ -1225,7 +1225,7 @@
                     <tr>
                         <th class="center">Priority</th>
                         <th>Name</th>
-                        <th class="num">Pay per half day</th>
+                        @unless (\App\Support\MoneyView::hidden())<th class="num">Pay per half day</th>@endunless
                         <th>Skills</th>
                         <th>Notes</th>
                     </tr>
@@ -1236,7 +1236,7 @@
                         <tr>
                             <td class="center">#{{ $w->priority }}</td>
                             <td><strong>{{ $w->workerName }}</strong></td>
-                            <td class="num">{{ \App\Support\Region::money((float) $w->costPerHalfDay) }}</td>
+                            @unless (\App\Support\MoneyView::hidden())<td class="num">{{ \App\Support\Region::money((float) $w->costPerHalfDay) }}</td>@endunless
                             <td>
                                 @if(count($wSkills) === 0)
                                     <span class="muted">None</span>
@@ -1709,8 +1709,10 @@
                 <div class="worker-header">
                     <div class="name">{{ $w->workerName }}</div>
                     <div class="meta">
-                        Priority #{{ $w->priority }} ·
-                        {{ \App\Support\Region::money((float) $w->costPerHalfDay) }} per half day
+                        Priority #{{ $w->priority }}
+                        @unless (\App\Support\MoneyView::hidden())
+                            · {{ \App\Support\Region::money((float) $w->costPerHalfDay) }} per half day
+                        @endunless
                         @if($w->notes)
                             · {{ $w->notes }}
                         @endif
@@ -1744,11 +1746,13 @@
                         </div>
                         <div class="sub">{{ $stats['units'] }} half days in all</div>
                     </div>
+                    @unless (\App\Support\MoneyView::hidden())
                     <div class="worker-stat earnings">
                         <div class="lbl">Total Earnings</div>
                         <div class="val">{{ \App\Support\Region::money($stats['earnings']) }}</div>
                         <div class="sub">{{ $stats['units'] }} × {{ \App\Support\Region::money((float) $w->costPerHalfDay) }}</div>
                     </div>
+                    @endunless
                 </div>
 
                 <h3>Work Days by Month</h3>

@@ -57,6 +57,11 @@ class DocumentController extends BaseScheduleController
             'docEntries.tag',
         ]);
 
+        // Money the worker is kept from is never sent (MoneyView), here as on the board.
+        if (\App\Support\MoneyView::hidden()) {
+            \App\Support\MoneyView::blankSchedule($schedule);
+        }
+
         // ---- Export view options (all optional query params) ----
         //
         // Filtering happens here rather than in the view so every figure the
@@ -248,6 +253,11 @@ class DocumentController extends BaseScheduleController
             'criticalRules',
             'docEntries.tag',
         ]);
+
+        // Money the worker is kept from is never sent (MoneyView), here as on the board.
+        if (\App\Support\MoneyView::hidden()) {
+            \App\Support\MoneyView::blankSchedule($schedule);
+        }
 
         // ---- Effective Day 0 anchor per lot (manual + activity flags) ----
         $lotDayZero = [];
@@ -800,6 +810,11 @@ class DocumentController extends BaseScheduleController
             'criticalRules',
             'docEntries.tag',
         ]);
+
+        // Money the worker is kept from is never sent (MoneyView), here as on the board.
+        if (\App\Support\MoneyView::hidden()) {
+            \App\Support\MoneyView::blankSchedule($schedule);
+        }
 
         $activeVersion = $schedule->versions->firstWhere('isActive', true)
             ?? $schedule->versions->firstWhere('isOriginal', true)

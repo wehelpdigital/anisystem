@@ -4166,23 +4166,32 @@ document.addEventListener('DOMContentLoaded', () => {
      * ================================================================ */
 
     /* ---- Lot chips --------------------------------------------------------
-     * Nothing picked means everywhere, which is what the label now says. A
-     * chip that said the same thing was a second way to answer one question,
-     * and it could disagree with the first. */
+     * N/A is the task that is not about any lot, like getting the equipment
+     * ready (the owner, 2026-11-06). It is what a new activity starts on, it
+     * lights whenever no lot is picked so the two can never disagree, and it
+     * is not a lot: getActivityLotIds() never counts it, and it saves as none. */
+    function paintLotNa() {
+        const na = $id('activityLotNa');
+        if (!na) return;
+        const on = getActivityLotIds().length === 0;
+        na.classList.toggle('is-selected', on);
+        na.setAttribute('aria-pressed', on ? 'true' : 'false');
+    }
     $id('activityLotsContainer')?.addEventListener('click', (e) => {
-        const chip = e.target.closest('.lot-chip');
-        if (!chip) return;
+        const na = e.target.closest('#activityLotNa');
+        const chip = na ? null : e.target.closest('.lot-chip');
+        if (!na && !chip) return;
         /* One lot at a time. Every question under this one — which counter
            the lens is in, whether a Day-0 anchor means anything, whether
            there is a transplant to mark — is a fact about the ground, and
            two lots on different crops cannot both be the answer. Tapping the
-           chosen one again lets it go, which is the N/A case: everywhere. */
-        const wasOn = chip.classList.contains('is-selected');
+           chosen one again lets it go, which lands on N/A. */
+        const wasOn = !!chip && chip.classList.contains('is-selected');
         $qsa('#activityLotsContainer .lot-chip').forEach((c) => {
             c.classList.remove('is-selected');
             c.setAttribute('aria-pressed', 'false');
         });
-        if (!wasOn) {
+        if (chip && !wasOn) {
             chip.classList.add('is-selected');
             chip.setAttribute('aria-pressed', 'true');
         }
@@ -4217,6 +4226,7 @@ document.addEventListener('DOMContentLoaded', () => {
             c.setAttribute('aria-pressed', on ? 'true' : 'false');
         });
         sayLotNarrowed(ids.length > 1, ids.map((id) => LOT_NAMES[id] || ('Lot #' + id)));
+        paintLotNa();
     }
 
     function getActivityLotIds() {
@@ -4617,10 +4627,10 @@ document.addEventListener('DOMContentLoaded', () => {
          * panel's own words change with the crop (DOS on an orchard, DAS on
          * a field). Offering it above the question that decides both meant a
          * reader could tick it, then pick a lot, and watch the sentence they
-         * had agreed to rewrite itself. It waits with the dates. */
-        if (!WHEN_ASKED) return false;
+         * had agreed to rewrite itself. So it waits for a lot: on N/A it
+         * would save a mark nothing reads, since a count starts on a lot. */
         const selected = getActivityLotIds();
-        if (selected.length === 0) return true;
+        if (selected.length === 0) return false;
         for (const lotId of selected) {
             const src = LOT_DAY_ZERO_SOURCE[lotId];
             if (!src) continue;
@@ -4644,9 +4654,8 @@ document.addEventListener('DOMContentLoaded', () => {
          * crop on the ground: rice has one, corn does not, an orchard cannot.
          * So this waits for the lot question with everything else, rather
          * than offering DAT 0 over a lot nobody has chosen yet. */
-        if (!WHEN_ASKED) return false;
         const selected = getActivityLotIds();
-        if (selected.length === 0) return true;
+        if (selected.length === 0) return false;
         // Transplant (DAT 0) only applies to a sown-then-transplanted lot: DAS and DAP go straight into the field and never flip.
         if (selected.every((id) => lotDayType(id) === 'DAP' || lotDayType(id) === 'DAS')) return false;
         const start = parseLocalDate(($id('activityTargetDate').value || '').trim());
@@ -4892,38 +4901,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function refreshActivityModalLotState() {
-        refreshWhenVisibility();            // the dates wait for the ground…
-        refreshDayZeroToggleVisibility();   // …may force-uncheck Day 0…
+        paintLotNa();
+        refreshDayZeroToggleVisibility();   // may force-uncheck Day 0…
         refreshActivityDasRow();            // …which this then reads
     }
-
-    /* WHEN waits for WHERE.
-     *
-     * The By-DAS tab is a lens over one lot's own calendar, and the counter
-     * it is in comes from that lot — so offering it before a lot is chosen
-     * is offering a lens over nothing, and the label on it would be a guess.
-     *
-     * "Everywhere" (no lot) is an answer, not an absence: an activity on the
-     * whole farm still happens on a day, so the block opens for it too — the
-     * moment somebody has actually said so by tapping a chip off, and on a
-     * form that has just been opened for a NEW activity, where nothing has
-     * been asked yet, it stays shut until the first tap. */
-    let WHEN_ASKED = false;
-    function refreshWhenVisibility() {
-        const wrap = $id('activityWhenWrap');
-        if (!wrap) return;
-        const chose = getActivityLotIds().length > 0;
-        const show = chose || WHEN_ASKED;
-        wrap.hidden = !show;
-        // A form the reader has not answered yet says what it is waiting for.
-        const hint = $id('activityWhenWaiting');
-        if (hint) hint.classList.toggle('hidden', show);
-    }
-    /* Tapping any chip — on or off — counts as answering the question. */
-    $id('activityLotsContainer')?.addEventListener('click', (e) => {
-        if (e.target.closest('.lot-chip')) { WHEN_ASKED = true; refreshWhenVisibility(); }
-    });
-    window.__resetWhenAsked = (asked) => { WHEN_ASKED = !!asked; };
 
     $id('activityStartDas')?.addEventListener('input', function () {
         const anchor = _activityDasAnchor();
@@ -6237,8 +6218,6 @@ document.addEventListener('DOMContentLoaded', () => {
         setActPane('details');
         $id('activityModeTabs')?.classList.remove('is-locked');
         setActivityLots([]);
-        // Nothing has been asked yet, so the date block waits.
-        window.__resetWhenAsked?.(false);
         setWorkerPay({});
         setActivityWorkers([]);
         setActivityImages([]);
@@ -6341,9 +6320,6 @@ document.addEventListener('DOMContentLoaded', () => {
             $id('activityIsDayZero').checked = !!boolFlag(a.isDayZero);
             $id('activityIsTransplant').checked = !!boolFlag(a.isTransplant);
             setActivityLots(a.lotIds || (a.lots || []).map((l) => l.id));
-            // An activity that exists has already answered the lot question,
-            // even when the answer is "everywhere" — so its date block opens.
-            window.__resetWhenAsked?.(true);
             setWorkerPay(a.workerPay || {});
             setActivityWorkers(a.workerIds || (a.workers || []).map((w) => w.id));
             if (a.activityType === 'worker_payroll') setActPane('workers');
@@ -13345,7 +13321,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const d = p.data || {};
             try {
                 switch (p.type) {
-                    case 'saved': if (d.id) _renderCardOrReplace(d); break;
+                    // The event reaches everyone in the room, so it carries no money (MoneyView).
+                    // Whoever may see money reads the card back with their own figures.
+                    case 'saved':
+                        if (!d.id) break;
+                        if (MONEY_HIDDEN) { _renderCardOrReplace(d); break; }
+                        api(U.show(d.id)).then((res) => _renderCardOrReplace(res && res.data ? res.data : d))
+                            .catch(() => _renderCardOrReplace(d));
+                        break;
                     case 'deleted': if (d.id) _removeCardById(d.id); break;
                     case 'toggle-done': { const c = cardOf(d.id); if (c) applyDoneState(c, !!d.isDone); break; }
                     case 'toggle-hidden': { const c = cardOf(d.id); if (c) { c.classList.toggle('is-hidden', !!d.isHidden); refreshHiddenActivityCount(); } break; }

@@ -66,6 +66,25 @@ class MoneyView
         $schedule->setRelation('dayIncomes', collect());
     }
 
+    /**
+     * A stock note without its price. The shed writes the price into the words
+     * ("Bought for “Planting” at ₱5,950.00 each", "Bought at ₱1,350.00 each"),
+     * and the board draws those notes under each day.
+     */
+    public static function blankNote(?string $note): ?string
+    {
+        if ($note === null || $note === '') {
+            return $note;
+        }
+        $note = preg_replace('/\s*·?\s*Bought at [^\d\s]{0,3}[\d,.]+ each/u', '', $note);
+        $note = preg_replace('/\s+at [^\d\s]{0,3}[\d,.]+ each/u', '', $note);
+        // A figure with the money sign typed by hand goes the same way.
+        $note = preg_replace('/\s*' . preg_quote(Region::symbol(), '/') . '\s?[\d,]+(?:\.\d+)?/u', '', $note);
+
+        // By letters, not bytes: trim() with a dot in its list can cut a letter in half.
+        return (string) preg_replace('/^[\s·]+|[\s·]+$/u', '', $note);
+    }
+
     /** One task's money blanked in memory. */
     public static function blankActivity($a): void
     {

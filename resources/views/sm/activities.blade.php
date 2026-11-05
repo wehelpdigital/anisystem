@@ -686,7 +686,7 @@
         html.money-off .day-income-block, html.money-off #activityCostSay, html.money-off #activityServicePriceWrap,
         html.money-off #workerPayTotal, html.money-off .wp-amount, html.money-off .wp-rate, html.money-off .rem-money,
         html.money-off .act-rem-amt, html.money-off .act-rem-total, html.money-off #itemPriceCell,
-        html.money-off .item-tag-price, html.money-off .act-check-pay, html.money-off [data-att-total] { display: none !important; }
+        html.money-off .item-tag-price, html.money-off .act-check-pay, html.money-off .act-check-total { display: none !important; }
         html.money-ro #activityServicePrice, html.money-ro .wp-amount, html.money-ro .rem-money, html.money-ro #itemPriceInput {
             pointer-events: none; opacity: .6; }
         .date-header-cash { order: 92; display: inline-flex; align-items: center; gap: .28rem;

@@ -134,7 +134,7 @@ class ActivityController extends BaseScheduleController
                     'typedSays' => ($m->enteredQty !== null && $m->enteredUnit)
                         ? \App\Models\AsInventoryItem::trim((float) $m->enteredQty) . ' ' . \App\Models\AsInventoryItem::unitSays($m->enteredUnit, abs((float) $m->enteredQty) == 1.0)
                         : null,
-                    'note' => $m->note,
+                    'note' => $moneyHidden ? \App\Support\MoneyView::blankNote($m->note) : $m->note,
                 ];
             })->values());
 
@@ -1077,7 +1077,7 @@ class ActivityController extends BaseScheduleController
 
         // Coming back off the drafts bin is the card arriving, which is what
         // 'saved' already means to the board.
-        $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
+        $this->broadcastBoard($schedule, 'saved', \App\Support\MoneyView::blankActivityArray($data), $fresh->versionId);
 
         return $this->jsonOk('Restored from drafts.', ['data' => \App\Support\MoneyView::hidden() ? \App\Support\MoneyView::blankActivityArray($data) : $data]);
     }
@@ -1171,7 +1171,7 @@ class ActivityController extends BaseScheduleController
 
         // Undoing a delete puts the card back for everyone, not just for the
         // person who pressed undo.
-        $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
+        $this->broadcastBoard($schedule, 'saved', \App\Support\MoneyView::blankActivityArray($data), $fresh->versionId);
 
         return $this->jsonOk('Activity restored.', ['data' => \App\Support\MoneyView::hidden() ? \App\Support\MoneyView::blankActivityArray($data) : $data]);
     }
@@ -1392,7 +1392,7 @@ class ActivityController extends BaseScheduleController
         $data['workerIds'] = $fresh->workers->pluck('id');
         $data = array_merge($data, $this->serializeWorkerPay($fresh));
 
-        $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
+        $this->broadcastBoard($schedule, 'saved', \App\Support\MoneyView::blankActivityArray($data), $fresh->versionId);
         return $this->jsonOk('Activity copied.', ['data' => \App\Support\MoneyView::hidden() ? \App\Support\MoneyView::blankActivityArray($data) : $data]);
     }
 
@@ -1866,7 +1866,7 @@ class ActivityController extends BaseScheduleController
         $data['items'] = $this->serializeItems($fresh);
         $data = array_merge($data, $this->serializeWorkerPay($fresh));
 
-        $this->broadcastBoard($schedule, 'saved', $data, $fresh->versionId);
+        $this->broadcastBoard($schedule, 'saved', \App\Support\MoneyView::blankActivityArray($data), $fresh->versionId);
 
         return $this->jsonOk($id ? 'Activity updated.' : 'Activity added.', [
             'data' => \App\Support\MoneyView::hidden() ? \App\Support\MoneyView::blankActivityArray($data) : $data,
