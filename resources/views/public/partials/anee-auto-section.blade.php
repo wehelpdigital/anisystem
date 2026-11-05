@@ -82,8 +82,9 @@
             </div>
         </div>
 
+        @include('public.partials.auto-building-note')
         <div class="hp-auto-cta reveal">
-            <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">{{ $aaSay('cta', 'Let Anee plan my season') }}</a>
+            <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">{{ \App\Support\AutoLock::open() ? $aaSay('cta', 'Let Anee plan my season') : 'Start free now' }}</a>
             <span>Answer once. Anee does the thinking; you do the farming.</span>
         </div>
     </div>

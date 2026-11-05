@@ -636,6 +636,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/app/how-tour', fn () => view('app.how-tour'))->name('how.tour');
     Route::get('/app/auto/how', fn () => view('auto.how-story'))->name('auto.how');
     // Anee Auto (2026-10-12): Anee plans the season and keeps planning it.
+    // Locked for everyone but admins while it is being built (App\Support\AutoLock).
+    Route::middleware(App\Http\Middleware\AutoIsOpen::class)->group(function () {
     Route::get('/app/auto', [App\Http\Controllers\AneeAutoController::class, 'index'])->name('auto.index');
     Route::get('/app/auto/quote', [App\Http\Controllers\AneeAutoController::class, 'quote'])->name('auto.quote');
     Route::post('/app/auto/start', [App\Http\Controllers\AneeAutoController::class, 'start'])->middleware('throttle:10,1')->name('auto.start');
@@ -674,6 +676,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/app/auto/{id}/observe', [App\Http\Controllers\AneeAutoController::class, 'observe'])->whereNumber('id')->middleware('throttle:20,1')->name('auto.observe');
     Route::get('/app/auto/{id}/log', [App\Http\Controllers\AneeAutoController::class, 'log'])->whereNumber('id')->name('auto.log');
     Route::post('/app/auto/{id}/ask', [App\Http\Controllers\AneeAutoController::class, 'ask'])->whereNumber('id')->middleware('throttle:20,1')->name('auto.ask');
+    });
     // Global Workers (2026-10-12): the farm's own roster, added to any season.
     Route::get('/app/workers', [App\Http\Controllers\GlobalWorkerController::class, 'page'])->name('workers.global');
     Route::get('/app/workers/list', [App\Http\Controllers\GlobalWorkerController::class, 'list'])->name('workers.global.list');

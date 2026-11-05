@@ -23,6 +23,9 @@ class AutoDailyCommand extends Command
         $q = AsAutoSeason::where('status', AsAutoSeason::ACTIVE)->where('deleteStatus', 1);
         if ($this->option('season')) {
             $q->where('id', (int) $this->option('season'));
+        } else {
+            // A locked season spends nothing and mails nobody.
+            \App\Support\AutoLock::onlyOpen($q);
         }
         $n = 0;
         foreach ($q->orderBy('id')->get() as $auto) {

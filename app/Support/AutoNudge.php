@@ -69,7 +69,7 @@ final class AutoNudge
         $n = 0;
         $mail = app(MailService::class);
         $bell = app(NotificationService::class);
-        foreach (AsAutoSeason::where('status', AsAutoSeason::ACTIVE)->where('deleteStatus', 1)->get() as $auto) {
+        foreach (AutoLock::onlyOpen(AsAutoSeason::where('status', AsAutoSeason::ACTIVE)->where('deleteStatus', 1))->get() as $auto) {
             try {
                 $last = self::lastHere($auto);
                 if (! $last || $last->gt(now()->subDays(self::IDLE_DAYS))) {

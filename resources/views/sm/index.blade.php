@@ -645,7 +645,7 @@
             </a>
             {{-- Anee Auto (2026-10-12): a season Anee plans and keeps planning. --}}
             <button type="button" class="sch-auto-cta md:hidden" data-auto-start>
-                <span class="sch-auto-face" aria-hidden="true"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""></span> Anee Auto <small>Anee plans the whole season</small>
+                <span class="sch-auto-face" aria-hidden="true"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""></span> Anee Auto <small>{{ \App\Support\AutoLock::open() ? 'Anee plans the whole season' : 'We are still building it' }}</small>
             </button>
         @endif
 

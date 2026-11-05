@@ -5,6 +5,9 @@
      in it), then the price confirmed as final. The credits are taken when
      the season is made, and the wizard opens on it. @once: a page that has
      two buttons pays for one door. --}}
+@if (! \App\Support\AutoLock::open())
+    @include('auto.partials.building-door')
+@else
 @once
 <style>
     .aus-veil { position: fixed; inset: 0; z-index: 210; display: flex; align-items: center; justify-content: center; padding: 1rem;
@@ -160,3 +163,4 @@
 </script>
 @endpush
 @endonce
+@endif

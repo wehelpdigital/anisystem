@@ -1,7 +1,7 @@
 {{-- Anee misses you (2026-10-28, the owner: "if user is not active in the anee auto, user should be receiving email
      asking user reminder ... and a notice in the dashboard"): a running Anee Auto season quiet for a couple of days,
      with work waiting, as a card at the top of the dashboard (App\Support\AutoNudge::forDashboard). --}}
-@php $idle = \App\Support\WorkerContext::inWorkerContext() ? [] : rescue(fn () => \App\Support\AutoNudge::forDashboard((int) auth()->id()), [], false); @endphp
+@php $idle = \App\Support\WorkerContext::inWorkerContext() || ! \App\Support\AutoLock::open() ? [] : rescue(fn () => \App\Support\AutoNudge::forDashboard((int) auth()->id()), [], false); @endphp
 @if ($idle)
 <style>
     .ain { position: relative; overflow: hidden; display: flex; gap: .9rem; align-items: center; padding: .95rem 1rem; border-radius: 1.2rem; color: #3b2f00;
