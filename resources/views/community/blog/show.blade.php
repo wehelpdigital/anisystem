@@ -349,6 +349,13 @@
         <h2 id="rdTalkH">Comments<span class="rd-talk-n" id="blogCommentCount">{{ $comments->count() }}</span></h2>
     </div>
 
+    @unless (\App\Support\WorkerContext::canUseCommunity())
+        {{-- Reading took no switch. A comment goes out under the person's own name, so this is the moment it asks. --}}
+        <div class="card rd-compose mb-4">
+            <p class="text-sm text-gray-600">A comment goes out under your own name, so it comes from your own account.</p>
+            <button type="button" class="btn btn-white btn-sm mt-2" data-wcs-open="{{ route('community.blog.show', ['id' => $post->id], false) }}#blogComments">Switch to comment</button>
+        </div>
+    @else
     <div class="card rd-compose mb-4 emoji-scope">
         <textarea id="blogCommentInput" class="form-textarea" rows="3" maxlength="5000" placeholder="Ask a question or share what worked on your farm…"></textarea>
 
@@ -372,6 +379,7 @@
             <button type="button" id="blogCommentSend" class="btn btn-primary btn-sm">Post comment</button>
         </div>
     </div>
+    @endunless
 
     <div id="blogCommentList" class="space-y-3">
         @forelse ($comments as $comment)
@@ -384,7 +392,10 @@
 
 </div>{{-- /plaza-center --}}
 <aside class="plaza-side plaza-side-right">
-    @include('community.partials.plaza-rail', ['rail' => ['posts', 'chats', 'discussions']])
+    {{-- The rail is the reader's own chats and feed, which belong to their own account. --}}
+    @if (\App\Support\WorkerContext::canUseCommunity())
+        @include('community.partials.plaza-rail', ['rail' => ['posts', 'chats', 'discussions']])
+    @endif
 </aside>
 </div>{{-- /plaza-shell --}}
 @endsection
@@ -514,6 +525,7 @@
 (function blogComments() {
     const $ = (id) => document.getElementById(id);
     const input = $('blogCommentInput');
+    if (!input) return;   // in a farm the page reads, and the box is an offer to switch
     const fileInput = $('blogCommentImage');
     const attach = $('blogAttach');
     const attachThumb = $('blogAttachThumb');

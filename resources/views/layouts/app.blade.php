@@ -843,7 +843,7 @@
         </a>
         {{-- The Technician's Blog has its own seat (2026-10-23, the owner: the Shop leaves
              the bar, Blog takes its place before Community). The Shop is a card on Home
-             until it opens. In a farm, the switch notice answers both taps (see the nav above). --}}
+             until it opens. In a farm the Blog simply opens, and the switch notice answers Community (see the nav above). --}}
         @php $__onBlog = request()->routeIs('community.blog', 'community.blog.*'); @endphp
         <a href="{{ route('community.blog') }}" data-nav-loader class="tabbar-item {{ $__onBlog ? 'is-active' : '' }}">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h13v13a2 2 0 002 2H6a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 9h3v9a2 2 0 01-2 2M8 9h5M8 13h5M8 17h3"/></svg>

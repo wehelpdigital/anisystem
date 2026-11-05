@@ -248,6 +248,9 @@ class WorkerModuleAccess
         ['community.*', 'community'],
     ];
 
+    /** Community pages that only read, so a worker need not leave the farm for them. */
+    public const READ_IN_ANY_ACCOUNT = ['community.blog', 'community.blog.show'];
+
     /** What to call each module when refusing it. */
     private const LABELS = [
         'notes' => 'Notes',
@@ -323,6 +326,15 @@ class WorkerModuleAccess
     {
         $name = (string) optional($request->route())->getName();
         if ($name === '' || ! WorkerContext::inWorkerContext()) {
+            return null;
+        }
+
+        /* When a worker has to switch to their own account (2026-11-06, the owner: having to
+         * switch "just to read the latest news ... sucks"). Reading the news carries nobody's
+         * name, so it stays open in a farm. Whatever goes out under a person's name or shows
+         * their own feed, cofarmers and messages (a comment, a reaction, a post, every other
+         * Community page) is their own account's, and still asks for the switch. */
+        if (in_array($name, self::READ_IN_ANY_ACCOUNT, true)) {
             return null;
         }
 

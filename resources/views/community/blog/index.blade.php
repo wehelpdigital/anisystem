@@ -340,7 +340,10 @@
 @endif
 </div>{{-- /plaza-center --}}
 <aside class="plaza-side plaza-side-right">
-    @include('community.partials.plaza-rail', ['rail' => ['posts', 'chats', 'discussions']])
+    {{-- The rail is the reader's own chats and feed, which belong to their own account. --}}
+    @if (\App\Support\WorkerContext::canUseCommunity())
+        @include('community.partials.plaza-rail', ['rail' => ['posts', 'chats', 'discussions']])
+    @endif
 </aside>
 </div>{{-- /plaza-shell --}}
 @endsection

@@ -2,12 +2,18 @@
 
      A worker standing in a boss's farm has no Community there: every worker
      login is a full account of its own, and the Community (feed, groups,
-     blog, messages, co-farmers) belongs to that account, never to the farm
-     they work on (WorkerContext::canUseCommunity). Rather than hide the door
-     or answer it with "no access", any way into /app/community from a farm
-     opens this notice: it says why, and one tap switches to the worker's own
-     account (worker.switch, bossId 0) and lands on the page they were going
-     to, the blog, a post, a group, their messages.
+     messages, co-farmers) belongs to that account, never to the farm they
+     work on (WorkerContext::canUseCommunity). Rather than hide the door or
+     answer it with "no access", any way into /app/community from a farm opens
+     this notice: it says why, and one tap switches to the worker's own account
+     (worker.switch, bossId 0) and lands on the page they were going to, a
+     post, a group, their messages.
+
+     The Technician's Blog is the exception (2026-11-06, the owner). Reading
+     it needs no switch: WorkerModuleAccess::READ_IN_ANY_ACCOUNT, and the links
+     to it pass this catcher. A comment or a reaction there goes out under the
+     person's own name, so the blog page offers the switch at that moment
+     through [data-wcs-open].
 
      Included by layouts.app only while WorkerContext::inWorkerContext(). It
      catches every same origin link into /app/community; a page that reaches
@@ -113,6 +119,8 @@
     ];
     const nameOf = (path) => (NAMES.find(([re]) => re.test(path)) || [null, 'the Community'])[1];
     const isCommunity = (u) => u.origin === location.origin && /^\/app\/community(\/|$)/.test(u.pathname);
+    // Mirrors WorkerModuleAccess::READ_IN_ANY_ACCOUNT: reading the blog stays in the farm.
+    const readsHere = (u) => /^\/app\/community\/blog(\/\d+)?\/?$/.test(u.pathname);
     const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
     let onClose = null;
 
@@ -157,12 +165,14 @@
     // Every way into the Community from a farm comes here first: the nav,
     // the tab bar, a link in a note or a notification.
     document.addEventListener('click', (e) => {
+        const asks = e.target.closest && e.target.closest('[data-wcs-open]');
+        if (asks) { window.aneeWorkerCommunity(asks.dataset.wcsOpen); return; }
         if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
         const a = e.target.closest && e.target.closest('a[href]');
         if (!a || a.hasAttribute('download')) return;
         let u;
         try { u = new URL(a.href, location.href); } catch (err) { return; }
-        if (!isCommunity(u)) return;
+        if (!isCommunity(u) || readsHere(u)) return;
         e.preventDefault();
         e.stopImmediatePropagation();
         window.aneeWorkerCommunity(u.href);
