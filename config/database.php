@@ -3,6 +3,45 @@
 use Illuminate\Support\Str;
 use Pdo\Mysql;
 
+/*
+ * The managed database refuses a connection with no encryption ("SSL is required",
+ * seen 2026-11-06, when it took the whole site down). So anything but a database on
+ * this machine connects with TLS. DB_SSL=false turns that off, and MYSQL_ATTR_SSL_CA
+ * names a certificate bundle. The server's certificate is not checked unless
+ * DB_SSL_VERIFY=true: a bundle or a host name this image disagrees with must not stop
+ * every page again.
+ */
+$databaseTls = (function (): array {
+    if (! extension_loaded('pdo_mysql')) {
+        return [];
+    }
+
+    $new = PHP_VERSION_ID >= 80500;
+    $caKey = $new ? Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA;
+    $named = env('MYSQL_ATTR_SSL_CA');
+    $local = in_array(env('DB_HOST', '127.0.0.1'), ['127.0.0.1', 'localhost', '::1'], true);
+    if ($local || ! filter_var(env('DB_SSL', true), FILTER_VALIDATE_BOOLEAN)) {
+        return $named ? [$caKey => $named] : [];
+    }
+
+    $bundle = $named;
+    foreach (['/etc/ssl/certs/ca-certificates.crt', '/etc/ssl/cert.pem', '/etc/pki/tls/certs/ca-bundle.crt'] as $path) {
+        if ($bundle) {
+            break;
+        }
+        $bundle = @is_file($path) ? $path : null;
+    }
+
+    // An empty name still turns TLS on: this is what asks for the encryption.
+    $options = [$caKey => $bundle ?: ''];
+    $verifyKey = $new ? 'Pdo\Mysql::ATTR_SSL_VERIFY_SERVER_CERT' : 'PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT';
+    if (defined($verifyKey)) {
+        $options[constant($verifyKey)] = filter_var(env('DB_SSL_VERIFY', false), FILTER_VALIDATE_BOOLEAN);
+    }
+
+    return $options;
+})();
+
 return [
 
     /*
@@ -59,9 +98,7 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                (PHP_VERSION_ID >= 80500 ? Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+            'options' => $databaseTls,
         ],
 
         'mariadb' => [
@@ -79,9 +116,7 @@ return [
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,
-            'options' => extension_loaded('pdo_mysql') ? array_filter([
-                (PHP_VERSION_ID >= 80500 ? Mysql::ATTR_SSL_CA : PDO::MYSQL_ATTR_SSL_CA) => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+            'options' => $databaseTls,
         ],
 
         'pgsql' => [
