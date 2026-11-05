@@ -4,13 +4,12 @@
   "sortOrder": 20,
   "lang": "en",
   "category": "Mais",
-  "title": "Corn Kernel: Parts of the Corn Plant, Kinds, Uses and Price",
-  "metaTitle": "Corn Kernel: Parts, Kinds, Uses and Price in the Philippines",
+  "title": "Corn Kernel and Corn Husk: Parts of the Corn Plant, Kinds, Uses and Price",
+  "metaTitle": "Corn Kernel and Corn Husk: Parts, Uses and Scientific Name",
   "metaDescription": "What is a corn kernel? See the parts of the corn plant and ear, how each kernel forms, the kinds of mais, their uses and the June 2026 corn prices.",
   "focusKeyword": "corn kernel",
   "keywords": [
     "corn kernel",
-    "corn flakes",
     "corn husk",
     "corn scientific name",
     "corn seeds",
@@ -42,7 +41,25 @@
     },
     {
       "type": "text",
-      "text": "If you searched for corns in Tagalog, the word is mais, and a field planted to corn is a maisan. A single grain is a butil ng mais. Every corn kernel is a complete seed, so the grain you sell and the seed you plant are the same thing, only handled differently.\n\nThe corn scientific name is Zea mays L. Corn belongs to the grass family, Poaceae, the same family as [palay](/crops/palay) and sugarcane. That is also why a few pests, such as the fall armyworm, can feed on both corn and rice.\n\nInside, a corn kernel has three main parts. The hull, or pericarp, is the thin outer skin. Most of the grain is endosperm, the starch that feeds the young plant. Near the narrow end lies the germ, or embryo, which grows into the new seedling. That narrow end, the tip cap, is where the kernel joined the cob."
+      "text": "If you searched for corns in Tagalog, the word is mais, and a field planted to corn is a maisan. A single grain is a butil ng mais. Every corn kernel is a complete seed, so the grain you sell and the seed you plant are the same thing, only handled differently."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Corn scientific name: Zea mays"
+    },
+    {
+      "type": "text",
+      "text": "The corn scientific name is Zea mays L. Corn belongs to the grass family, Poaceae, the same family as [palay](/crops/palay) and sugarcane. That is also why a few pests, such as the fall armyworm, can feed on both corn and rice."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Inside the corn kernel"
+    },
+    {
+      "type": "text",
+      "text": "Inside, a corn kernel has three main parts. The hull, or pericarp, is the thin outer skin. Most of the grain is endosperm, the starch that feeds the young plant. Near the narrow end lies the germ, or embryo, which grows into the new seedling. That narrow end, the tip cap, is where the kernel joined the cob."
     },
     {
       "type": "heading",
@@ -173,7 +190,6 @@
         "**Feeds.** Yellow corn goes mainly into hog and poultry feeds, so feed mills and traders are its main buyers.",
         "**Corn grits and [mais rice](/crops/mais-rice).** White corn milled into small grits and cooked like rice is a daily staple in parts of the Visayas and Mindanao, and in some towns of Isabela and Cagayan.",
         "**Corn bran.** Milling strips off the hull and some of the germ. This corn bran goes into animal feeds, and food makers also use it as a source of fiber.",
-        "**Corn flakes.** Factories cook milled corn, roll it thin and toast it to make corn flakes.",
         "**Starch, oil and syrup.** Processors also turn corn into starch, cooking oil, syrup and flour."
       ]
     },

@@ -11,7 +11,11 @@
        (the signup links on Ask Anee, the landing form's) is for our signup report, which the server has already read
        (SignupSource): Google would take it as a new traffic source, and credit the signup to our own page instead of
        the ad or search that brought the visitor.
-     - who this is goes in before gtag('js'), which is what sends the page view. --}}
+     - who this is goes in before gtag('js'), which is what sends the page view.
+
+     The container itself loads late (2026-11-05 SEO audit): it is a 178 KB script, and on a slow phone it held the page
+     back by about a second. Whatever is pushed before it arrives waits in dataLayer, so nothing is lost: it comes at the
+     first touch or scroll, just after the page has loaded, or after 3.5 seconds, whichever is first. --}}
 @if (\App\Support\SiteAnalytics::on())
     <script>
         (function () {
@@ -25,7 +29,22 @@
             } catch (e) { /* an old browser keeps the address, and the container's own filter hides the email */ }
         })();
     </script>
-    <script async src="https://www.googletagmanager.com/gtm.js?id={{ \App\Support\SiteAnalytics::container() }}"></script>
+    <script>
+        (function () {
+            var loaded = false;
+            function load() {
+                if (loaded) return;
+                loaded = true;
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtm.js?id={{ \App\Support\SiteAnalytics::container() }}';
+                document.head.appendChild(s);
+            }
+            ['scroll', 'touchstart', 'pointerdown', 'keydown'].forEach(function (e) { addEventListener(e, load, { once: true, passive: true }); });
+            addEventListener('load', function () { setTimeout(load, 300); }, { once: true });
+            setTimeout(load, 3500);
+        })();
+    </script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}

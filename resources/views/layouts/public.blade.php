@@ -277,7 +277,7 @@
 <body class="min-h-screen flex flex-col bg-white">
 
     {{-- Shown whole or not at all, the same as inside the app. --}}
-    @include('partials.boot-veil')
+    @include('partials.boot-veil', ['fast' => true])
 
     {{-- Header. The full bar starts at lg: between md and lg the six links
          and three buttons did not fit and the page scrolled sideways. A page
@@ -289,7 +289,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <a href="{{ route('home') }}" class="flex items-center shrink-0">
-                    <img src="{{ asset('images/logo.png') }}?v=anee2" alt="anee.io" title="anee.io" class="pub-logo pub-logo-day" width="1041" height="160">
+                    <img src="{{ asset('images/logo-600.webp') }}?v=anee2" alt="anee.io" title="anee.io" class="pub-logo pub-logo-day" width="600" height="92" decoding="async">
                     {{-- Night (the login page honours the app's theme cookie, 2026-10-15): the white logo. --}}
                     @hasSection('honours-theme-cookie')
                         <img src="{{ asset('images/site/logo-white-520.webp') }}?v=anee2" alt="anee.io" title="anee.io" class="pub-logo pub-logo-night" width="520" height="80" decoding="async">

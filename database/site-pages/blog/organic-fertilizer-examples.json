@@ -25,7 +25,6 @@
     "organic fertilizer benefits",
     "synthetic fertilizer",
     "example of inorganic fertilizer",
-    "palaya natural farm",
     "best fertilizer for vegetables",
     "fertilizer for plants and flowers",
     "fertilizer plants",
@@ -195,15 +194,6 @@
     },
     {
       "type": "heading",
-      "level": 3,
-      "text": "A farm to visit: Palaya Natural Farm"
-    },
-    {
-      "type": "text",
-      "text": "To see natural farming up close, many visitors go to Palaya Natural Farm in Barangay Cayabu, Tanay, Rizal, about an hour and a half from Manila. Started by Iggy Colesio, it follows natural farming methods. A 2017 visitor feature says it is best known for its dragon fruit, or pitahaya, grown on the slopes along with vegetables and herbs sold at the farm's market. It is a private farm, so check its pages for visiting days first."
-    },
-    {
-      "type": "heading",
       "level": 2,
       "text": "Best fertilizer for vegetables and flowers, the organic way"
     },
@@ -301,10 +291,6 @@
         {
           "label": "University of Maryland Extension: Blossom end rot of vegetables",
           "url": "https://extension.umd.edu/resource/blossom-end-rot-vegetables"
-        },
-        {
-          "label": "Visitor feature on Palaya Natural Farm, Tanay, Rizal (2017)",
-          "url": "https://iamfromthesouth.wordpress.com/2017/02/11/farm-freshness-with-a-heart-at-palaya-natural-farms/"
         }
       ]
     }

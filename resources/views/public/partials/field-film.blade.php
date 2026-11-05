@@ -16,7 +16,7 @@
         <div class="ff-grid">
             <div class="ff-media reveal">
                 <div class="ff-frame" data-ff>
-                    <video muted loop playsinline preload="none" poster="{{ $ffFilm('anee-standing-palay.webp') }}" data-hd="{{ $ffFilm('anee-standing-palay-hd.mp4') }}" aria-label="A real Anee supported palay field, standing strong before harvest">
+                    <video muted loop playsinline preload="none" data-late-poster="{{ $ffFilm('anee-standing-palay.webp') }}" data-hd="{{ $ffFilm('anee-standing-palay-hd.mp4') }}" aria-label="A real Anee supported palay field, standing strong before harvest">
                         <source src="{{ $ffFilm('anee-standing-palay.mp4') }}" type="video/mp4">
                     </video>
                     <span class="ff-rec"><i aria-hidden="true"></i>Real video of the field</span>

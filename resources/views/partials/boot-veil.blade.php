@@ -10,7 +10,12 @@
      rule that keeps the page's own content out of sight until it is whole.
 
      Lifted a frame after DOMContentLoaded — the moment every <style> in the
-     body has been parsed, which is what "the page is dressed" means here. --}}
+     body has been parsed, which is what "the page is dressed" means here.
+
+     $fast (the public site, 2026-11-05 SEO audit): lifted as soon as the document is parsed, the same promise that every
+     <style> has been read, but without waiting for the script bundle (DOMContentLoaded does) or the pictures. Those cost a
+     guide about two seconds on a slow phone, every visitor's first look and the figure Google ranks a phone page by. --}}
+@php $fast = $fast ?? false; @endphp
 <div id="bootVeil" class="boot-veil" aria-hidden="true"><span class="boot-veil-spin"></span></div>
 <script>
     (() => {
@@ -26,6 +31,16 @@
             veil.classList.add('is-off');
             setTimeout(() => veil.remove(), 400);
         };
+        @if ($fast)
+        const parsed = () => requestAnimationFrame(lift);
+        if (document.readyState === 'loading') {
+            document.addEventListener('readystatechange', function ready() {
+                if (document.readyState === 'loading') return;
+                document.removeEventListener('readystatechange', ready);
+                parsed();
+            });
+        } else parsed();
+        @else
         /* AND THE PICTURES, NOT ONLY THE MARKUP.
          *
          * Lifting a frame after the document is parsed shows a page that is
@@ -57,6 +72,7 @@
         ));
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', soon);
         else soon();
+        @endif
         // Nothing may sit behind a spinner forever, and nothing may stay
         // hidden. A stalled asset, a script that threw, an event that never
         // came — it lifts anyway.

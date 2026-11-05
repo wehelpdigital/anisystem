@@ -64,7 +64,7 @@
             </div>
             <div class="tf-media reveal" style="--reveal-delay: .1s">
                 <div class="tf-frame" data-tf>
-                    <video muted loop playsinline preload="none" poster="{{ $tfFilm('anee-typhoon-palay.webp') }}" aria-label="An Anee supported palay field several days before harvest in the 2026 wet season, golden and ready for a high harvest">
+                    <video muted loop playsinline preload="none" data-late-poster="{{ $tfFilm('anee-typhoon-palay.webp') }}" aria-label="An Anee supported palay field several days before harvest in the 2026 wet season, golden and ready for a high harvest">
                         <source src="{{ $tfFilm('anee-typhoon-palay.mp4') }}" type="video/mp4">
                     </video>
                     <span class="tf-rec"><i aria-hidden="true"></i>Real video of the field</span>

@@ -312,6 +312,9 @@
         .sp-tile, .sp-toc a, .sp-faq details, .sp-faq summary svg, .sp-tabs a, .sp-cats button { transition: none; }
         .sp-tile.is-in { animation: none; }
     }
+    /* A dated roundup pointing up to the permanent price pages. */
+    .sp-price-up { margin: 0 0 1.25rem !important; padding: .65rem .85rem; border-radius: .7rem; background: #f7faf3; border: 1px solid #dfe9d3; font-size: .9rem; color: #3f4f30; }
+    .sp-price-up a { color: #2f5316; font-weight: 700; }
 </style>
 <script>
     /* The section tabs: when the row is wider than the screen, the active tab

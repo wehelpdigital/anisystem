@@ -16,8 +16,7 @@
     "corn breed",
     "corn kernel",
     "corn scientific name",
-    "when fertilization occurs",
-    "corn seed grow a garden roblox"
+    "when fertilization occurs"
   ],
   "excerpt": "The corn seeds you plant limit how well the crop can do, whatever you spend on fertilizer later. This guide covers the kinds of seed sold in the Philippines. It shows how to pick a variety of corn for your field and your buyer. It also gives the usual seeding rate and spacing, and the care that turns seed into an even stand of corn seedlings.",
   "heroImage": {
@@ -26,10 +25,6 @@
     "credit": ""
   },
   "blocks": [
-    {
-      "type": "text",
-      "text": "A quick note if you searched corn seed grow a garden roblox: that is the Roblox game. This page is about real corn seed for a field in the Philippines."
-    },
     {
       "type": "heading",
       "level": 2,
@@ -184,10 +179,6 @@
         {
           "q": "Which variety of corn is best for mais rice?",
           "a": "Hard white flint corn. IPB Var 6, a white quality protein maize, is a good pick for grits. See our [mais rice](/crops/mais-rice) page."
-        },
-        {
-          "q": "Is this about the corn seed in Grow a Garden on Roblox?",
-          "a": "No, this page is about real corn seeds for real fields. If you came here from the Grow a Garden game, welcome anyway. The real crop takes about 95 to 120 days from planting to harvest."
         }
       ]
     },

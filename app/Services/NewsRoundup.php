@@ -614,7 +614,9 @@ class NewsRoundup
         $to = Carbon::parse($items->max('publishedAt'))->timezone('Asia/Manila');
         // A daily roundup is dated today, not by the span of its stories.
         $range = self::today();
-        $keywords = SeoKeywords::candidates($items->pluck('title')->implode(' ') . ' agriculture farm news philippines palay rice prices', 18)
+        $keywords = SeoKeywords::candidates($items->pluck('title')->implode(' ') . ' agriculture farm news philippines palay rice', 18)
+            // A price search belongs to its permanent page, never to a dated post (PriceHomes).
+            ->reject(fn ($k) => \App\Support\PriceHomes::ownsPhrase((string) $k->keyword))
             ->map(fn ($k) => $k->keyword . ' (' . number_format((int) $k->volume) . ' searches)')->all();
         $usedFocus = AsSitePage::query()->where('section', 'blog')->whereNotNull('focusKeyword')->pluck('focusKeyword')->map(fn ($f) => mb_strtolower($f))->unique()->values()->all();
 
@@ -634,6 +636,9 @@ class NewsRoundup
         // The house rules, checked, and our own words (no stretch of a report copied, CopyCheck);
         // one round back to fix what is missed.
         $problems = array_merge(PageWriter::audit($built['page']), $this->copied($data, $byId, $also, $pool)['problems']);
+        if (self::focusTaken($built['page'], $usedFocus)) {
+            $problems[] = 'The focus keyphrase "' . $built['page']['focusKeyword'] . '" is taken: it is already used or it is a price search that belongs to our permanent price pages. Choose another about the top story, and put it in the title, the excerpt and one heading.';
+        }
         if ($problems) {
             $fix = $this->ai->askForJson($settings, $this->repair($data, $problems), 9000, $parse, ['keepAgencies' => true]);
             foreach (['tokensIn', 'tokensOut'] as $k) {
@@ -641,7 +646,7 @@ class NewsRoundup
             }
             if (is_array($fix['data'] ?? null)) {
                 $again = $this->build($fix['data'], $byId, $also, $pool);
-                $left = count(PageWriter::audit($again['page'])) + count($this->copied($fix['data'], $byId, $also, $pool)['problems']);
+                $left = count(PageWriter::audit($again['page'])) + count($this->copied($fix['data'], $byId, $also, $pool)['problems']) + (self::focusTaken($again['page'], $usedFocus) ? 1 : 0);
                 if (count($again['used']) >= self::MIN_STORIES && $left < count($problems)) {
                     $built = $again;
                     $data = $fix['data'];
@@ -661,11 +666,36 @@ class NewsRoundup
                 return ['ok' => false, 'skip' => true, 'error' => 'Too few stories were left in our own words.', 'result' => $result];
             }
         }
+        // Still taken after being told: the page is named for the day instead of competing with our own pages.
+        if (self::focusTaken($built['page'], $usedFocus)) {
+            $built['page'] = self::namedForTheDay($built['page']);
+        }
         $used = $built['used'];
         $span = collect($used)->map(fn ($id) => Carbon::parse($byId[$id]->publishedAt));
 
         return ['ok' => true, 'page' => $built['page'], 'used' => $used, 'range' => [$span->min(), $span->max()], 'result' => $result,
             'also' => array_intersect_key($also, array_flip($used))];
+    }
+
+    /** The focus another page already has, or a price search only a permanent page may aim at (PriceHomes, 2026-11-05). */
+    private static function focusTaken(array $page, array $usedFocus): bool
+    {
+        $focus = mb_strtolower(trim((string) ($page['focusKeyword'] ?? '')));
+
+        return $focus === '' || in_array($focus, $usedFocus, true) || \App\Support\PriceHomes::ownsPhrase($focus);
+    }
+
+    private static function namedForTheDay(array $page): array
+    {
+        $day = now('Asia/Manila')->format('F j');
+        $old = (string) ($page['focusKeyword'] ?? '');
+        $clean = fn (string $s) => $old === '' ? $s : trim(preg_replace('/^[\s:,]+|[\s:,]+$/u', '', str_ireplace($old, '', $s)));
+        $page['focusKeyword'] = 'farm news ' . $day;
+        $page['title'] = Str::limit(Str::ucfirst($clean((string) $page['title'])) . ': Farm News for ' . now('Asia/Manila')->format('F j, Y'), 180, '');
+        $tail = ': Farm News, ' . $day;
+        $page['metaTitle'] = PageWriter::cut(Str::ucfirst($clean((string) $page['metaTitle'])), 60 - mb_strlen($tail)) . $tail;
+
+        return $page;
     }
 
     /** "September 28 to October 7, 2026", "October 1 to 7, 2026". */
@@ -721,7 +751,7 @@ class NewsRoundup
             . "7. actions: 3 to 5 short, concrete things a farmer can do this week because of today's news.\n"
             . "8. faq: 3 to 5 questions farmers would ask about today's news, with direct answers drawn from the stories.\n"
             . "9. links: 3 to 5 of our own related pages from the list below that a reader of these stories would want next.\n"
-            . "\n--- Focus keyphrase ---\nChoose one focus keyphrase a farmer would search for about the top story or today's farm news, 2 to 5 words, preferably a keyword from the list below. Never one of these, already used: " . ($usedFocus ? implode(', ', array_slice($usedFocus, 0, 60)) : 'none') . ".\n"
+            . "\n--- Focus keyphrase ---\nChoose one focus keyphrase a farmer would search for about the top story or today's farm news, 2 to 5 words, preferably a keyword from the list below. Never a phrase about palay, rice or fertilizer prices: those searches belong to our permanent price pages (/blog/palay-price-philippines and /blog/fertilizer-price-philippines), so report a price story in its own words without aiming the title at the search. Never one of these, already used: " . ($usedFocus ? implode(', ', array_slice($usedFocus, 0, 60)) : 'none') . ".\n"
             . PageWriter::voiceRules('en')
             . PageWriter::seoRules('', '900 to 1500', $keywords)
             . "\n--- Links ---\nInternal links go only in the links list (url from these pages):\n" . PageWriter::urlMap() . "\n"
@@ -949,9 +979,9 @@ class NewsRoundup
         $slug = Str::limit(trim($slug, '-'), 70, '') . '-' . now('Asia/Manila')->format('Y-m-d');
 
         return ['used' => $used, 'page' => [
-            'title' => Str::limit($title, 180, ''),
+            'title' => Str::limit(Str::ucfirst($title), 180, ''),
             'slug' => $slug,
-            'metaTitle' => PageWriter::cut($c($d['metaTitle'] ?? $title), 60),
+            'metaTitle' => Str::ucfirst(PageWriter::cut($c($d['metaTitle'] ?? $title), 60)),
             'metaDescription' => PageWriter::cut($c($d['metaDescription'] ?? ''), 156),
             'focusKeyword' => Str::limit($focus, 120, ''),
             'mainKeywords' => array_values(array_slice(array_filter(array_map($c, (array) ($d['mainKeywords'] ?? []))), 0, 2)),
@@ -1043,6 +1073,7 @@ class NewsRoundup
         ]);
         DB::table('as_site_pages')->where('id', $page->id)->update(['kind' => 'roundup']);
         $page->kind = 'roundup';
+        \App\Support\PriceHomes::freshen();
         try {
             SeoKeywords::markUsed(SitePages::plain(json_encode($p['blocks'], JSON_UNESCAPED_UNICODE)), $p['keywords']);
         } catch (\Throwable $e) {

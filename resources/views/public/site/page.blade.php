@@ -229,6 +229,12 @@
             @endif
             <div class="sp-wrap">
                 <div class="sp-body{{ $isNews ? ' is-news' : '' }}" id="spBody">
+                    {{-- The permanent price pages stay current by themselves; a dated post points up to them (App\Support\PriceHomes). --}}
+                    @if ($priceTopic = \App\Support\PriceHomes::topicOf($page))
+                        @include('public.site.partials.price-home', ['topic' => $priceTopic])
+                    @elseif ($isNews)
+                        <p class="sp-price-up">Looking for today's price? See <a href="{{ \App\Support\SitePages::url('blog', 'palay-price-philippines') }}">palay price today</a> and <a href="{{ \App\Support\SitePages::url('blog', 'fertilizer-price-philippines') }}">fertilizer price in the Philippines</a>.</p>
+                    @endif
                     @if ($yieldNote)
                         <div class="sp-yield-note">@include('partials.yield-note', ['compact' => true, 'flush' => true])</div>
                     @endif

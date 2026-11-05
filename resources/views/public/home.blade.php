@@ -45,11 +45,17 @@
     $tick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
 @endphp
 
+@push('head')
+    <link rel="preload" as="image" fetchpriority="high" imagesizes="(max-width: 639px) 150vw, 100vw" imagesrcset="{{ asset('images/site/photos/hero-planting-800.webp') }} 800w, {{ asset('images/site/photos/hero-planting-1200.webp') }} 1200w, {{ asset('images/site/photos/hero-planting-1600.webp') }} 1600w">
+@endpush
+
 @section('content')
 
     {{-- ================= HERO ================= --}}
     <section class="hp-hero" data-hero>
-        <img src="{{ asset('images/site/photos/hero-planting.jpg') }}" alt="{{ $R::t('farmersOfTitle') }} planting rice, one checking anee.io on his phone"
+        {{-- The picture Google times a phone by. It covers a tall hero, so a phone shows it far wider than the screen: 150vw. --}}
+        <img src="{{ asset('images/site/photos/hero-planting-1200.webp') }}" srcset="{{ asset('images/site/photos/hero-planting-800.webp') }} 800w, {{ asset('images/site/photos/hero-planting-1200.webp') }} 1200w, {{ asset('images/site/photos/hero-planting-1600.webp') }} 1600w" sizes="(max-width: 639px) 150vw, 100vw"
+             alt="{{ $R::t('farmersOfTitle') }} planting rice, one checking anee.io on his phone"
              class="hp-hero-bg" loading="eager" fetchpriority="high">
         <div class="hp-hero-shade" aria-hidden="true"></div>
         <div class="hp-hero-glow" aria-hidden="true"></div>
@@ -209,7 +215,7 @@
                     <span class="hp-sum-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8m0 0h-5m5 0v5"/></svg></span>
                     <p class="hp-sum-k">The only way up is a <span class="hp-hl">higher yield.</span></p>
                     <p class="hp-sum-p">Yield more from the same hectare with precision farming: the right work, in the right amount, on the right day.</p>
-                    <span class="hp-sum-brand"><img src="{{ asset('images/logo-mark.png') }}?v=anee2" alt="" onerror="this.remove()">anee.io shows you how.</span>
+                    <span class="hp-sum-brand"><img src="{{ asset('images/logo-mark-96.webp') }}?v=anee2" alt="" onerror="this.remove()">anee.io shows you how.</span>
                     <ul class="hp-sum-how">
                         <li>It dates every task from each lot's own planting day, so fertilizer and sprays go in on time.</li>
                         <li>Anee checks your crop, its growth stage and the weather before you spend.</li>
@@ -729,7 +735,7 @@
                         <span class="hp-chat-home" aria-hidden="true"></span>
                     </div>
                     <figure class="hp-anee-film" data-anee-film>
-                        <video playsinline preload="none" poster="{{ asset('videos/anee-hello-poster.webp') }}" aria-label="Anee says hello">
+                        <video playsinline preload="none" data-late-poster="{{ asset('videos/anee-hello-poster.webp') }}" aria-label="Anee says hello">
                             <source src="{{ asset('videos/anee-hello.mp4') }}" type="video/mp4">
                         </video>
                         <button type="button" class="hp-anee-film-play" aria-label="Play Anee's hello">
@@ -1438,7 +1444,7 @@
                     <img class="hp-storm-base" src="{{ asset('images/site/storm/ph-satellite.webp') }}"
                          srcset="{{ asset('images/site/storm/ph-satellite-760.webp') }} 760w, {{ asset('images/site/storm/ph-satellite.webp') }} 1280w"
                          sizes="(min-width: 1024px) 40rem, 92vw" alt="" width="1280" height="1000" loading="lazy">
-                    <span class="hp-storm-clouds"></span>
+                    <span class="hp-storm-clouds" data-late-bg="{{ asset('images/site/storm/clouds.webp') }}"></span>
                     <svg class="hp-storm-svg" viewBox="0 0 1280 1000" data-storm>
                         <defs>
                             <path id="hpStormPath" d="M1255 880 C 1224 875, 1131 865, 1070 850 C 1009 835, 946 815, 890 790 C 834 765, 783 733, 735 700 C 687 667, 641 627, 600 590 C 559 553, 522 514, 490 478 C 458 442, 428 405, 410 372 C 392 339, 384 306, 382 278 C 380 250, 388 226, 398 205 C 408 184, 437 161, 445 152"/>
@@ -1453,7 +1459,7 @@
                         <g class="hp-storm-eye">
                             <animateMotion dur="16s" repeatCount="indefinite" rotate="0"><mpath href="#hpStormPath"/></animateMotion>
                             <g>
-                                <image href="{{ asset('images/site/storm/typhoon.webp') }}" x="-170" y="-170" width="340" height="340"/>
+                                <image data-late-href="{{ asset('images/site/storm/typhoon.webp') }}" x="-170" y="-170" width="340" height="340"/>
                                 <animateTransform attributeName="transform" type="rotate" from="0" to="-360" dur="7s" repeatCount="indefinite"/>
                             </g>
                             <text class="hp-storm-name" x="0" y="-128">Typhoon · 185 km/h</text>
@@ -1687,7 +1693,7 @@
                 <div class="hp-vs-head" aria-hidden="true">
                     <span class="is-n">{{ $vsCount }} Things that Change</span>
                     <span class="is-old"><i class="hp-vs-key">{!! $vsX !!}</i>By Memory and Paper</span>
-                    <span class="is-new"><i class="hp-vs-key">{!! $tick !!}</i><img src="{{ asset('images/logo-mark.png') }}?v=anee2" alt="" onerror="this.remove()">With anee.io</span>
+                    <span class="is-new"><i class="hp-vs-key">{!! $tick !!}</i><img src="{{ asset('images/logo-mark-96.webp') }}?v=anee2" alt="" onerror="this.remove()">With anee.io</span>
                 </div>
                 @foreach ($vsGroups as $gi => [$gt, $gico, $rows])
                     <div class="hp-vs-group reveal" id="vs-{{ $gi }}" data-vs-group>
@@ -3197,7 +3203,7 @@
     .hp-storm-map { position: relative; aspect-ratio: 1280 / 1000; border-radius: 1.4rem; overflow: hidden; background: #0a1222;
         box-shadow: 0 0 0 1px rgb(255 255 255 / .1), 0 40px 80px -40px rgb(0 0 0 / .8); container-type: inline-size; }
     .hp-storm-base { position: absolute; inset: 0; width: 100%; height: 100%; }
-    .hp-storm-clouds { position: absolute; inset: -6% -12%; background: url('{{ asset('images/site/storm/clouds.webp') }}') center / cover no-repeat; opacity: .5;
+    .hp-storm-clouds { position: absolute; inset: -6% -12%; background: center / cover no-repeat; opacity: .5;
         animation: hpStormDrift 46s ease-in-out infinite alternate; pointer-events: none; }
     @keyframes hpStormDrift { from { transform: translate(4%, 2%); } to { transform: translate(-6%, -2%); } }
     .hp-storm-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }

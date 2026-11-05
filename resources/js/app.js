@@ -7,6 +7,32 @@ window.Alpine = Alpine;
 Alpine.start();
 
 /* ------------------------------------------------------------------ */
+/* Pictures a browser fetches however far down the page they are         */
+/* loading="lazy" reaches only an <img>. A video's poster, a CSS          */
+/* background and an SVG <image> all download on arrival, which cost the  */
+/* home page over half a megabyte a phone could not yet see. These carry  */
+/* their address in data-late-* and get it when near the screen.          */
+/* ------------------------------------------------------------------ */
+(function lateMedia() {
+    const marked = document.querySelectorAll('[data-late-poster], [data-late-bg], [data-late-href]');
+    if (!marked.length) return;
+    const show = (el) => {
+        const { latePoster, lateBg, lateHref } = el.dataset;
+        // A film already swapped by its own page keeps the poster it was given.
+        if (latePoster && !el.getAttribute('poster')) el.setAttribute('poster', latePoster);
+        if (lateBg) el.style.backgroundImage = `url("${lateBg}")`;
+        if (lateHref) el.setAttribute('href', lateHref);
+    };
+    if (!('IntersectionObserver' in window)) { marked.forEach(show); return; }
+    const io = new IntersectionObserver((seen) => seen.forEach((en) => {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        show(en.target);
+    }), { rootMargin: '900px 0px' });
+    marked.forEach((el) => io.observe(el));
+})();
+
+/* ------------------------------------------------------------------ */
 /* Reveal-on-scroll (public marketing site)                             */
 /* Elements tagged .reveal fade/rise in as they enter the viewport.     */
 /* The hidden start-state is gated on <html class="js"> (set pre-paint  */
