@@ -47,7 +47,7 @@ class VideoToolCheck extends Command
             $out = tempnam(sys_get_temp_dir(), 'vtco') . '.mp4';
             try {
                 // Noisy 1080p, the hard case: a phone filming leaves in the wind.
-                $made = $this->run([$bin, '-y', '-hide_banner', '-loglevel', 'error',
+                $made = $this->measure([$bin, '-y', '-hide_banner', '-loglevel', 'error',
                     '-f', 'lavfi', '-i', 'testsrc2=size=1920x1080:rate=30', '-f', 'lavfi', '-i', 'sine=frequency=440',
                     '-t', (string) self::SAMPLE_SECONDS, '-vf', 'noise=alls=18:allf=t',
                     '-c:v', 'libx264', '-preset', 'ultrafast', '-b:v', '14M', '-threads', '1', '-c:a', 'aac', '-b:a', '128k', $src], 200);
@@ -57,7 +57,7 @@ class VideoToolCheck extends Command
                     foreach (['veryfast', 'ultrafast'] as $preset) {
                         @unlink($out);
                         $scale = "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease,scale=trunc(iw/2)*2:trunc(ih/2)*2";
-                        $done = $this->run([$bin, '-y', '-hide_banner', '-loglevel', 'error', '-i', $src, '-vf', $scale,
+                        $done = $this->measure([$bin, '-y', '-hide_banner', '-loglevel', 'error', '-i', $src, '-vf', $scale,
                             '-c:v', 'libx264', '-preset', $preset, '-crf', '28', '-threads', '1',
                             '-c:a', 'aac', '-b:a', '96k', '-movflags', '+faststart', '-pix_fmt', 'yuv420p', $out], 300);
                         $report[$preset] = $done + [
@@ -85,7 +85,7 @@ class VideoToolCheck extends Command
     }
 
     /** One run at the lowest priority, watching its memory. */
-    private function run(array $args, int $timeout): array
+    private function measure(array $args, int $timeout): array
     {
         if (is_file('/usr/bin/nice') || is_file('/bin/nice')) {
             array_unshift($args, 'nice', '-n', '19');
