@@ -102,6 +102,12 @@ return Application::configure(basePath: dirname(__DIR__))
             ->withoutOverlapping(5)->runInBackground();
         // "Check the owner's Claude now" (2026-10-27, App\Support\ClaudeFirst): ai.claude_check_now on the settings
         // shelf makes the next minute's pass run the live check (key, speed, search, pictures) into ai.claude_check.
+        // "Measure the video tool now" (2026-11-06, App\Console\Commands\VideoToolCheck): video.check_now on the settings
+        // shelf makes the next minute's pass measure bin/ffmpeg on this host once, into video.check.
+        $schedule->command('videos:tool-check')->everyMinute()
+            ->when(fn () => \App\Models\AsSiteSetting::yes('video.check_now'))
+            ->before(fn () => \App\Models\AsSiteSetting::put('video.check_now', '0'))
+            ->withoutOverlapping(15)->runInBackground();
         $schedule->command('ai:claude-check')->everyMinute()
             ->when(fn () => \App\Models\AsSiteSetting::yes('ai.claude_check_now'))
             ->before(fn () => \App\Models\AsSiteSetting::put('ai.claude_check_now', '0'))
