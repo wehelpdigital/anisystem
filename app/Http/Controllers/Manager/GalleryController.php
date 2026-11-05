@@ -186,7 +186,8 @@ class GalleryController extends BaseScheduleController
 
     public function imageStore(Request $request)
     {
-        $schedule = $this->scheduleFromRequest($request);
+        // The camera right, not the plan's: the page keeps this button for whoever holds the camera (ga-nocam).
+        $schedule = $this->scheduleForNoteMedia($request, ['camera']);
 
         $validator = Validator::make($request->all(), [
             'albumId' => 'required|integer',

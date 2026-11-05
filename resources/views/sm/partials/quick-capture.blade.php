@@ -795,7 +795,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 await askAi(scheduleId);
             }
         } catch (err) {
-            toast(err.message || 'Something went wrong.', 'error');
+            // Long enough to read: it is the only word on a photo that did not save.
+            toast(err.message || 'Something went wrong.', 'error', 9000);
         } finally {
             busyHide();
             btn.disabled = false; btn.textContent = orig;

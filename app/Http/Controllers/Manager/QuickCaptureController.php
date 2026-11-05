@@ -24,17 +24,40 @@ use Illuminate\Support\Str;
  */
 class QuickCaptureController extends BaseScheduleController
 {
+    /**
+     * Filing a picture or a clip answers to the camera or the video right, not to the right to change the plan
+     * (2026-11-05: a worker with the camera on and the schedule on view got as far as naming the photo, then "You can
+     * view this season but not change it", and lost it). Recording what happened is not changing what is planned.
+     */
+    private function assertHolds(string $pen): void
+    {
+        if (! \App\Support\WorkerContext::canWriteModule($pen)) {
+            abort(response()->json([
+                'success' => false,
+                'message' => $pen === 'video' ? 'Recording video is turned off for you in this season.' : 'Taking photos is turned off for you in this season.',
+            ], 403));
+        }
+    }
+
+    private function assertMayWriteNotes(): void
+    {
+        if (! \App\Support\WorkerContext::canWriteModule('notes')) {
+            abort(response()->json([
+                'success' => false,
+                'message' => 'You can read the notes of this season but not add to them. Save this to the Gallery instead.',
+            ], 403));
+        }
+    }
+
     /** Save a captured photo group as one note on the chosen schedule. */
     public function storeNotes(Request $request)
     {
         // Asked before the upload is validated: someone who may not
         // write should hear that, not "capture a photo first".
         $schedule = $this->schedule($request->input('scheduleId'));
-        $this->assertCanEdit();
+        $this->assertHolds('camera');
+        $this->assertMayWriteNotes();
         $this->assertUnlocked($schedule);
-        if (! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')) {
-            \App\Support\Tier::scheduleDenyFor($schedule, 'videoRecording', 'Video recording comes with {plan}. Photos and voice notes stay yours on every plan.');
-        }
 
         $request->validate([
             'scheduleId' => 'required|integer',
@@ -136,8 +159,14 @@ class QuickCaptureController extends BaseScheduleController
         // Asked before the upload is validated: someone who may not
         // write should hear that, not "capture a photo first".
         $schedule = $this->schedule($request->input('scheduleId'));
-        $this->assertCanEdit();
+        $this->assertHolds('video');
+        if ($request->input('target') !== 'gallery') {
+            $this->assertMayWriteNotes();
+        }
         $this->assertUnlocked($schedule);
+        if (! \App\Support\Tier::scheduleCan($schedule, 'videoRecording')) {
+            \App\Support\Tier::scheduleDenyFor($schedule, 'videoRecording', 'Video recording comes with {plan}. Photos and voice notes stay yours on every plan.');
+        }
 
         $request->validate([
             'scheduleId' => 'required|integer',
@@ -374,7 +403,7 @@ class QuickCaptureController extends BaseScheduleController
         // Asked before the upload is validated: someone who may not
         // write should hear that, not "capture a photo first".
         $schedule = $this->schedule($request->input('scheduleId'));
-        $this->assertCanEdit();
+        $this->assertHolds('camera');
         $this->assertUnlocked($schedule);
 
         $request->validate([

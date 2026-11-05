@@ -378,7 +378,7 @@
             close();
         } catch (err) {
             busyHide();
-            window.toast?.(err.message, 'error');
+            window.toast?.(err.message, 'error', 9000);
         } finally {
             btn.disabled = false;
         }
