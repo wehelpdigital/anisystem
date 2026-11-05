@@ -400,18 +400,6 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
     ]);
 })->name('deploy.check');
 
-// Temporary: VideoToolProbe measures ffmpeg on this host. Goes when the measuring is done.
-Route::get('/deploy-check/video', function (\Illuminate\Http\Request $request) {
-    abort_unless($request->query('key') === \App\Support\VideoToolProbe::KEY, 404);
-    @set_time_limit(0);
-
-    return response()->json(match ($request->query('do')) {
-        'encode' => \App\Support\VideoToolProbe::encode((int) $request->query('threads', 0), $request->boolean('nice')),
-        'wait' => \App\Support\VideoToolProbe::wait((int) $request->query('s', 5)),
-        default => \App\Support\VideoToolProbe::facts(),
-    });
-});
-
 // A wall post somebody shared outward. Unguessable token, read-only, and
 // every way to join in asks the reader to sign in first.
 Route::get('/pw/{token}', [App\Http\Controllers\CommunityPublicController::class, 'post'])
