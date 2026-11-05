@@ -378,6 +378,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
         'probe' => $probe,
         // Facebook's crawler visits the app saw, newest first (NoteLinkReaders).
         'linkReaders' => rescue(fn () => Illuminate\Support\Facades\Cache::get(App\Http\Middleware\NoteLinkReaders::KEY, []), [], false),
+        // What a video upload meets on this host. Cloudflare's own 100 MB sits in front of both.
+        'uploads' => ['largestFile' => \Illuminate\Http\UploadedFile::getMaxFilesize(), 'videoTool' => rescue(fn () => \App\Support\VideoOptimizer::toolIsThere(), false, false)],
         // Whether Google accepts the maps key from this site's own address
         // (its allowed websites): asked as a page here would ask, with the
         // site as the Referer. Cached ten minutes; ?fresh=1 asks again.

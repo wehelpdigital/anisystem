@@ -245,6 +245,12 @@ class VideoOptimizer
     }
 
     /** Is this ffmpeg actually there and runnable? Asked once per request. */
+    /** For /deploy-check. Without ffmpeg a clip is stored as it came: no compression and no one minute rule on the server. */
+    public static function toolIsThere(): bool
+    {
+        return self::usable(self::binary());
+    }
+
     private static function usable(string $bin): bool
     {
         static $seen = [];

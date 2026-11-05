@@ -7,7 +7,11 @@
 
      Each file goes up in its own request. A phone's forty photos then show a real count, one too big for the server costs
      only itself, and a dropped line says how far it got. Photos go through Quick Capture's door and clips through Quick
-     Record's, which is the one that asks about the video right and the plan. --}}
+     Record's, which is the one that asks about the video right and the plan.
+
+     Only what the person chose goes in, and a video meets two walls the phone can see coming: Cloudflare turns away a request
+     over 100 MB before it reaches us (measured 2026-11-06: 90 MB passes, 120 MB is a 413), and a clip may run one minute
+     (VideoOptimizer::MAX_SECONDS). Those are marked on their tile and left out, rather than sent to be refused. --}}
 @php
     $giSeason = $season ?? null;
     $giSeasons = $seasons ?? collect();
@@ -38,6 +42,10 @@
     .gi-more { aspect-ratio: 1; border: 1.5px dashed var(--color-gray-300); border-radius: .6rem; background: var(--color-gray-50); color: var(--color-gray-500);
         display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .15rem; font-size: .72rem; font-weight: 700; }
     .gi-more svg { width: 1.2rem; height: 1.2rem; }
+    .gi-cell.is-out img, .gi-cell.is-out video { opacity: .35; }
+    .gi-cell.is-out .gi-kind { background: #b91c1c; }
+    .gi-note { margin-top: .45rem; font-size: .75rem; line-height: 1.35; color: var(--color-gray-500); }
+    .gi-note.is-warn { color: var(--color-gray-700); font-weight: 700; }
     .gi-go { background: #f5c518; color: #1f2937; font-weight: 800; }
     .gi-go:hover { background: #e6b800; }
     .gi-go:disabled { opacity: .5; }
@@ -54,7 +62,10 @@
         <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
     </div>
     <div class="sheet-body space-y-4">
-        <div class="gi-grid" id="giGrid"></div>
+        <div>
+            <div class="gi-grid" id="giGrid"></div>
+            <p class="gi-note" id="giNote"></p>
+        </div>
         @if (! $giSeason)
             <div>
                 <label class="form-label" for="giSeason">Which cropping schedule?</label>
@@ -88,13 +99,17 @@
     const CLIP = @json(route('quick-record.clip'));
     const ALBUMS = @json(route('quick-capture.albums'));
     const PHOTO_MAX = 8 * 1024 * 1024;   // what the server takes, QuickCaptureController::storeGallery
-    const CLIP_MAX = 300 * 1024 * 1024;  // the recorder's ceiling; asked here so a phone does not spend the data to hear it
+    const CLIP_MAX = @json(min(95 * 1024 * 1024, \Illuminate\Http\UploadedFile::getMaxFilesize()));   // under Cloudflare's 100 MB, or this server's own limit if lower
+    const CLIP_SECONDS = @json(\App\Support\VideoOptimizer::MAX_SECONDS);
+    const LIMIT_WORDS = 'A video can be up to 1 minute long and ' + Math.floor(CLIP_MAX / 1048576) + ' MB.';
     const FLASH = 'anee.galleryImport';
     const $ = (id) => document.getElementById(id);
     const csrf = () => document.querySelector('meta[name=csrf-token]')?.content || '';
     const isVideo = (f) => /^video\//.test(f.type) || (!f.type && /\.(mp4|mov|webm|mkv|m4v|3gp|avi)$/i.test(f.name));
     const word = (n, list) => n + (list.some(isVideo) ? ' item' : ' photo') + (n === 1 ? '' : 's');
-    let picked = [];   // { file, url }
+    const whyOut = (p) => !isVideo(p.file) ? '' : (p.file.size > CLIP_MAX ? 'Too big' : (p.long ? 'Too long' : ''));
+    const going = () => picked.filter((p) => !whyOut(p));
+    let picked = [];   // { file, url, long }
     let videoOk = true;
     let running = false;
 
@@ -116,15 +131,23 @@
         grid.innerHTML = '';
         picked.forEach((p, i) => {
             const cell = document.createElement('div');
-            cell.className = 'gi-cell';
+            const why = whyOut(p);
+            cell.className = 'gi-cell' + (why ? ' is-out' : '');
             const video = isVideo(p.file);
             const shot = document.createElement(video ? 'video' : 'img');
-            if (video) { shot.src = p.url + '#t=0.1'; shot.muted = true; shot.playsInline = true; shot.preload = 'metadata'; }
-            else { shot.src = p.url; shot.alt = ''; }
+            if (video) {
+                shot.src = p.url + '#t=0.1'; shot.muted = true; shot.playsInline = true; shot.preload = 'metadata';
+                // A length the phone cannot read is let through: the server asks again, of the file itself.
+                shot.addEventListener('loadedmetadata', () => {
+                    if (!p.long && Number.isFinite(shot.duration) && shot.duration > CLIP_SECONDS + 0.75) { p.long = true; paint(); }
+                });
+            } else {
+                shot.src = p.url; shot.alt = ''; shot.loading = 'lazy'; shot.decoding = 'async';
+            }
             cell.appendChild(shot);
             if (video) {
                 const kind = document.createElement('span');
-                kind.className = 'gi-kind'; kind.textContent = 'CLIP';
+                kind.className = 'gi-kind'; kind.textContent = why || 'Video';
                 cell.appendChild(kind);
             }
             const x = document.createElement('button');
@@ -143,9 +166,17 @@
         more.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" d="M12 5v14m7-7H5"/></svg><span>Add more</span>';
         more.addEventListener('click', choose);
         grid.appendChild(more);
-        const say = 'Import ' + word(picked.length, picked.map((p) => p.file));
+        const files = going().map((p) => p.file);
+        const out = picked.length - files.length;
+        const say = files.length ? 'Import ' + word(files.length, files) : 'Nothing to import';
         $('giTitle').textContent = say;
         $('giGo').textContent = say;
+        $('giGo').disabled = !files.length;
+        const note = $('giNote');
+        note.textContent = out
+            ? (out === 1 ? '1 video' : out + ' videos') + ' will stay on your phone. ' + LIMIT_WORDS
+            : 'Only these go in. Everything else stays on your phone. Tap × to leave one out.';
+        note.classList.toggle('is-warn', out > 0);
     }
 
     const seasonNow = () => $('gaImportSheet')?.dataset.season || $('giSeason')?.value || '';
@@ -188,6 +219,22 @@
         loadAlbums();
     });
 
+    // The server keeps jpg, png and webp. Anything else (HEIC, GIF, BMP) becomes a jpg here, if this phone can open it at all.
+    async function asJpeg(file) {
+        try {
+            const bmp = await createImageBitmap(file);
+            const canvas = document.createElement('canvas');
+            canvas.width = bmp.width;
+            canvas.height = bmp.height;
+            canvas.getContext('2d').drawImage(bmp, 0, 0);
+            bmp.close?.();
+            const blob = await new Promise((ok) => canvas.toBlob(ok, 'image/jpeg', 0.85));
+            return blob ? window.aneeShrinkPhoto(new File([blob], (file.name || 'photo').replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' })) : null;
+        } catch (_) {
+            return null;
+        }
+    }
+
     async function run() {
         const sid = seasonNow();
         if (!sid) { window.toast('Choose which cropping schedule these belong to.', 'error'); $('giSeason')?.focus(); return; }
@@ -197,17 +244,22 @@
 
         if (running) return;
         running = true;
-        const list = picked.map((p) => p.file);
+        const list = going().map((p) => p.file);
+        if (!list.length) { running = false; return; }
+        const left = picked.length - list.length;
         window.closeSheet('gaImportSheet');
         const busy = window.smBusy('Importing 1 of ' + list.length + '…');
-        let done = 0, trouble = '', clipsShut = false;
+        let done = 0, trouble = left ? LIMIT_WORDS : '', clipsShut = false;
         for (let i = 0; i < list.length; i++) {
-            busy.say('Importing ' + (i + 1) + ' of ' + list.length + '…');
             const video = isVideo(list[i]);
+            busy.say('Importing ' + (i + 1) + ' of ' + list.length + '…' + (video ? ' A video takes longer. Keep this page open.' : ''));
             if (video && clipsShut) continue;
-            if (video && list[i].size > CLIP_MAX) { trouble = trouble || 'A clip was larger than 300 MB.'; continue; }
-            const file = video ? list[i] : await window.aneeShrinkPhoto(list[i]);
-            if (!video && file.size > PHOTO_MAX) { trouble = trouble || 'A photo was over 8 MB.'; continue; }
+            let file = list[i];
+            if (!video) {
+                file = /^image\/(jpe?g|png|webp)$/.test(file.type) ? await window.aneeShrinkPhoto(file) : await asJpeg(file);
+                if (!file) { trouble = trouble || 'A photo was in a format this phone cannot read.'; continue; }
+                if (file.size > PHOTO_MAX) { trouble = trouble || 'A photo was over 8 MB.'; continue; }
+            }
             const fd = new FormData();
             fd.append('scheduleId', sid);
             if (albumId) fd.append('albumId', albumId); else fd.append('albumTitle', albumName);
@@ -227,20 +279,23 @@
                     albumId = albumId || String(data.albumId || '');
                     continue;
                 }
-                trouble = trouble || data.message || (res.status === 413 ? 'A clip was too big to send.' : 'One could not be saved.');
+                // A validation reply names the field ("images.0"), which helps nobody.
+                const said = data.errors ? 'A file was in a format the app cannot take.' : data.message;
+                trouble = trouble || said || (res.status === 413 ? 'A video was too big to send.' : 'One could not be saved.');
                 // No clips for this season or plan: the photos can still go.
                 if (video && res.status === 403) { clipsShut = true; continue; }
                 // Refused outright: the next one would hear the same.
                 if ([401, 403, 419, 423].includes(res.status)) break;
             } catch (_) {
-                trouble = 'The connection dropped.';
-                break;
+                trouble = trouble || 'The connection dropped.';
+                // A long video can lose its send alone and the next file still go. A photo losing it means the line is gone.
+                if (!video) break;
             }
         }
         busy.close();
         running = false;
 
-        const missed = list.length - done;
+        const missed = picked.length - done;
         if (!done) {
             window.toast(trouble || 'Nothing could be imported.', 'error', 9000);
             // Back to the sheet with the picks still in it, after the close above has finished hiding it.
