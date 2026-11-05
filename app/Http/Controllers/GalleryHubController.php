@@ -73,6 +73,9 @@ class GalleryHubController extends Controller
 
         $paged = $tab === 'albums' ? $shelf : array_slice($shelf, 0, self::PER_PAGE);
 
+        $importSeasons = $this->importSeasons($schedules);
+        $importVideo = $this->importTakesVideo($importSeasons);
+
         return view('sm.gallery-hub', [
             'tab' => $tab,
             'items' => $paged,
@@ -90,7 +93,28 @@ class GalleryHubController extends Controller
                 'team' => $tab === 'team' ? count($shelf) : null,
             ],
             'q' => $q,
+            'importSeasons' => $importSeasons,
+            'importVideo' => $importVideo,
         ]);
+    }
+
+    /** Clips are offered when at least one of those seasons takes them. The door that saves a clip asks again for its own season. */
+    private function importTakesVideo($seasons): bool
+    {
+        $mine = WorkerContext::seasonIdsWith('video', 'edit');
+
+        return $seasons->contains(fn ($s) => ($mine === null || in_array((int) $s->id, $mine, true))
+            && \App\Support\Tier::scheduleCan($s, 'videoRecording'));
+    }
+
+    /** Where Import from phone may file: an open season, and for a worker one where they hold the camera. */
+    private function importSeasons($schedules)
+    {
+        $mine = WorkerContext::seasonIdsWith('camera', 'edit');
+
+        return $schedules
+            ->filter(fn ($s) => ($mine === null || in_array((int) $s->id, $mine, true)) && ! $s->isLocked())
+            ->values();
     }
 
     /** The seasons this viewer may look at, newest first. */

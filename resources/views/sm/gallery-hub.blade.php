@@ -5,8 +5,9 @@
      shelves, the same tiles. A grower who has learned where photos live
      inside a season should not have to learn a second place.
 
-     What it does not do is make things — an album belongs to a season, so
-     albums are made in the season's own Gallery and only read here.
+     What it does not make is albums: an album belongs to a season, so they are
+     made in the season's own Gallery and only read here. Import from phone is the
+     one thing that files from here, and it asks which season first.
 
      Expects: $tab, $items, $albums, $team, $counts, $hasMore, $total, $q. --}}
 @extends('layouts.app')
@@ -68,6 +69,9 @@
         <span class="ga-n">{{ $now[2] ?? '' }}</span>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
+    @if ($importSeasons->isNotEmpty())
+        @include('sm.partials.gallery-import', ['seasons' => $importSeasons, 'video' => $importVideo])
+    @endif
 </div>
 
 {{-- The shelves, asked for once. Links rather than panes: each shelf is a

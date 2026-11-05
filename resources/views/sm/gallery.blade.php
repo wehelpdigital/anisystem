@@ -38,6 +38,9 @@
         <span class="ga-n" id="gaTabNowN">{{ $counts['all'] }}</span>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
+    @if (\App\Support\WorkerContext::canWriteModule('camera') && ! $schedule->isLocked())
+        @include('sm.partials.gallery-import', ['season' => $schedule->id, 'video' => \App\Support\WorkerContext::canWriteModule('video') && \App\Support\Tier::scheduleCan($schedule, 'videoRecording')])
+    @endif
 </div>
 
 {{-- The shelves, asked for once. --}}
