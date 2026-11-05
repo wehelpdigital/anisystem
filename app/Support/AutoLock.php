@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Anee Auto is not open yet (2026-11-05, the owner: "if user is not admin, lock anee auto and say we are still building
- * it"). Admins keep it whole, to go on building it. Everyone else meets the words below at every door: the routes
- * (AutoIsOpen), the start button (auto.partials.building-door) and the public pages (public.partials.auto-building-note).
- * The morning work stops too, so a locked season neither spends credits nor mails anyone.
+ * it"). Admins keep it whole, to go on building it. Everyone else meets the words below at every door inside the app: the
+ * routes (AutoIsOpen) and the start button (auto.partials.building-door). The morning work stops too, so a locked season
+ * neither spends credits nor mails anyone. The public pages say nothing of it, on purpose (the owner, the same day).
  *
  * To open it to everybody, set ADMINS_ONLY to false. Nothing else needs to change.
  */

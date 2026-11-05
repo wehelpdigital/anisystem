@@ -414,9 +414,8 @@
                     is <b>Anee's job now</b>. Answer a few questions about your farm once. She writes the whole season, checks it again at <b>5:00 every morning</b>,
                     and tells you and your workers exactly what to do today.
                 </p>
-                @include('public.partials.auto-building-note')
                 <div class="aap-ctas animate-fade-up" style="animation-delay:.2s">
-                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">{{ \App\Support\AutoLock::open() ? 'Start free, then add Anee Auto' : 'Start free now' }} {!! $arrow !!}</a>
+                    <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Start free, then add Anee Auto {!! $arrow !!}</a>
                     <a href="#aap-inside" class="hp-alt is-glass">See how she plans</a>
                 </div>
                 <ul class="aap-skip animate-fade-up" style="animation-delay:.26s" aria-label="What you no longer have to do">
@@ -646,11 +645,7 @@
             <div class="hp-head reveal">
                 <img class="aap-end-face" src="{{ $emo('wink') }}" alt="" width="128" height="128">
                 <h2 class="hp-h2" id="aapEndH" style="margin-top:1.4rem">Let This Be the Season <em>You Just Follow Anee.</em></h2>
-                @if (\App\Support\AutoLock::open())
                 <p class="hp-p">Start free on Libre, then turn on Anee Auto for your lots when you are ready. It is priced per lot for the whole season, and the app shows the price before you start.</p>
-                @else
-                <p class="hp-p">Start free on Libre today. Anee Auto opens here as soon as it is ready.</p>
-                @endif
             </div>
             <div class="hp-cta">
                 <div class="hp-cta-row">
