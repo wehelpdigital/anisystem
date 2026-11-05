@@ -16,11 +16,19 @@ use Illuminate\Http\Request;
  * some time last year". Global Notes already gathers the words; this gathers
  * the pictures, and the messenger borrows it so a farmer can attach anything
  * they have ever kept without first remembering which season it belonged to.
+ *
+ * It also holds the one thing with no season at all: what Import from phone was
+ * told to keep here (as_gallery_images with croppingScheduleId 0, albumId 0 and
+ * the person's userId, so only they see it). A row's file can be gone while the
+ * row stays, and a tile for nothing is not shown: see stillThere().
  */
 class GalleryHubController extends Controller
 {
     /** How many tiles arrive at once. */
     private const PER_PAGE = 24;
+
+    /** The moment this request stops asking the file store, once it has begun to. */
+    private float $checkUntil = 0.0;
 
     public function index(Request $request)
     {
@@ -74,7 +82,8 @@ class GalleryHubController extends Controller
         $paged = $tab === 'albums' ? $shelf : array_slice($shelf, 0, self::PER_PAGE);
 
         $importSeasons = $this->importSeasons($schedules);
-        $importVideo = $this->importTakesVideo($importSeasons);
+        // Clips may go to the farm's own plan on the Global Gallery, or to a season that takes them.
+        $importVideo = \App\Support\Tier::farmCan('videoRecording') || $this->importTakesVideo($importSeasons);
 
         return view('sm.gallery-hub', [
             'tab' => $tab,
@@ -96,6 +105,105 @@ class GalleryHubController extends Controller
             'importSeasons' => $importSeasons,
             'importVideo' => $importVideo,
         ]);
+    }
+
+    /** One file from Import from phone, kept on the Global Gallery with no season. */
+    public function import(Request $request)
+    {
+        $request->validate([
+            'image' => 'required_without:clip|image|mimes:jpg,jpeg,png,webp|max:8192',
+            'clip' => 'required_without:image|file|mimetypes:video/mp4,video/quicktime,video/webm,video/x-matroska,video/3gpp,video/x-m4v|max:2097152',
+        ]);
+
+        if ($request->hasFile('clip')) {
+            if (! \App\Support\Tier::farmCan('videoRecording')) {
+                \App\Support\Tier::farmDenyFor('videoRecording', 'Video recording comes with {plan}. Photos and voice notes stay yours on every plan.');
+            }
+            try {
+                $path = \App\Support\VideoOptimizer::storeCompressed($request->file('clip'), 'gallery')['video'];
+            } catch (\Throwable $e) {
+                return response()->json(['success' => false, 'message' => $e->getMessage() ?: 'The video could not be saved.'], 422);
+            }
+        } else {
+            $path = MediaStore::putFile($request->file('image'), 'gallery', \Illuminate\Support\Facades\Auth::id());
+        }
+
+        if (! $path) {
+            return response()->json(['success' => false, 'message' => 'Nothing could be saved. Please try again.'], 500);
+        }
+
+        $row = \App\Models\AsGalleryImage::create([
+            'albumId' => 0,
+            'croppingScheduleId' => 0,
+            'userId' => \Illuminate\Support\Facades\Auth::id(),
+            'path' => $path,
+            'deleteStatus' => 1,
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Saved to your Global Gallery.', 'id' => (int) $row->id]);
+    }
+
+    /** To the Trash, the same road a season's picture takes. Only your own, and only one with no season. */
+    public function destroyOwn(Request $request)
+    {
+        $row = \App\Models\AsGalleryImage::where('croppingScheduleId', 0)
+            ->where('userId', \Illuminate\Support\Facades\Auth::id())
+            ->where('deleteStatus', 1)
+            ->find((int) $request->input('id'));
+        if (! $row) {
+            return response()->json(['success' => false, 'message' => 'That picture is no longer here.'], 404);
+        }
+
+        $row->update(['deleteStatus' => 0]);
+
+        return response()->json(['success' => true, 'message' => 'Moved to the Trash. You can restore it there for 30 days.']);
+    }
+
+    /**
+     * Is the file behind this row still kept? A row can outlive its file, and a
+     * tile that says "File missing" is only noise (2026-11-06, the owner).
+     *
+     * The answer is remembered, because asking the file store costs a trip. Three
+     * seconds of asking per request, newest first: whatever is left is asked on the
+     * next visit, and meanwhile the page itself drops a photo that will not load.
+     * Not being able to tell is not the same as gone, so that shows the tile.
+     */
+    private function stillThere(?string $path): bool
+    {
+        if (blank($path) || MediaStore::isSiteAsset($path)) {
+            return true;
+        }
+
+        $key = 'gallery:there:' . sha1($path);
+        $known = \Illuminate\Support\Facades\Cache::get($key);
+        if ($known !== null) {
+            return (bool) $known;
+        }
+
+        if ($this->checkUntil === 0.0) {
+            $this->checkUntil = microtime(true) + 3;
+        }
+        if (microtime(true) > $this->checkUntil) {
+            return true;
+        }
+
+        try {
+            if (MediaStore::isRemote($path)) {
+                // Only a plain "not here" hides a picture. A refusal, a redirect that minds being
+                // asked, or a bad moment at the store says nothing about the file.
+                $status = \Illuminate\Support\Facades\Http::timeout(6)->withOptions(['stream' => true])
+                    ->withHeaders(['Range' => 'bytes=0-0', 'User-Agent' => 'anee.io media check'])
+                    ->get((string) MediaStore::url($path))->status();
+                $there = ! in_array($status, [404, 410], true);
+            } else {
+                $there = \Illuminate\Support\Facades\Storage::disk('public')->exists($path);
+            }
+        } catch (\Throwable $e) {
+            return true;
+        }
+        \Illuminate\Support\Facades\Cache::put($key, $there ? 1 : 0, $there ? now()->addHours(6) : now()->addMinutes(10));
+
+        return $there;
     }
 
     /** Clips are offered when at least one of those seasons takes them. The door that saves a clip asks again for its own season. */
@@ -152,6 +260,7 @@ class GalleryHubController extends Controller
                 continue;
             }
             $pictures = $a->images
+                ->filter(fn ($i) => $this->stillThere($i->path))
                 ->map(fn ($i) => [
                     'id' => (int) $i->id,
                     'path' => (string) $i->path,
@@ -197,6 +306,9 @@ class GalleryHubController extends Controller
         foreach ($schedules as $schedule) {
             foreach (\App\Support\SeasonTeamBox::for($schedule) as $row) {
                 if ($q !== '' && stripos($row['title'] . ' ' . $row['kind'] . ' ' . $schedule->title, $q) === false) {
+                    continue;
+                }
+                if (! $this->stillThere($row['path'] ?? null)) {
                     continue;
                 }
                 $row['scheduleId'] = (int) $schedule->id;
@@ -321,6 +433,48 @@ class GalleryHubController extends Controller
             }
         }
 
+        /* And what Import from phone kept here with no season. A photo taken only
+         * to ask Anee a question is also a loose row, and is not shown here. */
+        if ($meId) {
+            $own = \App\Models\AsGalleryImage::where('croppingScheduleId', 0)
+                ->where('userId', $meId)
+                ->where('deleteStatus', 1)
+                ->where('path', 'not like', '%ai-photos/%')
+                ->orderByDesc('id')
+                ->limit(600)
+                ->get();
+            $isClip = fn ($g) => (bool) preg_match('/\.(mp4|mov|webm|mkv|m4v|3gp)$/i', (string) $g->path);
+            $ownPosters = \App\Support\VideoPoster::urlsFor($own->filter($isClip)->pluck('path')->all());
+            foreach ($own as $g) {
+                $kind = $isClip($g) ? 'video' : 'image';
+                if ($kinds !== [] && ! $this->wanted($kind, $kinds)) {
+                    continue;
+                }
+                $title = (string) ($g->caption ?: 'Imported from phone');
+                if ($q !== '' && stripos($title . ' global gallery imported', $q) === false) {
+                    continue;
+                }
+                $posterUrl = $ownPosters[$g->path] ?? null;
+                $out[] = [
+                    'kind' => $kind,
+                    'type' => $kind,
+                    'path' => (string) $g->path,
+                    'poster' => MediaStore::pathFromUrl($posterUrl),
+                    'url' => MediaStore::url($g->path),
+                    'posterUrl' => $posterUrl,
+                    'title' => $title,
+                    'source' => 'Imported',
+                    'href' => null,
+                    'when' => $g->created_at?->timezone('Asia/Manila')->format('M j, Y'),
+                    'scheduleId' => 0,
+                    'scheduleTitle' => 'Global Gallery',
+                    'sortKey' => (int) ($g->created_at?->timestamp ?? 0),
+                    // Only these can be deleted from here: everything else has its own home to be deleted in.
+                    'ownId' => (int) $g->id,
+                ];
+            }
+        }
+
         /* And what this member has filmed on the community side.
          *
          * A clip shared on the wall, under somebody's post, as a discussion
@@ -363,7 +517,7 @@ class GalleryHubController extends Controller
         // actually remembers things in.
         usort($out, fn ($a, $b) => $b['sortKey'] <=> $a['sortKey']);
 
-        return $out;
+        return array_values(array_filter($out, fn ($m) => $this->stillThere($m['path'] ?? null)));
     }
 
     /** @param  list<string>  $kinds */

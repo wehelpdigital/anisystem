@@ -72,7 +72,7 @@ class WorkerTools
         }
         $all += [
             'notes' => ['Global Notes', 'records', 'images/sticky-note.png', ['notes.hub', 'notes.hub.store', 'notes.hub.destroy'], []],
-            'gallery' => ['Global Gallery', 'records', 'images/gallery.png', [], ['gallery.hub']],
+            'gallery' => ['Global Gallery', 'records', 'images/gallery.png', ['gallery.hub.import', 'gallery.hub.own.destroy'], ['gallery.hub']],
             'farmlots' => ['Global Lots', 'records', 'images/treasure-map.png', [], ['farmlots.index']],
             'maps' => ['Maps', 'records', 'images/location-marker.png', [], ['maps.page']],
             'draw' => ['Draw', 'records', 'images/writting.png', [], ['draw.page']],

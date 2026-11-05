@@ -2,12 +2,13 @@
      option to import from phone ... a button or a tab, in a taglike button"). Pictures already on the phone go into an album
      in one go, with no naming each one: that is what Quick Capture's own flow is for.
 
-     $season: the season's Gallery names its own season. $seasons: the Global Gallery asks which one, because an album belongs
-     to a season. $video: whether this person may bring in clips too.
+     $season: the season's Gallery names its own season. $seasons: the Global Gallery asks where, from a tag and its modal: one
+     of those seasons, or the Global Gallery alone, kept with no season and no album (GalleryHubController::import). The selects
+     behind the tags stay as the values' home, the house rule. $video: whether this person may bring in clips too.
 
      Each file goes up in its own request. A phone's forty photos then show a real count, one too big for the server costs
      only itself, and a dropped line says how far it got. Photos go through Quick Capture's door and clips through Quick
-     Record's, which is the one that asks about the video right and the plan.
+     Record's, which is the one that asks about the video right and the plan. The Global Gallery alone has its own door.
 
      Only what the person chose goes in, and a video meets two walls the phone can see coming: Cloudflare turns away a request
      over 100 MB before it reaches us (measured 2026-11-06: 90 MB passes, 120 MB is a 413), and a clip may run one minute
@@ -22,6 +23,7 @@
 </button>
 
 @push('head')
+@include('partials.tag-sheet-css')
 <style>
     .ga-shelfbar:has(.ga-import) { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
     /* A tag you can tap: the app's important actions are yellow. */
@@ -46,11 +48,15 @@
     .gi-cell.is-out .gi-kind { background: #b91c1c; }
     .gi-note { margin-top: .45rem; font-size: .75rem; line-height: 1.35; color: var(--color-gray-500); }
     .gi-note.is-warn { color: var(--color-gray-700); font-weight: 700; }
+    .gi-fold { display: grid; grid-template-rows: 1fr;
+        transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1), margin-top .28s cubic-bezier(.22,1,.36,1); }
+    .gi-fold > div { overflow: hidden; min-height: 0; }
+    .gi-fold.is-shut { grid-template-rows: 0fr; opacity: 0; pointer-events: none; margin-top: 0 !important; }
     .gi-go { background: #f5c518; color: #1f2937; font-weight: 800; }
     .gi-go:hover { background: #e6b800; }
     .gi-go:disabled { opacity: .5; }
     @keyframes giIn { from { opacity: 0; transform: scale(.92); } }
-    @media (prefers-reduced-motion: reduce) { .ga-import { transition: none; } .gi-cell { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .ga-import, .gi-fold { transition: none; } .gi-cell { animation: none; } }
 </style>
 @endpush
 
@@ -68,25 +74,46 @@
         </div>
         @if (! $giSeason)
             <div>
-                <label class="form-label" for="giSeason">Which cropping schedule?</label>
-                <select id="giSeason" class="form-select">
-                    @if ($giSeasons->count() > 1)<option value="">Choose one</option>@endif
+                <p class="form-label">Which cropping schedule?</p>
+                <button type="button" class="crop-tag" data-gi-pick="giSeason" aria-haspopup="dialog">
+                    <span class="crop-tag-e"></span>
+                    <span class="crop-tag-t"></span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <select id="giSeason" class="hidden" aria-hidden="true" tabindex="-1">
+                    <option value="0" data-e="🖼️" data-sub="Not tied to a cropping schedule. Only you can see it.">Global Gallery only</option>
                     @foreach ($giSeasons as $s)
-                        <option value="{{ $s->id }}">{{ $s->title }}</option>
+                        <option value="{{ $s->id }}" data-e="🌾">{{ $s->title }}</option>
                     @endforeach
                 </select>
             </div>
         @endif
-        <div>
-            <label class="form-label" for="giAlbum">Album</label>
-            <select id="giAlbum" class="form-select"><option value="">➕ New album</option></select>
-            <input type="text" id="giAlbumTitle" class="form-input mt-2" maxlength="191" placeholder="Name of the new album" aria-label="Name of the new album">
+        <div class="gi-fold" id="giAlbumFold">
+            <div>
+                <p class="form-label">Album</p>
+                <button type="button" class="crop-tag" data-gi-pick="giAlbum" aria-haspopup="dialog">
+                    <span class="crop-tag-e"></span>
+                    <span class="crop-tag-t"></span>
+                    <svg class="crop-tag-c" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <select id="giAlbum" class="hidden" aria-hidden="true" tabindex="-1"><option value="" data-e="➕">New album</option></select>
+                <input type="text" id="giAlbumTitle" class="form-input mt-2" maxlength="191" placeholder="Name of the new album" aria-label="Name of the new album">
+            </div>
         </div>
     </div>
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
         <button type="button" class="btn gi-go" id="giGo">Import</button>
     </div>
+</div>
+{{-- The modal both tags open. Above the import sheet, the way the post harvest picker stands over its form. --}}
+<div class="sheet hidden" id="giPickSheet" style="--sheet-width:24rem; z-index:150">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title" id="giPickTitle">Choose</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body dt-rows" id="giPickList"></div>
 </div>
 @endpush
 
@@ -96,6 +123,7 @@
     if (window.gaImportBound) return;
     window.gaImportBound = true;
     const SAVE = @json(route('quick-capture.gallery'));
+    const GLOBAL_SAVE = @json(route('gallery.hub.import'));
     const CLIP = @json(route('quick-record.clip'));
     const ALBUMS = @json(route('quick-capture.albums'));
     const PHOTO_MAX = 8 * 1024 * 1024;   // what the server takes, QuickCaptureController::storeGallery
@@ -179,10 +207,60 @@
         note.classList.toggle('is-warn', out > 0);
     }
 
-    const seasonNow = () => $('gaImportSheet')?.dataset.season || $('giSeason')?.value || '';
+    // On the Global Gallery with "Global Gallery only" chosen: no season, so no album either.
+    const globalOnly = () => !$('gaImportSheet')?.dataset.season && $('giSeason')?.value === '0';
+    const seasonNow = () => $('gaImportSheet')?.dataset.season || (globalOnly() ? '' : $('giSeason')?.value || '');
 
     function syncAlbumName() {
         $('giAlbumTitle').classList.toggle('hidden', !!$('giAlbum').value);
+    }
+
+    // A tag says what its hidden select holds.
+    function paintTag(id) {
+        const sel = $(id);
+        const tag = document.querySelector('[data-gi-pick="' + id + '"]');
+        if (!sel || !tag) return;
+        const on = sel.selectedOptions[0];
+        tag.querySelector('.crop-tag-e').textContent = on?.dataset.e || '';
+        tag.querySelector('.crop-tag-t').textContent = on?.textContent || '';
+    }
+
+    function syncWhere() {
+        paintTag('giSeason');
+        paintTag('giAlbum');
+        $('giAlbumFold').classList.toggle('is-shut', globalOnly());
+        syncAlbumName();
+    }
+
+    function openPick(id) {
+        const sel = $(id);
+        const list = $('giPickList');
+        $('giPickTitle').textContent = id === 'giSeason' ? 'Which cropping schedule?' : 'Which album?';
+        list.innerHTML = '';
+        list.dataset.for = id;
+        [...sel.options].forEach((o) => {
+            const row = document.createElement('button');
+            row.type = 'button';
+            row.className = 'dt-row' + (o.value === sel.value ? ' is-on' : '');
+            row.dataset.giVal = o.value;
+            const e = document.createElement('span');
+            e.className = 'dt-row-e';
+            e.textContent = o.dataset.e || '';
+            const body = document.createElement('span');
+            body.className = 'dt-row-body';
+            const b = document.createElement('b');
+            b.textContent = o.textContent;
+            body.appendChild(b);
+            if (o.dataset.sub) {
+                const i = document.createElement('i');
+                i.textContent = o.dataset.sub;
+                body.appendChild(i);
+            }
+            row.append(e, body);
+            row.insertAdjacentHTML('beforeend', '<svg class="dt-row-tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>');
+            list.appendChild(row);
+        });
+        window.openSheet('giPickSheet');
     }
 
     let asked = null;
@@ -191,15 +269,15 @@
         if (asked === sid) return;
         asked = sid;
         const sel = $('giAlbum');
-        sel.innerHTML = '<option value="">➕ New album</option>';
-        syncAlbumName();
+        sel.innerHTML = '<option value="" data-e="➕">New album</option>';
+        syncWhere();
         if (!sid) return;
         try {
             const res = await fetch(ALBUMS + '?scheduleId=' + encodeURIComponent(sid), { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
             const data = await res.json();
             (data?.data?.albums || []).forEach((a) => {
                 const o = document.createElement('option');
-                o.value = a.id; o.textContent = a.title;
+                o.value = a.id; o.textContent = a.title; o.dataset.e = '📁';
                 sel.appendChild(o);
             });
         } catch (_) { asked = null; }   // no list is no harm: a new album still works
@@ -215,6 +293,7 @@
         if (!wasEmpty) return;
         const day = new Date().toLocaleDateString('en-PH', { month: 'long', day: 'numeric', year: 'numeric' });
         $('giAlbumTitle').value = 'Imported from phone, ' + day;
+        syncWhere();
         window.openSheet('gaImportSheet');
         loadAlbums();
     });
@@ -236,11 +315,12 @@
     }
 
     async function run() {
+        const toGlobal = globalOnly();
         const sid = seasonNow();
-        if (!sid) { window.toast('Choose which cropping schedule these belong to.', 'error'); $('giSeason')?.focus(); return; }
         let albumId = $('giAlbum').value;
         const albumName = albumId ? $('giAlbum').selectedOptions[0].textContent : $('giAlbumTitle').value.trim();
-        if (!albumName) { window.toast('Name the new album first.', 'error'); $('giAlbumTitle').focus(); return; }
+        if (!toGlobal && !albumName) { window.toast('Name the new album first.', 'error'); $('giAlbumTitle').focus(); return; }
+        const where = toGlobal ? 'your Global Gallery' : albumName;
 
         if (running) return;
         running = true;
@@ -261,17 +341,21 @@
                 if (file.size > PHOTO_MAX) { trouble = trouble || 'A photo was over 8 MB.'; continue; }
             }
             const fd = new FormData();
-            fd.append('scheduleId', sid);
-            if (albumId) fd.append('albumId', albumId); else fd.append('albumTitle', albumName);
-            if (video) {
+            if (toGlobal) {
+                fd.append(video ? 'clip' : 'image', file);
+            } else if (video) {
+                fd.append('scheduleId', sid);
+                if (albumId) fd.append('albumId', albumId); else fd.append('albumTitle', albumName);
                 fd.append('target', 'gallery');
                 fd.append('title', albumName);   // or it is captioned "Quick record" and the hour
                 fd.append('clip', file);
             } else {
+                fd.append('scheduleId', sid);
+                if (albumId) fd.append('albumId', albumId); else fd.append('albumTitle', albumName);
                 fd.append('images[0]', file);
             }
             try {
-                const res = await fetch(video ? CLIP : SAVE, { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' }, body: fd, credentials: 'same-origin' });
+                const res = await fetch(toGlobal ? GLOBAL_SAVE : (video ? CLIP : SAVE), { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' }, body: fd, credentials: 'same-origin' });
                 const data = await res.json().catch(() => ({}));
                 if (res.ok && data.success) {
                     done++;
@@ -305,8 +389,8 @@
         // Said after the reload, which is what puts the new pictures on the shelves.
         try {
             sessionStorage.setItem(FLASH, JSON.stringify(missed
-                ? { type: 'error', text: word(done, list) + ' imported to ' + albumName + '. ' + missed + ' did not. ' + trouble }
-                : { type: 'success', text: word(done, list) + ' imported to ' + albumName + '.' }));
+                ? { type: 'error', text: word(done, list) + ' imported to ' + where + '. ' + missed + ' did not. ' + trouble }
+                : { type: 'success', text: word(done, list) + ' imported to ' + where + '.' }));
         } catch (_) { /* a private window goes without the words */ }
         picked.forEach((p) => URL.revokeObjectURL(p.url));
         picked = [];
@@ -323,11 +407,21 @@
             choose();
             return;
         }
-        if (e.target.closest('#giGo')) run();
+        if (e.target.closest('#giGo')) { run(); return; }
+        const tag = e.target.closest('[data-gi-pick]');
+        if (tag) { openPick(tag.dataset.giPick); return; }
+        const row = e.target.closest('[data-gi-val]');
+        if (row) {
+            // Shows itself as chosen and closes. It opens nothing further on its own.
+            const sel = $($('giPickList').dataset.for);
+            sel.value = row.dataset.giVal;
+            sel.dispatchEvent(new Event('change', { bubbles: true }));
+            window.closeSheet('giPickSheet');
+        }
     });
     document.addEventListener('change', (e) => {
-        if (e.target.id === 'giAlbum') syncAlbumName();
-        if (e.target.id === 'giSeason') { asked = null; loadAlbums(); }
+        if (e.target.id === 'giAlbum') syncWhere();
+        if (e.target.id === 'giSeason') { asked = null; loadAlbums(); syncWhere(); }
     });
     const tell = () => {
         let said = null;

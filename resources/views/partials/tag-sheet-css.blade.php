@@ -15,6 +15,7 @@
     .crop-tag-t.is-none { color: var(--color-gray-500); font-weight: 600; }
     .crop-tag-c { width: 1rem; height: 1rem; flex: none; color: var(--color-gray-400); }
     html.dark .crop-tag { background: #1c2416; border-color: #2b3a1c; }
+    html.dark .crop-tag-t { color: #a8cc7e; }
     html.dark .crop-tag-t.is-none { color: #9aa78d; }
     @media (prefers-reduced-motion: reduce) { .crop-tag { transition: none; } }
 

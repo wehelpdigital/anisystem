@@ -7,9 +7,13 @@
 
      What it does not make is albums: an album belongs to a season, so they are
      made in the season's own Gallery and only read here. Import from phone is the
-     one thing that files from here, and it asks which season first.
+     one thing that files from here: into a season, or onto this shelf with no season.
 
-     Expects: $tab, $items, $albums, $team, $counts, $hasMore, $total, $q. --}}
+     A picture whose file is gone is not shown at all. The controller leaves out what
+     the file store says is gone, and the listener below drops a photo that will not
+     load. A clip stays, because a phone that cannot play one says the same thing.
+
+     Expects: $tab, $items, $albums, $team, $counts, $hasMore, $total, $q, $importSeasons, $importVideo. --}}
 @extends('layouts.app')
 
 @section('title', 'Global Gallery')
@@ -40,6 +44,7 @@
     /* Voice tiles: the tile is a button (it unfolds a player, it does not
        navigate), so it needs the anchor's manners restated. */
     .ga-item-audio { cursor: pointer; text-align: left; width: 100%; }
+    .ga-cell.ga-noshot::before { display: none; }
     .gh-audio-player { display: block; margin-top: .35rem; }
     .gh-audio-player audio { height: 2rem; }
     @media (prefers-reduced-motion: reduce) {
@@ -47,6 +52,42 @@
         .gh-spin i { animation-duration: 2.4s; }
     }
 </style>
+<script>
+/* Here in the head, so it is listening before the first tile is parsed. Errors on a
+   picture do not bubble, so this catches them on the way down, for the tiles the page
+   came with and the ones the loader adds. */
+(function ghMissingFiles() {
+    document.addEventListener('error', (e) => {
+        const el = e.target;
+        if (!(el instanceof HTMLImageElement || el instanceof HTMLVideoElement)) return;
+        const tile = el.closest('.ga-wrap, .ga-cell, .tb-card');
+        if (!tile || tile.querySelector('.ga-item-audio')) return;
+
+        // A clip, or the poster of one: the file may be fine. Stop the shimmer and keep the tile.
+        const isClip = el instanceof HTMLVideoElement || tile.querySelector('.ga-play, .ga-vid, video');
+        // With no signal every picture fails, and that is not every picture deleted.
+        if (isClip || window.aneeOffline?.isDown?.()) {
+            (el.closest('.ga-shot, .ga-cell, .tb-shot') || tile).classList.add('ga-noshot');
+            el.remove();
+            return;
+        }
+
+        const album = tile.closest('.ga-album');
+        const onShelf = tile.matches('.ga-wrap, .tb-card');
+        tile.remove();
+        if (album) {
+            const n = album.querySelectorAll('.ga-cell').length;
+            const count = album.querySelector('.ga-count');
+            if (count) count.textContent = n + (n === 1 ? ' picture' : ' pictures');
+        } else if (onShelf) {
+            const shown = document.querySelector('#gaTabBtn .ga-n');
+            if (shown && /^\d+$/.test(shown.textContent.trim())) shown.textContent = Math.max(0, Number(shown.textContent) - 1);
+            // The shelf just got shorter, so the next page may already be in reach.
+            window.dispatchEvent(new Event('scroll'));
+        }
+    }, true);
+})();
+</script>
 @endpush
 
 @section('content')
@@ -69,9 +110,7 @@
         <span class="ga-n">{{ $now[2] ?? '' }}</span>
         <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
     </button>
-    @if ($importSeasons->isNotEmpty())
-        @include('sm.partials.gallery-import', ['seasons' => $importSeasons, 'video' => $importVideo])
-    @endif
+    @include('sm.partials.gallery-import', ['seasons' => $importSeasons, 'video' => $importVideo])
 </div>
 
 {{-- The shelves, asked for once. Links rather than panes: each shelf is a
@@ -159,19 +198,16 @@
                                             {{-- The frame the registry already keeps: a picture,
                                                  not a film the phone must decode for one. --}}
                                             <img src="{{ $im['posterUrl'] }}" alt="{{ $im['caption'] ?: 'Clip in this album' }}" loading="lazy"
-                                                 onload="this.classList.add('is-loaded')"
-                                                 onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();">
+                                                 onload="this.classList.add('is-loaded')">
                                         @else
                                             <video src="{{ $im['url'] }}#t=0.1" preload="metadata" playsinline muted
                                                    aria-label="{{ $im['caption'] ?: 'Clip in this album' }}"
-                                                   onloadeddata="this.classList.add('is-loaded')"
-                                                   onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();"></video>
+                                                   onloadeddata="this.classList.add('is-loaded')"></video>
                                         @endif
                                         <span class="ga-vid" aria-hidden="true">▶</span>
                                     @else
                                         <img src="{{ $im['url'] }}" alt="{{ $im['caption'] }}" loading="lazy"
-                                             onload="this.classList.add('is-loaded')"
-                                             onerror="this.closest('.ga-cell')?.classList.add('is-gone'); this.remove();">
+                                             onload="this.classList.add('is-loaded')">
                                     @endif
                                     @if (filled($im['caption']))
                                         <span class="ga-cap"><b>{{ $im['caption'] }}</b></span>
@@ -211,7 +247,7 @@
                                        preload="metadata" playsinline controls></video>
                                 @unless ($row['posterUrl'])<span class="tb-play"><span>▶</span></span>@endunless
                             @else
-                                <img src="{{ $row['thumbUrl'] ?? $row['url'] }}" alt="" loading="lazy" onerror="this.remove()">
+                                <img src="{{ $row['thumbUrl'] ?? $row['url'] }}" alt="" loading="lazy">
                             @endif
                             @unless ($goes)
                                 {{-- A recording is a thing people want off the app
@@ -342,7 +378,9 @@
                 const wants = (!shot && it.type === 'video' && it.path)
                     ? ' data-needs-frame="' + it.path.replace(/"/g, '&quot;') + '" data-clip-url="' + (it.url || '') + '"'
                     : '';
-                wrap.innerHTML = '<a class="ga-item" href="' + (it.url || '#') + '"'
+                wrap.innerHTML = (it.ownId ? '<button type="button" class="ga-del" data-del-own="' + it.ownId + '" title="Delete" aria-label="Delete">'
+                    + '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.87 12.14A2 2 0 0116.14 21H7.86a2 2 0 01-1.99-1.86L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16"/></svg></button>' : '')
+                    + '<a class="ga-item" href="' + (it.url || '#') + '"'
                     + (it.type === 'image' ? ' data-lightbox' : ' target="_blank" rel="noopener"') + '>'
                     + '<span class="ga-shot"' + wants + '>'
                     + (shot ? '<img src="' + shot + '" alt="" loading="lazy" onload="this.classList.add(\'is-loaded\')">' : '')
@@ -385,6 +423,30 @@
     window.addEventListener('resize', onScroll, { passive: true });
     near();
 })();
+
+/* What was kept here with no season has no other home to be deleted from. */
+document.addEventListener('click', async (e) => {
+    const bin = e.target.closest('[data-del-own]');
+    if (!bin) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const ok = await window.confirmAction({
+        title: 'Delete this from your Global Gallery?',
+        message: 'It goes to the Trash. You can restore it there for 30 days.',
+        confirmText: 'Delete', danger: true,
+    });
+    if (!ok) return;
+    try {
+        const res = await window.api(@json(route('gallery.hub.own.destroy')), { method: 'DELETE', body: { id: Number(bin.dataset.delOwn) } });
+        const wrap = bin.closest('.ga-wrap');
+        const shown = document.querySelector('#gaTabBtn .ga-n');
+        if (shown && /^\d+$/.test(shown.textContent.trim())) shown.textContent = Math.max(0, Number(shown.textContent) - 1);
+        if (window.animateOut) window.animateOut(wrap, () => wrap.remove()); else wrap.remove();
+        window.toast(res.message || 'Deleted.');
+    } catch (err) {
+        window.toast(err.message || 'Could not delete that.', 'error');
+    }
+});
 
 /* A voice tile unfolds its player where it stands — one at a time, the
    same delegated rule the notes use. */

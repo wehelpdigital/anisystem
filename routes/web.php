@@ -688,6 +688,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/app/workers/{id}/season', [App\Http\Controllers\GlobalWorkerController::class, 'addToSeason'])->whereNumber('id')->name('workers.global.season');
     // Every picture from every season, the way Global Notes gathers the words.
     Route::get('/app/gallery', [App\Http\Controllers\GalleryHubController::class, 'index'])->name('gallery.hub');
+    // Import from phone with no cropping schedule: the person's own, like a global note.
+    Route::post('/app/gallery/import', [App\Http\Controllers\GalleryHubController::class, 'import'])->name('gallery.hub.import');
+    Route::delete('/app/gallery/own', [App\Http\Controllers\GalleryHubController::class, 'destroyOwn'])->name('gallery.hub.own.destroy');
 
     // The Contact List — the member's own farm phonebook (every tier, no gates).
     Route::get('/app/contacts', [App\Http\Controllers\ContactListController::class, 'page'])->name('contacts.page');

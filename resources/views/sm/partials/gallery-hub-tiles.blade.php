@@ -33,18 +33,21 @@
         @continue
     @endif
     <div class="ga-wrap">
+        @if (! empty($it['ownId']))
+            <button type="button" class="ga-del" data-del-own="{{ $it['ownId'] }}" title="Delete" aria-label="Delete">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.87 12.14A2 2 0 0116.14 21H7.86a2 2 0 01-1.99-1.86L5 7m5 4v6m4-6v6M9 7V4a1 1 0 011-1h4a1 1 0 011 1v3M4 7h16"/></svg>
+            </button>
+        @endif
         <a class="ga-item" href="{{ $href }}"
            @if (! $goesToModule && $it['type'] === 'image') data-lightbox
            @elseif (! $goesToModule) target="_blank" rel="noopener" @endif>
             <span class="ga-shot">
                 @if ($shot)
                     <img src="{{ $shot }}" alt="" loading="lazy"
-                         onload="this.classList.add('is-loaded')"
-                         onerror="this.closest('.ga-shot')?.classList.add('is-gone'); this.remove();">
+                         onload="this.classList.add('is-loaded')">
                 @elseif ($it['type'] === 'video')
                     <video src="{{ $it['url'] }}#t=0.1" preload="metadata" playsinline muted
-                           onloadeddata="this.classList.add('is-loaded')"
-                           onerror="this.closest('.ga-shot')?.classList.add('is-gone'); this.remove();"></video>
+                           onloadeddata="this.classList.add('is-loaded')"></video>
                 @endif
                 @if ($it['type'] === 'video')
                     <span class="ga-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
