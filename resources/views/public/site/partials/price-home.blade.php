@@ -32,7 +32,7 @@
                 <div class="phm-row">
                     <b>{{ $label }}, per kilo</b>
                     <strong>{{ $money($r['p']) }}</strong>
-                    <span>Most sold between {{ $money($r['lo']) }} and {{ $money($r['hi']) }}</span>
+                    <span>Half of the reports fall between {{ $money($r['lo']) }} and {{ $money($r['hi']) }}</span>
                 </div>
             @endforeach
         </div>
