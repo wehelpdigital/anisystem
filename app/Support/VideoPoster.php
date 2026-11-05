@@ -198,7 +198,7 @@ class VideoPoster
                 $fallback = null;
                 foreach (['1', '3', '8', '0'] as $seek) {
                     $p = new Process([
-                        $bin, '-y',
+                        $bin, '-y', '-threads', '1',
                         // Enough of the file to know what it is, and no more.
                         // Without these, a phone's 190 MB recording is read
                         // for minutes before a single frame comes out.

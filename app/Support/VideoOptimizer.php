@@ -10,9 +10,9 @@ use Illuminate\Support\Str;
 use Symfony\Component\Process\Process;
 
 /**
- * Compresses an uploaded (or recorded) video to a web-friendly MP4 and extracts
- * a poster frame, using the ffmpeg binary. Videos are capped at 300 MB on input
- * and re-encoded to ≤720p H.264/AAC with faststart so they stream progressively.
+ * Keeps an uploaded (or recorded) video: checks it, saves it as filmed, and lists it
+ * for the scheduler to compress to a web-friendly MP4 with a poster frame, up to 720p
+ * H.264/AAC with faststart so it streams progressively (App\Support\VideoSqueeze).
  */
 class VideoOptimizer
 {
@@ -81,88 +81,12 @@ class VideoOptimizer
             ));
         }
 
-        $outVideo = tempnam(sys_get_temp_dir(), 'vid') . '.mp4';
-        $outPoster = tempnam(sys_get_temp_dir(), 'pos') . '.webp';
+        // Saved as filmed, then compressed by the scheduler (App\Support\VideoSqueeze). The front door
+        // hangs up at 20 seconds and a minute of video takes about 40 here, so it cannot happen in this request.
+        $videoPath = self::storeVerbatim($file, $dir);
+        VideoSqueeze::enqueue($videoPath);
 
-        try {
-            // Cap to 720p, force even dimensions (yuv420p needs them), H.264 CRF 28.
-            $scale = "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease,"
-                . 'scale=trunc(iw/2)*2:trunc(ih/2)*2';
-            $encode = self::encode($ffmpeg, $input, $outVideo, $scale, '28');
-            $encode->run();
-
-            /* A minute of phone video lands in the tens of megabytes at CRF 28,
-             * so this second pass is for the extraordinary: a camera shooting
-             * something this one has not met. Half the frame size and a
-             * coarser quality, once, rather than refusing the clip. */
-            if ($encode->isSuccessful() && is_file($outVideo) && filesize($outVideo) > self::MAX_OUT_BYTES) {
-                Log::info('VideoOptimizer: first pass over the ceiling, trying smaller', [
-                    'bytes' => filesize($outVideo),
-                ]);
-                $smaller = "scale='min(854,iw)':'min(480,ih)':force_original_aspect_ratio=decrease,"
-                    . 'scale=trunc(iw/2)*2:trunc(ih/2)*2';
-                $again = self::encode($ffmpeg, $input, $outVideo, $smaller, '32');
-                $again->run();
-                if ($again->isSuccessful() && is_file($outVideo) && filesize($outVideo) > 0) {
-                    $encode = $again;
-                }
-            }
-
-            if (! $encode->isSuccessful() || ! is_file($outVideo) || filesize($outVideo) === 0) {
-                // Surface the real reason in the log so this is debuggable.
-                Log::warning('VideoOptimizer: ffmpeg failed', [
-                    'bin' => $ffmpeg,
-                    'exit' => $encode->getExitCode(),
-                    'stderr' => Str::limit($encode->getErrorOutput(), 1500),
-                ]);
-                $hint = str_contains(strtolower($encode->getErrorOutput() . $ffmpeg), 'not recognized')
-                    || $encode->getExitCode() === 127
-                    ? 'The video tool (ffmpeg) was not found on the server.'
-                    : 'Could not process the video. Please try a different file.';
-                throw new \RuntimeException($hint);
-            }
-
-            // Poster ~1s in (a black first frame is common); ignore failures.
-            $poster = new Process([$ffmpeg, '-y', '-ss', '1', '-i', $outVideo, '-frames:v', '1', '-q:v', '3', $outPoster]);
-            $poster->setTimeout(60);
-            $poster->run();
-            $hasPoster = $poster->isSuccessful() && is_file($outPoster) && filesize($outPoster) > 0;
-
-            $base = trim($dir, '/') . '/' . Str::uuid()->toString();
-            $videoPath = $base . '.mp4';
-            $posterPath = null;
-
-            $stream = fopen($outVideo, 'rb');
-            Storage::disk('public')->put($videoPath, $stream);
-            if (is_resource($stream)) {
-                fclose($stream);
-            }
-
-            if ($hasPoster) {
-                $posterPath = $base . '.webp';
-                $ps = fopen($outPoster, 'rb');
-                Storage::disk('public')->put($posterPath, $ps);
-                if (is_resource($ps)) {
-                    fclose($ps);
-                }
-            }
-
-            /* Written down as well as handed back.
-             *
-             * Every video this app stores comes through here, and some of the
-             * callers keep only the clip — a note's attachment, a gallery
-             * upload — so the frame that was just made would be lost to
-             * everything that later wants a thumbnail for it. One row here and
-             * it is found by anything that asks, forever. */
-            if ($posterPath) {
-                VideoPoster::remember($videoPath, $posterPath);
-            }
-
-            return ['video' => $videoPath, 'poster' => $posterPath];
-        } finally {
-            @unlink($outVideo);
-            @unlink($outPoster);
-        }
+        return ['video' => $videoPath, 'poster' => null];
     }
 
     /**
@@ -170,22 +94,6 @@ class VideoOptimizer
      * common install locations, then falls back to a bare "ffmpeg" (PATH lookup).
      * The web server's PATH often differs from a shell's, so a full path is safest.
      */
-    /** One encode, at the frame size and quality asked for. */
-    private static function encode(string $ffmpeg, string $input, string $out, string $scale, string $crf): Process
-    {
-        $p = new Process([
-            $ffmpeg, '-y', '-i', $input,
-            '-vf', $scale,
-            '-c:v', 'libx264', '-preset', 'veryfast', '-crf', $crf,
-            '-c:a', 'aac', '-b:a', '96k',
-            '-movflags', '+faststart', '-pix_fmt', 'yuv420p',
-            $out,
-        ]);
-        $p->setTimeout(600);
-
-        return $p;
-    }
-
     /**
      * How long the clip runs, in seconds, or null if the file will not say.
      *
@@ -294,6 +202,7 @@ class VideoOptimizer
         $configured = (string) config('services.ffmpeg.bin', 'ffmpeg');
         $candidates = array_filter([
             $configured,
+            base_path('bin/ffmpeg'),   // fetched at build, bin/fetch-ffmpeg.php
             'C:\\ffmpeg\\ffmpeg-2025\\bin\\ffmpeg.exe',
             'C:\\ffmpeg\\bin\\ffmpeg.exe',
             'C:\\xampp\\ffmpeg\\bin\\ffmpeg.exe',

@@ -102,6 +102,16 @@ return Application::configure(basePath: dirname(__DIR__))
             ->withoutOverlapping(5)->runInBackground();
         // "Check the owner's Claude now" (2026-10-27, App\Support\ClaudeFirst): ai.claude_check_now on the settings
         // shelf makes the next minute's pass run the live check (key, speed, search, pictures) into ai.claude_check.
+        // Clips saved as filmed get compressed one at a time (App\Support\VideoSqueeze). Asked with a query, so an
+        // empty queue starts no process.
+        $schedule->command('videos:squeeze')->everyMinute()
+            ->when(fn () => \App\Support\VideoSqueeze::hasWork())
+            ->withoutOverlapping(30)->runInBackground();
+        // video.selftest_now on the settings shelf proves that road once, with a clip of its own, into video.selftest.
+        $schedule->command('videos:squeeze --selftest')->everyMinute()
+            ->when(fn () => \App\Models\AsSiteSetting::yes('video.selftest_now'))
+            ->before(fn () => \App\Models\AsSiteSetting::put('video.selftest_now', '0'))
+            ->withoutOverlapping(10)->runInBackground();
         // "Measure the video tool now" (2026-11-06, App\Console\Commands\VideoToolCheck): video.check_now on the settings
         // shelf makes the next minute's pass measure bin/ffmpeg on this host once, into video.check.
         $schedule->command('videos:tool-check')->everyMinute()
