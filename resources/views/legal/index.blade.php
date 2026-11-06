@@ -13,6 +13,7 @@
         'terms' => 'M8 3h6l5 5v11a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2zM14 3v5h5M9 13h6M9 17h6',
         'cookies' => 'M12 3a9 9 0 109 9 3 3 0 01-3-3 3 3 0 01-3-3 3 3 0 01-3-3zM8.5 12.5h.01M12 16h.01M15.5 13.5h.01M9 8.5h.01',
         'about' => 'M12 21c-4-3-7-6.5-7-10.5a7 7 0 0114 0C19 14.5 16 18 12 21zM12 7v4M12 14h.01',
+        'pictures' => 'M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM4 16l5-5 4 4 2-2 5 5M15.5 8.5h.01',
     ];
     $lgDoc = 'M8 3h6l5 5v11a2 2 0 01-2 2H8a2 2 0 01-2-2V5a2 2 0 012-2zM14 3v5h5';
     // A card's line ends on a whole sentence (or at least a whole word), never

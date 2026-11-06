@@ -7,6 +7,8 @@
 @php
     $S = \App\Support\SitePages::class;
     $hero = is_array($page->heroImage) ? $page->heroImage : [];
+    // A photo reused from another page keeps its credit here too (its licence asks for one).
+    $hero['credit'] = \App\Support\PictureRights::credit($hero['src'] ?? null, $hero['credit'] ?? null);
     $heroSrc = $S::img($hero['src'] ?? null);
     // A phone sized copy (-800.webp) beside a site photo, for srcset.
     $heroSet = null;

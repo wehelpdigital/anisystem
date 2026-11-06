@@ -1,0 +1,516 @@
+{
+    "note": "Read by App\\Support\\PictureRights. files: a picture's credit when a page shows it with none, and its original page when known. ours: pictures that belong to anee.io or its owner. A picture in neither, with no credit on its page, names no creator, because who took it is not on record.",
+    "oursUnder": [
+        "/images/site/app/"
+    ],
+    "ours": [
+        "/images/site/guides/blog-anee-io-review.webp",
+        "/images/site/guides/blog-digitize-farm-records.webp",
+        "/images/site/guides/blog-farm-app-for-android.webp",
+        "/images/site/guides/blog-farm-management-software-cost.webp",
+        "/images/site/guides/blog-rice-farming-app.webp",
+        "/images/site/guides/diseases-plant-diseases-philippines.webp",
+        "/images/site/guides/pests-crop-pests-philippines.webp",
+        "/images/site/guides/pests-integrated-pest-management.webp",
+        "/images/site/lp/anee-chat-hand.webp",
+        "/images/site/lp/report-money.webp",
+        "/images/site/lp/report-top.webp",
+        "/images/site/photos/anee-chat-hand.jpg",
+        "/images/site/photos/farmer-hijab.jpg",
+        "/images/site/photos/hero-planting.jpg",
+        "/images/site/photos/inspect.jpg",
+        "/images/site/photos/palay-phone.jpg",
+        "/images/site/photos/powered-by.jpg",
+        "/images/site/photos/sacks.jpg",
+        "/images/site/photos/team-thumbs.jpg",
+        "/images/site/photos/transplant.jpg"
+    ],
+    "files": {
+        "/images/site/deficiencies/ampalaya-nitrogen-deficiency.webp": {
+            "page": "https://data.mendeley.com/datasets/t2k7z4wsj4/2"
+        },
+        "/images/site/deficiencies/avocado-potassium-deficiency.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/16797305505/"
+        },
+        "/images/site/deficiencies/banana-potassium-deficiency.webp": {
+            "page": "https://doi.org/10.1371/journal.ppat.1013066"
+        },
+        "/images/site/deficiencies/bellpepper-calcium-deficiency.webp": {
+            "page": "https://www.ipmimages.org/browse/image/5622329"
+        },
+        "/images/site/deficiencies/cabbage-nitrogen-deficiency.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Spitskool_stikstofgebrek_(nitrogen_deficiency)_Brassica_oleracea_convar._capitata_var._alba.jpg"
+        },
+        "/images/site/deficiencies/cacao-nitrogen-deficiency.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/34522950110/"
+        },
+        "/images/site/deficiencies/cauliflower-nitrogen-deficiency.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Brassica_oleracea_Cauliflower_Bloemkool_stikstofgebrek.jpg"
+        },
+        "/images/site/deficiencies/chili-nitrogen-deficiency.webp": {
+            "page": "https://www.flickr.com/photos/47439717@N05/46589851562/"
+        },
+        "/images/site/deficiencies/citrus-nitrogen-deficiency.webp": {
+            "page": "https://zenodo.org/records/8294078"
+        },
+        "/images/site/deficiencies/coconut-nitrogen-deficiency.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/5684679401/"
+        },
+        "/images/site/deficiencies/coffee-nitrogen-deficiency.webp": {
+            "page": "https://data.mendeley.com/datasets/brfgw46wzb/2"
+        },
+        "/images/site/deficiencies/corn-yellow-nitrogen-deficiency.webp": {
+            "page": "https://data.mendeley.com/datasets/34gb2gr7p2/1"
+        },
+        "/images/site/deficiencies/cotton-potassium-deficiency.webp": {
+            "page": "https://www.flickr.com/photos/22503286@N06/5087815254/"
+        },
+        "/images/site/deficiencies/cucumber-nitrogen-deficiency.webp": {
+            "page": "https://zenodo.org/records/8105154"
+        },
+        "/images/site/deficiencies/eggplant-nitrogen-deficiency.webp": {
+            "page": "https://zenodo.org/records/8105154"
+        },
+        "/images/site/deficiencies/general-b.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/9543099088/"
+        },
+        "/images/site/deficiencies/general-ca.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/9737392836/"
+        },
+        "/images/site/deficiencies/general-cu.webp": {
+            "credit": "Florida Division of Plant Industry, Florida Department of Agriculture, CC BY 3.0 US, via ipmimages.org",
+            "page": "https://www.ipmimages.org/browse/image/5373166"
+        },
+        "/images/site/deficiencies/general-fe.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/11376214843/"
+        },
+        "/images/site/deficiencies/general-k.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/25002992546/"
+        },
+        "/images/site/deficiencies/general-mg.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/14840241853/"
+        },
+        "/images/site/deficiencies/general-mn.webp": {
+            "credit": "R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org",
+            "page": "https://www.ipmimages.org/browse/image/1402099"
+        },
+        "/images/site/deficiencies/general-mo.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Mo_deficienct_maize_subsistence_farmer_Vulindlela_2017_05_09_6666.jpg"
+        },
+        "/images/site/deficiencies/general-n.webp": {
+            "page": "https://www.flickr.com/photos/47439717@N05/31700888857/"
+        },
+        "/images/site/deficiencies/general-p.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/16233464175/"
+        },
+        "/images/site/deficiencies/general-s.webp": {
+            "credit": "R.J. Reynolds Tobacco Company, R.J. Reynolds Tobacco Company, Bugwood, CC BY 3.0 US, via ipmimages.org",
+            "page": "https://www.ipmimages.org/browse/image/1402098"
+        },
+        "/images/site/deficiencies/general-zn.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/15834663759/"
+        },
+        "/images/site/deficiencies/guava-potassium-deficiency.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/9570327169/"
+        },
+        "/images/site/deficiencies/lettuce-calcium-deficiency.webp": {
+            "page": "https://www.flickr.com/photos/128394688@N07/16846117238/"
+        },
+        "/images/site/deficiencies/mangosteen-phosphorus-deficiency.webp": {
+            "page": "https://www.scirp.org/journal/paperinformation?paperid=83889"
+        },
+        "/images/site/deficiencies/oilpalm-nitrogen-deficiency.webp": {
+            "page": "https://www.flickr.com/photos/jircas/36610654241/"
+        },
+        "/images/site/deficiencies/papaya-potassium-deficiency.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/34988210121/"
+        },
+        "/images/site/deficiencies/patola-nitrogen-deficiency.webp": {
+            "page": "https://zenodo.org/records/8105154"
+        },
+        "/images/site/deficiencies/peanut-nitrogen-deficiency.webp": {
+            "page": "https://seer.ufu.br/index.php/biosciencejournal/article/view/13417"
+        },
+        "/images/site/deficiencies/pechay-nitrogen-deficiency.webp": {
+            "page": "https://doi.org/10.3390/agriculture10100461"
+        },
+        "/images/site/deficiencies/potato-potassium-deficiency.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Potassium_deficiency_in_potatoes.jpg"
+        },
+        "/images/site/deficiencies/radish-boron-deficiency.webp": {
+            "page": "https://www.ipmimages.org/browse/image/5331069"
+        },
+        "/images/site/deficiencies/rice-nitrogen-deficiency.webp": {
+            "page": "https://doi.org/10.3390/ijms251910409"
+        },
+        "/images/site/deficiencies/soybean-potassium-deficiency.webp": {
+            "page": "https://www.ipmimages.org/browse/image/5465948"
+        },
+        "/images/site/deficiencies/squash-calcium-deficiency.webp": {
+            "page": "https://www.ipmimages.org/browse/image/5332017"
+        },
+        "/images/site/deficiencies/strawberry-calcium-deficiency.webp": {
+            "page": "https://www.ipmimages.org/browse/image/5539929"
+        },
+        "/images/site/deficiencies/sugarcane-iron-deficiency.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Amit_000_P_010_-_Copy.jpg"
+        },
+        "/images/site/deficiencies/sweetpotato-boron-deficiency.webp": {
+            "page": "https://doi.org/10.12688/gatesopenres.12879.1"
+        },
+        "/images/site/deficiencies/taro-potassium-deficiency.webp": {
+            "page": "https://www.flickr.com/photos/62295966@N07/15243363620/"
+        },
+        "/images/site/deficiencies/tobacco-nitrogen-deficiency.webp": {
+            "page": "https://www.ipmimages.org/browse/image/1440088"
+        },
+        "/images/site/deficiencies/tomato-nitrogen-deficiency.webp": {
+            "page": "https://zenodo.org/records/8105154"
+        },
+        "/images/site/deficiencies/upo-nitrogen-deficiency.webp": {
+            "page": "https://zenodo.org/records/8105154"
+        },
+        "/images/site/deficiencies/watermelon-calcium-deficiency.webp": {
+            "page": "https://www.ipmimages.org/browse/image/1235005"
+        },
+        "/images/site/guides/blog-fertilizer-for-fruit-trees.webp": {
+            "credit": "Judgefloro, Public domain, via Wikimedia Commons"
+        },
+        "/images/site/guides/blog-fertilizer-for-tomatoes.webp": {
+            "credit": "Judgefloro, CC BY SA 4.0, via Wikimedia Commons"
+        },
+        "/images/site/guides/crops-banana-farming-philippines.webp": {
+            "credit": "Shubert Ciencia, CC BY 2.0, via Wikimedia Commons"
+        },
+        "/images/site/guides/crops-coconut-fertilizer.webp": {
+            "credit": "Biag arnel, CC BY SA 4.0, via Wikimedia Commons"
+        },
+        "/images/site/guides/crops-pagtatanim-ng-gulay.webp": {
+            "credit": "JFVelasquez Floro, CC0, via Wikimedia Commons"
+        },
+        "/images/site/guides/crops-pagtatanim-ng-mais.webp": {
+            "credit": "Rochelle Vergara, CC BY SA 4.0, via Wikimedia Commons"
+        },
+        "/images/site/guides/crops-vegetables-philippines.webp": {
+            "credit": "Patrickroque01, CC BY SA 4.0, via Wikimedia Commons"
+        },
+        "/images/site/how-to-plant/abaca.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Abaca_Tree.jpg"
+        },
+        "/images/site/how-to-plant/alfalfa.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Walking_through_a_field_of_alfalfa_-_geograph.org.uk_-_4073273.jpg"
+        },
+        "/images/site/how-to-plant/almond.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Almond_cultivation_in_the_mountains_of_Relleu,_Alicante,_Spain,_2022_January.jpg"
+        },
+        "/images/site/how-to-plant/apple.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Maoa-Mafubelu_Fruits_Farm_produce.jpg"
+        },
+        "/images/site/how-to-plant/avocado.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Ugandan_avocado_fruit_on_the_tree.jpg"
+        },
+        "/images/site/how-to-plant/bamboo.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Vegetable_plantations_in_Santa_Maria,_Bulacan_04.jpg"
+        },
+        "/images/site/how-to-plant/banana.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Banana_Plantation,_Padada.JPG"
+        },
+        "/images/site/how-to-plant/barley.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Barley_field,_Ehrenbach,_from_trail.jpg"
+        },
+        "/images/site/how-to-plant/bell-pepper.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Veteran_New_Farmer_Green_Bexar_Farm_(20201017-NRCS-LSC-0130).jpg"
+        },
+        "/images/site/how-to-plant/bitter-gourd.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Momordica_charantia_-_Bitter_melon,_Adana_2017-11-19_01-1.jpg"
+        },
+        "/images/site/how-to-plant/blueberry.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:The_Blueberry_Patch.JPG"
+        },
+        "/images/site/how-to-plant/bottle-gourd.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Su_kabaklar%C4%B1.jpg"
+        },
+        "/images/site/how-to-plant/broccoli.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Broccoli_-_geograph.org.uk_-_7890282.jpg"
+        },
+        "/images/site/how-to-plant/cabbage.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Cabbage_farm_5.jpg"
+        },
+        "/images/site/how-to-plant/cacao.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Cacao_farm,_Can_Tho_(45199902095).jpg"
+        },
+        "/images/site/how-to-plant/calamansi.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:%D0%9A%D0%B0%D0%BB%D0%B0%D0%BC%D0%BE%D0%BD%D0%B4%D0%B8%D0%BD_DSC_0342.jpg"
+        },
+        "/images/site/how-to-plant/canola.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Canola_field_in_Manitoba,_Canada.jpg"
+        },
+        "/images/site/how-to-plant/carrot.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Carrot_field_near_Wormegay_-_geograph.org.uk_-_529368.jpg"
+        },
+        "/images/site/how-to-plant/cashew.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Cashewnuts_hanging_on_a_Cashew_Tree.jpg"
+        },
+        "/images/site/how-to-plant/cassava.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:02776jfSan_Luis_Roads_School_Halls_Mangga_Cassava_Tenejero_Barit_Candaba_Pampangafvf_20.JPG"
+        },
+        "/images/site/how-to-plant/cauliflower.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Brassica_oleracea_var_in_pabna.jpg"
+        },
+        "/images/site/how-to-plant/celery.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:G%27s_Celery_-_geograph.org.uk_-_4683218.jpg"
+        },
+        "/images/site/how-to-plant/chayote.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Sechium_edule_Main_Chayote_Cutler_P1050272.jpg"
+        },
+        "/images/site/how-to-plant/cherry.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:2009-06-21_Berlin_S%C3%BC%C3%9Fkirsche.jpg"
+        },
+        "/images/site/how-to-plant/chico.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Manilkara_Zapota_in_HK.JPG"
+        },
+        "/images/site/how-to-plant/chili.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Mirci_ready_in_the_field.JPG"
+        },
+        "/images/site/how-to-plant/citrus.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Citrus_orchards_near_Sagunto_04.jpg"
+        },
+        "/images/site/how-to-plant/coconut.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Coconut_Plantation_in_Sipocot,_Camarines_Sur,_Philippines.jpg"
+        },
+        "/images/site/how-to-plant/coffee.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Coffea_canephora_2_at_Aanakkulam.jpg"
+        },
+        "/images/site/how-to-plant/cotton.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Closeup_image_of_a_cotton_field_in_Raichur_Karnataka.jpg"
+        },
+        "/images/site/how-to-plant/cowpea.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Cowpea_cultivation_01.jpg"
+        },
+        "/images/site/how-to-plant/cucumber.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Kluse_-_Cucumis_sativus_Salatgurken_01_ies.jpg"
+        },
+        "/images/site/how-to-plant/dragon-fruit.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Dragonfruit_farm_in_Andhra_Pradesh_IMG_20251123_132250348.jpg"
+        },
+        "/images/site/how-to-plant/durian.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Tender_fruit%27s_Durian_tree.JPG"
+        },
+        "/images/site/how-to-plant/eggplant.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:09705jfVillages_Makinabang_Highway_Baliuag_Bulacan_Paddy_fields_Roadsfvf_11.jpg"
+        },
+        "/images/site/how-to-plant/garlic.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Garlic_in_the_Spring_(6908829406).jpg"
+        },
+        "/images/site/how-to-plant/ginger.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Ginger_farm.jpg"
+        },
+        "/images/site/how-to-plant/glutinous-corn.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:9698Cuisine_foods_in_Bulacan_51.jpg"
+        },
+        "/images/site/how-to-plant/grape.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Grappes_de_raisin_noir_%C3%A0_St-Pierre-d%27Albigny_(octobre_2021)_1.JPG"
+        },
+        "/images/site/how-to-plant/guava.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Guava_Fruits_with_Leaves.JPG"
+        },
+        "/images/site/how-to-plant/jackfruit.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Jackfruit_tree,_the_largest_tree_fruit_03.jpg"
+        },
+        "/images/site/how-to-plant/jute-mallow.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Corchorus_olitorius_254449477.jpg"
+        },
+        "/images/site/how-to-plant/lanzones.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Lansium_domesticum_(7126753821).jpg"
+        },
+        "/images/site/how-to-plant/lettuce.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Lettuce_farm.jpg"
+        },
+        "/images/site/how-to-plant/lima-bean.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Phaseol_lunat_130815-0005_tdp.JPG"
+        },
+        "/images/site/how-to-plant/malabar-spinach.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Basella_alba-yercaud-salem-India.JPG"
+        },
+        "/images/site/how-to-plant/mango.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Mangoes_during_the_end_of_Autumn_season_in_Hyderabad_(2).jpg"
+        },
+        "/images/site/how-to-plant/mangosteen.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Mangosteen_fruit_on_the_tree.jpg"
+        },
+        "/images/site/how-to-plant/melon.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Melon_tendral.jpg"
+        },
+        "/images/site/how-to-plant/moringa.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Drumstick_Tree_(Moringa_oleifera)_4.jpg"
+        },
+        "/images/site/how-to-plant/mungbean.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Vigna_radiata_256733481.jpg"
+        },
+        "/images/site/how-to-plant/mustard.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Brassica_juncea.jpg"
+        },
+        "/images/site/how-to-plant/oats.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:A_field_of_oats_-_geograph.org.uk_-_6945100.jpg"
+        },
+        "/images/site/how-to-plant/oil-palm.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Kunak-District_Sabah_Oil-palm-plantation-01.jpg"
+        },
+        "/images/site/how-to-plant/okra.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Okra_Aug_25_2012.JPG"
+        },
+        "/images/site/how-to-plant/onion.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Onion_fields_in_the_Philippines_River_32.jpg"
+        },
+        "/images/site/how-to-plant/papaya.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Young_papaya.jpg"
+        },
+        "/images/site/how-to-plant/peach.webp": {
+            "page": "https://www.flickr.com/photos/48353198@N05/5558955306"
+        },
+        "/images/site/how-to-plant/peanut.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Field_of_Peanut_Plants.jpg"
+        },
+        "/images/site/how-to-plant/pear.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Pears_-_fruits_x1.jpg"
+        },
+        "/images/site/how-to-plant/pechay.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Brassica_rapa_subsp._chinensis_-_Pak_choi_from_lalbagh_2289.JPG"
+        },
+        "/images/site/how-to-plant/pigeon-pea.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Cajanus_Cajan_(Fabaceae)_01.jpg"
+        },
+        "/images/site/how-to-plant/pineapple.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Del_Monte_Pineapple_field_at_Camp_Philips,_Bukidnon,_Philippines_01.jpg"
+        },
+        "/images/site/how-to-plant/pomelo.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Starr-030201-0005-Citrus_maxima-habit-Haiku-Maui_(24324252660).jpg"
+        },
+        "/images/site/how-to-plant/potato.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:CSIRO_ScienceImage_4062_Potato_plants_on_farm_near_Atherton_QLD.jpg"
+        },
+        "/images/site/how-to-plant/purple-yam.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Kaachil_cut.jpg"
+        },
+        "/images/site/how-to-plant/radish.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Daikon.jpg"
+        },
+        "/images/site/how-to-plant/rambutan.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Rambutan_fruits_Nephelium_lappaceum_02.JPG"
+        },
+        "/images/site/how-to-plant/rubber.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Rubber_Plantation_(32826).jpg"
+        },
+        "/images/site/how-to-plant/santol.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Sandoricum_koetjape_251714778.jpg"
+        },
+        "/images/site/how-to-plant/shallot.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Menyiram_Tanaman_Bawang.jpg"
+        },
+        "/images/site/how-to-plant/sorghum.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Sorghum_fields_in_the_Philippines_19.jpg"
+        },
+        "/images/site/how-to-plant/soursop.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Annona_muricata-4-panaimarathupatti-salem-India.jpg"
+        },
+        "/images/site/how-to-plant/soybean.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Soybean_Field_(9624053828).jpg"
+        },
+        "/images/site/how-to-plant/sponge-gourd.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Starr-170614-0951-Luffa_acutangula-fruit_leaves_tendrils-Community_Garden_Sand_Island-Midway_Atoll_(36218841511).jpg"
+        },
+        "/images/site/how-to-plant/spring-onion.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Sansing_Green_Onion_fields_20141206.jpg"
+        },
+        "/images/site/how-to-plant/squash.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Starr-131002-2370-plant-Cucurbita_moschata-fruit_and_leaves-Hawea_Pl_Olinda.jpg"
+        },
+        "/images/site/how-to-plant/star-apple.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Chrysophylum_caimito_-_Star_Apple_(52334746354).jpg"
+        },
+        "/images/site/how-to-plant/strawberry.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Strawberry_Plant_with_Fruit.jpg"
+        },
+        "/images/site/how-to-plant/string-bean.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:A_farmer_harvests_long_beans.jpg"
+        },
+        "/images/site/how-to-plant/sugar-apple.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Custard_apple_in_garden.jpg"
+        },
+        "/images/site/how-to-plant/sugar-beet.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Sugar_beet_field_(4799481326).jpg"
+        },
+        "/images/site/how-to-plant/sugarcane.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Sugar_Cane_Field,_Barangay_Haguimit,_La_Carlota_City_-_panoramio_(1).jpg"
+        },
+        "/images/site/how-to-plant/sunflower.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Sunflower_Field_(7848091146).jpg"
+        },
+        "/images/site/how-to-plant/sweet-corn.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Starr-150814-2148-Zea_mays-Illini_Xtra_Sweet_ears_harvested-Hawea_Pl_Olinda-Maui_(25000436000).jpg"
+        },
+        "/images/site/how-to-plant/sweet-potato.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Sweet_potato_field_in_Namegata,_Ibaraki_02.jpg"
+        },
+        "/images/site/how-to-plant/tamarind.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:A_aesthetic_Tamarind_tree.JPG"
+        },
+        "/images/site/how-to-plant/taro.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Taro_Field.jpg"
+        },
+        "/images/site/how-to-plant/tobacco.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:0281Tobacco_fields_in_Laoac,_Pangasinan_69.jpg"
+        },
+        "/images/site/how-to-plant/tomato.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Ripening_tomatoes.jpg"
+        },
+        "/images/site/how-to-plant/turmeric.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Curcuma_longa_DSCN0555.jpg"
+        },
+        "/images/site/how-to-plant/water-spinach.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Ipomoea_aquatica_at_Organic_Unit,_FP,_UPM.jpg"
+        },
+        "/images/site/how-to-plant/watermelon.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Watermelon_fields_in_Amino-cho_Tawarano_ac_(2).jpg"
+        },
+        "/images/site/how-to-plant/wheat.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Wheat_field_-_geograph.org.uk_-_4068947.jpg"
+        },
+        "/images/site/how-to-plant/winged-bean.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Psophocarpus_tetragonolobus_(240529-0857).jpg"
+        },
+        "/images/site/how-to-plant/yellow-corn.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:09299jfPura_Victoria_Tarlac_Corn_Fields_Barangay_National_Roadfvf_11.JPG"
+        },
+        "/images/site/land/corn-land-preparation.webp": {
+            "credit": "Judgefloro, Public domain, via Wikimedia Commons"
+        },
+        "/images/site/land/cucurbit-land-preparation.webp": {
+            "credit": "Judgefloro, Public domain, via Wikimedia Commons"
+        },
+        "/images/site/land/fruit-tree-land-preparation.webp": {
+            "credit": "Anish nellickal, CC BY SA 4.0, via Wikimedia Commons"
+        },
+        "/images/site/land/legume-land-preparation.webp": {
+            "credit": "Judgefloro, CC0, via Wikimedia Commons"
+        },
+        "/images/site/land/onion-garlic-land-preparation.webp": {
+            "credit": "Zarate123, CC BY SA 4.0, via Wikimedia Commons"
+        },
+        "/images/site/land/rice-land-preparation.webp": {
+            "credit": "Judgefloro, CC BY SA 4.0, via Wikimedia Commons"
+        },
+        "/images/site/land/root-crop-land-preparation.webp": {
+            "credit": "Judgefloro, CC0, via Wikimedia Commons"
+        },
+        "/images/site/land/sugarcane-land-preparation.webp": {
+            "credit": "Ebaran, CC BY SA 3.0, via Wikimedia Commons"
+        },
+        "/images/site/land/vegetable-land-preparation.webp": {
+            "credit": "Judgefloro, Public domain, via Wikimedia Commons"
+        },
+        "/images/site/lp/tractor.webp": {
+            "credit": "defika hendri, Unsplash License, via Unsplash"
+        }
+    }
+}

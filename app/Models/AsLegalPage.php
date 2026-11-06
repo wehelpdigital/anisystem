@@ -32,6 +32,8 @@ class AsLegalPage extends BaseModel
         'eula' => 'End User License Agreement',
         'cookies' => 'Cookie Policy',
         'about' => 'About anee.io',
+        // 2026-11-06: where a picture's license points (App\Support\PictureRights).
+        'pictures' => 'Pictures on anee.io',
     ];
 
     /** Short names for the page switcher. */
@@ -41,13 +43,14 @@ class AsLegalPage extends BaseModel
         'eula' => 'EULA',
         'cookies' => 'Cookies',
         'about' => 'About',
+        'pictures' => 'Pictures',
     ];
 
     /** The day the standard wording was last revised (shown when it stands in). */
     public const DEFAULTS_DATE = '2026-09-25';
 
     /** A page whose standard wording came later than the rest. */
-    private const DEFAULT_DATES = ['eula' => '2026-10-28', 'privacy' => '2026-11-05', 'cookies' => '2026-11-05'];
+    private const DEFAULT_DATES = ['eula' => '2026-10-28', 'privacy' => '2026-11-05', 'cookies' => '2026-11-05', 'pictures' => '2026-11-06'];
 
     public function scopePublished($q)
     {

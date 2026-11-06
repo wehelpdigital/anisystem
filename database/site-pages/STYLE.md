@@ -171,6 +171,10 @@ Commons photo in `heroImage` as `{ "src": "commons:File:Exact_file_name.jpg",
 "alt": "...", "credit": "Author, License" }` using only CC0, public domain,
 CC BY or CC BY SA files. Check the file page to be sure the name and licence
 are right. Do not use an image that does not show what the page is about.
+Keep the credit in the shape "Author, License, via Place":
+App\Support\PictureRights reads who took it and its licence from those words,
+for the page and for Google's image data. A file reused with no credit takes
+its credit from `picture-rights.json`, so add a new reused photo there.
 
 ## 6. Site images you may use
 

@@ -68,15 +68,8 @@ class PageSchema
                 $img['width'] = $size[0];
                 $img['height'] = $size[1];
             }
-            if (trim((string) ($hero['credit'] ?? '')) !== '') {
-                // The credit as words; a link inside it is the picture's own page.
-                $img['creditText'] = SitePages::plain((string) $hero['credit']);
-                $img['copyrightNotice'] = SitePages::plain((string) $hero['credit']);
-                if (preg_match('/\]\((https?:\/\/[^)\s]+)\)/', (string) $hero['credit'], $m)) {
-                    $img['acquireLicensePage'] = $m[1];
-                }
-            }
-            $graph[] = $img;
+            // Who it belongs to and how it may be used, read off its credit.
+            $graph[] = $img + PictureRights::schema($hero['src'] ?? null, $hero['credit'] ?? null);
         }
 
         $webpage = [

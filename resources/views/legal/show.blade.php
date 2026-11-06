@@ -9,6 +9,7 @@
         'terms' => 'Terms of Service for the anee.io Farm App',
         'cookies' => 'Cookie Policy: How anee.io Uses Cookies',
         'about' => 'About anee.io: The Farm App Built by Farmers',
+        'pictures' => 'Pictures on anee.io: Credits and How to Reuse Them',
     ][$page->slug] ?? (mb_strlen($page->title) < 30 ? $page->title . ' for the anee.io Farm App' : $page->title);
 @endphp
 @section('title', $legalSeo)
