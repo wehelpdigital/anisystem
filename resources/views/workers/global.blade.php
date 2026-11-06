@@ -326,6 +326,7 @@
     </div>
     <div class="sheet-body space-y-3">
         <p class="ga-say" id="gaSay"></p>
+        <p class="ga-say" id="gaCostAdmin" hidden></p>
         <div id="gaRightsWrap">@include('sm.partials.worker-rights', ['p' => 'ga', 'tools' => false])</div>
     </div>
     <div class="sheet-footer">
@@ -608,6 +609,10 @@
         $('gaAccess').value = sched;
         $('gaAccess').dispatchEvent(new Event('change', { bubbles: true }));
         window.workerRights.paint('ga', a);
+        const adminNote = $('gaCostAdmin');
+        adminNote.hidden = !g.login.workerIsAdmin;
+        adminNote.innerHTML = g.login.workerIsAdmin
+            ? '<b>' + esc(g.workerName) + '</b> is an admin, so they always see the costings, even on None.' : '';
     }
     function openAccess(id) {
         const a = ((loginFor && loginFor.login && loginFor.login.access) || []).find((x) => String(x.id) === String(id));

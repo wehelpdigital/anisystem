@@ -27,25 +27,33 @@ class WorkerGrantState
             'toolsOff' => array_values((array) ($grant->toolsOff ?? [])),
             // Where they may work (2026-10-22): the "all cropping schedules" setting first, then one per season.
             'access' => self::access($grant),
+            // An admin sees the costings whatever their setting says (WorkerContext::moduleAccess).
+            'workerIsAdmin' => self::workerIsAdmin($grant),
             'reach' => $grant->reachSay(),
         ];
+    }
+
+    private static function workerIsAdmin(WorkerGrant $grant): bool
+    {
+        return $grant->workerUserId && (bool) \App\Models\User::find($grant->workerUserId)?->isSuperAdmin();
     }
 
     /** The login's access settings, each with its scope's name and its rights, for the panels. */
     public static function access(WorkerGrant $grant): array
     {
         $rows = $grant->accessRows();
+        $isAdmin = self::workerIsAdmin($grant);
         $titles = \App\Models\AsCroppingSchedule::whereIn('id', $rows->pluck('croppingScheduleId')->filter()->all() ?: [-1])
             ->get(['id', 'title', 'status', 'deleteStatus'])->keyBy('id');
 
         return $rows->sortBy(fn ($r) => $r->isAll() ? '' : mb_strtolower((string) optional($titles->get($r->croppingScheduleId))->title))
-            ->map(function ($r) use ($titles) {
+            ->map(function ($r) use ($titles, $isAdmin) {
                 $season = $r->isAll() ? null : $titles->get($r->croppingScheduleId);
 
                 return ['id' => (int) $r->id, 'all' => $r->isAll(), 'scheduleId' => $r->croppingScheduleId,
                     'title' => $r->isAll() ? 'All cropping schedules' : ($season ? (string) $season->title : 'A season no longer here'),
                     'gone' => ! $r->isAll() && (! $season || (int) $season->deleteStatus !== 1),
-                    'summary' => $r->summary()] + $r->rights();
+                    'summary' => $r->summary($isAdmin)] + $r->rights();
             })->values()->all();
     }
 

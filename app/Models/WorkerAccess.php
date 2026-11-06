@@ -136,13 +136,20 @@ class WorkerAccess extends BaseModel
         return $out;
     }
 
-    /** A short line of what it gives, for a list: "Activities: can edit · Notes · Money: view". */
-    public function summary(): string
+    /** A short line of what it gives, for a list: "Activities: can edit · Costings hidden · Notes". */
+    public function summary(bool $workerIsAdmin = false): string
     {
         $r = $this->rights();
         $parts = ['Activities: ' . ($r['scheduleAccess'] === 'edit' ? 'can edit' : 'view only')];
+        // Whether they see the costings is the question an owner asks of a login, so the line always answers it.
+        $parts[] = match (true) {
+            $r['moneyAccess'] === 'edit' => 'Costings',
+            $r['moneyAccess'] === 'view' => 'Costings (view)',
+            $workerIsAdmin => 'Costings (admin)',
+            default => 'Costings hidden',
+        };
         $names = ['notesAccess' => 'Notes', 'reportsAccess' => 'Reports', 'inventoryAccess' => 'Inventory', 'observationsAccess' => 'Observations',
-            'moneyAccess' => 'Money', 'mapsAccess' => 'Maps', 'drawAccess' => 'Draw', 'aiAccess' => 'Anee', 'cameraAccess' => 'Camera',
+            'mapsAccess' => 'Maps', 'drawAccess' => 'Draw', 'aiAccess' => 'Anee', 'cameraAccess' => 'Camera',
             'videoAccess' => 'Video', 'voiceAccess' => 'Voice'];
         foreach ($names as $col => $name) {
             $v = $r[$col];

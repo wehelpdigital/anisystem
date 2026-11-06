@@ -244,8 +244,19 @@ class WorkerContext
     public static function moduleAccess(string $key): string
     {
         $grant = self::activeGrant();
+        if (! $grant) {
+            return 'edit';
+        }
+        $level = $grant->moduleAccess($key, self::$season);
 
-        return $grant ? $grant->moduleAccess($key, self::$season) : 'edit';
+        // Admins see the costings even while working on somebody's farm (the owner, 2026-11-06).
+        // Only where this login has access at all, and seeing is not changing: Edit still comes from
+        // the setting. Someone looked at through impersonation counts as that member, as AutoLock does.
+        if ($key === 'money' && $level === 'none' && $grant->rightsFor(self::$season) && Auth::user()?->isSuperAdmin()) {
+            return 'view';
+        }
+
+        return $level;
     }
 
     /** May they open this module at all? */

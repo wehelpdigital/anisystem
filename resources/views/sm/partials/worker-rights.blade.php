@@ -33,11 +33,13 @@
     // level rows: [id suffix, mark, label, hint]
     $wrLevels = [
         ['Access', '🗓️', 'Activities', 'The daily plan: activities board, lots and calendar.'],
+        // Right under the board it is about, in the owner's word (2026-11-06). Its hint stays on a phone:
+        // this is the one row whose name alone does not say what None takes away.
+        ['MoneyAccess', '💰', 'Costings', 'Can they see costs, pay and prices?'],
         ['NotesAccess', '📝', 'Notes', 'Day notes and their photos and videos.'],
         ['ReportsAccess', '📊', 'Reports', 'Labor and money reports for this farm.'],
         ['InventoryAccess', '📦', 'Inventory', 'Items on hand, stock moves and what they cost.'],
         ['ObservationsAccess', '🔍', 'Observations', 'Harvest yields, prices, problems and lessons for next season.'],
-        ['MoneyAccess', '💰', 'Money', 'Task costs, worker pay, the day totals, extra expenses and income, and the money reports.'],
         ['MapsAccess', '🗺️', 'Maps', 'Field and lot maps. View only, or draw and save too.'],
         ['DrawAccess', '✏️', 'Draw', 'Drawings and saved pictures. View only, or draw new ones.'],
     ];
@@ -63,7 +65,7 @@
     <p class="wr-head">What they can open</p>
 
     @foreach ($wrLevels as [$key, $mark, $label, $hint])
-        <div class="wr-row">
+        <div class="wr-row{{ $key === 'MoneyAccess' ? ' wr-costings' : '' }}">
             <span class="wr-mark">{{ $mark }}</span>
             <span class="wr-what">
                 <b>{{ $label }}</b>
@@ -298,7 +300,7 @@
         .wr-seg button { min-width:2.6rem; padding-left:.3rem; padding-right:.3rem; }
         .wr-what i { display:none; }
         /* The dashboard tools row keeps its line: it is the one row that says what tapping it opens. */
-        .wr-tools-head .wr-what i { display:block; }
+        .wr-tools-head .wr-what i, .wr-costings .wr-what i { display:block; }
     }
 </style>
 @endpush

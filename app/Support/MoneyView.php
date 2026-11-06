@@ -23,7 +23,8 @@ use App\Models\AsCroppingSchedule;
  * back cannot wipe the owner's figures.
  *
  * An owner on their own farm sees and writes everything; so does anybody
- * outside a worker context.
+ * outside a worker context. An admin working on somebody's farm always sees
+ * (WorkerContext::moduleAccess), and writes only if the setting says Edit.
  */
 class MoneyView
 {
