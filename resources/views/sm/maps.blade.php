@@ -199,6 +199,38 @@
                 border-radius: .6rem;
             }
         }
+
+        /* A big screen gets the whole screen too (2026-11-06, the owner: "full
+           width and full height"): edge to edge under the header and down to the
+           floor, with the header's ends stepping out to line up with it. The
+           height comes from fit() below. No overflow lock here, unlike a phone:
+           a free plan's advertisement above the map may need the page to scroll
+           on a short window. */
+        @media (min-width: 768px) {
+            /* The layout keeps a strip for a scrollbar, which this page has no use for. */
+            html:has(body.smap-open) { scrollbar-gutter: auto; }
+            header > .max-w-6xl { transition: max-width .28s cubic-bezier(.22,1,.36,1); }
+            body.smap-open header > .max-w-6xl { max-width: 100vw; }
+            body.smap-open main { max-width: none; padding: 0; }
+            body.smap-open .mp-stagebar { margin: 0; padding: .5rem .75rem; }
+            body.smap-open .ad-slot { margin: .5rem .75rem 0; }
+            .smap-stage { height: calc(100dvh - 7.25rem); border: 0; border-radius: 0; }
+            /* The two rows of a phone's toolbar become one: every row here comes off the map. */
+            #smapStageWrap .cmap-bar { flex-direction: row; align-items: center; }
+            #smapStageWrap .cmap-acts { min-width: 0; }
+            #smapStageWrap .cmap-menu-btn { align-self: center; flex-shrink: 0; }
+        }
+        @media (min-width: 1024px) {
+            /* And All maps and Save join that row. They stay outside the map's own
+               markup, so the toolbar makes room by their measured width (fit()). */
+            #smapStageWrap { position: relative; }
+            body.smap-open .mp-stagebar { position: absolute; top: 0; left: 0; padding: .4rem 0 .4rem .5rem; }
+            #smapStageWrap .cmap-bar { padding-left: calc(var(--mp-bar-w, 12rem) + .75rem); }
+            .smap-stage { height: calc(100dvh - 4rem); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            header > .max-w-6xl { transition: none; }
+        }
     </style>
 @endpush
 
@@ -638,10 +670,12 @@
                differ per device, and a hard calc() left a band of dead page
                under the map on some and clipped it on others. */
             const stage = document.querySelector('.smap-stage');
-            const GAP = 8;   // the same thin frame the sides get
+            const phone = () => window.matchMedia('(max-width: 767px)').matches;
+            const GAP = 8;   // a phone's thin frame, the same as its sides; a big screen runs to the edge
             function fit() {
-                if (!stage || !window.matchMedia('(max-width: 767px)').matches) return;
+                if (!stage) return;
                 if (stage.getBoundingClientRect().height === 0) return;   // stage is off — nothing to size
+                if (stagebar) stage.style.setProperty('--mp-bar-w', stagebar.getBoundingClientRect().width + 'px');
                 // A tab bar that is not rendered still answers with a rect —
                 // top 0 — which collapsed the map to its minimum height. The
                 // activities shell hides the bar, so its presence has to be
@@ -651,19 +685,20 @@
                 const bar = document.querySelector('.tabbar');
                 const barBox = bar ? bar.getBoundingClientRect() : null;
                 const floor = barBox && barBox.height > 0 ? barBox.top : window.innerHeight;
-                const h = Math.max(260, Math.round(floor - stage.getBoundingClientRect().top - GAP));
+                // A big screen's page can scroll past an advertisement, so it measures
+                // from the top of the page, and rounds down: a part of a pixel over
+                // the floor would give the whole page a scrollbar.
+                const box = stage.getBoundingClientRect().top;
+                const h = Math.max(260, phone() ? Math.round(floor - box - GAP) : Math.floor(floor - box - window.scrollY));
                 if (stage.style.height === h + 'px') return;   // no resize loop
                 stage.style.height = h + 'px';
                 // Google needs telling when its container changes size.
                 if (window.google?.maps?.event) window.google.maps.event.trigger(window, 'resize');
             }
-            /* A full-screen map with a site footer under it means the page
-               scrolls away from the map you are working on. The footer goes
-               while the map is on screen — and comes back the moment it is
-               not, which matters in the module shell, where switching modules
-               only hides this one rather than removing it. A ResizeObserver
-               catches that: a hidden stage measures zero. */
-            const phone = () => window.matchMedia('(max-width: 767px)').matches;
+            /* What changes while the map is on screen, and changes back the
+               moment it is not. A ResizeObserver catches that: a hidden stage
+               measures zero. The footer is not one of them: this page has none
+               at any size (no-footer, at the top of this file). */
             let stageWasShown = false;
             function chrome() {
                 const shown = !!stage && stage.getBoundingClientRect().height > 0;
@@ -677,7 +712,6 @@
                 // drives that one for the AI module, and two owners toggling
                 // one class fight each other when you switch between them.
                 document.body.classList.toggle('smap-open', shown);
-                document.body.classList.toggle('no-footer', shown && phone());
             }
             if (stage && window.ResizeObserver) {
                 const ro = new ResizeObserver(() => { chrome(); fit(); });
@@ -687,7 +721,12 @@
                 // Google's own chrome arriving all move the stage without
                 // resizing it, and only a fit afterwards is the right height.
                 ro.observe(document.body);
+                // A second way out appearing beside All maps pushes the toolbar along.
+                if (stagebar) ro.observe(stagebar);
             }
+            // The stage eases in 8px low, and the first measure lands inside that:
+            // measure again once it has arrived, or a gap stays under the map.
+            stageWrap.addEventListener('animationend', () => { chrome(); fit(); });
             requestAnimationFrame(() => { chrome(); fit(); });
             // First paint is the worst moment to measure — the module is
             // injected, scripts re-run, then the map boots. A few passes catch
