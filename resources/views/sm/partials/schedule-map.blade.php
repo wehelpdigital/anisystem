@@ -1089,12 +1089,15 @@
             || null;
         if (!spot) return null;
         const badge = new (G().Marker)({
-            map, position: LL(spot), clickable: true, zIndex: 60, title: 'Show or hide this shape’s measurements',
+            map: pinMap(), position: LL(spot), clickable: true, zIndex: 60, title: 'Show or hide this shape’s measurements',
             icon: { path: BADGE_DISC, scale: 1, fillColor: colorStr || '#4a7c2a',
                 fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2,
                 labelOrigin: new (G().Point)(0, BADGE_DROP) },
             label: { text: '📏', className: 'cmap-mbadge', color: '#fff', fontSize: '11px', fontWeight: '800' },
         });
+        // Goes away with the pins (see setPinsShown). NOT __pin: the turning
+        // handle counts __pin markers as a box's corners, in order.
+        badge.__withPins = true;
         badge.addListener('click', () => {
             // While erasing, a tap on anything of this shape removes it —
             // the badge must not become a hole in that.
@@ -1902,7 +1905,10 @@
        this screen only: the team's maps, the saved file and its picture keep
        every pin. A shape drawn or arriving while they are away arrives without
        them, so the map never shows half its pins. They fade rather than blink,
-       from wherever a fade still running left them. */
+       from wherever a fade still running left them.
+       The round ruler button under each shape's middle goes with them (2026-11-06,
+       the owner), the half-drawn shape's one too. Numbers already open stay open:
+       showing the pins again brings the button back to put them away. */
     const pinMap = () => (pinsHidden ? null : map);
     function setPinsShown(on) {
         pinsHidden = !on;
@@ -1916,7 +1922,8 @@
         }
         if (!map) return;
         const pins = [];
-        layers.forEach((parts) => parts.forEach((p) => { if (p.__pin) pins.push(p); }));
+        layers.forEach((parts) => parts.forEach((p) => { if (p.__pin || p.__withPins) pins.push(p); }));
+        if (tempBadge) pins.push(tempBadge);
         const run = ++pinsFade;
         const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (calm) { pins.forEach((p) => { p.setOpacity(1); p.setMap(on ? map : null); }); return; }
@@ -1985,7 +1992,7 @@
         if (tempBadge) tempBadge.setPosition(LL(at));
         else {
             tempBadge = new (G().Marker)({
-                map, position: LL(at), clickable: true, zIndex: 60,
+                map: pinMap(), position: LL(at), clickable: true, zIndex: 60,
                 title: 'Show or hide this shape’s measurements',
                 icon: { path: BADGE_DISC, scale: 1, fillColor: color, fillOpacity: .95,
                     strokeColor: '#fff', strokeWeight: 2,
