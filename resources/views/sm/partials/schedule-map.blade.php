@@ -114,17 +114,10 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4l7 16 2-6 6-2z"/></svg>
                     <span>Select and edit a shape</span>
                 </button>
-                <button type="button" class="cmap-mrow" data-mtool="pen" data-short="Pen">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L18 9l-3-3L5 16l-1 4z"/></svg>
-                    <span>Freehand draw</span>
-                </button>
+                <p class="cmap-msec">Measure</p>
                 <button type="button" class="cmap-mrow" data-mtool="line" data-short="Line">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 21L21 3M8.5 15.5l1.8 1.8M12 12l1.8 1.8M15.5 8.5l1.8 1.8"/></svg>
                     <span>Line: drag to measure distance</span>
-                </button>
-                <button type="button" class="cmap-mrow" data-mtool="arrow" data-short="Arrow">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20L18 6M18 6h-7M18 6v7"/></svg>
-                    <span>Arrow: drag to point</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="path" data-short="Path">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 6-8"/><path stroke-linecap="round" d="M3 17h.01M8 11h.01M12 14h.01M18 6h.01"/></svg>
@@ -138,13 +131,57 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 6-3 10H7L4 9l8-6z"/></svg>
                     <span>Area: tap corners to measure hectares</span>
                 </button>
+                <p class="cmap-msec">Draw, no measurements</p>
+                <div class="cmap-mtiles">
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="pen" data-short="Freehand">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L18 9l-3-3L5 16l-1 4z"/></svg>
+                        <span>Freehand</span>
+                    </button>
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="dline" data-short="Plain line">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 20L20 4"/></svg>
+                        <span>Plain line</span>
+                    </button>
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="arrow" data-short="Arrow">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20L18 6M18 6h-7M18 6v7"/></svg>
+                        <span>Arrow</span>
+                    </button>
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="drect" data-short="Rectangle">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="6" width="16" height="12" rx="1"/></svg>
+                        <span>Rectangle</span>
+                    </button>
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="dcircle" data-short="Circle">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+                        <span>Circle</span>
+                    </button>
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="dtri" data-short="Triangle">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linejoin="round" d="M12 4l9 16H3z"/></svg>
+                        <span>Triangle</span>
+                    </button>
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="ddiamond" data-short="Diamond">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linejoin="round" d="M12 3l9 9-9 9-9-9z"/></svg>
+                        <span>Diamond</span>
+                    </button>
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="dhex" data-short="Hexagon">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linejoin="round" d="M7.5 4h9L21 12l-4.5 8h-9L3 12z"/></svg>
+                        <span>Hexagon</span>
+                    </button>
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="dstar" data-short="Star">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linejoin="round" d="M12 3l2.7 5.8 6.3.8-4.6 4.4 1.2 6.3L12 17.2l-5.6 3.1 1.2-6.3L3 9.6l6.3-.8z"/></svg>
+                        <span>Star</span>
+                    </button>
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="dcross" data-short="Cross">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 5l14 14M19 5L5 19"/></svg>
+                        <span>Cross</span>
+                    </button>
+                    <button type="button" class="cmap-mrow cmap-mtile" data-mtool="text" data-short="Text">
+                        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13M9 19h6"/></svg>
+                        <span>Text</span>
+                    </button>
+                </div>
+                <p class="cmap-msec">Other</p>
                 <button type="button" class="cmap-mrow" data-mtool="pin" data-short="Pin">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
                     <span>Pin a place: drag to move, tap for Google Maps</span>
-                </button>
-                <button type="button" class="cmap-mrow" data-mtool="text" data-short="Text">
-                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 6h14M12 6v13M9 19h6"/></svg>
-                    <span>Text label</span>
                 </button>
                 <button type="button" class="cmap-mrow" data-mtool="erase" data-short="Erase">
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l7-7 6 6-4 4H8l-4-3z"/><path stroke-linecap="round" d="M8 18h11"/></svg>
@@ -714,6 +751,13 @@
         padding: .5rem .6rem; border-radius: .55rem; font-size: .82rem; font-weight: 700; color: var(--color-gray-700); }
     .cmap-mrow svg { width: 1.05rem; height: 1.05rem; flex-shrink: 0; }
     .cmap-mrow:hover { background: var(--color-gray-50); }
+    /* The tools come in groups: a heading, then rows, or tiles for the drawing shapes. */
+    .cmap-msec { margin: .55rem 0 .1rem; padding: 0 .6rem; font-size: .68rem; font-weight: 800; letter-spacing: .04em;
+        text-transform: uppercase; color: var(--color-gray-500); }
+    .cmap-mtiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .2rem; }
+    .cmap-mrow.cmap-mtile { flex-direction: column; justify-content: center; gap: .25rem; min-height: 3.6rem;
+        padding: .45rem .15rem; font-size: .68rem; line-height: 1.15; text-align: center; }
+    .cmap-mtile svg { width: 1.3rem; height: 1.3rem; }
     .cmap-mrow.is-active,
     html.dark .cmap-mrow.is-active { background: var(--color-brand-50); color: var(--color-brand-800); }
     .cmap-search { flex: 1 1 8rem; min-width: 6rem; height: 2.15rem; border: 1px solid var(--color-gray-200);
@@ -1606,6 +1650,11 @@
             parts.push(ar2); mlabels.push(ar2);
             measureBadge(parts, o.id, at2, style.strokeColor, mlabels,
                 { kind: 'area', closed: true, segs: segs2, area: ar2, pts });
+        } else if (o.kind === 'sketch') {
+            // Drawn, not measured (see SKETCH): an outline and nothing else.
+            const sk = new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: .12 });
+            sk.__sketch = true;
+            parts.push(sk);
         } else if (o.kind === 'pin') {
             /* A place, not a shape. Always draggable — a pin dropped from a
                moving tricycle is thirty metres out and the fix for that is
@@ -1916,7 +1965,7 @@
              * show the area". Measuring is the reason anybody draws one. Marked
              * before the render so the paint below opens it in the same breath,
              * with no flash of a closed shape. */
-            if (kind !== 'pen' && kind !== 'text') {
+            if (kind !== 'pen' && kind !== 'text' && kind !== 'sketch') {
                 measureOpen.add(String(res.data.object.id));
                 saveMeasure();
             }
@@ -1924,7 +1973,7 @@
             pushHist({ type: 'add', object: res.data.object });
             // A label says its own thing about what to do next, and pen
             // strokes say nothing at all.
-            if (kind !== 'pen' && kind !== 'text' && window.toast) toast(SID > 0 && CHROME !== 'lot' ? 'Saved to the team map.' : 'Saved.');
+            if (kind !== 'pen' && kind !== 'text' && kind !== 'sketch' && window.toast) toast(SID > 0 && CHROME !== 'lot' ? 'Saved to the team map.' : 'Saved.');
             return res.data.object;
         } catch (e) { if (window.toast) toast(e.message, 'error'); return null; }
     }
@@ -2107,6 +2156,48 @@
         }
         syncDraftBadge(ring);
     }
+    /* DRAWING, WITH NO NUMBERS (2026-11-07, the owner: "draw tools ... shapes,
+       etc. that is not related to distance or area"). A drawn shape is the kind
+       `sketch`: an outline kept as its points, a circle being 64 of them, so all
+       that anything reading it has to do is close the line. No corner pins, no
+       ruler button, no numbers. Select moves it, turns it and sizes it. A plain
+       line is a two point `pen` stroke, which already has none of those.
+       Each shape is its outline in a box from -1 to 1, y running down. */
+    const SKETCH = (() => {
+        const around = (n, r, from) => Array.from({ length: n }, (_, i) => {
+            const a = from + i * 2 * Math.PI / n;
+            return [Math.cos(a) * r(i), Math.sin(a) * r(i)];
+        });
+        const t = .28;
+        const plus = [[-t, -1], [t, -1], [t, -t], [1, -t], [1, t], [t, t], [t, 1], [-t, 1], [-t, t], [-1, t], [-1, -t], [-t, -t]];
+        return {
+            drect: [[-1, -1], [1, -1], [1, 1], [-1, 1]],
+            dcircle: around(64, () => 1, 0),
+            dtri: [[0, -1], [1, 1], [-1, 1]],
+            ddiamond: [[0, -1], [1, 0], [0, 1], [-1, 0]],
+            dhex: around(6, () => 1, 0),
+            dstar: around(10, (i) => (i % 2 ? .42 : 1), -Math.PI / 2),
+            dcross: plus.map(([x, y]) => [(x - y) * Math.SQRT1_2, (x + y) * Math.SQRT1_2]),
+        };
+    })();
+    // These keep their proportions however the finger drags: a circle stays round.
+    const SKETCH_ROUND = ['dcircle', 'dhex', 'dstar', 'dcross'];
+    /** The outline of shape t in the box dragged from a to b, as it looks on the screen. */
+    function sketchRing(t, a, b) {
+        const pr = proj.getProjection();
+        const A = pr.fromLatLngToContainerPixel(LL(a)), B = pr.fromLatLngToContainerPixel(LL(b));
+        let w = B.x - A.x, h = B.y - A.y;
+        if (SKETCH_ROUND.includes(t)) {
+            const s = Math.max(Math.abs(w), Math.abs(h));
+            w = w < 0 ? -s : s;
+            h = h < 0 ? -s : s;
+        }
+        const cx = A.x + w / 2, cy = A.y + h / 2, rx = Math.abs(w) / 2, ry = Math.abs(h) / 2;
+        return SKETCH[t].map(([x, y]) => {
+            const ll = pr.fromContainerPixelToLatLng(new (G().Point)(cx + x * rx, cy + y * ry));
+            return [ll.lat(), ll.lng()];
+        });
+    }
     let traceLast = 0, traceOn = false;
     function sendTrace(done) {
         // A trace exists to show teammates the shape being drawn, and only
@@ -2117,7 +2208,7 @@
         traceOn = !done;
         api(`${URLS.trace}?scheduleId=${SID}`, { method: 'POST', body: done
             ? { done: 1 }
-            : { kind: tool, color, points: tempPts.slice(-120) } }).catch(() => {});
+            : { kind: SKETCH[tool] ? 'sketch' : (tool === 'dline' ? 'pen' : tool), color, points: tempPts.slice(-120) } }).catch(() => {});
     }
     function clearTemp() {
         tempPts = [];
@@ -2140,7 +2231,7 @@
             ? new (G().Polygon)({ ...opts, paths: tempPts.map(LL), fillColor: color, fillOpacity: .06 })
             : new (G().Polyline)({ ...opts, path: tempPts.map(LL), icons: tool === 'arrow' ? [ARROW_HEAD(color)] : null });
         // An arrow points, it does not measure — no label clutter on it.
-        if (tool === 'pen' || tool === 'arrow') dropTempLabels();
+        if (tool === 'pen' || tool === 'arrow' || tool === 'dline' || SKETCH[tool]) dropTempLabels();
         else refreshTempLabels(closed);
         if (Date.now() - traceLast > 250) { traceLast = Date.now(); sendTrace(false); }
     }
@@ -2524,7 +2615,7 @@
         };
         // Point-then-point felt like surveying; point-and-DRAG feels like
         // drawing. Line and box ride the same pointer plumbing as the pen.
-        const DRAG_TOOLS = ['pen', 'line', 'rect', 'arrow'];
+        const DRAG_TOOLS = ['pen', 'line', 'rect', 'arrow', 'dline', ...Object.keys(SKETCH)];
         const rectCorners = (a, b) => {
             const bd = new (G().LatLngBounds)(LL(a), LL(b));
             const sw = bd.getSouthWest(), ne = bd.getNorthEast();
@@ -2548,7 +2639,8 @@
             if (!penDown || !DRAG_TOOLS.includes(tool)) return;
             const p = ll(e); lastPt = p;
             if (tool === 'pen') { penPts.push(p); tempPts = penPts; previewTemp(false); }
-            else if (tool === 'line' || tool === 'arrow') { tempPts = [penPts[0], p]; previewTemp(false); }
+            else if (tool === 'line' || tool === 'arrow' || tool === 'dline') { tempPts = [penPts[0], p]; previewTemp(false); }
+            else if (SKETCH[tool]) { tempPts = sketchRing(tool, penPts[0], p); previewTemp(true); }
             else { tempPts = rectCorners(penPts[0], p); previewTemp(true); }
             e.preventDefault();
         });
@@ -2560,6 +2652,8 @@
             clearTemp();
             if (t === 'pen' && stream.length > 1) saveObject('pen', stream);
             else if ((t === 'line' || t === 'arrow') && dist(start, end) > 0.5) saveObject(t, [start, end]);
+            else if (t === 'dline' && dist(start, end) > 0.5) saveObject('pen', [start, end]);
+            else if (SKETCH[t] && dist(start, end) > 0.5) saveObject('sketch', sketchRing(t, start, end));
             else if (t === 'rect' && dist(start, end) > 0.5) {
                 const b = new (G().LatLngBounds)(LL(start), LL(end));
                 saveObject('rect', [[b.getSouthWest().lat(), b.getSouthWest().lng()], [b.getNorthEast().lat(), b.getNorthEast().lng()]]);
@@ -2585,7 +2679,7 @@
     // it can drag it without hunting for it first.
     let editing = null, saveTimer = null, pendingEdit = null, selVertex = null, pendingPoint = null;
     function showEditBar(o) {
-        const KINDS = { pen: 'drawing', line: 'line', path: 'path', rect: 'box', area: 'area', text: 'label', arrow: 'arrow' };
+        const KINDS = { pen: 'drawing', line: 'line', path: 'path', rect: 'box', area: 'area', text: 'label', arrow: 'arrow', sketch: 'shape' };
         document.getElementById('cmapEditLbl').textContent = 'Editing ' + (KINDS[o.kind] || 'shape');
         document.getElementById('cmapDelPoint').hidden = true;
         // Only a label has words behind it.
@@ -2753,6 +2847,11 @@
         // not a second way of picking something up.
         if (o.kind === 'text') showSizeHandle(o, parts);
         if (o.kind === 'rect') showTurnHandle(o, parts);
+        // A drawn shape turns and sizes. A circle has nothing to turn.
+        if (o.kind === 'sketch') {
+            if ((o.points || []).length < 32) showTurnHandle(o, parts);
+            showGrowHandle(o, parts);
+        }
     }
     function endEdit() {
         if (!editing) return;
@@ -2770,6 +2869,7 @@
         clearSelVertex();
         dropSizeHandle();
         dropTurnHandle();
+        dropGrowHandle();
         const bar = document.getElementById('cmapEditBar');
         if (bar) bar.classList.add('hidden');
     }
@@ -2884,19 +2984,20 @@
     function ringNow(parts) {
         const pts = [];
         parts[0].getPath().forEach((v) => pts.push([v.lat(), v.lng()]));
-        return pts.slice(0, 4);
+        // A box is its four corners; a drawn shape is every point of its outline.
+        return parts[0].__sketch ? pts : pts.slice(0, 4);
     }
     /** The box's centre and corners on the flat plane, and where its handle
         stands: past the side highest on the screen, whichever way the box was
         drawn (a box's corners go round from wherever the drag began). */
     function turnSpot(ring) {
-        if (ring.length < 4) return null;
+        if (ring.length < 3) return null;
         const w = ring.map(worldOf);
         if (w.some((p) => !p)) return null;
-        const cx = (w[0].x + w[1].x + w[2].x + w[3].x) / 4, cy = (w[0].y + w[1].y + w[2].y + w[3].y) / 4;
+        const cx = w.reduce((s, p) => s + p.x, 0) / w.length, cy = w.reduce((s, p) => s + p.y, 0) / w.length;
         let mx = 0, my = Infinity;
-        for (let i = 0; i < 4; i++) {
-            const a = w[i], b = w[(i + 1) % 4];
+        for (let i = 0; i < w.length; i++) {
+            const a = w[i], b = w[(i + 1) % w.length];
             if ((a.y + b.y) / 2 < my) { mx = (a.x + b.x) / 2; my = (a.y + b.y) / 2; }
         }
         const d = Math.hypot(mx - cx, my - cy);
@@ -2925,7 +3026,7 @@
         turnFor = { o, parts, spot: null, ring: null, square: false, turn: 0 };
         turnHandle = new (G().Marker)({
             map, position: LL(fromWorld(s.x, s.y)), draggable: true, crossOnDrag: false, zIndex: Z_LIVE,
-            title: 'Drag to turn this box',
+            title: o.kind === 'rect' ? 'Drag to turn this box' : 'Drag to turn this shape',
             icon: { path: G().SymbolPath.CIRCLE, scale: 14, fillColor: '#111827',
                 fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2.5 },
             label: handleFace('\u21bb', 16),
@@ -2944,7 +3045,7 @@
             // The bottom side's heading, before and after: square is a multiple of a right angle.
             const th0 = Math.atan2(s.w[1].y - s.w[0].y, s.w[1].x - s.w[0].x);
             const q = Math.PI / 2, near = Math.round((th0 + a) / q) * q;
-            f.square = Math.abs(th0 + a - near) < TURN_SNAP;
+            f.square = f.o.kind === 'rect' && Math.abs(th0 + a - near) < TURN_SNAP;
             if (f.square) a = near - th0;
             const cos = Math.cos(a), sin = Math.sin(a);
             f.ring = s.w.map((v) => {
@@ -2955,7 +3056,7 @@
             f.parts[0].setPath(f.ring.map(LL));
             f.parts.filter((m) => m.__pin).forEach((m, i) => { if (f.ring[i]) m.setPosition(LL(f.ring[i])); });
             trackMeasure(f.o.id);
-            const deg = ((Math.round((th0 + a) * 180 / Math.PI) % 360) + 360) % 360;
+            const deg = ((Math.round((f.o.kind === 'rect' ? th0 + a : a) * 180 / Math.PI) % 360) + 360) % 360;
             turnHandle.setLabel(handleFace(deg + '\u00b0', 11));
         });
         turnHandle.addListener('dragend', () => {
@@ -2972,6 +3073,72 @@
         // The handle follows the box when the box is dragged, and every zoom.
         editing.listeners.push(shape.addListener('drag', placeTurnHandle));
         editing.listeners.push(map.addListener('idle', placeTurnHandle));
+    }
+    /* A drawn shape's size: a handle past its lower right, pulled away from the
+       middle to grow it and in to shrink it. The same way through as turning:
+       live under the finger, kept on release. */
+    const GROW_GAP = 34;
+    let growHandle = null, growFor = null, growDragging = false;
+    function growSpot(ring) {
+        const w = ring.map(worldOf);
+        if (!w.length || w.some((p) => !p)) return null;
+        const cx = w.reduce((s, p) => s + p.x, 0) / w.length, cy = w.reduce((s, p) => s + p.y, 0) / w.length;
+        const far = w.reduce((a, p) => (p.x + p.y > a.x + a.y ? p : a), w[0]);
+        const d = Math.hypot(far.x - cx, far.y - cy);
+        if (!(d > 0)) return null;
+        const gap = GROW_GAP / Math.pow(2, map.getZoom() || 0);
+        return { cx, cy, w, x: far.x + (far.x - cx) / d * gap, y: far.y + (far.y - cy) / d * gap };
+    }
+    function placeGrowHandle() {
+        if (!growHandle || !growFor || growDragging) return;
+        const s = growSpot(ringNow(growFor.parts));
+        if (s) growHandle.setPosition(LL(fromWorld(s.x, s.y)));
+    }
+    function dropGrowHandle() {
+        if (growHandle) { growHandle.setMap(null); growHandle = null; }
+        growFor = null;
+        growDragging = false;
+    }
+    function showGrowHandle(o, parts) {
+        dropGrowHandle();
+        const shape = parts && parts[0];
+        if (!shape || !shape.getPath || !map.getProjection()) return;
+        const s = growSpot(ringNow(parts));
+        if (!s) return;
+        growFor = { o, parts, spot: null, ring: null };
+        growHandle = new (G().Marker)({
+            map, position: LL(fromWorld(s.x, s.y)), draggable: true, crossOnDrag: false, zIndex: Z_LIVE,
+            title: 'Drag to make this shape bigger or smaller',
+            icon: { path: G().SymbolPath.CIRCLE, scale: 14, fillColor: '#111827',
+                fillOpacity: .95, strokeColor: '#fff', strokeWeight: 2.5 },
+            label: handleFace('\u2198\uFE0E', 15),
+        });
+        growHandle.addListener('dragstart', () => {
+            if (!growFor) return;
+            growDragging = true;
+            growFor.spot = growSpot(ringNow(growFor.parts));
+            growFor.ring = null;
+        });
+        growHandle.addListener('drag', (ev) => {
+            const f = growFor, s = f && f.spot;
+            if (!s) return;
+            const p = map.getProjection().fromLatLngToPoint(ev.latLng);
+            const k = Math.max(.05, Math.hypot(p.x - s.cx, p.y - s.cy) / Math.hypot(s.x - s.cx, s.y - s.cy));
+            f.ring = s.w.map((v) => fromWorld(s.cx + (v.x - s.cx) * k, s.cy + (v.y - s.cy) * k));
+            f.parts[0].setPath(f.ring.map(LL));
+        });
+        growHandle.addListener('dragend', () => {
+            growDragging = false;
+            const f = growFor;
+            if (!f) return;
+            const ring = f.ring;
+            f.ring = null;
+            placeGrowHandle();
+            if (ring) commitTurn(f.o, ring, false);
+        });
+        if (!editing) return;
+        editing.listeners.push(shape.addListener('drag', placeGrowHandle));
+        editing.listeners.push(map.addListener('idle', placeGrowHandle));
     }
     async function commitTurn(o, ring, square) {
         const cur = objIndex.get(o.id) || o;
@@ -3317,7 +3484,7 @@
     function renderGhost(p) {
         dropGhost(p.userId);
         if (p.done || !Array.isArray(p.points) || !p.points.length) return;
-        const closed = (p.kind === 'rect' || p.kind === 'area');
+        const closed = (p.kind === 'rect' || p.kind === 'area' || p.kind === 'sketch');
         const opts = { map, strokeColor: p.color || hue(p.userId), strokeWeight: 3, strokeOpacity: .55, clickable: false, zIndex: Z_LIVE - 1 };
         const shape = closed
             ? new (G().Polygon)({ ...opts, paths: p.points.map(LL), fillColor: opts.strokeColor, fillOpacity: .05 })
@@ -3784,7 +3951,7 @@
         [...objIndex.values()].forEach((o) => {
             const colour = o.color || '#f5c518';
             const pts = o.kind === 'rect' ? ringOf(o) : o.points;
-            const closed = (o.kind === 'rect' || o.kind === 'area');
+            const closed = (o.kind === 'rect' || o.kind === 'area' || o.kind === 'sketch');
 
             if (o.kind === 'text') { plate(pts[0], o); return; }
             if (o.kind === 'pin') { drawPin(pts[0], o); return; }
@@ -3798,7 +3965,7 @@
             if (closed) { ctx.fillStyle = colour + '22'; ctx.fill(); }
             ctx.stroke();
 
-            if (o.kind === 'pen') return;               // a freehand line has no useful numbers
+            if (o.kind === 'pen' || o.kind === 'sketch') return;               // a freehand line has no useful numbers
             pts.forEach((p) => dot(p, colour));
             if (o.kind === 'arrow') return;             // an arrow points, it does not measure
 

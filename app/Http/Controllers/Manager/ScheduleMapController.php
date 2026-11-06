@@ -215,7 +215,7 @@ class ScheduleMapController extends BaseScheduleController
         $this->assertCanDraw($schedule);
 
         $validator = Validator::make($request->all(), [
-            'kind' => 'required|in:pen,line,path,rect,area,text,arrow,pin',
+            'kind' => 'required|in:pen,line,path,rect,area,text,arrow,pin,sketch',
             'color' => 'nullable|string|max:16',
             // 20 was the pen's ceiling. A label's type size lives in the same
             // column and wants to go bigger than any line ever would.
@@ -358,7 +358,7 @@ class ScheduleMapController extends BaseScheduleController
 
         $validator = Validator::make($request->all(), [
             'done' => 'nullable|boolean',
-            'kind' => 'nullable|in:pen,line,path,rect,area,arrow,pin',
+            'kind' => 'nullable|in:pen,line,path,rect,area,arrow,pin,sketch',
             'color' => 'nullable|string|max:16',
             'points' => 'nullable|array|max:200',
             'points.*' => 'array|size:2',
@@ -1068,12 +1068,12 @@ class ScheduleMapController extends BaseScheduleController
                     if (end($pts) !== end($keep)) {
                         $keep[] = end($pts);
                     }
-                    if ($o['kind'] === 'area' && count($keep) > 2) {
+                    if (($o['kind'] === 'area' || $o['kind'] === 'sketch') && count($keep) > 2) {
                         $keep[] = $keep[0];
                     }
                 }
                 $enc = 'color:0x' . $color . 'ff|weight:' . max(2, (int) ($o['width'] ?: 3));
-                if ($o['kind'] === 'rect' || $o['kind'] === 'area') {
+                if ($o['kind'] === 'rect' || $o['kind'] === 'area' || $o['kind'] === 'sketch') {
                     $enc .= '|fillcolor:0x' . $color . '33';
                 }
                 foreach ($keep as $p) {
