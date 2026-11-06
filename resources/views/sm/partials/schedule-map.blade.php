@@ -512,6 +512,11 @@
             <span class="cmap-saved-dot"></span>
             <span id="cmapSavedTxt">Saved</span>
         </div>
+        {{-- Something on its way to or from the server. See showBusy(). --}}
+        <div class="cmap-busy" id="cmapBusy" role="status" aria-live="polite">
+            <span class="cmap-busy-ring" aria-hidden="true"></span>
+            <span id="cmapBusyTxt"></span>
+        </div>
     </div>
 @endif
 </div>
@@ -827,6 +832,22 @@
         .cmap-saved { transition: opacity .01s linear; }
         .cmap-saved.is-working .cmap-saved-dot { animation: none; }
     }
+    /* The map's loader: top centre, clear of the Saved word (top right) and the edit bar (bottom). */
+    .cmap-busy { position: absolute; top: .6rem; left: 50%; z-index: 6; pointer-events: none;
+        display: flex; align-items: center; gap: .45rem; padding: .35rem .75rem; border-radius: 999px; white-space: nowrap;
+        font-size: .75rem; font-weight: 800; color: var(--color-gray-700);
+        background: rgb(255 255 255 / .96); box-shadow: 0 8px 22px -10px rgb(0 0 0 / .55);
+        opacity: 0; transform: translate(-50%, -.4rem);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-busy.is-on { opacity: 1; transform: translate(-50%, 0); }
+    .cmap-busy-ring { width: .85rem; height: .85rem; border-radius: 999px; flex-shrink: 0;
+        border: 2px solid rgb(74 124 42 / .25); border-top-color: #4a7c2a; animation: cmapVeilSpin .8s linear infinite; }
+    html.dark .cmap-busy { background: rgb(21 27 18 / .95); color: #e8efe1; }
+    html.dark .cmap-busy-ring { border-color: rgb(165 201 126 / .25); border-top-color: #a5c97e; }
+    @media (prefers-reduced-motion: reduce) {
+        .cmap-busy { transition: opacity .01s linear; }
+        .cmap-busy-ring { animation: none; }
+    }
     /* The press-and-hold ring for dropping a point into an edge. It sits on the
        edge, not under the finger, so it answers the only question the hold
        raises: not "is it counting" but "where is this point going". The sweep
@@ -916,6 +937,41 @@
         load: @json(route('sm.map.load')),
         places: @json(route('sm.map.places')),
         undoJournal: @json(route('sm.undo.get')),
+    };
+    /* A LOADER FOR EVERY UPDATE (2026-11-06, the owner: "some things do not appear
+       immediately ... add a loader every update"). A new shape only appears once
+       the server has answered, so on a slow line the map looked as if it had done
+       nothing. This stands in for the page's api(), so every call in this file
+       passes through it and a new one cannot forget.
+       Left out on purpose: half-drawn traces and GPS beacons (many a minute, and
+       nothing waits for them), the undo journal, and the saves and searches that
+       have their own word on the screen. Shown for at least half a second, so a
+       fast answer can still be read rather than blinking. */
+    const BUSY_SKIP = ['trace', 'loc', 'undoJournal', 'saves', 'save', 'places'];
+    const BUSY_WORDS = { objects: 'Loading the map…', load: 'Loading the map…', push: 'Adding to the map…', remove: 'Removing…', clear: 'Clearing the map…' };
+    let busyCount = 0, busySince = 0, busyHide = null;
+    function showBusy(words) {
+        const el = document.getElementById('cmapBusy');
+        if (!el) return;
+        clearTimeout(busyHide);
+        if (words) {
+            document.getElementById('cmapBusyTxt').textContent = words;
+            if (!el.classList.contains('is-on')) busySince = performance.now();
+            el.classList.add('is-on');
+            return;
+        }
+        busyHide = setTimeout(() => el.classList.remove('is-on'), Math.max(0, 500 - (performance.now() - busySince)));
+    }
+    const api = (url, opts) => {
+        const door = String(url).split('?')[0];
+        const key = Object.keys(URLS).find((k) => URLS[k] === door);
+        if (BUSY_SKIP.includes(key)) return window.api(url, opts);
+        busyCount++;
+        showBusy(BUSY_WORDS[key] || 'Saving your change…');
+        return window.api(url, opts).finally(() => {
+            busyCount--;
+            if (busyCount === 0) showBusy('');
+        });
     };
     /* THE ERRAND, IF THERE IS ONE.
      *
