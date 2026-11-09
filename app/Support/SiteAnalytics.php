@@ -4,6 +4,7 @@ namespace App\Support;
 
 use App\Models\AsOrder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 
 /**
@@ -104,6 +105,30 @@ final class SiteAnalytics
         app()->terminating(fn () => rescue(fn () => Http::timeout(3)->post($url, $body), null, false));
     }
 
+    /**
+     * A Libre account was asked for by email: the visitor is kept for the confirmation (2026-11-09, the owner: "track
+     * purchases and registrations in the app (libre)"). The link is often opened in a mail app's own browser, which has
+     * no analytics cookie, and the confirmation should still be credited to whatever brought the signup. Four days: the
+     * link lasts three.
+     */
+    public static function rememberSignup(int $userId, Request $request): void
+    {
+        $visitor = self::visitor($request);
+        if ($visitor !== null && filled(config('services.analytics.api_secret'))) {
+            rescue(fn () => Cache::put('ga.signup.' . $userId, $visitor, now()->addDays(4)), null, false);
+        }
+    }
+
+    /**
+     * A Libre account became real: the emailed link was clicked, or Google vouched for the address. One event for both
+     * doors, so email_confirmed counts every finished registration (sign_up counts the forms sent, confirmed or not).
+     */
+    public static function confirmed(int $userId, Request $request, string $method): void
+    {
+        $kept = rescue(fn () => Cache::pull('ga.signup.' . $userId), null, false);
+        self::report('email_confirmed', ['method' => $method, 'plan' => 'libre'], $kept ?: self::visitor($request), $userId);
+    }
+
     /** An order was opened: its visitor is kept on it, since the decision comes later, from someone else's browser. */
     public static function orderOpened(AsOrder $order, Request $request): void
     {
@@ -117,7 +142,10 @@ final class SiteAnalytics
         self::order('begin_checkout', $order);
     }
 
-    /** begin_checkout, purchase or refund. The total is what SalesLedger counts, so the two agree. */
+    /**
+     * begin_checkout (the order opened), add_payment_info (the receipt sent), purchase (approved) or refund (revoked).
+     * The total is what SalesLedger counts, so the two agree.
+     */
     public static function order(string $event, AsOrder $order): void
     {
         self::report($event, [

@@ -97,7 +97,7 @@ class GoogleAuthController extends Controller
             if ($user->status === 'pending') {
                 // Google just proved the address the emailed link was waiting on.
                 NewMemberWelcome::activate($user);
-                \App\Support\SiteAnalytics::report('email_confirmed', [], \App\Support\SiteAnalytics::visitor($request), (int) $user->id);
+                \App\Support\SiteAnalytics::confirmed((int) $user->id, $request, 'google');
             }
         } else {
             $user = User::create([
@@ -116,7 +116,9 @@ class GoogleAuthController extends Controller
             ]);
             NewMemberWelcome::activate($user);
             \App\Support\SignupSource::record($user, $request, 'google');
-            \App\Support\SiteAnalytics::report('sign_up', ['method' => 'google'], \App\Support\SiteAnalytics::visitor($request), (int) $user->id);
+            \App\Support\SiteAnalytics::report('sign_up', ['method' => 'google', 'plan' => 'libre'], \App\Support\SiteAnalytics::visitor($request), (int) $user->id);
+            // Google has already proved the address, so the registration is finished on the spot.
+            \App\Support\SiteAnalytics::confirmed((int) $user->id, $request, 'google');
         }
 
         SignIn::user($user, true); // no box to tick at this door: kept for ten days

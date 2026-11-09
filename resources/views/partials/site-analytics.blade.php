@@ -57,7 +57,7 @@
         gtag('js', new Date());
         {{-- One page view long (RegisterController): the "check your inbox" page right after an account is made. --}}
         @if (empty($bare) && session('signup.fresh'))
-            gtag('event', 'sign_up', { method: 'email' });
+            gtag('event', 'sign_up', { method: 'email', plan: 'libre' });
         @endif
     </script>
 @endif

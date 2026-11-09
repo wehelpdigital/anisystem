@@ -118,6 +118,7 @@ class RegisterController extends Controller
         $this->sendVerification($user);
         \App\Support\SignupSource::record($user, $request);
         \App\Support\Legal::record((int) $user->id, 'eula', \App\Support\Legal::EULA_VERSION, null, $request);
+        \App\Support\SiteAnalytics::rememberSignup((int) $user->id, $request);
 
         $request->session()->put('signup.email', $user->email);
         // One page view long: the inbox page reports the signup to the ads.
@@ -179,7 +180,7 @@ class RegisterController extends Controller
 
         if ($user->status === 'pending') {
             NewMemberWelcome::activate($user);
-            \App\Support\SiteAnalytics::report('email_confirmed', [], \App\Support\SiteAnalytics::visitor($request), (int) $user->id);
+            \App\Support\SiteAnalytics::confirmed((int) $user->id, $request, 'email');
         } elseif ($user->status !== 'active') {
             return redirect()->route('login')->with('error', 'Your account is disabled.');
         }

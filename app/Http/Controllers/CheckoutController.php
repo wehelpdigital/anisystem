@@ -113,6 +113,8 @@ class CheckoutController extends Controller
         } catch (RuntimeException $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 409);
         }
+        // The middle step of the sale in Google Analytics: opened, paid, approved (an order takes one proof).
+        \App\Support\SiteAnalytics::order('add_payment_info', $order);
 
         // A GCash plan with a receipt: the buyer waits while Anee reads it
         // (a pass approves it now). Anything else: answer at once, and let
