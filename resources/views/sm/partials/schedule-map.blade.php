@@ -339,24 +339,35 @@
         </div>
         {{-- How thick the line is drawn. The pen had no such control at all:
              one weight for a field boundary and for a footpath. --}}
-        <button type="button" class="cmap-tool" id="cmapSizeBtn" title="Line thickness" aria-label="Line thickness">
+        <button type="button" class="cmap-tool" id="cmapSizeBtn" title="Line and fill" aria-label="Line thickness and fill">
             <span class="cmap-size-dot" id="cmapSizeDot"></span>
         </button>
         <div class="sheet hidden" id="cmapSizeSheet" style="--sheet-width:22rem">
             <div class="sheet-handle"></div>
             <div class="sheet-header">
-                <h3 class="sheet-title">Line thickness</h3>
+                <h3 class="sheet-title">Line and fill</h3>
                 <button type="button" class="icon-btn" data-sheet-close aria-label="Close">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
             <div class="sheet-body" style="padding-bottom:1.1rem">
+                <label class="cmap-save-label" style="margin-top:0">Line thickness</label>
                 <div class="cmap-sizes">
                     <button type="button" class="cmap-sizeopt" data-msize="2"><span style="height:2px"></span><b>Thin</b></button>
                     <button type="button" class="cmap-sizeopt is-active" data-msize="3"><span style="height:3px"></span><b>Normal</b></button>
                     <button type="button" class="cmap-sizeopt" data-msize="5"><span style="height:5px"></span><b>Thick</b></button>
                     <button type="button" class="cmap-sizeopt" data-msize="8"><span style="height:8px"></span><b>Heavy</b></button>
                 </div>
+                {{-- How solid the inside of a box, an area or a drawn shape is
+                     (2026-11-09, the owner). A held one changes as you slide. --}}
+                <label class="cmap-save-label" for="cmapFill">Fill</label>
+                <div class="cmap-fillrow">
+                    <span class="cmap-fillswatch" id="cmapFillSwatch" aria-hidden="true"><i></i></span>
+                    <input type="range" id="cmapFill" class="cmap-range" min="0" max="100" step="5" value="10" aria-label="How solid the fill is">
+                    <b class="cmap-fillsay" id="cmapFillSay">10%</b>
+                </div>
+                <p class="cmap-text-hint">For boxes, areas and drawn shapes. Slide left to see through, right for solid.</p>
+                <p class="cmap-text-hint" id="cmapFillHint" hidden>The shape you are holding changes too.</p>
             </div>
         </div>
         {{-- Writing on the map. It has no button of its own in the bar: the
@@ -400,10 +411,17 @@
                     <button type="button" class="cmap-fontopt" data-mfont="mono">
                         <span class="cmap-fontsample">Aa</span><b>Even</b>
                     </button>
+                    <button type="button" class="cmap-fontopt" data-mfont="hand">
+                        <span class="cmap-fontsample">Aa</span><b>Hand</b>
+                    </button>
                 </div>
+                <label class="cmap-save-label" for="cmapTextSize">Size <span class="cmap-sizesay" id="cmapTextSizeSay">16</span></label>
+                <input type="range" id="cmapTextSize" class="cmap-range" min="10" max="48" step="1" value="16">
+                <div class="cmap-txtprev" aria-hidden="true"><span id="cmapTextPrevWords">Your words</span></div>
                 <p class="cmap-text-hint">
-                    Set the size on the map. Drag the round <b>A</b> beside the
-                    label out to make it bigger, or in to make it smaller.
+                    Drag a label on the map to move it. With Text or Select, tap a
+                    label and a round <b>A</b> shows beside it: drag that out to
+                    make it bigger, or in to make it smaller.
                 </p>
                 <button type="button" class="cmap-save-go" id="cmapTextGo"><span id="cmapTextGoTxt">Place label</span></button>
             </div>
@@ -694,10 +712,28 @@
     html.dark .cmap-sizeopt span { background: #cdd8c0; }
     html.dark .cmap-sizeopt b { color: #cdd8c0; }
     html.dark .cmap-sizeopt.is-active { border-color: #6b9f3d; background: rgb(107 159 61 / .22); }
-    /* The lettering picker: a row of the four faces, each shown in itself.
-       Wraps rather than scrolls — four is few enough to see at once, and a
+    /* The lettering picker: a row of the five faces, each shown in itself.
+       One row rather than a scroller — five is few enough to see at once, and a
        scroller hides the one you have not looked at yet. */
-    .cmap-fonts { display: grid; grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr)); gap: .5rem; }
+    .cmap-fonts { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .4rem; }
+    .cmap-range { display: block; width: 100%; height: 1.75rem; accent-color: #4a7c2a; cursor: pointer; }
+    .cmap-sizesay { font-weight: 800; color: var(--color-gray-900); margin-left: .2rem; }
+    .cmap-txtprev { margin-top: .45rem; min-height: 4.5rem; max-height: 8.5rem; overflow: hidden; padding: .7rem;
+        display: flex; align-items: center; justify-content: center; border-radius: .7rem;
+        background: linear-gradient(135deg, #4d6b35, #6f8f4a); }
+    .cmap-txtprev span { background: #fff; color: #111827; border: 1.5px solid #111827; border-radius: .45rem;
+        padding: .12rem .45rem; font-weight: 800; line-height: 1.2; white-space: pre-line; text-align: center;
+        max-width: 100%; overflow-wrap: anywhere; box-shadow: 0 2px 6px rgb(0 0 0 / .25);
+        transition: font-size .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-fillrow { display: flex; align-items: center; gap: .75rem; }
+    .cmap-fillrow .cmap-range { flex: 1 1 auto; min-width: 0; }
+    .cmap-fillswatch { position: relative; flex: 0 0 auto; width: 2.5rem; height: 2.5rem; border-radius: .55rem;
+        overflow: hidden; border: 3px solid var(--fc, #f5c518); background: linear-gradient(135deg, #4d6b35, #6f8f4a); }
+    .cmap-fillswatch i { position: absolute; inset: 0; background: var(--fc, #f5c518); opacity: var(--fo, .1);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-fillsay { flex: 0 0 3.2rem; text-align: right; font-size: .8rem; font-weight: 800; color: var(--color-gray-700); }
+    html.dark .cmap-sizesay, html.dark .cmap-fillsay { color: #e8efe1; }
+    @media (prefers-reduced-motion: reduce) { .cmap-txtprev span, .cmap-fillswatch i { transition: none; } }
     .cmap-fontopt { display: flex; flex-direction: column; align-items: center; gap: .15rem;
         padding: .55rem .4rem; border-radius: .7rem; border: 2px solid var(--color-gray-200);
         background: var(--color-white); cursor: pointer;
@@ -1091,6 +1127,8 @@
         serif: 'Georgia, "Times New Roman", Times, serif',
         cond: '"Arial Narrow", "Roboto Condensed", "Liberation Sans Narrow", sans-serif-condensed, sans-serif',
         mono: 'ui-monospace, SFMono-Regular, Menlo, Consolas, "Roboto Mono", "Courier New", monospace',
+        // Handwriting from what each device already has: Windows, Apple, then Android's casual face.
+        hand: '"Segoe Print", "Bradley Hand", Noteworthy, "Comic Sans MS", casual, cursive',
     };
     // Small enough to sit beside a fence without shouting, big enough to name
     // a whole paddock from across it. 16 is where a new one starts.
@@ -1098,6 +1136,19 @@
     // What a label looked like before any of this existed, and still does.
     const TXT_LEGACY = 11;
     const clampTxt = (n) => Math.min(TXT_MAX, Math.max(TXT_MIN, Math.round(n)));
+
+    /* FILL (2026-11-09, the owner: "a fill option that you can change fill
+       transparency"). How solid the inside of a box, an area or a drawn shape
+       is, 0 to 100, kept on the shape as `fill`. A shape saved before this has
+       none and keeps the light fill its kind always had. */
+    const FILL_KINDS = ['rect', 'area', 'sketch'];
+    const FILL_OLD = { rect: 8, area: 10, sketch: 12 };
+    let fillLevel = 10;
+    function fillPct(o) {
+        const n = parseInt(o && o.fill, 10);
+        return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : (FILL_OLD[o && o.kind] ?? 10);
+    }
+    const fillOf = (o) => fillPct(o) / 100;
 
     /* What face and what size to draw this label at.
      *
@@ -1630,7 +1681,7 @@
         } else if (o.kind === 'rect') {
             // Its four corners as they stand, turned or upright (see ringOf).
             const c = ringOf(o);
-            parts.push(new (G().Polygon)({ ...style, paths: c.map(LL), fillColor: style.strokeColor, fillOpacity: .08 }));
+            parts.push(new (G().Polygon)({ ...style, paths: c.map(LL), fillColor: style.strokeColor, fillOpacity: fillOf(o) }));
             vertexPins(parts, o, c, style.strokeColor);
             const segs = segLabels(parts, c, true, mlabels);
             // The area label and the badge share one anchor on purpose: the
@@ -1642,7 +1693,7 @@
             measureBadge(parts, o.id, at, style.strokeColor, mlabels,
                 { kind: 'rect', closed: true, segs, area: ar, pts: c });
         } else if (o.kind === 'area') {
-            parts.push(new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: .1 }));
+            parts.push(new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: fillOf(o) }));
             vertexPins(parts, o, pts, style.strokeColor);
             const segs2 = segLabels(parts, pts, true, mlabels);
             const at2 = anchorOf('area', pts);
@@ -1652,7 +1703,7 @@
                 { kind: 'area', closed: true, segs: segs2, area: ar2, pts });
         } else if (o.kind === 'sketch') {
             // Drawn, not measured (see SKETCH): an outline and nothing else.
-            const sk = new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: .12 });
+            const sk = new (G().Polygon)({ ...style, paths: pts.map(LL), fillColor: style.strokeColor, fillOpacity: fillOf(o) });
             sk.__sketch = true;
             parts.push(sk);
         } else if (o.kind === 'pin') {
@@ -1740,11 +1791,13 @@
                 // the right tool first.
                 openPinSheet(objIndex.get(o.id) || o, 'open');
             } else if (tool === 'text' && o.kind === 'text') {
-                // With the Text tool out, a tap on ground writes a new label
-                // and a tap on a label rewrites that one — otherwise the only
-                // thing this gesture could do was stack a second label on top
-                // of the first.
-                openTextSheet(objIndex.get(o.id) || o);
+                // With the Text tool out, a tap on ground writes a new label.
+                // A tap on a label takes hold of it, as Select does: drag it,
+                // or pull the round A to size it. A second tap opens its words,
+                // letter style and size (2026-11-09).
+                const held = editing && editing.o.id === o.id;
+                beginEdit(o, parts);
+                if (held) openTextSheet(objIndex.get(o.id) || o);
             }
         }));
         if (pendingEdit === o.id) { pendingEdit = null; beginEdit(o, parts); }
@@ -1856,7 +1909,7 @@
         const res = await api(`${URLS.push}?scheduleId=${SID}`, {
             // font travels with it, or undoing the deletion of a label would
             // put the words back in a face nobody chose.
-            method: 'POST', body: { kind: object.kind, points: object.points, color: object.color, width: object.width, font: object.font || null, label: object.label },
+            method: 'POST', body: { kind: object.kind, points: object.points, color: object.color, width: object.width, font: object.font || null, fill: object.fill ?? null, label: object.label },
         });
         renderObject(res.data.object);
         return res.data.object;
@@ -1954,7 +2007,7 @@
     async function saveObject(kind, pts, label, extra) {
         try {
             const res = await api(`${URLS.push}?scheduleId=${SID}`, {
-                method: 'POST', body: { kind, points: pts, color, width, label: label || null, ...(extra || {}) },
+                method: 'POST', body: { kind, points: pts, color, width, label: label || null, ...(FILL_KINDS.includes(kind) ? { fill: fillLevel } : {}), ...(extra || {}) },
             });
             /* A shape you just drew shows its numbers without being asked.
              *
@@ -2228,7 +2281,7 @@
         if (tempShape) tempShape.setMap(null);
         const opts = { map, strokeColor: color, strokeWeight: width, clickable: false, zIndex: Z_LIVE };
         tempShape = closed
-            ? new (G().Polygon)({ ...opts, paths: tempPts.map(LL), fillColor: color, fillOpacity: .06 })
+            ? new (G().Polygon)({ ...opts, paths: tempPts.map(LL), fillColor: color, fillOpacity: fillLevel / 100 })
             : new (G().Polyline)({ ...opts, path: tempPts.map(LL), icons: tool === 'arrow' ? [ARROW_HEAD(color)] : null });
         // An arrow points, it does not measure — no label clutter on it.
         if (tool === 'pen' || tool === 'arrow' || tool === 'dline' || SKETCH[tool]) dropTempLabels();
@@ -2244,7 +2297,9 @@
      * and the drawing tools own the finger outright. Pan and Select & edit are
      * the two that are not already spending it, which is the same pair the
      * long-press-for-a-point handler carves out for the same reason. */
-    function textDraggable() { return tool === 'pan' || tool === 'edit'; }
+    // Since 2026-11-09 the Text tool too (the owner: "reposition via drag"):
+    // a tap on ground still writes a new label, a drag on one moves it.
+    function textDraggable() { return tool === 'pan' || tool === 'edit' || tool === 'text'; }
     /* A marker's draggable flag is set once, when it is rendered, and the tool
      * changes long after that — so every label ALREADY on the map has to be
      * told, not just the next one drawn. */
@@ -2580,6 +2635,7 @@
             // Nothing is created here. The ground is remembered, the sheet
             // asks, and only pressing its button writes anything — so backing
             // out of a label leaves the map exactly as it was.
+            endEdit();
             openTextSheet(null, p);
         } else if (tool === 'pin') {
             /* A pin goes down where you tapped, immediately.
@@ -3163,6 +3219,25 @@
             if (objIndex.has(o.id)) { endEdit(); dropObject(o.id); renderObject(cur); }
         }
     }
+    /** A held shape's fill, kept for the team, with one undo step. */
+    async function commitFill(o, pct) {
+        const cur = objIndex.get(o.id) || o;
+        const was = (cur.fill === undefined || cur.fill === null) ? null : cur.fill;
+        if (was !== null && fillPct(cur) === pct) return;
+        try {
+            const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id: cur.id, fill: pct } });
+            const fresh = res.data.object;
+            // Same guard as commitTextSize: the map may have changed under the write.
+            if (!objIndex.has(cur.id)) return;
+            pushHist({ type: 'label', id: cur.id, before: { fill: was }, after: { fill: fresh.fill } });
+            objIndex.set(fresh.id, fresh);
+            if (editing && editing.o.id === fresh.id) editing.o = fresh;
+        } catch (e) {
+            if (window.toast) toast(e.message, 'error');
+            const part = objIndex.has(cur.id) && (layers.get(cur.id) || [])[0];
+            if (part && part.setOptions) part.setOptions({ fillOpacity: fillOf(cur) });
+        }
+    }
     async function commitTextSize(o, px) {
         const cur = objIndex.get(o.id) || o;
         // A label from before lettering existed has no font, and a size stored
@@ -3206,6 +3281,23 @@
     function paintFontRow() {
         document.querySelectorAll('#cmapTextSheet .cmap-fontopt').forEach((b) =>
             b.classList.toggle('is-active', b.dataset.mfont === textFont));
+        paintTextPreview();
+    }
+    /* The size, and how the label will look, before it is placed (2026-11-09,
+       the owner: "change font, font size"). The round A on the map still sizes
+       a held label by dragging. */
+    function paintTextPreview() {
+        const r = document.getElementById('cmapTextSize');
+        if (r && String(r.value) !== String(textSize)) r.value = textSize;
+        const say = document.getElementById('cmapTextSizeSay');
+        if (say) say.textContent = String(textSize);
+        const w = document.getElementById('cmapTextPrevWords');
+        if (!w) return;
+        const ta = document.getElementById('cmapTextInput');
+        const words = String(ta ? ta.value : '').trim();
+        w.textContent = words ? words.slice(0, 120) : 'Your words';
+        w.style.fontFamily = FONTS[textFont] || '';
+        w.style.fontSize = textSize + 'px';
     }
     function sayTextLeft() {
         const ta = document.getElementById('cmapTextInput');
@@ -3280,7 +3372,7 @@
                     // the size handle is ever found: it is standing beside the
                     // words before anyone goes looking for it.
                     beginEdit(obj, parts);
-                    if (window.toast) toast('Label placed. Drag the A beside it to change the size.');
+                    if (window.toast) toast('Label placed. Drag it to move it, or pull the A beside it to size it.');
                 }
             }
             textDraft = null;
@@ -3962,7 +4054,7 @@
             ctx.lineWidth = (o.width || 3) * SCALE;
             ctx.strokeStyle = colour;
             ctx.lineJoin = ctx.lineCap = 'round';
-            if (closed) { ctx.fillStyle = colour + '22'; ctx.fill(); }
+            if (closed && fillPct(o) > 0) { ctx.globalAlpha = fillOf(o); ctx.fillStyle = colour; ctx.fill(); ctx.globalAlpha = 1; }
             ctx.stroke();
 
             if (o.kind === 'pen' || o.kind === 'sketch') return;               // a freehand line has no useful numbers
@@ -4633,10 +4725,43 @@
             width = parseInt(b.dataset.msize, 10) || 3;
             document.querySelectorAll('#cmapSizeSheet .cmap-sizeopt').forEach((x) => x.classList.toggle('is-active', x === b));
             sayWidth();
-            window.closeSheet?.('cmapSizeSheet');
+            // Left open: the fill is set in the same sheet (2026-11-09).
             // A half-drawn line takes the new weight immediately.
             if (tempPts.length) previewTemp(tool === 'area');
         }));
+        /* ---- how solid a closed shape is ---- */
+        const fillRange = document.getElementById('cmapFill');
+        const heldFilled = () => (editing && FILL_KINDS.includes(editing.o.kind)) ? (objIndex.get(editing.o.id) || editing.o) : null;
+        const sayFill = (pct) => {
+            const say = document.getElementById('cmapFillSay');
+            if (say) say.textContent = pct <= 0 ? 'None' : pct >= 100 ? 'Solid' : pct + '%';
+            const sw = document.getElementById('cmapFillSwatch');
+            const held = heldFilled();
+            if (sw) { sw.style.setProperty('--fc', (held && held.color) || color); sw.style.setProperty('--fo', String(pct / 100)); }
+        };
+        // Opened with a box, an area or a drawn shape in hand, the slider
+        // starts from that shape's own fill and moves it.
+        document.getElementById('cmapSizeBtn')?.addEventListener('click', () => {
+            const held = heldFilled();
+            const pct = held ? fillPct(held) : fillLevel;
+            if (fillRange) fillRange.value = pct;
+            sayFill(pct);
+            const hint = document.getElementById('cmapFillHint');
+            if (hint) hint.hidden = !held;
+        });
+        fillRange?.addEventListener('input', () => {
+            const pct = Math.max(0, Math.min(100, parseInt(fillRange.value, 10) || 0));
+            fillLevel = pct;
+            sayFill(pct);
+            if (tempPts.length) previewTemp(tool === 'area');
+            const held = heldFilled();
+            const part = held && (layers.get(held.id) || [])[0];
+            if (part && part.setOptions) part.setOptions({ fillOpacity: pct / 100 });
+        });
+        fillRange?.addEventListener('change', () => {
+            const held = heldFilled();
+            if (held) commitFill(held, fillLevel);
+        });
         /* ---- writing on the map ---- */
         // Each face shown in itself, painted from the one list of stacks —
         // duplicating them into the stylesheet is how the picker ends up
@@ -4646,7 +4771,11 @@
             if (sample) sample.style.fontFamily = FONTS[b.dataset.mfont] || '';
             b.addEventListener('click', () => { textFont = b.dataset.mfont; paintFontRow(); });
         });
-        document.getElementById('cmapTextInput')?.addEventListener('input', sayTextLeft);
+        document.getElementById('cmapTextInput')?.addEventListener('input', () => { sayTextLeft(); paintTextPreview(); });
+        document.getElementById('cmapTextSize')?.addEventListener('input', (e) => {
+            textSize = clampTxt(parseInt(e.target.value, 10) || TXT_NEW);
+            paintTextPreview();
+        });
         document.getElementById('cmapTextGo')?.addEventListener('click', commitTextSheet);
         document.getElementById('cmapEditText')?.addEventListener('click', () => {
             if (editing) openTextSheet(objIndex.get(editing.o.id) || editing.o);

@@ -82,7 +82,7 @@ final class MapThumb
         $ink = imagecolorallocate($img, 47, 82, 25);
 
         // Areas first, so lines and pins sit on top of them.
-        $order = ['area' => 0, 'path' => 1, 'line' => 1, 'arrow' => 1, 'pen' => 1, 'pin' => 2, 'text' => 3];
+        $order = ['area' => 0, 'rect' => 0, 'sketch' => 0, 'path' => 1, 'line' => 1, 'arrow' => 1, 'pen' => 1, 'pin' => 2, 'text' => 3];
         usort($objects, fn ($a, $b) => ($order[$a['kind'] ?? 'pen'] ?? 1) <=> ($order[$b['kind'] ?? 'pen'] ?? 1));
 
         foreach ($objects as $o) {
@@ -96,11 +96,24 @@ final class MapThumb
             imagesetthickness($img, $width);
             $stroke = $rgb($o['color'] ?? null);
 
-            if ($kind === 'area' && count($xy) >= 3) {
+            // Closed shapes: an area, a box (two opposite corners when upright,
+            // four when turned) and a drawn shape, each with its own fill when
+            // it has one (2026-11-09). A box used to come out as its diagonal.
+            $ring = $xy;
+            if ($kind === 'rect' && count($xy) === 2) {
+                [[$x1, $y1], [$x2, $y2]] = $xy;
+                $ring = [[$x1, $y1], [$x2, $y1], [$x2, $y2], [$x1, $y2]];
+            }
+            if (in_array($kind, ['area', 'rect', 'sketch'], true) && count($ring) >= 3) {
                 $flat = [];
-                foreach ($xy as [$x, $y]) { $flat[] = $x; $flat[] = $y; }
-                imagefilledpolygon($img, $flat, $rgb($o['color'] ?? null, 82));
-                imagepolygon($img, $flat, $ink);
+                foreach ($ring as [$x, $y]) { $flat[] = $x; $flat[] = $y; }
+                $alpha = isset($o['fill']) && is_numeric($o['fill'])
+                    ? 127 - (int) round(127 * max(0, min(100, (int) $o['fill'])) / 100)
+                    : 82;
+                if ($alpha < 127) {
+                    imagefilledpolygon($img, $flat, $rgb($o['color'] ?? null, $alpha));
+                }
+                imagepolygon($img, $flat, $kind === 'area' ? $ink : $stroke);
             } elseif ($kind === 'pin' || (count($xy) === 1 && $kind !== 'text')) {
                 [$x, $y] = $xy[0];
                 imagesetthickness($img, 2);

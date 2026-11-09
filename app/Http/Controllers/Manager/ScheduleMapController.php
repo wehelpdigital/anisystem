@@ -33,10 +33,10 @@ class ScheduleMapController extends BaseScheduleController
      * The client owns the stacks, because which families a phone actually has
      * is a client question and the answer keeps changing. Four of them, all
      * already installed everywhere: a sans, a serif, a condensed and a
-     * monospace. Nothing here downloads a font — the map is read in a field,
-     * on whatever signal the field has.
+     * monospace, and since 2026-11-09 handwriting. Nothing here downloads a
+     * font — the map is read in a field, on whatever signal the field has.
      */
-    private const FONTS = 'sans,serif,cond,mono';
+    private const FONTS = 'sans,serif,cond,mono,hand';
 
     /**
      * Maps, in Global and Quick Tools: every map of your own (and, for a
@@ -224,6 +224,8 @@ class ScheduleMapController extends BaseScheduleController
             'points.*' => 'array|size:2',
             'label' => 'nullable|string|max:500',
             'font' => 'nullable|in:' . self::FONTS,
+            // How solid a closed shape's inside is, 0 to 100 (2026-11-09).
+            'fill' => 'nullable|integer|min:0|max:100',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail($validator->errors()->first(), 422);
@@ -236,6 +238,7 @@ class ScheduleMapController extends BaseScheduleController
             'color' => $request->input('color'),
             'width' => (int) $request->input('width', 3),
             'font' => $request->input('font'),
+            'fill' => $request->input('fill') === null ? null : (int) $request->input('fill'),
             'points' => json_encode($request->input('points')),
             'label' => $request->input('label'),
             'deleteStatus' => 1,
@@ -270,6 +273,7 @@ class ScheduleMapController extends BaseScheduleController
             'label' => 'sometimes|nullable|string|max:500',
             'font' => 'sometimes|nullable|in:' . self::FONTS,
             'width' => 'sometimes|integer|min:1|max:64',
+            'fill' => 'sometimes|nullable|integer|min:0|max:100',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail($validator->errors()->first(), 422);
@@ -292,6 +296,10 @@ class ScheduleMapController extends BaseScheduleController
         }
         if ($request->has('width')) {
             $patch['width'] = (int) $request->input('width');
+        }
+        // Null puts back the light fill a shape had before it had its own (undo).
+        if ($request->has('fill')) {
+            $patch['fill'] = $request->input('fill') === null ? null : (int) $request->input('fill');
         }
         if (empty($patch)) {
             return $this->jsonFail('Nothing to change on that shape.', 422);
@@ -500,6 +508,7 @@ class ScheduleMapController extends BaseScheduleController
                 'color' => $o['color'] ?? null,
                 'width' => (int) ($o['width'] ?? 3),
                 'font' => $o['font'] ?? null,
+                'fill' => $o['fill'] ?? null,
                 'points' => $o['points'],
                 'label' => $o['label'] ?? null,
             ])->values()->all();
@@ -790,6 +799,7 @@ class ScheduleMapController extends BaseScheduleController
             $shapes = json_encode(array_map(fn ($o) => [
                 'kind' => $o['kind'], 'color' => $o['color'], 'width' => $o['width'],
                 'font' => $o['font'] ?? null,
+                'fill' => $o['fill'] ?? null,
                 'points' => $o['points'], 'label' => $o['label'],
             ], $objects));
 
@@ -962,6 +972,8 @@ class ScheduleMapController extends BaseScheduleController
                 // null is exactly right for them: the client reads that as
                 // "an old label" and draws it the way it always drew.
                 'font' => $o['font'] ?? null,
+                // Saves from before fill existed have none: the light fill.
+                'fill' => isset($o['fill']) && is_numeric($o['fill']) ? max(0, min(100, (int) $o['fill'])) : null,
                 'points' => json_encode($o['points']),
                 'label' => $o['label'] ?? null,
                 'deleteStatus' => 1,
@@ -1074,7 +1086,11 @@ class ScheduleMapController extends BaseScheduleController
                 }
                 $enc = 'color:0x' . $color . 'ff|weight:' . max(2, (int) ($o['width'] ?: 3));
                 if ($o['kind'] === 'rect' || $o['kind'] === 'area' || $o['kind'] === 'sketch') {
-                    $enc .= '|fillcolor:0x' . $color . '33';
+                    // Its own fill when it has one (2026-11-09), else the light one it always had.
+                    $alpha = isset($o['fill']) && is_numeric($o['fill'])
+                        ? sprintf('%02x', (int) round(255 * max(0, min(100, (int) $o['fill'])) / 100))
+                        : '33';
+                    $enc .= '|fillcolor:0x' . $color . $alpha;
                 }
                 foreach ($keep as $p) {
                     $enc .= '|' . round($p[0], 6) . ',' . round($p[1], 6);
