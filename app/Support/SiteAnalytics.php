@@ -85,6 +85,12 @@ final class SiteAnalytics
     /** One event from the server, sent after the answer has gone so nobody waits on Google, and never a failure of its own. */
     public static function report(string $event, array $params, ?string $visitor, int $userId): void
     {
+        self::send([$event => $params], $visitor, $userId);
+    }
+
+    /** Several events about one moment in one request, name => params: a finished registration is two at once. */
+    public static function send(array $events, ?string $visitor, int $userId): void
+    {
         $secret = (string) config('services.analytics.api_secret');
         if ($secret === '') {
             return;
@@ -97,36 +103,53 @@ final class SiteAnalytics
         $body = [
             // No cookie (the link opened on another phone): still counted, without knowing where they came from.
             'client_id' => $client !== '' ? $client : 'server.' . hash('crc32b', (string) $userId),
-            'events' => [['name' => $event, 'params' => array_filter(
+            'events' => array_map(fn ($name, $params) => ['name' => $name, 'params' => array_filter(
                 ['session_id' => $session, 'engagement_time_msec' => 1] + $params,
                 fn ($v) => $v !== '' && $v !== null,
-            )]],
+            )], array_keys($events), array_values($events)),
         ];
         app()->terminating(fn () => rescue(fn () => Http::timeout(3)->post($url, $body), null, false));
     }
 
-    /**
-     * A Libre account was asked for by email: the visitor is kept for the confirmation (2026-11-09, the owner: "track
-     * purchases and registrations in the app (libre)"). The link is often opened in a mail app's own browser, which has
-     * no analytics cookie, and the confirmation should still be credited to whatever brought the signup. Four days: the
-     * link lasts three.
+    /*
+     * Registrations (2026-11-09, the owner: "track purchases and registrations in the app (libre)", then "the
+     * registration we need it in the generate leads analysis"). GA4's Generate leads reports count people by three
+     * events, so a Libre account walks through them:
+     *   generate_lead       the account is asked for (the email form, or Google)       signedUp()
+     *   qualify_lead        the account is finished (the emailed link, or Google)      confirmed()
+     *   close_convert_lead  the first purchase is approved                             order()
+     * lead_source 'signup' keeps them apart from Ask Anee's leads (lead_source 'ask_anee', sent by its own page).
+     * Beside them stay the events the property already counts: sign_up (the form; the inbox page sends the email one
+     * from the browser) and email_confirmed (the finished account, both doors).
      */
-    public static function rememberSignup(int $userId, Request $request): void
-    {
-        $visitor = self::visitor($request);
-        if ($visitor !== null && filled(config('services.analytics.api_secret'))) {
-            rescue(fn () => Cache::put('ga.signup.' . $userId, $visitor, now()->addDays(4)), null, false);
-        }
-    }
+    private const LEAD = ['lead_source' => 'signup', 'plan' => 'libre'];
 
     /**
-     * A Libre account became real: the emailed link was clicked, or Google vouched for the address. One event for both
-     * doors, so email_confirmed counts every finished registration (sign_up counts the forms sent, confirmed or not).
+     * A Libre account was asked for. For email, the visitor is kept for the confirmation: the link is often opened in a
+     * mail app's own browser, which has no analytics cookie, and the finished registration should still be credited to
+     * whatever brought the signup. Four days: the link lasts three.
      */
+    public static function signedUp(int $userId, Request $request, string $method): void
+    {
+        $visitor = self::visitor($request);
+        $events = ['generate_lead' => self::LEAD + ['method' => $method]];
+        if ($method === 'google') {
+            // Google's door has no inbox page to say sign_up from the browser.
+            $events = ['sign_up' => ['method' => 'google', 'plan' => 'libre']] + $events;
+        } elseif ($visitor !== null && filled(config('services.analytics.api_secret'))) {
+            rescue(fn () => Cache::put('ga.signup.' . $userId, $visitor, now()->addDays(4)), null, false);
+        }
+        self::send($events, $visitor, $userId);
+    }
+
+    /** A Libre account became real: the emailed link was clicked, or Google vouched for the address. */
     public static function confirmed(int $userId, Request $request, string $method): void
     {
         $kept = rescue(fn () => Cache::pull('ga.signup.' . $userId), null, false);
-        self::report('email_confirmed', ['method' => $method, 'plan' => 'libre'], $kept ?: self::visitor($request), $userId);
+        self::send([
+            'email_confirmed' => ['method' => $method, 'plan' => 'libre'],
+            'qualify_lead' => self::LEAD + ['method' => $method],
+        ], $kept ?: self::visitor($request), $userId);
     }
 
     /** An order was opened: its visitor is kept on it, since the decision comes later, from someone else's browser. */
@@ -144,11 +167,12 @@ final class SiteAnalytics
 
     /**
      * begin_checkout (the order opened), add_payment_info (the receipt sent), purchase (approved) or refund (revoked).
-     * The total is what SalesLedger counts, so the two agree.
+     * The total is what SalesLedger counts, so the two agree. The buyer's first approved order is also the lead
+     * converted.
      */
     public static function order(string $event, AsOrder $order): void
     {
-        self::report($event, [
+        $events = [$event => [
             'transaction_id' => (string) $order->orderNumber,
             'value' => (float) $order->total,
             'currency' => (string) $order->currency,
@@ -157,6 +181,17 @@ final class SiteAnalytics
                 'item_id' => (string) $order->itemKey, 'item_name' => (string) $order->itemName, 'item_category' => (string) $order->kind,
                 'price' => (float) $order->total, 'quantity' => 1,
             ]],
-        ], $order->gaClient, (int) $order->userId);
+        ]];
+        if ($event === 'purchase' && self::firstPurchase($order)) {
+            $events['close_convert_lead'] = ['lead_source' => 'signup', 'value' => (float) $order->total, 'currency' => (string) $order->currency];
+        }
+        self::send($events, $order->gaClient, (int) $order->userId);
+    }
+
+    /** No other order of this buyer was ever approved (a revoked one was, and keeps its approvedAt). Unsure: not first. */
+    private static function firstPurchase(AsOrder $order): bool
+    {
+        return ! rescue(fn () => AsOrder::where('userId', $order->userId)->where('id', '!=', $order->id)
+            ->whereNotNull('approvedAt')->exists(), true, false);
     }
 }

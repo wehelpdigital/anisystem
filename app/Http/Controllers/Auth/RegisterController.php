@@ -118,7 +118,7 @@ class RegisterController extends Controller
         $this->sendVerification($user);
         \App\Support\SignupSource::record($user, $request);
         \App\Support\Legal::record((int) $user->id, 'eula', \App\Support\Legal::EULA_VERSION, null, $request);
-        \App\Support\SiteAnalytics::rememberSignup((int) $user->id, $request);
+        \App\Support\SiteAnalytics::signedUp((int) $user->id, $request, 'email');
 
         $request->session()->put('signup.email', $user->email);
         // One page view long: the inbox page reports the signup to the ads.

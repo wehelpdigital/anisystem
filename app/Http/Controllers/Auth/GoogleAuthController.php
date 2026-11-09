@@ -116,7 +116,7 @@ class GoogleAuthController extends Controller
             ]);
             NewMemberWelcome::activate($user);
             \App\Support\SignupSource::record($user, $request, 'google');
-            \App\Support\SiteAnalytics::report('sign_up', ['method' => 'google', 'plan' => 'libre'], \App\Support\SiteAnalytics::visitor($request), (int) $user->id);
+            \App\Support\SiteAnalytics::signedUp((int) $user->id, $request, 'google');
             // Google has already proved the address, so the registration is finished on the spot.
             \App\Support\SiteAnalytics::confirmed((int) $user->id, $request, 'google');
         }
