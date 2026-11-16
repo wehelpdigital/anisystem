@@ -62,11 +62,21 @@ final class ProductBook
             $r['_n'] = self::norm(implode(' plus ', (array) ($r['ai'] ?? [])));
             $r['_o'] = [self::ORIGIN_RANK[$r['origin'] ?? 'ph'] ?? 2, $i];
             $r['popular'] = isset(self::popular()[self::norm((string) $r['brand'])]);
+            // A registration that has ended is never offered (2026-11-16): the expiry on the registration list, in Manila time.
+            $r['ended'] = ! empty($r['exp']) && (string) $r['exp'] < self::today();
             $all[$r['key']] = $r;
         }
         uasort($all, fn ($a, $b) => $a['_o'] <=> $b['_o']);
 
         return self::$all = self::twins($all);
+    }
+
+    /** Today in Manila, as the registration list writes dates (YYYY-MM-DD). */
+    private static function today(): string
+    {
+        static $d = null;
+
+        return $d ??= now('Asia/Manila')->toDateString();
     }
 
     /**
@@ -262,6 +272,9 @@ final class ProductBook
     {
         $map = [];
         foreach (self::all() as $p) {
+            if (! empty($p['ended'])) {
+                continue;
+            }
             foreach ($p['app_ai'] ?? [] as $ai) {
                 foreach ($p['crops'] ?? [] as $crop) {
                     $map[self::norm($ai)][$crop][] = $p['key'];
@@ -314,6 +327,10 @@ final class ProductBook
         }
         $ing = $prob = $any = [];
         foreach (self::all() as $k => $p) {
+            // Its registration has ended: in no list (a renewal comes back with the next registration list).
+            if (! empty($p['ended'])) {
+                continue;
+            }
             foreach ($p['app_ai'] ?? [] as $ai) {
                 $ing[self::norm((string) $ai)][] = $k;
             }
