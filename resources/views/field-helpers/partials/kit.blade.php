@@ -98,6 +98,9 @@
     .fh-prod-n small span { min-width: 0; overflow-wrap: anywhere; }
     .fh-prod em, .fh-pcard em { flex: none; font-style: normal; font-size: .58rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; padding: .08rem .38rem; border-radius: 999px; color: #6b4e00; background: #fdeeb2; }
     .fh-pshop { flex: none; display: inline-flex; gap: .35rem; }
+    .fh-pop { flex: none; font-style: normal; font-size: .56rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; padding: .08rem .4rem; border-radius: 999px; color: #1a1a1a; background: #f5c518; }
+    .fh-twin { flex-basis: 100%; font-size: .66rem; color: #8a5a00; }
+    html.dark .fh-twin { color: #fcd34d; }
     .fh-rate { margin-top: .45rem; }
     .fh-pcards { display: grid; gap: .5rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     @media (min-width: 640px) { .fh-pcards { grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); } }
@@ -783,15 +786,18 @@
         + '<a class="shop-logo is-lz" href="' + esc(lazada) + '" target="_blank" rel="noopener nofollow" title="Search Lazada for ' + esc(what) + '" aria-label="Search Lazada for ' + esc(what) + '"><img src="' + LOGO.lz + '" alt="" width="48" height="48">' + (words ? '<span>Search Lazada</span>' : '') + '</a></span>';
     FH.prodShop = (p, words) => { const u = FH.shopOf(p.brand); return FH.shopLinks(u.shopee, u.lazada, p.brand, 'fh-pshop', words); };
     // `seen` (a Set, optional): the list's flags so far, so a form code or a timing flags its first chip only.
+    // A brand farmers know by name, and a look alike of one (2026-11-16, ProductBook::popular and twins).
+    FH.popChip = (p) => (p && p.popular ? '<i class="fh-pop">Popular</i>' : '');
+    FH.twinLine = (p) => (p && p.twin ? '<span class="fh-twin">Same make up as ' + esc(p.twin) + ', under its own name</span>' : '');
     FH.prodChip = (p, seen) => '<div class="fh-prod"><button type="button" class="fh-prod-n" data-prod="' + esc(p.key) + '">'
-        + '<b><span>' + esc(p.brand) + '</span>' + FH.mobChips(p.mob) + FH.selChip(p) + '</b>'
-        + (p.timing && TIMING[p.timing] || p.company || p.form ? '<small>' + (p.timing && TIMING[p.timing] ? '<em' + tlAttr(TIMING_TL[p.timing], seen) + '>' + TIMING[p.timing][0] + '</em>' : '')
-            + '<span' + (p.form ? tlAttr(FH.tlForm(p.form), seen) : '') + '>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</span></small>' : '') + '</button>'
+        + '<b><span>' + esc(p.brand) + '</span>' + FH.popChip(p) + FH.mobChips(p.mob) + FH.selChip(p) + '</b>'
+        + (p.timing && TIMING[p.timing] || p.company || p.form || p.twin ? '<small>' + (p.timing && TIMING[p.timing] ? '<em' + tlAttr(TIMING_TL[p.timing], seen) + '>' + TIMING[p.timing][0] + '</em>' : '')
+            + '<span' + (p.form ? tlAttr(FH.tlForm(p.form), seen) : '') + '>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</span>' + FH.twinLine(p) + '</small>' : '') + '</button>'
         + FH.prodShop(p) + '</div>';
     // The group chip flags on every card (each is read on its own); a form code and a timing on their first card.
     // opts.help: the worded way into the explainer under the cards (when no spray list above has its "?").
     FH.prodStrip = (cards, opts) => { const seen = new Set(), o = opts || {}; return (cards && cards.length) ? '<div class="fh-pcards">' + cards.map((p) => '<div class="fh-pcard"><button type="button" class="fh-pcard-n" data-prod="' + esc(p.key) + '">'
-        + '<b>' + esc(p.brand) + '</b><small' + (p.form ? tlAttr(FH.tlForm(p.form), seen) : '') + '>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</small>'
+        + '<b>' + esc(p.brand) + FH.popChip(p) + '</b><small' + (p.form ? tlAttr(FH.tlForm(p.form), seen) : '') + '>' + esc([p.company, p.form].filter(Boolean).join(', ')) + '</small>' + (p.twin ? '<small class="fh-twin">Same make up as ' + esc(p.twin) + '</small>' : '')
         + ((p.ai || []).length ? '<span>' + esc(p.ai.join(' plus ')) + '</span>' : '') + (p.fert && p.grade ? '<span>' + esc(p.grade) + '</span>' : '') + (p.group ? '<i' + tlAttr(FH.tlGroup(p.group)) + '>' + esc(p.group) + '</i>' : '')
         + FH.mobChips(p.mob) + FH.selChip(p)
         + (p.timing && TIMING[p.timing] ? '<em' + tlAttr(TIMING_TL[p.timing], seen) + '>' + TIMING[p.timing][0] + '</em>' : '') + '</button>' + FH.prodShop(p) + '</div>').join('') + '</div>'

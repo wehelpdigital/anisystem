@@ -61,11 +61,105 @@ final class ProductBook
             // Its ingredients as one key ("lambda cyhalothrin plus thiamethoxam"), worked out once.
             $r['_n'] = self::norm(implode(' plus ', (array) ($r['ai'] ?? [])));
             $r['_o'] = [self::ORIGIN_RANK[$r['origin'] ?? 'ph'] ?? 2, $i];
+            $r['popular'] = isset(self::popular()[self::norm((string) $r['brand'])]);
             $all[$r['key']] = $r;
         }
         uasort($all, fn ($a, $b) => $a['_o'] <=> $b['_o']);
 
-        return self::$all = $all;
+        return self::$all = self::twins($all);
+    }
+
+    /**
+     * The brands farmers know by name (2026-11-16, the owner: "check popular products online for different pests and
+     * include it"): database/products/popular.json. A list always shows them, after the owner's Philippine first
+     * order has had its places (pick()), and their cards say Popular.
+     */
+    public static function popular(): array
+    {
+        static $set = null;
+        if ($set === null) {
+            $set = [];
+            foreach ((array) (json_decode((string) @file_get_contents(database_path('products/popular.json')), true)['brands'] ?? []) as $b) {
+                $set[self::norm((string) $b)] = true;
+            }
+        }
+
+        return $set;
+    }
+
+    /**
+     * A look alike (2026-11-16, the owner: "it says aliah 247 zc when it is alika"): a product registered under a
+     * name one or two letters from a popular brand with the very same active ingredients, like Agway's Aliah 247 ZC
+     * beside Syngenta's Alika 247 ZC. Both are real registrations; the card says which one it looks like, and a list
+     * puts the popular one first.
+     */
+    private static function twins(array $all): array
+    {
+        $pop = [];
+        foreach ($all as $k => $p) {
+            if ($p['popular']) {
+                $pop[$p['_n'] . '|' . self::tail((string) $p['brand'])][$k] = self::head((string) $p['brand']);
+            }
+        }
+        foreach ($all as $k => $p) {
+            // The same ingredients AND the same strength and formulation ("247 ZC"): the same make up.
+            $group = $p['_n'] . '|' . self::tail((string) $p['brand']);
+            if ($p['popular'] || empty($pop[$group])) {
+                continue;
+            }
+            $h = self::head((string) $p['brand']);
+            foreach ($pop[$group] as $ok => $oh) {
+                $d = levenshtein($h, $oh);
+                if ($h !== $oh && strlen($h) >= 4 && $d >= 1 && $d <= 2) {
+                    $all[$k]['twin'] = $ok;
+                    break;
+                }
+            }
+        }
+
+        return $all;
+    }
+
+    /** What follows a brand's own word, its strength and formulation: "Aliah 247 ZC" is "247 zc". */
+    private static function tail(string $brand): string
+    {
+        return strtolower(trim((string) preg_replace('/^\S+\s*/', '', trim($brand))));
+    }
+
+    /** A brand's own word: "Aliah 247 ZC" is aliah. */
+    private static function head(string $brand): string
+    {
+        return strtolower((string) preg_replace('/[^a-z]/i', '', explode(' ', trim($brand))[0] ?? ''));
+    }
+
+    /**
+     * The owner's order, then the known names (2026-11-16): one card a brand, an original before its look alike, the
+     * first $max, then any popular brand the cut left out (up to two more), so Alika or Karate is never missing.
+     */
+    private static function pick(array $keys, int $max): array
+    {
+        $all = self::all();
+        $keys = self::oneABrand($keys);
+        $at = array_flip($keys);
+        foreach ($keys as $k) {
+            $o = $all[$k]['twin'] ?? null;
+            if ($o && isset($at[$o]) && $at[$o] > $at[$k]) {
+                array_splice($keys, $at[$o], 1);
+                array_splice($keys, $at[$k], 0, [$o]);
+                $at = array_flip($keys);
+            }
+        }
+        $out = array_slice($keys, 0, $max);
+        foreach (array_slice($keys, $max) as $k) {
+            if (count($out) >= $max + 2) {
+                break;
+            }
+            if (! empty($all[$k]['popular'])) {
+                $out[] = $k;
+            }
+        }
+
+        return $out;
     }
 
     /** One product, shaped for a card: with its origin, and what its label names (on each crop) in the catalogue's words. */
@@ -79,6 +173,8 @@ final class ProductBook
             'ai' => $p['ai'] ?? [], 'group' => $p['group'] ?? '', 'form' => $p['formulation'] ?? '',
             'timing' => $p['timing'] ?? null, 'note' => trim($note . ($note !== '' && $line !== '' ? ' ' : '') . $line),
             'origin' => $p['origin'] ?? 'ph',
+            'popular' => ! empty($p['popular']),
+            'twin' => isset($p['twin'], self::all()[$p['twin']]) ? self::all()[$p['twin']]['brand'] . ' (' . (self::all()[$p['twin']]['company'] ?? '') . ')' : null,
         ];
     }
 
@@ -96,8 +192,8 @@ final class ProductBook
     public static function keysForIngredient(string $ai, ?string $crop = null, ?string $weedGroup = null, int $max = 4): array
     {
         $all = self::all();
-        $out = [];
-        foreach (self::oneABrand(self::index()['ing'][self::norm($ai)] ?? []) as $k) {
+        $fit = [];
+        foreach (self::index()['ing'][self::norm($ai)] ?? [] as $k) {
             $p = $all[$k];
             if ($crop && ! in_array($crop, $p['crops'] ?? [], true)) {
                 continue;
@@ -105,13 +201,10 @@ final class ProductBook
             if ($weedGroup && $p['kind'] === 'herbicide' && ! in_array($weedGroup, $p['weeds'] ?? [], true)) {
                 continue;
             }
-            $out[] = $k;
-            if (count($out) >= $max) {
-                break;
-            }
+            $fit[] = $k;
         }
 
-        return $out;
+        return self::pick($fit, $max);
     }
 
     /** The products a label names for one pest or disease on one crop (any crop when none), Philippine companies first. */
@@ -129,7 +222,7 @@ final class ProductBook
         // The single ingredient products before the mixes, the owner's order kept within each.
         usort($keys, fn ($a, $b) => [count($all[$a]['ai'] ?? []) > 1, $all[$a]['_o']] <=> [count($all[$b]['ai'] ?? []) > 1, $all[$b]['_o']]);
 
-        return array_slice(self::oneABrand($keys), 0, $max);
+        return self::pick($keys, $max);
     }
 
     /** A brand two companies register shows once: the first in the owner's order (a Philippine company's). */
@@ -156,17 +249,8 @@ final class ProductBook
         $n = self::norm(self::bare($ai));
         $keys = $crop ? (self::index()['prob'][$ref][$crop] ?? []) : (self::index()['probAny'][$ref] ?? []);
         $all = self::all();
-        $out = [];
-        foreach (self::oneABrand($keys) as $k) {
-            if (($all[$k]['_n'] ?? '') === $n) {
-                $out[] = $k;
-                if (count($out) >= $max) {
-                    break;
-                }
-            }
-        }
 
-        return $out;
+        return self::pick(array_values(array_filter($keys, fn ($k) => ($all[$k]['_n'] ?? '') === $n)), $max);
     }
 
     /**
