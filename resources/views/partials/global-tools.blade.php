@@ -223,7 +223,7 @@
             $qVoiceSeasons = $qSeasonsWith('voice');
             $qQuickAny = $qCamSeasons->isNotEmpty() || $qVidSeasons->isNotEmpty() || $qVoiceSeasons->isNotEmpty();
             $qShowAnee = $qAnyOn(['wtp', 'whatp', 'vary', 'proto', 'sat', 'landprep']);
-            $qShowInside = $qMayCompare || $qAnyOn(array_merge(['sky', 'pb', 'npk', 'lcc', 'bilad', 'hatian', 'market', 'seedcalc', 'htp'], $qFhKeys));
+            $qShowInside = $qMayCompare || $qAnyOn(array_merge(['sky', 'heatmap', 'pb', 'npk', 'lcc', 'bilad', 'hatian', 'market', 'seedcalc', 'htp'], $qFhKeys));
             $qShowRecords = ! \App\Support\WorkerContext::inWorkerContext() || $qQuickAny
                 || $qAnyOn(['notes', 'gallery', 'farmlots', 'maps', 'draw', 'contacts', 'tags']);
             // Nothing to show (every tool switched off for this login): no panel at all.
@@ -398,6 +398,24 @@
                     <i>Watch clouds, rain and typhoon paths over your farm, see where the rain is headed, and ask Anee what it means for your lot. {{ \App\Support\SkyPass::price() }} credits a week.</i>
                 </span>
                 @if ($qSkyLocked)
+                    <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
+                @else
+                    <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                @endif
+            </a>
+            @endif
+            {{-- Heat Map Forecast (2026-11-17, the owner): the week's heat painted around a lot, played day by day,
+                 and a guide for each day. Libre + Anee and up, no credits. --}}
+            @if (\Illuminate\Support\Facades\Route::has('heatmap.page') && $qOn('heatmap'))
+            @php $qHeatLocked = ! \App\Support\Tier::farmCan('heatMap'); $qHeatRung = \App\Support\Tier::farmUnlocksAt('heatMap'); @endphp
+            <a href="{{ route('heatmap.page') }}" class="qa-tile qa-wtp"
+               @if ($qHeatLocked) data-tier-lock="{{ $qHeatRung }}" data-lock-say="The Heat Map Forecast comes with {{ \App\Support\Tier::withPlan($qHeatRung) }}. See the week's heat over your lot on the map, hour by hour, and what to do on the hottest days." @endif>
+                <span class="qa-ico"><img src="{{ asset('images/icons/heat-map.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
+                <span class="qa-txt {{ $qHeatLocked ? 'tl-dim' : '' }}">
+                    <b>Heat Map Forecast{{ \App\Support\Tagalog::flag('heat-map-forecast') }}</b>
+                    <i>See the week's heat over your lot on the map, play it day by day, and get a guide for the hottest days: when to work, spray, water and fertilize.</i>
+                </span>
+                @if ($qHeatLocked)
                     <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>
                 @else
                     <svg class="qa-go" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>

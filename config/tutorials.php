@@ -296,6 +296,12 @@ return [
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 
+        'tool.heatmap' => [
+            'title' => 'Heat Map Forecast',
+            'blurb' => "Pick your lot and see the week's heat painted around it on the map. Press play to watch the days go by, slide the colors lighter or stronger, and open Forecast and guides for what to do on each day.",
+            'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
+        ],
+
         'tool.npk' => [
             'title' => 'NPK Plus Calculator',
             'blurb' => 'Add up every fertilizer in your plan and see if it gives your crop enough nitrogen, phosphorus and potassium, and what yield it can feed.',
@@ -457,6 +463,7 @@ return [
         // Anee Auto's card shows on the season's own page (no seasons page since 2026-10-27).
         'auto.show'     => 'analysis.anee-auto',
         'sky.page'      => 'tool.sky-weather',
+        'heatmap.page'  => 'tool.heatmap',
         'npk.page'      => 'tool.npk',
         'lcc.page'      => 'tool.lcc',
         'bilad.page'    => 'tool.bilad',

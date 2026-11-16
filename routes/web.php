@@ -254,6 +254,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
             // 2026-10-27: the Market Price Forecast, its tables loaded, and the import events the daily news brings.
             'marketPrices' => class_exists(\App\Support\MarketBook::class) && \Illuminate\Support\Facades\Route::has('market.page') && \App\Support\MarketBook::ready(),
             'marketNews' => class_exists(\App\Support\MarketNews::class) && \App\Support\MarketNews::ready(),
+            // 2026-11-17: the Heat Map Forecast in Your tools.
+            'heatMap' => class_exists(\App\Support\HeatForecast::class) && \Illuminate\Support\Facades\Route::has('heatmap.page'),
             // 2026-10-27: the daily news reading runs on the owner's own Claude (true once its key is kept).
             'newsClaude' => method_exists(\App\Models\AiSetting::class, 'newsReader') && (bool) rescue(fn () => \App\Models\AiSetting::newsReader(), null, false),
             // 2026-10-27: the price records reach the calculators' palay card, the chats, the season reports and Anee Auto.
@@ -1028,6 +1030,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Hatian (2026-10-26, the owner): the harvest shared with the farm manager, the share counted from the gross.
     Route::get('/app/hatian', [App\Http\Controllers\HatianController::class, 'page'])->name('hatian.page');
     // Market Price Forecast (2026-10-27, the owner): when to sell, from the kept farmgate prices and the import events.
+    // Heat Map Forecast (2026-11-17, the owner): the week's heat painted around a lot on Google Maps, and a guide for each day.
+    Route::get('/app/heat-map', [App\Http\Controllers\HeatMapController::class, 'page'])->name('heatmap.page');
+    Route::get('/app/heat-map/maps', [App\Http\Controllers\HeatMapController::class, 'maps'])->name('heatmap.maps');
+    Route::get('/app/heat-map/forecast', [App\Http\Controllers\HeatMapController::class, 'forecast'])->middleware('throttle:60,1')->name('heatmap.forecast');
     Route::get('/app/market-prices', [App\Http\Controllers\MarketPriceController::class, 'page'])->name('market.page');
     Route::get('/app/market-prices/places', [App\Http\Controllers\MarketPriceController::class, 'places'])->name('market.places');
     Route::get('/app/market-prices/outlook', [App\Http\Controllers\MarketPriceController::class, 'outlook'])->middleware('throttle:120,1')->name('market.outlook');

@@ -51,6 +51,7 @@ return [
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
         'marketPrices'      => false,   // the Market Price Forecast: Libre + Anee and up (2026-10-29, the owner)
+        'heatMap'           => false,   // the Heat Map Forecast: Libre + Anee and up, no credits (2026-11-17, the owner)
         'seedCount'         => false,   // the Seed Count and Distance Calculator: Libre + Anee and up (2026-10-29, the owner)
         'howToPlant'        => false,   // How to Plant: Libre + Anee and up (2026-10-29, the owner)
         'inventory'         => false,   // and so is the shed
@@ -89,7 +90,7 @@ return [
         'excludes' => [
             'Anee: AI chat, analyses and credits (Libre + Anee)',
             'The field helpers, the Compatibility Checker and the Range Effect calendar (Libre + Anee)',
-            'Satellite Weather, NPK Plus and Maps (Libre + Anee)',
+            'Satellite Weather, the Heat Map Forecast, NPK Plus and Maps (Libre + Anee)',
             'Market Price Forecast, Seed Count and Distance, How to Plant (Libre + Anee)',
             'Workers and inventory (Solo Farmer)',
             'Video recording, worker logins, Collab Room',
@@ -123,6 +124,7 @@ return [
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
         'marketPrices'      => true,    // Libre + Anee and up (2026-10-29, the owner)
+        'heatMap'           => true,    // the Heat Map Forecast (2026-11-17)
         'seedCount'         => true,    // Libre + Anee and up (2026-10-29, the owner)
         'howToPlant'        => true,    // Libre + Anee and up (2026-10-29, the owner)
         'inventory'         => false,
@@ -154,7 +156,7 @@ return [
             'Land Prep Planner, Anee Auto and Realign by Anee',
             'Field helpers: the pest, disease, weed, nutrient and variety finders and the Compatibility Checker',
             'The Range Effect calendar: how long every fertilizer and spray keeps working',
-            'Satellite Weather and the NPK Plus calculator',
+            'Satellite Weather, the Heat Map Forecast and the NPK Plus calculator',
             'Maps: draw and measure up to 3 fields',
             'The Market Price Forecast, the Seed Count and Distance Calculator and How to Plant',
             'Buy AI credit packs whenever you need more',
@@ -164,7 +166,7 @@ return [
             'Your Libre plan exactly as it is',
             'Anee AI chat: ask anything, show a photo',
             'Every AI analysis, the Land Prep Planner and Anee Auto',
-            'The field helpers, Satellite Weather, NPK Plus and Maps',
+            'The field helpers, Satellite Weather, the Heat Map, NPK Plus and Maps',
             'The Market Price Forecast, Seed Count and How to Plant',
             'Buy AI credit packs whenever you need more, and no ads',
         ],
@@ -196,6 +198,7 @@ return [
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
         'marketPrices'      => true,    // the Market Price Forecast: every plan, no credits (2026-10-27)
+        'heatMap'           => true,    // the Heat Map Forecast (2026-11-17)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => true,
@@ -267,6 +270,7 @@ return [
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
         'marketPrices'      => true,    // the Market Price Forecast: every plan, no credits (2026-10-27)
+        'heatMap'           => true,    // the Heat Map Forecast (2026-11-17)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => true,
@@ -332,6 +336,7 @@ return [
         'bentaBilad'        => true,    // the Benta o Bilad Calculator: every plan (2026-10-19)
         'hatian'            => true,    // the Hatian Calculator: every plan (2026-10-26)
         'marketPrices'      => true,    // the Market Price Forecast: every plan, no credits (2026-10-27)
+        'heatMap'           => true,    // the Heat Map Forecast (2026-11-17)
         'seedCount'         => true,    // the Seed Count and Distance Calculator: every plan (2026-10-19)
         'howToPlant'        => true,    // How to Plant, the traditional way crop by crop: every plan (2026-10-19)
         'inventory'         => true,

@@ -53,6 +53,7 @@ class WorkerTools
             'sat' => ['Satellite Analysis', 'anee', 'images/icons/satellite.svg', ['sat.*'], []],
             'landprep' => ['Land Prep Planner', 'anee', 'images/icons/land-prep.svg', ['landprep.*', 'fh.*@landprep'], []],
             'sky' => ['Satellite Weather', 'tools', 'images/icons/storm.svg', ['sky.*', 'sat.places'], []],
+            'heatmap' => ['Heat Map Forecast', 'tools', 'images/icons/heat-map.svg', ['heatmap.*'], []],
             'compare' => ['Compare Reports', 'tools', 'images/icons/ab-testing.png', ['compare.*', 'sm.compare.*'], []],
             'pb' => ['Protocol Builder', 'tools', 'images/icons/bricks.png', ['pb.*'], []],
             'npk' => ['NPK Plus Calculator', 'tools', 'images/icons/npk.svg', ['npk.*', 'seedcalc.count'], []],

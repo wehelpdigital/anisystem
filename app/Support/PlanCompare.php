@@ -85,6 +85,7 @@ class PlanCompare
                 ['Forecast', null, fn (array $t) => $t['weatherDays'] === null ? 'Full forecast' : 'Today and tomorrow', 'forecast'],
                 ['Weather right now', 'Shown on your dashboard', $gate('weatherNow')],
                 ['Satellite Weather', 'Clouds, rain radar and typhoon paths over your farm. Opened by a weekly pass in credits', $gate('skyWeather'), 'satellite-weather'],
+                ['Heat Map Forecast', "The week's heat painted over your lot, played day by day, with a guide for each day", $gate('heatMap'), 'heat-map-forecast'],
             ]],
             ['Workers and team', 'M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z', [
                 ['Workers and payroll', 'Rates, attendance and labor cost on every task', $gate('workers'), 'workers'],

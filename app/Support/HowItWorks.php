@@ -108,7 +108,7 @@ class HowItWorks
         'when' => 'aiAnalyses', 'what' => 'aiAnalyses', 'variety' => 'aiAnalyses', 'cropProtocol' => 'aiAnalyses',
         'satellite' => 'aiAnalyses', 'landprep' => 'aiAnalyses', 'review' => 'aiAnalyses', 'auto' => 'aiAnalyses',
         'chat' => 'ai', 'realign' => 'ai',
-        'maps' => 'maps', 'skyWeather' => 'skyWeather', 'npk' => 'npkPlus', 'bilad' => 'bentaBilad', 'hatian' => 'hatian', 'market' => 'marketPrices', 'seedCount' => 'seedCount', 'howToPlant' => 'howToPlant',
+        'maps' => 'maps', 'skyWeather' => 'skyWeather', 'heatMap' => 'heatMap', 'npk' => 'npkPlus', 'bilad' => 'bentaBilad', 'hatian' => 'hatian', 'market' => 'marketPrices', 'seedCount' => 'seedCount', 'howToPlant' => 'howToPlant',
         'varietyFinder' => 'fieldHelpers', 'pestFinder' => 'fieldHelpers', 'diseaseFinder' => 'fieldHelpers',
         'nutrientFinder' => 'fieldHelpers', 'weedHelper' => 'fieldHelpers', 'compat' => 'fieldHelpers', 'rangeEffect' => 'fieldHelpers',
         'inventory' => 'inventory', 'stock' => 'inventory',
@@ -363,6 +363,11 @@ class HowItWorks
                         'Watch the clouds and rain of the last hours over your farm, fast forward the forecast, and see every typhoon with its path, its cone and how far it is from your field.',
                         ['Satellite clouds and rain radar, played back', 'Typhoon tracks with the time at every forecast point', 'Where the rain clusters are headed, hour by hour'],
                         'satellite-weather', 'sky.page'),
+                    // The Heat Map Forecast (2026-11-17, the owner): the week's heat painted around a lot, and a guide for each day.
+                    self::item('heatMap', 'Heat Map Forecast', "The week's heat over your lot, day by day", 'icons/heat-map.svg', false,
+                        "Pick a lot and see the week's temperatures painted around it on the map. Play it day by day or hour by hour, and read what to do on each day: when to work, spray, water and fertilize, and what the heat does to your crop at its stage.",
+                        ["The week's heat on the map, played day by day", 'What the heat feels like to the people in the field', "A guide for each day, with your crop's stage"],
+                        null, 'heatmap.page'),
                     // The LCC Checker (2026-10-14): is it time for nitrogen, from the leaves.
                     self::item('lcc', 'LCC Checker', 'Rice: is it time for nitrogen?', 'icons/leaf-color.svg', false,
                         'From the third week on, hold your leaves against the leaf color chart and tap the color each one matches, or send Anee photos of the leaves and she reads the color. The checker says if urea is due now and how many kilos your area needs.',
@@ -773,6 +778,7 @@ class HowItWorks
         'compat' => ['**Mix sprays without damage.** See which products go on together and which do not.', '**One trip instead of two.** Products that mix go in one tank, saving labor and fuel.', '**Pour in the right order.** The mixing order and a jar test keep the tank from clumping.', '**The right strength.** How strong the spray is for your crop and its age.'],
         'bilad' => ['**Sell the better way.** See if selling wet or drying first leaves you more money.', '**Every cost counted.** The harvester\'s share, the drying and the weight it takes out.', '**Know your break even.** The dry price where drying starts to pay.', '**An answer in minutes.** Put in your sacks and prices and see.'],
         'hatian' => ['**A fair share, counted right.** The farm manager\'s share from the whole harvest, as agreed.', '**Fewer disputes.** Everyone sees how the share was counted.', '**Home food set aside.** Your family\'s sacks come out of your own share.', '**Paid in sacks or in money.** Both ways, at your price.'],
+        'heatMap' => ['**Work in the cool hours.** See when the heat peaks on each day of the week.', '**Spray and fertilize at the right time.** Not in the midday heat that wastes them.', '**Protect the crop at its weak stage.** Flowering in heat is warned days ahead.', '**Keep the people safe.** What the heat feels like, and when to rest in the shade.'],
         'market' => ['**Sell in the best months.** See when your crop sells highest and when prices fall.', '**Plant for a better price.** Time the harvest away from the glut months.', '**Know if storing pays.** See if keeping the harvest a while adds to the price.', '**Understand the swings.** The imports and bans that moved the price, explained.'],
         'auto' => ['**No more figuring out what to do each day.** Anee plans the season and tells you every morning.', '**The analyses done for you.** Planting date, variety ranking and fertilizer, worked out for your field.', '**A plan that keeps up with the weather.** Rain or a typhoon? She moves the work to the best day.', '**More from each hectare.** Every bag and spray at its moment, with fewer losses.'],
     ];
