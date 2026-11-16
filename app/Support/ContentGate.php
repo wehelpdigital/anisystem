@@ -160,6 +160,68 @@ class ContentGate
     }
 
     /**
+     * The part behind the gate as a visitor gets it (2026-11-16, the owner: "user can easily read it"): the same
+     * blocks with every word swapped for letters of the same length, so the blur looks the same while reader mode,
+     * view source or a translation finds nothing to read. Headings and questions stay, the teaser of what is inside;
+     * pictures, related links and sources stay too. Only a proven crawler (App\Support\Crawler) gets the real text.
+     */
+    public static function veil(array $blocks, string $seed): array
+    {
+        mt_srand(crc32($seed));
+        $mix = fn ($s) => self::scramble(SitePages::plain((string) $s));
+        $out = [];
+        foreach ($blocks as $k => $b) {
+            switch ($b['type'] ?? '') {
+                case 'text':
+                case 'quote':
+                    $b['text'] = implode("\n\n", array_map($mix, preg_split('/\n\s*\n/', (string) ($b['text'] ?? ''))));
+                    unset($b['cite']);
+                    break;
+                case 'list':
+                    $b['items'] = array_map(fn ($i) => is_array($i) ? $mix($i['text'] ?? '') : $mix($i), (array) ($b['items'] ?? []));
+                    break;
+                case 'steps':
+                    $b['items'] = array_map(fn ($i) => ['title' => $mix($i['title'] ?? ''), 'text' => $mix($i['text'] ?? '')], (array) ($b['items'] ?? []));
+                    break;
+                case 'table':
+                    $rows = (array) ($b['rows'] ?? []);
+                    $b['rows'] = array_map(fn ($row, $i) => $i === 0 ? $row : array_map($mix, (array) $row), $rows, array_keys($rows));
+                    break;
+                case 'callout':
+                    $b['text'] = $mix($b['text'] ?? '');
+                    unset($b['textTl']);
+                    break;
+                case 'faq':
+                    $b['items'] = array_map(fn ($i) => ['q' => (string) ($i['q'] ?? ''), 'a' => $mix($i['a'] ?? '')], (array) ($b['items'] ?? []));
+                    break;
+            }
+            $out[$k] = $b;
+        }
+        mt_srand();
+
+        return $out;
+    }
+
+    /** Letters for letters and digits for digits, case and spacing kept. */
+    private static function scramble(string $s): string
+    {
+        $lower = 'etaoinshrdlcumwfgypbvk';
+        $out = '';
+        foreach (mb_str_split($s) as $ch) {
+            if (ctype_digit($ch)) {
+                $out .= (string) mt_rand(0, 9);
+            } elseif (preg_match('/^\p{L}$/u', $ch)) {
+                $r = $lower[mt_rand(0, strlen($lower) - 1)];
+                $out .= mb_strtoupper($ch) === $ch && mb_strtolower($ch) !== $ch ? strtoupper($r) : $r;
+            } else {
+                $out .= $ch;
+            }
+        }
+
+        return $out;
+    }
+
+    /**
      * What the gate's card calls the page's subject: a variety by the name on
      * its seed bag and its registry number, a pest, disease or weed by its
      * plain name ("Kangkong Weed in Rice Fields" is Kangkong). Null for a

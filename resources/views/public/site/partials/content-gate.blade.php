@@ -35,10 +35,16 @@
         default => ['Read the whole guide', null],
     };
 @endphp
+@php
+    // The real words behind the wall go only to a proven search or AI crawler (2026-11-16, the owner: "user can
+    // easily read it"); a visitor gets the same shapes with the letters swapped, under the same blur.
+    $real = \App\Support\Crawler::trusted();
+    $shown = $real ? $gated : $G::veil($gated, $page->section . '/' . $page->slug);
+@endphp
 @include('public.site.partials.content-gate-assets')
 <div class="sp-gate">
-    <div class="sp-gated" id="spGated">
-        @include('public.site.blocks', ['blocks' => $gated])
+    <div class="sp-gated" id="spGated" @unless ($real) aria-hidden="true" translate="no" @endunless>
+        @include('public.site.blocks', ['blocks' => $shown])
     </div>
     @include('public.site.partials.content-gate-card', [
         'tl' => $tl,

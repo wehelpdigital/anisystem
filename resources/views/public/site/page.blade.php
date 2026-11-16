@@ -37,6 +37,9 @@
     $gateSplit = (! ($preview ?? false) && \App\Support\ContentGate::applies($page->section)) ? \App\Support\ContentGate::split($blocks) : null;
     // A member reads it all; a thin marker shows where a guest would stop.
     $memberSplit = ($gateSplit === null && ! ($preview ?? false) && \App\Support\ContentGate::opensFor($page->section)) ? \App\Support\ContentGate::split($blocks) : null;
+    // Behind the wall, a visitor's copy of the structured data carries only the open part: the answers and steps it
+    // would otherwise spell out go to proven crawlers alone, with the page (App\Support\Crawler, 2026-11-16).
+    $schemaOpen = $gateSplit !== null && ! \App\Support\Crawler::trusted();
     $isFeature = $page->section === 'features';
     $isQuestion = $page->section === 'questions';
     $feat = $isFeature ? $S::feature($page) : null;
@@ -119,7 +122,7 @@
     <meta name="twitter:description" content="{{ $page->metaDescription }}">
     @if ($heroSrc)<meta name="twitter:image" content="{{ $heroSrc }}">@endif
     {{-- One graph, every node tied to the others (App\Support\PageSchema). --}}
-    <script type="application/ld+json">{!! json_encode(\App\Support\PageSchema::graph($page, $blocks, $meta, $canonical, $faq), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
+    <script type="application/ld+json">{!! json_encode(\App\Support\PageSchema::graph($page, $schemaOpen ? $gateSplit['open'] : $blocks, $meta, $canonical, $schemaOpen ? $S::faq($gateSplit['open']) : $faq), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
 @endpush
 
 @section('content')

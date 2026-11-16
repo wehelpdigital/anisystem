@@ -90,6 +90,8 @@ Route::get('/deploy-check', function (\Illuminate\Http\Request $request) {
         // When the build ran: Composer writes the autoloader then.
         'builtAt' => (string) (env('RAILWAY_DEPLOYMENT_ID') ?: (is_file(base_path('vendor/composer/autoload_real.php')) ? date('c', (int) filemtime(base_path('vendor/composer/autoload_real.php'))) : 'unknown')),
         'analytics' => ['container' => config('services.analytics.container'), 'serverEvents' => filled(config('services.analytics.api_secret'))],
+        // Crawler addresses proven or refused today (App\Support\Crawler): Google must keep getting the guides' text.
+        'crawlers' => \App\Support\Crawler::stats(),
         'markers' => [
             'eyeFilterButton' => str_contains($source, 'id="viewFilterBtn"'),
             'dragGrip' => str_contains($source, 'A grip says the card can be dragged'),
