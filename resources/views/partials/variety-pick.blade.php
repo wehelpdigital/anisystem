@@ -140,7 +140,7 @@
     const isPicked = (n) => S.picked.some((x) => norm(x) === norm(n));
     const doneSay = () => { if (S.multi) $('vpDone').textContent = S.picked.length ? 'Done · ' + S.picked.length + ' chosen' : 'Done'; };
 
-    const record = (r) => ({ name: r[0], alias: r[1] || null, type: r[2], days: r[3] || null, daysUnit: r[4] || 'days', avg: r[5] || null, top: r[6] || null, unit: r[7] || 't/ha', year: r[8] || null, where: r[10] || '', learned: !!r[11] });
+    const record = (r) => ({ name: r[0], alias: r[1] || null, type: r[2], days: r[3] || null, daysUnit: r[4] || 'days', avg: r[5] || null, top: r[6] || null, unit: r[7] || 't/ha', year: r[8] || null, where: r[10] || '', learned: !!r[11], ratings: r[13] || null });
     const facts = (rec) => !rec ? '' : [rec.type === 'hybrid' ? 'Hybrid' : 'Not hybrid', rec.days ? Math.round(rec.days) + ' ' + (rec.daysUnit || 'days') : '', rec.year ? 'released ' + rec.year : ''].filter(Boolean).join(' · ');
     const yieldSay = (rec) => !rec ? '' : rec.top ? fmt(rec.top) + ' ' + rec.unit + ' at best in trials' + (rec.avg ? ', ' + fmt(rec.avg) + ' on average' : '') : rec.avg ? fmt(rec.avg) + ' ' + rec.unit + ' on average in trials' : '';
 

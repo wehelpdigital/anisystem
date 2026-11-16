@@ -228,6 +228,10 @@ final class NpkNeed
                 $f[] = $k;
             }
         }
+        // A pH of 8.5 or more is sodium: a limy soil stops near 8.3 (2026-11-16, the page's factors() the same).
+        if ($ph !== null && $ph >= NpkModel::SODIC_PH && $ph <= 12) {
+            $f[] = 'sodic';
+        }
         $f = array_values(array_unique(array_filter($f)));
         // Strongly alkaline and NOT sodic reads as a limy soil, rich in calcium.
         if (in_array('strongAlk', $f, true) && ! in_array('sodic', $f, true)) {
@@ -642,7 +646,7 @@ final class NpkNeed
     /** How much is planted per hectare against the usual, and what that does to the goal. */
     public static function seed(?array $c, array $in): array
     {
-        $out = ['perHa' => null, 'raw' => null, 'kind' => null, 'usual' => null, 'unitWord' => null, 'sf' => 1.0, 'pop' => 1.0, 'germ' => null, 'words' => '', 'warn' => false];
+        $out = ['perHa' => null, 'raw' => null, 'kind' => null, 'usual' => null, 'unitWord' => null, 'sf' => 1.0, 'pop' => 1.0, 'sn' => 1.0, 'stand' => null, 'germ' => null, 'words' => '', 'warn' => false];
         $seed = (array) ($in['seed'] ?? []);
         $v = (float) ($seed['amount'] ?? 0);
         $a = (float) ($in['areaHa'] ?? 0);
@@ -673,13 +677,25 @@ final class NpkNeed
         if ($tree && $out['kind'] === 'n') {
             $base = (float) ($c['treesPerHa'] ?? 0) ?: ($u[0] + $u[1]) / 2;
             $out['pop'] = max(0.3, min(2, $out['perHa'] / $base));
-        } elseif ($out['perHa'] < $u[0] * 0.75) {
-            $out['sf'] = max(0.3, $out['perHa'] / ($u[0] * 0.75));
-            $out['warn'] = true;
-            $out['words'] .= ' Yours is thinner, so the need is counted for ' . round($out['sf'] * 100) . ' percent of the goal.';
-        } elseif ($out['perHa'] > $u[1] * 1.5) {
-            $out['warn'] = true;
-            $out['words'] .= ' Yours is much more: crowded plants need no more fertilizer and give no more harvest.';
+        } else {
+            // The final stand against the middle of the usual (NpkModel::STAND, 2026-11-16): the need follows it.
+            $out['stand'] = $out['perHa'] / (($u[0] + $u[1]) / 2);
+            if ($out['perHa'] < $u[0] * 0.75) {
+                $out['sf'] = max(0.3, $out['perHa'] / ($u[0] * 0.75));
+                $out['warn'] = true;
+                $out['words'] .= ' Yours is thinner, so the need is counted for ' . round($out['sf'] * 100) . ' percent of the goal.';
+            } else {
+                $S = NpkModel::STAND;
+                $out['sn'] = $out['perHa'] > $u[1] ? min($S['max'], 1 + $S['slope'] * ($out['perHa'] / $u[1] - 1))
+                    : ($out['perHa'] < $u[0] ? max($S['min'], 1 - $S['slope'] * (1 - $out['perHa'] / $u[0])) : 1.0);
+                $pct = (int) round(abs($out['sn'] - 1) * 100);
+                if ($out['perHa'] > $u[1] * 1.5) {
+                    $out['warn'] = true;
+                    $out['words'] .= ' Yours is much more: crowded plants make more leaves and straw, so about ' . $pct . ' percent more nitrogen and potassium is counted, but they give no more grain and lodge and catch diseases more easily.';
+                } elseif ($pct >= 2) {
+                    $out['words'] .= ' The need follows your stand: about ' . $pct . ' percent ' . ($out['sn'] > 1 ? 'more' : 'less') . ' nitrogen and potassium is counted.';
+                }
+            }
         }
 
         return $out;
@@ -924,6 +940,10 @@ final class NpkNeed
             } elseif (($Up[$n] ?? 0) > 0 && ! empty($g['Yeff'])) {
                 $v = ! empty($c['removalOnly']) ? $g['Yeff'] * $Up[$n] : $g['Yeff'] * $Up[$n] * (1 - $base[$n]) / $RE[$n];
                 $out['how'][$n] = ! empty($c['removalOnly']) ? 'removal' : 'uptake';
+            }
+            // The final stand moves the nitrogen and potassium need (NpkModel::STAND, 2026-11-16).
+            if ($v !== null && ($n === 'N' || $n === 'K2O')) {
+                $v *= (float) ($g['seed']['sn'] ?? 1);
             }
             if ($v !== null) {
                 $out['raw'][$n] = $v;

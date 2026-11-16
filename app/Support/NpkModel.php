@@ -191,20 +191,39 @@ final class NpkModel
      * soil's own share (share: multipliers on SOIL_SHARE). Kept within 0.5 to
      * 1.8 when several apply.
      */
+    /** A soil pH at or above this is sodium, not lime: a limy soil stops near 8.3 (2026-11-16). */
+    public const SODIC_PH = 8.5;
+
+    /**
+     * The final stand and the need (2026-11-16, the owner: the need should rise with the final stand, and a thin one
+     * should show its penalty). The plants that come up (seed at its germination) against the usual range: inside
+     * it the need stays (a range like rice's 18 to 40 kg spans hybrid and inbred seed, both full stands); above its
+     * top, a denser stand makes more leaves and straw, which carry nitrogen and potassium:
+     * need x (1 + slope x (stand / top - 1)), up to max; below its low end, need x (1 - slope x (1 - stand / low)),
+     * down to min. Under 75 percent of the low end the goal itself is cut instead (seed(), sf), never both.
+     */
+    public const STAND = ['slope' => 0.3, 'min' => 0.95, 'max' => 1.15];
+
+    /*
+     * Potassium and the pH (2026-11-16, the owner: "sodic alkaline should have a lower K right?"). Less potassium
+     * reaches the roots at both ends: an acid soil holds little of it and lets it wash out (the same loss as a sandy
+     * soil, so `kwash` counts once, the larger); on a high pH soil calcium, and on a sodic or salty one sodium, crowd
+     * it off the roots (`kcrowd`, once, the larger: sodium the most). So more is counted.
+     */
     public const ADJUST = [
-        'sandy' => ['N' => 1.15, 'K2O' => 1.2, 'share' => ['N' => 0.9, 'K2O' => 0.9], 'why' => 'Sandy soil lets nitrogen and potassium wash down'],
+        'sandy' => ['N' => 1.15, 'K2O' => 1.2, 'same' => ['K2O' => 'kwash'], 'share' => ['N' => 0.9, 'K2O' => 0.9], 'why' => 'Sandy soil lets nitrogen and potassium wash down'],
         'clay' => ['K2O' => 0.9, 'why' => 'Clay holds potassium'],
-        'strongAcid' => ['P2O5' => 1.3, 'same' => ['P2O5' => 'pfix'], 'why' => 'Very acid soil (pH under 5) locks up phosphorus'],
-        'acid' => ['P2O5' => 1.2, 'same' => ['P2O5' => 'pfix'], 'why' => 'Acid soil locks up phosphorus'],
+        'strongAcid' => ['P2O5' => 1.3, 'K2O' => 1.1, 'same' => ['P2O5' => 'pfix', 'K2O' => 'kwash'], 'why' => 'Very acid soil (pH under 5) locks up phosphorus and lets potassium wash out'],
+        'acid' => ['P2O5' => 1.2, 'K2O' => 1.05, 'same' => ['P2O5' => 'pfix', 'K2O' => 'kwash'], 'why' => 'Acid soil locks up phosphorus and lets some potassium wash out'],
         // A high pH locks phosphorus up as calcium phosphate in a limy soil; in a
         // sodic one the high pH is sodium, and sodium phosphate stays soluble,
         // so there (unless sodic) only the nitrogen lost to the air counts.
-        'alkaline' => ['P2O5' => 1.15, 'N' => 1.05, 'same' => ['P2O5' => 'pfix', 'N' => 'nair'], 'unless' => ['P2O5' => 'sodic'], 'why' => 'Alkaline soil locks up phosphorus and loses some urea nitrogen to the air',
+        'alkaline' => ['P2O5' => 1.15, 'N' => 1.05, 'K2O' => 1.05, 'same' => ['P2O5' => 'pfix', 'N' => 'nair', 'K2O' => 'kcrowd'], 'unless' => ['P2O5' => 'sodic'], 'why' => 'Alkaline soil locks up phosphorus, loses some urea nitrogen to the air, and its calcium crowds out some potassium',
             'whyUnless' => 'Alkaline soil loses some urea nitrogen to the air'],
-        'strongAlk' => ['P2O5' => 1.25, 'N' => 1.1, 'same' => ['P2O5' => 'pfix', 'N' => 'nair'], 'unless' => ['P2O5' => 'sodic'], 'why' => 'Strongly alkaline soil (pH over 8) locks up phosphorus and loses urea nitrogen to the air',
+        'strongAlk' => ['P2O5' => 1.25, 'N' => 1.1, 'K2O' => 1.1, 'same' => ['P2O5' => 'pfix', 'N' => 'nair', 'K2O' => 'kcrowd'], 'unless' => ['P2O5' => 'sodic'], 'why' => 'Strongly alkaline soil (pH over 8) locks up phosphorus, loses urea nitrogen to the air, and crowds out potassium',
             'whyUnless' => 'Strongly alkaline soil (pH over 8) loses urea nitrogen to the air; its sodium keeps phosphorus soluble, so phosphorus is not raised'],
-        'sodic' => ['N' => 1.1, 'K2O' => 1.1, 'same' => ['N' => 'nair'], 'why' => 'Sodic soil loses nitrogen to the air, and sodium crowds out potassium'],
-        'saline' => ['K2O' => 1.15, 'N' => 1.05, 'why' => 'On salty soil potassium helps the crop keep the salt out'],
+        'sodic' => ['N' => 1.1, 'K2O' => 1.2, 'same' => ['N' => 'nair', 'K2O' => 'kcrowd'], 'why' => 'Sodic soil loses nitrogen to the air, and sodium crowds out potassium'],
+        'saline' => ['K2O' => 1.15, 'N' => 1.05, 'same' => ['K2O' => 'kcrowd'], 'why' => 'On salty soil potassium helps the crop keep the salt out'],
         'acid_sulfate' => ['P2O5' => 1.3, 'same' => ['P2O5' => 'pfix'], 'why' => 'Acid sulfate soil locks up phosphorus'],
         // Low organic matter and a low nitrogen test are one shortfall (a test reads the soil's own N supply,
         // and the soil atlas rates N by organic matter): they count once, the larger (2026-10-19).
@@ -565,7 +584,7 @@ final class NpkModel
             'textures' => self::TEXTURES, 'conditions' => $conditions + self::MORE_CONDITIONS, 'soilShare' => self::SOIL_SHARE, 'soilShareCrop' => self::SOIL_SHARE_CROP, 'recovery' => self::RECOVERY,
             'guideYield' => self::GUIDE_YIELD, 'acidity' => self::ACIDITY, 'acidAt' => self::ACID_AT, 'acidUnlock' => self::ACID_UNLOCK, 'phNeed' => self::PH_NEED, 'pkBase' => self::PK_BASE, 'potentialX' => self::POTENTIAL_X, 'adjust' => self::ADJUST, 'seeding' => array_map(fn ($s) => array_diff_key($s, ['sources' => 1]), self::SEEDING), 'elements' => array_map(fn ($e) => array_diff_key($e, ['sources' => 1]), self::ELEMENTS), 'phShift' => self::PH_SHIFT, 'acidEffect' => self::ACID_EFFECT, 'planLock' => self::PLAN_LOCK, 'lockSoil' => self::LOCK_SOIL, 'gypsumSodic' => self::GYPSUM_SODIC,
             'levels' => self::MICRO_LEVELS, 'soilMicro' => ['step' => self::SOIL_STEP, 'floor' => self::SOIL_FLOOR, 'none' => self::SOIL_NONE, 'factor' => self::SOIL_FACTOR, 'byEl' => self::SOIL_FACTOR_EL], 'climate' => self::CLIMATE, 'ensoTilt' => self::ENSO_TILT,
-            'field' => self::FIELD, 'yieldBasis' => self::YIELD_BASIS,
+            'field' => self::FIELD, 'yieldBasis' => self::YIELD_BASIS, 'sodicPh' => self::SODIC_PH, 'stand' => self::STAND,
             // The pump's year and its months, in the lot questions' own words (2026-10-21).
             'pumpYear' => FieldProfile::QUESTIONS['pumpYear']['o'], 'pumpMonths' => FieldProfile::QUESTIONS['pumpStops']['o'],
         ];

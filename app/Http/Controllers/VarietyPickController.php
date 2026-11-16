@@ -86,6 +86,25 @@ class VarietyPickController extends Controller
         return [$b['name'], $b['alias'], $b['type'], $b['days'], $b['daysUnit'], $r['yield'] !== null ? round((float) $r['yield'], 2) : null,
             ($r['yieldTop'] ?? null) !== null ? round((float) $r['yieldTop'], 2) : null, $r['yieldUnit'] ?? 't/ha', $b['year'],
             implode(' ', array_slice((array) $r['aliases'], 0, 4)), mb_substr((string) ($r['where'] ?? ''), 0, 120),
-            empty($r['learned']) ? 0 : 1, implode('|', array_slice((array) $r['aliases'], 0, 12))];
+            empty($r['learned']) ? 0 : 1, implode('|', array_slice((array) $r['aliases'], 0, 12)), self::ratings($r)];
+    }
+
+    /** The record's pest and disease ratings, short: "bl:I blb:R" (NPK Plus reads them for its risks, 2026-11-16). */
+    private const RATING_KEYS = ['blast' => 'bl', 'bacterial leaf blight' => 'blb', 'sheath blight' => 'shb', 'tungro' => 'tu',
+        'brown planthopper' => 'bph', 'green leafhopper' => 'glh', 'stem borer' => 'sb', 'corn borer' => 'cb', 'stalk rot' => 'sr',
+        'rust' => 'ru', 'downy mildew' => 'dm', 'corn earworm' => 'ew'];
+
+    private static function ratings(array $r): string
+    {
+        $out = [];
+        foreach ((array) ($r['ratings'] ?? []) as $name => $code) {
+            $k = self::RATING_KEYS[strtolower((string) $name)] ?? null;
+            $code = strtoupper(trim((string) $code));
+            if ($k && preg_match('/^(R|MR|I|MS|S|HS)$/', $code)) {
+                $out[] = $k . ':' . $code;
+            }
+        }
+
+        return implode(' ', $out);
     }
 }

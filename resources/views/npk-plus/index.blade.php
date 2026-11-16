@@ -70,8 +70,12 @@
     .np-by-b b { display: block; font-size: .84rem; font-weight: 800; line-height: 1.3; color: var(--color-gray-900); }
     .np-by-b small { display: block; margin-top: .1rem; font-size: .7rem; line-height: 1.35; color: var(--color-gray-500); }
     .np-by-b.is-on { border-color: #4a7c2a; background: #f4f9ee; box-shadow: 0 0 0 3px rgb(107 159 61 / .16); }
-    .np-three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
-    .np-three .np-label { min-height: 2.1rem; display: flex; flex-direction: column; justify-content: flex-end; line-height: 1.2; margin-top: .2rem; }
+    /* One field a row on a phone (2026-11-16, the owner: fields "squeezed in columns"); side by side from 560px. */
+    .np-three { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 .5rem; }
+    @media (min-width: 560px) {
+        .np-three { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; }
+        .np-three .np-label { min-height: 2.1rem; display: flex; flex-direction: column; justify-content: flex-end; line-height: 1.2; margin-top: .2rem; }
+    }
     .np-bypane { animation: npByIn .28s var(--np-ease) both; }
     .np-germ { margin-top: .5rem; padding-top: .1rem; border-top: 1px dashed var(--color-gray-200); animation: npByIn .28s var(--np-ease) both; }
     @keyframes npByIn { from { opacity: 0; transform: translateY(8px); } }
@@ -262,8 +266,8 @@
     .np-qstep input { text-align: center; font-size: 1.25rem; font-weight: 800; }
     .np-qsum { margin-top: .8rem; padding: .7rem .8rem; border-radius: .9rem; font-size: .82rem; line-height: 1.55; color: #24400f; background: #f3f8ec; border: 1px solid #c9e0ad; }
     html.dark .np-qsum { color: #d5e3c5; background: #17220f; border-color: #2b3a1c; }
-    .np-cgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; margin-top: .5rem; }
-    @media (min-width: 560px) { .np-cgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .np-cgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: .55rem; margin-top: .5rem; }
+    @media (min-width: 560px) { .np-cgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .45rem; } }
     .np-cgrid label { font-size: .7rem; font-weight: 800; color: var(--color-gray-600); }
     .np-cgrid input { margin-top: .15rem; }
 
@@ -277,7 +281,9 @@
     html.dark .np-microsw { background: #121a0d; border-color: #2b3a1c; }
     .np-otab.is-off { opacity: .55; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
     @media (prefers-reduced-motion: reduce) { .np-otab.is-off { transition: none; } }
-    .np-soilu { display: flex; flex-wrap: wrap; gap: .5rem .9rem; margin-top: .7rem; }
+    .np-soilu { display: flex; flex-direction: column; gap: .5rem; margin-top: .7rem; }
+    .np-soilu label { justify-content: space-between; }
+    @media (min-width: 560px) { .np-soilu { flex-direction: row; flex-wrap: wrap; gap: .5rem .9rem; } .np-soilu label { justify-content: flex-start; } }
     .np-soilu label { display: flex; align-items: center; gap: .45rem; font-size: .74rem; font-weight: 800; color: var(--color-gray-600); }
     .np-soilu .np-utag { min-height: 2.1rem; min-width: 0; }
     .np-testbox { margin-top: 1rem; padding: .8rem; border-radius: .9rem; border: 1px dashed var(--color-gray-200); }
@@ -301,13 +307,13 @@
     @media (prefers-reduced-motion: reduce) { .np-area-use { transition: none; } .np-area-say:not([hidden]) { animation: none; } }
     html.dark .np-testbox { border-color: #2b3a1c; }
 
-    /* What the plan gives: three tabs. */
-    .np-otabs { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: .8rem; padding: .25rem; border-radius: .95rem; background: var(--color-gray-100); }
+    /* What the plan gives: four tabs. */
+    .np-otabs { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: .8rem; padding: .25rem; border-radius: .95rem; background: var(--color-gray-100); }
     html.dark .np-otabs { background: #121a0d; }
     .np-otab { position: relative; z-index: 1; padding: .5rem .3rem; border: 0; background: none; border-radius: .75rem; font-size: .82rem; font-weight: 800; color: var(--color-gray-500); cursor: pointer;
         transition: color .28s var(--np-ease); }
     .np-otab.is-on { color: #fff; }
-    .np-otab-ind { position: absolute; z-index: 0; top: .25rem; bottom: .25rem; left: .25rem; width: calc((100% - .5rem) / 3); border-radius: .75rem; background: var(--color-brand-600);
+    .np-otab-ind { position: absolute; z-index: 0; top: .25rem; bottom: .25rem; left: .25rem; width: calc((100% - .5rem) / 4); border-radius: .75rem; background: var(--color-brand-600);
         transform: translateX(calc(var(--i, 0) * 100%)); transition: transform .28s var(--np-ease); box-shadow: 0 6px 14px -8px rgb(45 80 22 / .8); }
     #npOut.is-flash { animation: npFlash 1s var(--np-ease) both; }
     .np-pane { animation: npIn .32s var(--np-ease) both; }
@@ -505,14 +511,69 @@
     .np-law-fig svg { width: 100%; max-width: 15rem; height: auto; }
 
     .np-acts { display: grid; gap: .5rem; margin-top: .9rem; }
-    .np-port { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; }
-    .np-port .btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; text-align: center; line-height: 1.25; }
-    .np-port svg { flex: none; width: 1.05rem; height: 1.05rem; color: #4d7c2a; }
-    @media (max-width: 420px) { .np-port { grid-template-columns: minmax(0, 1fr); } }
-    .np-anee { display: flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 1rem; border-radius: .95rem; border: 0; cursor: pointer; font-weight: 800;
-        color: #1a1a1a; background: linear-gradient(135deg, #f7d23a, #f5c518); transition: transform .28s var(--np-ease); }
-    .np-anee:hover { transform: translateY(-1px); } .np-anee:disabled { opacity: .5; transform: none; cursor: default; }
-    .np-anee img { width: 1.6rem; height: 1.6rem; border-radius: 999px; }
+    /* Anee's button (2026-11-16, the owner: "looks big and does not look good in mobile"): one compact line, the
+       credits in a small chip at its end instead of a second line of words. */
+    .np-anee { display: flex; align-items: center; justify-content: center; gap: .5rem; min-height: 2.75rem; padding: .55rem .9rem; border-radius: .8rem; border: 0; cursor: pointer;
+        font-size: .9rem; font-weight: 800; line-height: 1.2; color: #1a1a1a; background: #f5c518; box-shadow: 0 6px 16px -10px rgb(180 130 0 / .8); transition: transform .28s var(--np-ease), box-shadow .28s var(--np-ease); }
+    .np-anee:hover { transform: translateY(-1px); box-shadow: 0 10px 20px -12px rgb(180 130 0 / .9); } .np-anee:disabled { opacity: .5; transform: none; cursor: default; }
+    .np-anee img { width: 1.4rem; height: 1.4rem; border-radius: 999px; flex: none; }
+    .np-anee-t { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .np-anee-c { flex: none; padding: .12rem .45rem; border-radius: 999px; font-size: .7rem; font-weight: 800; color: #5c4300; background: rgb(255 255 255 / .55); }
+    /* The Risks tab (2026-11-16): the balance, then one card a risk with its level, what pushes it and how to lower it. */
+    .np-rk-lead { margin-top: .9rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-600); }
+    .np-rk-bal { margin-top: .7rem; padding: .75rem .8rem; border-radius: .9rem; border: 1px solid #dfeccf; background: #f3f8ee; }
+    .np-rk-bal.is-off { border-color: #f6d58a; background: #fff8e6; }
+    .np-rk-bal > b { font-size: .7rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--color-brand-700); }
+    .np-rk-bal.is-off > b { color: #8a5a00; }
+    .np-rk-bal p { margin-top: .2rem; font-size: .84rem; line-height: 1.5; color: var(--color-gray-800); }
+    .np-rk-bars { display: grid; gap: .35rem; margin-top: .55rem; }
+    .np-rk-bars > span { display: grid; grid-template-columns: 3rem minmax(0, 1fr) 2.8rem; gap: .5rem; align-items: center; }
+    .np-rk-bars i { font-style: normal; font-size: .72rem; font-weight: 800; color: var(--color-gray-600); }
+    .np-rk-bars em { position: relative; height: .55rem; border-radius: 999px; background: rgb(0 0 0 / .07); overflow: visible; }
+    .np-rk-bars s { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; background: #6b9f3d; transition: width .28s var(--np-ease); }
+    .np-rk-bars s.is-short { background: #d99a06; } .np-rk-bars s.is-over { background: #c2410c; }
+    .np-rk-bars u { position: absolute; top: -.2rem; bottom: -.2rem; width: 2px; margin-left: -1px; background: var(--color-gray-700); border-radius: 2px; }
+    .np-rk-bars small { font-size: .72rem; font-weight: 800; color: var(--color-gray-700); text-align: right; }
+    .np-rks { display: grid; gap: .55rem; margin-top: .7rem; }
+    .np-rk { padding: .75rem .8rem; border-radius: .9rem; border: 1px solid var(--color-gray-200); background: #fff; animation: npRkIn .28s var(--np-ease) both; animation-delay: calc(var(--k, 0) * 40ms); }
+    @keyframes npRkIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .np-rk-top { display: flex; align-items: center; gap: .5rem; }
+    .np-rk-ico { font-size: 1.05rem; line-height: 1; }
+    .np-rk-top b { flex: 1 1 auto; min-width: 0; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); }
+    .np-rk-top em { flex: none; font-style: normal; font-size: .68rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; padding: .15rem .5rem; border-radius: 999px; background: #e4efd4; color: #2d5016; }
+    .np-rk.is-medium .np-rk-top em { background: #fff1c2; color: #8a5a00; } .np-rk.is-high .np-rk-top em { background: #fde2e1; color: #b42318; }
+    .np-rk-meter { height: .35rem; margin-top: .5rem; border-radius: 999px; background: var(--color-gray-100); overflow: hidden; }
+    .np-rk-meter i { display: block; height: 100%; border-radius: 999px; background: #6b9f3d; transition: width .28s var(--np-ease); }
+    .np-rk.is-medium .np-rk-meter i { background: #d99a06; } .np-rk.is-high .np-rk-meter i { background: #c2410c; }
+    .np-rk-why { display: grid; gap: .2rem; margin-top: .5rem; }
+    .np-rk-why li { position: relative; padding-left: 1rem; font-size: .8rem; line-height: 1.45; color: var(--color-gray-700); }
+    .np-rk-why li::before { content: ''; position: absolute; left: .1rem; top: .5rem; width: .4rem; height: .4rem; border-radius: 999px; background: #c2410c; }
+    .np-rk-why li.is-down::before { background: #6b9f3d; }
+    .np-rk-none { margin-top: .45rem; font-size: .8rem; color: var(--color-gray-500); }
+    .np-rk-fix { margin-top: .5rem; padding: .5rem .6rem; border-radius: .7rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-800); background: var(--color-gray-50); }
+    /* Ranges (2026-11-16). */
+    .np-range { margin-top: .9rem; }
+    .np-range[hidden] { display: none; }
+    .np-rg { display: grid; gap: .5rem; }
+    .np-rg-y { padding: .8rem .85rem; border-radius: .95rem; color: #fff; background: radial-gradient(120% 140% at 100% 0%, #4a7c2a 0%, #14250a 70%); }
+    .np-rg-y small { display: block; font-size: .68rem; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; opacity: .85; }
+    .np-rg-y b { display: block; margin-top: .15rem; font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; }
+    .np-rg-y span { display: block; margin-top: .25rem; font-size: .8rem; line-height: 1.5; opacity: .92; }
+    .np-rg-n { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
+    .np-rg-n span { display: flex; flex-direction: column; padding: .55rem .6rem; border-radius: .8rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .np-rg-n small { font-size: .66rem; font-weight: 800; color: var(--color-gray-500); text-transform: uppercase; letter-spacing: .04em; }
+    .np-rg-n b { font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
+    .np-rg-n i { font-style: normal; font-size: .7rem; color: var(--color-gray-500); }
+    @media (max-width: 380px) { .np-rg-n { grid-template-columns: minmax(0, 1fr); } }
+    html.dark .np-rk { background: #151d10; border-color: #2b3a1c; }
+    html.dark .np-rk-top b, html.dark .np-rg-n b { color: #e8efe1; }
+    html.dark .np-rk-why li, html.dark .np-rk-fix, html.dark .np-rk-bal p { color: #cbd6c0; }
+    html.dark .np-rk-fix, html.dark .np-rg-n span { background: #121a0d; border-color: #2b3a1c; }
+    html.dark .np-rk-bal { background: #17210f; border-color: #2b3a1c; }
+    html.dark .np-rk-bal.is-off { background: rgb(217 154 6 / .1); border-color: rgb(217 154 6 / .35); }
+    html.dark .np-rk-bars u { background: #e8efe1; }
+    html.dark .np-rk-meter, html.dark .np-rk-bars em { background: #22301a; }
+    @media (prefers-reduced-motion: reduce) { .np-rk { animation: none; } .np-rk-bars s, .np-rk-meter i { transition: none; } }
     .np-rep { margin-top: 1rem; }
     .np-rep[hidden] { display: none; }
     .np-rhead { border-radius: 1.1rem; padding: 1rem 1.1rem; color: #fff; background: radial-gradient(120% 140% at 100% 0%, #4a7c2a 0%, #14250a 65%); }
@@ -866,6 +927,7 @@
                         <button type="button" class="np-otab is-on" role="tab" aria-selected="true" data-p="npk">NPK</button>
                         <button type="button" class="np-otab" role="tab" aria-selected="false" data-p="micro">Micros</button>
                         <button type="button" class="np-otab" role="tab" aria-selected="false" data-p="barrel">Barrel</button>
+                        <button type="button" class="np-otab" role="tab" aria-selected="false" data-p="risk">Risks</button>
                     </div>
 
                     <div class="np-pane" id="npPaneNpk" role="tabpanel">
@@ -895,16 +957,20 @@
                         </div>
                     </div>
 
+                    {{-- Lodging, diseases, pests and the balance (2026-11-16, the owner). --}}
+                    <div class="np-pane" id="npPaneRisk" role="tabpanel" hidden>
+                        <div id="npRisk"><div class="np-say">Pick the crop and add a fertilizer to see what this plan risks.</div></div>
+                    </div>
+
+                    {{-- What to expect as ranges, not single numbers (2026-11-16, the owner). --}}
+                    <div class="np-range" id="npRange" hidden></div>
+
                     <div class="np-disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
-                        <span>A guide, not a promise. The need and the yield still depend on the variety, and on your soil: how much of its own nutrients the crop can actually use. The weather and how and when the fertilizer goes on matter too. A soil test makes all of it surer.</span></div>
+                        <span>This is only a guide, not a promise. The weather, the timing of each application, the water, pests and diseases, and how the field is run will change these numbers, and so will the variety and how much of its own nutrients your soil can give. A soil test makes all of it surer.</span></div>
                     <div class="np-acts">
                         <button type="button" class="btn btn-white" id="npSave">Save this calculation</button>
-                        {{-- Put to work (2026-10-24, the owner): the bags on the crop's days, onto a cropping schedule or into the Protocol Builder (partials/plan-port, App\Support\NpkPort). --}}
-                        <div class="np-port">
-                            <button type="button" class="btn btn-white" id="npToSeason"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1zM9 14l2 2 4-4"/></svg>Put it on a cropping schedule</button>
-                            <button type="button" class="btn btn-white" id="npToBuilder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5h10M9 12h10M9 19h10M4 5h.01M4 12h.01M4 19h.01"/></svg>Send to Protocol Builder</button>
-                        </div>
-                        <button type="button" class="np-anee" id="npAnee"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""><span id="npAneeSays">Analyze further with Anee</span></button>
+                        {{-- The cropping schedule and Protocol Builder buttons were taken off on 2026-11-16 (the owner: "i don't think we need it in this feature"). --}}
+                        <button type="button" class="np-anee" id="npAnee"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt=""><span class="np-anee-t" id="npAneeSays">Analyze further with Anee</span><small class="np-anee-c" id="npAneeCost" hidden></small></button>
                     </div>
                     {{-- The owner's rule (2026-10-15): the calculator never uses credits; only Anee's reading does, when it is ready. --}}
                     <p class="np-free" id="npFree"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>The calculator uses no credits. Credits are used only when you ask Anee to look further.</span></p>
@@ -926,7 +992,7 @@
         .np-frame-bar span { flex: 1; min-width: 0; font-size: .82rem; font-weight: 700; color: var(--color-gray-600); }
         .np-frame-bar .btn { flex: none; }
         html.dark .np-frame-bar { background: rgb(22 28 18 / .96); border-color: #2b3a1c; }
-        html.is-frame .np-hero, html.is-frame .np-tabs, html.is-frame #npSave, html.is-frame #npAnee, html.is-frame #npFree, html.is-frame .np-port { display: none !important; }
+        html.is-frame .np-hero, html.is-frame .np-tabs, html.is-frame #npSave, html.is-frame #npAnee, html.is-frame #npFree { display: none !important; }
     </style>
     @endif
 
@@ -1132,8 +1198,6 @@
     @include('partials.farm-lots')
 @endunless
 @include('partials.trash-row')
-{{-- Onto a cropping schedule or into the Protocol Builder (2026-10-24): the sheets the Crop Protocol and Land Prep share. --}}
-@include('partials.plan-port')
 @endsection
 
 @push('scripts')
@@ -1357,7 +1421,7 @@
         // By spacing (2026-10-21): the seeds the seed calculator counted for it, as NpkNeed reads them (PlantAmount::asSeed).
         const bySp = st.by === 'spacing', sd0 = bySp && st.cnt ? st.cnt.seed : null;
         const v = bySp ? (sd0 ? sd0.amount : 0) : num('npSeed'), a = areaHa(), unit = bySp ? (sd0 ? sd0.unit : 'kg') : st.seedUnit;
-        const out = { perHa: null, kind: seedKind(unit), usual: null, sf: 1, pop: 1, words: '', warn: false };
+        const out = { perHa: null, kind: seedKind(unit), usual: null, sf: 1, pop: 1, sn: 1, stand: null, words: '', warn: false };
         if (!v || !a) return out;
         out.perHa = (unit === 'g' ? v / 1000 : v) / a;
         // Seed is counted at its germination against the usual 85% the guides
@@ -1378,13 +1442,23 @@
             const base = c.treesPerHa || (u[0] + u[1]) / 2;
             out.pop = clamp(out.perHa / base, 0.3, 2);
             if (Math.abs(out.pop - 1) > 0.1) out.words += ' The need is sized to your ' + fmt(out.perHa, 0) + ' per hectare.';
-        } else if (out.perHa < u[0] * 0.75) {
-            out.sf = Math.max(0.3, out.perHa / (u[0] * 0.75));
-            out.warn = true;
-            out.words += ' Yours is thinner, so NPK Plus counts for ' + Math.round(out.sf * 100) + '% of the goal.';
-        } else if (out.perHa > u[1] * 1.5) {
-            out.warn = true;
-            out.words += ' Yours is much more: crowded plants need no more fertilizer and give no more harvest.';
+        } else {
+            // The final stand against the middle of the usual (NpkModel::STAND, 2026-11-16, the owner): the need follows it.
+            out.stand = out.perHa / ((u[0] + u[1]) / 2);
+            if (out.perHa < u[0] * 0.75) {
+                out.sf = Math.max(0.3, out.perHa / (u[0] * 0.75));
+                out.warn = true;
+                out.words += ' Yours is thinner, so NPK Plus counts for ' + Math.round(out.sf * 100) + '% of the goal.';
+            } else {
+                const S = M.stand;
+                out.sn = out.perHa > u[1] ? Math.min(S.max, 1 + S.slope * (out.perHa / u[1] - 1))
+                    : out.perHa < u[0] ? Math.max(S.min, 1 - S.slope * (1 - out.perHa / u[0])) : 1;
+                const pct = Math.round(Math.abs(out.sn - 1) * 100);
+                if (out.perHa > u[1] * 1.5) {
+                    out.warn = true;
+                    out.words += ' Yours is much more: crowded plants make more leaves and straw, so about ' + pct + '% more nitrogen and potassium is counted, but they give no more grain and lodge and catch diseases more easily.';
+                } else if (pct >= 2) out.words += ' The need follows your stand: about ' + pct + '% ' + (out.sn > 1 ? 'more' : 'less') + ' nitrogen and potassium is counted.';
+            }
         }
         return out;
     };
@@ -1840,6 +1914,8 @@
         if (ph != null) { if (ph < 5) f.add('strongAcid'); else if (ph < 5.5) f.add('acid'); else if (ph > 8) f.add('strongAlk'); else if (ph > 7.3) f.add('alkaline'); }
         else { if (st.conds.includes('acidic')) f.add('acid'); if (st.conds.includes('alkaline')) f.add('alkaline'); }
         ['sodic', 'saline', 'acid_sulfate', 'low_om', 'peat', 'waterlogged'].forEach((k) => { if (st.conds.includes(k)) f.add(k); });
+        // A pH of 8.5 or more is sodium: a limy soil stops near 8.3 (2026-11-16, NpkNeed::factors the same).
+        if (ph != null && ph >= M.sodicPh) f.add('sodic');
         // A soil test's organic matter under 2% is low organic matter for the micros too (NpkNeed::run).
         if (soilClass(soil(false)).OM === 'low') f.add('low_om');
         // Strongly alkaline and NOT sodic reads as a limy soil, rich in calcium.
@@ -1919,8 +1995,8 @@
         else if (f.has('clay')) add('🧱', a.texture === 'heavy_clay' ? 'Heavy clay that cracks.' : 'Clay soil.', 'It holds potassium and nitrogen well, so a little less potassium is counted. The nitrogen can go in fewer, larger doses than on sandy soil.', pctSay('clay', f));
         // Acidity.
         const acidK = f.has('strongAcid') ? 'strongAcid' : f.has('acid') ? 'acid' : null, alkK = f.has('strongAlk') ? 'strongAlk' : f.has('alkaline') ? 'alkaline' : null;
-        if (acidK) add('🍋', 'Acid soil' + phSay + '.', 'Phosphorus is locked up, so more of it is counted. Lime the field about a month before planting. A soil test says how much.', pctSay(acidK, f, ['P2O5']));
-        if (alkK) add('🧂', 'Alkaline soil' + phSay + '.', 'Phosphorus is less available, and zinc and iron may run short (the Micros tab counts them). For nitrogen, ammonium sulfate suits this soil better than urea.', pctSay(alkK, f));
+        if (acidK) add('🍋', 'Acid soil' + phSay + '.', 'Phosphorus is locked up and potassium washes out, so more of both is counted. Lime the field about a month before planting. A soil test says how much.', pctSay(acidK, f, ['P2O5', 'K2O']));
+        if (alkK) add('🧂', 'Alkaline soil' + phSay + '.', 'Phosphorus is less available, its calcium crowds out some potassium, and zinc and iron may run short (the Micros tab counts them). For nitrogen, ammonium sulfate suits this soil better than urea.', pctSay(alkK, f));
         if (f.has('acid_sulfate')) add('🟠', 'Acid sulfate soil.', 'Phosphorus is locked up and the soil sours when it dries. Keep it wet where you can, and lime it.', pctSay('acid_sulfate', f));
         // Organic matter.
         if (a.organic === 'high' && !f.has('low_om')) add('🌱', 'Rich in organic matter.', 'It gives some nitrogen of its own, so about ' + Math.round((1 - (F.omHighN || 0.9)) * 100) + '% less nitrogen is counted.', '−' + Math.round((1 - (F.omHighN || 0.9)) * 100) + '% N');
@@ -2358,6 +2434,8 @@
                 v = c.removalOnly ? g.Yeff * Up[n] : g.Yeff * Up[n] * (1 - base[n]) / RE[n];
                 out.how[n] = c.removalOnly ? 'removal' : 'uptake';
             }
+            // The final stand moves the nitrogen and potassium need (NpkModel::STAND, 2026-11-16).
+            if (v != null && (n === 'N' || n === 'K2O')) v *= (g.sd && g.sd.sn) || 1;
             if (v != null) { out.raw[n] = v; out.need[n] = v * out.adj[n]; }
         });
         // Your field: what the last crop left (a legume's nitrogen, rice straw's potassium), never more than part of the need.
@@ -2537,12 +2615,25 @@
 
         const micro = st.microsOn ? micros(c, md, tot, perHa, area, out.length) : microsOff();
         const { reach, harvest } = barrel(c, md, states, perHa, out.length, g, micro);
+        // Lodging, diseases, pests and the balance; then the yield and the need as ranges (2026-11-16, the owner).
+        // Never at the cost of the calculator: a slip here leaves the totals and the need standing.
+        let RK = null, RG = null;
+        try {
+            RK = out.length ? risks(c, states, f, fl, g, micro, seasonPlanks(c, g)) : null;
+            RG = out.length ? ranges(c, md, g, reach, harvest) : null;
+            $('npRisk').innerHTML = riskHtml(RK, c);
+            $('npRange').innerHTML = rangeHtml(RG, c);
+        } catch (err) { console.error(err); RK = null; RG = null; }
+        $('npRange').hidden = !RG;
 
         const seedV = num('npSeed');
         RES = { perHa: Object.fromEntries(Object.entries(perHa).filter(([, v]) => v > 0).map(([k, v]) => [k, Math.round(v * 1000) / 1000])), total: Object.fromEntries(Object.entries(tot).filter(([, v]) => v > 0).map(([k, v]) => [k, Math.round(v * 1000) / 1000])),
             npkPerHa: npk, needs: states, micros: micro, reach, harvest, lines: out, areaHa: area, soilClass: cls,
             acid: md.acid ? { limeEqPerHa: Math.round(md.acid.eq), rootZonePh: md.acid.zone, fieldPh: md.acid.bulk, soil: md.acid.soil, texture: md.acid.tex, limy: md.acid.calc, sources: md.acid.sources, gypsumKgPerHa: md.acid.gypsumKg } : null,
             lockouts: md.lockouts || [],
+            risks: RK ? { balance: RK.balance.say, items: RK.list.map((r) => ({ name: r.name, level: r.level, why: r.up, eases: r.down })) } : null,
+            ranges: RG ? { yieldTPerHa: RG.yield.map((x) => Math.round(x * 100) / 100), needPerHa: Object.fromEntries(Object.entries(RG.need).map(([k, v]) => [k, v.map((x) => Math.round(x))])) } : null,
+            stand: g.sd && g.sd.stand ? { ofUsualMiddle: Math.round(g.sd.stand * 100) / 100, needFactor: Math.round((g.sd.sn || 1) * 1000) / 1000, goalFactor: Math.round(g.sd.sf * 100) / 100 } : null,
             goal: g.Y ? { tPerHa: Math.round(g.Y * 100) / 100, counted: Math.round(g.Yeff * 100) / 100, why: g.why, fieldCap: g.capped ? Math.round(g.cap.k * 100) / 100 : null } : null,
             setup: { variety: $('npVariety').value.trim(), areaUnit: st.areaUnit, areaValue: num('npArea'), yUnit: st.yUnit,
                 potential: num('npPotential') ? { value: num('npPotential'), unit: yu[1], key: st.yUnit, tPerHa: Math.round(num('npPotential') * yu[3] * 100) / 100 } : null,
@@ -2572,6 +2663,14 @@
         const li = [];
         li.push('<b>Yield goal:</b> ' + (g.Y ? fmt(g.Y) + ' t/ha, ' + esc(g.why) + '.' : 'none, so the guide rate is used as it is.') + (g.sd.sf < 1 ? ' A thin stand brings it to ' + fmt(g.Y * g.sd.sf) + ' t/ha.' : '')
             + (g.capped ? ' ' + esc(fieldWho()) + ' (' + esc(capWords(g.cap)) + ') holds it to ' + fmt(g.Yeff) + ' t/ha.' : ''));
+        if (g.sd && g.sd.stand) {
+            const sn = g.sd.sn || 1, u = g.sd.usual || [0, 0], per = g.sd.perHa || 0;
+            const where = per > u[1] ? 'above the usual (about ' + Math.round((per / u[1] - 1) * 100) + '% past its top)' : per < u[0] ? 'below the usual (about ' + Math.round((1 - per / u[0]) * 100) + '% under its low end)' : 'within the usual range';
+            li.push('<b>Final stand:</b> what you plant' + (g.sd.germ ? ' at ' + Math.round(g.sd.germ) + '% germination' : '') + ' comes out ' + where + ' for this crop. '
+                + (g.sd.sf < 1 ? 'That is too thin to reach the goal, so the goal is counted at ' + Math.round(g.sd.sf * 100) + '% and the need with it.'
+                    : Math.abs(sn - 1) >= 0.02 ? 'The need follows it: ' + (sn > 1 ? 'about ' + Math.round((sn - 1) * 100) + '% more' : 'about ' + Math.round((1 - sn) * 100) + '% less') + ' nitrogen and potassium' + (sn >= (M.stand.max - 0.001) ? ' (the most it adds: a crowded stand adds straw, not grain)' : '') + '.'
+                    : 'That is within the usual, so the need stays as counted.'));
+        }
         if (md.credit && (md.credit.N || md.credit.K2O)) li.push('<b>Credits from your field:</b> ' + [md.credit.N ? fmt(md.credit.N, 0) + ' kg N from the legume before' : '', md.credit.K2O ? fmt(md.credit.K2O, 0) + ' kg K₂O from the rice straw plowed back' : ''].filter(Boolean).join(', and ') + ', taken off the need above.');
         const Up = c.uptakePerTon || {};
         if (g.Yeff && NPK.some((n) => Up[n] > 0)) li.push('<b>What the crop takes up:</b> at ' + fmt(g.Yeff) + ' t/ha, about ' + NPK.filter((n) => Up[n] > 0).map((n) => fmt(Up[n] * g.Yeff, 0) + ' kg ' + lab(n)).join(', ') + (c.removalOnly ? ' leaves with the harvest.' : ' in all, from the soil and the fertilizer together.'));
@@ -2955,8 +3054,167 @@
     $('lbKey').addEventListener('click', (e) => { const b = e.target.closest('.lb-k'); if (b) { $('lbStage').classList.add('was-turned'); BR.face(Number(b.dataset.i)); } });
     $('lbInfo').addEventListener('click', (e) => { e.stopPropagation(); window.openSheet('npLawSheet'); });
 
-    /* ---- the three tabs ---- */
-    const PANES = { npk: 'npPaneNpk', micro: 'npPaneMicro', barrel: 'npPaneBarrel' };
+    /* ---- risks from the balance (2026-11-16, the owner: "add lodging analysis, balance, disease risk, etc. based on
+       the balance of nutrients, and soil analysis from lot questionnaire, and crop type (variety type resistance)") ----
+       Each risk is a score from what the plan, the soil and the field answers, the stand, the season and the
+       variety's own ratings push up or down: under 1.5 low, under 3 medium, else high. Words say every push. */
+    const RATE_W = { R: -1.5, MR: -1, I: 0, MS: 1, S: 1.5, HS: 2 };
+    const RATE_WORD = { R: 'resistant', MR: 'moderately resistant', I: 'intermediate', MS: 'moderately susceptible', S: 'susceptible', HS: 'highly susceptible' };
+    const isRiceK = (c) => !!c && String(c.key).startsWith('rice');
+    const isCornK = (c) => !!c && String(c.key).startsWith('corn');
+    const isCereal = (c) => !!c && /^(rice|corn|sorghum|wheat|millet)/.test(String(c.key));
+    // The variety's ratings on record ("bl:I blb:R ..."; partials/variety-pick, VarietyPickController::row).
+    const ratingOf = (k) => {
+        const r = st.varPick && st.varPick.source === 'record' ? st.varPick.ratings : null;
+        if (!r) return null;
+        const m = String(r).match(new RegExp('(?:^| )' + k + ':([A-Z]+)'));
+        return m ? m[1] : null;
+    };
+    const lvlOf = (s) => (s >= 3 ? 'high' : s >= 1.5 ? 'medium' : 'low');
+    const upFirst = (x) => String(x).charAt(0).toUpperCase() + String(x).slice(1);
+    const LVL_WORD = { low: 'Low', medium: 'Medium', high: 'High' };
+    const risks = (c, states, f, fl, g, micro, SP) => {
+        if (!c || !Object.keys(states).length) return null;
+        const cov = (n) => (states[n] && states[n].need > 0 ? states[n].plan / states[n].need : null);
+        const cN = cov('N'), cK = cov('K2O'), cP = cov('P2O5'), pc = (x) => Math.round(x * 100) + '%';
+        const a = fl && fl.on ? fl.a || {} : {}, past = (a.outbreaks || []).join(' ');
+        const rice = isRiceK(c), corn = isCornK(c), crop = cropShort(c).split(',')[0].toLowerCase();
+        const siShort = !!(rice && st.microsOn && micro && micro.Si && micro.Si.state === 'short');
+        const caShort = !!(st.microsOn && micro && micro.Ca && micro.Ca.state === 'short');
+        const sd = g.sd || {}, crowd = sd.perHa && sd.usual ? sd.perHa / sd.usual[1] : 0;
+        const humid = !!((SP && SP.rain >= 1000) || f.has('high_rainfall'));
+        const vName = $('npVariety').value.trim() || 'The variety';
+        const R = () => ({ s: 0, up: [], down: [], fix: [] });
+        const up = (o, w, why) => { o.s += w; o.up.push(why); };
+        const dn = (o, w, why) => { o.s -= w; o.down.push(why); };
+        const rate = (o, key, label) => { const r = ratingOf(key); if (!r || RATE_W[r] == null || !RATE_W[r]) return; (RATE_W[r] > 0 ? up : dn)(o, Math.abs(RATE_W[r]), vName + ' is rated ' + RATE_WORD[r] + ' to ' + label); };
+        const hadPast = (o, re, label) => { if (re.test(past)) up(o, 1.5, label + ' troubled the last crop on this lot'); };
+        const nOver = (o, big, small) => { if (cN > 1.3) up(o, big, 'the nitrogen is well over the need (' + pc(cN) + ')'); else if (cN > 1.1) up(o, small, 'the nitrogen is a little over the need (' + pc(cN) + ')'); };
+        const kShort = (o, w, why) => { if (cK != null && cK < 0.9) up(o, cK < 0.75 ? w : w * 0.66, 'potassium covers only ' + pc(cK) + ' of the need' + (why ? ', ' + why : '')); };
+        const done = (o, name, icon, fix) => { o.fix = fix.filter(Boolean); o.level = lvlOf(o.s); o.name = name; o.icon = icon; o.s = Math.round(o.s * 10) / 10; return o; };
+        const out = [];
+        // Lodging: cereals carry heavy heads on soft stems.
+        if (isCereal(c)) {
+            const L = R();
+            nOver(L, 2, 1);
+            kShort(L, 1.5, 'so the stems are weaker');
+            if (cN != null && cK != null && cK > 0 && cN / cK > 1.4) up(L, 1, 'the nitrogen runs well ahead of the potassium');
+            if (siShort) up(L, 1, 'silicon is short, and it stiffens rice stems');
+            if (crowd > 1.5) up(L, 1.5, 'the stand is crowded, so the stems grow thin and tall');
+            else if (crowd > 1) up(L, 1, 'the stand is above the usual');
+            if (f.has('peat') || a.organic === 'high') up(L, 0.75, 'the soil gives a lot of nitrogen of its own');
+            if (f.has('waterlogged') || a.drainage === 'stands') up(L, 0.5, 'standing water keeps the roots shallow');
+            if (humid) up(L, 0.5, 'the season is a rainy one, with wind and heavy rain at harvest time');
+            if (g.T && g.P && g.T > 0.9 * g.P) up(L, 0.5, 'a goal near the variety\'s best means heavy heads');
+            if (cN != null && cN < 0.9) dn(L, 1, 'the nitrogen is not over the need');
+            if (cN != null && cK != null && cK >= 1 && cN <= 1.1) dn(L, 0.5, 'nitrogen and potassium are in balance');
+            out.push(done(L, 'Lodging', '🌾', [
+                cN > 1.1 ? 'Bring the nitrogen down to the need and split it, with the last dose by ' + (rice ? 'panicle initiation' : 'tasseling') + ' and none after flowering.' : '',
+                cK != null && cK < 0.9 ? 'Bring the potassium up to the need: half at planting and half ' + (rice ? 'at panicle initiation' : 'at the second top dressing') + ' firms the stems.' : '',
+                siShort ? 'Plow the straw back in, or add rice hull ash, for silicon.' : '',
+                crowd > 1 ? 'Plant closer to the usual next season.' : '',
+                rice ? 'Where the water allows, drain the field for about a week around 30 to 40 days after transplanting: it firms the roots.' : corn ? 'Hill up the base of the plants at the last weeding.' : '',
+            ]));
+        }
+        // Diseases, in the groups that matter for this crop.
+        const leaf = R(), stem = R();
+        nOver(leaf, 1.5, 1); kShort(leaf, 1); if (siShort) up(leaf, 1, 'silicon is short, and it shields the leaves');
+        if (humid) up(leaf, 1, 'the season is rainy and humid'); if (crowd > 1) up(leaf, 1, 'a dense stand keeps the leaves wet longer');
+        if (rice && ((cN != null && cN < 0.8) || (cK != null && cK < 0.75))) up(leaf, 0.5, 'hungry rice catches brown spot');
+        nOver(stem, 1.5, 1); kShort(stem, 1); if (crowd > 1) up(stem, 1, 'a dense stand traps moisture at the base');
+        if (rice && (f.has('flooded') && (a.drainage === 'stands' || a.drainage === 'slow'))) up(stem, 0.5, 'water that stays long favors rots at the base');
+        if (humid) up(stem, 0.5, 'the season is rainy and humid');
+        if (cN != null && cN < 0.9 && (cK == null || cK >= 0.9)) { dn(leaf, 0.5, 'the nitrogen is not over the need'); dn(stem, 0.5, 'the nitrogen is not over the need'); }
+        if (rice) {
+            rate(leaf, 'bl', 'blast'); hadPast(leaf, /blast|brown-spot/, 'Blast or brown spot');
+            rate(stem, 'shb', 'sheath blight'); hadPast(stem, /sheath-blight|stem-rot|sheath-rot/, 'Sheath blight or a stem rot');
+            const B = R();
+            nOver(B, 1.5, 1); if (humid) up(B, 1, 'storms and rain spread it from leaf to leaf'); rate(B, 'blb', 'bacterial leaf blight'); hadPast(B, /bacterial/, 'Bacterial blight');
+            if (cN != null && cN < 0.9) dn(B, 0.5, 'the nitrogen is not over the need');
+            out.push(done(leaf, 'Blast and brown spot', '🍂', [cN > 1.1 ? 'Keep the nitrogen to the need and split it.' : '', cK != null && cK < 0.9 ? 'Bring the potassium up to the need.' : '', siShort ? 'Add silicon: straw plowed back in or rice hull ash.' : '', 'Scout the leaves weekly from tillering, and the necks at heading.']));
+            out.push(done(stem, 'Sheath blight and stem rot', '🪵', [cN > 1.1 ? 'Keep the nitrogen to the need.' : '', crowd > 1 ? 'Plant closer to the usual spacing so air moves at the base.' : '', 'Check the sheaths near the water line from maximum tillering.']));
+            out.push(done(B, 'Bacterial leaf blight', '💧', [cN > 1.1 ? 'Hold back the extra nitrogen, the biggest push for it.' : '', 'After a storm, look for yellow, wavy leaf edges.']));
+        } else if (corn) {
+            rate(leaf, 'ru', 'rust'); hadPast(leaf, /rust|leaf-blight|leaf-spot/, 'Rust or a leaf blight');
+            rate(stem, 'sr', 'stalk rot'); hadPast(stem, /stalk-rot|ear-rot/, 'A stalk or ear rot');
+            kShort(stem, 0.5, 'and potassium keeps the stalks from rotting');
+            const D = R();
+            if (humid) up(D, 1, 'cool, wet nights favor it'); if (crowd > 1) up(D, 0.5, 'a dense stand spreads it'); rate(D, 'dm', 'downy mildew'); hadPast(D, /downy-mildew/, 'Downy mildew');
+            out.push(done(leaf, 'Rust and leaf blights', '🍂', [cN > 1.1 ? 'Keep the nitrogen to the need.' : '', cK != null && cK < 0.9 ? 'Bring the potassium up to the need.' : '', 'Scout the leaves weekly from knee high.']));
+            out.push(done(stem, 'Stalk and ear rots', '🌽', [cK != null && cK < 0.9 ? 'Bring the potassium up to the need: it is the stalks\' best defense.' : '', 'Harvest on time; stalks left standing rot and fall.']));
+            out.push(done(D, 'Downy mildew', '🌫️', ['Plant seed treated against downy mildew, and pull infected seedlings early.']));
+        } else {
+            hadPast(leaf, /blight|spot|anthracnose|mildew|rust/, 'A leaf disease'); hadPast(stem, /rot|wilt|damping/, 'A rot or a wilt');
+            out.push(done(leaf, 'Leaf spots and blights', '🍂', [cN > 1.1 ? 'Keep the nitrogen to the need.' : '', 'Water at the base, not over the leaves, and give the plants room.']));
+            out.push(done(stem, 'Stem, root and fruit rots', '🪵', [cK != null && cK < 0.9 ? 'Bring the potassium up to the need.' : '', 'Keep the field draining well.']));
+            if (caShort && ['tomato', 'bellpepper', 'chili', 'watermelon', 'cabbage', 'pechay'].includes(c.key)) {
+                const Ca = R();
+                up(Ca, 2.5, 'calcium is short, and ' + crop + ' shows it as blossom end rot or tip burn');
+                if (f.has('drought') || st.water === 'rainfed') up(Ca, 0.5, 'uneven water makes it worse');
+                out.push(done(Ca, 'Blossom end rot and tip burn', '🍅', ['Add calcium (gypsum, or calcium nitrate as a top dressing) and keep the water even.']));
+            }
+        }
+        // Pests that follow lush, nitrogen fed growth.
+        const suck = R(), bore = R();
+        nOver(suck, 1.5, 1); kShort(suck, 0.5); if (crowd > 1) up(suck, 0.5, 'a dense stand shelters them'); if (humid && rice) up(suck, 0.5, 'humid weather lets planthoppers build up');
+        nOver(bore, 1, 0.5);
+        if (cN != null && cN < 0.9) { dn(suck, 0.5, 'the nitrogen is not over the need'); dn(bore, 0.5, 'the nitrogen is not over the need'); }
+        if (rice) { rate(suck, 'bph', 'brown planthopper'); rate(suck, 'glh', 'green leafhopper'); rate(bore, 'sb', 'stem borer'); }
+        if (corn) { rate(bore, 'cb', 'corn borer'); rate(bore, 'ew', 'corn earworm'); }
+        hadPast(suck, /planthopper|leafhopper|aphid|whitefly|thrips|mite|mealybug|black-bug|rice-bug/, 'Sucking insects');
+        hadPast(bore, /borer|earworm|armyworm|caseworm|leaffolder/, 'Borers or caterpillars');
+        out.push(done(suck, rice ? 'Planthoppers and leafhoppers' : 'Aphids, whiteflies and mites', '🦗', [cN > 1.1 ? 'Lush, nitrogen heavy leaves draw them: keep the nitrogen to the need.' : '', 'Spray only when a count calls for it, so the spiders and wasps that eat them stay.']));
+        out.push(done(bore, rice ? 'Stem borers' : corn ? 'Corn borer and earworm' : 'Borers and caterpillars', '🐛', [cN > 1.1 ? 'Keep the nitrogen to the need.' : '', 'Scout weekly and act on the first egg masses and deadhearts.']));
+        // The balance: each of N, P2O5 and K2O against its own need.
+        const bal = ['N', 'P2O5', 'K2O'].filter((n) => cov(n) != null).map((n) => ({ n, c: cov(n) }));
+        const off = bal.filter((b) => b.c < 0.9 || b.c > 1.3);
+        const lean = !off.length ? 'In balance: every one of nitrogen, phosphorus and potassium sits near its need.'
+            : 'Out of balance: ' + list(off.map((b) => NAMES[b.n].toLowerCase() + (b.c < 0.9 ? ' short (' + pc(b.c) + ')' : ' too much (' + pc(b.c) + ')'))) + '.';
+        return { list: out, balance: { items: bal, ok: !off.length, say: lean }, variety: !!(st.varPick && st.varPick.ratings) };
+    };
+    const riskHtml = (RK, c) => {
+        if (!RK) return '<div class="np-say">Pick the crop and add a fertilizer to see what this plan risks.</div>';
+        const bar = (x) => Math.max(4, Math.min(100, x / 1.6 * 100));
+        return '<p class="np-rk-lead">From the balance of your plan, your soil' + (fieldOn() ? ' and ' + esc(fieldWho() === 'Your field in detail' ? 'field' : fieldWho()) + ' answers' : '') + ', the stand, the season' + (RK.variety ? ' and the variety\'s own ratings' : '') + '. A guide to where to look, not a forecast.</p>'
+            + '<div class="np-rk-bal ' + (RK.balance.ok ? 'is-ok' : 'is-off') + '"><b>Balance</b><p>' + esc(RK.balance.say) + '</p><div class="np-rk-bars">'
+            + RK.balance.items.map((b) => '<span><i>' + lab(b.n) + '</i><em><s style="width:' + bar(b.c) + '%" class="' + (b.c < 0.9 ? 'is-short' : b.c > 1.3 ? 'is-over' : 'is-right') + '"></s><u style="left:' + bar(1) + '%"></u></em><small>' + Math.round(b.c * 100) + '%</small></span>').join('') + '</div></div>'
+            + '<div class="np-rks">' + RK.list.map((r, k) => '<div class="np-rk is-' + r.level + '" style="--k:' + k + '"><div class="np-rk-top"><span class="np-rk-ico" aria-hidden="true">' + r.icon + '</span><b>' + esc(r.name) + '</b><em>' + LVL_WORD[r.level] + '</em></div>'
+                + '<div class="np-rk-meter" aria-hidden="true"><i style="width:' + Math.max(6, Math.min(100, (r.s + 1) / 5 * 100)) + '%"></i></div>'
+                + (r.up.length ? '<ul class="np-rk-why">' + r.up.map((w) => '<li class="is-up">' + esc(upFirst(w)) + '</li>').join('') + '</ul>' : '<p class="np-rk-none">Nothing in this plan pushes it up.</p>')
+                + (r.down.length ? '<ul class="np-rk-why">' + r.down.map((w) => '<li class="is-down">' + esc(upFirst(w)) + '</li>').join('') + '</ul>' : '')
+                + (r.level !== 'low' && r.fix.length ? '<p class="np-rk-fix"><b>To lower it:</b> ' + esc(r.fix.join(' ')) + '</p>' : '') + '</div>').join('') + '</div>'
+            + (!RK.variety && (isRiceK(c) || isCornK(c)) ? '<p class="np-fine mt-2">Pick the variety from the records in step 2 and its own ratings against diseases and pests are counted here too.</p>' : '');
+    };
+
+    /* ---- ranges (2026-11-16, the owner: "possible ranges not only specific ones like for range for potential yield
+       based on the added nutrients ... add a disclaimer") ---- */
+    const ranges = (c, md, g, reach, harvest) => {
+        if (!c || !g.Yeff || reach == null) return null;
+        const share = (harvest != null ? harvest : reach) / 100;
+        const mid = g.Yeff * Math.min(1, share), top = Math.max(g.P || 0, g.Yeff);
+        const lo = mid * 0.8, hi = Math.min(top, mid * 1.12);
+        const R = c.recommendedPerHa || {}, need = {};
+        NPK.forEach((n) => {
+            const v = md.need[n];
+            if (v == null) return;
+            if (md.how[n] === 'guide' && Array.isArray(R[n]) && R[n][1] > R[n][0]) {
+                const m = (R[n][0] + R[n][1]) / 2;
+                need[n] = [v * R[n][0] / m, v * R[n][1] / m];
+            } else need[n] = [v * 0.88, v * 1.12];
+        });
+        return { yield: [lo, mid, hi], need };
+    };
+    const rangeHtml = (RG, c) => {
+        if (!RG) return '';
+        const [lo, mid, hi] = RG.yield, U = Y_U[st.yUnit];
+        const t = (x) => fmt(x / U[3]);
+        return '<h4 class="np-label">What to expect, as ranges</h4>'
+            + '<div class="np-rg"><div class="np-rg-y"><small>The yield your plan supports</small><b>' + t(lo) + ' to ' + t(hi) + ' ' + esc(U[1]) + '</b><span>Most likely near ' + t(mid) + ' ' + esc(U[1]) + esc(basisSay(c, mid)) + '. The low end is a hard season or late applications; the high end is everything on time with good weather.</span></div>'
+            + '<div class="np-rg-n">' + NPK.filter((n) => RG.need[n]).map((n) => '<span><small>' + lab(n) + ' need</small><b>' + fmt(RG.need[n][0], 0) + ' to ' + fmt(RG.need[n][1], 0) + '</b><i>kg per ha</i></span>').join('') + '</div></div>';
+    };
+
+    /* ---- the four tabs ---- */
+    const PANES = { npk: 'npPaneNpk', micro: 'npPaneMicro', barrel: 'npPaneBarrel', risk: 'npPaneRisk' };
     $('npOTabs').addEventListener('click', (e) => {
         const b = e.target.closest('.np-otab');
         if (!b) return;
@@ -3146,25 +3404,6 @@
         return r;
     };
     $('npSave').addEventListener('click', async () => { try { const r = await save(); window.toast?.(r.message + ' It is on the Saved tab.', 'success'); } catch (err) { window.toast?.(err.message, 'error'); } });
-    /* Put to work (2026-10-24, the owner): the plan is saved first (a port reads the saved one), then the shared
-       sheets take it onto a cropping schedule or into the Protocol Builder, its bags on the crop's days. */
-    const portTo = async (where, btn) => {
-        if (!window.planPort) return;
-        if (!RES || !RES.lines.length) { window.toast?.('Add the fertilizers you plan to use first.', 'error'); return; }
-        btn.disabled = true;
-        try {
-            const r = await save();
-            const c = cropOf(st.crop);
-            window.planPort[where]({
-                source: 'npk', id: calcId, title: (r && r.data && r.data.title) || 'Fertilizer plan', prev: (RES && RES.portedTo) || null,
-                lots: [{ i: 0, name: LOT ? LOT.name : 'Field', crop: st.crop || '', cropLabel: c ? cropName(c) : '', planting: $('npPlanted').value || '' }],
-                onDone: (season) => { if (season && RES) RES.portedTo = season; },
-            });
-        } catch (err) { window.toast?.(err.message, 'error'); }
-        finally { btn.disabled = false; }
-    };
-    $('npToSeason').addEventListener('click', (e) => portTo('season', e.currentTarget));
-    $('npToBuilder').addEventListener('click', (e) => portTo('builder', e.currentTarget));
     $('npAnee').addEventListener('click', () => {
         $('npRun').disabled = !OPT.canUse;
         if (!$('npLoc').value.trim()) { const [tw, pv] = placeWords(); if (pv) $('npLoc').value = (tw ? tw + ', ' : '') + pv; }
@@ -3338,7 +3577,7 @@
             paintPhCats();
             pills($('npTiming'), OPT.timing, 'timing');
             // The optional extra step, said with its price: the calculator itself is free.
-            if (OPT.quote) $('npAneeSays').textContent = 'Analyze further with Anee · ' + OPT.quote + ' credits';
+            if (OPT.quote) { $('npAneeCost').textContent = OPT.quote + ' credits'; $('npAneeCost').hidden = false; }
             soilTag(); lines(); hints(); calc();
             if (window.aneeFieldCard) mountCard(); else document.addEventListener('DOMContentLoaded', mountCard, { once: true });
             if (window.aneeLots) mountLots(); else document.addEventListener('DOMContentLoaded', mountLots, { once: true });
