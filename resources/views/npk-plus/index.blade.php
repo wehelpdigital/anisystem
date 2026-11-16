@@ -3175,7 +3175,8 @@
     const riskHtml = (RK, c) => {
         if (!RK) return '<div class="np-say">Pick the crop and add a fertilizer to see what this plan risks.</div>';
         const bar = (x) => Math.max(4, Math.min(100, x / 1.6 * 100));
-        return '<p class="np-rk-lead">From the balance of your plan, your soil' + (fieldOn() ? ' and ' + esc(fieldWho() === 'Your field in detail' ? 'field' : fieldWho()) + ' answers' : '') + ', the stand, the season' + (RK.variety ? ' and the variety\'s own ratings' : '') + '. A guide to where to look, not a forecast.</p>'
+        const from = ['the balance of your plan', 'your soil' + (fieldOn() ? ' and your ' + (LOT ? 'lot\'s' : 'field\'s') + ' answers' : ''), 'the stand', 'the season'].concat(RK.variety ? ['the variety\'s own ratings'] : []);
+        return '<p class="np-rk-lead">Counted from ' + esc(list(from)) + '. A guide to where to look, not a forecast.</p>'
             + '<div class="np-rk-bal ' + (RK.balance.ok ? 'is-ok' : 'is-off') + '"><b>Balance</b><p>' + esc(RK.balance.say) + '</p><div class="np-rk-bars">'
             + RK.balance.items.map((b) => '<span><i>' + lab(b.n) + '</i><em><s style="width:' + bar(b.c) + '%" class="' + (b.c < 0.9 ? 'is-short' : b.c > 1.3 ? 'is-over' : 'is-right') + '"></s><u style="left:' + bar(1) + '%"></u></em><small>' + Math.round(b.c * 100) + '%</small></span>').join('') + '</div></div>'
             + '<div class="np-rks">' + RK.list.map((r, k) => '<div class="np-rk is-' + r.level + '" style="--k:' + k + '"><div class="np-rk-top"><span class="np-rk-ico" aria-hidden="true">' + r.icon + '</span><b>' + esc(r.name) + '</b><em>' + LVL_WORD[r.level] + '</em></div>'
