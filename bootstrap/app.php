@@ -74,6 +74,8 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\RecordsScheduleActivity::class,
             // The public site's share and search tags, never missing (2026-10-07).
             \App\Http\Middleware\PublicSeoTags::class,
+            // A guest's pages before signing up, for the admin panel and the mother app (2026-11-16).
+            \App\Http\Middleware\TrackJourney::class,
         ]);
         $middleware->redirectGuestsTo(fn () => route('login'));
         $middleware->redirectUsersTo(fn () => route('app.dashboard'));
@@ -170,6 +172,9 @@ return Application::configure(basePath: dirname(__DIR__))
         // once a night (App\Support\Trash).
         $schedule->command('trash:tick')->everyTenMinutes()->withoutOverlapping(15)->runInBackground();
         $schedule->command('trash:tick --purge')->dailyAt('02:40')->timezone('Asia/Manila')->withoutOverlapping(60)->runInBackground();
+        // Visitor journeys nobody claimed with a signup, gone after 90 days (App\Support\VisitorJourney).
+        $schedule->call(fn () => \App\Support\VisitorJourney::prune())
+            ->name('visitor-journeys-prune')->dailyAt('03:10')->timezone('Asia/Manila');
         // Proof the scheduler runs (Laravel Cloud's toggle, 2026-10-07):
         // /deploy-check shows the last tick, written to the shared settings.
         $schedule->call(fn () => \App\Models\AsSiteSetting::put('scheduler.tick', now()->toIso8601String()))

@@ -199,6 +199,8 @@ class AdminPanelController extends Controller
             'tierExpires' => $u->activeSubscription()?->expiresAt?->format('Y-m-d'),
             'storageUsedGb' => round(\App\Support\Tier::storageUsed($u) / 1073741824, 2),
             'storageCapGb' => $u->tierConfig()['storageGb'] ?? null,
+            // The pages they opened before signing up, first to last (App\Support\VisitorJourney, 2026-11-16).
+            'journey' => rescue(fn () => \App\Support\VisitorJourney::forUser((int) $u->id), null, false),
         ]]);
     }
 

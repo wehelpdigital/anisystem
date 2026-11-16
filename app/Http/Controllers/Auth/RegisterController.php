@@ -27,6 +27,8 @@ class RegisterController extends Controller
 
         return view('auth.signup', [
             'plan' => $request->query('plan'),
+            // The guide they left, named on the form: they come back to it after the email link (WelcomeController).
+            'reading' => \App\Support\ContentGate::waiting(),
         ]);
     }
 
@@ -64,6 +66,7 @@ class RegisterController extends Controller
 
         if ($pending) {
             $this->sendVerification($pending);
+            WelcomeController::keep((int) $pending->id, $request);
             $request->session()->put('signup.email', $pending->email);
 
             return redirect()->route('verify.notice')
@@ -88,7 +91,8 @@ class RegisterController extends Controller
                     }
                 },
             ],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            // One box with a show button (2026-11-16): typing it twice cost signups and caught nothing the reset link does not.
+            'password' => ['required', 'string', 'min:8'],
             // The End User License Agreement (2026-10-28), ticked.
             'eula' => ['accepted'],
         ], [
@@ -101,7 +105,6 @@ class RegisterController extends Controller
             'email.email' => 'That email address does not look right. Please check it.',
             'password.required' => 'Please choose a password.',
             'password.min' => 'Your password needs at least 8 characters.',
-            'password.confirmed' => 'The two passwords do not match. Please type the same password twice.',
         ]);
 
         $user = User::create([
@@ -119,6 +122,9 @@ class RegisterController extends Controller
         \App\Support\SignupSource::record($user, $request);
         \App\Support\Legal::record((int) $user->id, 'eula', \App\Support\Legal::EULA_VERSION, null, $request);
         \App\Support\SiteAnalytics::signedUp((int) $user->id, $request, 'email');
+        // The pages they read on the way here, now theirs (the admin panel's client sheet shows them).
+        \App\Support\VisitorJourney::claim($user, $request, 'email');
+        WelcomeController::keep((int) $user->id, $request);
 
         $request->session()->put('signup.email', $user->email);
         // One page view long: the inbox page reports the signup to the ads.
@@ -135,7 +141,21 @@ class RegisterController extends Controller
     {
         return view('auth.verify-notice', [
             'email' => $request->session()->get('signup.email'),
+            'reading' => \App\Support\ContentGate::waiting(),
         ]);
+    }
+
+    /**
+     * Whether the address on the "check your inbox" page was confirmed, maybe in another browser: the page asks every
+     * few seconds and then offers the login. Only for the address this session signed up with, and only yes or no.
+     */
+    public function status(Request $request)
+    {
+        $email = (string) $request->session()->get('signup.email');
+        $user = $email === '' ? null : User::active()->whereRaw('LOWER(email) = ?', [mb_strtolower($email)])->first(['id', 'status']);
+
+        return response()->json(['confirmed' => (bool) ($user && $user->status === 'active')])
+            ->header('Cache-Control', 'no-store');
     }
 
     /** Resend the confirmation link — one a minute per address, tops. */
@@ -178,9 +198,11 @@ class RegisterController extends Controller
                 ->with('error', 'That confirmation link is not valid. Sign up again to get a fresh one.');
         }
 
-        if ($user->status === 'pending') {
+        $fresh = $user->status === 'pending';
+        if ($fresh) {
             NewMemberWelcome::activate($user);
             \App\Support\SiteAnalytics::confirmed((int) $user->id, $request, 'email');
+            \App\Support\VisitorJourney::confirmed((int) $user->id);
         } elseif ($user->status !== 'active') {
             return redirect()->route('login')->with('error', 'Your account is disabled.');
         }
@@ -189,12 +211,19 @@ class RegisterController extends Controller
         $request->session()->regenerate();
         $user->forceFill(['currentSessionId' => $request->session()->getId()])->saveQuietly();
 
-        $plan = $request->session()->pull('signup.plan');
+        // The link is often opened in another browser than the form (the mail app's own): the guide and the plan
+        // the form was opened for come back from the account.
+        $plan = WelcomeController::restore((int) $user->id, $request);
         $request->session()->forget('signup.email');
 
         if ($plan) {
             return redirect()->route('purchase.plans', ['plan' => $plan])
                 ->with('success', 'Email confirmed. Welcome to anee.io! Pick a plan, or start free.');
+        }
+
+        // They signed up on a members' guide: they choose where to go, the guide first (2026-11-16).
+        if ($fresh && \App\Support\ContentGate::waiting()) {
+            return redirect()->route('signup.welcome');
         }
 
         return redirect()->route('app.dashboard')

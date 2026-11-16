@@ -83,6 +83,8 @@ class GoogleAuthController extends Controller
             return redirect()->route('login')->with('error', 'Your account is disabled.');
         }
 
+        // A new account, or a pending one Google finishes: the welcome page may follow.
+        $fresh = ! $user || $user->status === 'pending';
         if ($user) {
             $patch = [];
             if (blank($user->googleId)) {
@@ -98,6 +100,7 @@ class GoogleAuthController extends Controller
                 // Google just proved the address the emailed link was waiting on.
                 NewMemberWelcome::activate($user);
                 \App\Support\SiteAnalytics::confirmed((int) $user->id, $request, 'google');
+                \App\Support\VisitorJourney::confirmed((int) $user->id);
             }
         } else {
             $user = User::create([
@@ -119,6 +122,7 @@ class GoogleAuthController extends Controller
             \App\Support\SiteAnalytics::signedUp((int) $user->id, $request, 'google');
             // Google has already proved the address, so the registration is finished on the spot.
             \App\Support\SiteAnalytics::confirmed((int) $user->id, $request, 'google');
+            \App\Support\VisitorJourney::claim($user, $request, 'google');
         }
 
         SignIn::user($user, true); // no box to tick at this door: kept for ten days
@@ -127,6 +131,11 @@ class GoogleAuthController extends Controller
 
         if (\App\Support\UserHats::needsChoice($user)) {
             return redirect()->route('account.choose');
+        }
+
+        // A signup that began on a members' guide chooses where to go, the guide first (Auth\WelcomeController).
+        if ($fresh && \App\Support\ContentGate::waiting()) {
+            return redirect()->route('signup.welcome');
         }
 
         // Same rule as the password door: every login lands on the dashboard.

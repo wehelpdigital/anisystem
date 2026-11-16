@@ -124,6 +124,65 @@
         } catch (err) { toast(err.message, 'error'); closeSheet('clSheet'); }
     });
 
+    /* The pages they opened before signing up (App\Support\VisitorJourney, 2026-11-16): where they
+       came from, the first page, and every page after it in order, a new visit after half an hour away. */
+    const JOURNEY_SHOWN = 12;
+    function journeyCard(j) {
+        if (!j) {
+            return `<div class="card p-3.5 space-y-1.5">
+                <p class="font-bold text-sm text-gray-900">How they found anee.io</p>
+                <p class="text-xs text-gray-400">No record of the pages they read before signing up. It is kept for signups from Nov 16, 2026 on, on browsers that keep cookies.</p>
+            </div>`;
+        }
+        const u = j.utm || {};
+        const ad = [u.source, u.medium, u.campaign].filter(Boolean).join(' · ');
+        const chip = (t, cls = 'badge-gray') => `<span class="badge ${cls}">${esc(t)}</span>`;
+        const choice = { read: 'went back to the guide', dashboard: 'went to the dashboard', home: 'went to the home page' }[j.choice];
+        const steps = j.steps || [];
+        let lastVisit = 1;
+        const line = (s, i) => {
+            // Past the first dozen, folded behind the button.
+            const fold = `data-jstep ${i >= JOURNEY_SHOWN ? 'hidden' : ''}`;
+            let head = '';
+            if (s.visit !== lastVisit) { lastVisit = s.visit; head = `<li ${fold} class="pt-2 text-[11px] font-extrabold uppercase tracking-wider text-gray-400">Visit ${s.visit}</li>`; }
+            if (s.event === 'signup') {
+                return head + `<li ${fold} class="flex gap-2 items-baseline rounded-lg bg-green-50 dark:bg-green-900/20 px-2 py-1.5">
+                    <span class="shrink-0 w-24 text-[11px] text-gray-500">${esc(s.at)}</span>
+                    <span class="text-xs font-bold text-green-800 dark:text-green-300">✓ ${esc(s.title || 'Signed up')}</span></li>`;
+            }
+            return head + `<li ${fold} class="flex gap-2 items-baseline ${s.after ? 'opacity-60' : ''}">
+                <span class="shrink-0 w-24 text-[11px] text-gray-400">${esc(s.at)}</span>
+                <span class="min-w-0">
+                    <span class="block text-xs font-semibold text-gray-900 break-words">${esc(s.title || s.path || '')}</span>
+                    <span class="block text-[11px] text-gray-400 break-all">${esc(s.path || '')}${s.from ? ` · from ${esc(s.from)}` : ''}${s.after ? ' · after signing up' : ''}</span>
+                </span></li>`;
+        };
+        const list = steps.map(line).join('');
+        return `<div class="card p-3.5 space-y-2.5">
+            <p class="font-bold text-sm text-gray-900">How they found anee.io</p>
+            <div class="flex flex-wrap gap-1.5 text-xs">
+                ${chip('first visit ' + (j.firstAt || ''))}
+                ${chip(j.referrer ? 'came from ' + j.referrer : 'typed it or came from a bookmark')}
+                ${ad ? chip('ad: ' + ad, 'badge-blue') : ''}
+                ${j.device ? chip(j.device) : ''}
+                ${chip(j.views + ' page' + (j.views === 1 ? '' : 's') + ' in ' + j.visits + ' visit' + (j.visits === 1 ? '' : 's'))}
+                ${j.took ? chip('signed up ' + j.took + ' after the first page', 'badge-green') : ''}
+                ${j.method ? chip('with ' + (j.method === 'google' ? 'Google' : 'email')) : ''}
+                ${j.confirmedAt ? chip('email confirmed ' + j.confirmedAt, 'badge-green') : (j.signedUpAt ? chip('email not confirmed yet', 'badge-yellow') : '')}
+                ${choice ? chip('then ' + choice) : ''}
+            </div>
+            <p class="text-xs text-gray-500">First page: <b class="text-gray-900 break-all">${esc(j.landing || '')}</b></p>
+            <ol class="space-y-1.5 border-l-2 border-gray-100 dark:border-gray-700 pl-2.5">${list}</ol>
+            ${steps.length > JOURNEY_SHOWN ? `<button type="button" class="btn btn-white btn-sm w-full" data-jmore>Show all ${steps.length} steps</button>` : ''}
+        </div>`;
+    }
+    document.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-jmore]');
+        if (!b) return;
+        b.closest('.card').querySelectorAll('[data-jstep][hidden]').forEach((x) => { x.hidden = false; });
+        b.remove();
+    });
+
     function paint() {
         const c = CUR;
         $id('clTitle').textContent = c.name;
@@ -193,6 +252,8 @@
                 <button type="button" class="btn btn-primary btn-sm w-full" id="ceTierSet">Set plan</button>
                 <p class="text-xs text-gray-400">Setting a plan also gives its welcome credits (Libre's starter credits only once). Leave the date empty to set it for 10 years.</p>
             </div>
+
+            ${journeyCard(c.journey)}
 
             <div class="card p-3.5 space-y-2.5">
                 <p class="font-bold text-sm text-gray-900">Community</p>

@@ -574,6 +574,9 @@ Route::middleware(['guest', 'no-cache'])->group(function () {
     // link the mail carries. Guests only — a logged-in member has no business
     // here, and the verify link itself logs the person in.
     Route::get('/verify-notice', [App\Http\Controllers\Auth\RegisterController::class, 'notice'])->name('verify.notice');
+    // The notice page asks whether its address was confirmed in another browser (2026-11-16).
+    Route::get('/verify-status', [App\Http\Controllers\Auth\RegisterController::class, 'status'])
+        ->name('verify.status')->middleware('throttle:40,10');
     Route::post('/verify-resend', [App\Http\Controllers\Auth\RegisterController::class, 'resend'])
         ->name('verify.resend')->middleware('throttle:5,10');
     Route::get('/verify-email/{id}/{hash}', [App\Http\Controllers\Auth\RegisterController::class, 'verify'])
@@ -853,6 +856,10 @@ Route::middleware(['auth', 'subscription'])->group(function () {
 
         return $to && ! $request->boolean('drop') ? redirect()->to($to['url']) : redirect()->route('app.dashboard');
     })->name('gate.continue');
+    // A signup that began on a members' guide: the guide, the home page or the dashboard (2026-11-16).
+    Route::get('/app/welcome', [App\Http\Controllers\Auth\WelcomeController::class, 'show'])->name('signup.welcome');
+    Route::get('/app/welcome/{to}', [App\Http\Controllers\Auth\WelcomeController::class, 'go'])
+        ->where('to', 'read|dashboard|home')->name('signup.welcome.go');
     // What Offline Mode keeps on the shelf: the handful of pages a farm day
     // actually opens. app.js fetches each through the service worker while
     // the mode is on and the line is up, so their copies are cached BEFORE
