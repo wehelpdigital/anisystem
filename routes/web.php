@@ -1034,6 +1034,7 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     Route::get('/app/heat-map', [App\Http\Controllers\HeatMapController::class, 'page'])->name('heatmap.page');
     Route::get('/app/heat-map/maps', [App\Http\Controllers\HeatMapController::class, 'maps'])->name('heatmap.maps');
     Route::get('/app/heat-map/forecast', [App\Http\Controllers\HeatMapController::class, 'forecast'])->middleware('throttle:60,1')->name('heatmap.forecast');
+    Route::get('/app/heat-map/year', [App\Http\Controllers\HeatMapController::class, 'year'])->middleware('throttle:60,1')->name('heatmap.year');
     Route::get('/app/market-prices', [App\Http\Controllers\MarketPriceController::class, 'page'])->name('market.page');
     Route::get('/app/market-prices/places', [App\Http\Controllers\MarketPriceController::class, 'places'])->name('market.places');
     Route::get('/app/market-prices/outlook', [App\Http\Controllers\MarketPriceController::class, 'outlook'])->middleware('throttle:120,1')->name('market.outlook');

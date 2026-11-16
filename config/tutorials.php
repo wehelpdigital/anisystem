@@ -298,7 +298,7 @@ return [
 
         'tool.heatmap' => [
             'title' => 'Heat Map Forecast',
-            'blurb' => "Pick your lot and see the week's heat painted around it on the map. Press play to watch the days go by, slide the colors lighter or stronger, and open Forecast and guides for what to do on each day.",
+            'blurb' => "Pick your lot and see the week's heat painted around it on the map. Press play to watch the days go by, then open Days and hours for the best days and hours to plant, spray, fertilize, work and dry, and Months for the year there.",
             'video' => null, 'poster' => null, 'portrait' => null, 'portrait_poster' => null,
         ],
 

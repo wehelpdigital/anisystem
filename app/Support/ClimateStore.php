@@ -434,6 +434,47 @@ final class ClimateStore
         return $by;
     }
 
+    /**
+     * Every kept week of a point's cell with all its columns, as [year][week] => array, and the cell (2026-11-17,
+     * the Heat Map Forecast's year view). Read only: null when the cell is not made or not filled yet, and nothing
+     * is fetched. fillLater() asks for it after the answer has gone out.
+     *
+     * @return array{cell: object, weeks: array<int, array<int, array>>}|null
+     */
+    public static function weekRows(float $lat, float $lng): ?array
+    {
+        if (! self::schema()->hasTable('as_weather_weeks')) {
+            return null;
+        }
+        $cell = self::db()->table('as_weather_cells')->where('cellKey', self::cellKey($lat, $lng))->first();
+        if (! $cell || ! $cell->fetchedThrough) {
+            return null;
+        }
+        self::db()->table('as_weather_cells')->where('id', $cell->id)->update(['lastUsedAt' => now()]);
+        $by = [];
+        foreach (self::db()->table('as_weather_weeks')->where('cellId', $cell->id)->get() as $r) {
+            $by[(int) $r->year][(int) $r->week] = (array) $r;
+        }
+
+        return $by ? ['cell' => $cell, 'weeks' => $by] : null;
+    }
+
+    /**
+     * Make a point's cell and fill its twenty years once the answer to the farmer has gone out (a page that cannot
+     * wait for the archive). One fill at a time per cell.
+     */
+    public static function fillLater(float $lat, float $lng, ?string $label = null): void
+    {
+        app()->terminating(function () use ($lat, $lng, $label) {
+            try {
+                $cell = self::cell($lat, $lng, $label);
+                Cache::lock('climate:fill:' . $cell->cellKey, 180)->get(fn () => self::ready($cell, true));
+            } catch (\Throwable $e) {
+                Log::info('climate: later fill failed', ['e' => $e->getMessage()]);
+            }
+        });
+    }
+
     /** weekTable()'s answers in this request, by cell. */
     private static array $weekMemo = [];
 

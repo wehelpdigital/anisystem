@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AsCroppingSchedule;
-use App\Models\AsScheduleLot;
-use App\Support\CropCatalog;
-use App\Support\CropStages;
 use App\Support\FarmLots;
+use App\Support\FieldHours;
 use App\Support\HeatForecast;
 use App\Support\HeatGuide;
-use App\Support\LotCalendar;
-use App\Support\LotSync;
+use App\Support\HeatYear;
 use App\Support\MapAccess;
 use App\Support\PlaceSearch;
 use App\Support\Region;
@@ -27,8 +23,9 @@ use Illuminate\Support\Carbon;
  * the forecasted temperature and guides based on the future dates, as well as a play button in the map").
  *
  * The page (heat-map.index) asks for a lot of Global Lots or a saved map of Global Maps, then paints the week's
- * temperatures around it on a Google map it turns, tilts and zooms like any Google map, and reads the lot's own
- * week day by day with what to do (App\Support\HeatGuide). The numbers come from App\Support\HeatForecast.
+ * temperatures around it on a Google map it turns, tilts and zooms like any Google map, reads the spot's own week
+ * day by day and hour by hour for the work (App\Support\FieldHours, HeatGuide), and shows the year there month by
+ * month (App\Support\HeatYear). The numbers come from App\Support\HeatForecast and the climate shelf.
  *
  * Libre + Anee and up (tier key heatMap, 2026-11-17, the owner: "only available on paid subscriptions just like the
  * other tools"); a worker's login has its own switch for it (WorkerTools 'heatmap'). No credits.
@@ -67,57 +64,81 @@ class HeatMapController extends Controller
 
     /**
      * The week around a lot (lot=ID) or a saved map (map=ID): where it is on the map, the heat square the map
-     * plays, the lot's own week with a guide for each day, and the crop's stage on each date when the lot is in
-     * an open season.
+     * plays, and the spot's own week: each day's heat reading and notes (HeatGuide) and the good hours for the
+     * work (FieldHours). Never tied to what grows on the lot (the owner, 2026-11-17).
      */
     public function forecast(Request $request)
     {
         $this->gate();
-        $lotId = (int) $request->query('lot');
-        $mapId = (int) $request->query('map');
-        $place = null;
-        $farmLot = null;
-        if ($lotId > 0) {
-            $farmLot = FarmLots::one((int) WorkerContext::effectiveOwnerId(), $lotId);
-            if (! $farmLot) {
-                return $this->json(false, 'That lot is not in your lots any more. Pick another one.', [], 404);
-            }
-            $place = $this->lotPlace($farmLot);
-            if (! $place) {
-                return $this->json(false, 'We could not find ' . $farmLot['name'] . ' on the map. Set its pin, or check its town and province.', ['noPlace' => true], 422);
-            }
-        } elseif ($mapId > 0) {
-            $save = MapAccess::viewable($mapId);
-            $geo = $save ? self::shapes((string) $save->objects) : null;
-            if (! $save || ! $geo) {
-                return $this->json(false, $save ? 'That map has nothing drawn on it yet. Draw your field on it in Global Maps first.' : 'That map is not open to you.', [], $save ? 422 : 404);
-            }
-            $place = ['kind' => 'map', 'id' => (int) $save->id, 'name' => (string) $save->title, 'label' => 'A map from Global Maps', 'lat' => $geo['center'][0], 'lng' => $geo['center'][1],
-                'how' => 'map', 'bounds' => $geo['bounds'], 'shapes' => $geo['shapes'], 'ring' => null, 'pin' => null];
-        } else {
-            return $this->json(false, 'Pick a lot or a map first.', [], 422);
+        [$place, $fail] = $this->place($request);
+        if ($fail) {
+            return $fail;
         }
-
         $week = HeatForecast::around((float) $place['lat'], (float) $place['lng']);
         if (! $week) {
             return $this->json(false, 'The forecast could not be reached just now. Please try again in a minute.', ['place' => $place], 503);
         }
 
-        $grow = $farmLot ? rescue(fn () => $this->growing($farmLot), null, false) : null;
+        $work = FieldHours::week($week['lot']);
         $days = [];
         foreach ((array) ($week['lot']['days'] ?? []) as $d) {
-            $g = $grow ? ($grow['stages'][$d['date']] ?? null) : null;
-            $days[] = $d + ['guide' => HeatGuide::day($d, HeatForecast::dayHours($week['lot'], $d['date']), $g ? $grow['crop'] + ['stage' => $g['stage'], 'day' => $g['day'], 'counter' => $g['counter']] : null),
-                'grow' => $g];
+            $days[] = $d + ['guide' => HeatGuide::day($d, HeatForecast::dayHours($week['lot'], $d['date'])), 'work' => $work[$d['date']] ?? []];
         }
         $week['lot']['days'] = $days;
 
         return $this->json(true, 'ok', [
             'place' => $place,
             'week' => $week,
-            'grow' => $grow ? ['season' => $grow['season'], 'lot' => $grow['lotName'], 'crop' => $grow['crop']['label'], 'cropKey' => $grow['crop']['crop'], 'icon' => $grow['crop']['icon']] : null,
+            'work' => array_map(fn ($w) => ['name' => $w[0], 'icon' => $w[1]], FieldHours::WORK),
             'today' => now('Asia/Manila')->toDateString(),
+            'nowHour' => (int) now('Asia/Manila')->format('G'),
         ]);
+    }
+
+    /**
+     * The year at the place (2026-11-17, the owner: "a graphical heatmap presentation as well for months to see in
+     * your area"): twenty years of its weather month by month and week by week, and how each month usually suits
+     * the work (HeatYear). A place not on the climate shelf yet answers pending while its years are fetched.
+     */
+    public function year(Request $request)
+    {
+        $this->gate();
+        [$place, $fail] = $this->place($request);
+        if ($fail) {
+            return $fail;
+        }
+        $year = HeatYear::of((float) $place['lat'], (float) $place['lng'], $place['label'] ?: $place['name']);
+
+        return $this->json(true, 'ok', ['place' => ['name' => $place['name'], 'how' => $place['how']], 'year' => $year,
+            'work' => array_map(fn ($w) => ['name' => $w[0], 'icon' => $w[1]], HeatYear::WORK), 'month' => (int) now('Asia/Manila')->month]);
+    }
+
+    /** The place a request names: a lot of the farm's, or a saved map it may open. [place, null] or [null, refusal]. */
+    private function place(Request $request): array
+    {
+        $lotId = (int) $request->query('lot');
+        $mapId = (int) $request->query('map');
+        if ($lotId > 0) {
+            $farmLot = FarmLots::one((int) WorkerContext::effectiveOwnerId(), $lotId);
+            if (! $farmLot) {
+                return [null, $this->json(false, 'That lot is not in your lots any more. Pick another one.', [], 404)];
+            }
+            $place = $this->lotPlace($farmLot);
+
+            return $place ? [$place, null] : [null, $this->json(false, 'We could not find ' . $farmLot['name'] . ' on the map. Set its pin, or check its town and province.', ['noPlace' => true], 422)];
+        }
+        if ($mapId > 0) {
+            $save = MapAccess::viewable($mapId);
+            $geo = $save ? self::shapes((string) $save->objects) : null;
+            if (! $save || ! $geo) {
+                return [null, $this->json(false, $save ? 'That map has nothing drawn on it yet. Draw your field on it in Global Maps first.' : 'That map is not open to you.', [], $save ? 422 : 404)];
+            }
+
+            return [['kind' => 'map', 'id' => (int) $save->id, 'name' => (string) $save->title, 'label' => 'A map from Global Maps', 'lat' => $geo['center'][0], 'lng' => $geo['center'][1],
+                'how' => 'map', 'bounds' => $geo['bounds'], 'shapes' => $geo['shapes'], 'ring' => null, 'pin' => null], null];
+        }
+
+        return [null, $this->json(false, 'Pick a lot or a map first.', [], 422)];
     }
 
     /** A place to search when a lot has no pin: "Bantug, Science City of Munoz, Nueva Ecija". */
@@ -152,65 +173,6 @@ class HeatMapController extends Controller
             if ($hit && isset($hit['lat'], $hit['lng'])) {
                 return $base + ['lat' => (float) $hit['lat'], 'lng' => (float) $hit['lng'], 'how' => $how];
             }
-        }
-
-        return null;
-    }
-
-    /**
-     * What grows on the lot now: its season lot in an open season (linked by farmLotId, or by its name), the crop,
-     * and the crop's stage on each date of the week, counted the way the whole app counts (LotCalendar).
-     */
-    private function growing(array $farmLot): ?array
-    {
-        $owner = (int) WorkerContext::effectiveOwnerId();
-        $seasons = AsCroppingSchedule::query()->forClient($owner)->where('deleteStatus', 1)
-            ->whereNotIn('status', [AsCroppingSchedule::STATUS_COMPLETED, AsCroppingSchedule::STATUS_ARCHIVED])
-            ->orderByDesc('id')->limit(30)->get(['id', 'title', 'cropType', 'status', 'dayType']);
-        if ($seasons->isEmpty()) {
-            return null;
-        }
-        $key = fn ($s) => trim((string) preg_replace('/\s+/u', ' ', mb_strtolower((string) $s)));
-        $linked = LotSync::ready();
-        $lots = AsScheduleLot::whereIn('croppingScheduleId', $seasons->pluck('id'))->where('deleteStatus', 1)->whereNull('harvestedAt')->get()
-            ->filter(fn ($l) => ($linked && (int) ($l->farmLotId ?? 0) === (int) $farmLot['id'])
-                || (int) ($farmLot['lotId'] ?? 0) === (int) $l->id
-                || (! ($linked && $l->farmLotId) && $key($l->lotName) !== '' && $key($l->lotName) === $key($farmLot['name'])))
-            ->sortByDesc('croppingScheduleId');
-        $dates = [];
-        $today = now('Asia/Manila')->startOfDay();
-        for ($i = 0; $i < HeatForecast::DAYS; $i++) {
-            $dates[] = $today->copy()->addDays($i);
-        }
-        foreach ($lots as $lot) {
-            $s = $seasons->firstWhere('id', $lot->croppingScheduleId);
-            $crop = CropStages::normalize($lot->crop ?: $s?->cropType);
-            if (! $s || ! $crop) {
-                continue;
-            }
-            $s->load(['lots', 'activities' => fn ($q) => $q->where(fn ($w) => $w->where('isDayZero', 1)->orWhere('isTransplant', 1))->with('lots')]);
-            [$zero, $trans] = LotCalendar::effectiveAnchors($s);
-            $stages = [];
-            foreach ($dates as $on) {
-                $age = LotCalendar::ageOf($lot, $on, $zero[$lot->id] ?? null, $trans[$lot->id] ?? null);
-                $day = $lot->stageDay($age);
-                $st = $day !== null ? CropStages::stageFor($crop, $day, $age['counter'] ?? null, $lot->maturityDays()) : null;
-                if ($st) {
-                    $stages[$on->toDateString()] = ['stage' => $st['label'], 'day' => (int) ($age['day'] ?? $day), 'counter' => (string) ($age['counter'] ?? '')];
-                }
-            }
-            if (! $stages) {
-                continue;
-            }
-            $label = CropCatalog::label($crop);
-            $word = mb_strtolower(trim((string) preg_split('/[,(]/u', $label)[0])) ?: 'crop';
-
-            return [
-                'season' => (string) $s->title,
-                'lotName' => (string) $lot->lotName,
-                'crop' => ['crop' => $crop, 'word' => $word, 'label' => $label, 'icon' => CropStages::icon($crop), 'lot' => (string) $lot->lotName],
-                'stages' => $stages,
-            ];
         }
 
         return null;

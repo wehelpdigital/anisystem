@@ -12,8 +12,9 @@ use Illuminate\Support\Facades\Log;
  * location ... colors based on temperature ... a play button in the map showing the next days temperature").
  *
  * A square of 9 by 9 points around the lot, 0.04 degrees apart (about 4.4 km, so the square is about 35 km across),
- * plus the lot itself as an 82nd point, asked of the Open-Meteo model in ONE call: every hour for a week of the air
- * temperature, what it feels like and the humidity, and each day's sky, high, low, rain chance and sun strength.
+ * asked of the Open-Meteo model for every hour of a week's temperature, and the lot's own spot asked at the same time
+ * for what the work needs: the temperature, what it feels like, the humidity, the rain and its chance, the wind and
+ * the cloud by the hour, and each day's sky, rain chance and sun strength (App\Support\FieldHours reads them).
  * The model corrects its temperature for the height of the ground, so hills and valleys show; on flat land the
  * square is nearly one color, which is the truth.
  *
@@ -43,7 +44,7 @@ final class HeatForecast
     private const TZ = 'Asia/Manila';
 
     /** Bump to drop every kept square at once (a change of shape). */
-    private const VER = 'v2';
+    private const VER = 'v3';
 
     /**
      * The week around a point, or null when the model cannot be reached and nothing is kept.
@@ -87,31 +88,38 @@ final class HeatForecast
                 $lngs[] = round($lng0 + $c * self::STEP, 4);
             }
         }
-        // The lot itself, last: its own week for the forecast tab and the guides.
-        $lats[] = round($lat, 5);
-        $lngs[] = round($lng, 5);
         $n = self::SIZE * self::SIZE;
 
+        // Two asks at once (2026-11-17, the work guide): the square's temperature only, and the lot's own week with
+        // what the work needs, the rain, its chance, the wind and the cloud. 82 places either way, each under the
+        // ten variables Open-Meteo weighs as one call.
         try {
-            $res = Http::timeout(25)->retry(1, 400, throw: false)->get(self::URL, [
-                'latitude' => implode(',', $lats),
-                'longitude' => implode(',', $lngs),
-                'hourly' => 'temperature_2m,apparent_temperature,relative_humidity_2m',
-                'daily' => 'weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max,precipitation_probability_max,uv_index_max',
-                'forecast_days' => self::DAYS,
-                'timezone' => self::TZ,
+            [$gr, $lr] = Http::pool(fn ($pool) => [
+                $pool->timeout(25)->get(self::URL, [
+                    'latitude' => implode(',', $lats), 'longitude' => implode(',', $lngs),
+                    'hourly' => 'temperature_2m', 'forecast_days' => self::DAYS, 'timezone' => self::TZ,
+                ]),
+                $pool->timeout(25)->get(self::URL, [
+                    'latitude' => round($lat, 5), 'longitude' => round($lng, 5),
+                    'hourly' => 'temperature_2m,apparent_temperature,relative_humidity_2m,precipitation_probability,precipitation,wind_speed_10m,cloud_cover',
+                    'daily' => 'weather_code,precipitation_probability_max,uv_index_max',
+                    'forecast_days' => self::DAYS, 'timezone' => self::TZ,
+                ]),
             ]);
         } catch (\Throwable $e) {
             Log::info('Heat map forecast could not be fetched: ' . $e->getMessage());
 
             return null;
         }
-        $all = $res->ok() ? $res->json() : null;
-        if (! is_array($all) || ! array_is_list($all) || count($all) !== $n + 1 || ! isset($all[0]['hourly']['time'], $all[0]['daily']['time'])) {
-            Log::info('Heat map forecast came back unusable: HTTP ' . $res->status());
+        $grid = $gr instanceof \Illuminate\Http\Client\Response && $gr->ok() ? $gr->json() : null;
+        $me = $lr instanceof \Illuminate\Http\Client\Response && $lr->ok() ? $lr->json() : null;
+        if (! is_array($grid) || ! array_is_list($grid) || count($grid) !== $n || ! isset($grid[0]['hourly']['time'])
+            || ! is_array($me) || ! isset($me['hourly']['time'], $me['daily']['time'])) {
+            Log::info('Heat map forecast came back unusable: HTTP ' . ($gr instanceof \Illuminate\Http\Client\Response ? $gr->status() : 'none') . '/' . ($lr instanceof \Illuminate\Http\Client\Response ? $lr->status() : 'none'));
 
             return null;
         }
+        $all = $grid;
 
         $times = array_values((array) $all[0]['hourly']['time']);
         $num = fn ($v, int $dp = 1) => is_numeric($v) ? round((float) $v, $dp) : null;
@@ -132,7 +140,7 @@ final class HeatForecast
 
         // Each day's high and low at every point, read off the same hours the map plays and the chart draws, so the
         // badge, the colors and the chart never disagree by the half degree the model's own daily figures can.
-        $dates = array_values((array) $all[0]['daily']['time']);
+        $dates = array_values((array) $me['daily']['time']);
         $hoursOf = [];
         foreach ($times as $k => $t) {
             $hoursOf[substr((string) $t, 0, 10)][] = $k;
@@ -152,33 +160,41 @@ final class HeatForecast
             $max = [];
             $min = [];
             for ($i = 0; $i < $n; $i++) {
-                $series = (array) ($all[$i]['hourly']['temperature_2m'] ?? []);
-                $max[] = $span($series, $date, true) ?? $num($all[$i]['daily']['temperature_2m_max'][$d] ?? null);
-                $min[] = $span($series, $date, false) ?? $num($all[$i]['daily']['temperature_2m_min'][$d] ?? null);
+                $max[] = $span((array) ($all[$i]['hourly']['temperature_2m'] ?? []), $date, true);
+                $min[] = $span((array) ($all[$i]['hourly']['temperature_2m'] ?? []), $date, false);
             }
             $days[] = ['date' => $date, 'max' => $max, 'min' => $min];
         }
 
-        // The lot's own week: every hour, and its days.
-        $me = $all[$n];
+        // The lot's own week: every hour (its hours line up with the square's), and its days.
         $h = (array) ($me['hourly'] ?? []);
-        $lotHours = ['from' => $times[0] ?? null, 't' => [], 'f' => [], 'h' => []];
+        $int = fn ($v) => is_numeric($v) ? (int) round((float) $v) : null;
+        $lotHours = ['from' => $times[0] ?? null, 't' => [], 'f' => [], 'h' => [], 'pp' => [], 'p' => [], 'w' => [], 'c' => []];
         foreach ($times as $k => $_) {
             $lotHours['t'][] = $num($h['temperature_2m'][$k] ?? null);
             $lotHours['f'][] = $num($h['apparent_temperature'][$k] ?? null);
-            $lotHours['h'][] = isset($h['relative_humidity_2m'][$k]) && is_numeric($h['relative_humidity_2m'][$k]) ? (int) round($h['relative_humidity_2m'][$k]) : null;
+            $lotHours['h'][] = $int($h['relative_humidity_2m'][$k] ?? null);
+            $lotHours['pp'][] = $int($h['precipitation_probability'][$k] ?? null);
+            $lotHours['p'][] = $num($h['precipitation'][$k] ?? null);
+            $lotHours['w'][] = $int($h['wind_speed_10m'][$k] ?? null);
+            $lotHours['c'][] = $int($h['cloud_cover'][$k] ?? null);
         }
         $dd = (array) ($me['daily'] ?? []);
         $lotDays = [];
         foreach ($dates as $d => $date) {
+            $rain = 0.0;
+            foreach ($hoursOf[$date] ?? [] as $k) {
+                $rain += is_numeric($h['precipitation'][$k] ?? null) ? (float) $h['precipitation'][$k] : 0.0;
+            }
             $lotDays[] = [
                 'date' => $date,
-                'code' => isset($dd['weather_code'][$d]) && is_numeric($dd['weather_code'][$d]) ? (int) $dd['weather_code'][$d] : null,
-                'max' => $span((array) ($h['temperature_2m'] ?? []), $date, true) ?? $num($dd['temperature_2m_max'][$d] ?? null),
-                'min' => $span((array) ($h['temperature_2m'] ?? []), $date, false) ?? $num($dd['temperature_2m_min'][$d] ?? null),
-                'fmax' => $span((array) ($h['apparent_temperature'] ?? []), $date, true) ?? $num($dd['apparent_temperature_max'][$d] ?? null),
-                'pop' => isset($dd['precipitation_probability_max'][$d]) && is_numeric($dd['precipitation_probability_max'][$d]) ? (int) $dd['precipitation_probability_max'][$d] : null,
+                'code' => $int($dd['weather_code'][$d] ?? null),
+                'max' => $span((array) ($h['temperature_2m'] ?? []), $date, true),
+                'min' => $span((array) ($h['temperature_2m'] ?? []), $date, false),
+                'fmax' => $span((array) ($h['apparent_temperature'] ?? []), $date, true),
+                'pop' => $int($dd['precipitation_probability_max'][$d] ?? null),
                 'uv' => $num($dd['uv_index_max'][$d] ?? null),
+                'rain' => round($rain, 1),
             ];
         }
 
@@ -196,15 +212,22 @@ final class HeatForecast
         return $out;
     }
 
+    /** Where a date's midnight sits in the lot's hours (the index of its 12 AM), or null. */
+    public static function dayStart(array $lot, string $date): ?int
+    {
+        $from = $lot['hours']['from'] ?? null;
+
+        return $from ? (int) Carbon::parse($from, self::TZ)->diffInHours(Carbon::parse($date . ' 00:00', self::TZ), false) : null;
+    }
+
     /** The hours of one day of the lot's week, as [hour => [t, f, h]]. */
     public static function dayHours(array $lot, string $date): array
     {
         $hours = (array) ($lot['hours'] ?? []);
-        $from = isset($hours['from']) ? Carbon::parse($hours['from'], self::TZ) : null;
-        if (! $from) {
+        $start = self::dayStart($lot, $date);
+        if ($start === null) {
             return [];
         }
-        $start = (int) $from->diffInHours(Carbon::parse($date . ' 00:00', self::TZ), false);
         $out = [];
         for ($i = 0; $i < 24; $i++) {
             $k = $start + $i;

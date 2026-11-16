@@ -409,11 +409,11 @@
             @if (\Illuminate\Support\Facades\Route::has('heatmap.page') && $qOn('heatmap'))
             @php $qHeatLocked = ! \App\Support\Tier::farmCan('heatMap'); $qHeatRung = \App\Support\Tier::farmUnlocksAt('heatMap'); @endphp
             <a href="{{ route('heatmap.page') }}" class="qa-tile qa-wtp"
-               @if ($qHeatLocked) data-tier-lock="{{ $qHeatRung }}" data-lock-say="The Heat Map Forecast comes with {{ \App\Support\Tier::withPlan($qHeatRung) }}. See the week's heat over your lot on the map, hour by hour, and what to do on the hottest days." @endif>
+               @if ($qHeatLocked) data-tier-lock="{{ $qHeatRung }}" data-lock-say="The Heat Map Forecast comes with {{ \App\Support\Tier::withPlan($qHeatRung) }}. See the week's heat over your lot on the map, and the best days and hours for the farm's work." @endif>
                 <span class="qa-ico"><img src="{{ asset('images/icons/heat-map.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qHeatLocked ? 'tl-dim' : '' }}">
                     <b>Heat Map Forecast{{ \App\Support\Tagalog::flag('heat-map-forecast') }}</b>
-                    <i>See the week's heat over your lot on the map, play it day by day, and get a guide for the hottest days: when to work, spray, water and fertilize.</i>
+                    <i>See the week's heat over your lot on the map, the best days and hours to plant, spray, fertilize, work and dry, and the year there month by month.</i>
                 </span>
                 @if ($qHeatLocked)
                     <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>

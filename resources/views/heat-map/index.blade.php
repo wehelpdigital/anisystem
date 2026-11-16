@@ -123,15 +123,25 @@
     .hm-change span { min-width: 0; display: grid; line-height: 1.15; }
     .hm-change b { font-size: .86rem; font-weight: 800; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .hm-change small { font-size: .68rem; font-weight: 700; color: var(--color-gray-500); }
-    .hm-tabs { position: relative; flex: none; display: grid; grid-template-columns: 1fr 1fr; margin-left: auto; padding: .25rem; border-radius: 999px; background: var(--color-gray-100); }
-    .hm-tab-ind { position: absolute; top: .25rem; bottom: .25rem; left: .25rem; width: calc(50% - .25rem); border-radius: 999px; background: #cf4a2c; transition: transform .28s var(--hm-e); }
+    .hm-tabs { position: relative; flex: none; display: grid; grid-template-columns: repeat(3, 1fr); margin-left: auto; padding: .25rem; border-radius: 999px; background: var(--color-gray-100); }
+    .hm-tab-ind { position: absolute; top: .25rem; bottom: .25rem; left: .25rem; width: calc((100% - .5rem) / 3); border-radius: 999px; background: #cf4a2c; transition: transform .28s var(--hm-e); }
     .hm-tabs.is-days .hm-tab-ind { transform: translateX(100%); }
+    .hm-tabs.is-months .hm-tab-ind { transform: translateX(200%); }
     .hm-tab { position: relative; z-index: 1; min-height: 2.3rem; padding: 0 .95rem; display: inline-flex; align-items: center; justify-content: center; gap: .35rem; font-size: .8rem; font-weight: 800;
         color: var(--color-gray-600); white-space: nowrap; transition: color .28s var(--hm-e); }
     .hm-tab svg { width: .95rem; height: .95rem; }
     .hm-tab[aria-selected="true"] { color: #fff; }
-    @media (max-width: 419.98px) { .hm-tab { padding: 0 .6rem; font-size: .74rem; } .hm-tab .hm-tlong { display: none; } .hm-change { padding-right: .6rem; } }
-    @media (min-width: 420px) { .hm-tab .hm-tshort { display: none; } }
+    /* A phone: the place on one line, the three tabs across the whole width under it. */
+    @media (max-width: 719.98px) {
+        .hm-vhead { flex-wrap: wrap; gap: .45rem; }
+        .hm-change { flex: 1 1 100%; min-height: 2.3rem; padding: .2rem .7rem .2rem .4rem; }
+        .hm-change span { display: flex; align-items: baseline; gap: .5rem; }
+        .hm-change small { flex: none; }
+        .hm-tabs { flex: 1 1 100%; margin-left: 0; }
+        .hm-tab { padding: 0 .4rem; font-size: .78rem; }
+        .hm-tab .hm-tlong { display: none; }
+    }
+    @media (min-width: 720px) { .hm-tab .hm-tshort { display: none; } }
 
     .hm-stage { position: relative; isolation: isolate; overflow: hidden; border-radius: 1.4rem; background: #0f1309; border: 1px solid var(--color-gray-200); box-shadow: 0 30px 60px -40px rgb(0 0 0 / .9); }
     .hm-map { height: var(--hm-h, calc(100svh - var(--app-head, 4rem) - 4.5rem)); min-height: 22rem; }
@@ -265,9 +275,79 @@
     .hm-stat small { display: block; font-size: .64rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; color: var(--color-gray-500); }
     .hm-stat b { display: block; margin-top: .1rem; font-size: 1.05rem; font-weight: 900; color: var(--color-gray-900); font-variant-numeric: tabular-nums; }
     .hm-stat em { display: block; font-style: normal; font-size: .7rem; color: var(--color-gray-500); }
-    .hm-grow { display: flex; align-items: center; gap: .55rem; margin-top: .7rem; padding: .55rem .7rem; border-radius: .9rem; font-size: .8rem; line-height: 1.45; color: #2d5016; background: #f1f7ea; border: 1px solid #d6e8c6; }
-    .hm-grow i { flex: none; font-style: normal; font-size: 1.15rem; }
-    html.dark .hm-grow { color: #c5e2a8; background: #17220f; border-color: #2b3a1c; }
+    /* ---- the heat grids: the work by day, by hour and by month, and the weather by month and week ---- */
+    .hm-hgw { position: relative; margin-top: .75rem; }
+    .hm-hgw.is-scroll { overflow-x: auto; padding-bottom: .4rem; scrollbar-width: thin; -webkit-overflow-scrolling: touch; }
+    .hm-hg { display: grid; grid-template-columns: var(--lab, 7rem) repeat(var(--n), minmax(var(--cw, 1.9rem), var(--cmax, 1fr))); gap: 3px; align-items: stretch; }
+    .hm-hgw.is-scroll .hm-hg { width: max-content; min-width: 100%; }
+    /* A phone and twelve months: each row's name on its own line above its squares, so the year fits the width. */
+    .hm-hg.is-stack { grid-template-columns: repeat(var(--n), minmax(0, 1fr)); row-gap: 2px; }
+    .hm-hg.is-stack > .hm-hl { grid-column: 1 / -1; position: static; padding: .5rem 0 .15rem; }
+    .hm-hg.is-stack > .hm-hl:first-child { display: none; }
+    .hm-hg.is-stack > .hm-hl b { white-space: normal; }
+    .hm-hg.is-stack > .hm-hl small { display: inline; margin-left: .35rem; }
+    .hm-hl { position: sticky; left: 0; z-index: 2; display: flex; align-items: center; gap: .35rem; min-width: 0; padding-right: .4rem; font-size: .72rem; line-height: 1.2; color: var(--color-gray-700); background: var(--color-white); }
+    .hm-hl svg { flex: none; width: .95rem; height: .95rem; color: #b8441f; }
+    .hm-hl b { min-width: 0; font-weight: 800; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .hm-hl small { display: block; font-size: .62rem; font-weight: 700; color: var(--color-gray-400); white-space: nowrap; }
+    .hm-hh { display: grid; align-content: end; justify-items: center; padding-bottom: .2rem; font-size: .66rem; font-weight: 800; line-height: 1.1; text-align: center; color: var(--color-gray-500); white-space: nowrap; }
+    .hm-hh small { font-size: .58rem; font-weight: 700; color: var(--color-gray-400); }
+    .hm-hh svg { width: .95rem; height: .95rem; color: #b8441f; }
+    .hm-hh.is-on, .hm-hh.is-on small { color: #b8441f; }
+    .hm-hc { position: relative; height: var(--ch, 2rem); min-width: 0; border: 0; border-radius: .42rem; display: grid; place-items: center; padding: 0; font-size: var(--cf, .7rem); font-weight: 800;
+        font-variant-numeric: tabular-nums; line-height: 1; transition: transform .2s var(--hm-e), box-shadow .2s var(--hm-e), opacity .2s var(--hm-e);
+        animation: hmCell .42s var(--hm-e) both; animation-delay: calc(var(--d, 0) * 16ms); }
+    @keyframes hmCell { from { opacity: 0; transform: scale(.6); } }
+    .hm-hc svg { width: .8rem; height: .8rem; }
+    button.hm-hc { cursor: pointer; }
+    button.hm-hc:hover, button.hm-hc:focus-visible { transform: scale(1.08); z-index: 1; outline: none; box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px #1d150e; }
+    .hm-hc.is-col { box-shadow: 0 0 0 2px var(--color-white), 0 0 0 3.5px #cf4a2c; }
+    .hm-hc.is-past { opacity: .32; }
+    .hm-hc.is-pick { box-shadow: 0 0 0 2px var(--color-white), 0 0 0 4px #1d150e; z-index: 1; }
+    .r-g { background: #3f8f3a; color: #fff; }
+    .r-f { background: #e3ac2f; color: #2b2100; }
+    .r-p { background: #cf4a2c; color: #fff; }
+    .r-x { color: transparent; background: repeating-linear-gradient(45deg, var(--color-gray-100) 0 3px, var(--color-gray-200) 3px 6px); }
+    .r-n { color: var(--color-gray-300); background: transparent; box-shadow: inset 0 0 0 1px var(--color-gray-200); }
+    .hm-key { display: flex; flex-wrap: wrap; gap: .35rem .9rem; margin-top: .6rem; font-size: .72rem; font-weight: 700; color: var(--color-gray-600); }
+    .hm-key span { display: inline-flex; align-items: center; gap: .35rem; }
+    .hm-key i { width: 1rem; height: 1rem; border-radius: .3rem; display: grid; place-items: center; }
+    .hm-key i svg { width: .65rem; height: .65rem; }
+    .hm-hnote { min-height: 2.6rem; margin-top: .55rem; padding: .55rem .7rem; border-radius: .85rem; font-size: .8rem; line-height: 1.5; color: var(--color-gray-700); background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
+    .hm-hnote b { color: var(--color-gray-900); }
+    .hm-hnote.is-fresh { animation: hmIn .25s ease both; }
+    .hm-sec-h { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem; }
+    .hm-seg { display: inline-flex; gap: .15rem; padding: .2rem; border-radius: 999px; background: var(--color-gray-100); }
+    .hm-seg button { padding: .35rem .8rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: var(--color-gray-600); transition: background-color .28s var(--hm-e), color .28s var(--hm-e); }
+    .hm-seg button[aria-pressed="true"] { background: var(--color-white); color: var(--color-gray-900); box-shadow: 0 3px 10px -6px rgb(0 0 0 / .45); }
+
+    /* The day's work, as a list. */
+    .hm-work { display: grid; gap: .45rem; margin-top: .85rem; }
+    .hm-work h4, .hm-hours h4 { font-size: .74rem; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-500); }
+    .hm-wk { display: grid; grid-template-columns: 2.2rem minmax(0, 1fr) auto; gap: .6rem; align-items: center; padding: .6rem .65rem; border-radius: .95rem; background: var(--color-gray-50);
+        border: 1px solid var(--color-gray-100); animation: hmUp .35s var(--hm-e) both; animation-delay: calc(var(--i, 0) * 45ms); }
+    .hm-wk > i { width: 2.2rem; height: 2.2rem; border-radius: .75rem; display: grid; place-items: center; color: #b8441f; background: #fde9dc; }
+    .hm-wk > i svg { width: 1.15rem; height: 1.15rem; }
+    .hm-wk b { display: block; font-size: .86rem; font-weight: 800; color: var(--color-gray-900); }
+    .hm-wk p { margin-top: .1rem; font-size: .78rem; line-height: 1.45; color: var(--color-gray-600); }
+    .hm-rate { display: inline-flex; align-items: center; gap: .3rem; padding: .28rem .6rem .28rem .45rem; border-radius: 999px; font-size: .72rem; font-weight: 800; white-space: nowrap; }
+    .hm-rate svg { width: .75rem; height: .75rem; }
+    .hm-hours { margin-top: 1rem; }
+    html.dark .hm-wk > i { background: #36190b; color: #f8b48a; }
+
+    /* The year. */
+    .hm-yr { background: linear-gradient(135deg, #17324f, #0d1b2c); box-shadow: 0 18px 40px -26px rgb(13 27 44 / .95); }
+    .hm-yr p { color: #cfe0f2; }
+    .hm-wait2 { display: flex; gap: .8rem; align-items: center; }
+    .hm-wait2 .hm-therm { flex: none; }
+    .hm-best { display: grid; gap: .4rem; margin-top: .7rem; }
+    .hm-best div { display: grid; grid-template-columns: 9rem minmax(0, 1fr); gap: .5rem; align-items: baseline; font-size: .78rem; color: var(--color-gray-600); }
+    .hm-best b { font-weight: 800; color: var(--color-gray-800); }
+    .hm-best span { display: flex; flex-wrap: wrap; gap: .25rem; }
+    .hm-best em { font-style: normal; padding: .1rem .5rem; border-radius: 999px; font-size: .72rem; font-weight: 800; color: #1f5a1d; background: #dcefd9; }
+    .hm-best i { font-style: normal; color: var(--color-gray-400); }
+    @media (max-width: 479.98px) { .hm-best div { grid-template-columns: 1fr; gap: .2rem; } }
+    html.dark .hm-best em { background: #1b2a12; color: #b9dc98; }
 
     .hm-chart { position: relative; margin-top: .8rem; touch-action: pan-y; }
     .hm-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -331,7 +411,7 @@
     html.dark .hm-info section > i { background: #36190b; color: #f8b48a; }
 
     @media (prefers-reduced-motion: reduce) {
-        .hm-in, .hm-pane, .hm-at, .hm-mcard, .hm-card, .hm-sum, .hm-dchip, .hm-g, .hm-wbar, .hm-art .hm-ring, .hm-art .hm-merc, .hm-therm .hm-merc { animation: none !important; }
+        .hm-in, .hm-pane, .hm-at, .hm-mcard, .hm-card, .hm-sum, .hm-dchip, .hm-g, .hm-wbar, .hm-wk, .hm-hc, .hm-hnote, .hm-art .hm-ring, .hm-art .hm-merc, .hm-therm .hm-merc { animation: none !important; }
         .hm-chart .draw { animation: none; stroke-dashoffset: 0; }
         .hm-src-ind, .hm-tab-ind, .hm-rail i::after, .hm-more2, .hm-panel, .hm-lmark, .hm-mcheck { transition: none !important; }
     }
@@ -347,7 +427,7 @@
         'key' => (string) config('services.google_maps.key'),
         'mapId' => (string) config('services.google_maps.map_id'),
         'pin' => asset('images/map-pin.png'),
-        'urls' => ['forecast' => route('heatmap.forecast'), 'maps' => route('heatmap.maps'), 'mapsPage' => route('maps.page'), 'lotsPage' => route('farmlots.index')],
+        'urls' => ['forecast' => route('heatmap.forecast'), 'year' => route('heatmap.year'), 'maps' => route('heatmap.maps'), 'mapsPage' => route('maps.page'), 'lotsPage' => route('farmlots.index')],
         'lot' => (int) request()->query('lot') ?: null,
         'map' => (int) request()->query('map') ?: null,
     ];
@@ -374,8 +454,8 @@
             </svg>
             <div>
                 <h2>See the week's heat over your lot</h2>
-                <p>The temperature around your lot, painted on the map for every day and hour of the week. Press play to watch it, and read what to do on the hottest days.</p>
-                <div class="hm-chips"><span>7 days</span><span>Every 3 hours</span><span>A guide for each day</span><span>Philippine time</span></div>
+                <p>The temperature around your lot, painted on the map for every day and hour of the week, the best days and hours to plant, spray, fertilize, work, water and dry, and the year there month by month.</p>
+                <div class="hm-chips"><span>7 days</span><span>Hour by hour</span><span>12 months</span><span>Philippine time</span></div>
             </div>
         </div>
 
@@ -421,8 +501,12 @@
                     <span class="hm-tlong">Heat map</span><span class="hm-tshort">Map</span>
                 </button>
                 <button type="button" class="hm-tab" role="tab" aria-selected="false" data-tab="days">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path stroke-linecap="round" d="M8 3v4m8-4v4M3.5 10h17M8 14h3m-3 3h6"/></svg>
-                    <span class="hm-tlong">Forecast and guides</span><span class="hm-tshort">Guides</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5V12l3 2"/></svg>
+                    <span class="hm-tlong">Days and hours</span><span class="hm-tshort">Days</span>
+                </button>
+                <button type="button" class="hm-tab" role="tab" aria-selected="false" data-tab="months">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path stroke-linecap="round" d="M8 3v4m8-4v4M3.5 10h17"/><path d="M7.5 13.5h2v2h-2zm3.5 0h2v2h-2zm3.5 0h2v2h-2z" fill="currentColor" stroke="none"/></svg>
+                    <span class="hm-tlong">Months</span><span class="hm-tshort">Months</span>
                 </button>
             </div>
         </div>
@@ -498,6 +582,10 @@
         <div class="hm-tp" data-tp="days" hidden>
             <div class="hm-days" id="hmDays"></div>
         </div>
+
+        <div class="hm-tp" data-tp="months" hidden>
+            <div class="hm-days" id="hmMonths"></div>
+        </div>
     </section>
 </div>
 
@@ -542,7 +630,7 @@
             </section>
             <section>
                 <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 19h16M7 16V9m5 7V5m5 11v-4"/></svg></i>
-                <div><h4>Where the numbers come from</h4><p>A weather forecast model gives the temperature for each spot, corrected for the height of the land, and it is refreshed every 3 hours. Open <b>Forecast and guides</b> for your lot's own week and what to do on each day.</p></div>
+                <div><h4>Where the numbers come from</h4><p>A weather forecast model gives the temperature for each spot, corrected for the height of the land, and it is refreshed every 3 hours. Open <b>Days and hours</b> for the best days and hours for planting, spraying, fertilizing, field work, watering and drying, and <b>Months</b> for the year there from twenty years of weather.</p></div>
             </section>
         </div>
     </div>
@@ -559,7 +647,7 @@
     const U = B.urls;
     const PICK_KEY = 'anee.heatPick';
     const st = { step: 0, src: 'lot', lot: null, map: null, maps: null, tab: 'map', mode: 'high', i: 0, day: 0, playing: false, folded: false, loadedFor: null };
-    let D = null;        // the forecast answer: place, week, grow, today
+    let D = null;        // the forecast answer: place, week (with the work of each day), today
 
     /* ---------------- the color scale: one for every day ---------------- */
     const T0 = 14, T1 = 40;
@@ -729,13 +817,15 @@
     function setTab(t) {
         st.tab = t;
         $('hmTabs').classList.toggle('is-days', t === 'days');
+        $('hmTabs').classList.toggle('is-months', t === 'months');
         $('hmTabs').querySelectorAll('[data-tab]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.tab === t)));
         document.querySelectorAll('#hmView .hm-tp').forEach((p) => { p.hidden = p.dataset.tp !== t; });
         document.documentElement.classList.toggle('hm-maptab', t === 'map' && st.step === 1);
         const el = document.querySelector('#hmView .hm-tp[data-tp="' + t + '"]');
         if (el && !reduce()) { el.classList.remove('hm-in'); void el.offsetWidth; el.classList.add('hm-in'); }
         window.scrollTo({ top: 0, behavior: 'auto' });
-        if (t === 'map') requestAnimationFrame(fit); else { stop(); if (D) paintDays(); }
+        if (t === 'map') requestAnimationFrame(fit);
+        else { stop(); if (t === 'days' && D) paintDays(); if (t === 'months') openMonths(); }
     }
     $('hmTabs').addEventListener('click', (e) => { const b = e.target.closest('[data-tab]'); if (b) setTab(b.dataset.tab); });
 
@@ -770,7 +860,7 @@
     window.gm_authFailure = function () {
         try { if (typeof prevAuth === 'function') prevAuth(); } catch (_) {}
         mapsRefused = true;
-        if (st.step === 1) veil('The map cannot be shown right now.', 'Google Maps refused this site. Please tell us. The forecast and the guides still work: open Forecast and guides.', true);
+        if (st.step === 1) veil('The map cannot be shown right now.', 'Google Maps refused this site. Please tell us. The days, the hours and the months still work: open Days and hours.', true);
     };
 
     let map = null, ground = null, fadeTok = 0, lotMarks = [], tapMark = null, tapTimer = 0, gridMarks = [], shapeMarks = [];
@@ -828,10 +918,11 @@
         if ((st.src === 'lot' ? 'lot=' + st.lot?.id : 'map=' + st.map?.id) !== want) return;   // changed meanwhile
         D = r.data;
         st.loadedFor = want;
+        Y = null; yearFor = null; yearPick = null; clearTimeout(yearT);
         FRAMES.clear();
         build();
         if (!mapsRefused) veil(false);
-        else veil('The map cannot be shown right now.', 'Google Maps refused this site. Please tell us. The forecast and the guides still work: open Forecast and guides.', true);
+        else veil('The map cannot be shown right now.', 'Google Maps refused this site. Please tell us. The days, the hours and the months still work: open Days and hours.', true);
     }
 
     /* ================= the heat ================= */
@@ -1184,40 +1275,95 @@
     const uvWord = (u) => u == null ? 'Not given' : u >= 11 ? 'Extreme' : u >= 8 ? 'Very high' : u >= 6 ? 'High' : u >= 3 ? 'Moderate' : 'Low';
     const bold = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
 
+    /* ---- the work, drawn the same way everywhere: good, fair, poor, each with its mark, never color alone ---- */
+    const RATE = { g: 'Good', f: 'Fair', p: 'Poor', x: 'Past', n: '' };
+    const MARK = { g: '<path d="M6 12.5l4 4L18 8"/>', f: '<path d="M7 12h10"/>', p: '<path d="M7.5 7.5l9 9m0-9l-9 9"/>' };
+    const mark = (r) => (MARK[r] ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + MARK[r] + '</svg>' : '');
+    const SHORT = { plant: 'Planting', spray: 'Spraying', fert: 'Fertilizing', labor: 'Field work', water: 'Watering', dry: 'Drying', plantRain: 'Plant, rain only', plantWater: 'Plant, irrigated' };
+    const KEY = '<div class="hm-key" aria-hidden="true">' + ['g', 'f', 'p'].map((r) => '<span><i class="r-' + r + '">' + mark(r) + '</i>' + RATE[r] + '</span>').join('') + '</div>';
+    const narrow = () => ($('hmView').clientWidth || innerWidth) < 560;
+    const hourShort = (h) => (h === 12 ? 'noon' : (h % 12 || 12) + (h < 12 ? 'a' : 'p'));
+
+    // A heat grid: rows down the side, columns across. cell(ri, ci) -> { tag, cls, style, html, attrs, label }.
+    function heatGrid(rows, cols, cell, o) {
+        o = o || {};
+        let h = '<div class="hm-hgw' + (o.scroll ? ' is-scroll' : '') + '"' + (o.id ? ' id="' + o.id + '"' : '') + '><div class="hm-hg' + (o.stack ? ' is-stack' : '') + '" role="table" aria-label="' + esc(o.label || '') + '" style="--n:' + cols.length
+            + ';--lab:' + (o.lab || '7rem') + ';--cw:' + (o.cw || '1.9rem') + ';--cmax:' + (o.cmax || '1fr') + ';--ch:' + (o.ch || '2rem') + ';--cf:' + (o.cf || '.7rem') + '">';
+        h += '<span class="hm-hl" role="columnheader"></span>' + cols.map((c) => '<span class="hm-hh' + (c.on ? ' is-on' : '') + '" role="columnheader">' + c.html + '</span>').join('');
+        rows.forEach((r, ri) => {
+            h += '<span class="hm-hl' + (r.wrap ? ' is-wrap' : '') + '" role="rowheader">' + r.html + '</span>';
+            cols.forEach((c, ci) => {
+                const x = cell(ri, ci) || {};
+                const tag = x.tag || 'span';
+                h += '<' + tag + (tag === 'button' ? ' type="button"' : '') + ' class="hm-hc ' + (x.cls || '') + '" role="cell" style="--d:' + Math.min(60, ri + ci) + ';' + (x.style || '') + '" ' + (x.attrs || '')
+                    + (x.label ? ' aria-label="' + esc(x.label) + '"' + (tag === 'span' ? ' title="' + esc(x.label) + '"' : '') : '') + '>' + (x.html ?? '') + '</' + tag + '>';
+            });
+        });
+
+        return h + '</div></div>';
+    }
+
+    // One hue for amounts, faint for a little and strong for a lot: rain in blues, hot days in reds, storms in purples.
+    // On a dark page the ramp runs from the page's own dark up to bright, so "more" is still the stronger color.
+    const SEQ = { blue: ['#eef4fb', '#6fa3dc', '#173d6e'], red: ['#fdeee8', '#e57a3c', '#8f1d12'], purple: ['#f3effa', '#9b7fd0', '#3f2a6b'] };
+    const SEQ_DARK = { blue: ['#1b2633', '#2f6db5', '#9cc6f2'], red: ['#2d1a14', '#b8441f', '#f6a27c'], purple: ['#251d33', '#6e52a8', '#c6b2ee'] };
+    function seq(name, k) {
+        k = Math.max(0, Math.min(1, k || 0));
+        const dark = document.documentElement.classList.contains('dark');
+        const stops = (dark ? SEQ_DARK : SEQ)[name];
+        const [a, b] = k < 0.5 ? [hexRgb(stops[0]), hexRgb(stops[1])] : [hexRgb(stops[1]), hexRgb(stops[2])];
+        const f = k < 0.5 ? k * 2 : (k - 0.5) * 2;
+        const c = [0, 1, 2].map((i) => Math.round(a[i] + (b[i] - a[i]) * f));
+        const ink = dark ? (k > 0.62 ? '#1d150e' : '#f3f1ec') : (k > 0.55 ? '#fff' : '#1d150e');
+
+        return 'background:rgb(' + c.join(',') + ');color:' + ink;
+    }
+    const tempCell = (t) => (t == null ? 'background:transparent;color:inherit' : 'background:' + cssOf(t) + ';color:' + inkOn(t));
+
+    /* ---- the days and hours ---- */
     function dayHours(date) {
         const L = D.week.lot.hours, out = [];
         const base = Math.round((utcOf(date) - utcOf(L.from, hourOf(L.from))) / 36e5);
-        for (let h = 0; h < 24; h++) { const k = base + h; if (k >= 0 && k < L.t.length && L.t[k] != null) out.push({ h, t: L.t[k], f: L.f[k], rh: L.h[k] }); }
+        for (let h = 0; h < 24; h++) { const k = base + h; if (k >= 0 && k < L.t.length && L.t[k] != null) out.push({ h, t: L.t[k], f: L.f[k], rh: L.h[k], pp: L.pp ? L.pp[k] : null, p: L.p ? L.p[k] : null, w: L.w ? L.w[k] : null }); }
         return out;
     }
+    const workKeys = () => Object.keys(D.work || {});
+    const bestDays = (k) => D.week.lot.days.filter((d) => d.work && d.work[k] && d.work[k].r === 'g').map((d) => (d.date === D.today ? 'Today' : DOW[dowOf(d.date)]));
 
     function paintDays() {
         const L = D.week.lot, days = L.days || [];
-        if (!days.length) { $('hmDays').innerHTML = '<div class="hm-card"><h3>No forecast for this lot yet</h3><p>Please try again in a minute.</p></div>'; return; }
+        if (!days.length) { $('hmDays').innerHTML = '<div class="hm-card"><h3>No forecast for this place yet</h3><p>Please try again in a minute.</p></div>'; return; }
         st.day = Math.max(0, Math.min(days.length - 1, st.day));
         const hot = days.reduce((a, d) => ((d.max ?? -99) > (a.max ?? -99) ? d : a), days[0]);
         const warmN = days.reduce((a, d) => ((d.min ?? -99) > (a.min ?? -99) ? d : a), days[0]);
         const feels = days.reduce((a, d) => ((d.fmax ?? -99) > (a.fmax ?? -99) ? d : a), days[0]);
-        const h35 = days.reduce((n, d) => n + (d.guide?.above35 || 0), 0);
         const P = D.place;
-        const gw = D.grow;
+        const sprayDays = bestDays('spray'), plantDays = bestDays('plant');
+        const keys = workKeys();
         $('hmDays').innerHTML =
             '<section class="hm-sum"><small>The week at ' + esc(P.name) + '</small>'
             + '<b>The hottest is ' + esc(dayWord(hot.date, true)) + ', up to ' + deg(hot.max) + 'C' + (hot.guide?.peak ? ' around ' + esc(hot.guide.peak) : '') + '.</b>'
-            + '<p>' + esc(hot.guide?.say || '') + (feels.fmax != null ? ' The heat feels like up to ' + deg(feels.fmax) + 'C on ' + esc(dayWord(feels.date)) + ' in the sun and the damp air.' : '') + '</p>'
+            + '<p>' + (sprayDays.length ? 'Good spray days: ' + esc(sprayDays.join(', ')) + '. ' : 'No easy spray day this week: look for the best hours below. ')
+            + (plantDays.length ? 'Good planting days: ' + esc(plantDays.join(', ')) + '.' : '') + '</p>'
             + '<div class="hm-sum-tags"><span>Warmest night ' + deg(warmN.min) + ', ' + esc(dayWord(warmN.date)) + '</span>'
-            + '<span>' + (h35 ? h35 + (h35 === 1 ? ' hour' : ' hours') + ' at 35°C or more' : 'No hour at 35°C or more') + '</span>'
-            + (gw ? '<span>' + esc(gw.icon || '🌱') + ' ' + esc(gw.crop) + ' in ' + esc(gw.season) + '</span>' : '')
+            + (feels.fmax != null ? '<span>Feels like up to ' + deg(feels.fmax) + 'C, ' + esc(dayWord(feels.date)) + '</span>' : '')
             + (P.how && !['pin', 'boundary', 'map'].includes(P.how) ? '<span>No pin yet, so read at its ' + esc(P.how) + '</span>' : '') + '</div></section>'
-            + '<div class="hm-strip" id="hmStrip" role="tablist" aria-label="The days">' + days.map((d, i) => {
-                const lv = d.guide?.level || 'mild';
-                return '<button type="button" class="hm-dchip' + (i === st.day ? ' is-on' : '') + '" role="tab" aria-selected="' + (i === st.day) + '" data-day="' + i + '" style="--i:' + i + '">'
-                    + '<b>' + esc(d.date === D.today ? 'Today' : DOW[dowOf(d.date)]) + '</b><small>' + esc(MON[ymd(d.date)[1] - 1] + ' ' + ymd(d.date)[2]) + '</small>'
-                    + (window.wxSky ? window.wxSky(window.wxKeyFor ? window.wxKeyFor(d.code, false, d.max) : 'cloudy', 30) : '')
-                    + '<span class="hm-t">' + deg(d.max) + ' <small>' + deg(d.min) + '</small></span>'
-                    + '<span class="hm-bar" style="background:' + (d.max != null ? cssOf(d.max) : '#ccc') + '"></span>'
-                    + '<em>' + esc(d.guide?.tag || '') + '</em></button>';
-            }).join('') + '</div>'
+            // The week's work at a glance: every kind of work against every day.
+            + '<section class="hm-card"><h3>The best days for the work</h3><p>Tap a day to see its best hours.</p>'
+            + heatGrid(keys.map((k) => ({ html: ico(D.work[k].icon) + '<b>' + esc(SHORT[k] || D.work[k].name) + '</b>' })),
+                days.map((d, i) => ({ on: i === st.day, html: esc(d.date === D.today ? 'Today' : DOW[dowOf(d.date)]) + '<small>' + ymd(d.date)[2] + '</small>' })),
+                (ri, ci) => {
+                    const k = keys[ri], d = days[ci], w = (d.work || {})[k] || {}, r = w.r || 'n';
+                    return { tag: 'button', cls: 'r-' + r + (ci === st.day ? ' is-col' : ''), attrs: 'data-day="' + ci + '"', html: mark(r),
+                        label: (SHORT[k] || '') + ', ' + dayWord(d.date) + ': ' + (RATE[r] || 'no hours left') + (w.best ? ', ' + w.best : '') };
+                }, { label: 'The best days for the work', lab: narrow() ? '6.4rem' : '8.5rem', cw: '1.9rem', cmax: '6.5rem', ch: narrow() ? '1.9rem' : '2.2rem' })
+            + KEY + '</section>'
+            + '<div class="hm-strip" id="hmStrip" role="tablist" aria-label="The days">' + days.map((d, i) => '<button type="button" class="hm-dchip' + (i === st.day ? ' is-on' : '') + '" role="tab" aria-selected="' + (i === st.day) + '" data-day="' + i + '" style="--i:' + i + '">'
+                + '<b>' + esc(d.date === D.today ? 'Today' : DOW[dowOf(d.date)]) + '</b><small>' + esc(MON[ymd(d.date)[1] - 1] + ' ' + ymd(d.date)[2]) + '</small>'
+                + (window.wxSky ? window.wxSky(window.wxKeyFor ? window.wxKeyFor(d.code, false, d.max) : 'cloudy', 30) : '')
+                + '<span class="hm-t">' + deg(d.max) + ' <small>' + deg(d.min) + '</small></span>'
+                + '<span class="hm-bar" style="background:' + (d.max != null ? cssOf(d.max) : '#ccc') + '"></span>'
+                + '<em>' + esc(d.guide?.tag || '') + '</em></button>').join('') + '</div>'
             + '<section class="hm-card" id="hmDayCard"></section>'
             + '<section class="hm-card"><h3>The week, high and low</h3><p>Each bar runs from the night\'s low to the day\'s high, in the map\'s colors.</p><div class="hm-week" id="hmWeek"></div></section>';
         paintWeek();
@@ -1237,7 +1383,7 @@
         const g = d.guide || {}, lv = g.level || 'mild';
         const hours = dayHours(d.date);
         const peakH = hours.reduce((a, x) => (x.t > (a?.t ?? -99) ? x : a), null);
-        const grow = d.grow;
+        const keys = workKeys();
         $('hmDayCard').innerHTML =
             '<div class="hm-dtop"><h3>' + (window.wxSky ? window.wxSky(window.wxKeyFor ? window.wxKeyFor(d.code, false, d.max) : 'cloudy', 40) : '')
             + '<span>' + esc(dayWord(d.date, true)) + '<small>' + esc(dateLong(d.date)) + '</small></span></h3>'
@@ -1248,25 +1394,69 @@
             + '<div class="hm-stat"><small>Low</small><b>' + deg(d.min) + 'C</b><em>at night</em></div>'
             + '<div class="hm-stat"><small>Feels like' + (window.aneeTl ? window.aneeTl.flag('feels-like') : '') + '</small><b>' + deg(d.fmax) + 'C</b><em><span class="hm-lv pp-' + esc(g.people?.key || 'ok') + '" style="padding:.05rem .45rem;font-size:.66rem">' + esc(g.people?.words || '') + '</span></em></div>'
             + '<div class="hm-stat"><small>Humidity</small><b>' + (peakH && peakH.rh != null ? peakH.rh + '%' : '--') + '</b><em>at the hottest hour</em></div>'
-            + '<div class="hm-stat"><small>Rain chance</small><b>' + (d.pop != null ? d.pop + '%' : '--') + '</b><em>' + (d.pop >= 70 ? 'likely' : d.pop >= 40 ? 'maybe' : 'unlikely') + '</em></div>'
+            + '<div class="hm-stat"><small>Rain</small><b>' + (d.pop != null ? d.pop + '%' : '--') + '</b><em>' + (d.rain >= 0.5 ? 'about ' + Math.round(d.rain) + ' mm' : (d.pop >= 70 ? 'likely' : d.pop >= 40 ? 'maybe' : 'unlikely')) + '</em></div>'
             + '<div class="hm-stat"><small>Sun strength</small><b>' + esc(uvWord(d.uv)) + '</b><em>' + (d.uv != null ? 'UV ' + Math.round(d.uv) : '') + '</em></div>'
             + '</div>'
-            + (grow ? '<div class="hm-grow"><i>' + esc(D.grow?.icon || '🌱') + '</i><span>Your ' + esc((D.grow?.crop || 'crop').split(/[,(]/)[0].trim().toLowerCase()) + ' in ' + esc(D.grow?.lot || D.place.name) + ' on this day: <b>' + esc(String(grow.stage).replace(/ & /g, ' and ')) + '</b>' + (grow.counter ? ', ' + esc(grow.counter + ' ' + grow.day) : '') + '.</span></div>' : '')
+            + '<div class="hm-work"><h4>The work on this day</h4>' + keys.map((k, i) => {
+                const w = (d.work || {})[k] || {}, r = w.r || 'n';
+                return '<div class="hm-wk" style="--i:' + i + '"><i>' + ico(D.work[k].icon) + '</i><div><b>' + esc(D.work[k].name) + '</b><p>' + esc(w.say || '') + '</p></div>'
+                    + (r !== 'n' ? '<span class="hm-rate r-' + r + '">' + mark(r) + RATE[r] + '</span>' : '') + '</div>';
+            }).join('') + '</div>'
+            + '<div class="hm-hours"><h4>Hour by hour</h4>' + hourGrid(d, hours) + KEY
+            + '<p class="hm-hnote" id="hmHourNote" aria-live="polite">Tap an hour for its reading.</p></div>'
             + '<div class="hm-chart" id="hmChart"></div>'
             + '<div class="hm-ckey"><span><i></i>Temperature</span><span><i class="is-f"></i>Feels like</span></div>'
-            + '<div class="hm-guides"><h4>What to do on this day</h4>' + (g.lines || []).map((l, i) => '<div class="hm-g' + (l.i === 'crop' ? ' is-crop' : ['ok', 'rain'].includes(l.i) ? ' is-calm' : '') + '" style="--i:' + i + '"><i>' + ico(l.i) + '</i><p><b>' + esc(l.b) + '</b> ' + esc(l.t) + '</p></div>').join('')
-            + (!(g.lines || []).length ? '<div class="hm-g is-calm"><i>' + ico('ok') + '</i><p><b>Nothing special to watch.</b> The usual care is enough on this day.</p></div>' : '') + '</div>'
+            + ((g.lines || []).length ? '<div class="hm-guides"><h4>Heat notes</h4>' + g.lines.map((l, i) => '<div class="hm-g" style="--i:' + i + '"><i>' + ico(l.i) + '</i><p><b>' + esc(l.b) + '</b> ' + esc(l.t) + '</p></div>').join('') + '</div>' : '')
             + '<div class="hm-dacts"><button type="button" class="btn btn-cta is-go" data-onmap>See this day on the map</button></div>';
         drawChart();
     }
+    // The day's hours from 6 AM to 6 PM: the temperature, what it feels like, the rain chance, then every kind of work.
+    function hourGrid(d, hours) {
+        const keys = workKeys(), any = (d.work || {})[keys[0]] || {}, from = any.from ?? 6, n = (any.hours || '').length || 13;
+        const at = (h) => hours.find((x) => x.h === h) || {};
+        const isPast = (h) => d.date === D.today && h < (D.nowHour ?? -1);
+        const cols = Array.from({ length: n }, (_, i) => ({ html: (from + i) % 3 === 0 ? esc(hourShort(from + i)) : '' }));
+        const rows = [{ k: 't', html: '<b>Temperature</b>' }, { k: 'f', html: '<b>Feels like</b>' }, { k: 'pp', html: '<b>Rain chance</b>' }]
+            .concat(keys.map((k) => ({ k, html: ico(D.work[k].icon) + '<b>' + esc(SHORT[k] || D.work[k].name) + '</b>' })));
+        hourGridData = { d, hours, keys, from, rows };
+
+        return heatGrid(rows, cols, (ri, ci) => {
+            const h = from + ci, x = at(h), row = rows[ri], past = isPast(h) ? ' is-past' : '';
+            const a = 'data-hr="' + h + '" data-row="' + ri + '"';
+            if (row.k === 't' || row.k === 'f') { const v = x[row.k]; return { tag: 'button', cls: past.trim(), attrs: a, style: tempCell(v), html: v == null ? '' : Math.round(v), label: hourWord(h) + ', ' + (row.k === 't' ? 'temperature ' : 'feels like ') + deg(v) + 'C' }; }
+            if (row.k === 'pp') { const v = x.pp; return { tag: 'button', cls: past.trim(), attrs: a, style: seq('blue', (v || 0) / 100), html: v == null ? '' : v, label: hourWord(h) + ', rain chance ' + (v ?? '--') + '%' }; }
+            const w = (d.work || {})[row.k] || {}, r = (w.hours || '')[ci] || 'n';
+            return { tag: 'button', cls: 'r-' + r + past, attrs: a, html: mark(r), label: hourWord(h) + ', ' + (SHORT[row.k] || '') + ': ' + (RATE[r] || 'not its hours') + ((w.why || [])[ci] ? ', ' + w.why[ci] : '') };
+        }, { label: 'Hour by hour on ' + dayWord(d.date), lab: narrow() ? '5.6rem' : '8rem', cw: narrow() ? '1.05rem' : '1.7rem', ch: narrow() ? '1.55rem' : '1.9rem', cf: narrow() ? '.58rem' : '.68rem' });
+    }
+    let hourGridData = null;
+    function hourNote(btn) {
+        const G = hourGridData;
+        if (!G || !btn) return;
+        const h = Number(btn.dataset.hr), row = G.rows[Number(btn.dataset.row)], x = G.hours.find((q) => q.h === h) || {};
+        const ci = h - G.from;
+        let say = '<b>' + esc(hourWord(h)) + '</b> · ' + deg(x.t) + 'C, feels like ' + deg(x.f) + 'C'
+            + (x.rh != null ? ', humidity ' + x.rh + '%' : '') + (x.pp != null ? ', rain chance ' + x.pp + '%' : '') + (x.w != null ? ', wind ' + x.w + ' km/h' : '') + '.';
+        if (row && G.keys.includes(row.k)) {
+            const w = (G.d.work || {})[row.k] || {}, r = (w.hours || '')[ci] || 'n';
+            say = '<b>' + esc(hourWord(h)) + ', ' + esc((D.work[row.k] || {}).name || '') + ': ' + esc(RATE[r] || 'not its hours') + '.</b> '
+                + (w.why && w.why[ci] ? esc(w.why[ci].charAt(0).toUpperCase() + w.why[ci].slice(1)) + '. ' : (r === 'g' ? 'A good hour for it. ' : '')) + say.replace(/^<b>[^<]*<\/b> · /, '');
+        }
+        const el = $('hmHourNote');
+        el.innerHTML = say;
+        el.classList.remove('is-fresh'); void el.offsetWidth; el.classList.add('is-fresh');
+        document.querySelectorAll('#hmDayCard .hm-hc.is-pick').forEach((c) => c.classList.remove('is-pick'));
+        btn.classList.add('is-pick');
+    }
     $('hmDays').addEventListener('click', (e) => {
+        const hr = e.target.closest('[data-hr]');
+        if (hr) { hourNote(hr); return; }
         const c = e.target.closest('[data-day]');
         if (c) {
             st.day = Number(c.dataset.day);
-            $('hmStrip').querySelectorAll('[data-day]').forEach((x) => { const on = Number(x.dataset.day) === st.day; x.classList.toggle('is-on', on); x.setAttribute('aria-selected', String(on)); });
-            const card = $('hmDayCard');
-            if (!reduce()) { card.style.animation = 'none'; void card.offsetWidth; card.style.animation = ''; }
-            paintDay();
+            const fromGrid = !!c.closest('.hm-hg');
+            paintDays();
+            if (fromGrid) $('hmDayCard')?.scrollIntoView({ behavior: reduce() ? 'auto' : 'smooth', block: 'start' });
             return;
         }
         if (e.target.closest('[data-onmap]')) {
@@ -1276,6 +1466,135 @@
             else { const i = FL.findIndex((f) => f.date === date); if (i >= 0) showFrame(i); }
         }
     });
+
+    /* ---- the months: twenty years of the place's weather, and the work it suits ---- */
+    let Y = null, yearFor = null, yearTry = 0, yearT = 0, yearView = 'months', yearPick = null;
+    const MONS = MON;
+    const wantNow = () => (st.src === 'lot' ? 'lot=' + st.lot?.id : 'map=' + st.map?.id);
+    async function openMonths() {
+        const want = wantNow();
+        clearTimeout(yearT);
+        if (Y && yearFor === want) { paintMonths(); return; }
+        if (yearFor !== want) { yearTry = 0; yearPick = null; }
+        if (!Y || yearFor !== want) $('hmMonths').innerHTML = '<section class="hm-card"><div class="hm-wait2">' + document.querySelector('.hm-therm').outerHTML + '<div><h3>Reading twenty years of weather…</h3><p>Every week since ' + (new Date().getFullYear() - 20) + ' at this place.</p></div></div></section>';
+        let r;
+        try {
+            r = await window.api(U.year + '?' + want);
+        } catch (err) {
+            $('hmMonths').innerHTML = '<section class="hm-card"><h3>The year could not be read just now</h3><p>' + esc(err.message) + '</p><div class="hm-dacts"><button type="button" class="btn btn-white" data-year-retry>Try again</button></div></section>';
+            return;
+        }
+        if (wantNow() !== want) return;
+        if (r.data.year && r.data.year.pending) {
+            yearTry++;
+            $('hmMonths').innerHTML = '<section class="hm-card"><div class="hm-wait2">' + document.querySelector('.hm-therm').outerHTML + '<div><h3>Gathering twenty years of weather for this place</h3><p>It is the first time anyone looks here, so it takes about a minute. This page fills in by itself.</p></div></div></section>';
+            if (yearTry < 10 && st.tab === 'months') yearT = setTimeout(openMonths, 15000);
+            return;
+        }
+        Y = r.data;
+        yearFor = want;
+        paintMonths();
+    }
+    function paintMonths() {
+        const M = Y.year || {}, months = M.months || [];
+        if (!months.length) { $('hmMonths').innerHTML = '<section class="hm-card"><h3>No weather history for this place yet</h3><p>Please check again later.</p></section>'; return; }
+        const cur = Y.month, F = M.facts || {}, wk = Object.keys(Y.work || {});
+        const mName = (m) => MONS[m - 1];
+        const longM = (m) => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][m - 1];
+        const nar = narrow();
+        const monthCols = months.map((m) => ({ on: m.m === cur, html: nar ? esc(mName(m.m).charAt(0)) : esc(mName(m.m)) }));
+        const work = M.work || {};
+        let h = '<section class="hm-sum hm-yr"><small>The year at ' + esc(Y.place.name) + '</small>'
+            + '<b>' + esc(longM(F.hottest?.m || 4)) + ' is the hottest, ' + esc(longM(F.wettest?.m || 8)) + ' the wettest.</b>'
+            + '<p>Twenty years of weather here, ' + esc(M.span || '') + ', month by month: when the heat, the rain and the storms come, and the months each kind of work goes well.</p>'
+            + '<div class="hm-sum-tags">'
+            + (F.hottest ? '<span>Hottest: ' + esc(mName(F.hottest.m)) + ', highs about ' + Math.round(F.hottest.v) + '°C</span>' : '')
+            + (F.coolest ? '<span>Coolest: ' + esc(mName(F.coolest.m)) + ', about ' + Math.round(F.coolest.v) + '°C</span>' : '')
+            + (F.wettest ? '<span>Wettest: ' + esc(mName(F.wettest.m)) + ', about ' + F.wettest.v + ' mm</span>' : '')
+            + (F.driest ? '<span>Driest: ' + esc(mName(F.driest.m)) + ', about ' + F.driest.v + ' mm</span>' : '')
+            + ((F.storms || []).length ? '<span>Storm months: ' + esc(F.storms.map(mName).join(', ')) + '</span>' : '') + '</div></section>';
+
+        // The work, month by month.
+        h += '<section class="hm-card"><h3>The best months for the work</h3><p>From how hot and how wet each month usually is here. Tap a month for the reason.</p>'
+            + heatGrid(wk.map((k) => ({ html: ico(Y.work[k].icon) + '<b>' + esc(SHORT[k] || Y.work[k].name) + '</b>' })), monthCols, (ri, ci) => {
+                const k = wk[ri], m = months[ci].m, x = (work[k] || {})[m] || {}, r = x.r || 'n';
+                const pick = yearPick && yearPick[0] === k && yearPick[1] === m;
+                return { tag: 'button', cls: 'r-' + r + (m === cur ? ' is-col' : '') + (pick ? ' is-pick' : ''), attrs: 'data-mk="' + k + '" data-m="' + m + '"', html: mark(r),
+                    label: Y.work[k].name + ' in ' + longM(m) + ': ' + (RATE[r] || '') + '. ' + (x.why || '') };
+            }, { label: 'The best months for the work', stack: nar, lab: '9rem', cw: '2rem', ch: nar ? '1.9rem' : '2.1rem' })
+            + KEY + '<p class="hm-hnote" id="hmMonthNote" aria-live="polite">' + monthNote() + '</p>'
+            + '<div class="hm-best">' + wk.map((k) => '<div><b>' + esc(Y.work[k].name) + '</b><span>' + ((M.best || {})[k] || []).map((m) => '<em>' + esc(mName(m)) + '</em>').join('') + (((M.best || {})[k] || []).length ? '' : '<i>No month is easy: pick the best days in Days and hours.</i>') + '</span></div>').join('') + '</div></section>';
+
+        // The weather, month by month or week by week.
+        h += '<section class="hm-card"><div class="hm-sec-h"><h3>The weather here</h3><div class="hm-seg" role="group" aria-label="Months or weeks">'
+            + '<button type="button" data-yv="months" aria-pressed="' + (yearView === 'months') + '">Months</button><button type="button" data-yv="weeks" aria-pressed="' + (yearView === 'weeks') + '">Weeks</button></div></div>'
+            + '<p>The usual of the last twenty years. Each square says its number; the deeper the color, the more of it.</p>'
+            + (yearView === 'weeks' ? weeksGrid(M) : monthsWeather(months, monthCols, nar))
+            + '<p class="hm-credit">From the weather records of the last twenty years for the 25 km around this place. A usual year: any one year can be wetter, drier or hotter.</p></section>';
+        $('hmMonths').innerHTML = h;
+        if (yearView === 'weeks') {
+            const box = $('hmWeeksBox'), on = box && box.querySelector('.hm-hh.is-on');
+            if (box && on) box.scrollLeft = Math.max(0, on.offsetLeft - box.clientWidth / 2);
+        }
+    }
+    function monthNote() {
+        if (!yearPick || !Y) return 'Tap a square to see why.';
+        const [k, m] = yearPick, x = ((Y.year.work || {})[k] || {})[m] || {};
+        const longM = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][m - 1];
+        return '<b>' + esc(Y.work[k].name) + ' in ' + esc(longM) + ': ' + esc(RATE[x.r] || '') + '.</b> ' + esc(x.why || '');
+    }
+    const WROWS = [
+        { k: 'high', name: 'Hottest of the day', unit: '°C', paint: (v) => tempCell(v), fmt: (v) => Math.round(v) },
+        { k: 'mean', name: 'Day average', unit: '°C', paint: (v) => tempCell(v), fmt: (v) => Math.round(v) },
+        { k: 'hot35', name: 'Days at 35°C or more', unit: 'days', paint: (v, mx) => seq('red', v / Math.max(4, mx)), fmt: (v) => (v < 0.5 ? '0' : Math.round(v)) },
+        { k: 'rain', name: 'Rain', unit: 'mm', paint: (v, mx) => seq('blue', v / Math.max(1, mx)), fmt: (v) => Math.round(v) },
+        { k: 'rainy', name: 'Rainy days', unit: 'days', paint: (v, mx) => seq('blue', v / Math.max(1, mx)), fmt: (v) => Math.round(v) },
+        { k: 'storms', name: 'Storm years', unit: 'of 20', paint: (v) => seq('purple', v / 8), fmt: (v) => v, months: true },
+    ];
+    function monthsWeather(months, cols, nar) {
+        const rows = WROWS.filter((r) => months.some((m) => m[r.k] != null));
+        return heatGrid(rows.map((r) => ({ wrap: true, html: '<b>' + esc(r.name) + '<small>' + esc(r.unit) + '</small></b>' })), cols, (ri, ci) => {
+            const r = rows[ri], v = months[ci][r.k], mx = Math.max(...months.map((m) => m[r.k] || 0));
+            return { style: v == null ? '' : r.paint(v, mx), cls: months[ci].m === Y.month ? 'is-col' : '', html: v == null ? '' : r.fmt(v), label: r.name + ', ' + MONS[months[ci].m - 1] + ': ' + (v == null ? 'none' : r.fmt(v) + ' ' + r.unit) };
+        }, { label: 'The weather month by month', stack: nar, lab: '9rem', cw: '2rem', ch: nar ? '1.9rem' : '2.1rem', cf: nar ? '.6rem' : '.7rem' });
+    }
+    function weeksGrid(M) {
+        const weeks = M.weeks || [], rows = WROWS.filter((r) => !r.months && weeks.some((w) => w[r.k] != null));
+        const thisWeek = Math.min(52, Math.floor((Date.now() - Date.UTC(new Date().getFullYear(), 0, 1)) / 864e5 / 7) + 1);
+        const unitW = { hot35: 'days a week', rain: 'mm a week', rainy: 'days a week' };
+        const cols = weeks.map((w, i) => ({ on: w.w === thisWeek, html: i === 0 || weeks[i - 1].m !== w.m ? esc(MONS[w.m - 1]) : '' }));
+        return heatGrid(rows.map((r) => ({ wrap: true, html: '<b>' + esc(r.name) + '<small>' + esc(unitW[r.k] || r.unit) + '</small></b>' })), cols, (ri, ci) => {
+            const r = rows[ri], v = weeks[ci][r.k], mx = Math.max(...weeks.map((w) => w[r.k] || 0));
+            return { style: v == null ? '' : r.paint(v, mx), cls: weeks[ci].w === thisWeek ? 'is-col' : '', html: v == null ? '' : r.fmt(v), label: r.name + ', week ' + weeks[ci].w + ' (' + MONS[weeks[ci].m - 1] + '): ' + (v == null ? 'none' : r.fmt(v) + ' ' + (unitW[r.k] || r.unit)) };
+        }, { label: 'The weather week by week', scroll: true, id: 'hmWeeksBox', lab: narrow() ? '6.2rem' : '9rem', cw: '1.6rem', ch: '1.9rem', cf: '.6rem' });
+    }
+    $('hmMonths').addEventListener('click', (e) => {
+        if (e.target.closest('[data-year-retry]')) { openMonths(); return; }
+        const v = e.target.closest('[data-yv]');
+        if (v) { yearView = v.dataset.yv; paintMonths(); return; }
+        const c = e.target.closest('[data-mk]');
+        if (c) {
+            yearPick = [c.dataset.mk, Number(c.dataset.m)];
+            $('hmMonths').querySelectorAll('.hm-hc.is-pick').forEach((x) => x.classList.remove('is-pick'));
+            c.classList.add('is-pick');
+            const el = $('hmMonthNote');
+            el.innerHTML = monthNote();
+            el.classList.remove('is-fresh'); void el.offsetWidth; el.classList.add('is-fresh');
+        }
+    });
+    // The grids change shape between a phone and a wider screen.
+    let gridW = 0, gridT = 0;
+    addEventListener('resize', () => {
+        clearTimeout(gridT);
+        gridT = setTimeout(() => {
+            const w = narrow();
+            if (w === gridW) return;
+            gridW = w;
+            if (st.tab === 'days' && D) paintDays();
+            if (st.tab === 'months' && Y) paintMonths();
+        }, 200);
+    });
+    gridW = narrow();
 
     // One day, hour by hour: the temperature and what it feels like, with the 35°C line that hurts flowering crops.
     function drawChart() {
