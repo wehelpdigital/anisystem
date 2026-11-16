@@ -177,7 +177,9 @@
     .hm-read span { display: grid; line-height: 1.15; max-width: 6.5rem; }
     .hm-read b { font-size: .72rem; font-weight: 800; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .hm-read small { font-size: .66rem; font-weight: 700; color: #c9c1b4; white-space: nowrap; }
-    @media (max-width: 379.98px) { .hm-read span { display: none; } }
+    /* On a phone the time needs the room: the reading keeps its number and "Feels like", the lot's name goes. */
+    @media (max-width: 479.98px) { .hm-read b { display: none; } .hm-read span { max-width: 4.6rem; } .hm-read small { white-space: normal; line-height: 1.2; } }
+    @media (max-width: 359.98px) { .hm-read span { display: none; } }
     .hm-more2 { display: grid; gap: .55rem; max-height: 16rem; transition: max-height .3s var(--hm-e), opacity .24s var(--hm-e); }
     .hm-panel.is-folded .hm-more2 { max-height: 0; opacity: 0; overflow: hidden; pointer-events: none; }
     .hm-scrub { position: relative; padding-bottom: 1.05rem; }
@@ -957,8 +959,11 @@
     }
     function paintPanel(f) {
         const v = lotValue(f);
-        $('hmWhen').textContent = st.mode === 'hour' ? dayWord(f.date) + ' · ' + hourWord(f.h) : dayWord(f.date);
-        $('hmWhenSub').textContent = st.mode === 'hour' ? 'Hour by hour' : st.mode === 'low' ? 'The coolest of the night' : 'The hottest of the day';
+        // Short enough for a phone: "Fri, 12 PM" over "Nov 20, hour by hour".
+        const [, fm, fd] = ymd(f.date);
+        const near = f.date === D.today || f.date === addDay(D.today, 1);
+        $('hmWhen').textContent = st.mode === 'hour' ? (near ? dayWord(f.date) : DOW[dowOf(f.date)]) + ', ' + hourWord(f.h) : dayWord(f.date);
+        $('hmWhenSub').textContent = st.mode === 'hour' ? (near ? 'Hour by hour' : MON[fm - 1] + ' ' + fd + ', hour by hour') : st.mode === 'low' ? 'The coolest of the night' : 'The hottest of the day';
         const t = v.t;
         const sw = $('hmReadT');
         sw.textContent = deg(t);
@@ -1118,7 +1123,9 @@
         g.event.addListenerOnce(map, 'idle', () => { if (map.getZoom() > 18) map.setZoom(18); });
     }
     $('hmFitBtn').addEventListener('click', () => { if (D) { map.setHeading?.(0); map.setTilt?.(0); fitPlace(); } });
-    $('hmAreaBtn').addEventListener('click', () => { if (imgBounds) map.fitBounds(imgBounds, 0); });
+    // The whole square, clear of the panel at the bottom and the buttons at the side.
+    const panelRoom = () => ($('hmPanel').classList.contains('is-off') ? 20 : Math.round($('hmPanel').offsetHeight + 40));
+    $('hmAreaBtn').addEventListener('click', () => { if (imgBounds) map.fitBounds(imgBounds, { top: 50, bottom: panelRoom(), left: 10, right: 60 }); });
     $('hmTypeBtn').addEventListener('click', () => {
         if (!map) return;
         const road = map.getMapTypeId() !== 'roadmap';
@@ -1147,7 +1154,9 @@
         const N = grid.size, vals = FL[st.i].vals;
         if (!show) { gridMarks.forEach((m) => m.setMap(null)); return; }
         const pts = [];
-        for (let r = 0; r < N; r += 2) for (let c = 0; c < N; c += 2) pts.push([r, c]);
+        const mid = (N - 1) / 2;
+        // Every other point, but not the middle one: the lot's own badge stands there.
+        for (let r = 0; r < N; r += 2) for (let c = 0; c < N; c += 2) if (!(r === mid && c === mid && D.place.kind === 'lot')) pts.push([r, c]);
         pts.forEach(([r, c], k) => {
             let m = gridMarks[k];
             if (!m) { m = new (G().Marker)({ clickable: false, zIndex: 800 }); gridMarks[k] = m; }
