@@ -9,8 +9,13 @@
        window.userTags.value(el)         -> ['word', ...] for the save payload
        window.userTags.chips(tags)       -> HTML of read-only chips for a row
 
-     @once, so a page that collects it twice pays once. --}}
+     @once, so a page that collects it twice pays once.
+
+     The sheet's rows are the shared dt-row family, so their styles come along (2026-11-16, the owner: the tags in
+     What to Plant's Saved tab opened with "really big icons"): a page that never loaded tag-sheet-css drew each
+     row's tick as a full width picture. --}}
 @once
+@include('partials.tag-sheet-css')
 <style>
     .ut-mount { display: flex; flex-wrap: wrap; gap: .35rem; align-items: center; }
     .ut-chip { display: inline-flex; align-items: center; gap: .3rem; padding: .22rem .3rem .22rem .6rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: var(--color-brand-700); background: var(--color-brand-50); border: 1px solid #cfe3bd; }
