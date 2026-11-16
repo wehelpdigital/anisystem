@@ -1,0 +1,223 @@
+{
+  "section": "blog",
+  "slug": "atangya-sa-palay",
+  "sortOrder": -7663,
+  "lang": "tl",
+  "category": "Crop Health",
+  "title": "Atangya sa Palay: Paano Makilala at Puksain ang Rice Bug",
+  "metaTitle": "Atangya sa Palay: Paano Puksain ang Rice Bug o Alitangya",
+  "metaDescription": "Ang atangya o alitangya ay ang rice bug na sumisipsip sa gatas ng butil ng palay. Alamin kung kailan ito umaatake, paano bilangin at paano puksain.",
+  "focusKeyword": "atangya",
+  "keywords": ["atangya", "atangya sa palay", "alitangya", "gamot sa atangya", "pamatay ng atangya", "atangya sa palayan", "itim na atangya", "rice bug"],
+  "excerpt": "Ang atangya, o alitangya sa ibang lugar, ay ang rice bug (Leptocorisa oratorius). Payat ito, mahaba ang paa at antenna, at mabaho kapag nahawakan. Sinisipsip nito ang gatas ng butil ng palay mula pamumulaklak hanggang malambot pa ang butil, kaya nagiging hungkag at may batik ang butil. Heto kung paano ito makilala, kailan bilangin, at paano puksain nang hindi nasasayang ang pera.",
+  "heroImage": {
+    "src": "/images/site/guides/problems-rice-bug.webp",
+    "alt": "Isang atangya o rice bug na nakakapit sa berdeng uhay ng palay",
+    "credit": "Maulidya Fachra, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Maraming magsasaka ang nakakaamoy muna sa atangya bago pa ito makita. Kapag naglakad ka sa palayang namumulaklak at may naamoy kang masangsang, malamang nandiyan na sila. Mabilis silang lumipad palayo kapag nagalaw ang palay, kaya madalas silang hindi napapansin hanggang makita na ang hungkag na uhay.\n\nAng magandang balita, maikli lang ang panahon ng panganib. Kapag alam mo kung kailan mamumulaklak ang bawat lote, alam mo rin kung kailan dapat magbantay."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ano ang atangya at ano ang itsura nito?"
+    },
+    {
+      "type": "text",
+      "text": "Ang adult ay mga 15 milimetro ang haba, payat, at kulay berde na may halong kayumanggi. Mahaba ang mga paa at antenna nito. Ang mga bata, o nymph, ay kulay berde at walang pakpak, kaya madalas silang nakatago sa dahon at hindi agad nakikita.\n\nSa English, tinatawag itong rice bug, rice ear bug o rice earhead bug. Sa Ilocano, dangaw ang tawag dito, at tiangaw naman sa maraming bayan sa Kanlurang Visayas at Mindanao. Kung gusto mong makita ang lahat ng pangalan nito, basahin ang aming gabay sa [alitangya in English](/blog/alitangya-in-english)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Atangya at itim na atangya: magkaiba ang dalawa"
+    },
+    {
+      "type": "text",
+      "text": "Huwag ipagkamali ang atangya sa itim na atangya. Ang itim na atangya ay ang rice black bug, bilog at maitim, at nagtatago sa puno ng palay malapit sa tubig. Sinisipsip nito ang katas ng tangkay, kaya namumula at natutuyo ang palay na parang nasunog. Ang karaniwang atangya naman ay nasa uhay, at ang butil ang kinakain.\n\nIba rin ang paraan ng pagpuksa sa dalawa. Para sa itim na atangya, light trap at tamang patubig ang karaniwang gamit, na ipinapaliwanag sa aming gabay sa [rice black bug](/pests/rice-black-bug)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Paano sinisira ng atangya ang palay"
+    },
+    {
+      "type": "text",
+      "text": "Tinutusok nito ang butil gamit ang parang karayom na bibig nito, at sinisipsip ang laman habang malagatas pa. Pinakamalakas ang pinsala ng mga nymph. Kapag sinipsip ang butil sa simula ng paggatas, hungkag ito. Kapag mas huli, maliit, kulubot o may batik ang butil."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Hungkag o hindi napuno ang butil",
+        "May kayumanggi o itim na batik ang butil kung saan ito sinipsip",
+        "Nakatayo pa rin ang uhay kahit hinog na, dahil magaan ang butil",
+        "Mabaho ang bigas, pati ang kanin, at ayaw ng baka ang dayami"
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Puwedeng umabot sa 30 percent ang nawawalang ani kapag malala ang atake. Pero tandaan: ang thrips at ang kakulangan sa sustansya ay puwede ring magdulot ng hungkag na butil. Kaya hanapin muna ang mismong insekto bago kumilos."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Kailan umaatake ang atangya sa palayan?"
+    },
+    {
+      "type": "text",
+      "text": "Nagsisimula ang panganib bago mamulaklak ang palay at tumatagal hanggang malambot pa ang butil, o soft dough. Sa karamihan ng variety, mga dalawa hanggang tatlong linggo ito. Bago mamulaklak, nasa mga damong ligaw sa pilapil, kanal at gilid ng bukid sila, at doon sila nabubuhay sa pagitan ng mga taniman.\n\nMas dumarami sila kapag:"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "May gubat, damuhan o mga ligaw na damo malapit sa palayan",
+        "Hindi sabay sabay magtanim ang mga katabing bukid, kaya sunod sunod ang namumulaklak",
+        "Simula ng tag ulan, o mainit at maulap ang panahon",
+        "Huli ang pagtatanim mo kumpara sa mga kapitbahay, dahil lilipat sa iyo ang atangya mula sa naaning bukid"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ang buhay ng atangya"
+    },
+    {
+      "type": "text",
+      "text": "Nangingitlog ang babae sa ibabaw ng dahon o sa uhay, nakahanay sa dalawa o tatlong hilera na may 10 hanggang 20 itlog bawat kumpol. Kulay dilaw ang itlog sa simula at nagiging mapulang kayumanggi. Napipisa ito sa loob ng mga isang linggo. Mga 18 araw na nymph ito bago maging adult, kaya mga isang buwan ang isang buong siklo. Sa isang pag aaral, 75 hanggang 135 itlog ang nailalagay ng bawat babae sa buong buhay nito."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Paano bilangin ang atangya at kailan kikilos"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Magsimula bago mamulaklak",
+          "text": "Maglakad sa palayan mula sa pagbubuntis ng palay hanggang tumigas ang butil."
+        },
+        {
+          "title": "Maglakad sa umaga o hapon",
+          "text": "Sa maagang umaga at sa hapon nasa uhay sila. Sa tanghali, nagtatago sila sa ilalim ng dahon."
+        },
+        {
+          "title": "Bilangin sa 20 puno",
+          "text": "Pumili ng 20 puno ng palay nang pahilis sa bukid at bilangin ang lahat ng nymph at adult na makita."
+        },
+        {
+          "title": "Ikumpara sa talaan",
+          "text": "Tingnan ang talaan sa ibaba bago bumili ng kahit anong gamot."
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "caption": "Kailan dapat isipin ang pagpuksa sa atangya",
+      "rows": [
+        ["Yugto ng palay", "Kumilos kapag nakakita ng"],
+        ["Pamumulaklak hanggang tumigas ang butil", "Higit sa 10 atangya sa 20 puno"],
+        ["Paggatas ng butil", "Higit sa 5 nymph at adult bawat metro kwadrado"],
+        ["Pagpuno ng butil", "Higit sa 10 nymph at adult bawat metro kwadrado"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Paano puksain ang atangya nang walang gamot"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Linisin ang paligid.** Putulin ang mga damong ligaw sa pilapil, kanal at gilid ng bukid bago mamulaklak ang palay.",
+        "**Sabay sabay magtanim.** Kapag sabay namumulaklak ang buong lugar, hati hati ang atangya at hindi sunod sunod ang pinsala.",
+        "**Pantay na tanim.** Ang pantay na lupa, abono at tubig ay nagbubunga ng sabay na pamumulaklak, kaya mas maikli ang panahon ng panganib.",
+        "**Gumamit ng net.** Sa maliit na bukid, iwasiwas ang net sa ibabaw ng palay sa madaling araw o dapit hapon.",
+        "**Maglagay ng pain.** Ang bulok na kuhol, isda o karne na nakasabit sa patpat ay umaakit sa atangya sa isang lugar, kung saan madali silang patayin.",
+        "**Alagaan ang mga kaibigang insekto.** Ang maliliit na putakti ay nangingitlog sa loob ng itlog ng atangya, at kinakain naman ng mga tipaklong na mahaba ang antenna at ng gagamba ang mga itlog at nymph nito."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Gamot sa atangya: kailan at alin"
+    },
+    {
+      "type": "text",
+      "text": "Gumamit lang ng insecticide kapag lumampas sa talaan ang bilang. Pumili ng produktong rehistrado sa FPA na may nakasulat na rice bug sa rice sa label nito. Ang pinakakaraniwang sangkap sa mga label sa Pilipinas para sa atangya ay lambda cyhalothrin, isang pyrethroid. Rehistrado rin ang cypermethrin, malathion, thiamethoxam at ang halo ng lambda cyhalothrin at thiamethoxam.\n\nMag spray sa hapon, kapag bumalik na ang atangya sa uhay at sarado na ang mga bulaklak ng palay. Tingnan muna ang forecast, dahil naaanod ng ulan ang spray. Basahin ang buong label para sa tamang dami, ilang beses puwedeng mag spray, at ilang araw bago anihin ang huling spray. Para sa buong listahan at paghahambing, basahin ang aming gabay sa [insecticide for rice bug](/blog/insecticide-for-rice-bug)."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Ang sobrang spray ay nagpapabalik ng peste",
+      "text": "Kapag nag spray nang walang bilang, namamatay ang gagamba at putakti na pumipigil sa atangya at sa planthopper. Pagkatapos, bumabalik ang peste nang mas marami. Kaya bilangin muna bago bumili."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Paano makakatulong ang anee.io laban sa atangya"
+    },
+    {
+      "type": "text",
+      "text": "Sa anee.io, hindi mo na kailangang hulaan kung kailan magbabantay. Binibilang ng [cropping calendar](/features/cropping-calendar) ang araw ng bawat lote mula sa pagtatanim, kaya alam mo kung kailan mamumulaklak at gagatas ang butil ng bawat palayan. Pinapaalala rin ng season board mo kung kailan dapat tingnan ang atangya sa bawat yugto.\n\nKapag may nakita kang insekto, kunan ito ng litrato at ipadala kay Anee, ang [smart farm technician](/features/ai-agricultural-technician) ng anee.io. Sasabihin niya sa Tagalog o English kung atangya ba ito, itim na atangya o iba, at kung kailangan nang kumilos. Ipinapakita naman ng [Pest Finder](/features/pest-and-disease-finders) ang lahat ng produktong rehistrado para sa atangya sa palay, at sinasabi ng forecast ng bawat lote kung uulan sa araw ng spray."
+    },
+    {
+      "type": "cta",
+      "title": "Bantayan ang atangya nang hindi nanghuhula",
+      "text": "Mag sign up nang libre, ilagay ang araw ng pagtatanim ng bawat lote, at hayaang ipaalala ng anee.io kung kailan magbabantay. Ipadala kay Anee ang litrato ng insekto kapag may nakita ka.",
+      "label": "Magsimula nang libre",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Mga tanong tungkol sa atangya"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Ano ang atangya sa English?",
+          "a": "Ang atangya ay rice bug sa English, o Leptocorisa oratorius. Tinatawag din itong rice ear bug. Ang itim na atangya naman ay ang rice black bug."
+        },
+        {
+          "q": "Pareho ba ang atangya at alitangya?",
+          "a": "Oo, sa karamihan ng lugar pareho ang tinutukoy nila: ang payat na rice bug na sumisipsip sa butil. Sa ibang bayan, alitangya rin ang tawag sa itim na atangya, kaya tingnan ang itsura: payat at berde, o bilog at maitim."
+        },
+        {
+          "q": "Nangangagat ba ang atangya?",
+          "a": "Hindi. Katas lang ng halaman ang kinakain ng atangya, at hindi nito kayang tusukin ang balat ng tao. Mabaho lang ito kapag nahawakan."
+        },
+        {
+          "q": "Bakit may atangya sa bahay namin sa gabi?",
+          "a": "Kadalasan, itim na atangya ang dumadagsa sa bahay. Naaakit sila sa ilaw, lalo na sa mga gabi bago at pagkatapos ng kabilugan ng buwan. Patayin ang ilaw sa labas na hindi kailangan, at walisin sila papunta sa tubig na may sabon."
+        },
+        {
+          "q": "Ano ang pinakamabisang gamot sa atangya?",
+          "a": "Ang lambda cyhalothrin ang pinakakaraniwang sangkap sa mga label para sa atangya sa palay. Pero gamitin lang ito kapag lumampas sa talaan ang bilang, at sundin ang label ng produktong rehistrado sa FPA."
+        },
+        {
+          "q": "Anong app ang makakatulong sa akin laban sa atangya?",
+          "a": "Ang anee.io. Ipinapaalala nito kung kailan mamumulaklak ang bawat lote, at sinasagot ni Anee sa Tagalog kung atangya ba ang insektong nasa litrato mo at kung dapat nang kumilos."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Mga kaugnay na gabay",
+      "items": [
+        { "label": "Rice bug guide in English", "url": "/pests/rice-bug" },
+        { "label": "Alitangya in English", "url": "/blog/alitangya-in-english" },
+        { "label": "Insecticide for rice bug", "url": "/blog/insecticide-for-rice-bug" },
+        { "label": "Rice black bug", "url": "/pests/rice-black-bug" },
+        { "label": "Pagtatanim ng palay", "url": "/crops/pagtatanim-ng-palay" },
+        { "label": "Farm words in Tagalog", "url": "/blog/farm-words-in-tagalog" }
+      ]
+    }
+  ]
+}

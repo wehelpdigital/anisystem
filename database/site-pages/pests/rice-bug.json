@@ -43,7 +43,16 @@
     },
     {
       "type": "text",
-      "text": "In English you will read about the rice bug, the rice ear bug or the rice earhead bug. Its Tagalog name is atangya and its Ilocano name is dangaw. One source from Camarines Sur gives tayangaw. We found no second source for it, so treat it as a local word. The general words for insects and bugs in Tagalog are kulisap and insekto, and our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) has more.\n\nBe careful with alitangya. Tagalog dictionaries, Wiktionary among them, give alitangya as the name of the rice black bug, the round, dark stink bug also called itim na atangya. Plain atangya means the rice bug. Because the names overlap, trust the shape of the insect more than the name. A slender, long legged bug on the panicle is the rice bug. A broad, oval black bug at the base of the hill is the [rice black bug](/pests/rice-black-bug)."
+      "text": "In English you will read about the rice bug, the rice ear bug, the rice earhead bug or the rice seed bug. Tagalog farmers call it atangya or alitangya, Ilocano farmers dangaw, and many farmers in Western Visayas and parts of Mindanao tiangaw. One source from Camarines Sur gives tayangaw, so treat that one as a local word. The general words for insects and bugs in Tagalog are kulisap and insekto, and our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) has more. Our guide to [alitangya in English](/blog/alitangya-in-english) puts every name side by side.\n\nBe careful with alitangya. Tagalog dictionaries, Wiktionary among them, give alitangya as the name of the rice black bug, the round, dark stink bug also called itim na atangya. Plain atangya means the rice bug. Because the names overlap, trust the shape of the insect more than the name. A slender, long legged bug on the panicle is the rice bug. A broad, oval black bug at the base of the hill is the [rice black bug](/pests/rice-black-bug)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice bug scientific name and life cycle"
+    },
+    {
+      "type": "text",
+      "text": "The rice bug's scientific name is Leptocorisa oratorius. A close relative, Leptocorisa acuta, does the same damage, and many guides treat the two as one pest. Both belong to the family Alydidae, the broad headed bugs, in the order Hemiptera, the true bugs that feed by sucking.\n\nA female lays her eggs in rows of about 10 to 20 on the upper side of the leaves or on the panicle. They start yellowish, turn reddish brown and hatch in about a week. The green nymphs then feed for about 18 days before they grow wings, so one generation takes about a month. In one study each female laid 75 to 135 eggs. That is why two or three waves can follow one another when the fields around you flower at different times."
     },
     {
       "type": "heading",
@@ -102,7 +111,7 @@
       "items": [
         {
           "title": "Start before flowering",
-          "text": "Begin scouting just before the panicles come out and keep going every day until the hard dough stage. The risky window is about 30 days, from flowering to soft dough."
+          "text": "Begin scouting just before the panicles come out and keep going until the hard dough stage, a window of about 30 days."
         },
         {
           "title": "Walk the field early or late",
@@ -110,11 +119,11 @@
         },
         {
           "title": "Count every nymph and adult",
-          "text": "Adults often fly off before you reach the hill, so your count may show mostly nymphs. Write the number down with the date and the lot."
+          "text": "Adults often fly off before you reach the hill, so write down what you find with the date and the lot."
         },
         {
           "title": "Compare with the threshold",
-          "text": "Consider a spray only when the count passes a threshold in the table below. The thresholds count differently, some by 20 hills and some by a square meter. If your count stays under, keep counting instead of spraying."
+          "text": "Consider a spray only when the count passes a threshold in the table below. If it stays under, keep counting instead of spraying."
         }
       ]
     },
@@ -142,7 +151,7 @@
     },
     {
       "type": "text",
-      "text": "anee.io makes this easier. Each lot on your [cropping calendar](/features/cropping-calendar) counts its own days after transplanting, and the [growth stages](/features/growth-stages-and-weather) view tells you when that lot reaches flowering and the milky stage. Put a daily scouting reminder on the board for those weeks, then log each count in a note with a photo."
+      "text": "anee.io makes this easier. Each lot on your [cropping calendar](/features/cropping-calendar) counts its own days after transplanting, and the [growth stages](/features/growth-stages-and-weather) view tells you when that lot reaches flowering and the milky stage. Your season board reminds you to check for the rice bug in those weeks, so log each count in a note with a photo."
     },
     {
       "type": "heading",
@@ -153,13 +162,13 @@
       "type": "list",
       "ordered": false,
       "items": [
-        "**Clean the surroundings.** Cut grassy weeds in the field, on the pilapil (levees) and along canals, so the bugs have fewer places to breed between crops.",
-        "**Plant together.** The whole community should plant at the same time after at least a month of fallow, so bugs cannot move from early fields to late ones.",
-        "**Keep the crop even.** A level field with even fertilizer and water grows at one pace, so the whole lot passes the milky stage together.",
-        "**Net them.** Sweeping a net through the crop at dawn or toward evening works while numbers are low, though it takes labor.",
-        "**Bait them.** Rotting meat, fish or snails are baits that draw the bugs to one spot, where you can collect and destroy them.",
-        "**Grow awned varieties where you can.** Awned varieties resist the bug, and panicles that stay longer inside the leaf sheath get some protection too.",
-        "**Protect natural enemies.** Small wasps such as Gryon nixoni and long horned grasshoppers kill the eggs. Spiders, crickets and lady beetles eat nymphs and adults, and the fungus Beauveria bassiana infects them."
+        "**Clean the surroundings.** Cut grassy weeds in the field, on the pilapil (levees) and along canals, where the bugs breed between crops.",
+        "**Plant together.** When the whole community plants at once, bugs cannot move from early fields to late ones.",
+        "**Keep the crop even.** Even land, fertilizer and water let the whole lot pass the milky stage together.",
+        "**Net them.** Sweep a net through the crop at dawn or toward evening while numbers are low.",
+        "**Bait them.** Rotting meat, fish or snails draw the bugs to one spot, where you can destroy them.",
+        "**Grow awned varieties where you can.** Awned varieties resist the bug.",
+        "**Protect natural enemies.** Small wasps such as Gryon nixoni and long horned grasshoppers kill the eggs, and spiders and lady beetles eat the nymphs and adults."
       ]
     },
     {
@@ -175,7 +184,7 @@
     },
     {
       "type": "text",
-      "text": "Use a pesticide only when the count calls for it, and ask an agricultural extension worker first. If your counts pass the threshold, choose a product whose FPA registered label lists this pest on rice.\n\nTwo familiar examples come from Syngenta. The Karate insecticide (Karate 2.5 EC) contains lambda cyhalothrin, a pyrethroid in IRAC Group 3A. Its Philippine product page names rice bug on rice, along with leaffolder, black bugs, armyworms and green leafhopper. The Alika insecticide (Alika 247 ZC) mixes lambda cyhalothrin with thiamethoxam, a Group 4A neonicotinoid, and its page lists rice bug, stem borer and leafhoppers on rice.\n\nBoth are broad spectrum products, so they can also kill spiders and other friendly insects. Read the whole label before you mix: the rate per tank, the number of sprays, the pre harvest interval and the protective gear. Rice bugs feed until the grain hardens, close to harvest, so the pre harvest interval deserves extra care. Our guides to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) and to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides) compare these products, and the [FPA guide](/blog/fertilizer-and-pesticide-authority) explains how to check a registration."
+      "text": "Use a pesticide only when the count calls for it. If your counts pass the threshold, choose a product whose FPA registered label lists rice bug on rice. Read that label for the rate, the number of sprays and the pre harvest interval. Rice bugs feed until the grain hardens, close to harvest, so the pre harvest interval deserves extra care.\n\nTwo familiar examples come from Syngenta. The Karate insecticide (Karate 2.5 EC) contains lambda cyhalothrin, a pyrethroid in IRAC Group 3A. The Alika insecticide (Alika 247 ZC) mixes lambda cyhalothrin with thiamethoxam, a Group 4A neonicotinoid. Both are broad spectrum, so they can also kill spiders and other friendly insects. Our guide to the [insecticide for rice bug](/blog/insecticide-for-rice-bug) compares every active ingredient and when to spray, and our guides to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) and [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides) cover the brands."
     },
     {
       "type": "text",
@@ -223,12 +232,12 @@
         [
           "Cypermethrin",
           "IRAC 3A",
-          "A sound second choice. 6 registered products name it on rice."
+          "A sound second choice. 99 registered products name it on rice."
         ],
         [
           "Beta cypermethrin",
           "IRAC 3A",
-          "A sound second choice. 5 registered products name it on rice."
+          "A sound second choice. 6 registered products name it on rice."
         ],
         [
           "Carbosulfan",
@@ -249,7 +258,7 @@
     },
     {
       "type": "text",
-      "text": "The table stops at the ten best. 11 more on Philippine labels for it are older or broad chemistry. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here."
+      "text": "The table stops at the ten best. 13 more on Philippine labels for it, most of them older or broad chemistry, are left out. The [Pest Finder](/features/pest-and-disease-finders) in anee.io lists every one, crop by crop, with the products sold here and the popular brands marked."
     },
     {
       "type": "cta",
@@ -268,7 +277,11 @@
       "items": [
         {
           "q": "What is the rice bug called in Tagalog?",
-          "a": "Atangya is the Tagalog name and dangaw is the Ilocano name. One Camarines Sur source gives tayangaw. Tagalog dictionaries use alitangya for the rice black bug, so look at the insect before you decide."
+          "a": "Atangya or alitangya in Tagalog, dangaw in Ilocano, and tiangaw in many Visayan towns. One Camarines Sur source gives tayangaw. Tagalog dictionaries also use alitangya for the rice black bug, so look at the insect before you decide."
+        },
+        {
+          "q": "What is the scientific name of the rice bug?",
+          "a": "Leptocorisa oratorius, with the related Leptocorisa acuta. It is a true bug of the family Alydidae, in the order Hemiptera."
         },
         {
           "q": "When does atangya attack palay?",
@@ -279,12 +292,12 @@
           "a": "No. The rice bug is slender and feeds on milky grains in the panicle. The rice black bug is a round, dark stink bug that sucks sap at the base of the plant and can cause deadhearts and bugburn."
         },
         {
-          "q": "Should I spray every season?",
-          "a": "No. Count first. Direct control may be needed when you find more than 10 bugs in 20 hills. Do not let the count pass 5 nymphs and adults per square meter at the milky stage."
+          "q": "Which insecticide works on rice bugs?",
+          "a": "Lambda cyhalothrin is the active ingredient most Philippine labels name for it on rice, as in Karate, and Alika mixes it with thiamethoxam. Use only FPA registered products whose label names rice bug, and follow the label. Our guide to the insecticide for rice bug lists the rest."
         },
         {
-          "q": "Which insecticide works on rice bugs?",
-          "a": "Karate and Alika, both with lambda cyhalothrin, list rice bug on rice on their Philippine product pages. Treat them as examples, use only FPA registered products and follow the label."
+          "q": "What app helps me catch the rice bug early?",
+          "a": "anee.io. Its calendar shows when each lot flowers, your season board reminds you to scout, and Anee, its smart farm technician, tells you from a photo whether it is the rice bug and whether the count calls for a spray."
         }
       ]
     },
@@ -293,20 +306,28 @@
       "title": "Related pages",
       "items": [
         {
+          "label": "Atangya sa palay, sa Tagalog",
+          "url": "/blog/atangya-sa-palay"
+        },
+        {
+          "label": "Alitangya in English",
+          "url": "/blog/alitangya-in-english"
+        },
+        {
+          "label": "Insecticide for rice bug",
+          "url": "/blog/insecticide-for-rice-bug"
+        },
+        {
+          "label": "Rice black bug",
+          "url": "/pests/rice-black-bug"
+        },
+        {
           "label": "Rice stem borer",
           "url": "/pests/rice-stem-borer"
         },
         {
           "label": "Green leafhopper",
           "url": "/pests/green-leafhopper"
-        },
-        {
-          "label": "Rice birds",
-          "url": "/pests/rice-birds"
-        },
-        {
-          "label": "Rice black bug",
-          "url": "/pests/rice-black-bug"
         },
         {
           "label": "Rice insects in the Philippines",
@@ -317,16 +338,8 @@
           "url": "/pests/brown-planthopper"
         },
         {
-          "label": "Thrips",
-          "url": "/pests/thrips"
-        },
-        {
           "label": "Alika, Virtako and Chess",
           "url": "/blog/rice-insecticides-alika-virtako-chess"
-        },
-        {
-          "label": "Growth stages and weather",
-          "url": "/features/growth-stages-and-weather"
         },
         {
           "label": "All crop pests",

@@ -324,6 +324,10 @@
         {
           "q": "Can I control rice black bugs without insecticide?",
           "a": "Yes, in many cases. Synchronous planting, flooding egg masses, ducks, light traps, Metarhizium fungus and clean bunds together keep numbers down. Keep insecticide use to a minimum."
+        },
+        {
+          "q": "Why are there atangya bugs in my house at night?",
+          "a": "Those are usually rice black bugs, the itim na atangya. They fly to bright lights, most in the nights around the full moon. Turn off the outdoor lights you do not need, and sweep them into soapy water instead of crushing them."
         }
       ]
     },
@@ -331,6 +335,14 @@
       "type": "links",
       "title": "Related pages",
       "items": [
+        {
+          "label": "Atangya sa palay, sa Tagalog",
+          "url": "/blog/atangya-sa-palay"
+        },
+        {
+          "label": "Alitangya in English",
+          "url": "/blog/alitangya-in-english"
+        },
         {
           "label": "Rice stem borer",
           "url": "/pests/rice-stem-borer"
@@ -360,16 +372,8 @@
           "url": "/crops/rice-varieties-philippines"
         },
         {
-          "label": "Urea fertilizer",
-          "url": "/blog/urea-fertilizer"
-        },
-        {
           "label": "Cropping calendar",
           "url": "/features/cropping-calendar"
-        },
-        {
-          "label": "All crop pests",
-          "url": "/pests"
         }
       ]
     },

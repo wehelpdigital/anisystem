@@ -69,6 +69,12 @@
           "Metarhizium at low counts, deep water and a spray above 5"
         ],
         [
+          "Rice bug (atangya)",
+          "10 or fewer bugs in 20 hills",
+          "More than 10 bugs in 20 hills, from flowering to hard dough",
+          "Cut the grasses around the field"
+        ],
+        [
           "Leaffolder",
           "First 30 to 40 days, and while natural enemies keep up",
           "Rarely, and only on your technician's advice",
@@ -123,6 +129,15 @@
     {
       "type": "text",
       "text": "At 5 or fewer black bugs per hill, spray the fungus Metarhizium anisopliae, a biological control. Above 5 per hill, a recommended insecticide becomes an option. First raise the water to about 15 cm so the bugs climb up the stems, then spray in cool weather while they sit on top of the plants.\n\nFlooding also works on the eggs. Eggs kept under water for more than 24 hours do not hatch, so keep water in the field from tillering to ripening. In heavy attacks, light traps with bright bulbs pull in huge numbers, best run around the full moon. Plow under any field the bugs have ruined right away. Read more on the [rice black bug](/pests/rice-black-bug)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Rice bug (atangya)"
+    },
+    {
+      "type": "text",
+      "text": "The rice bug only matters from flowering to the soft dough stage, when it sucks the milky grain. Count it early in the morning or late in the afternoon. More than 10 bugs in 20 hills is the line to act, and at the milky stage more than 5 a square meter. Below that, cut the grasses on the levees and let the spiders and wasps work. When a spray is needed, use one whose label names rice bug on rice, late in the afternoon. Our guide to the [insecticide for rice bug](/blog/insecticide-for-rice-bug) lists what is registered, and the [rice bug](/pests/rice-bug) guide covers the rest."
     },
     {
       "type": "heading",

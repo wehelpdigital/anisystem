@@ -468,6 +468,7 @@ Blog:
 /blog/plant-disease-identification-app, /blog/app-to-identify-plant-problems,
 /blog/farm-management-software, /blog/farm-record-keeping-app, /blog/anee-io-review,
 /blog/can-anee-io-increase-my-yield,
+/blog/alitangya-in-english, /blog/insecticide-for-rice-bug, /blog/atangya-sa-palay,
 /blog/best-fertilizer-for-palay, /blog/fertilizer-store-near-me,
 /blog/fertilizer-price-philippines, /blog/fertilizer-subsidy-philippines,
 /blog/npk-ratio-for-rice, /blog/balanced-fertilization-for-rice,

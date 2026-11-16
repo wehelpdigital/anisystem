@@ -1,0 +1,161 @@
+{
+  "section": "blog",
+  "slug": "alitangya-in-english",
+  "sortOrder": -7662,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "Alitangya in English: The Rice Bug and All Its Local Names",
+  "metaTitle": "Alitangya in English: Rice Bug Names, Signs and Control",
+  "metaDescription": "Alitangya in English is the rice bug, Leptocorisa oratorius. See its local names, how to tell it from the black bug, and how to stop it in your palay.",
+  "focusKeyword": "alitangya in english",
+  "keywords": ["alitangya in english", "alitangya", "atangya in english", "rice bug in tagalog", "atangya", "itim na atangya", "rice bug local name", "alitangya meaning"],
+  "excerpt": "Alitangya in English is the rice bug, an insect whose scientific name is Leptocorisa oratorius. Tagalog farmers also call it atangya, Ilocano farmers say dangaw, and many Visayan farmers say tiangaw. It is the slender, smelly bug that sucks the milky grains of palay and leaves them empty. Do not mix it up with the itim na atangya. That one is the round rice black bug at the base of the plant.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-alitangya-in-english.webp",
+    "alt": "A slender green rice bug, the alitangya, with long legs and long antennae standing on a green leaf",
+    "credit": "Jeevan Jose, CC BY SA 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "If you searched for alitangya in English, the short answer is the rice bug. You will also see it called the rice ear bug, the rice earhead bug or the rice seed bug. In India the same pest goes by gundhi bug. All of these names point to one thin, long legged insect that shows up when palay starts to flower.\n\nThe names matter because one word can mean two pests. In some towns, atangya or alitangya also means the black bug. So this page puts the names side by side, then shows how to tell the bugs apart, and what to do about each one."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Alitangya and atangya in English, Tagalog and other languages"
+    },
+    {
+      "type": "table",
+      "caption": "Names of the rice bug across the Philippines",
+      "rows": [
+        ["Language or place", "Name of the rice bug"],
+        ["English", "Rice bug, rice ear bug, rice earhead bug, rice seed bug"],
+        ["Tagalog", "Atangya, alitangya, atangyang"],
+        ["Ilocano", "Dangaw"],
+        ["Western Visayas and parts of Mindanao", "Tiangaw"],
+        ["Camarines Sur (one local report)", "Tayangaw"],
+        ["Scientific name", "Leptocorisa oratorius, with the related Leptocorisa acuta"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Names change from town to town, so ask your neighbors what they call it. When a farmer from another province names a bug you do not know, a photo settles it faster than words. Our list of [farm words in Tagalog](/blog/farm-words-in-tagalog) has more names for pests and farm work."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What does atangya mean, and is it always the rice bug?"
+    },
+    {
+      "type": "text",
+      "text": "Most of the time, yes. Atangya is the slender rice bug that feeds on the grain. But the rice black bug is often called itim na atangya, which simply means black atangya, and in Ilocano it is nangisit a bangaw. Some Tagalog dictionaries even give alitangya for the black bug. So when a neighbor says the atangya is back, ask one question first: is it thin and green brown, or round and black?"
+    },
+    {
+      "type": "table",
+      "caption": "Rice bug and rice black bug side by side",
+      "rows": [
+        ["", "Rice bug (atangya)", "Rice black bug (itim na atangya)"],
+        ["Shape", "Long, thin body about 15 millimeters long, with long legs and antennae", "Broad, oval, flat body about 8 to 9 millimeters long"],
+        ["Color", "Green when young, green brown as an adult", "Dark brown to almost black"],
+        ["Where you find it", "On the panicle, feeding on the grain", "At the base of the hill, near the water"],
+        ["When it attacks", "From flowering to the soft dough stage", "From tillering on, by sucking the stems"],
+        ["Damage you see", "Empty, spotted grains on panicles that stay upright", "Reddish brown patches called bugburn, deadhearts and whiteheads"],
+        ["At night", "Comes to lights now and then", "Swarms to lights in the nights around the full moon"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Our full guides cover each one: the [rice bug](/pests/rice-bug) and the [rice black bug](/pests/rice-black-bug). If you read Tagalog more easily, our guide to [atangya sa palay](/blog/atangya-sa-palay) says it all in Tagalog."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Does alitangya bite, and why does it smell?"
+    },
+    {
+      "type": "text",
+      "text": "No, the rice bug does not bite people. Its mouth is a thin beak made for sucking plant juice, and it cannot pierce your skin the way a mosquito does. The bad smell is its defense. When you touch it or brush the plants, it releases a strong odor from glands on its body. That smell can stay on your hands for a while.\n\nThe smell also follows the harvest. Grain from a field the bugs fed on heavily can smell bad, even after cooking, and cattle may refuse the straw."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why are atangya bugs in my house at night?"
+    },
+    {
+      "type": "text",
+      "text": "Bugs that pour into houses at night are usually rice black bugs, not rice bugs. Black bugs fly toward bright lights, and their flights peak in the nights around the full moon. In bad years they cover walls and streetlights in farming towns. They do not bite either, but they stink when crushed.\n\nSo turn off the outdoor lights you do not need on those nights and close the screens. Then sweep the bugs into soapy water instead of crushing them. In the field, farmers set light traps on the same nights, which our [rice black bug](/pests/rice-black-bug) guide explains."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What to do when you see alitangya in your palay"
+    },
+    {
+      "type": "text",
+      "text": "Look at the stage of your crop first. The rice bug feeds from flowering until the grain hardens, so those two or three weeks are the time to watch. Walk the field early in the morning or late in the afternoon, when the bugs sit on the panicles, and count them.\n\nThen act only when the count is high. More than 10 bugs in 20 hills from flowering to the hard dough stage is the usual sign to consider control. Before that, clean the grassy weeds around the field and plant at the same time as your neighbors. Keep the spiders and small wasps that eat the eggs, too. If a spray is needed, use a product registered for rice bug on rice and follow its label. Our guide to the [insecticide for rice bug](/blog/insecticide-for-rice-bug) lists the active ingredients on Philippine labels and when to spray."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps you catch the rice bug early"
+    },
+    {
+      "type": "text",
+      "text": "anee.io was built for problems like this one. Anee, the [smart farm technician](/features/ai-agricultural-technician) inside the app, reads a photo of the bug. She tells you in Tagalog or English whether it is the rice bug, the black bug or something else, and what to do next. She checks your lot's growth stage first, so her answer fits the week your crop is in.\n\nThe [cropping calendar](/features/cropping-calendar) counts each lot's days from planting, so you know which week each field will flower and reach the milky stage. Your season board also reminds you when to check for the rice bug at each stage. And the [Pest Finder](/features/pest-and-disease-finders) lists every active ingredient registered for it, with the products sold in the Philippines."
+    },
+    {
+      "type": "cta",
+      "title": "Know the bug before you spray",
+      "text": "Send Anee a photo of the bug on your palay and get its name and the next step, in Tagalog or English. Start free with anee.io.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about alitangya and atangya"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is alitangya in English?",
+          "a": "Alitangya in English is the rice bug, Leptocorisa oratorius. It is also called the rice ear bug or the rice earhead bug. It sucks the milky grains of palay and leaves them empty."
+        },
+        {
+          "q": "What is atangya in English?",
+          "a": "Atangya is also the rice bug. The itim na atangya, or black atangya, is a different pest: the rice black bug, Scotinophara coarctata, which sucks the stems at the base of the plant."
+        },
+        {
+          "q": "What is the rice bug called in Bisaya or Ilonggo?",
+          "a": "Many farmers in Western Visayas and parts of Mindanao call it tiangaw. Names vary by town, so a photo is the surest way to agree on the bug."
+        },
+        {
+          "q": "What is alitangya in Ilocano?",
+          "a": "Ilocano farmers call the rice bug dangaw. The black bug is nangisit a bangaw."
+        },
+        {
+          "q": "Does alitangya bite?",
+          "a": "No. The rice bug feeds only on plant juice and cannot bite people. It does give off a strong smell when you touch it."
+        },
+        {
+          "q": "What app can tell me if the bug in my field is atangya?",
+          "a": "anee.io. Send a photo to Anee, its smart farm technician, and she names the bug and tells you whether your count calls for action, in Tagalog or English."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        { "label": "Rice bug: damage, thresholds and control", "url": "/pests/rice-bug" },
+        { "label": "Atangya sa palay, sa Tagalog", "url": "/blog/atangya-sa-palay" },
+        { "label": "Insecticide for rice bug", "url": "/blog/insecticide-for-rice-bug" },
+        { "label": "Rice black bug", "url": "/pests/rice-black-bug" },
+        { "label": "Identify rice pests from a photo", "url": "/blog/identify-rice-pests-from-a-photo" },
+        { "label": "Farm words in Tagalog", "url": "/blog/farm-words-in-tagalog" }
+      ]
+    }
+  ]
+}

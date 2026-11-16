@@ -1,0 +1,206 @@
+{
+  "section": "blog",
+  "slug": "insecticide-for-rice-bug",
+  "sortOrder": -7661,
+  "lang": "en",
+  "category": "Crop Health",
+  "title": "Insecticide for Rice Bug (Atangya): What Works and When to Spray",
+  "metaTitle": "Insecticide for Rice Bug: What Works and When to Spray",
+  "metaDescription": "The insecticide for rice bug most Philippine labels name is lambda cyhalothrin. See what else is registered, when a spray pays, and how to time it right.",
+  "focusKeyword": "insecticide for rice bug",
+  "keywords": ["insecticide for rice bug", "best insecticide for atangya", "gamot sa atangya", "rice bug chemical control", "pesticide for rice bug", "lambda cyhalothrin", "insecticide para sa atangya"],
+  "excerpt": "The insecticide for rice bug that most Philippine labels name is lambda cyhalothrin, a pyrethroid. Cypermethrin, malathion, thiamethoxam and the mix of lambda cyhalothrin with thiamethoxam are registered for it on rice too. But a spray only pays when your count passes the threshold during flowering to the milky stage. Count first, spray late in the afternoon if you must, and always follow the label of an FPA registered product.",
+  "heroImage": {
+    "src": "/images/site/photos/palay-heads.jpg",
+    "alt": "Palay panicles filling their grains in a green field, the stage when an insecticide for rice bug may be needed",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Farmers often ask for the gamot sa atangya, the one product that stops the rice bug for good. The answer has two parts. Several insecticides on Philippine labels work on it. But the timing and the count decide whether any of them is worth the money.\n\nThe rice bug, called atangya or alitangya in Tagalog, sucks the grain while it is still milky. So the danger window is short, from flowering to the soft dough stage. A spray before or after that window is wasted, and a spray inside it without a count may kill the spiders and wasps that were already keeping the bugs down."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When an insecticide for rice bug pays"
+    },
+    {
+      "type": "text",
+      "text": "Count before you buy anything. Walk the field early in the morning or late in the afternoon, when the bugs rest on the panicles. Then compare your count with these signs."
+    },
+    {
+      "type": "table",
+      "caption": "When to consider control of the rice bug",
+      "rows": [
+        ["Crop stage", "Consider control when you find"],
+        ["Flowering to hard dough", "More than 10 bugs in 20 hills"],
+        ["Milky stage", "More than 5 nymphs and adults per square meter"],
+        ["Grain filling", "More than 10 nymphs and adults per square meter"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Below these numbers, let natural enemies do the work. Small wasps grow inside rice bug eggs, and long horned grasshoppers and spiders eat the eggs and young bugs. Our guide on [when to spray rice pests](/blog/when-to-spray-rice-pests) lines these counts up with the other rice pests."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Active ingredients registered for rice bug in the Philippines"
+    },
+    {
+      "type": "text",
+      "text": "These are the active ingredients whose Philippine labels name the rice bug on rice, most common first. Pick a product whose FPA registered label lists rice bug on rice, and read that label for the rate."
+    },
+    {
+      "type": "table",
+      "caption": "Active ingredients for rice bug on Philippine labels. Always follow the label of an FPA registered product.",
+      "rows": [
+        ["Active ingredient", "Group", "What to know"],
+        ["Lambda cyhalothrin", "Pyrethroid, IRAC 3A", "The most named for rice bug, and the base of Karate. Fast, but hard on fish and spiders."],
+        ["Cypermethrin", "Pyrethroid, IRAC 3A", "Sold by many companies as 5 EC. The same group as lambda cyhalothrin."],
+        ["Malathion", "Organophosphate, IRAC 1B", "An older choice that breaks down within days."],
+        ["Lambda cyhalothrin plus thiamethoxam", "IRAC 3A plus 4A", "A ready mix, as in Alika, that also covers leafhoppers and stem borer."],
+        ["Thiamethoxam", "Neonicotinoid, IRAC 4A", "Taken up by the plant, so it reaches bugs feeding on the panicle."],
+        ["Dinotefuran", "Neonicotinoid, IRAC 4A", "Also taken up by the plant. Toxic to bees."],
+        ["Beta cypermethrin, alpha cypermethrin, esfenvalerate", "Pyrethroid, IRAC 3A", "The same group again, so they do not count as a change of group."],
+        ["Carbosulfan", "Carbamate, IRAC 1A", "Few products carry it for rice bug."]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Rotate groups from one spray to the next. Lambda cyhalothrin followed by cypermethrin counts as the same group, and bugs that live through the first spray may live through the second. Our guides to [Karate, Cymbush and Selecron](/blog/karate-cymbush-selecron-insecticides) and to [Alika, Virtako and Chess](/blog/rice-insecticides-alika-virtako-chess) compare the brands. Some popular sprays, such as Goldrush, are registered on rice for planthoppers, leafhoppers, black bug, leaffolder and stem borer. Their labels do not name the rice bug, so check the label before you buy."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to time and apply the spray"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Spray inside the window",
+          "text": "Rice bugs feed from flowering to the soft dough stage. A spray before the panicles come out, or after the grain hardens, misses them."
+        },
+        {
+          "title": "Spray late in the afternoon",
+          "text": "The bugs hide from the midday heat and come back to the panicles toward evening. Late afternoon also keeps the spray off the flowers that open in the morning."
+        },
+        {
+          "title": "Check the weather first",
+          "text": "Rain within a few hours can wash the spray off the panicles, so look at the forecast for your lot before you mix."
+        },
+        {
+          "title": "Start at the field edges",
+          "text": "Rice bugs move in from the grasses on the levees and canals, so the edges often hold the most."
+        },
+        {
+          "title": "Respect the days before harvest",
+          "text": "The bug feeds close to harvest, so the pre harvest interval on the label matters. Never spray inside it."
+        },
+        {
+          "title": "Wear protection",
+          "text": "Use gloves, long sleeves, a mask and boots, as the label says. Wash after spraying, and keep children and animals away."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Do not spray just because you saw a few bugs",
+      "text": "A spray without a count kills the wasps and spiders that hold rice bugs and planthoppers down. Then the pests come back stronger, and the next spray has to be bigger."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What works besides an insecticide"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Cut the grasses** on the pilapil and the canals before the crop flowers, since the bugs live on them between seasons.",
+        "**Plant with your neighbors.** Fields that flower at the same time share the bugs, instead of feeding one wave after another.",
+        "**Sweep with a net** at dawn or dusk in small fields.",
+        "**Use bait.** Rotting snails or fish hung on sticks draw the bugs to one spot, where you can kill them.",
+        "**Keep natural enemies** by skipping early sprays you do not need.",
+        "**Pick awned varieties** where you can, since the awns hold the bugs off."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Our full [rice bug](/pests/rice-bug) guide explains each one, and our page on [alitangya in English](/blog/alitangya-in-english) helps you tell the rice bug from the black bug before you spend."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io helps you spray less and save more grain"
+    },
+    {
+      "type": "text",
+      "text": "anee.io puts the whole decision in one place. Anee, the [smart farm technician](/features/ai-agricultural-technician), confirms from a photo that the bug is really the rice bug, so you never pay for the wrong product. The [cropping calendar](/features/cropping-calendar) shows when each lot flowers, so you scout in the right weeks.\n\nNext, the [Pest Finder](/features/pest-and-disease-finders) lists every product registered for rice bug on rice, with the popular brands marked. Then the [Range Effect calendar](/features/residual-effect-calendar) shows day by day how long a spray keeps working against insects. It lays that over how critical each stage is, so you can see whether one spray covers the milky stage. And each lot's forecast warns you when rain falls on a spray day."
+    },
+    {
+      "type": "cta",
+      "title": "Count, confirm, then spray",
+      "text": "Send Anee a photo of the bug, see your lot's stage and the products registered for it, all in anee.io. Start free.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the insecticide for rice bug"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the best insecticide for rice bug?",
+          "a": "Lambda cyhalothrin is the active ingredient most Philippine labels name for rice bug on rice, and cypermethrin, malathion and thiamethoxam are registered too. The best choice is a product whose FPA registered label lists rice bug on rice, sprayed only when your count passes the threshold."
+        },
+        {
+          "q": "Ano ang gamot sa atangya?",
+          "a": "Ang pinakakaraniwang sangkap sa mga label para sa atangya ay lambda cyhalothrin. Pero gamitin lang ito kapag mataas na ang bilang ng atangya mula pamumulaklak hanggang paggatas ng butil, at sundin ang label ng produktong rehistrado sa FPA."
+        },
+        {
+          "q": "When should I spray for rice bug?",
+          "a": "Only from flowering to the soft dough stage, only when the count passes the threshold, and late in the afternoon when the bugs are back on the panicles."
+        },
+        {
+          "q": "Can I use Goldrush for rice bug?",
+          "a": "Its label names planthoppers, leafhoppers, black bug, leaffolder and stem borer on rice, but not the rice bug. Use a product whose label names the rice bug, or ask your technician."
+        },
+        {
+          "q": "How many days before harvest can I spray?",
+          "a": "It depends on the product. Read the pre harvest interval on its label, and never spray inside it."
+        },
+        {
+          "q": "Do I need to spray for rice bug every season?",
+          "a": "No. Many seasons stay below the threshold, especially when the whole area plants together and the grasses around the fields are cut."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        { "label": "Rice bug: damage, thresholds and control", "url": "/pests/rice-bug" },
+        { "label": "Atangya sa palay, sa Tagalog", "url": "/blog/atangya-sa-palay" },
+        { "label": "Alitangya in English", "url": "/blog/alitangya-in-english" },
+        { "label": "When to spray rice pests", "url": "/blog/when-to-spray-rice-pests" },
+        { "label": "Rain before spraying", "url": "/blog/rain-before-spraying" },
+        { "label": "How to avoid buying the wrong pesticide", "url": "/blog/avoid-buying-the-wrong-pesticide" }
+      ]
+    },
+    {
+      "type": "sources",
+      "items": [
+        { "label": "Syngenta Philippines: Karate 2.5 EC", "url": "https://www.syngenta.com.ph/product/crop-protection/karate-25-ec" },
+        { "label": "Syngenta Philippines: Alika 247 ZC", "url": "https://www.syngenta.com.ph/product/crop-protection/alika-247-zc" },
+        { "label": "IRAC: Mode of Action Classification", "url": "https://irac-online.org/mode-of-action/classification-online/" }
+      ]
+    }
+  ]
+}
