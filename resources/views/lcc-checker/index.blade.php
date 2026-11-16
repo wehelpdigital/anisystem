@@ -458,6 +458,16 @@
     .lv-note { margin-top: .7rem; padding: .7rem .8rem; border-radius: .95rem; font-size: .85rem; line-height: 1.55; color: var(--color-gray-700); background: var(--color-gray-50); }
     .lv-note > b { display: block; margin-bottom: .15rem; font-size: .7rem; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; color: var(--color-brand-700); }
     .lv-note ul { display: grid; gap: .3rem; }
+    /* How fast nitrogen works (2026-11-16): two day cards, then the notes. */
+    .lv-ntimes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .55rem; margin-top: .75rem; }
+    .lv-nt { display: flex; flex-direction: column; gap: .15rem; padding: .75rem .8rem; border-radius: .95rem; background: #f3f8ee; border: 1px solid #dfeccf; }
+    .lv-nt b { font-size: 1.15rem; font-weight: 900; color: #3d6b20; line-height: 1.15; }
+    .lv-nt span { font-size: .84rem; font-weight: 700; color: var(--color-gray-900); line-height: 1.35; }
+    .lv-nt small { font-size: .76rem; color: var(--color-gray-600); line-height: 1.4; }
+    .lv-ntxt { margin-top: .65rem; font-size: .86rem; line-height: 1.55; color: var(--color-gray-700); }
+    .lv-note.is-tip { background: #fff8e1; }
+    .lv-note.is-tip > b { color: #8a5a00; }
+    @media (max-width: 380px) { .lv-ntimes { grid-template-columns: 1fr; } }
     .lv-note li b { color: var(--color-gray-900); }
     .lv-dl { display: grid; grid-template-columns: 1fr 1fr; gap: .55rem .8rem; margin-top: .75rem; }
     .lv-dl dt { font-size: .66rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--color-gray-400); }
@@ -690,6 +700,12 @@
     html.dark .lc-d:hover:not(:disabled):not(.is-sel), html.dark .lc-mon button:hover:not(:disabled) { background: #22301a; }
     html.dark .lv-grid3 span, html.dark .lv-note, html.dark .lc-ck-date, html.dark .lc-sum-chips span { background: #1c2616; border-color: #2b3a1c; }
     html.dark .lx-stage { --lx-bg: #1c2616; --lx-line: #34482a; --lx-ink: #e8efe1; --lx-mute: #a9bb98; }
+    html.dark .lv-nt { background: #1c2616; border-color: #2b3a1c; }
+    html.dark .lv-nt b { color: #a5c97e; }
+    html.dark .lv-nt span { color: #e8efe1; }
+    html.dark .lv-nt small, html.dark .lv-ntxt { color: #a9bb98; }
+    html.dark .lv-note.is-tip { background: rgb(245 197 24 / .1); }
+    html.dark .lv-note.is-tip > b { color: #fcd34d; }
     html.dark .lv-ftag { background: rgb(202 138 4 / .1); border-color: rgb(202 138 4 / .35); }
     html.dark .lv-ftag:hover { background: rgb(202 138 4 / .16); border-color: #ca8a04; }
     html.dark .lv-ftag-g, html.dark .lc-frow .u-ab { background: #b45309; color: #fff; }
@@ -1652,6 +1668,16 @@
             if (v === 'early') { small = 'Start reading on'; line = `That is day ${d.startDay} after ${wd}. Then check every 7 days.`; }
             if (d.lastWeek) { big = 'About the last one'; line = `The first flowers come ${d.flowerDate ? `around ${d.flowerDate}` : 'within a week'}. After them, no more nitrogen.`; }
             out.push(`<section class="lv-card lv-next lv-in" ${K()}>${d.nextCheckIso ? calBox(d.nextCheckIso) : `<span class="lv-cal is-icon">${I.cal}</span>`}<div><small>${small}</small><b>${esc(big)}</b><p>${esc(line)}</p></div></section>`);
+        }
+        // How soon each nitrogen bag shows, the usual bags, and granular over sprays (2026-11-16, the owner).
+        if (v !== 'late') {
+            const dose = num(Number(d.kgN) || (p.season === 'dry' ? 30 : 23));
+            out.push(`<section class="lv-card lv-ntime lv-in" ${K()}><h3>${I.cal}<span data-tl="nitrogen">Plan around how fast nitrogen works</span></h3>
+                <div class="lv-ntimes"><div class="lv-nt"><b>3 to 5 days</b><span>Ammosul (21-0-0) and ammonium chloride (25-0-0)</span><small>Their nitrogen is already in the form the roots take up.</small></div>
+                <div class="lv-nt"><b>5 to 7 days</b><span>Urea (46-0-0)</span><small>The soil turns it into that form first, in 1 to 3 days.</small></div></div>
+                <p class="lv-ntxt">That is how long until the leaves start to green after spreading, in warm weather on flooded soil. The full effect shows in about 7 to 10 days, so read the leaves again a week later. Cool, dry or very rainy weeks slow it down.</p>
+                <div class="lv-note"><b>The usual nitrogen bags</b><div>Ammonium sulfate (ammosul) and urea are the most common nitrogen sources for rice. Urea carries the most nitrogen in a bag, and ammosul adds sulfur too.</div></div>
+                <div class="lv-note is-tip"><b>Use granular, not sprays</b><div>Nitrogen is a macronutrient, so rice takes it up by the kilo. One top dressing here is ${dose} kg of nitrogen a hectare, and a safe foliar spray gives only a few kilos. Spread granular fertilizer for nitrogen. A spray alone may not be enough to fill what the crop needs.</div></div></section>`);
         }
         if (a) {
             const items = [];
