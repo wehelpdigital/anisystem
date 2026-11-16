@@ -43,6 +43,7 @@ class WorkerInviteController extends Controller
             ->whereRaw('LOWER(email) = ?', [mb_strtolower($grant->invitedEmail)])
             ->first();
 
+        $isNew = ! $user;
         if (! $user) {
             $user = new User();
             $user->email = $grant->invitedEmail;
@@ -66,6 +67,20 @@ class WorkerInviteController extends Controller
         $request->session()->regenerate();
         $user->forceFill(['currentSessionId' => $request->session()->getId()])->saveQuietly();
         session(['activeBossId' => $grant->bossUserId]);
+
+        // A login this invite just made gets its welcome (2026-11-16, the owner: "after registration, there's no
+        // welcome to anee email being sent"). The address is proven: the invite reached it.
+        if ($isNew) {
+            try {
+                app(\App\Services\MailService::class)->sendTemplateToUser('worker_welcome', $user, [
+                    // "Isinama ka ni Ariel": the first name reads as people say it.
+                    'bossName' => trim((string) optional($grant->boss)->firstName)
+                        ?: (trim((string) optional($grant->boss)->full_name) ?: (string) strtok((string) optional($grant->boss)->email, '@')),
+                ]);
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Worker welcome email failed for user ' . $user->id . ': ' . $e->getMessage());
+            }
+        }
 
         return redirect()->route('app.dashboard')->with('success', 'Welcome! You can now open your farm manager\'s seasons.');
     }

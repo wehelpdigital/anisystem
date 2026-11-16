@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\EmailTemplate;
 use App\Support\EmailSkin as S;
+use App\Support\Newsletter\Voice;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Schema;
 
@@ -132,26 +133,60 @@ class AniSystemEmailTemplateSeeder extends Seeder
                 ),
             ],
 
+            /* The welcome (2026-11-16, the owner: "make sure have the email content to explain what is
+             * anee.io, make it welcoming, persuasive"). Written as Anee in the newsletter's voice
+             * (App\Support\Newsletter\Voice): Taglish, short paragraphs, one column, no dashes, signed
+             * "Rooting for you, Anee". It says what Libre opens and what Libre + Anee adds; the price comes
+             * in as {{plusPrice}} (NewMemberWelcome), so a price change never needs this text changed. */
             'registration_welcome' => [
                 'name' => 'Sign-up — welcome, after confirming',
-                'subject' => 'Welcome to {{siteName}}, {{firstName}}!',
-                'tags' => '{{firstName}}, {{lastName}}, {{email}}, {{siteName}}, {{loginUrl}}',
+                'subject' => 'Welcome sa anee.io, {{firstName}}! Ganito ito gumagana',
+                'tags' => '{{firstName}}, {{lastName}}, {{email}}, {{siteName}}, {{loginUrl}}, {{plusPrice}}',
                 'body' => S::wrap(
                     '<p>Hi {{firstName}},</p>'
-                    . '<p>Your email is confirmed and your anee.io account is open. You start on the free '
-                    . '<strong>Libre</strong> plan — no card needed, and no clock running.</p>'
-                    . S::panel(
-                        S::label('Three good first steps')
-                        . '<ol style="margin:6px 0 0 18px;padding:0;">'
-                        . '<li style="margin:0 0 6px;"><strong>Start a season.</strong> Pick your crop and planting date, and the work lays itself out day by day.</li>'
-                        . '<li style="margin:0 0 6px;"><strong>Add your lots and workers,</strong> so everyone sees their own jobs.</li>'
-                        . '<li style="margin:0;"><strong>Ask Anee.</strong> She is your AI farm technician — ask her about pests, fertilizer or the weather.</li>'
-                        . '</ol>'
-                    )
-                    . S::button('Open anee.io', '{{loginUrl}}', false)
-                    . S::note($contact),
-                    'Welcome to anee.io, {{firstName}}',
-                    ['face' => 'wave', 'eyebrow' => 'You are in', 'preheader' => 'Your account is open. Here is where to start.']
+                    . '<p>Welcome sa anee.io! Ako si Anee. Oo, ako yung kumakaway sa taas. (haha)</p>'
+                    . '<p>Bukas na ang account mo. Libre ito, walang card, at walang trial na nauubos.</p>'
+                    . '<p>Kaya diretsahan na tayo. Ano ba talaga ang anee.io?</p>'
+                    . '<p>Isipin mo ang notebook mo sa bukid. Yung may petsa ng tanim, listahan ng abono at mga gastos. Halos lahat ng magsasaka may ganyan, diba?</p>'
+                    . '<p>Ngayon, isipin mo na yung notebook na yan ay marunong magpaalala. Alam niya kung ilang araw na ang tanim mo. Sinasabi niya kung kailan mag aabono, kailan babantayan ang peste, at magkano na ang nagastos mo.</p>'
+                    . '<p><strong>Yan ang anee.io: ang buong season mo, nakaayos araw araw, sa phone mo.</strong></p>'
+                    . S::panel(S::label('Bukas na sa Libre account mo') . '<ul style="margin:6px 0 0 18px;padding:0;"><li style="margin:0 0 6px;"><b>Cropping calendar.</b> Piliin ang tanim at ang petsa ng tanim, at lalabas ang bawat gawain sa tamang araw.</li><li style="margin:0 0 6px;"><b>Global Lots.</b> Bawat lote mo may sariling notes, photos at drawing.</li><li style="margin:0 0 6px;"><b>Weather ngayon at bukas,</b> para alam mo kung tuloy ang spray.</li><li style="margin:0 0 6px;"><b>Protocol Builder at LCC Checker</b> para sa plano ng abono.</li><li style="margin:0;"><b>Observations, labor report, Community at farm news,</b> pati offline mode kahit walang signal.</li></ul>')
+                    . '<p>Pero aaminin ko na. Ang hinahanap ng karamihan sa anee.io ay ako. (pasensya na, kailangan ko lang sabihin)</p>'
+                    . '<p>Ako ang smart farm technician ng anee.io. Pwede mo akong tanungin kahit alas dos ng madaling araw. Kunan mo ng litrato ang dahon na may batik, at sasabihin ko kung ano ito at ano ang gagawin mo.</p>'
+                    . '<p>Hindi ako basta sumasagot. Tinitingnan ko muna ang lupa ng lote mo, ang panahon sa lugar mo at ang variety mo.</p>'
+                    . '<p>Kasama rin dito ang buong gabay namin sa peste, sakit, damo, binhi at kakulangan sa sustansya, at ang mga field helper na tumutulong pumili ng tamang gamot.</p>'
+                    . '<p>Kaya ba ng anee.io na pataasin ang ani mo? <strong>Oo.</strong> Hindi dahil sa magic. Kundi dahil wala nang gawain na nakakalimutan, at may basehan ang bawat desisyon. <a href="https://anee.io/blog/can-anee-io-increase-my-yield" style="color:#3d6b22;font-weight:700;">Basahin kung paano</a>.</p>'
+                    . '<p>Kasama ako sa <strong>Libre + Anee</strong>, {{plusPrice}} lang kada buwan. Nandoon pa rin lahat ng nasa Libre mo.</p>'
+                    . S::button('Buksan ang anee.io', '{{loginUrl}}', false)
+                    . S::panel(S::label('Ang unang gagawin mo, tatlong minuto lang') . '<ol style="margin:6px 0 0 18px;padding:0;"><li style="margin:0 0 6px;">Gumawa ng unang season: ang tanim at ang petsa ng tanim.</li><li style="margin:0 0 6px;">Idagdag ang lote mo, para may sariling tala ang bawat isa.</li><li style="margin:0;">Silipin ang gawain mo para bukas.</li></ol>', 'gold')
+                    . '<p>Ayan. Hindi mo kailangang matutunan lahat ngayon. Isang season lang muna.</p>'
+                    . '<p>' . Voice::signOffHtml('ang notebook na marunong magpaalala') . '</p>'
+                    . '<p>P.S. May tanong ka? Sumulat ka lang sa <a href="mailto:support@anee.io" style="color:#3d6b22;font-weight:700;">support@anee.io</a>. Totoong tao ang sasagot.</p>',
+                    'Welcome sa anee.io, {{firstName}}',
+                    ['face' => 'wave', 'eyebrow' => 'Bukas na ang account mo', 'preheader' => 'Ano ang anee.io, ano ang bukas sa Libre mo, at ang unang gagawin mo.']
+                ),
+            ],
+
+            /* A worker who set up their login from a farm's invite (2026-11-16). Same voice as the welcome above;
+             * WorkerInviteController sends it once, only for an account the invite made. */
+            'worker_welcome' => [
+                'name' => 'Worker — welcome, after accepting an invite',
+                'subject' => 'Welcome sa team, {{firstName}}! Bukas na ang anee.io mo',
+                'tags' => '{{firstName}}, {{lastName}}, {{bossName}}, {{siteName}}, {{loginUrl}}',
+                'body' => S::wrap(
+                    '<p>Hi {{firstName}},</p>'
+                    . '<p>Welcome sa anee.io! Ako si Anee.</p>'
+                    . '<p>Isinama ka ni <strong>{{bossName}}</strong> sa team ng bukid niya, at bukas na ang login mo.</p>'
+                    . '<p>Ganito ang anee.io. Ang buong season ng bukid ay nakaayos araw araw: kailan magtatanim, mag aabono, mag spray at mag aani. Wala nang hulaan kung ano ang gagawin bukas.</p>'
+                    . S::panel(S::label('Ano ang makikita mo sa loob') . '<ul style="margin:6px 0 0 18px;padding:0;"><li style="margin:0 0 6px;">Ang mga season na binuksan ni {{bossName}} para sa iyo, at ang mga gawain sa bawat araw.</li><li style="margin:0 0 6px;">Depende sa ibinigay sa iyo, pwede mo ring markahan na tapos ang gawain at maglagay ng notes at photos, para alam agad ng may ari.</li><li style="margin:0;">Ang weather ngayon at bukas, at ang Community ng mga magsasaka.</li></ul>')
+                    . S::button('Buksan ang anee.io', '{{loginUrl}}', false)
+                    . '<p>Isa pa. May sarili ka bang lupa, kahit maliit?</p>'
+                    . '<p>May sarili ring bukid ang account mo, libre. Pwede kang gumawa ng sarili mong season sa parehong login, at hiwalay ito sa bukid ni {{bossName}}. Pagbukas mo ng anee.io, pipiliin mo lang kung aling bukid ang titingnan.</p>'
+                    . '<p>' . Voice::signOffHtml('isang team, isang kalendaryo') . '</p>'
+                    . '<p>P.S. Hindi mo alam kung saan magsisimula? Itanong mo kay {{bossName}} kung aling season ang sa iyo, o sumulat sa <a href="mailto:support@anee.io" style="color:#3d6b22;font-weight:700;">support@anee.io</a>.</p>',
+                    'Welcome sa team, {{firstName}}',
+                    ['face' => 'wave', 'eyebrow' => 'Bukas na ang login mo', 'preheader' => 'Isinama ka sa team ng bukid. Ito ang makikita mo sa loob.',
+                     'why' => 'You are getting this because you accepted an invite to a farm team on anee.io.']
                 ),
             ],
 

@@ -34,7 +34,10 @@ class NewMemberWelcome
         }
 
         try {
-            app(\App\Services\MailService::class)->sendTemplateToUser('registration_welcome', $user);
+            app(\App\Services\MailService::class)->sendTemplateToUser('registration_welcome', $user, [
+                // "Kasama ako sa Libre + Anee, ₱70 lang kada buwan": the price as it is today, in their money.
+                'plusPrice' => self::plusPrice($user),
+            ]);
         } catch (\Throwable $e) {
             Log::warning('Welcome email failed for user '.$user->id.': '.$e->getMessage());
         }
@@ -63,5 +66,20 @@ class NewMemberWelcome
         } catch (\Throwable $e) {
             Log::warning('Newsletter signup sync failed for user '.$user->id.': '.$e->getMessage());
         }
+    }
+
+    /** Libre + Anee's monthly price for the welcome email ("₱70"), or plain words when it cannot be read. */
+    public static function plusPrice(User $user): string
+    {
+        try {
+            $item = \App\Support\ManualPay::item(\App\Support\ContentGate::PLUS_PLAN . ':month');
+            if ($item && (float) $item['price'] > 0) {
+                return \App\Support\Region::as(\App\Support\Region::of($user), fn () => \App\Support\Region::money($item['price'], 0));
+            }
+        } catch (\Throwable $e) {
+            // The words below say it well enough.
+        }
+
+        return 'maliit na halaga';
     }
 }
