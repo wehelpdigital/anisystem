@@ -288,7 +288,7 @@
         },
         {
           "q": "Will a rice farming app raise my yield?",
-          "a": "No app can promise an exact number, because the weather and the market decide part of every harvest. But an app that reads your field takes the guessing out. Anee weighs your lot, its soil, your variety, its stage and the weather, so you know when to apply, what to use, which variety to plant and the best date to plant. That precision improves your palay from the first season and stops the losses that guessing brings."
+          "a": "Yes, a good one does, because it takes the guessing out. Anee weighs your lot, its soil, your variety, its stage and the weather, so you know when to apply, what to use, which variety to plant and the best date to plant. That precision raises your palay yield from the first season and stops the losses that guessing brings."
         }
       ]
     },
@@ -315,6 +315,10 @@
         {
           "label": "Pagtatanim ng palay",
           "url": "/crops/pagtatanim-ng-palay"
+        },
+        {
+          "label": "Can anee.io increase my yield?",
+          "url": "/blog/can-anee-io-increase-my-yield"
         }
       ]
     }

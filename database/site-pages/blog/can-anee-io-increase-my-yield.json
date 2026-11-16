@@ -1,0 +1,246 @@
+{
+  "section": "blog",
+  "slug": "can-anee-io-increase-my-yield",
+  "sortOrder": -7660,
+  "lang": "en",
+  "category": "Farm Apps",
+  "title": "Can anee.io Increase My Yield? Yes, and Here Is How",
+  "metaTitle": "Can anee.io Increase My Yield? Yes, and Here Is How",
+  "metaDescription": "Can anee.io increase my yield? Yes. Anee times planting, fertilizer, water and pest control for your own lot, so more of your crop reaches the harvest.",
+  "focusKeyword": "can anee.io increase my yield",
+  "keywords": [
+    "can anee.io increase my yield",
+    "increase crop yield",
+    "higher yield",
+    "crop yield increase",
+    "palay yield per hectare",
+    "smart farm technician",
+    "farm app"
+  ],
+  "excerpt": "Can anee.io increase my yield? Yes. anee.io raises your yield by getting the big decisions right for your own lot: the variety, the planting date, the fertilizer and its timing, the water, and how fast a pest is stopped. Anee, the smart farm technician inside the app, checks it all first. She weighs your lot and its soil, your variety and its stage, the forecast and twenty years of your town's weather. So there is no guessing game, and more of what you plant reaches the harvest.",
+  "heroImage": {
+    "src": "/images/site/photos/palay-phone.jpg",
+    "alt": "An older farmer crouches in a field of heavy, ripening palay and smiles at a phone, checking the plan that raises the yield",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "A farmer asked us in plain words: can anee make my yield higher? The answer is yes, and this page shows where the extra harvest comes from.\n\nMost fields give less than they could. Trials of good season management reached about 7 tons of palay per hectare in the dry season, while the national average stood near 4. The seed and the fertilizer you already buy can carry more grain. But part of every harvest slips away to a late fix, a sack applied in the wrong week, or a planting date chosen by habit. anee.io closes those gaps one by one, so the same field gives you more."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why a field gives less than it could"
+    },
+    {
+      "type": "text",
+      "text": "Yield is not decided by the sack alone. It is decided by when and how each input reaches the crop. Every guess on the farm has a price, and these are the most each one can take from a hectare of palay."
+    },
+    {
+      "type": "table",
+      "caption": "Where guessing takes yield from a hectare, and what anee.io does about it",
+      "rows": [
+        [
+          "Where yield is lost",
+          "The most it can take",
+          "What anee.io does"
+        ],
+        [
+          "Pests and diseases caught late",
+          "Up to 40 percent",
+          "Send Anee a photo and she names the problem and what works, in seconds"
+        ],
+        [
+          "Fertilizer in the wrong week",
+          "Up to 25 percent",
+          "Every top dressing is dated from your lot's own planting day"
+        ],
+        [
+          "Water at the wrong stage",
+          "Up to 25 percent",
+          "Each lot shows its growth stage, so you know when water matters most"
+        ],
+        [
+          "Days waiting for an answer",
+          "Up to 20 percent",
+          "Anee answers at any hour, from your own farm's records"
+        ],
+        [
+          "Planting outside the best window",
+          "Up to 20 percent",
+          "When to Plant Analysis picks the date from your town's weather"
+        ]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "The ranges come from published Philippine rice loss estimates. They do not add up to one total, since no field suffers all of them at full strength. Still, even one of them caught in time puts sacks back in your shed. Our guide on how to [reduce crop losses](/blog/reduce-crop-losses) covers the field, the weather and the harvest itself."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io raises your yield, step by step"
+    },
+    {
+      "type": "text",
+      "text": "Each step below is a decision that shapes the harvest. In anee.io, every one of them is made for your own lot, with your own data."
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Plant the right variety",
+          "text": "Variety Research has Anee compare the newest varieties of your crop for your field and season, then rank them by what matters most to you. So the seed you buy fits your field."
+        },
+        {
+          "title": "Plant on the best date",
+          "text": "When to Plant Analysis reads your town's weather record, the outlook for the months ahead and how long your crop takes to mature. Then it names the planting window with the least risk."
+        },
+        {
+          "title": "Feed the right amount",
+          "text": "The NPK Plus calculator adds up every nutrient in the products you plan to use and holds the total against what your crop needs. So you see what is short and what is too much before you buy a single bag."
+        },
+        {
+          "title": "Feed in the right week",
+          "text": "The cropping calendar dates every task from each lot's own day zero. Basal fertilizer, each top dressing, weeding and water land on the right day, even for a lot planted a week late."
+        },
+        {
+          "title": "Stop pests and diseases on day one",
+          "text": "Take a photo of the leaf or the pest. Anee tells you what it is and what works, before the damage spreads and before you pay for the wrong product."
+        },
+        {
+          "title": "Keep the rain off your spray day",
+          "text": "Each lot has its own forecast beside the plan, with a reminder when rain falls on a spray day. So the fertilizer and the spray stay where you put them."
+        },
+        {
+          "title": "Repeat your best season",
+          "text": "Harvest records keep the yield of every lot, and Compare Reports puts two seasons side by side. Anee then writes a season report on what worked, so the next season starts from your best one."
+        }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "The same sack, a bigger harvest",
+      "text": "The right sack in the wrong week feeds the crop only part of what you paid for. That is why the timing matters as much as the fertilizer. For any pesticide, follow the product label and its FPA registration, and Anee reminds you of both."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "But anee.io is an app. How can an app raise a harvest?"
+    },
+    {
+      "type": "text",
+      "text": "The same way a good agriculturist does. A technician never carries your sacks or pulls your weeds, yet a farm with a good technician harvests more. The yield rises because the decisions improve: the right product, the right amount, on the right day, in the right lot.\n\nAnee is that technician on your phone, awake at any hour. She reads your season plan, your lots and their stages, the weather and the photos you send. Then she answers for this field, not for an average one. You can read how she does it on the [smart farm technician](/features/ai-agricultural-technician) page.\n\nAfter that, the [cropping calendar](/features/cropping-calendar) turns the advice into work done on the day it counts. A sack of urea does not raise a yield on its own either. What raises it is the timing and the amount, and that is what anee.io gets right."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Does it help if my soil is poor or my seed is ordinary?"
+    },
+    {
+      "type": "text",
+      "text": "Yes, and that is often where it helps the most. Global Lots keep each field's soil and water answers, and every analysis reads them. So the variety, the planting date and Anee's fertilizer advice all fit that ground. For acidic or salty soil, our guides on [acidic soil preparation](/land-preparation/acidic-soil-preparation) and [saline soil preparation](/land-preparation/saline-soil-preparation) show how to fix the ground first.\n\nIf water is short, What to Plant Analysis ranks the crops that fit your land and your water best. And when the seed is the weak link, Variety Research shows which varieties suit your area, so your next seed buy counts."
+    },
+    {
+      "type": "cta",
+      "title": "Start raising your yield this season",
+      "text": "Sign up free, add your lots and planting dates, and let anee.io date every task. Add Anee when you want her answers and analyses.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How much higher can my yield go?"
+    },
+    {
+      "type": "text",
+      "text": "That depends on how much your field loses now, and on the weather of each season. Nobody can name the exact number before the season ends, but the math is simple. Say a hectare of palay gives you 4 tons, and stem borers take a fifth of it. Catching them early brings back up to 800 kilograms, about 16 cavans of 50 kilograms.\n\nNext, add the fertilizer that now lands in the right week. Then add the planting date that keeps flowering away from the worst weather. Each gap you close adds to the harvest you keep. That space between your field and the 7 tons of a well run season is the yield anee.io helps you take back.\n\nYou will see the change from the first season, because the first plan is already dated and the first pest is caught early. The second season is better still, since your own records then show what worked on each lot. For palay, our guide on how to [increase rice yield per hectare](/blog/increase-rice-yield-per-hectare) goes through the nine checks one by one."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "So, can anee.io increase my yield? Start with these four moves"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Add your lots, crops and planting dates, so every task gets its day. Our guide on [how to make a cropping calendar](/blog/how-to-make-a-cropping-calendar) shows the idea.",
+        "Run When to Plant Analysis before the next season, and plant inside the window it gives. See the [best time to plant rice](/blog/best-time-to-plant-rice-philippines) for why the date matters.",
+        "Send Anee a photo the first day you see a spot, a hole or a yellow leaf. Our page on [early pest detection](/blog/early-pest-detection) shows what to look for.",
+        "Record every harvest per lot, then compare it with last season in the [farm reports](/features/farm-reports)."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Do these, and the question answers itself at harvest time. For a full tour of the app, read our [anee.io review](/blog/anee-io-review), or open the [pricing](/pricing) page to choose a plan."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions farmers ask about anee.io and yield"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Can anee.io really increase my yield?",
+          "a": "Yes. anee.io raises yield by getting the season's decisions right for your own lot: the variety, the planting date, the amount and timing of fertilizer, the water, and how fast pests are stopped. Anee weighs your lot, soil, variety, stage, forecast and twenty years of your town's weather before she answers, so there is no guessing game."
+        },
+        {
+          "q": "How soon will I see a higher yield?",
+          "a": "From the first season. The first plan already dates every task, and the first pest you photograph is named the same day. From the second season your own records show what worked best on each lot, so the gains build."
+        },
+        {
+          "q": "I already buy good seed and fertilizer. Will anee.io still raise my yield?",
+          "a": "Yes. Good inputs give the most when they land on the right day and in the right amount. anee.io dates every application from your lot's planting day, checks your fertilizer against what the crop needs and warns you when rain falls on a spray day, so you harvest what you paid for."
+        },
+        {
+          "q": "Does anee.io work for corn and vegetables, or only palay?",
+          "a": "It works for 85 Philippine crops, from palay and mais to vegetables, coconut and fruit trees. Each lot can grow a different crop with its own calendar. For mais, see how to [increase corn yield](/blog/increase-corn-yield-per-hectare)."
+        },
+        {
+          "q": "Do I need sensors or a drone?",
+          "a": "No. Your phone is enough. anee.io reads your lot's location for the weather and your photos for pests and diseases, with no extra equipment."
+        },
+        {
+          "q": "Is anee.io free?",
+          "a": "Yes. The Libre plan is free with one active cropping schedule and the full calendar. Anee and her analyses come with Libre plus Anee and every plan above it."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Increase rice yield per hectare",
+          "url": "/blog/increase-rice-yield-per-hectare"
+        },
+        {
+          "label": "Increase corn yield per hectare",
+          "url": "/blog/increase-corn-yield-per-hectare"
+        },
+        {
+          "label": "How to reduce crop losses",
+          "url": "/blog/reduce-crop-losses"
+        },
+        {
+          "label": "Is AI farm advice accurate?",
+          "url": "/blog/ai-farm-advice-accuracy"
+        },
+        {
+          "label": "Best time to plant rice",
+          "url": "/blog/best-time-to-plant-rice-philippines"
+        },
+        {
+          "label": "anee.io review",
+          "url": "/blog/anee-io-review"
+        }
+      ]
+    }
+  ]
+}

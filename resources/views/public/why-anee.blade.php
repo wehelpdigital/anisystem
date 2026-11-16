@@ -47,6 +47,8 @@
     $faqs = [
         ['Is Anee better than ChatGPT for farming?',
             'For questions about your own farm, yes. Anee reads your lots, your soil, your crop stage, the forecast, the ENSO outlook and twenty years of your town\'s weather before she answers. A general chat app such as ChatGPT or Gemini only knows what you type and what it learned online, so its answer has to stay general. For writing a letter or a question outside farming, a general app works fine.'],
+        ['Can Anee increase my yield?',
+            'Yes. Because she reads your own field before she answers, her advice lands on the right day and in the right amount for your lot: the variety, the planting date, the fertilizer and its timing, the water and the first sign of a pest. That precision raises your yield from the first season and stops the losses that guessing brings.'],
         ['What data does Anee use in her analysis?',
             'Your own lots and season (crop, variety, planting date, tasks, harvests and photos), your field profile and the usual soil of your barangay, the forecast for your spot, the ENSO outlook, twenty years of rain and heat, every typhoon, flood and drought in your town since 2005, the records of over 1,600 varieties, and over 7,000 fertilizers and pesticides registered in the Philippines.'],
         ['Does Anee answer in Tagalog?',
@@ -450,6 +452,7 @@
             <div class="wa-limit-foot reveal">
                 <p>General chat apps are still handy for writing a letter or explaining a word. For decisions on your own field, use the one that reads your field.</p>
                 <div class="wa-limit-links">
+                    <a href="{{ url('/blog/can-anee-io-increase-my-yield') }}">Can Anee increase my yield? Yes. Here is how {!! $arrow !!}</a>
                     <a href="{{ url('/blog/ai-farm-advice-accuracy') }}">How accurate is AI farm advice? {!! $arrow !!}</a>
                     <a href="{{ route('pricing') }}">Plans that include Anee {!! $arrow !!}</a>
                     <a href="{{ route('how') }}">The whole season, step by step {!! $arrow !!}</a>

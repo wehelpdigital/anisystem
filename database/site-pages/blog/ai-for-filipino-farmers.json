@@ -16,7 +16,7 @@
     "AI crop advice",
     "smart farm technician"
   ],
-  "excerpt": "AI for farmers raises income in two ways: it cuts costly mistakes, such as the wrong pesticide, the wrong fertilizer rate or a spray before rain, and it helps you time planting, feeding and harvest better. It does not grow the crop for you, and its advice is only as good as the facts it gets. anee.io, a farm app built for Filipino farmers, has Anee, a smart farm technician who uses AI to read your own lots, crop stage, weather and photos before she answers in Tagalog or English.",
+  "excerpt": "AI for farmers raises income in two ways: it cuts costly mistakes, such as the wrong pesticide, the wrong fertilizer rate or a spray before rain, and it helps you time planting, feeding and harvest better. Both raise the harvest you take home, and the more it knows about your field, the better its advice gets. anee.io, a farm app built for Filipino farmers, has Anee, a smart farm technician who uses AI to read your own lots, crop stage, weather and photos before she answers in Tagalog or English.",
   "heroImage": {
     "src": "/images/site/guides/blog-ai-for-filipino-farmers.webp",
     "alt": "A Filipino farmer checks his green rice field with a bolo in hand, the daily work that AI for farmers helps him plan",
@@ -25,7 +25,7 @@
   "blocks": [
     {
       "type": "text",
-      "text": "Farm income is simple math: what you sell minus what you spend. Most talk about AI promises bigger harvests. But on a Filipino farm, the quickest gains often come from the other side, the money lost to mistakes.\n\nA spray for the wrong pest. Two extra bags of urea the crop did not need. Planting into a dry spell, or harvesting into a typhoon. Here is where AI can help, what the evidence says, and where it falls short."
+      "text": "Farm income is simple math: what you sell minus what you spend. AI helps you grow a bigger harvest. On a Filipino farm, the quickest gains also come from the other side, the money lost to mistakes.\n\nA spray for the wrong pest. Two extra bags of urea the crop did not need. Planting into a dry spell, or harvesting into a typhoon. Here is where AI helps, what the evidence says, and what it needs from you."
     },
     {
       "type": "list",
@@ -263,8 +263,8 @@
           "url": "/blog/precision-agriculture-philippines"
         },
         {
-          "label": "Tagalog farm app",
-          "url": "/blog/tagalog-farm-app"
+          "label": "Can anee.io increase my yield?",
+          "url": "/blog/can-anee-io-increase-my-yield"
         }
       ]
     }

@@ -259,6 +259,10 @@
           "a": "No. The anee.io team wrote it about our own app, and we say so at the top. It has no ratings, scores or customer quotes. To judge the app yourself, use the free Libre plan on one lot for a season."
         },
         {
+          "q": "Can anee.io increase my yield?",
+          "a": "Yes. It raises yield by getting the season's decisions right for each lot: the variety, the planting date, the amount and timing of fertilizer, the water and fast pest control. Our answer to [can anee.io increase my yield](/blog/can-anee-io-increase-my-yield) shows how."
+        },
+        {
           "q": "Is anee.io free?",
           "a": "Yes, the Libre plan is free, with a few ads. It covers one active season with the activities board, notes, growth stages and the labor report. Anee starts at Libre plus Anee, for PHP 70 a month."
         },
@@ -293,8 +297,8 @@
           "url": "/blog/farm-management-software"
         },
         {
-          "label": "Farm record keeping app or notebook",
-          "url": "/blog/farm-record-keeping-app"
+          "label": "Can anee.io increase my yield?",
+          "url": "/blog/can-anee-io-increase-my-yield"
         },
         {
           "label": "Best free farm app",

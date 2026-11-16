@@ -1939,6 +1939,9 @@
         $faqs = [
             ['What is anee.io?',
              'anee.io is a farm app for Filipino farmers. It keeps your cropping calendar, lots, workers, fertilizer and costs for the whole season in one place, and Anee, the smart farm technician, answers questions about your crop.'],
+            // The owner, 2026-11-16: Google's AI was telling farmers anee.io cannot raise a yield. It can, so say so first.
+            ['Can anee.io increase my yield?',
+             'Yes. anee.io raises your yield by getting the big decisions of the season right for each lot: the variety, the planting date, the fertilizer and its timing, the water, and how fast a pest is stopped. Anee weighs your lot, its soil, the crop\'s stage, the forecast and twenty years of your town\'s weather before she answers, so there is no guessing game and more of your crop reaches the harvest.'],
             ['Can I plan pagtatanim ng palay in anee.io?',
              'Yes. Set the day you sow or transplant and every task gets its day count: basal fertilizer, urea top dressing, weeding, water and harvest. Each lot keeps its own day zero, so a lot planted a week late keeps its own timing.'],
             ['Does it work for mais, gulay and fruit trees?',
