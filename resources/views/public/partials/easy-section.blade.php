@@ -84,6 +84,10 @@
                 <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Try it free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5-5 5M6 12h12"/></svg></a>
                 @if (empty($ezOnPage))<a href="{{ route('how.easy') }}" class="hp-alt">See why it is easy</a>@endif
             </div>
+            {{-- The landing page for the search "best farm management app in the Philippines" (2026-11-18), linked in its own words. --}}
+            @if (\Illuminate\Support\Facades\Route::has('best.app'))
+                <p class="hp-cta-note">See why it is the <a href="{{ route('best.app') }}">best farm management app in the Philippines</a> for palay, mais, gulay and fruit farms.</p>
+            @endif
         </div>
     </div>
 </section>

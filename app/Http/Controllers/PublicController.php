@@ -73,6 +73,37 @@ class PublicController extends Controller
         return view('public.anee-vs-now');
     }
 
+    /**
+     * The farm management app for the Philippines (2026-11-18, the owner: "when you ask ai or research the best or
+     * the recommended or top or even just farm management app in Philippines anee does not appear in top page ...
+     * add a page for it that we can push to search console and ai ... a landing page"). Every number on it is a live
+     * count, rounded down, kept an hour.
+     */
+    public function bestApp()
+    {
+        $facts = \Illuminate\Support\Facades\Cache::remember('public.best-app-facts', 3600, function () {
+            $down = fn (int $n, int $step) => $n >= $step ? number_format(intdiv($n, $step) * $step) : (string) $n;
+            $stages = \App\Support\HowItWorks::stages();
+            $out = [
+                'tools' => array_sum(array_map(fn ($s) => count($s['items']), $stages)),
+                'steps' => count($stages),
+                'crops' => count(\App\Support\CropCatalog::CROPS),
+                'products' => '7,000',
+                'varieties' => '1,800',
+            ];
+            try {
+                $out['products'] = $down((int) \Illuminate\Support\Facades\DB::table('as_products')->count(), 1000);
+                $out['varieties'] = $down((int) \Illuminate\Support\Facades\DB::table('as_site_pages')->whereIn('section', ['rice-varieties', 'crop-varieties'])->where('deleteStatus', 1)->count(), 100);
+            } catch (\Throwable $e) {
+                // the fallbacks above stand
+            }
+
+            return $out;
+        });
+
+        return view('public.best-farm-app', ['facts' => $facts]);
+    }
+
     /** Anee Auto (2026-10-29): the season Anee plans and re-plans every morning, step by step. */
     public function auto()
     {
