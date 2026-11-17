@@ -1035,7 +1035,6 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     // Market Price Forecast (2026-10-27, the owner): when to sell, from the kept farmgate prices and the import events.
     // Heat Map Forecast (2026-11-17, the owner): the week's heat painted around a lot on Google Maps, and a guide for each day.
     Route::get('/app/heat-map', [App\Http\Controllers\HeatMapController::class, 'page'])->name('heatmap.page');
-    Route::get('/app/heat-map/maps', [App\Http\Controllers\HeatMapController::class, 'maps'])->name('heatmap.maps');
     Route::get('/app/heat-map/forecast', [App\Http\Controllers\HeatMapController::class, 'forecast'])->middleware('throttle:60,1')->name('heatmap.forecast');
     Route::get('/app/heat-map/year', [App\Http\Controllers\HeatMapController::class, 'year'])->middleware('throttle:60,1')->name('heatmap.year');
     Route::get('/app/market-prices', [App\Http\Controllers\MarketPriceController::class, 'page'])->name('market.page');

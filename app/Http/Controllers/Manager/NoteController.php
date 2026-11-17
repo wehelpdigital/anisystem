@@ -70,6 +70,9 @@ class NoteController extends BaseScheduleController
             'when' => $m->created_at?->timezone('Asia/Manila')->format('M j, Y'),
         ]);
 
+        // The season's lots, for the note's lot tag and the lot each card names (2026-11-18).
+        $noteLots = self::lotsOf($schedule->id);
+
         // The scroller asks for cards alone — no layout, no scripts.
         if ($request->boolean('rows')) {
             return response()->view('sm.partials.notes-rows', [
@@ -77,6 +80,7 @@ class NoteController extends BaseScheduleController
                 'schedule' => $schedule,
                 'mapSaves' => $mapSaves,
                 'mapUrlByPath' => $mapUrlByPath,
+                'noteLots' => $noteLots,
             ]);
         }
 
@@ -85,6 +89,7 @@ class NoteController extends BaseScheduleController
             'notes' => $notes,
             'mapSaves' => $mapSaves,
             'mapUrlByPath' => $mapUrlByPath,
+            'noteLots' => $noteLots,
         ]);
     }
 
@@ -364,12 +369,23 @@ class NoteController extends BaseScheduleController
             'media.*.strokes' => ['nullable', 'array', 'max:4000', DrawStrokes::rule()],
             // Which saved map a map picture is (maps are their owners' now).
             'media.*.saveId' => 'nullable|integer',
+            // The day the note is about and the lot it pertains to (2026-11-18, the owner).
+            'noteDate' => 'nullable|date_format:Y-m-d',
+            'lotId' => 'nullable|integer|min:0',
         ]);
         if ($validator->fails()) {
             return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
         $data = $validator->validated();
+        // The date defaults to today; a lot must be one of this season's, else the note is the whole season's.
+        if (AsScheduleNote::datesReady()) {
+            $data['noteDate'] = $data['noteDate'] ?? now('Asia/Manila')->toDateString();
+            $lot = (int) ($data['lotId'] ?? 0);
+            $data['lotId'] = $lot > 0 && $schedule && \App\Models\AsScheduleLot::where('id', $lot)->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->exists() ? $lot : null;
+        } else {
+            unset($data['noteDate'], $data['lotId']);
+        }
         // Body is client rich text → same allow-list the descriptions use.
         $data['body'] = filled($data['body'] ?? null) ? HtmlSanitizer::rich($data['body']) : null;
         $data['imagePath'] = $data['imagePath'] ?? null;
@@ -403,6 +419,24 @@ class NoteController extends BaseScheduleController
             ->values()->all() ?: null;
 
         return $data;
+    }
+
+    /**
+     * A season's lots as the note's lot tag lists them: [id, name, crop, icon, size], in the order they were added.
+     *
+     * @return list<array{id: int, name: string, crop: ?string, icon: string, size: ?string}>
+     */
+    public static function lotsOf(int $scheduleId): array
+    {
+        return rescue(fn () => \App\Models\AsScheduleLot::where('croppingScheduleId', $scheduleId)->where('deleteStatus', 1)->orderBy('id')
+            ->get(['id', 'lotName', 'crop', 'lotSize', 'lotSizeUnit'])
+            ->map(fn ($l) => [
+                'id' => (int) $l->id,
+                'name' => (string) ($l->lotName ?: 'Lot ' . $l->id),
+                'crop' => $l->crop ? \App\Support\CropCatalog::label(\App\Support\CropStages::normalize($l->crop) ?? $l->crop) : null,
+                'icon' => $l->crop ? \App\Support\CropStages::icon($l->crop) : '🌱',
+                'size' => $l->lotSize ? rtrim(rtrim((string) $l->lotSize, '0'), '.') . ' ' . ($l->lotSizeUnit ?: 'ha') : null,
+            ])->values()->all(), [], false);
     }
 
     private function present(AsScheduleNote $n): array

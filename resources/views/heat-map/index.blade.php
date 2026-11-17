@@ -15,7 +15,7 @@
      temperature. make it look good especially in mobile").
 
      Step 1: a lot of Global Lots (partials/farm-lots, with "Set the pin" and "Draw the boundary" from
-     partials/lot-map), or a saved map of Global Maps. Step 2: the map and the forecast, in two tabs.
+     partials/lot-map); lots only since 2026-11-18. Step 2: the map, the days and hours, and the months.
 
      The colors: one fixed scale from 14 to 40°C, so a color means the same heat on every day (blue cool, a pale
      cream around 27°C, then orange to deep red), and every color on the map is also said in numbers (the lot's badge,
@@ -55,16 +55,6 @@
     .hm-wiz h3 { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 800; color: var(--color-gray-900); }
     .hm-sub { margin: .25rem 0 .9rem; font-size: .84rem; line-height: 1.55; color: var(--color-gray-500); }
 
-    .hm-src { position: relative; display: grid; grid-template-columns: 1fr 1fr; padding: .3rem; margin-bottom: .9rem; border-radius: 1rem; background: var(--color-gray-100); }
-    .hm-src-ind { position: absolute; top: .3rem; bottom: .3rem; left: .3rem; width: calc(50% - .3rem); border-radius: .75rem; background: var(--color-white); box-shadow: 0 4px 12px -6px rgb(0 0 0 / .35);
-        transition: transform .28s var(--hm-e); }
-    .hm-src.is-map .hm-src-ind { transform: translateX(100%); }
-    .hm-src button { position: relative; z-index: 1; min-height: 2.6rem; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; font-size: .88rem; font-weight: 800;
-        color: var(--color-gray-500); transition: color .28s var(--hm-e); }
-    .hm-src button[aria-selected="true"] { color: var(--color-gray-900); }
-    .hm-src img { width: 1.15rem; height: 1.15rem; object-fit: contain; }
-    .hm-pane { animation: hmIn .26s ease both; }
-
     .hm-at { display: grid; gap: .6rem; margin-top: .9rem; padding: .8rem .85rem; border-radius: 1rem; background: #fff7f0; border: 1px solid #f6dcc8; animation: hmUp .3s var(--hm-e) both; }
     .hm-at p { display: flex; gap: .55rem; align-items: flex-start; font-size: .84rem; line-height: 1.5; color: #6a2a10; }
     .hm-at p svg { flex: none; width: 1.1rem; height: 1.1rem; margin-top: .15rem; color: #cf4a2c; }
@@ -79,25 +69,6 @@
     html.dark .hm-at p { color: #f3c9ad; } html.dark .hm-at p b { color: #ffe6d4; }
     html.dark .hm-pill:not(.is-main) { background: #1b130e; color: #f3b48c; border-color: #5a3420; }
 
-    .hm-maps { display: grid; gap: .55rem; }
-    @media (min-width: 640px) { .hm-maps { grid-template-columns: 1fr 1fr; } }
-    .hm-mcard { position: relative; display: flex; align-items: center; gap: .75rem; width: 100%; padding: .6rem; border-radius: 1.1rem; text-align: left; background: var(--color-white);
-        border: 1.5px solid var(--color-gray-200); transition: border-color .28s var(--hm-e), background-color .28s var(--hm-e), transform .28s var(--hm-e); animation: hmUp .32s var(--hm-e) both; }
-    .hm-mcard:hover { border-color: #f0a56a; transform: translateY(-1px); }
-    .hm-mcard.is-on { border-color: #cf4a2c; background: #fff6ef; box-shadow: 0 0 0 3px rgb(207 74 44 / .14); }
-    .hm-mthumb { flex: none; width: 3.6rem; height: 3.6rem; border-radius: .8rem; overflow: hidden; display: grid; place-items: center; background: #e9efe4; }
-    /* The picture lies over the map mark; with no picture (or one that fails) the mark shows. */
-    .hm-mthumb > * { grid-area: 1 / 1; }
-    .hm-mthumb img { width: 100%; height: 100%; object-fit: cover; }
-    .hm-mthumb svg { width: 1.6rem; height: 1.6rem; color: #4a7c2a; }
-    .hm-mcard span { min-width: 0; flex: 1 1 auto; }
-    .hm-mcard b { display: block; font-size: .9rem; font-weight: 800; color: var(--color-gray-900); overflow-wrap: anywhere; }
-    .hm-mcard small { display: block; margin-top: .1rem; font-size: .74rem; color: var(--color-gray-500); }
-    .hm-mcheck { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; display: grid; place-items: center; color: #fff; background: #cf4a2c; transform: scale(0); transition: transform .28s var(--hm-e); }
-    .hm-mcheck svg { width: .85rem; height: .85rem; }
-    .hm-mcard.is-on .hm-mcheck { transform: scale(1); }
-    html.dark .hm-mcard.is-on { background: #2a160c; }
-    html.dark .hm-mthumb { background: #1b2416; }
     .hm-empty { padding: 1.1rem 1rem; border-radius: 1.1rem; font-size: .86rem; line-height: 1.55; color: var(--color-gray-600); background: var(--color-gray-50); border: 1px dashed var(--color-gray-200); }
     .hm-empty a, .hm-more a { font-weight: 800; color: #b8441f; text-decoration: underline; text-underline-offset: 2px; }
     .hm-more { display: flex; flex-wrap: wrap; gap: .25rem .6rem; justify-content: space-between; margin-top: .7rem; font-size: .78rem; color: var(--color-gray-500); }
@@ -411,9 +382,9 @@
     html.dark .hm-info section > i { background: #36190b; color: #f8b48a; }
 
     @media (prefers-reduced-motion: reduce) {
-        .hm-in, .hm-pane, .hm-at, .hm-mcard, .hm-card, .hm-sum, .hm-dchip, .hm-g, .hm-wbar, .hm-wk, .hm-hc, .hm-hnote, .hm-art .hm-ring, .hm-art .hm-merc, .hm-therm .hm-merc { animation: none !important; }
+        .hm-in, .hm-pane, .hm-at, .hm-card, .hm-sum, .hm-dchip, .hm-g, .hm-wbar, .hm-wk, .hm-hc, .hm-hnote, .hm-art .hm-ring, .hm-art .hm-merc, .hm-therm .hm-merc { animation: none !important; }
         .hm-chart .draw { animation: none; stroke-dashoffset: 0; }
-        .hm-src-ind, .hm-tab-ind, .hm-rail i::after, .hm-more2, .hm-panel, .hm-lmark, .hm-mcheck { transition: none !important; }
+        .hm-tab-ind, .hm-rail i::after, .hm-more2, .hm-panel, .hm-lmark { transition: none !important; }
     }
     html.sm-still .hm-art .hm-ring, html.sm-still .hm-art .hm-merc, html.sm-still .hm-therm .hm-merc { animation: none; }
 </style>
@@ -427,9 +398,8 @@
         'key' => (string) config('services.google_maps.key'),
         'mapId' => (string) config('services.google_maps.map_id'),
         'pin' => asset('images/map-pin.png'),
-        'urls' => ['forecast' => route('heatmap.forecast'), 'year' => route('heatmap.year'), 'maps' => route('heatmap.maps'), 'mapsPage' => route('maps.page'), 'lotsPage' => route('farmlots.index')],
+        'urls' => ['forecast' => route('heatmap.forecast'), 'year' => route('heatmap.year'), 'lotsPage' => route('farmlots.index')],
         'lot' => (int) request()->query('lot') ?: null,
-        'map' => (int) request()->query('map') ?: null,
     ];
     $hmIco = [
         'chev' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>',
@@ -462,22 +432,15 @@
         <div class="hm-wiz" id="hmWiz">
             <div class="hm-stepno"><span>Step 1 of 2</span><span>The place</span></div>
             <div class="hm-rail" aria-hidden="true"><i class="is-on"></i><i></i></div>
-            <h3>Where should the map open?</h3>
-            <p class="hm-sub">Pick one of your lots, or a map you drew in Global Maps. The heat is painted around it.</p>
+            <h3>Which lot is it for?</h3>
+            {{-- Lots only (2026-11-18, the owner: "remove the part where you can select via map and not via lot ...
+                 we have an option to specify map in lot"): a lot's place on the map is its pin or its boundary,
+                 set right here or in Global Lots. --}}
+            <p class="hm-sub">Pick one of your lots, or add one. The heat is painted around its pin or its boundary on the map.</p>
 
-            <div class="hm-src" id="hmSrc" role="tablist" aria-label="Where the map opens">
-                <span class="hm-src-ind" aria-hidden="true"></span>
-                <button type="button" role="tab" aria-selected="true" data-src="lot"><img src="{{ asset('images/treasure-map.png') }}" alt="">My lots</button>
-                <button type="button" role="tab" aria-selected="false" data-src="map"><img src="{{ asset('images/location-marker.png') }}" alt="">My maps</button>
-            </div>
-
-            <div class="hm-pane" data-pane="lot">
+            <div class="hm-pane">
                 <div id="hmLots"></div>
                 <div class="hm-at" id="hmLotAt" hidden></div>
-            </div>
-            <div class="hm-pane" data-pane="map" hidden>
-                <div class="hm-maps" id="hmMaps"><p class="hm-wait">Loading your maps…</p></div>
-                <p class="hm-more"><span>Your maps are kept in Global Maps.</span><a href="{{ route('maps.page') }}">Open Global Maps</a></p>
             </div>
 
             <div class="hm-nav">
@@ -646,7 +609,7 @@
     const B = JSON.parse($('hmBoot').textContent);
     const U = B.urls;
     const PICK_KEY = 'anee.heatPick';
-    const st = { step: 0, src: 'lot', lot: null, map: null, maps: null, tab: 'map', mode: 'high', i: 0, day: 0, playing: false, folded: false, loadedFor: null };
+    const st = { step: 0, lot: null, tab: 'map', mode: 'high', i: 0, day: 0, playing: false, folded: false, loadedFor: null };
     let D = null;        // the forecast answer: place, week (with the work of each day), today
 
     /* ---------------- the color scale: one for every day ---------------- */
@@ -693,20 +656,10 @@
 
     /* ================= Step 1: the place ================= */
     let picker = null;
-    const remember = () => { try { localStorage.setItem(PICK_KEY, JSON.stringify(st.src === 'lot' ? { src: 'lot', id: st.lot?.id } : { src: 'map', id: st.map?.id })); } catch (_) {} };
+    const remember = () => { try { localStorage.setItem(PICK_KEY, JSON.stringify({ src: 'lot', id: st.lot?.id })); } catch (_) {} };
     const recall = () => { try { return JSON.parse(localStorage.getItem(PICK_KEY) || 'null'); } catch (_) { return null; } };
-    const canGo = () => (st.src === 'lot' ? !!(st.lot && st.lot.where) : !!st.map);
+    const canGo = () => !!(st.lot && st.lot.where);
     const paintNext = () => { $('hmNext').disabled = !canGo(); };
-
-    function setSrc(src) {
-        st.src = src;
-        $('hmSrc').classList.toggle('is-map', src === 'map');
-        $('hmSrc').querySelectorAll('[data-src]').forEach((b) => b.setAttribute('aria-selected', String(b.dataset.src === src)));
-        document.querySelectorAll('#hmWiz .hm-pane').forEach((p) => { p.hidden = p.dataset.pane !== src; });
-        if (src === 'map' && !st.maps) loadMapList();
-        paintNext();
-    }
-    $('hmSrc').addEventListener('click', (e) => { const b = e.target.closest('[data-src]'); if (b) setSrc(b.dataset.src); });
 
     const PEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 20h4L18.5 9.5a2.1 2.1 0 00-4-4L4 16v4zM13.5 6.5l4 4"/></svg>';
     const PIN = @json($hmIco['pin']);
@@ -745,47 +698,11 @@
     function mountLots() {
         if (picker || !window.aneeLots) return;
         const r = recall();
-        const want = B.lot || (!B.map && r && r.src === 'lot' ? r.id : null);
+        const want = B.lot || (r && r.src === 'lot' ? r.id : null);
         picker = window.aneeLots.picker($('hmLots'), { crop: () => null, value: want || null, onPick: lotPicked });
         // A lot to start on is shown as picked; only Next moves on (the owner's rule: a pick never turns the page).
         if (want) picker.set(want).then(() => { const v = picker.value(); if (v) lotPicked(v); }).catch(() => {});
     }
-
-    const MAP_MARK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 4L3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5L9 4zm0 0v13.5m6-11v13.5"/></svg>';
-    const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-    async function loadMapList() {
-        const box = $('hmMaps');
-        box.innerHTML = '<p class="hm-wait">Loading your maps…</p>';
-        try {
-            const r = await window.api(U.maps);
-            st.maps = r.data.maps || [];
-        } catch (err) {
-            st.maps = null;
-            box.innerHTML = '<div class="hm-empty">' + esc(err.message || 'Your maps could not be loaded.') + ' <a href="#" data-maps-retry>Try again</a></div>';
-            return;
-        }
-        paintMapList();
-    }
-    function paintMapList() {
-        const box = $('hmMaps'), list = st.maps || [];
-        if (!list.length) {
-            box.innerHTML = '<div class="hm-empty">No saved maps with a field on them yet. Draw your field in Global Maps, save it, and it shows here. <a href="' + esc(U.mapsPage) + '">Open Global Maps</a></div>';
-            return;
-        }
-        box.innerHTML = list.map((m, i) => '<button type="button" class="hm-mcard' + (st.map && st.map.id === m.id ? ' is-on' : '') + '" data-map="' + m.id + '" style="animation-delay:' + (i * 35) + 'ms" aria-pressed="' + (st.map && st.map.id === m.id) + '">'
-            + '<span class="hm-mthumb">' + MAP_MARK + (m.thumbUrl ? '<img src="' + esc(m.thumbUrl) + '" alt="" loading="lazy" onerror="this.remove()">' : '') + '</span>'
-            + '<span><b>' + esc(m.title) + '</b><small>' + esc([m.count + (m.count === 1 ? ' shape' : ' shapes'), m.season, m.when, m.by ? 'by ' + m.by : null].filter(Boolean).join(' · ')) + '</small></span>'
-            + '<span class="hm-mcheck">' + CHECK + '</span></button>').join('');
-    }
-    $('hmMaps').addEventListener('click', (e) => {
-        if (e.target.closest('[data-maps-retry]')) { e.preventDefault(); loadMapList(); return; }
-        const c = e.target.closest('[data-map]');
-        if (!c || !st.maps) return;
-        const m = st.maps.find((x) => x.id === Number(c.dataset.map));
-        st.map = m || null;
-        $('hmMaps').querySelectorAll('.hm-mcard').forEach((x) => { const on = Number(x.dataset.map) === st.map?.id; x.classList.toggle('is-on', on); x.setAttribute('aria-pressed', String(on)); });
-        paintNext();
-    });
 
     $('hmBack').addEventListener('click', () => window.aneeLeave());
     $('hmNext').addEventListener('click', () => { if (canGo()) { remember(); show(1); } });
@@ -863,7 +780,7 @@
         if (st.step === 1) veil('The map cannot be shown right now.', 'Google Maps refused this site. Please tell us. The days, the hours and the months still work: open Days and hours.', true);
     };
 
-    let map = null, ground = null, fadeTok = 0, lotMarks = [], tapMark = null, tapTimer = 0, gridMarks = [], shapeMarks = [];
+    let map = null, ground = null, fadeTok = 0, lotMarks = [], tapMark = null, tapTimer = 0, gridMarks = [];
     const G = () => window.google.maps;
     function ensureMap() {
         if (map) return map;
@@ -895,8 +812,8 @@
     $('hmRetry').addEventListener('click', () => { st.loadedFor = null; openView(); });
 
     async function openView() {
-        const want = st.src === 'lot' ? 'lot=' + st.lot.id : 'map=' + st.map.id;
-        const name = st.src === 'lot' ? st.lot.name : st.map.title;
+        const want = 'lot=' + st.lot.id;
+        const name = st.lot.name;
         $('hmPlaceName').textContent = name;
         requestAnimationFrame(fit);
         if (st.loadedFor === want && D) { veil(false); return; }
@@ -915,7 +832,7 @@
             if (err.data && err.data.noPlace) $('hmVeilSub').textContent += ' Tap Change, then Set the pin.';
             return;
         }
-        if ((st.src === 'lot' ? 'lot=' + st.lot?.id : 'map=' + st.map?.id) !== want) return;   // changed meanwhile
+        if ('lot=' + st.lot?.id !== want) return;   // changed meanwhile
         D = r.data;
         st.loadedFor = want;
         Y = null; yearFor = null; yearPick = null; clearTimeout(yearT);
@@ -1166,8 +1083,8 @@
     }
     let badgeMark = null;
     function drawPlace() {
-        [...lotMarks, ...shapeMarks].forEach((m) => m.setMap(null));
-        lotMarks = []; shapeMarks = [];
+        lotMarks.forEach((m) => m.setMap(null));
+        lotMarks = [];
         if (badgeMark) { badgeMark.setMap(null); badgeMark = null; }
         const P = D.place;
         const ring = (P.ring || []).map(([lat, lng]) => ({ lat, lng }));
@@ -1181,17 +1098,6 @@
             lotMarks.push(new (G().Marker)({ map, position: P.pin, icon: { url: B.pin, scaledSize: new (G().Size)(26, 33), anchor: new (G().Point)(13, 33) }, clickable: false, zIndex: 950 }));
             lift = 33;
         }
-        (P.shapes || []).forEach((s) => {
-            const path = s.points.map(([lat, lng]) => ({ lat, lng }));
-            if (s.type === 'closed') {
-                shapeMarks.push(new (G().Polygon)({ map, paths: path, strokeColor: '#000', strokeOpacity: .3, strokeWeight: 5, fillOpacity: 0, clickable: false, zIndex: 900 }));
-                shapeMarks.push(new (G().Polygon)({ map, paths: path, strokeColor: s.color, strokeOpacity: 1, strokeWeight: 2.5, fillColor: s.color, fillOpacity: .08, clickable: false, zIndex: 901 }));
-            } else if (s.type === 'line') {
-                shapeMarks.push(new (G().Polyline)({ map, path, strokeColor: s.color, strokeOpacity: .95, strokeWeight: 3, clickable: false, zIndex: 901 }));
-            } else {
-                shapeMarks.push(new (G().Marker)({ map, position: path[0], icon: { url: B.pin, scaledSize: new (G().Size)(22, 28), anchor: new (G().Point)(11, 28) }, clickable: false, title: s.label || '', zIndex: 940 }));
-            }
-        });
         badgeMark = new (G().Marker)({ map, position: { lat: P.lat, lng: P.lng }, icon: badge(null, lift), clickable: false, zIndex: 1000, title: P.name });
         badgeMark.__lift = lift;
     }
@@ -1199,9 +1105,7 @@
     function fitPlace() {
         const P = D.place, g = G();
         const ring = (P.ring || []).map(([lat, lng]) => ({ lat, lng }));
-        if (P.bounds) {
-            map.fitBounds(new g.LatLngBounds({ lat: P.bounds[0], lng: P.bounds[1] }, { lat: P.bounds[2], lng: P.bounds[3] }), { top: 70, bottom: 200, left: 40, right: 60 });
-        } else if (ring.length >= 3) {
+        if (ring.length >= 3) {
             const b = new g.LatLngBounds();
             ring.forEach((p) => b.extend(p));
             map.fitBounds(b, { top: 80, bottom: 210, left: 40, right: 60 });
@@ -1470,7 +1374,7 @@
     /* ---- the months: twenty years of the place's weather, and the work it suits ---- */
     let Y = null, yearFor = null, yearTry = 0, yearT = 0, yearView = 'months', yearPick = null;
     const MONS = MON;
-    const wantNow = () => (st.src === 'lot' ? 'lot=' + st.lot?.id : 'map=' + st.map?.id);
+    const wantNow = () => 'lot=' + st.lot?.id;
     async function openMonths() {
         const want = wantNow();
         clearTimeout(yearT);
@@ -1651,14 +1555,7 @@
     /* ================= boot ================= */
     // After the app's own script (window.api, the sheets), which loads deferred: DOMContentLoaded waits for it.
     const boot = () => {
-        // The lot or map to start on: from the address, else the last one used here. Shown picked; only Next moves on.
-        const r0 = recall();
-        if (B.map || (!B.lot && r0 && r0.src === 'map')) {
-            setSrc('map');
-            const want = Number(B.map || r0.id);
-            const wait = setInterval(() => { if (st.maps) { clearInterval(wait); const m = st.maps.find((x) => x.id === want); if (m) { st.map = m; paintMapList(); paintNext(); } } }, 120);
-            setTimeout(() => clearInterval(wait), 15000);
-        }
+        // The lot to start on: from the address, else the last one used here. Shown picked; only Next moves on.
         mountLots();
         paintNext();
     };

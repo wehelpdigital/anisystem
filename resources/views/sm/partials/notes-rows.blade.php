@@ -86,6 +86,9 @@
             'id' => $n->id,
             'title' => $n->title,
             'body' => $n->body,
+            // The day the note is about and its lot (2026-11-18); a note from before keeps the day it was written.
+            'noteDate' => ($n->noteDate ?? $n->created_at)?->format('Y-m-d'),
+            'lotId' => $n->lotId ? (int) $n->lotId : null,
             'imagePath' => $n->imagePath,
             'imageUrl' => $n->imagePath ? \App\Support\MediaStore::url($n->imagePath) : null,
             'media' => $editorMedia ?? [],
@@ -106,9 +109,19 @@
                     @endif
                     {{-- Where this note lives, the way the Global Notes shelf
                          says it — here the scope is just this one season. --}}
+                    @php
+                        $noteDay = $n->noteDate ?? $n->created_at;
+                        $noteLotName = $n->lotId ? (collect($noteLots ?? [])->firstWhere('id', (int) $n->lotId)['name'] ?? null) : null;
+                    @endphp
                     <p class="note-meta js-time">
                         <span class="note-kindtag is-notebook">Notebook</span>
-                        <span class="note-when">{{ $n->updated_at?->diffForHumans() }}</span>
+                        @if ($noteDay)
+                            <span class="note-chip"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg><span>{{ $noteDay->format('D, M j') }}{{ $noteDay->year === now()->year ? '' : ', ' . $noteDay->year }}</span></span>
+                        @endif
+                        @if ($noteLotName)
+                            <span class="note-chip"><svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-6.2 7-11.5A7 7 0 005 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>{{ $noteLotName }}</span></span>
+                        @endif
+                        <span class="note-when">edited {{ $n->updated_at?->diffForHumans() }}</span>
                     </p>
                 </div>
             </div>

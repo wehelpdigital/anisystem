@@ -63,6 +63,16 @@
         html.dark .note-kindtag.is-notebook { background: rgb(21 128 61 / .2); color: #86efac; }
         html.dark .note-kindtag.is-day { background: rgb(180 83 9 / .2); color: #eec155; }
         .note-when { font-size: .72rem; color: var(--color-gray-400); }
+        /* The note's day and lot: two tags in the sheet, two chips on the card (2026-11-18). */
+        .note-tagrow { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .35rem; }
+        .note-lottag { max-width: 100%; }
+        .note-lottag .dt-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 14rem; }
+        .note-lottag .note-lotchev { width: .8rem; height: .8rem; opacity: .7; }
+        .note-chip { display: inline-flex; align-items: center; gap: .25rem; padding: .08rem .45rem; border-radius: 999px; font-size: .68rem; font-weight: 700;
+            color: #3d6823; background: #f0f7e8; border: 1px solid #d9eac6; max-width: 12rem; }
+        .note-chip svg { width: .72rem; height: .72rem; flex: none; }
+        .note-chip span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        html.dark .note-chip { color: #bfe19a; background: rgb(61 104 35 / .22); border-color: #3f5626; }
         .note-lives { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem;
             border-top: 1px dashed var(--color-gray-200); padding-top: .6rem; }
         .note-lives-act { display: inline-flex; align-items: center; gap: .3rem; padding: .3rem .65rem;
@@ -221,6 +231,22 @@
             <label class="form-label" for="noteTitle">Title <span class="text-red-500">*</span></label>
             <input type="text" id="noteTitle" class="form-input" maxlength="191" placeholder="e.g. Pest check, west corner">
         </div>
+        {{-- The day the note is about and the lot it pertains to, always there (2026-11-18, the owner: "always have a
+             taglike button for the date which defaults to the current date, and a taglike button to select which lot
+             is it applied or it pertains to"). The date is today until changed; the lot is the season's only lot,
+             else the whole season, until one is picked. --}}
+        <div class="mb-4">
+            <span class="form-label">Date and lot</span>
+            <div class="note-tagrow">
+                @include('partials.date-tag', ['id' => 'noteDate', 'value' => now('Asia/Manila')->toDateString(), 'empty' => 'Pick the date'])
+                <button type="button" class="date-tag note-lottag" id="noteLotBtn" aria-haspopup="dialog" aria-controls="noteLotSheet">
+                    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-6.2 7-11.5A7 7 0 005 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+                    <span class="dt-text" id="noteLotNow">All lots</span>
+                    <svg class="note-lotchev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <input type="hidden" id="noteLot" value="">
+            </div>
+        </div>
         <div class="mb-4">
             <div class="flex items-center justify-between gap-2">
                 <label class="form-label mb-0">Note</label>
@@ -290,6 +316,19 @@
     <div class="sheet-footer">
         <button type="button" class="btn btn-ghost" data-sheet-close>Cancel</button>
         <button type="button" class="btn btn-primary" id="noteSaveBtn">Save note</button>
+    </div>
+</div>
+{{-- Which lot the note is about: the season's lots, or the whole season. --}}
+@include('partials.tag-sheet-css')
+<div class="sheet hidden" id="noteLotSheet" style="--sheet-width:28rem">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header">
+        <h3 class="sheet-title">Which lot is it about?</h3>
+        <button type="button" data-sheet-close class="btn-ghost p-2 rounded-full" aria-label="Close">✕</button>
+    </div>
+    <div class="sheet-body">
+        <div class="dt-rows" id="noteLotRows" role="listbox" aria-label="Lots"></div>
+        <p class="form-hint mt-3" id="noteLotNone" hidden>This season has no lots yet. Add them in the Lots module and they show here.</p>
     </div>
 </div>
 {{-- When opened standalone (not as a module inside the activities shell, which
@@ -406,6 +445,7 @@ const __init = () => {
             'fromMap' => $mapNoteIds->has($n->id),
             'fromDraw' => $fromBoardIds->has($n->id),
             'id' => $n->id, 'title' => $n->title, 'body' => $n->body,
+            'noteDate' => $n->noteDate?->format('Y-m-d') ?? $n->created_at?->format('Y-m-d'), 'lotId' => $n->lotId ? (int) $n->lotId : null,
             'imagePath' => $n->imagePath,
             'imageUrl' => $n->imagePath ? \App\Support\MediaStore::url($n->imagePath) : null,
             'media' => $mediaUrls($n->media),
@@ -420,6 +460,47 @@ const __init = () => {
     const emptyEl = document.getElementById('notesEmpty');
     const fld = (id) => document.getElementById(id);
     let quill = null;
+
+    /* ---- the note's day and lot (2026-11-18): today and the season's only lot, else the whole season ---- */
+    const NOTE_LOTS = @json($noteLots ?? []);
+    const LOT_OF = Object.fromEntries(NOTE_LOTS.map((l) => [String(l.id), l]));
+    const TODAY = @json(now('Asia/Manila')->toDateString());
+    const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const dayWords = (v) => {
+        const [y, m, d] = String(v || '').split('-').map(Number);
+        if (!y || !m || !d) return '';
+        const dt = new Date(y, m - 1, d);
+        return DOW[dt.getDay()] + ', ' + MON[m - 1] + ' ' + d + (y === new Date().getFullYear() ? '' : ', ' + y);
+    };
+    const defaultLot = () => (NOTE_LOTS.length === 1 ? NOTE_LOTS[0].id : null);
+    function setLot(id) {
+        const l = id ? LOT_OF[String(id)] : null;
+        fld('noteLot').value = l ? String(l.id) : '';
+        fld('noteLotNow').textContent = l ? l.name : 'All lots';
+    }
+    function paintLotRows() {
+        const on = fld('noteLot').value;
+        const tick = '<svg class="dt-row-tick" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+        const row = (id, e, name, sub) => '<button type="button" class="dt-row' + (String(id) === on ? ' is-on' : '') + '" role="option" aria-selected="' + (String(id) === on) + '" data-lot="' + escapeHtml(String(id)) + '">'
+            + '<span class="dt-row-e">' + e + '</span><span class="dt-row-body"><b>' + escapeHtml(name) + '</b>' + (sub ? '<i>' + escapeHtml(sub) + '</i>' : '') + '</span>' + tick + '</button>';
+        fld('noteLotRows').innerHTML = row('', '🗺️', 'All lots', 'The whole season')
+            + NOTE_LOTS.map((l) => row(l.id, l.icon || '🌱', l.name, [l.crop, l.size].filter(Boolean).join(' · '))).join('');
+        fld('noteLotNone').hidden = NOTE_LOTS.length > 0;
+    }
+    fld('noteLotBtn').addEventListener('click', () => { paintLotRows(); openSheet('noteLotSheet'); });
+    fld('noteLotRows').addEventListener('click', (e) => {
+        const b = e.target.closest('[data-lot]');
+        if (!b) return;
+        setLot(b.dataset.lot ? Number(b.dataset.lot) : null);
+        fld('noteLotRows').querySelectorAll('.dt-row').forEach((r) => { const on = r === b; r.classList.toggle('is-on', on); r.setAttribute('aria-selected', String(on)); });
+        setTimeout(() => closeSheet('noteLotSheet'), 150);
+    });
+    // The card's day and lot, the same way the server draws them.
+    const PIN_SVG = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-6.2 7-11.5A7 7 0 005 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>';
+    const CAL_SVG = '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>';
+    const chipsOf = (n) => (n.noteDate ? '<span class="note-chip">' + CAL_SVG + '<span>' + escapeHtml(dayWords(n.noteDate)) + '</span></span>' : '')
+        + (n.lotId && LOT_OF[String(n.lotId)] ? '<span class="note-chip">' + PIN_SVG + '<span>' + escapeHtml(LOT_OF[String(n.lotId)].name) + '</span></span>' : '');
 
     /* ---- Quill, lazy-loaded from CDN (open-source, no paid tier) ---- */
     function loadQuill() {
@@ -459,6 +540,9 @@ const __init = () => {
         else window.smTags?.clear(fld('noteTagsMount'));
         fld('noteSheetTitle').textContent = note ? 'Edit note' : 'New note';
         fld('noteTitle').value = note ? note.title : '';
+        fld('noteDate').value = note && note.noteDate ? note.noteDate : TODAY;
+        setLot(note ? note.lotId : defaultLot());
+        window.smDateTags?.();
         fld('notePhoto').value = '';
         fld('noteUploads').innerHTML = '';
         // Seed the gallery: existing media, plus any legacy single photo.
@@ -868,7 +952,7 @@ const __init = () => {
                         <h3 class="font-bold text-gray-900 leading-snug js-title">${escapeHtml(n.title)}</h3>
                         ${n.fromMap ? '<span class="badge badge-green note-origin">Team map</span>' : ''}
                         ${n.fromDraw ? '<span class="badge badge-blue note-origin">Team drawing</span>' : ''}
-                        <p class="note-meta js-time"><span class="note-kindtag is-notebook">Notebook</span><span class="note-when">just now</span></p>
+                        <p class="note-meta js-time"><span class="note-kindtag is-notebook">Notebook</span>${chipsOf(n)}<span class="note-when">edited just now</span></p>
                     </div>
                 </div>
                 <div class="flex gap-1 shrink-0 note-acts">
@@ -908,6 +992,8 @@ const __init = () => {
             // would strip a named clip on its first edit.
             media: media.map((m) => ({ type: m.type, path: m.path, poster: m.poster || null, title: m.title || null, description: m.description || null, strokes: m.strokes || null })),
             tags: window.smTags ? smTags.value(fld('noteTagsMount')) : [],
+            noteDate: fld('noteDate').value || TODAY,
+            lotId: Number(fld('noteLot').value) || null,
         };
 
         const btn = fld('noteSaveBtn'); btn.disabled = true;
@@ -936,6 +1022,8 @@ const __init = () => {
                 id: Number(id),
                 title,
                 body: payload.body,
+                noteDate: payload.noteDate,
+                lotId: payload.lotId,
                 imagePath: null,
                 imageUrl: null,
                 media: media.map((m) => ({ ...m })),
@@ -950,7 +1038,9 @@ const __init = () => {
                 toast('Note saved on this phone. It shows here once you are back online.');
                 return;
             }
-            const n = { id: res.data.id, title: res.data.title, body: res.data.body, imagePath: res.data.imagePath, imageUrl: res.data.imageUrl, media: res.data.media || [] };
+            const n = { id: res.data.id, title: res.data.title, body: res.data.body, imagePath: res.data.imagePath, imageUrl: res.data.imageUrl, media: res.data.media || [],
+                // Before the columns are in (the deploy's migration), the card still says what was picked.
+                noteDate: res.data.noteDate || payload.noteDate, lotId: res.data.lotId !== undefined ? res.data.lotId : payload.lotId };
             NOTES[n.id] = n;
             const fresh = renderCard(n);
             const existing = list.querySelector('.note-card[data-id="' + n.id + '"]');
