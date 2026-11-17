@@ -129,8 +129,10 @@ class SitePageController extends Controller
 
     /**
      * A pest, disease or weed of the field catalogue with no profile page
-     * written yet (2026-10-08): its short fact sheet, from its row. Kept out
-     * of search engines (thin beside a profile) until a page replaces it.
+     * written yet (2026-10-08): its short fact sheet, from its row. Indexed
+     * and in the sitemap since 2026-11-18 (the owner: an audit found 74
+     * disease sheets "blocked by X-Robots-Tag"; 172 sheets in all were kept
+     * out). A written profile page replaces a sheet at the same address.
      */
     private function factSheet(Request $request, string $section, string $slug)
     {
@@ -143,7 +145,6 @@ class SitePageController extends Controller
         if (! $e) {
             return null;
         }
-        $request->attributes->set('robots', 'noindex, follow');
         // Others of its first crop, the profiles and sheets alike.
         $first = $e['crops'][0] ?? null;
         $all = $section === 'weeds' ? $F::weeds() : $F::problems($section);
@@ -196,12 +197,27 @@ class SitePageController extends Controller
             }
         }
         $urls = array_map(fn ($p) => ['loc' => url($p), 'lastmod' => null], $static);
+        $written = [];
         try {
             foreach (AsSitePage::live()->orderBy('section')->orderBy('sortOrder')->get(['section', 'slug', 'updated_at']) as $p) {
                 $urls[] = ['loc' => SitePages::url($p->section, $p->slug), 'lastmod' => $p->updated_at?->toAtomString()];
+                $written[$p->section . '/' . $p->slug] = true;
             }
         } catch (\Throwable $e) {
             // no pages table yet: the site's own pages still go out
+        }
+        // The field catalogue's fact sheets (2026-11-18): every pest, disease and weed with no written page yet.
+        try {
+            $F = \App\Support\FieldCatalogue::class;
+            foreach (['pests' => $F::problems('pests'), 'diseases' => $F::problems('diseases'), 'weeds' => $F::weeds()] as $section => $entries) {
+                foreach (array_keys($entries) as $slug) {
+                    if (! isset($written[$section . '/' . $slug]) && ! SitePages::movedTo($section, (string) $slug)) {
+                        $urls[] = ['loc' => SitePages::url($section, (string) $slug), 'lastmod' => null];
+                    }
+                }
+            }
+        } catch (\Throwable $e) {
+            // the catalogue unreadable: the written pages still go out
         }
         try {
             foreach (\App\Models\AsLegalPage::active()->published()->orderBy('sortOrder')->get(['slug', 'updated_at']) as $p) {

@@ -42,12 +42,14 @@
         @if ($plus && $member)
             <a href="{{ $planItem ? route('checkout', ['item' => $G::PLUS_PLAN . ':month']) : route('account.subscription') }}" class="btn btn-accent">{{ $tl ? 'Mag-upgrade sa ' . $planName : 'Upgrade to ' . $planName }}</a>
             <a href="{{ route('account.subscription') }}" class="btn btn-outline">{{ $tl ? 'Tingnan ang lahat ng plan' : 'See every plan' }}</a>
+        {{-- nofollow (2026-11-18): every guide's card links its own /signup?read= and /login?read= address, and
+             robots.txt shuts both, so a crawler that followed them logged thousands of "blocked" pages. --}}
         @elseif ($plus)
-            <a href="{{ route('signup') }}?read={{ urlencode($here) }}" class="btn btn-accent">{{ $tl ? 'Magsimula nang libre' : 'Start free' }}</a>
-            <a href="{{ route('login') }}?read={{ urlencode($here) }}" class="btn btn-outline">{{ $tl ? 'May account na ako' : 'I have an account' }}</a>
+            <a href="{{ route('signup') }}?read={{ urlencode($here) }}" rel="nofollow" class="btn btn-accent">{{ $tl ? 'Magsimula nang libre' : 'Start free' }}</a>
+            <a href="{{ route('login') }}?read={{ urlencode($here) }}" rel="nofollow" class="btn btn-outline">{{ $tl ? 'May account na ako' : 'I have an account' }}</a>
         @else
-            <a href="{{ route('signup') }}?read={{ urlencode($here) }}" class="btn btn-accent">{{ $tl ? 'Mag-register nang libre' : 'Register for free' }}</a>
-            <a href="{{ route('login') }}?read={{ urlencode($here) }}" class="btn btn-outline">{{ $tl ? 'May account na ako' : 'I have an account' }}</a>
+            <a href="{{ route('signup') }}?read={{ urlencode($here) }}" rel="nofollow" class="btn btn-accent">{{ $tl ? 'Mag-register nang libre' : 'Register for free' }}</a>
+            <a href="{{ route('login') }}?read={{ urlencode($here) }}" rel="nofollow" class="btn btn-outline">{{ $tl ? 'May account na ako' : 'I have an account' }}</a>
         @endif
     </div>
     @if ($plus && $member)
