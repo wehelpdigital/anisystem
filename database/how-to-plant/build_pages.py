@@ -291,6 +291,13 @@ def page_of(g, order, heroes, hubs, used):
     else:
         title = "%s: %s the Traditional Way, Step by Step" % (ftitle, cap_title(local))
     meta_title = next(t for t in ["%s: The Traditional Way, Step by Step" % ftitle, "%s: The Traditional Way" % ftitle, "%s: Step by Step" % ftitle, ftitle] if len(t) <= 60)
+    # The address is English (/how-to-plant/abaca) and a Tagalog focus may share no word with it ("Paano Magtanim
+    # ng Abaka"): a 2026-11-18 URL audit failed 64 pages for it. The English name joins the SEO title then.
+    slug_words = {w for w in g["slug"].split("-") if len(w) > 2}
+    if tagalog and not slug_words & set(re.findall(r"[a-z]+", meta_title.lower())):
+        eng = cap_title(g["slug"].replace("-", " "))   # the address's own words: "Glutinous Corn", not "Corn, White Glutinous"
+        meta_title = next(t for t in ["%s: How to Plant %s, Step by Step" % (ftitle, eng), "%s: How to Plant %s" % (ftitle, eng),
+                                      "%s: %s, Step by Step" % (ftitle, eng), "%s: %s" % (ftitle, eng), meta_title] if len(t) <= 60)
     fcap = focus[0].upper() + focus[1:]
     descs = [
         "%s? See how traditional farmers plant %s step by step, with the days, the spacing and what to change for a higher yield." % (fcap, plant_word),

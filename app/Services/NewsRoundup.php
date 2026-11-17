@@ -694,8 +694,30 @@ class NewsRoundup
         $page['title'] = Str::limit(Str::ucfirst($clean((string) $page['title'])) . ': Farm News for ' . now('Asia/Manila')->format('F j, Y'), 180, '');
         $tail = ': Farm News, ' . $day;
         $page['metaTitle'] = PageWriter::cut(Str::ucfirst($clean((string) $page['metaTitle'])), 60 - mb_strlen($tail)) . $tail;
+        // The address follows the new name (2026-11-18): it kept the dropped focus ("palay-rice-2026-11-12" for
+        // "Water Alerts and Visayas Farm: Farm News, November 12"), which a URL audit failed for sharing no word.
+        $page['slug'] = self::daySlug($page['metaTitle'], now('Asia/Manila')->format('Y-m-d'));
 
         return $page;
+    }
+
+    /**
+     * A roundup named for its day, as an address: the news words of its SEO title, then "farm news" and the date.
+     * "El Nino Drought and P884M Cane Aid: Farm News, November 5" is el-nino-drought-p884m-cane-aid-farm-news-2026-11-05.
+     */
+    public static function daySlug(string $metaTitle, string $date): string
+    {
+        $news = preg_replace('/:\s*Farm News.*$/iu', '', $metaTitle);
+        $words = array_values(array_filter(explode('-', Str::slug($news)), fn ($w) => $w !== '' && ! in_array($w, ['and', 'the', 'of', 'plus', 'farm', 'news'], true)));
+        $base = '';
+        foreach ($words as $w) {
+            if (strlen($base . '-' . $w) > 44) {
+                break;
+            }
+            $base = ltrim($base . '-' . $w, '-');
+        }
+
+        return ($base !== '' ? $base . '-' : '') . 'farm-news-' . $date;
     }
 
     /** "September 28 to October 7, 2026", "October 1 to 7, 2026". */

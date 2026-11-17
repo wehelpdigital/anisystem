@@ -10,6 +10,8 @@
         'cookies' => 'Cookie Policy: How anee.io Uses Cookies',
         'about' => 'About anee.io: The Farm App Built by Farmers',
         'pictures' => 'Pictures on anee.io: Credits and How to Reuse Them',
+        // Its address is /legal/eula: the word the address has leads the title (2026-11-18 URL audit).
+        'eula' => 'EULA: End User License Agreement for the anee.io Farm App',
     ][$page->slug] ?? (mb_strlen($page->title) < 30 ? $page->title . ' for the anee.io Farm App' : $page->title);
 @endphp
 @section('title', $legalSeo)

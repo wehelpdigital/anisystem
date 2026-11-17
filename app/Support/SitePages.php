@@ -157,7 +157,8 @@ class SitePages
             'label' => 'Latest in Agriculture',
             'crumb' => 'Latest in Agriculture',
             'hubTitle' => 'Latest in Agriculture',
-            'metaTitle' => 'Latest in Agriculture: Philippine Farm News and Guides',
+            // "Blog" in the title too: the address is /blog (2026-11-18 URL audit).
+            'metaTitle' => 'Latest in Agriculture Blog: Philippine Farm News and Guides',
             'metaDescription' => 'Philippine farm news every few days, with what each story means for your farm, plus fertilizer guides, palay prices and farm words in Tagalog.',
             'intro' => 'Philippine farm news every few days, with what each story means for your farm and a link to the full report. Plus our guides to fertilizer, pesticides, palay prices and farm words in Tagalog.',
             'kicker' => 'Latest in Agriculture',
@@ -306,6 +307,28 @@ class SitePages
         'blog/palaycheck-key-checks' => 'blog/increase-rice-yield-per-hectare',
         // VC 5 is PSB Cv 10, one cassava held twice (2026-10-20).
         'crop-varieties/cassava-vc-5' => 'crop-varieties/cassava-psb-cv-10',
+        // Farm news roundups renamed for their news (2026-11-18 URL audit): their old addresses chased a price
+        // search (/blog/palay-price-philippines owns it) or shared no word with the title. Moved by migration 2026_11_18_120000.
+        'blog/el-nino-visayas-fuel-palay-price-today-2026-10-11' => 'blog/el-nino-hits-visayas-farms-farm-news-2026-10-11',
+        'blog/palay-rice-2026-10-13' => 'blog/fuel-rollback-cattle-imports-farm-news-2026-10-13',
+        'blog/palay-rice-2026-10-14' => 'blog/el-nino-fuel-aid-solar-pumps-farm-news-2026-10-14',
+        'blog/rice-palay-price-philippines-2026-10-18' => 'blog/typhoon-champi-fuel-pressures-farm-news-2026-10-18',
+        'blog/palay-price-today-2026-10-19' => 'blog/typhoon-champi-super-el-nino-farm-news-2026-10-19',
+        'blog/rice-palay-price-philippines-2026-10-21' => 'blog/el-nino-damage-livestock-imports-farm-news-2026-10-21',
+        'blog/rice-palay-price-philippines-2026-10-22' => 'blog/super-typhoon-rosal-el-nino-farm-news-2026-10-22',
+        'blog/palay-price-today-2026-10-23' => 'blog/buffer-stocks-cyclones-farm-news-2026-10-23',
+        'blog/rice-palay-price-philippines-2026-10-24' => 'blog/diesel-hike-typhoon-rosal-farm-news-2026-10-24',
+        'blog/rice-palay-price-philippines-2026-10-25' => 'blog/el-nino-pork-import-tariffs-farm-news-2026-10-25',
+        'blog/rice-palay-price-philippines-2026-10-26' => 'blog/el-nino-losses-southern-rains-farm-news-2026-10-26',
+        'blog/palay-price-today-2026-10-27' => 'blog/diesel-weak-peso-el-nino-farm-news-2026-10-27',
+        'blog/fertilizer-price-philippines-2026-10-30' => 'blog/fertilizer-imports-el-nino-farm-news-2026-10-30',
+        'blog/rice-palay-price-philippines-2026-10-31' => 'blog/calamity-in-109-areas-fuel-costs-farm-news-2026-10-31',
+        'blog/rice-palay-price-philippines-2026-11-01' => 'blog/weak-peso-input-costs-farm-news-2026-11-01',
+        'blog/rice-palay-price-philippines-2026-11-02' => 'blog/one-ton-bags-typhoon-watch-farm-news-2026-11-02',
+        'blog/fertilizer-price-philippines-2026-11-03' => 'blog/el-nino-calamity-fertilizer-costs-farm-news-2026-11-03',
+        'blog/rice-palay-price-philippines-2026-11-04' => 'blog/imports-storm-in-fa-watch-farm-news-2026-11-04',
+        'blog/rice-palay-price-philippines-2026-11-05' => 'blog/el-nino-drought-p884m-cane-aid-farm-news-2026-11-05',
+        'blog/palay-rice-2026-11-12' => 'blog/water-alerts-visayas-farm-news-2026-11-12',
     ];
 
     /** Where a page taken off the site sends its reader now, or null. */
