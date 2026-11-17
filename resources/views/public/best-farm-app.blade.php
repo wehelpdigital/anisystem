@@ -289,13 +289,14 @@
                 <p class="hp-p">Most farm apps are made for big farms abroad. These are the eight things that matter on a farm here, and how anee.io does each one.</p>
             </div>
             <ol class="bf-must">
-                @foreach ($must as $i => [$h, $why, $how, $link, $icon])
+                {{-- $inApp, never $how: the page's own $how (the How It Works link) is used again below. --}}
+                @foreach ($must as $i => [$h, $why, $inApp, $link, $icon])
                     <li class="bf-mcard reveal" style="--reveal-delay: {{ ($i % 4) * 0.06 }}s">
                         <span class="bf-mnum">{{ $i + 1 }}</span>
                         <i class="bf-mico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $icon }}"/></svg></i>
                         <h3>{{ $h }}</h3>
                         <p class="bf-why">{{ $why }}</p>
-                        <p class="bf-how"><b>{!! $mk['y'] !!}In anee.io</b>{{ $how }}</p>
+                        <p class="bf-how"><b>{!! $mk['y'] !!}In anee.io</b>{{ $inApp }}</p>
                         <a href="{{ $link }}" class="bf-more">See how {!! $arrow !!}</a>
                     </li>
                 @endforeach

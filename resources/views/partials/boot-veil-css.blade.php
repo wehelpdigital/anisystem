@@ -25,6 +25,11 @@
     html.booting body > *:not(#bootVeil) { visibility: hidden;
         animation: bootReveal 0s linear 8s forwards; }
     @keyframes bootReveal { to { visibility: visible; } }
+    /* The first screen shown before the rest has arrived (2026-11-18 speed audit; partials.boot-veil, window.__bootEarly):
+       a long page puts a marker after its first screen, and what follows it stays hidden until the whole document is
+       parsed, with the same eight second give up. visibility, so nothing moves when it shows. */
+    html.boot-tail [data-boot-rest] ~ *, html.boot-tail body > main ~ * { visibility: hidden;
+        animation: bootReveal 0s linear 8s forwards; }
     .boot-veil { position: fixed; top: 0; right: 0; bottom: 0; left: 0;
         z-index: 400; display: flex; align-items: center; justify-content: center;
         background: #f1f3f5;

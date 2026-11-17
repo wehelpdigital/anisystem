@@ -32,7 +32,16 @@
             setTimeout(() => veil.remove(), 400);
         };
         @if ($fast)
-        const parsed = () => requestAnimationFrame(lift);
+        /* THE FIRST SCREEN, SOONER (2026-11-18 speed audit: a phone waited 5.7 s for the home page's hero, the whole
+         * 1.2 MB document had to be parsed before the veil lifted). A page whose first screen has all its styles in
+         * the head calls this right after it, behind a [data-boot-rest] marker: the veil lifts on what is there, and
+         * what follows the marker stays hidden (html.boot-tail) until the document is parsed. Same task, one frame. */
+        window.__bootEarly = () => {
+            if (lifted) return;
+            root.classList.add('boot-tail');
+            lift();
+        };
+        const parsed = () => requestAnimationFrame(() => { lift(); root.classList.remove('boot-tail'); });
         if (document.readyState === 'loading') {
             document.addEventListener('readystatechange', function ready() {
                 if (document.readyState === 'loading') return;

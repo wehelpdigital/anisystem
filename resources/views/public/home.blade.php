@@ -142,6 +142,11 @@
         </a>
     </section>
 
+    {{-- The first screen is whole here (its styles are all in the head): show it now, the rest stays hidden until the
+         document is parsed (partials.boot-veil, 2026-11-18 speed audit: the hero waited for 1.2 MB of page). --}}
+    <i data-boot-rest hidden></i>
+    <script>window.__bootEarly && window.__bootEarly();</script>
+
     {{-- A tool's film on a phone, over the page (the steps' Watch buttons on a phone). --}}
     <div class="hp-fm" data-fm role="dialog" aria-modal="true" aria-labelledby="hpFmName" hidden>
         <div class="hp-fm-veil" data-fm-close></div>
@@ -1830,7 +1835,8 @@
 
     {{-- ================= GUIDES (the Philippine face) ================= --}}
     @if (! empty($guides))
-    @include('public.site.css')
+    {{-- No public.site.css here any more (2026-11-18 speed audit): the guide tiles that wore it became hp-topics, and
+         its 29 KB sat in the head unused, ahead of the first screen. --}}
     <section class="hp-sec hp-guides-bg">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="hp-head reveal">
@@ -2009,7 +2015,9 @@
 
 @push('head')
 {{-- The Collab Room whiteboard's handwriting: only the letters it writes. --}}
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap&text=Lot12Sedbcan%20" rel="stylesheet">
+{{-- Not render blocking (2026-11-18 speed audit): the board is far down the page, the first screen never waits for it. --}}
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap&text=Lot12Sedbcan%20" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap&text=Lot12Sedbcan%20" rel="stylesheet"></noscript>
 <style>
     /* ===================== THE HOMEPAGE ===================== */
     /* ---- hero ---- */
