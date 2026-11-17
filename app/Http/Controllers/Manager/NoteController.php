@@ -378,11 +378,19 @@ class NoteController extends BaseScheduleController
         }
 
         $data = $validator->validated();
-        // The date defaults to today; a lot must be one of this season's, else the note is the whole season's.
+        // Only what was sent is touched, so a save from an older page (or the offline queue) keeps a note's date and
+        // lot; a new note is dated today by the model. A lot must be one of this season's, else the whole season's.
+        $sent = $request->all();
         if (AsScheduleNote::datesReady()) {
-            $data['noteDate'] = $data['noteDate'] ?? now('Asia/Manila')->toDateString();
-            $lot = (int) ($data['lotId'] ?? 0);
-            $data['lotId'] = $lot > 0 && $schedule && \App\Models\AsScheduleLot::where('id', $lot)->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->exists() ? $lot : null;
+            if (empty($data['noteDate'])) {
+                unset($data['noteDate']);
+            }
+            if (array_key_exists('lotId', $sent)) {
+                $lot = (int) ($data['lotId'] ?? 0);
+                $data['lotId'] = $lot > 0 && $schedule && \App\Models\AsScheduleLot::where('id', $lot)->where('croppingScheduleId', $schedule->id)->where('deleteStatus', 1)->exists() ? $lot : null;
+            } else {
+                unset($data['lotId']);
+            }
         } else {
             unset($data['noteDate'], $data['lotId']);
         }
