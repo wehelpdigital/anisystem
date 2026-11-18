@@ -46,7 +46,7 @@
 @endphp
 
 @push('head')
-    <link rel="preload" as="image" fetchpriority="high" imagesizes="(max-width: 639px) 150vw, 100vw" imagesrcset="{{ asset('images/site/photos/hero-planting-800.webp') }} 800w, {{ asset('images/site/photos/hero-planting-1200.webp') }} 1200w, {{ asset('images/site/photos/hero-planting-1600.webp') }} 1600w">
+    <link rel="preload" as="image" fetchpriority="high" imagesizes="(max-width: 639px) 150vw, 100vw" imagesrcset="{{ asset('images/site/photos/hero-planting-800.webp') }}?v=2 800w, {{ asset('images/site/photos/hero-planting-1200.webp') }}?v=2 1200w, {{ asset('images/site/photos/hero-planting-1600.webp') }}?v=2 1600w">
 @endpush
 
 @section('content')
@@ -54,7 +54,7 @@
     {{-- ================= HERO ================= --}}
     <section class="hp-hero" data-hero>
         {{-- The picture Google times a phone by. It covers a tall hero, so a phone shows it far wider than the screen: 150vw. --}}
-        <img src="{{ asset('images/site/photos/hero-planting-1200.webp') }}" srcset="{{ asset('images/site/photos/hero-planting-800.webp') }} 800w, {{ asset('images/site/photos/hero-planting-1200.webp') }} 1200w, {{ asset('images/site/photos/hero-planting-1600.webp') }} 1600w" sizes="(max-width: 639px) 150vw, 100vw"
+        <img src="{{ asset('images/site/photos/hero-planting-1200.webp') }}?v=2" srcset="{{ asset('images/site/photos/hero-planting-800.webp') }}?v=2 800w, {{ asset('images/site/photos/hero-planting-1200.webp') }}?v=2 1200w, {{ asset('images/site/photos/hero-planting-1600.webp') }}?v=2 1600w" sizes="(max-width: 639px) 150vw, 100vw"
              alt="{{ $R::t('farmersOfTitle') }} planting rice, one checking anee.io on his phone"
              class="hp-hero-bg" loading="eager" fetchpriority="high">
         <div class="hp-hero-shade" aria-hidden="true"></div>
@@ -76,12 +76,12 @@
             <figure class="hp-hero-phone animate-fade-up" aria-hidden="true" data-hero-phone data-cues='@json($hpCues)'>
                 <div class="hp-phone is-sm">
                     <div class="hp-phone-scr">
-                        <video class="hp-film" muted loop playsinline preload="none" poster="{{ asset($hpTour . '.webp') . $hpTourV }}" width="420" height="910">
+                        <video class="hp-film" muted loop playsinline preload="none" data-late-poster="{{ asset($hpTour . '.webp') . $hpTourV }}" width="420" height="910">
                             <source src="{{ asset($hpTour . '.mp4') . $hpTourV }}" type="video/mp4">
                         </video>
                     </div>
                 </div>
-                <figcaption><img src="{{ $face }}" alt="" width="40" height="40"><span data-hero-cue>{{ $hpCues[0][1] }}</span></figcaption>
+                <figcaption><img src="{{ $face }}" alt="" width="40" height="40" loading="lazy"><span data-hero-cue>{{ $hpCues[0][1] }}</span></figcaption>
             </figure>
             <div class="hp-hero-copy">
                 <span class="hp-chip animate-fade-up">
@@ -599,7 +599,7 @@
                         @php $first = $filmOf($hpSteps[0]['items'][0]['key']); @endphp
                         <div class="hp-phone">
                             <div class="hp-phone-scr">
-                                <video class="hp-film" data-step-film muted playsinline loop preload="none" poster="{{ $first['poster'] ?? '' }}" aria-label="{{ $hpSteps[0]['items'][0]['name'] }} on a phone">
+                                <video class="hp-film" data-step-film muted playsinline loop preload="none" data-late-poster="{{ $first['poster'] ?? '' }}" aria-label="{{ $hpSteps[0]['items'][0]['name'] }} on a phone">
                                     @if ($first)<source src="{{ $first['src'] }}" type="video/mp4">@endif
                                 </video>
                                 {{-- A tool with no film yet (2026-10-18): its card on the phone's
@@ -847,8 +847,8 @@
                 <div class="hp-ak-orbit reveal" aria-label="What Anee checks: every task you did, your notes, photos and reports, weather data, growth stages, deep farm knowledge and online research">
                     <span class="hp-ak-ring is-1" aria-hidden="true"></span><span class="hp-ak-ring is-2" aria-hidden="true"></span>
                     {{-- Anee thinking, the same clip her wait screen plays in the app. --}}
-                    <span class="hp-ak-core" aria-hidden="true"><video src="{{ asset('videos/anee/thinking.mp4') }}" poster="{{ asset('videos/anee/thinking.webp') }}"
-                        muted playsinline loop preload="metadata" disablepictureinpicture disableremoteplayback tabindex="-1" data-ak-think></video><i>Analyzing</i></span>
+                    <span class="hp-ak-core" aria-hidden="true"><video src="{{ asset('videos/anee/thinking.mp4') }}" data-late-poster="{{ asset('videos/anee/thinking.webp') }}"
+                        muted playsinline loop preload="none" disablepictureinpicture disableremoteplayback tabindex="-1" data-ak-think></video><i>Analyzing</i></span>
                     <span class="hp-ak-spin" aria-hidden="true"><span class="hp-ak-src" style="--n: 0"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg><b>Every task you did</b></span></span><span class="hp-ak-src" style="--n: 1"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg><b>Your notes</b></span></span><span class="hp-ak-src" style="--n: 2"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9zM15 13a3 3 0 11-6 0 3 3 0 016 0z"/></svg><b>Your photos</b></span></span><span class="hp-ak-src" style="--n: 3"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg><b>Your reports</b></span></span><span class="hp-ak-src" style="--n: 4"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z"/></svg><b>Weather data</b></span></span><span class="hp-ak-src" style="--n: 5"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z"/></svg><b>Growth stages</b></span></span><span class="hp-ak-src" style="--n: 6"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><b>Deep farm knowledge</b></span></span><span class="hp-ak-src" style="--n: 7"><span class="hp-ak-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg><b>Online research</b></span></span></span>
                 </div>
 

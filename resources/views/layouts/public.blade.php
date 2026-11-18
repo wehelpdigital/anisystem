@@ -382,7 +382,7 @@
                      flags, so the pill stands in the middle of that gap. --}}
                 <div class="ask-slot hidden lg:flex">
                     <a href="{{ url('/ask-anee') }}" class="ask-pill {{ request()->routeIs('ask.*') ? 'is-on' : '' }}">
-                        <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" aria-hidden="true">
+                        <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" aria-hidden="true" loading="lazy">
                         <span><span class="ask-more">Try and </span>Ask Anee</span>
                     </a>
                 </div>
@@ -439,7 +439,7 @@
              x-transition:leave="pm-out" x-transition:leave-start="pm-to" x-transition:leave-end="pm-from">
             <div class="pm-scroll">
                 <a href="{{ url('/ask-anee') }}" class="pm-ask" style="--i: 0">
-                    <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" aria-hidden="true">
+                    <img src="{{ asset('images/anee/avatar-160.jpg') }}" alt="" aria-hidden="true" loading="lazy">
                     <span class="min-w-0">
                         <b>Try and Ask Anee</b>
                         <small>Ask one farming question for free</small>
