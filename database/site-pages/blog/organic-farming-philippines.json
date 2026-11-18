@@ -1,0 +1,237 @@
+{
+  "section": "blog",
+  "slug": "organic-farming-philippines",
+  "sortOrder": 1370,
+  "lang": "en",
+  "category": "Getting Started",
+  "title": "Organic Farming in the Philippines: What It Is, What It Allows and How to Start",
+  "metaTitle": "Organic Farming in the Philippines: A Practical Guide",
+  "metaDescription": "Organic farming in the Philippines: what it allows, compost and green manure, pest control without synthetic sprays, certification and how to start slowly.",
+  "focusKeyword": "organic farming",
+  "keywords": [
+    "organic farming",
+    "what is organic farming",
+    "organic agriculture",
+    "organic farming in the Philippines"
+  ],
+  "excerpt": "Organic farming grows crops without synthetic fertilizers, synthetic pesticides or genetically modified seed. Instead, it feeds the soil with compost, manure and green manure. It keeps pests down with rotation, natural enemies and approved natural sprays. Here is what it allows, how certification works in the Philippines, and how to start without losing your harvest.",
+  "heroImage": {
+    "src": "/images/site/guides/fertilizer-types-compost.webp",
+    "alt": "Long piles of compost made from crop waste lying in a grassy field, the kind of homemade compost organic farming depends on",
+    "credit": "SuSanA Secretariat, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Organic agriculture is not the same as simply skipping fertilizer. A field left unfed gives a poor crop, organic or not. Real organic farming is a planned system that builds the soil so the crop can feed from it, season after season.\n\nMany Filipino farmers already use parts of it, such as vermicast, fish amino acid and rice straw mulch. Organic farming in the Philippines turns those habits into a full system. And if you want the organic label, it turns them into a certified one."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is organic farming?"
+    },
+    {
+      "type": "text",
+      "text": "Organic farming is a way of growing food with what the farm and nature provide, instead of factory made chemicals. Its main tools are living soil, a mix of crops and natural pest control. The soil comes first, because soil rich in organic matter releases nutrients slowly, holds water and keeps roots healthy.\n\nThe country has a law for it, the Organic Agriculture Act of 2010, amended in 2020. It sets the rules for what may be sold and labeled as organic."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What organic farming allows and does not allow"
+    },
+    {
+      "type": "table",
+      "caption": "Common inputs in organic farming, allowed and not allowed",
+      "rows": [
+        ["Allowed", "Not allowed"],
+        ["Compost, vermicast and well rotted animal manure", "Urea, complete fertilizer and other synthetic fertilizers"],
+        ["Green manure and cover crops", "Synthetic insecticides, fungicides and herbicides"],
+        ["Natural minerals such as agricultural lime and rock phosphate, within the standard's limits", "Genetically modified seed and planting material"],
+        ["Botanical and microbial sprays that the standard lists", "Synthetic plant growth regulators"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Every certifier works from a written standard with a list of allowed inputs. So before you buy anything sold as organic, check that it is on your certifier's list. Our [examples of organic fertilizer](/blog/organic-fertilizer-examples) cover the common ones on Philippine farms."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Feeding the soil: compost and green manure"
+    },
+    {
+      "type": "text",
+      "text": "Organic fertilizer carries far less nutrient per sack than urea or 14 14 14. That means an organic farm needs much more of it, made on the farm where possible. Our comparison of [organic vs inorganic fertilizer](/blog/organic-vs-inorganic-fertilizer) shows how wide that gap is."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Compost.** Pile crop waste, manure and green leaves in layers, keep the pile moist, and turn it every week or two. A Trichoderma fungus activator speeds it up.",
+        "**Vermicast.** Earthworms such as the African night crawler turn farm waste into fine castings, a favorite for vegetables.",
+        "**Green manure.** Grow a legume such as mungbean, Sesbania or sunn hemp, then plow it under at early flowering. In palay, the water fern azolla adds nitrogen to the paddy.",
+        "**Animal manure.** Chicken, hog, goat and cattle manure all work, but compost them first so they do not burn roots or carry weed seeds and germs.",
+        "**Fermented brews.** Fish amino acid and fermented plant juice are popular foliar feeds in natural farming. They carry little nutrient, though, so they add to compost rather than replace it."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "For leafy greens, see the best [organic fertilizer for pechay](/blog/organic-fertilizer-for-pechay)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pest control without synthetic sprays"
+    },
+    {
+      "type": "text",
+      "text": "Organic pest control starts before any pest shows up, because healthy, well spaced plants on balanced soil suffer less. The rest follows the same thinking as [integrated pest management](/pests/integrated-pest-management). Scout often, know the pest, and act only when the damage will cost more than the control."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Rotate crops of different families, so a pest that lives on one crop finds nothing the next season.",
+        "Keep flowers and grassy borders, so the spiders, lady beetles and wasps that eat pests have a home.",
+        "Use yellow sticky traps and fruit fly traps, and bag fruits like ampalaya and mango.",
+        "Release natural enemies where you can get them, such as Trichogramma wasps against corn borer.",
+        "Pick off snails, caterpillars and beetles by hand, and pull out sick plants early.",
+        "Spray only what the standard allows, such as the microbial insecticide Bacillus thuringiensis against caterpillars."
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "A natural spray is still a pesticide",
+      "text": "Buy only pest control products registered with the FPA, check that your certifier allows them, and follow the label. Homemade brews can burn leaves too, so test a few plants first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Organic certification in the Philippines"
+    },
+    {
+      "type": "text",
+      "text": "You may farm organically without a certificate. But to sell your produce as organic, the law requires certification, and there are two routes.\n\nIn third party certification, an accredited certifying body inspects your farm and your records. It suits bigger farms and exporters. Since the 2020 amendment, small farmers may also use a participatory guarantee system, or PGS. Here a local group of farmers, buyers and others checks each member's farm together. It costs less and mostly serves local markets.\n\nEither way, expect a conversion period before your harvest can carry the label. Also keep records of every input, every field and every sale, because the certifier will ask for them. Your certifier sets the exact rules."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The honest tradeoffs"
+    },
+    {
+      "type": "text",
+      "text": "Organic farming is not a sure way to earn more. Yields usually drop in the first seasons after you stop synthetic fertilizer. Some crops come close to their old yields once the soil improves, while others stay lower. How much depends on the crop, the soil and how well you manage nutrients.\n\nPrices can be higher, but only with buyers who pay for organic. Think of a weekend market, a restaurant, a store or regular customers. At the usual trading post, organic produce often fetches the ordinary price. Labor also rises, since compost, hand weeding and scouting all take time.\n\nOn the plus side, input costs can fall and the soil grows richer over the years. Your family and workers also handle no synthetic poisons. So work out your own numbers before you switch a whole farm. Our guide to [farm profitability](/blog/farm-profitability) shows how."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to start organic farming, step by step"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Start with one lot",
+          "text": "Pick a small area, ideally a vegetable plot that sells near home. Keep the rest of the farm on your usual practice while you learn."
+        },
+        {
+          "title": "Build the soil first",
+          "text": "Make compost and add it every season. Get a soil test at the Municipal Agriculture Office so you know what is lacking, and lime acidic soil."
+        },
+        {
+          "title": "Cut synthetic inputs bit by bit",
+          "text": "Each season, replace part of your fertilizer with compost and manure. Then swap synthetic sprays for scouting, traps and allowed products."
+        },
+        {
+          "title": "Find your buyers",
+          "text": "Before the harvest, talk to buyers who want organic produce. Ask what they pay and what proof they need."
+        },
+        {
+          "title": "Keep records from day one",
+          "text": "Write down every input, where it came from and the date you used it. Certifiers ask for these records, and they also show you what works."
+        },
+        {
+          "title": "Decide on certification",
+          "text": "Once the system works and buyers want the label, join a PGS group or call a certifier."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Run an organic season in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "Organic farming lives on records, and anee.io keeps them in one place. Plan the season in the [Protocol Builder](/features/protocol-builder), with compost, green manure and allowed sprays as materials. Then turn it into a cropping calendar for your lot, with each task dated from its day zero.\n\nOn the paid plans, the inventory tracks how much compost and other inputs each activity used. Save photos and notes from every field visit, so you have proof of what you did and when. And when a pest appears, send a photo to Anee, the smart farm technician, who answers in Tagalog or English."
+    },
+    {
+      "type": "cta",
+      "title": "Keep your organic records in one place",
+      "text": "Sign up free, add your lot and date every compost, green manure and scouting task on one calendar.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about organic farming"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is organic farming in simple words?",
+          "a": "It means growing crops without synthetic fertilizers, synthetic pesticides or genetically modified seed. You feed the soil with compost and manure and control pests with natural methods."
+        },
+        {
+          "q": "Is there an organic farming law in the Philippines?",
+          "a": "Yes. The Organic Agriculture Act of 2010, amended in 2020, covers organic agriculture here. It also says who may label produce as organic."
+        },
+        {
+          "q": "Can I sell my vegetables as organic without certification?",
+          "a": "Not under the organic label. The law allows only produce certified by an accredited third party or through a participatory guarantee system to carry it. Without it, sell as ordinary produce and tell buyers how you grow it."
+        },
+        {
+          "q": "Does organic farming give lower yields?",
+          "a": "Often at first, especially in the conversion years. Some crops come close to their old yields once the soil improves, while others stay lower. Good compost, green manure and pest control narrow the gap."
+        },
+        {
+          "q": "How long does it take to go organic?",
+          "a": "Your certifier sets the conversion period, and it usually runs for years, not months. Tree crops usually take longer than vegetables, so keep records from the very start."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides",
+      "items": [
+        {
+          "label": "Examples of organic fertilizer",
+          "url": "/blog/organic-fertilizer-examples"
+        },
+        {
+          "label": "Organic vs inorganic fertilizer",
+          "url": "/blog/organic-vs-inorganic-fertilizer"
+        },
+        {
+          "label": "Organic fertilizer for pechay",
+          "url": "/blog/organic-fertilizer-for-pechay"
+        },
+        {
+          "label": "Integrated pest management",
+          "url": "/pests/integrated-pest-management"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "Protocol Builder in anee.io",
+          "url": "/features/protocol-builder"
+        }
+      ]
+    }
+  ]
+}

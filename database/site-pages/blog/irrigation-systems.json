@@ -1,0 +1,236 @@
+{
+  "section": "blog",
+  "slug": "irrigation-systems",
+  "sortOrder": 1360,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Irrigation Systems for Philippine Farms: Kinds, Costs and Which Crop Needs What",
+  "metaTitle": "Irrigation Systems: Kinds and Costs for Philippine Farms",
+  "metaDescription": "Irrigation systems for Filipino farms compared: canals, shallow wells, ponds, drip and sprinklers, what each costs, and how to time water for each crop.",
+  "focusKeyword": "irrigation systems",
+  "keywords": [
+    "irrigation systems",
+    "what is irrigation system",
+    "kinds of irrigation systems",
+    "drip irrigation system",
+    "drip irrigation systems",
+    "surface irrigation",
+    "water for irrigation"
+  ],
+  "excerpt": "Irrigation systems bring water to your crop when the rain does not. It can be a gravity canal, a pump on a shallow tube well, a farm pond or drip lines under mulch. This guide explains each kind, what it costs, which crops it suits and how to time the water.",
+  "heroImage": {
+    "src": "/images/site/fields-aerial.jpg",
+    "alt": "Aerial view of green fields divided by narrow bunds, with a small waterway and a flooded plot beside it, the kind of farm that irrigation systems feed",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "In many seasons, water decides the harvest more than fertilizer does. A field you can water also lets you plant on time instead of waiting for the rains.\n\nStill, no single system fits every farm. The right one depends on your water, your crop, your slope and your cash."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is an irrigation system?"
+    },
+    {
+      "type": "text",
+      "text": "An irrigation system is the set of parts that takes water from a source to your crop's roots. It has three parts. The source can be a river, creek, spring, well, pond or tank. The water then moves by gravity or by an engine or solar pump. Finally, it spreads on the field by flooding, furrows, sprinklers or drippers.\n\nWhen people talk about the kinds of irrigation systems, they usually mean that last part. So this guide starts there."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Kinds of irrigation systems on Philippine farms"
+    },
+    {
+      "type": "table",
+      "caption": "The main kinds of irrigation systems and where they fit",
+      "rows": [
+        ["System", "How water reaches the crop", "Best for", "Watch out for"],
+        ["Basin or flood", "Water fills a field closed in by bunds", "Lowland palay", "Uses the most water, needs level fields and sound bunds"],
+        ["Furrow", "Water runs down furrows between the rows", "Corn, sugarcane, onion, eggplant, tomato", "Uneven wetting on long or sloping rows"],
+        ["Sprinkler", "Water sprays over the crop like rain", "Leafy greens, seedbeds, nurseries", "Wind, wet leaves that invite disease, needs pressure"],
+        ["Drip", "Tubes drip water at the base of each plant", "Vegetables, melons, fruit trees", "Higher start up cost, clogged emitters without a filter"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Surface irrigation: basin and furrow"
+    },
+    {
+      "type": "text",
+      "text": "Surface irrigation spreads water over the ground by gravity. It is the oldest kind and the most common here, because it needs no pipes. Palay grows in basins, the bunded paddies you flood. Row crops get furrow irrigation, where water flows down each furrow and soaks sideways into the beds.\n\nThis kind works best on level fields. A well leveled paddy needs less water to cover every corner, and it holds down weeds evenly. On furrows, keep the rows short enough that the far end gets water before the near end floods."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Drip irrigation systems"
+    },
+    {
+      "type": "text",
+      "text": "A drip irrigation system lets water out slowly through small holes or emitters at the base of each plant. Almost none lands between rows, so weeds get less and the leaves stay dry. Many growers pair drip tape with plastic mulch for tomato, ampalaya, bell pepper, melon and watermelon. You can also feed soluble fertilizer through the lines, a practice called fertigation.\n\nMost drip irrigation systems have a pump or raised tank, a filter, a main pipe, and drip tape along each row. The filter matters most. Sand, algae and iron in well water clog emitters, so clean the filter often.\n\nFor a backyard or small plot, a kit fed from a drum on a raised stand runs without a pump. Thin drip tape is cheap but may last only a season or two. Thicker drip lines cost more and last several years."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Sprinklers"
+    },
+    {
+      "type": "text",
+      "text": "Sprinklers suit leafy vegetables, seedbeds and nurseries, where you want gentle water over the whole bed. They need steady pressure from a pump or a high tank. Water early in the morning, so the leaves dry before night and leaf diseases have less chance."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Water sources: canals, wells, pumps and ponds"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Gravity canals.** National and communal irrigation systems divert water from rivers and dams into canals. Farmers on a communal system usually form an irrigators' association that shares the water and the canal work.",
+        "**Shallow tube wells.** A pipe sunk into a shallow water table, with a small gasoline or diesel pump on top. It is the usual way to water dry season palay, onion and vegetables where groundwater sits near the surface.",
+        "**Open source pumps.** A pump lifts water straight from a river, creek or drainage canal beside the field.",
+        "**Farm ponds and small dams.** They catch rain and runoff in the wet season for use in the dry months. Many farmers raise fish in them too.",
+        "**Solar pumps.** Panels run the pump in daylight with no fuel cost. The price at the start is higher, but running costs stay low."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Water for irrigation: palay versus vegetables"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Palay"
+    },
+    {
+      "type": "text",
+      "text": "Lowland palay uses the most water of any common crop. Much of it goes into soaking and puddling the field, and more seeps through the bunds. After that, the crop does not need standing water every day.\n\nFrom about three weeks after transplanting until flowering, you can let the water sink below the surface, then flood again. Our guide to [alternate wetting and drying](/blog/alternate-wetting-and-drying) shows how to read an observation well for this. But never let the field dry around flowering. Keep about 5 cm of water through grain filling. Then drain one to two weeks before harvest, depending on your soil."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Vegetables and other upland crops"
+    },
+    {
+      "type": "text",
+      "text": "Vegetables need less water in total but more often, because their roots are shallow. They should never sit in water. Most suffer worst from dry spells at flowering and fruit set, while leafy greens wilt fast in the dry months. For corn, the risky days are at tasseling and silking.\n\nWater in the morning and wet the roots, not the leaves. Let the topsoil dry a little between waterings. A simple test is to squeeze soil from a finger's depth. If it crumbles dry, water. Our guide to [vegetables in the Philippines](/crops/vegetables-philippines) covers each crop's needs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What irrigation systems cost and how to choose"
+    },
+    {
+      "type": "text",
+      "text": "Prices for pumps, pipes and drip kits vary by brand, size and province, so get quotes from several dealers. Still, the pattern is clear. Surface irrigation from a canal costs the least to start. A shallow tube well with an engine pump costs more, and fuel becomes your biggest running cost.\n\nDrip costs the most per hectare at the start. But it saves water, labor and fertilizer, so it pays best on crops that earn a lot per square meter. Before you buy, answer these questions:"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Where does the water come from, and does it last through a dry year? Our [El Niño and La Niña farming tips](/blog/el-nino-la-nina-farming-tips) help you plan for one.",
+        "Is the water clean enough? Wells near the coast can turn salty late in the dry season, and muddy or iron rich water clogs drippers.",
+        "Which crop will you grow, and how much does it earn per hectare?",
+        "Is your field level, gently sloping or steep?",
+        "Who will run and repair the system, and where can you buy spare parts?"
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Ways to save irrigation water"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Level your fields so water covers them evenly with less.",
+        "Repair bunds and plug the rat and crab holes that leak water.",
+        "Use alternate wetting and drying in palay where you control the water.",
+        "Mulch vegetable beds with straw or plastic so less water dries off the soil.",
+        "Water early in the morning or late in the afternoon, when the sun takes less.",
+        "Skip a watering when the forecast says rain is coming."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan irrigation days in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, irrigation is a task on the Activities board, just like plowing or spraying. Put each watering, the AWD start and the final drain on your [cropping calendar](/features/cropping-calendar). Each lot then gets its own dates from its own day zero.\n\nThe [weather forecast](/features/farm-weather-forecast) for each lot shows the rain ahead, so you can skip a pumping the rain will do. On the paid plans, log pump fuel and repairs as expenses. The reports then show what water cost you each season. If a crop wilts and you cannot tell thirst from disease, send a photo to Anee, the smart farm technician."
+    },
+    {
+      "type": "cta",
+      "title": "Put every watering on the calendar",
+      "text": "Sign up free, add your lots and let anee.io date each irrigation from your own planting day.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about irrigation systems"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are the main kinds of irrigation systems?",
+          "a": "Surface irrigation (basin, flood and furrow), sprinkler irrigation and drip irrigation. Surface irrigation is the most common in the Philippines, while drip saves the most water."
+        },
+        {
+          "q": "Which irrigation system is best for vegetables?",
+          "a": "Drip, if you can afford it, because it waters only the root zone, keeps leaves dry and can carry fertilizer. Furrow irrigation also works well for eggplant, tomato and other row crops on level land."
+        },
+        {
+          "q": "Is irrigation free in the Philippines?",
+          "a": "For small farms, yes. The Free Irrigation Service Act frees farmers with 8 hectares or less from fees in national and communal systems. A pump or well on your own farm is still your own cost."
+        },
+        {
+          "q": "How often should I irrigate palay?",
+          "a": "It depends on the soil and the weather. With alternate wetting and drying, irrigate once the water in the observation well drops out of sight. Keep the field flooded around flowering."
+        },
+        {
+          "q": "Can I run drip irrigation without a pump?",
+          "a": "Yes, on a small plot. A drum or tank on a raised stand gives enough pressure for a low pressure drip kit. Bigger fields need a pump."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related water and planning guides",
+      "items": [
+        {
+          "label": "Alternate wetting and drying",
+          "url": "/blog/alternate-wetting-and-drying"
+        },
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "El Niño and La Niña farming tips",
+          "url": "/blog/el-nino-la-nina-farming-tips"
+        },
+        {
+          "label": "Rice land preparation",
+          "url": "/land-preparation/rice-land-preparation"
+        },
+        {
+          "label": "Cropping calendar in anee.io",
+          "url": "/features/cropping-calendar"
+        },
+        {
+          "label": "Farm weather forecast",
+          "url": "/features/farm-weather-forecast"
+        }
+      ]
+    }
+  ]
+}

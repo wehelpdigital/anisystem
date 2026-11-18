@@ -1,0 +1,223 @@
+{
+  "section": "crops",
+  "slug": "high-value-crops-philippines",
+  "sortOrder": 140,
+  "lang": "en",
+  "category": "Cash crops",
+  "title": "High Value Crops in the Philippines: What to Grow, the Risks and How to Choose",
+  "metaTitle": "High Value Crops in the Philippines: How to Choose One",
+  "metaDescription": "High value crops in the Philippines can earn more per hectare than rice or corn. See which vegetables and fruits fit your land, the risks and how to choose.",
+  "focusKeyword": "high value crops",
+  "keywords": [
+    "high value crops",
+    "high value crops in the Philippines",
+    "crop yield",
+    "crops and vegetables",
+    "vegetable crops"
+  ],
+  "excerpt": "High value crops can earn far more per hectare than rice or corn. They include vegetables such as ampalaya, tomato, onion and garlic, fruits such as mango, banana and calamansi, and tree crops like coffee and cacao. But they also cost more to grow and carry more risk. This guide shows what makes a crop high value, which ones fit Philippine farms and how to choose.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-vegetables-philippines.webp",
+    "alt": "Ampalaya vines climbing a bamboo trellis over plastic mulch in San Rafael, Bulacan, one of the high value crops grown on Philippine farms",
+    "credit": "Judgefloro, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "The law draws the line first. The High Value Crops Development Act of 1995 counts as high value any crop besides the traditional four: rice, corn, coconut and sugarcane. It names coffee, cacao, fruits, vegetables, root crops, legumes, spices and cut flowers among them.\n\nIn the field, the meaning is simpler. A high value crop can return much more per square meter than palay, if you grow it well and sell it at the right time."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What makes a crop high value?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**A good price per kilo.** Vegetables, fruits and spices often sell for much more per kilo than palay.",
+        "**A short cycle.** Leafy greens are ready in about a month and many fruiting vegetables in two to three months, so you can grow several crops a year.",
+        "**Many pickings from one planting.** Ampalaya, eggplant, okra and sitaw give a harvest every few days for weeks.",
+        "**Steady demand.** Onion, garlic, tomato and calamansi go into every kitchen, and fruits sell fresh, processed or for export.",
+        "**More money per square meter.** A good crop yield on a small plot can earn what a much larger rice field earns."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "High value crops in the Philippines worth a look"
+    },
+    {
+      "type": "table",
+      "caption": "Examples to consider and what each crop needs",
+      "rows": [
+        ["Crop", "First harvest", "Fits", "Main risk"],
+        ["Ampalaya", "About 2 months from sowing", "Lowland, trellis, dry season", "Fruit fly"],
+        ["Tomato", "About 2 months from transplanting", "Dry season, well drained soil", "Bacterial wilt, low prices at peak season"],
+        ["Eggplant (talong)", "About 2 months from transplanting", "Lowland, most of the year", "Fruit and shoot borer"],
+        ["Onion", "About 3 to 4 months from transplanting", "Irrigated lowland, dry season", "Armyworm, price swings"],
+        ["Garlic", "About 3 to 4 months", "Cool dry season, as in Ilocos and Mindoro", "Competition from imports"],
+        ["Peppers (siling labuyo, bell pepper)", "About 2 to 3 months from transplanting", "Well drained soil, bell pepper best in cool areas", "Thrips, viruses, fruit rot"],
+        ["Mango", "About 3 to 5 years from grafted trees", "Areas with a clear dry season", "Cecid fly, anthracnose, cost of flower induction"],
+        ["Banana (lakatan, saba)", "About 10 to 14 months", "Most lowlands, shelter from wind", "Fusarium wilt, bunchy top, typhoons"],
+        ["Pineapple", "About 18 to 24 months", "Well drained, even acidic soil", "Long wait before the first sale"],
+        ["Coffee and cacao", "About 2 to 3 years", "Upland, partial shade", "Long wait, berry borer, black pod"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "These are typical times. Your own dates depend on the variety, the season and your care. Each crop has its own guide in our How to Plant section, for example [ampalaya](/how-to-plant/bitter-gourd), [tomato](/how-to-plant/tomato), [onion](/how-to-plant/onion) and [calamansi](/how-to-plant/calamansi)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The risks to plan for"
+    },
+    {
+      "type": "text",
+      "text": "Higher returns come with higher stakes. Before you plant, look hard at these four risks."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Price swings"
+    },
+    {
+      "type": "text",
+      "text": "Vegetable prices can rise or crash within weeks. When many farmers plant the same crop after a good price, their harvests flood the market together. Onion is the famous example. In some years farmers could hardly sell at a profit, yet in late 2022 the retail price hit record highs. A [staggered planting schedule](/blog/staggered-planting-schedule) and a buyer lined up before planting both soften the swings."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Pests and diseases"
+    },
+    {
+      "type": "text",
+      "text": "Vegetables and fruits draw more pests than palay, and one pest can take a whole crop. Eggplant faces the [fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), ampalaya the [melon fly](/pests/melon-fly), onion the armyworm and tomato bacterial wilt. So scout every few days and act early. If you spray, use only products registered with the FPA for that crop and follow the label."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Inputs and cash"
+    },
+    {
+      "type": "text",
+      "text": "Hybrid seed, trellis, plastic mulch, fertilizer, sprays and labor cost much more per hectare than rice does. So a failed crop also loses more. Keep cash for a second planting, and do not borrow more than you can repay if prices fall."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Market access"
+    },
+    {
+      "type": "text",
+      "text": "Most vegetable crops spoil within days. If your farm is far from a trading post, or the road floods in the wet season, pick a crop that keeps. Cured onion and garlic, calamansi or dried cacao beans may serve you better than leafy greens."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to choose a high value crop for your land"
+    },
+    {
+      "type": "steps",
+      "items": [
+        {
+          "title": "Start with your water",
+          "text": "Most vegetables grow best in the dry season, but then they need water every few days. Without sure water, plant at the start of the rains or pick hardier crops. Our guide to [irrigation systems](/blog/irrigation-systems) compares the options."
+        },
+        {
+          "title": "Match the crop to your land",
+          "text": "Check your elevation, soil and drainage. Cabbage, carrots and bell pepper like cool highlands, while ampalaya, eggplant and okra thrive in hot lowlands. Low, heavy soil that floods suits few vegetables in the wet season. Our guide to [vegetables in the Philippines](/crops/vegetables-philippines) lists what grows where."
+        },
+        {
+          "title": "Find the buyer first",
+          "text": "Ask traders, market vendors, restaurants or processors what they buy, at what size and quality, and when. A regular buyer is worth more than a high price you saw once."
+        },
+        {
+          "title": "Count the cost",
+          "text": "List every cost per lot, from seed to hauling, and work out your break even price. Our guide to [farm profitability](/blog/farm-profitability) shows the math."
+        },
+        {
+          "title": "Start small and plant in batches",
+          "text": "Grow a few hundred square meters for one season before you plant a hectare. Then plant in two or three batches a few weeks apart, so you do not sell the whole harvest at one price."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Still deciding? Our guide on [what crop to plant this season](/blog/what-crop-to-plant-this-season) walks through the six checks. In anee.io, the [What to Plant Analysis](/features/what-to-plant-analysis) asks about your field, water, budget and market. Then Anee ranks the crops that fit your land, each with a planting and harvest window."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep records of every crop and lot"
+    },
+    {
+      "type": "text",
+      "text": "With high value crops, the line between profit and loss is thin, so records matter even more than with rice. Write down every cost, the harvest from each picking and the price of each sale. After two or three seasons, you will know which crops and vegetables really pay on your farm.\n\nIn anee.io, each crop goes on its own lot, with tasks dated from its own day zero on the [cropping calendar](/features/cropping-calendar). On the paid plans, the reports add up labor, expenses, yield and buyer prices per season. Compare Reports then sets one season against another. Our [farm record keeping](/blog/farm-record-keeping) guide shows what to track."
+    },
+    {
+      "type": "cta",
+      "title": "Find the crop that fits your land",
+      "text": "Let Anee rank the crops for your field, water and market, then plan every task on one calendar.",
+      "label": "See What to Plant",
+      "url": "/features/what-to-plant-analysis"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about high value crops"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What are high value crops?",
+          "a": "Crops other than the traditional rice, corn, coconut and sugarcane that can earn more per hectare. Vegetables, fruits, coffee, cacao, spices and cut flowers are common examples."
+        },
+        {
+          "q": "What is the most profitable high value crop in the Philippines?",
+          "a": "There is no single answer. It depends on your land, water, season, buyers and skill. A crop that pays well near a city market may lose money on a farm far from the road."
+        },
+        {
+          "q": "Which crops suit beginners?",
+          "a": "Short crops you can sell nearby, such as pechay, mustasa, okra, sitaw and eggplant. They teach you pests and selling at low cost before you try onion, garlic or fruit trees. See our [small farm ideas](/blog/small-farm-ideas-philippines)."
+        },
+        {
+          "q": "Can I grow vegetables after rice?",
+          "a": "Yes. Many lowland farmers plant onion, garlic, melon or vegetables in the dry season after the wet season rice. Check that you have water for the whole crop. Our guide to [multiple cropping](/blog/multiple-cropping) shows how to plan it."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related crop guides",
+      "items": [
+        {
+          "label": "Vegetables in the Philippines",
+          "url": "/crops/vegetables-philippines"
+        },
+        {
+          "label": "What crop to plant this season",
+          "url": "/blog/what-crop-to-plant-this-season"
+        },
+        {
+          "label": "What to Plant Analysis",
+          "url": "/features/what-to-plant-analysis"
+        },
+        {
+          "label": "Farm profitability",
+          "url": "/blog/farm-profitability"
+        },
+        {
+          "label": "Small farm ideas",
+          "url": "/blog/small-farm-ideas-philippines"
+        },
+        {
+          "label": "How to plant every crop",
+          "url": "/how-to-plant"
+        }
+      ]
+    }
+  ]
+}

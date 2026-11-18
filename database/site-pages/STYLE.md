@@ -309,7 +309,8 @@ Crops:
 /crops/corn-kernel, /crops/corn-seeds, /crops/pagtatanim-ng-mais,
 /crops/mais-rice, /crops/vegetables-philippines, /crops/pagtatanim-ng-gulay,
 /crops/coconut-fertilizer, /crops/banana-farming-philippines,
-/crops/pagtatanim-ng-puno
+/crops/pagtatanim-ng-puno, /crops/sugarcane-farming-philippines,
+/crops/high-value-crops-philippines
 
 Land preparation (by crop, and for problem soils):
 /land-preparation/land-preparation-philippines,
@@ -483,7 +484,8 @@ Blog:
 /blog/crop-yield-forecasting, /blog/farm-app-for-livestock-and-crops,
 /blog/farm-sensors-philippines, /blog/multiple-cropping,
 /blog/palayisdaan, /blog/palay-drying,
-/blog/palay-drawing
+/blog/palay-drawing, /blog/soil-erosion, /blog/irrigation-systems,
+/blog/organic-farming-philippines
 
 ## 9. Keywords per page
 

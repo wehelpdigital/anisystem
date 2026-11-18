@@ -254,6 +254,10 @@ def land_page(g):
     return "/land-preparation/land-preparation-philippines", "every crop"
 
 
+# A crop's plant as people search it, used in one FAQ question (slug: words).
+PLANT_SEARCH = {"bottle-gourd": "an upo plant"}
+
+
 def focus_of(g, used):
     if g["crop"] in FOCUS:
         return FOCUS[g["crop"]]
@@ -434,7 +438,10 @@ def page_of(g, order, heroes, hubs, used):
         a = " ".join("%s, it is ready %s." % (n, h) if len(hws) > 1 else "It is ready %s." % h for n, h in hws)
         if g.get("harvest"):
             a += " " + first_sentences(g["harvest"], 1)
-        faq.append({"q": "How long before %s can be harvested?" % say, "a": a})
+        # The search people type for the plant itself, where it differs from the crop word (2026-11-18: Ubersuggest
+        # found "upo plant" at #60 for the bottle gourd page, which never said it).
+        plant = PLANT_SEARCH.get(g["slug"])
+        faq.append({"q": ("How long before %s can be harvested?" % plant) if plant else ("How long before %s can be harvested?" % say), "a": a})
     if waters:
         x = waters[0][1]
         rows = [s for s in (x.get("schedule") or []) if isinstance(s, dict) and s.get("often")]

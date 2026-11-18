@@ -1,0 +1,207 @@
+{
+  "section": "crops",
+  "slug": "sugarcane-farming-philippines",
+  "sortOrder": 130,
+  "lang": "en",
+  "category": "Cash crops",
+  "title": "Sugarcane Farming in the Philippines: Planting, Ratoons, Fertilizer and the Mill",
+  "metaTitle": "Sugarcane Farming in the Philippines: A Planter's Guide",
+  "metaDescription": "Sugarcane farming in the Philippines: where cane grows, cane points, planting windows, ratoons, fertilizer timing, pests, harvest and how the mill shares.",
+  "focusKeyword": "sugarcane farming",
+  "keywords": [
+    "sugarcane farming",
+    "sugarcane farming in the Philippines",
+    "sugarcane cultivation",
+    "cultivation of sugarcane"
+  ],
+  "excerpt": "Sugarcane farming in the Philippines runs on the mill's calendar. Farmers plant cane points in furrows and cut the plant cane after about a year. Then they take two or three ratoon crops from the same stubble before they replant. This guide covers where cane grows, planting, feeding, pests and how the mill shares the sugar.",
+  "heroImage": {
+    "src": "/images/site/how-to-plant/sugarcane.webp",
+    "alt": "Rows of young sugarcane on tilled brown soil in La Carlota, Negros Occidental, with trees and a mountain behind, a typical field for sugarcane farming",
+    "credit": "divina_gracia, CC BY 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Negros Island grows the biggest share of the country's cane. But cane also grows in Panay, Tarlac, Pampanga, Batangas, Bukidnon and other provinces, each with its own mill.\n\nThe cultivation of sugarcane is long and heavy work. The cane stays in the field for a year or more and needs deep soil work at the start. After cutting, it must reach the mill within a day or two. So good sugarcane farming is as much about timing and trucks as about the plant."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where sugarcane farming fits in the Philippines"
+    },
+    {
+      "type": "text",
+      "text": "Every cane farm belongs to a mill district, the area that sends its cane to one sugar mill. The mill sets the harvest schedule, so your planting and cutting dates follow its milling season. The crop year runs from September to August. Most mills grind from about September or October until around May, and the exact dates differ by district.\n\nCane does best in deep, well drained loam or clay loam under full sun. It wants rain or irrigation while it grows, then a clear dry spell to ripen. Most cane here grows on rain alone."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Planting material: cane points"
+    },
+    {
+      "type": "text",
+      "text": "Farmers plant setts, called cane points or patdan. These are pieces of stalk with two or three healthy buds, or eyes. Take them from a clean, even stand about 8 to 10 months old, or use fresh tops cut at harvest. Cut each one with a single clean stroke. Then peel off the dry sheaths gently so you do not bruise the eyes, and plant within a few days.\n\nThrow out any piece with red flesh inside, a sign of red rot. Where you can, get cane points from a clean seed cane nursery. Some mills also treat seed cane in hot water against diseases carried inside the stalk. Choose a variety your mill recommends, too. Our page of [sugarcane varieties](/crop-varieties/sugarcane) lists the Phil, VMC and PSR varieties grown here."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When to plant sugarcane"
+    },
+    {
+      "type": "table",
+      "caption": "The usual planting windows for sugarcane",
+      "rows": [
+        ["Window", "When", "Notes"],
+        ["Right after harvest", "About October to January", "Uses the moisture left from the rains. The most common window."],
+        ["Dry season", "About February to April", "Needs irrigation or soil that holds water. Plant more cane points, since fewer sprout."],
+        ["Start of the rains", "About May to June", "For upland fields with no irrigation."]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Space the furrows about 1 to 1.2 meters apart, up to 1.5 meters for heavy tillering varieties. Then lay the cane points end to end or slightly overlapped.\n\nPrepare the field first, with deep plowing and furrows opened just before planting. Our [sugarcane land preparation](/land-preparation/sugarcane-land-preparation) guide explains each pass. For the field steps by day, see [how to plant sugarcane](/how-to-plant/sugarcane)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plant cane and ratoon crops"
+    },
+    {
+      "type": "text",
+      "text": "The first crop from planted cane points is the plant cane. It is ready about 10 to 12 months after planting. Once you cut it, the stubble sprouts again and grows a ratoon crop, ready about 11 to 12 months later. Many farmers take two or three ratoons before they plow the field and plant again.\n\nRatoons keep sugarcane farming affordable, because you skip land preparation and planting material. But each one usually yields less than the crop before it, as the stand thins and gaps appear. When a ratoon no longer pays its costs, or gaps cover much of the field, replant.\n\nFor a strong ratoon, cut low, fill the gaps, fertilize and hill up soon after harvest."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fertilizer timing in sugarcane cultivation"
+    },
+    {
+      "type": "text",
+      "text": "Cane takes up nutrients fastest while it tillers and starts to grow tall, in its first months. So the usual pattern starts with a basal dose of complete fertilizer in the furrow at planting. Cover it with a little soil so it does not burn the buds.\n\nAbout one to two months later, side dress urea and muriate of potash along the rows at off barring. Then cover them when you hill up. For ratoons, fertilize soon after cutting.\n\nAvoid late nitrogen. A heavy dose late in the season keeps the cane green and growing when it should ripen. That lowers the sugar in the stalk. Near the mills, many farmers also add mill mud (filter cake), which is rich in organic matter, and boiler ash.\n\nExact rates depend on a soil test and your target yield. Get the test from the Municipal Agriculture Office or your mill. Then the [NPK Plus calculator](/features/npk-plus-calculator) in anee.io checks what your plan gives against what the crop needs."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Weeds, pests and diseases"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Weeds"
+    },
+    {
+      "type": "text",
+      "text": "In sugarcane farming, the first three to four months matter most for weeds. Until the cane leaves close over the rows, weeds compete hard for water and fertilizer. Hoe or plow between rows, hand pull along the rows, and keep the field clean until the canopy closes. If you use a herbicide, choose one registered with the FPA for sugarcane and follow its label."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Pests"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**White grubs** (Leucopholis irrorata), the larvae of a large beetle, eat the roots, so clumps wilt and fall over. Collect the beetles when they come out at the start of the rains, and pick out grubs during plowing. See our [white grub](/pests/white-grub) page.",
+        "**Stem borers** tunnel into shoots and stalks. Young cane shows dead hearts, while older stalks turn weak and light.",
+        "**Red striped soft scale**, a sap sucking insect, has spread through Philippine cane fields in recent years, Negros included. Its honeydew lets black sooty mold grow on the leaves. Report a suspected outbreak to your mill or the Municipal Agriculture Office."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Diseases"
+    },
+    {
+      "type": "text",
+      "text": "Smut shows as a long black whip at the top of the stalk. Pull out and burn smut clumps early, before the whip sheds its spores. Red rot turns the inside of the stalk red, with white patches across it. Ratoon stunting disease shows little besides short, thin stalks, and it spreads on cane knives and infected seed cane. Clean planting material, resistant varieties and disinfected tools prevent most of this damage."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Harvest and the milling season"
+    },
+    {
+      "type": "text",
+      "text": "Cane is ready when growth slows, the lower leaves dry and the stalk top tastes as sweet as its base. Some planters also test the juice with a hand refractometer, which reads the sugar in a drop. Cut close to the ground, because the base of the stalk holds much of the sugar. A low cut also makes a stronger ratoon.\n\nHaul the cane to the mill within a day or two. Cut cane loses sugar as it waits in the sun. So your cutters and trucks must work to the mill's schedule. Some farms still burn the field first, but more now cut the cane green and leave the trash as mulch."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Costs and the planter and mill sharing"
+    },
+    {
+      "type": "text",
+      "text": "The biggest costs in sugarcane farming are land preparation, cane points, fertilizer, weeding and, above all, cutting and hauling. Hauling cost rises with your distance to the mill and the price of diesel.\n\nUnder the usual arrangement, the mill does not just buy your cane by the ton. It mills the cane and splits the sugar and molasses with you. The planter gets the larger part. Under the Sugar Act of 1952, that share runs from 60 to 70 percent, rising with the mill's output. Many districts also add their own agreements.\n\nMills count sugar in LKg, bags of 50 kilos. Your bags per ton depend on the variety, the cane's ripeness and how fast it reached the mill. Planters then sell their sugar through warehouse receipts called quedans, at prices that move with the market."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan your cane season in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "Sugarcane is one of the 85 crops in anee.io. Set each block as a lot with its planting or ratoon date. Then the [cropping calendar](/features/cropping-calendar) dates gap filling, off barring, side dressing, hilling up and harvest from that day. Growth stages show where each lot stands, and the weather forecast helps you pick dry days for field work.\n\nOn the paid plans, pay your crews by the day and record LKg, prices and buyers in your reports. And if the leaves turn pale or a pest shows up, send a photo to Anee, the smart farm technician."
+    },
+    {
+      "type": "cta",
+      "title": "Run your cane farm on one calendar",
+      "text": "Add your blocks as lots and set the planting date, and anee.io dates every task to harvest.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about sugarcane farming"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How long does sugarcane take to grow?",
+          "a": "About 10 to 12 months for the plant cane, then about 11 to 12 months for each ratoon after it. Many farmers take two or three ratoons before replanting."
+        },
+        {
+          "q": "What do I plant to grow sugarcane?",
+          "a": "Cane points, pieces of healthy stalk with two or three buds from cane about 8 to 10 months old. Lay them in furrows about 1 to 1.2 meters apart."
+        },
+        {
+          "q": "How are cane planters paid?",
+          "a": "The mill splits the sugar and molasses from your cane with you, and you get the larger part. You then sell your sugar through quedans at the market price."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related sugarcane guides",
+      "items": [
+        {
+          "label": "Sugarcane land preparation",
+          "url": "/land-preparation/sugarcane-land-preparation"
+        },
+        {
+          "label": "How to plant sugarcane",
+          "url": "/how-to-plant/sugarcane"
+        },
+        {
+          "label": "Sugarcane varieties",
+          "url": "/crop-varieties/sugarcane"
+        },
+        {
+          "label": "Sugarcane nutrient deficiency",
+          "url": "/nutrient-deficiencies/sugarcane-nutrient-deficiency"
+        },
+        {
+          "label": "White grub",
+          "url": "/pests/white-grub"
+        },
+        {
+          "label": "NPK Plus calculator",
+          "url": "/features/npk-plus-calculator"
+        }
+      ]
+    }
+  ]
+}
