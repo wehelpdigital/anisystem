@@ -67,6 +67,19 @@ class LoginController extends Controller
             ]);
         }
 
+        // An active account whose address was never proven confirms it first, like a new signup (2026-11-19).
+        if (\App\Support\EmailConfirm::needed($user)) {
+            $request->session()->put('signup.email', $user->email);
+            try {
+                \App\Support\EmailConfirm::send($user);
+            } catch (\Throwable $e) {
+                // The inbox page offers a fresh link.
+            }
+
+            return redirect()->route('verify.notice')
+                ->with('error', 'Please confirm your email first. We sent a link to your inbox.');
+        }
+
         // A day of idleness ends the session; "Keep me logged in" adds the
         // remember cookie, ten days from the last visit (see App\Support\SignIn).
         SignIn::user($user, $request->boolean('remember'));

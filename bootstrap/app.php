@@ -56,6 +56,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\EnforceSingleSession::class,
             \App\Http\Middleware\RefreshRememberCookie::class,
             \App\Http\Middleware\UpdateLastSeen::class,
+            // Every account confirms its email first (2026-11-19, the owner): a signed in account whose address was
+            // never proven is signed out and sent to the inbox page with a fresh link (App\Support\EmailConfirm).
+            \App\Http\Middleware\EnsureEmailConfirmed::class,
             // Whether the worker in front of us may be at this door at all.
             // Here rather than in ninety controller actions: that shape has
             // already cost this app twelve open endpoints once.

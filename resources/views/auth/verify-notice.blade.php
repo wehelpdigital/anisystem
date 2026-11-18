@@ -65,11 +65,11 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
             </div>
-            <h1 class="mt-4 text-2xl font-bold text-gray-900">{{ $reading ? 'Confirm your email to keep reading' : 'Check your inbox' }}</h1>
+            <h1 class="mt-4 text-2xl font-bold text-gray-900">{{ $reading ? 'Confirm your email to keep reading' : (($existing ?? false) ? 'Confirm your email to continue' : 'Check your inbox') }}</h1>
             <p class="mt-2 text-sm text-gray-600 leading-relaxed">
                 We sent a confirmation link
                 @if ($email) to <span class="font-semibold text-gray-900" style="overflow-wrap:anywhere">{{ $email }}</span>@endif.
-                Tap it to open your free account.
+                {{ ($existing ?? false) ? 'Every account confirms its email before it goes on. Tap the link and you are back in.' : 'Tap it to open your free account.' }}
             </p>
             @if ($reading)
                 <div class="vn-lock">
@@ -112,7 +112,11 @@
                 <ul>
                     <li>Look in the Spam, Promotions or Updates folder. Mark it "Not spam" so our next emails reach you.</li>
                     <li>Search your mail for <b>anee.io</b>.</li>
-                    <li>Check that the address above is right. If it is not, sign up again with the right one.</li>
+                    @if ($existing ?? false)
+                        <li>Check that the address above is right. If it is not, tell us below and we fix it.</li>
+                    @else
+                        <li>Check that the address above is right. If it is not, sign up again with the right one.</li>
+                    @endif
                     <li>Still nothing? Send a new link below.</li>
                 </ul>
             </details>
@@ -138,7 +142,12 @@
 
         <p class="text-center text-sm text-gray-600 mt-6" id="vnWrong">
             Wrong address?
+            @if ($existing ?? false)
+                {{-- An account that already has its seasons: a new signup would start an empty one. --}}
+                <a href="{{ route('contact') }}" class="inline-block py-2 font-bold text-brand-700 hover:underline">Tell us, and we fix it</a>
+            @else
             <a href="{{ route('signup') }}{{ $reading ? '?read=' . urlencode((string) parse_url($reading['url'], PHP_URL_PATH)) : '' }}" class="inline-block py-2 font-bold text-brand-700 hover:underline">Sign up again</a>
+            @endif
         </p>
     </div>
 </div>

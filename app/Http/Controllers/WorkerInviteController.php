@@ -53,6 +53,11 @@ class WorkerInviteController extends Controller
             $user->deleteStatus = 1;
         }
         $user->password = Hash::make($data['password']);
+        // The invite was mailed to this address, so opening it proves the address (2026-11-19: every account
+        // confirms its email, App\Support\EmailConfirm).
+        if (empty($user->emailVerifiedAt)) {
+            $user->emailVerifiedAt = now();
+        }
         $user->save();
 
         $grant->update([

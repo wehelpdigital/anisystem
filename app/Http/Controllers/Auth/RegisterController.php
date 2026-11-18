@@ -139,9 +139,14 @@ class RegisterController extends Controller
     /** The "check your inbox" page shown right after email signup. */
     public function notice(Request $request)
     {
+        $email = $request->session()->get('signup.email');
+        $owner = $email ? User::active()->whereRaw('LOWER(email) = ?', [mb_strtolower((string) $email)])->first(['id', 'status']) : null;
+
         return view('auth.verify-notice', [
-            'email' => $request->session()->get('signup.email'),
+            'email' => $email,
             'reading' => \App\Support\ContentGate::waiting(),
+            // An account that already had a login and is asked to confirm its address (2026-11-19), not a new signup.
+            'existing' => $owner && $owner->status === 'active',
         ]);
     }
 
@@ -152,9 +157,10 @@ class RegisterController extends Controller
     public function status(Request $request)
     {
         $email = (string) $request->session()->get('signup.email');
-        $user = $email === '' ? null : User::active()->whereRaw('LOWER(email) = ?', [mb_strtolower($email)])->first(['id', 'status']);
+        $user = $email === '' ? null : User::active()->whereRaw('LOWER(email) = ?', [mb_strtolower($email)])->first();
 
-        return response()->json(['confirmed' => (bool) ($user && $user->status === 'active')])
+        // Confirmed means the address is proven now, not only that the account is active (2026-11-19).
+        return response()->json(['confirmed' => (bool) ($user && $user->status === 'active' && ! \App\Support\EmailConfirm::needed($user))])
             ->header('Cache-Control', 'no-store');
     }
 
@@ -169,8 +175,12 @@ class RegisterController extends Controller
 
         $user = User::active()
             ->whereRaw('LOWER(email) = ?', [mb_strtolower($email)])
-            ->where('status', 'pending')
+            ->whereIn('status', ['pending', 'active'])
             ->first();
+        // A new signup, or an account asked to confirm the address it already has (2026-11-19).
+        if ($user && $user->status === 'active' && ! \App\Support\EmailConfirm::needed($user)) {
+            $user = null;
+        }
 
         // Same words whether or not the address exists — this page must not
         // double as an address directory.
@@ -205,6 +215,9 @@ class RegisterController extends Controller
             \App\Support\VisitorJourney::confirmed((int) $user->id);
         } elseif ($user->status !== 'active') {
             return redirect()->route('login')->with('error', 'Your account is disabled.');
+        } elseif (empty($user->emailVerifiedAt)) {
+            // An account that had a login but never proved its address: proven now (2026-11-19).
+            $user->forceFill(['emailVerifiedAt' => now()])->saveQuietly();
         }
 
         SignIn::user($user, true); // no box to tick at this door: kept for ten days
@@ -232,32 +245,7 @@ class RegisterController extends Controller
 
     private function sendVerification(User $user): void
     {
-        $link = URL::temporarySignedRoute('verify.email', now()->addDays(3), [
-            'id' => $user->id,
-            'hash' => sha1(mb_strtolower($user->email)),
-        ]);
-
-        /* The words live in the mother app's email editor (email_verification)
-         * like every other email; the view is only for a database that has
-         * not been given that template yet. */
-        $tags = [
-            'verifyUrl' => $link,
-            'thanks' => \App\Support\Region::as(\App\Support\Region::of($user), fn () => \App\Support\Region::t('thanks')),
-        ];
-        if ($this->mail->render('email_verification', $tags, $user)) {
-            $this->mail->sendTemplateToUser('email_verification', $user, $tags, ['userId' => $user->id]);
-
-            return;
-        }
-
-        $html = \App\Support\Region::as(\App\Support\Region::of($user), fn () => view('emails.verify-email', [
-            'firstName' => $user->firstName,
-            'link' => $link,
-        ])->render());
-
-        $this->mail->send($user->email, $user->full_name, 'Confirm your email for anee.io', $html, [
-            'templateKey' => 'email_verification',
-            'userId' => $user->id,
-        ]);
+        // One helper for every door that mails the link (App\Support\EmailConfirm, 2026-11-19).
+        \App\Support\EmailConfirm::send($user, true);
     }
 }
