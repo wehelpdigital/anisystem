@@ -26,13 +26,26 @@
     $hue = $isWeed ? (['grasses' => 98, 'sedges' => 168, 'broadleaves' => 38][$e['group']] ?? 98) : ($P::KINDS[$e['kind']] ?? 98);
     $where = $isWeed ? collect() : collect($isPest ? $e['parts'] : $e['signs'])->map(fn ($k) => ($isPest ? $P::PARTS : $P::SIGNS)[$k] ?? null)->filter()->values();
     $title = $e['name'] . ($isWeed ? ': How to Tell It and Control It' : ': Signs and What to Spray');
+    // The <title> held to 60 characters (2026-11-18 SEO audit: eight sheets ran to 67 to 79). The page's own heading
+    // keeps the full name; the title drops the site name, then shortens its tail, then the words in brackets.
+    $shortName = trim((string) preg_replace('/\s*\([^)]*\)/', '', $e['name']));
+    $tails = $isWeed ? [': How to Tell It and Control It', ': How to Control It', ''] : [': Signs and What to Spray', ': Signs and Control', ''];
+    $seoTitle = $title . ' | anee.io';
+    $tries = [[$e['name'], $tails[0]], [$e['name'], $tails[1]], [$shortName, $tails[0]], [$shortName, $tails[1]], [$e['name'], ''], [$shortName, '']];
+    foreach ($tries as [$nm, $tail]) {
+        foreach ([' | anee.io', ''] as $site) {
+            if (mb_strlen($seoTitle) > 60 && mb_strlen($nm . $tail . $site) <= 60) {
+                $seoTitle = $nm . $tail . $site;
+            }
+        }
+    }
     $desc = \Illuminate\Support\Str::limit(trim($e['hint'] . ' ' . ($isWeed ? 'A weed of ' : 'Found on ') . $crops->take(4)->map(fn ($c) => $F::cropWord($c))->join(', ', ' and ') . ' in the Philippines.'), 155);
     $canonical = $S::url($section, $slug);
     // Its photo (freely licensed, credited), when one has been found.
     $photo = $F::photo($section, $slug);
 @endphp
 
-@section('title_full', $title . ' | anee.io')
+@section('title_full', $seoTitle)
 @section('meta_description', $desc)
 
 @push('head')
