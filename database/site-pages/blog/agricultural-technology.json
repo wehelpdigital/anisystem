@@ -1,0 +1,193 @@
+{
+  "section": "blog",
+  "slug": "agricultural-technology",
+  "sortOrder": 1470,
+  "lang": "en",
+  "category": "Getting Started",
+  "title": "Agricultural Technology in the Philippines: What a Small Farm Can Use",
+  "metaTitle": "Agricultural Technology for Small Farms in the Philippines",
+  "metaDescription": "Agricultural technology a small Filipino farm can use now: better seed, hired machines, pumps, solar dryers, soil tests and phone apps, and how to choose.",
+  "focusKeyword": "agricultural technology",
+  "keywords": [
+    "agricultural technology",
+    "agricultural technology in the Philippines",
+    "agricultural production",
+    "farm technology",
+    "farm mechanization"
+  ],
+  "excerpt": "Agricultural technology is any tool, input or method that helps a farm grow more, lose less or spend less work per kilo. For a small Filipino farm, the useful kinds are better seed, hired machines, pumps and drip lines and solar dryers. Soil tests and phone apps for planning, weather and pests count too. The trick is to match each one to a real problem on your farm.",
+  "heroImage": {
+    "src": "/images/site/lp/tractor.webp",
+    "alt": "A farmer walks behind a hand tractor through a wet rice field, with egrets and coconut palms behind him, a common piece of agricultural technology on small farms",
+    "credit": ""
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "When people hear agricultural technology, they picture drones and sensors. But on most small farms, the biggest gains come from plain things done right. Think of good seed, a transplanter on the right day and a soil test before buying fertilizer.\n\nAgricultural production per hectare rises when a farm fixes its weakest link first. So this guide goes through the farm technology that small growers here can really use, then shows how to choose."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What counts as agricultural technology?"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Seed:** certified inbred varieties and hybrids bred for yield, pests or drought.",
+        "**Machines:** hand tractors, transplanters, seeders, combine harvesters and dryers.",
+        "**Water:** pumps, shallow wells, drip lines and water saving methods.",
+        "**After harvest:** dryers, crates and airtight storage.",
+        "**Soil and nutrients:** soil tests, the leaf color chart and fertilizer calculators.",
+        "**Digital tools:** phone apps for planning, weather, pest checks and records."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Better seed comes first"
+    },
+    {
+      "type": "text",
+      "text": "Seed is usually the cheapest upgrade with the largest return. Certified seed comes clean, true to its variety and with a tested germination rate, unlike grain saved from the last harvest. Hybrid rice and hybrid corn can yield more again. But you must buy new seed every season, and hybrids need good fertilizer and water to pay off.\n\nMatch the variety to your season, your water and the pests of your area. Our guide to the [best rice variety for your area](/blog/best-rice-variety-for-my-area) walks through the choice."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Farm mechanization through service providers"
+    },
+    {
+      "type": "text",
+      "text": "Few small farmers own a combine harvester, and they do not need to. Most machines reach small farms as a hired service, from a neighbor, a cooperative, an irrigators' association or a private operator. Rates vary by area and season, so ask around before the rush."
+    },
+    {
+      "type": "table",
+      "caption": "Common farm machines and how small farms usually get them",
+      "rows": [
+        ["Machine", "What it does", "How small farms usually get it"],
+        ["Hand tractor", "Plows, harrows and puddles paddies", "Owned by many farmers, or rented with a driver"],
+        ["Four wheel tractor", "Plows big or hard fields fast", "Hired per hectare"],
+        ["Rice transplanter", "Plants tray seedlings in straight rows", "Hired with its operator, and you raise the tray seedlings"],
+        ["Drum seeder", "Sows sprouted rice seed in rows", "Cheap enough for many farmers to own"],
+        ["Combine harvester", "Cuts, threshes and cleans in one pass", "Hired per hectare or for a share of the harvest"],
+        ["Mechanical dryer", "Dries palay in any weather", "At a cooperative or a mill, paid per sack"],
+        ["Spraying drone", "Sprays fields from the air", "A hired service in some provinces, following the product label"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Machines save the most where labor is scarce or costly, at transplanting and at harvest. But everyone needs them in the same weeks. Book early. Also plant at the same time as your neighbors, so one machine can serve many small lots in a row. The native [carabao plow](/blog/native-plow) still has a place on small and muddy fields."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Water: pumps, wells and drip lines"
+    },
+    {
+      "type": "text",
+      "text": "Water lets you plant on time instead of waiting for the rain. A pump on a shallow tube well waters dry season palay, onion and vegetables where groundwater sits close to the surface. Solar pumps cost more to buy, but they burn no fuel. For vegetables and fruit, drip lines put water at each plant and cut weeding.\n\nIn rice, alternate wetting and drying lets the paddy dry a little between floods, which saves water and pumping. Our guides to [irrigation systems](/blog/irrigation-systems) and [alternate wetting and drying](/blog/alternate-wetting-and-drying) explain both."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "After harvest: dryers and storage"
+    },
+    {
+      "type": "text",
+      "text": "A good harvest can still rot in a wet week. Mechanical dryers save palay when the sun does not come out, and our guide to [palay drying](/blog/palay-drying) explains when they pay. For fruit, vegetables and fish, try a solar dryer of plastic sheet over a frame. It dries faster than open sun and keeps out dust and flies. Airtight grain bags keep weevils down in stored rice and corn, because the insects run out of air."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Soil and nutrient tools"
+    },
+    {
+      "type": "text",
+      "text": "A soil test shows the pH and the nutrients your field already has, so you stop paying for fertilizer it does not need. Your Municipal Agriculture Office can tell you where to send a sample or run a quick test kit. In rice, the leaf color chart tells you when the crop needs nitrogen, as our guide to the [leaf color chart](/blog/leaf-color-chart-rice) shows. Then a fertilizer calculator turns the need into bags per hectare."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Phone apps for planning, weather and pests"
+    },
+    {
+      "type": "text",
+      "text": "Most farmers already carry a strong piece of agricultural technology in their pocket. A phone can hold the season's plan, track a typhoon and show a pest to someone who knows it. It also keeps the records that tell you which lot made money.\n\nanee.io puts these in one place, in the phone's browser. The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day of sowing, transplanting or planting. Each lot shows its growth stage and the forecast for its location. [Satellite Weather](/features/satellite-weather) tracks every storm within 300 km of your farm. Then Anee, the smart farm technician, reads a photo of a pest or a sick plant with your lot's crop, stage and weather. She answers in Tagalog or English. The plan also works offline in the field."
+    },
+    {
+      "type": "text",
+      "text": "The Libre plan is free. Libre plus Anee costs PHP 100 a month or PHP 1,000 a year. It adds Anee, her analyses, Satellite Weather, the field helpers, NPK Plus and Maps. Her answers and analyses use credits. Solo Farmer at PHP 200 a month adds workers, inventory and all the reports. Farm Owner at PHP 600 a month adds worker logins. You can pay from any bank or wallet app in the Philippines."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to choose agricultural technology for your farm"
+    },
+    {
+      "type": "steps",
+      "items": [
+        { "title": "Name the problem", "text": "Start from your biggest loss: late planting, a short crew, pests found late, or palay that rots before it dries. Our page on [problems in agriculture](/blog/problems-in-agriculture) lists the usual ones." },
+        { "title": "Count the cost per hectare", "text": "Compare what the technology costs with what it saves in labor, inputs or lost harvest. For a machine, work out how many crew days it saves and what those days cost you." },
+        { "title": "Check service nearby", "text": "A machine without a mechanic or spare parts in your town will sit idle when you need it most." },
+        { "title": "Try it on one lot", "text": "Test it beside your usual way on one lot, and keep the records of both." },
+        { "title": "Share it with neighbors", "text": "Buying or hiring as a group spreads the cost and keeps the machine busy." }
+      ]
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Rent before you buy",
+      "text": "Hire a machine or a service for a season or two before you buy one. You learn what it really saves on your own fields, and you skip a loan you might not need."
+    },
+    {
+      "type": "cta",
+      "title": "The phone tool that ties your season together",
+      "text": "Plan every task, watch the weather over each lot and ask Anee about a pest, all from one phone.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about agricultural technology"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is agricultural technology?",
+          "a": "It is any tool, input or method that helps a farm produce more, lose less or work less. Seed, machines, irrigation, dryers, soil tests and phone apps all count."
+        },
+        {
+          "q": "What are examples of agricultural technology in the Philippines?",
+          "a": "Certified and hybrid seed, hand tractors, rice transplanters, drum seeders, combine harvesters, mechanical dryers, shallow tube wells, drip lines, solar dryers, the leaf color chart and farm apps on the phone."
+        },
+        {
+          "q": "Which farm technology pays off first on a small farm?",
+          "a": "Usually good seed and a soil test, because they cost little and lift yield or cut fertilizer waste right away. Then hire machines for the jobs where labor is short."
+        },
+        {
+          "q": "Do I need drones or sensors?",
+          "a": "Not to start. They help on bigger farms, but a phone, a weekly field walk and good records do more for most small farms. See our page on [farm sensors in the Philippines](/blog/farm-sensors-philippines)."
+        },
+        {
+          "q": "How does Anee fit in?",
+          "a": "Anee is the smart farm technician inside anee.io. She reads your lot's crop, stage and weather before she answers. Besides, she can look at a photo of a pest or a sick plant. She comes with Libre plus Anee at PHP 100 a month, and her answers use credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related farm technology guides",
+      "items": [
+        { "label": "Modern farming techniques", "url": "/blog/modern-farming-techniques" },
+        { "label": "Precision agriculture in the Philippines", "url": "/blog/precision-agriculture-philippines" },
+        { "label": "Digital farming tools", "url": "/blog/digital-farming-tools" },
+        { "label": "Irrigation systems", "url": "/blog/irrigation-systems" },
+        { "label": "The native plow", "url": "/blog/native-plow" },
+        { "label": "Satellite Weather", "url": "/features/satellite-weather" }
+      ]
+    }
+  ]
+}

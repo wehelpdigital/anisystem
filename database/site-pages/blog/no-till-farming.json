@@ -1,0 +1,204 @@
+{
+  "section": "blog",
+  "slug": "no-till-farming",
+  "sortOrder": 1410,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "No Till Farming: How Zero Tillage Works for Rice and Corn",
+  "metaTitle": "No Till Farming: Zero Tillage for Rice and Corn Farms",
+  "metaDescription": "No till farming plants straight into the last crop's stubble, with no plowing. See how zero and minimum tillage work for rice and corn, and when they fit.",
+  "focusKeyword": "no till farming",
+  "keywords": [
+    "no till farming",
+    "zero tillage",
+    "minimum tillage",
+    "cultivation of soil"
+  ],
+  "excerpt": "No till farming means planting a crop straight into the stubble of the last one, without plowing or harrowing first. Farmers control the weeds with herbicide, mulch or a cover crop instead of the plow. Here it works best for corn, mungbean and dry seeded rice, and less well for puddled, transplanted rice.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-lower-fertilizer-cost.webp",
+    "alt": "Two farmers in Laguna spread rice straw back over a wet paddy, the kind of residue cover that no till farming keeps on the soil",
+    "credit": "IRRI Images, CC BY 2.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "For most Filipino farmers, every season starts with the plow. But each pass of the carabao or the tractor costs money, takes days and leaves the soil bare for the next heavy rain.\n\nNo till farming turns that around. You leave the old stalks and straw on the field, kill the weeds another way and plant through the cover. It does not suit every field, so this guide shows where it fits and where it does not."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is no till farming?"
+    },
+    {
+      "type": "text",
+      "text": "Tillage is the cultivation of soil before planting: plowing, harrowing and rotavating to loosen the ground and bury weeds and stubble. No till farming skips all of it. The seed goes straight into soil that nobody turned since the last harvest. Zero tillage is another name for the same thing.\n\nMinimum tillage sits in between. You still work the soil, but less: one shallow pass instead of three, or only a narrow strip where the seed goes. Both systems keep most of the old crop residue on the surface."
+    },
+    {
+      "type": "table",
+      "caption": "Conventional tillage, minimum tillage and zero tillage compared",
+      "rows": [
+        ["System", "What you do", "Soil cover left", "Fits best"],
+        ["Conventional", "Plow, then harrow two or three times", "Little or none", "Puddled lowland rice, fields that need leveling"],
+        ["Minimum tillage", "One shallow pass, or till only the planting strip", "Some to most", "Corn and vegetables on loose soil"],
+        ["Zero tillage", "No soil turned, seed planted through residue", "Most or all", "Corn or mungbean after rice, dry seeded rice, slopes"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How does no till farming work?"
+    },
+    {
+      "type": "steps",
+      "items": [
+        { "title": "Leave the residue", "text": "Do not burn the straw or the corn stalks after harvest. Spread them evenly, because thick piles in one place block the seed and hide rats." },
+        { "title": "Kill the standing weeds", "text": "Before planting, control the weeds already growing. Farmers use a non selective herbicide such as glyphosate, or cut the weeds low and leave them as mulch. Follow the product label and the FPA registration." },
+        { "title": "Plant through the cover", "text": "Make a hole with a dibble stick or a jab planter, drop the seed and close it. On bigger fields, a no till seeder cuts through the residue and places the seed in one pass." },
+        { "title": "Keep the ground covered", "text": "The residue now works as mulch. It holds moisture, shades out new weeds and slowly feeds the soil as it rots." },
+        { "title": "Watch the weeds after planting", "text": "Weeds that sprout later still need control. Pull them by hand, add mulch or use a herbicide registered for that crop." }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "No till farming for corn"
+    },
+    {
+      "type": "text",
+      "text": "Corn takes to it well. In lowland areas, many farmers plant corn or mungbean right after the rice harvest, dibbling the seed into the stubble while the soil is still moist. Skipping the plow saves days, so the second crop gets more of the moisture that is left.\n\nOn sloping upland farms, zero tillage also keeps topsoil in place, because the residue breaks the force of the rain. Where weeds are under control, corn planted without plowing often yields close to plowed corn and costs less to start. Our guide to [corn land preparation](/land-preparation/corn-land-preparation) shows when a field still needs full tillage first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Zero tillage for rice"
+    },
+    {
+      "type": "text",
+      "text": "Rice is harder. For transplanted lowland rice, puddling does real work: it seals the soil so the paddy holds water, buries weeds and softens the ground for the seedlings. So most transplanted fields still need it, though some farmers cut the job to minimum tillage with one rotavator pass instead of a plow and three harrowings.\n\nZero tillage fits better in rainfed areas where rice is dry seeded. After a burndown of the weeds, farmers drill or dibble the seed into the unplowed field at the first good rains. Our guides to [direct seeded rice land preparation](/land-preparation/direct-seeded-rice-land-preparation) and [rice land preparation](/land-preparation/rice-land-preparation) explain both ways."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Residue and cover crops"
+    },
+    {
+      "type": "text",
+      "text": "Residue is the heart of the system. Rice straw and corn stalks left on the field slow runoff, keep the soil cool and moist, and add organic matter as they rot. Over the years, that builds the dark, crumbly [humus soil](/blog/humus-soil) every crop grows better in.\n\nBetween crops, a cover crop keeps the ground working. Mungbean, cowpea and peanut also fix nitrogen, and under tree crops a creeping legume like calopo holds the soil. Then cut or roll the cover crop before planting and leave it as mulch. Our page on [soil erosion](/blog/soil-erosion) shows how much topsoil bare ground can lose in one rainy season."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Weed control without plowing"
+    },
+    {
+      "type": "text",
+      "text": "Weeds are the main reason no till fails. The plow used to bury them, so now something else must keep them down. Most farmers combine a few methods."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**A burndown before planting.** A non selective herbicide like glyphosate kills what is already growing. Use only products registered for that use, and follow the label and the FPA registration.",
+        "**A stale seedbed.** Wet the field, let the weeds sprout, then kill them before you plant, so fewer weed seeds are left to come up with the crop.",
+        "**Thick, even mulch.** Straw or cut weeds spread well shade out many small weeds.",
+        "**Hand weeding early.** Pull weeds in the first weeks, while they are small and before they set seed.",
+        "**Rotation.** Changing crops and herbicide groups keeps the same weeds from taking over."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Perennial weeds like cogon and purple nutsedge come back from roots and tubers, so one spray rarely ends them. For rice fields, our guide to [herbicides for rice weeds](/weeds/herbicides-for-rice-weeds) lists the active ingredients by weed type."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When no till fits and when it does not"
+    },
+    {
+      "type": "table",
+      "caption": "Where zero tillage usually works and where it struggles",
+      "rows": [
+        ["Usually fits", "Usually struggles"],
+        ["Sloping land that loses soil when plowed", "Fields that need leveling first"],
+        ["Loose, well drained loam or sandy soil", "Hard, compacted soil or a deep hardpan"],
+        ["Corn or mungbean after a rice harvest", "Puddled, transplanted lowland rice"],
+        ["Farms short on labor or tractor time", "Fields full of cogon, nutsedge or weedy rice"],
+        ["A short gap between two crops", "Fields where rats or snails are already bad"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Cost and labor savings"
+    },
+    {
+      "type": "text",
+      "text": "The savings come from the passes you skip. Each plowing or harrowing means paying for a tractor or a carabao and its driver, plus fuel and days of waiting. With no till farming, the field can go from one harvest to the next planting in days instead of weeks.\n\nStill, some costs go up. You buy herbicide, and you may rent a seeder. Yields can dip in the first season while you learn the weeds of your field. So try it on one small plot first, side by side with your usual field, and compare the costs and the harvest."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Spray safely",
+      "text": "Wear gloves, long sleeves and a mask when you mix and spray. Keep herbicide away from canals, fishponds and your neighbor's crop, and never spray on a windy day."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan and compare your no till plot in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "A fair test needs two plots and good records. In anee.io, set up the no till plot and the plowed plot as separate [farm lots](/features/farm-lots). The [cropping calendar](/features/cropping-calendar) then dates the burndown, the planting and every weeding from each lot's own day of planting.\n\nIf a weed you do not know comes up, send Anee, the smart farm technician, a photo. She reads it with the lot's crop, stage and weather and answers in Tagalog or English, before you buy any herbicide. At harvest, the full reports on Solo Farmer and Farm Owner show what each lot cost and yielded. Anee comes with Libre plus Anee at PHP 100 a month, and her answers use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Test no till on one lot this season",
+      "text": "Ask Anee about the weeds in your field, then plan the burndown, planting and weeding on one calendar.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about no till farming"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is no till farming in simple words?",
+          "a": "It is planting without plowing. You leave the old crop's stubble on the field, kill the weeds another way and plant the seed through the residue."
+        },
+        {
+          "q": "Is zero tillage the same as minimum tillage?",
+          "a": "No. Zero tillage turns no soil at all. Minimum tillage still works the soil, but with fewer or shallower passes, or only along the planting row."
+        },
+        {
+          "q": "Does no till farming work for rice?",
+          "a": "It works best for dry seeded rice in rainfed fields. Transplanted lowland rice usually still needs puddling to hold water and bury weeds, though one rotavator pass can replace the full plowing."
+        },
+        {
+          "q": "Do I need herbicide for no till?",
+          "a": "Most farmers use a burndown herbicide before planting, but mulch, a stale seedbed and early hand weeding can cut how much you need. Always follow the label and the FPA registration."
+        },
+        {
+          "q": "Can Anee tell me which weeds are in my field?",
+          "a": "Yes. Send Anee a clear photo of the weed and she reads it with your lot's crop and stage, then tells you what it likely is and how to control it. Her answers use credits on Libre plus Anee and the paid plans."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related land and soil guides",
+      "items": [
+        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
+        { "label": "Corn land preparation", "url": "/land-preparation/corn-land-preparation" },
+        { "label": "Direct seeded rice land preparation", "url": "/land-preparation/direct-seeded-rice-land-preparation" },
+        { "label": "Humus soil and how to build it", "url": "/blog/humus-soil" },
+        { "label": "Soil erosion", "url": "/blog/soil-erosion" },
+        { "label": "The native plow", "url": "/blog/native-plow" }
+      ]
+    }
+  ]
+}

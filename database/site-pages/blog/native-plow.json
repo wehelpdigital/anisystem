@@ -1,0 +1,202 @@
+{
+  "section": "blog",
+  "slug": "native-plow",
+  "sortOrder": 1480,
+  "lang": "en",
+  "category": "Farm culture",
+  "title": "Native Plow: The Araro and the Carabao Plow in Philippine Farming",
+  "metaTitle": "Native Plow: How the Araro and Carabao Plow Work",
+  "metaDescription": "The native plow, or araro, is the carabao drawn plow of Filipino farms. See how it works with the suyod, when it beats a hand tractor and when it does not.",
+  "focusKeyword": "native plow",
+  "keywords": [
+    "native plow",
+    "araro",
+    "carabao plow",
+    "traditional plow in the Philippines",
+    "suyod"
+  ],
+  "excerpt": "The native plow, or araro, is the traditional plow in the Philippines. It has a wooden beam and handle with a metal share at the tip, and a carabao pulls it. It cuts the soil and turns it to one side. Farmers follow it with the suyod, a toothed harrow, to break the clods and level the field. It still makes sense on small, muddy or terraced fields where a hand tractor struggles.",
+  "heroImage": {
+    "src": "/images/site/land/land-preparation-philippines.webp",
+    "alt": "A farmer in Bulacan plows a dry field with a carabao and a native plow, the furrow of turned soil behind them",
+    "credit": "Judgefloro, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "For generations, land preparation here meant one farmer, one carabao and one araro. Hand tractors now do much of that work on lowland fields. But the native plow still earns its keep in the uplands, on the terraces and on many small farms.\n\nThis guide explains how it works and how it fits into rice and corn land preparation. It also shows when it still beats a machine."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is the native plow?"
+    },
+    {
+      "type": "text",
+      "text": "The native plow is a single moldboard plow, light enough for one animal to pull. Its body is wood, and only the cutting tip is metal. As the carabao walks, the share cuts a strip of soil and the moldboard lifts and turns it over to one side. Weeds and stubble end up buried under the turned soil, where they rot."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Beam:** the long pole that links the plow to the yoke on the carabao.",
+        "**Handle:** the farmer holds it to steer the plow and to set how deep it bites.",
+        "**Share:** the metal point that cuts into the soil.",
+        "**Moldboard:** the curved part behind the share that lifts and turns the strip of soil.",
+        "**Yoke:** the wooden bar, or pamatok, that sits on the carabao's neck, with ropes to the plow."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A carabao plow works shallower than a tractor's disc plow. That is usually enough for rice, whose roots feed mostly in the top layer. For deep rooted crops like sugarcane or cassava, farmers usually want a deeper tillage than the native plow gives."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How the carabao plow is used for rice"
+    },
+    {
+      "type": "steps",
+      "items": [
+        { "title": "Soften the field", "text": "Flood the paddy or wait for the first good rains, so the soil is soft enough for the share to bite." },
+        { "title": "Plow once", "text": "Plow the field with the araro, turning the stubble and weeds under. Go round and round from the edge, or back and forth in strips." },
+        { "title": "Let it rest", "text": "Leave the field for about a week, so the buried weeds and straw start to rot and new weeds sprout." },
+        { "title": "Harrow with the suyod", "text": "Pull the suyod across the field two or three times, about 5 to 7 days apart, lengthwise first and then crosswise. Each pass breaks clods and buries the new weeds." },
+        { "title": "Level the field", "text": "Under about 5 cm of water, drag a wooden plank behind the carabao until no high spots show above the water." }
+      ]
+    },
+    {
+      "type": "text",
+      "text": "This is the same order as the machine method, only slower. Our guide to [rice land preparation](/land-preparation/rice-land-preparation) gives the full 21 day plan, day by day."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "The suyod"
+    },
+    {
+      "type": "text",
+      "text": "The suyod is the native harrow. It is a frame with rows of teeth of wood, bamboo or iron, pulled behind the carabao like a big comb. In a wet paddy, the teeth break the clods into mud and drag out weeds. Some farmers stand on the frame to press the teeth deeper. After the last pass, the field should be soft, even mud ready for leveling."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The native plow in corn and upland fields"
+    },
+    {
+      "type": "text",
+      "text": "On upland farms, the native plow prepares dry fields for corn, peanut and root crops. After the first plowing and harrowing, farmers use it again to open the furrows where the seed goes.\n\nIt also works between the rows once the corn is up. First, a pass close to each row throws soil away from the plants and cuts the young weeds. Farmers call this off barring. A few weeks later, another pass throws the soil back against the stems. This hilling up buries new weeds and props up the plants. Our guide to [corn land preparation](/land-preparation/corn-land-preparation) covers the furrows and spacing."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Native plow or hand tractor?"
+    },
+    {
+      "type": "table",
+      "caption": "The carabao and native plow compared with a hand tractor",
+      "rows": [
+        ["", "Carabao and native plow", "Hand tractor"],
+        ["Speed", "Slow, several days for a hectare", "Much faster"],
+        ["Running cost", "Feed, water and care of the animal, no fuel", "Fuel, oil and repairs, or the rental fee"],
+        ["Best fields", "Small, terraced, steep or oddly shaped plots", "Flat lots with a way in for the machine"],
+        ["Soft, deep mud", "Works where machines sink", "Can bog down without the right wheels"],
+        ["Other uses", "Pulls a cart or sled, gives manure", "Pulls a trailer, and some run a pump"],
+        ["Labor", "One farmer walking all day behind the animal", "One operator, and far fewer hours"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "When the traditional plow in the Philippines still makes sense"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Your fields are small, terraced or on slopes where machines cannot reach.",
+        "The paddy has deep, soft mud that swallows tractor wheels.",
+        "You already keep a carabao, so the plowing costs no cash for fuel or rent.",
+        "No tractor is free in the rush weeks, and you cannot wait for your turn.",
+        "You need careful work between corn rows, like off barring and hilling up."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "It makes less sense on big areas, or when two crops follow each other with only a short gap. In the hot months, a carabao tires quickly and needs long rests. Besides, fewer young people know how to train and handle a plowing carabao. For those farms, hiring a hand tractor saves days that the next crop needs. Our page on [agricultural technology](/blog/agricultural-technology) compares the machines you can hire."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Caring for the carabao that pulls it"
+    },
+    {
+      "type": "text",
+      "text": "A carabao has few sweat glands, so it cools itself in water and mud. Work it in the cool morning and late afternoon, and let it wallow and rest in the shade at midday. Give it clean water, green grass and rice straw. Then check its neck and shoulders where the yoke sits, because sores there slow the work for days."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Plow when the soil is right",
+      "text": "In upland fields, plow when a handful of soil crumbles in your fist. If it is too dry, the share skips and the carabao strains. If it is too wet, the plow leaves sticky clods that bake hard."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan the plowing days in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "With an animal or a hired machine, timing decides everything. The [Land Prep Planner](/features/land-preparation-planner) in anee.io asks how many workers you have and whether you have a tractor or a hand tractor. It also asks how many days a week the crew works. Then Anee dates the plowing, each harrowing and the leveling for every lot, so each one is ready on its planting day. She also reads the forecast and the rain history of your area for that window.\n\nOnce the season starts, the [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero. Add a hired plowman or tractor as a hired service on the task, so its cost stays in the season's records. The Land Prep Planner and Anee come with Libre plus Anee at PHP 100 a month. Anee's plans and answers use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Let Anee date your land preparation",
+      "text": "Tell Anee your lots, your crew and your planting day, and get every plowing and harrowing pass on the calendar.",
+      "label": "See the Land Prep Planner",
+      "url": "/features/land-preparation-planner"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the native plow"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the native plow called in Tagalog?",
+          "a": "It is the araro. The harrow that follows it is the suyod."
+        },
+        {
+          "q": "What is the difference between a plow and a harrow?",
+          "a": "A plow cuts and turns the soil over, burying weeds and stubble. A harrow comes after it to break the clods, mix the soil and level the surface."
+        },
+        {
+          "q": "How long does it take a carabao to plow a hectare?",
+          "a": "Several days, and it varies with the soil, the moisture, the animal and the hours it works each day. A hand tractor covers the same field much faster."
+        },
+        {
+          "q": "Is the carabao plow better than a hand tractor?",
+          "a": "Not better, but better suited to some fields. It wins on small, terraced or very muddy plots and on farms that already keep a carabao. The hand tractor wins on speed and on larger, flat fields."
+        },
+        {
+          "q": "Can Anee plan my land preparation?",
+          "a": "Yes. In the Land Prep Planner, Anee dates the plowing, harrowing and leveling for each lot around your crew and your planting day. It comes with Libre plus Anee, and her plans use credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related land preparation guides",
+      "items": [
+        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
+        { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" },
+        { "label": "Corn land preparation", "url": "/land-preparation/corn-land-preparation" },
+        { "label": "No till farming", "url": "/blog/no-till-farming" },
+        { "label": "Agricultural technology for small farms", "url": "/blog/agricultural-technology" },
+        { "label": "The Land Prep Planner", "url": "/features/land-preparation-planner" }
+      ]
+    }
+  ]
+}

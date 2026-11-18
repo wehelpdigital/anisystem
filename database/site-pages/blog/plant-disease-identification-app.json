@@ -20,7 +20,10 @@
     "free plant disease app",
     "plant disease app free",
     "free tree disease identification app",
-    "plant app diagnosis"
+    "plant app diagnosis",
+    "free app to identify plant disease",
+    "app for identifying plant disease",
+    "plant app to identify disease"
   ],
   "excerpt": "The best plant disease identification app covers your crop, reads the photo with the crop's age and weather, and tells you how to confirm. No app is right every time. In a field test, PlantVillage Nuru named cassava disease symptoms correctly 65 percent of the time, and 74 to 88 percent when it read six leaves per plant. For a free first guess, Plantix says its photo diagnosis is free. anee.io, a farm app built for Filipino farmers, has a Disease Finder and Pest Finder, and Anee, its smart farm technician, reads your photo with your season's records.",
   "heroImage": {
@@ -285,6 +288,10 @@
         {
           "q": "Can an app identify plant disease from one photo?",
           "a": "Sometimes, when the signs are clear. Still, in the Nuru study, reading six leaves per plant raised the app's accuracy to 74 to 88 percent. So send several photos."
+        },
+        {
+          "q": "Is there a free app to identify plant disease?",
+          "a": "Yes. Some photo apps say their diagnosis is free, and a free plant disease identification app is a fair first check. Treat its answer as a lead, because an app for identifying plant disease knows only the crops it learned. In anee.io, Anee reads your photo with your lot's crop, stage and weather on Libre plus Anee, from PHP 100 a month, and her answers use credits. Any plant app to identify disease needs sharp daylight photos of the leaf, the plant and the patch."
         },
         {
           "q": "What is the best free plant disease identification app?",

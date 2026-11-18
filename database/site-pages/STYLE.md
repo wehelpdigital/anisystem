@@ -485,7 +485,10 @@ Blog:
 /blog/farm-sensors-philippines, /blog/multiple-cropping,
 /blog/palayisdaan, /blog/palay-drying,
 /blog/palay-drawing, /blog/soil-erosion, /blog/irrigation-systems,
-/blog/organic-farming-philippines
+/blog/organic-farming-philippines, /blog/problems-in-agriculture, /blog/no-till-farming,
+/blog/humus-soil, /blog/fruit-and-vegetable-storage, /blog/potato-tuber,
+/blog/transplanting-meaning, /blog/integrated-farming-system,
+/blog/agricultural-technology, /blog/native-plow
 
 ## 9. Keywords per page
 

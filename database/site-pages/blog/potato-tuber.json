@@ -1,0 +1,179 @@
+{
+  "section": "blog",
+  "slug": "potato-tuber",
+  "sortOrder": 1440,
+  "lang": "en",
+  "category": "Getting Started",
+  "title": "Potato Tuber: What It Is, How It Forms and How to Keep It",
+  "metaTitle": "Potato Tuber: What It Is, How It Forms and Seed Tubers",
+  "metaDescription": "A potato tuber is a swollen underground stem, not a root. Learn how tubers form, seed tubers versus table potatoes, why green ones are unsafe and storage.",
+  "focusKeyword": "potato tuber",
+  "keywords": [
+    "potato tuber",
+    "tubers of potato",
+    "tuber potato",
+    "seed tubers",
+    "seed potato"
+  ],
+  "excerpt": "A potato tuber is a swollen underground stem, not a root. The plant grows it at the tip of short underground side stems called stolons and fills it with starch, and its eyes are buds that can sprout into new plants. That is why farmers plant seed tubers instead of seeds, and why a tuber left in the light turns green.",
+  "heroImage": {
+    "src": "/images/site/how-to-plant/potato.webp",
+    "alt": "Young potato plants growing in rows of red soil, the leafy part of the plant that feeds each potato tuber forming underground",
+    "credit": "Willem van Aken, CSIRO, CC BY 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "In the highlands, patatas is one of the main cash crops, and many lowland farmers try it in the coolest months. Yet few stop to ask what they are digging up. The answer explains a lot: why you plant pieces of potato, why some sprout and some do not, and why a green potato should not go in the pot.\n\nThis guide covers the botany in plain words, then the practical side of seed tubers, greening and storage."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is a potato tuber?"
+    },
+    {
+      "type": "text",
+      "text": "A tuber is a thick underground stem that a plant uses to store food. The potato plant sends out stolons, short stems that grow sideways under the soil. When conditions are right, the tip of each stolon swells into a potato tuber packed with starch.\n\nYou can see that it is a stem by its eyes. Each eye is a node with buds, just like the joints on a stalk above ground. The eyes run in a spiral around the tuber and crowd together at the end farthest from the stolon, called the rose end. The other end, where the stolon was attached, is the stem end. Tiny pores in the skin let the tuber breathe."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Potato versus kamote"
+    },
+    {
+      "type": "text",
+      "text": "Kamote looks similar but is a true root, a storage root with no eyes in rows. That is why farmers plant kamote from vine cuttings, while they plant potato from tubers or tuber pieces with eyes. The potato plant also makes small green berries with true seed. Do not eat them, because they are poisonous. Farmers rarely plant that seed, since the seedlings do not come true to the parent."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How tubers form"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "**Sprouting.** The eyes of the seed tuber sprout, and the shoots push up through the soil while roots grow from their base.",
+        "**Leaf growth.** The plant builds leaves and stems, and stolons start to grow sideways underground.",
+        "**Tuber set.** The stolon tips swell into small tubers. In many varieties this starts about a month after planting, sooner in early ones.",
+        "**Bulking.** The leaves send sugar down, and the tubers fill with starch. Most of the harvest weight comes in these weeks.",
+        "**Maturity.** The vines yellow and die back, and the tuber skin hardens so it peels less at digging."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Tubers set best when the soil stays cool, about 15 to 20 degrees Celsius. In hot soil above about 25 degrees, the plant puts its energy into leaves and sets fewer, smaller tubers. That is why most potatoes grow in the highlands. Also, too much nitrogen late in the season keeps the plant leafy, and a dry spell during bulking gives small or cracked tubers."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Seed tubers versus table potatoes"
+    },
+    {
+      "type": "table",
+      "caption": "How a seed potato differs from a potato for the kitchen",
+      "rows": [
+        ["", "Seed tubers", "Table potatoes"],
+        ["Purpose", "Planted to grow a new crop", "Cooked and eaten"],
+        ["Size", "Small to medium, about 30 to 60 grams", "Medium to large, the bigger the better price"],
+        ["Health", "From a field free of wilt, leaf roll and blight, certified when you can get it", "Can carry diseases that do not matter in the kitchen"],
+        ["Age", "Two to three months past harvest, with short sprouts", "Fresh, with no sprouts"],
+        ["Storage", "Racks in soft, indirect light", "Dark, cool and airy"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Market potatoes make poor seed. They may carry bacterial wilt or viruses, they may come from a variety that does not suit your elevation, and some stored potatoes are treated so they will not sprout. Even your own seed tubers lose vigor over time. After a few seasons of replanting your own small tubers, viruses build up and yields often fall, so renew with clean seed every few seasons.\n\nOur guide on [how to plant potato](/how-to-plant/potato) covers sprouting and cutting seed tubers step by step. To choose a variety, see the [potato varieties](/crop-varieties/potato) sold here."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why you should not eat green potatoes"
+    },
+    {
+      "type": "text",
+      "text": "A potato tuber turns green when light reaches it, in the field or in storage. The green itself is chlorophyll, which is harmless. But in the same skin, the tuber also builds up solanine and chaconine, natural toxins that taste bitter. In large amounts they can cause stomach pain, vomiting and headache.\n\nSo cut away every green part and every sprout, and peel deeply. Throw out a tuber that is green all over or tastes bitter, because cooking does not destroy these toxins. To prevent greening, hill up soil over the tubers during the season, keep dug potatoes out of the sun and store table potatoes in the dark. Seed tubers are different: they may turn green in soft light, and that even toughens them for planting."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Keep green potatoes away from children",
+      "text": "Children weigh less, so a smaller amount of solanine can make them sick. Sort out green and sprouted tubers before potatoes reach the kitchen."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Storing potatoes and controlling sprouting"
+    },
+    {
+      "type": "text",
+      "text": "Fresh potatoes have thin skin, so first cure them for about a week in a cool, shaded shed. Then sort out cut, bruised and rotting tubers. Store table potatoes in a dark, cool, airy place, in crates or open sacks rather than plastic, and check them every week.\n\nEvery potato rests after harvest before it can sprout. The length of that rest depends on the variety, from a few weeks to a few months. Once it ends, warmth makes the tubers sprout. Long sprouts draw water and starch out of a table potato, so it turns soft and shriveled. Seed potatoes are the opposite case. Spread them in thin layers on racks in soft light, and they grow short, thick green sprouts that break less at planting.\n\nAlso watch for the potato tuber moth. Its larvae tunnel into stored tubers, so keep the store clean, cover the tubers and take out any with holes. Our guide to [fruit and vegetable storage](/blog/fruit-and-vegetable-storage) covers crates and airflow for other crops."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Where potatoes grow in the Philippines"
+    },
+    {
+      "type": "text",
+      "text": "Benguet grows most of the country's potatoes, on the cool slopes of its highland towns. Mountain Province adds more in the Cordillera, while Davao del Sur and Bukidnon are the main growers in Mindanao. In these highlands, the main plantings fall in March to April and October to November.\n\nIn the lowlands, potato does well only in the coolest months. Farmers plant from November to mid December and harvest before the hot months begin. For the field work before planting, see our guide to [root crop land preparation](/land-preparation/root-crop-land-preparation)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan your potato season with anee.io"
+    },
+    {
+      "type": "text",
+      "text": "In anee.io, potato is one of the 85 crops with [growth stages](/features/growth-stages-and-weather). Each lot counts its days from its own planting day, so the hilling up, the side dressing and the vine cutting land on the right dates for every lot. Pick any date to see each lot's stage and what to watch for.\n\nLate blight spreads fast in cool, wet weather, and the forecast for each lot's location sits beside the plan. If dark, water soaked patches appear on the leaves, send Anee, the smart farm technician, a photo. She reads it with the lot's crop, its stage and the weather lately, and answers in Tagalog or English. Anee comes with Libre plus Anee at PHP 100 a month or PHP 1,000 a year, and her answers use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Show Anee your potato leaves",
+      "text": "Send a photo of a sick plant and get a reading that knows your crop, its age and your weather.",
+      "label": "Meet Anee",
+      "url": "/features/ai-agricultural-technician"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the potato tuber"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "Is a potato a root or a stem?",
+          "a": "A stem. The potato tuber is the swollen tip of an underground stem, and its eyes are buds. Kamote, by contrast, is a true storage root."
+        },
+        {
+          "q": "What is a seed tuber?",
+          "a": "A small to medium potato, about 30 to 60 grams, kept to plant a new crop. It should come from a healthy field and be two to three months past harvest with short, strong sprouts."
+        },
+        {
+          "q": "Can I plant potatoes bought at the market?",
+          "a": "You can try, but they make poor seed. They may carry diseases, may not suit your elevation and may be treated so they do not sprout. Clean seed tubers give a far better start."
+        },
+        {
+          "q": "Is it safe to eat a green potato?",
+          "a": "Cut away all the green and the sprouts and peel deeply. If the tuber is green all over or tastes bitter, throw it out, because cooking does not remove the toxins."
+        },
+        {
+          "q": "Can Anee tell me if my potatoes have late blight?",
+          "a": "Send Anee a clear photo of the leaves and she reads it with your lot's stage and weather, then says what she sees and what to check next. See our page on [late blight](/diseases/late-blight). Her answers use credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related potato guides",
+      "items": [
+        { "label": "How to plant potato", "url": "/how-to-plant/potato" },
+        { "label": "Potato varieties", "url": "/crop-varieties/potato" },
+        { "label": "Potato nutrient deficiency", "url": "/nutrient-deficiencies/potato-nutrient-deficiency" },
+        { "label": "Late blight", "url": "/diseases/late-blight" },
+        { "label": "Fruit and vegetable storage", "url": "/blog/fruit-and-vegetable-storage" }
+      ]
+    }
+  ]
+}

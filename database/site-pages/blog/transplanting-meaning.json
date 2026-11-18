@@ -1,0 +1,197 @@
+{
+  "section": "blog",
+  "slug": "transplanting-meaning",
+  "sortOrder": 1450,
+  "lang": "en",
+  "category": "Palay",
+  "title": "Transplanting Meaning in Farming: What It Is and How DAT Is Counted",
+  "metaTitle": "Transplanting Meaning in Farming and How DAT Is Counted",
+  "metaDescription": "Transplanting meaning in farming: moving seedlings from a seedbed to the field. Compare it with direct seeding, see seedling ages, and learn how DAT counts.",
+  "focusKeyword": "transplanting meaning",
+  "keywords": [
+    "transplanting meaning",
+    "what is transplanting",
+    "transplanting in agriculture",
+    "DAT",
+    "days after transplanting",
+    "transplant shock"
+  ],
+  "excerpt": "The transplanting meaning in farming is simple. You raise seedlings in a seedbed or tray first, then move them to the field. Palay, onion, tomato, eggplant and cabbage usually start this way. From that day on, farmers count the crop's age as DAT, or days after transplanting.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-best-time-to-plant-rice-philippines.webp",
+    "alt": "Farmers transplanting rice seedlings by hand in a flooded paddy in Pandi, Bulacan, with coconut palms behind them, the plain transplanting meaning in a rice field",
+    "credit": "Judgefloro, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "On a lowland rice farm, the season turns on one day, when the seedlings leave the seedbed for the paddy. That day starts the count farmers use for fertilizer, water and pest checks.\n\nIn Tagalog, farmers call it lipat tanim, and direct seeding sabog tanim. This guide explains both. It also gives the right seedling age for each crop, ways to limit transplant shock and how to count DAT."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Transplanting meaning: what is transplanting?"
+    },
+    {
+      "type": "text",
+      "text": "Transplanting is moving a young plant from where it started to where it will grow to harvest. In agriculture, it usually means moving seedlings from a seedbed, a tray or a nursery bag to the field.\n\nThat is the plain transplanting meaning a farmer uses. Transplanting in agriculture covers palay from a wet bed or a tray and vegetables like tomato and cabbage. It also covers fruit trees moved from nursery bags into holes."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Why farmers transplant"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Seedlings get a protected start in a small bed that is easy to water and watch.",
+        "The crop starts ahead of the weeds, because the field gets plants that are already weeks old.",
+        "The crop spends less time in the field, which helps fit two crops in a year.",
+        "It uses less seed, since nearly every seedling ends up in a hill.",
+        "You can choose only the strong seedlings and leave the weak ones behind."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Transplanting versus direct seeding for palay"
+    },
+    {
+      "type": "table",
+      "caption": "Transplanted and direct seeded rice compared",
+      "rows": [
+        ["", "Transplanting (lipat tanim)", "Direct seeding (sabog tanim)"],
+        ["Seed per hectare", "About 20 to 40 kg for the seedbed", "About 40 to 60 kg with a drum seeder, often more when broadcast"],
+        ["Labor", "Heavy at transplanting, a crew for a day or more", "Light at sowing"],
+        ["Weeds", "Rice starts ahead of them", "Weeds and rice start together, so weed control matters more"],
+        ["Snails and rats", "Bigger seedlings stand up better", "Young seedlings are easy prey in the first weeks"],
+        ["Field work", "Puddled, leveled field", "Very level field with small drainage canals"],
+        ["Harvest", "Transplant shock costs a few days", "Often ready a few days sooner from sowing"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Neither one is always better. Where labor is scarce or costly, many farmers switch to direct seeding. Where weeds, snails or uneven fields are the bigger problem, transplanting often pays. Our guides to [rice land preparation](/land-preparation/rice-land-preparation) and [direct seeded rice land preparation](/land-preparation/direct-seeded-rice-land-preparation) show the field work for each."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Transplanting vegetables"
+    },
+    {
+      "type": "text",
+      "text": "Farmers usually transplant vegetables with small seeds and slow early growth. Tomato, eggplant, pepper, cabbage, broccoli, lettuce and onion are the common ones. Root crops like carrot and radish are sown straight in the field, because a moved root grows crooked. Beans and corn are also direct seeded.\n\nCucurbits like ampalaya, squash and cucumber have roots that dislike any disturbance. Still, many growers raise them in trays. Then they move them very young, about a week after sprouting, with the whole root ball. Before any transplanting, harden the seedlings for about a week. Water them less and give them more sun, so the move to the field is not a shock."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Seedling age at transplanting"
+    },
+    {
+      "type": "table",
+      "caption": "Usual seedling age at transplanting, counted from sowing",
+      "rows": [
+        ["Crop", "Usual seedling age"],
+        ["Palay, hand transplanted", "18 to 21 days"],
+        ["Palay, mechanical transplanter", "14 to 18 days"],
+        ["Tomato", "About 25 to 30 days"],
+        ["Eggplant", "About 30 to 35 days, with 3 to 4 true leaves"],
+        ["Cabbage", "About 25 to 35 days, short and sturdy"],
+        ["Onion", "About 30 to 45 days"],
+        ["Ampalaya", "About 7 to 10 days after the seed sprouts"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Old seedlings recover slowly and tiller or branch less, while very young ones break easily and drown in deep water. So time the seedbed sowing for the day the field and the crew will be ready."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Transplant shock and how to reduce it"
+    },
+    {
+      "type": "text",
+      "text": "Transplant shock is the setback a seedling suffers after the move. Roots tear, and the plant loses water faster than it can take it up. So it wilts or yellows for some days. Rice leaf tips may dry before new leaves come. Most seedlings recover within a week or so, but a hard shock delays the whole crop."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Water the seedbed the day before you pull, so the roots come out with less damage.",
+        "Transplant in the late afternoon or on a cloudy day, not in the midday heat.",
+        "Keep pulled seedlings in the shade and plant them the same day.",
+        "Plant rice shallow, only a few centimeters deep, so tillers start sooner.",
+        "Keep a ball of soil on vegetable roots, and water each plant right after planting.",
+        "Use seedlings of the right age, because younger ones bounce back faster."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How days after transplanting (DAT) is counted"
+    },
+    {
+      "type": "text",
+      "text": "DAT stands for days after transplanting. The transplanting day itself is DAT 0. The next day is DAT 1, and a week later is DAT 7. Before that day, while the seedlings are still in the seedbed, farmers count days after sowing, or DAS.\n\nThe two counts add up to the crop's real age. A seedling pulled at 21 days and now at 30 DAT is 51 days from sowing. This matters at harvest time. Rice maturity counts from sowing. So a 115 day variety with 21 day old seedlings is ready at roughly 94 DAT, or a few days later after a hard shock.\n\nMost advice for transplanted crops uses DAT. For example, our [cropping calendar guide](/blog/how-to-make-a-cropping-calendar) puts the basal fertilizer at 0 to 14 DAT. The first top dressing follows at 22 to 26 DAT. Each lot keeps its own count, so a lot transplanted a week later gets each task a week later."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io counts DAT for every lot"
+    },
+    {
+      "type": "text",
+      "text": "anee.io counts every task from each lot's own transplanting day. While the seedlings are in the seedbed, a transplanted lot counts days after sowing. On its transplanting day, the count starts again at DAT 0. From then on, every task takes its date from that day. Two lots transplanted a week apart each get their own dates on the [cropping calendar](/features/cropping-calendar).\n\nWhen the crew runs late, drag the task to its new day. The delay counter shows any lot that runs behind. The [growth stages](/features/growth-stages-and-weather) read the same count, so you see each lot's stage and what to watch for. Anee, the smart farm technician, also reads each lot's day count and stage before she answers in Tagalog or English. She comes with Libre plus Anee at PHP 100 a month, and her answers use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Date every task from transplanting day",
+      "text": "Sign up free, add your lots and their transplanting days, and let the calendar count DAT for each one.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the transplanting meaning in farming"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What does transplanting mean in farming?",
+          "a": "It means raising seedlings in a seedbed, tray or nursery first. Then you move them to the field, where they grow to harvest. Farmers usually transplant palay, onion, tomato, eggplant and cabbage."
+        },
+        {
+          "q": "What is DAT in rice farming?",
+          "a": "DAT means days after transplanting. It counts the days since the seedlings went into the paddy. Most fertilizer, water and pest advice for transplanted rice uses it."
+        },
+        {
+          "q": "Is transplanting day DAT 0 or DAT 1?",
+          "a": "Transplanting day is DAT 0, and the next day is DAT 1. In anee.io, every lot counts the same way."
+        },
+        {
+          "q": "How old should rice seedlings be at transplanting?",
+          "a": "Usually 18 to 21 days for hand transplanting and 14 to 18 days for a mechanical transplanter."
+        },
+        {
+          "q": "Does Anee know how many days after transplanting my lot is?",
+          "a": "Yes. Anee reads each lot's day count and growth stage before she answers. So her advice on fertilizer or pests fits that day. She comes with Libre plus Anee and the paid plans, and her answers use credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related rice planting guides",
+      "items": [
+        { "label": "How to make a cropping calendar", "url": "/blog/how-to-make-a-cropping-calendar" },
+        { "label": "Pagtatanim ng palay", "url": "/crops/pagtatanim-ng-palay" },
+        { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
+        { "label": "Fertilizer for rice tillering", "url": "/blog/fertilizer-for-rice-tillering" },
+        { "label": "The cropping calendar in anee.io", "url": "/features/cropping-calendar" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "section": "blog",
+  "slug": "problems-in-agriculture",
+  "sortOrder": 1400,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "Problems in Agriculture: What Filipino Farmers Face and What Helps",
+  "metaTitle": "Problems in Agriculture in the Philippines and What Helps",
+  "metaDescription": "The main problems in agriculture in the Philippines, from typhoons and late pests to debt and low farmgate prices, and what a farmer can do about each.",
+  "focusKeyword": "problems in agriculture",
+  "keywords": [
+    "problems in agriculture",
+    "agricultural problems",
+    "problems of agriculture",
+    "problems in farming",
+    "problems in agriculture in the Philippines"
+  ],
+  "excerpt": "The biggest problems in agriculture in the Philippines are typhoons and dry spells, pests caught too late, costly inputs and debt, low farmgate prices, small farms, aging farmers and too little technical advice. No single fix covers them all. Still, each one has steps a farmer can take this season, and this guide lists them.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-el-nino-la-nina-farming-tips.webp",
+    "alt": "Rice plants drying out at the cracked edge of a paddy during a dry spell, one of the problems in agriculture a farmer cannot ignore",
+    "credit": "Dragfyre, CC BY SA 3.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Most agricultural problems feed each other. A typhoon flattens the crop, so the farmer borrows to replant. Then the loan pushes a quick sale at harvest, when the price is lowest.\n\nSo the goal is not to fix everything at once. It is to find the problem that cost you the most last season, and to work on that one first."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What are the main problems in agriculture in the Philippines?"
+    },
+    {
+      "type": "table",
+      "caption": "The usual problems in farming here, and the first thing that helps",
+      "rows": [
+        ["Problem", "What it does to the farm", "What helps first"],
+        ["Typhoons and floods", "Flattened or drowned crops, lost harvests", "Plant in a safer window, harvest early when a storm comes"],
+        ["El Nino dry spells", "Late rains, stunted crops, empty canals", "Shorter varieties, water saving, crops that need less water"],
+        ["Pests and diseases found late", "Damage spreads before anyone sprays", "Walk the field every week and act early"],
+        ["High input costs and debt", "Thin margins, loans at high interest", "Soil test, right rate, and a record of every peso"],
+        ["Low farmgate prices", "Selling wet palay at the harvest peak", "Dry and store, sell together, know your cost per kilo"],
+        ["Small, split farms", "Machines and bulk buying cost more per hectare", "Farm with neighbors, hire machine services"],
+        ["Aging farmers, scarce labor", "No crew at transplanting or harvest", "Mechanize the hardest jobs, plan crews ahead"],
+        ["Poor records", "No way to tell which lot lost money", "Write down costs, yield and price per lot"],
+        ["Little technical advice", "Guesswork on fertilizer and sprays", "Ask early, with a photo and your crop's age"]
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Typhoons, floods and dry spells"
+    },
+    {
+      "type": "text",
+      "text": "About 20 tropical cyclones enter Philippine waters in an average year, and several cross the farm belts of Luzon and the Visayas. In La Nina years, rain and floods come more often. Then an El Nino year brings the opposite: late rains, short wet seasons and dry canals.\n\nYou cannot stop the weather, but you can plan around it. Plant so the crop flowers and ripens outside your worst storm weeks. Keep drains and canals clean before the rainy months. When a storm is coming and the grain is mature enough, harvest early instead of waiting for the full count. Our [typhoon preparation guide](/blog/typhoon-preparation-for-farmers) lists the steps, and the [El Nino farming tips](/blog/el-nino-la-nina-farming-tips) cover the dry years."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Pests and diseases caught too late"
+    },
+    {
+      "type": "text",
+      "text": "Rice black bug, brown planthopper, stem borers, tungro and, in corn, the fall armyworm all start small. Most farmers notice them only when whole patches turn yellow or brown. By then, a spray costs more and saves less.\n\nThe fix is cheap but takes habit. Walk each lot once a week, part the plants and look at the base, the leaves and the undersides. Learn the two or three pests that hit your crop at each stage. If you do spray, use a product registered for that pest and crop, and follow the label and the FPA registration. Our guide to [integrated pest management](/pests/integrated-pest-management) shows how to decide when a spray is worth it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Input costs, debt and low farmgate prices"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Costs and debt"
+    },
+    {
+      "type": "text",
+      "text": "Fertilizer, seed, fuel and labor take most of a season's money, and many farmers borrow for them. Some loans come from the five six lender, where you borrow five and pay back six. Others come from a trader who lends the inputs and then buys the harvest at his own price.\n\nCutting waste is the surest saving. A soil test tells you which nutrients the field already has, so you stop buying what it does not need. Our guide on how to [lower fertilizer cost](/blog/lower-fertilizer-cost) explains the usual savings. Also write down every expense, because you cannot cut a cost you never counted."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Prices and middlemen"
+    },
+    {
+      "type": "text",
+      "text": "At harvest, everyone sells at once, and wet palay goes for less than dry. Traders hold the most power in those weeks. Farmers who can dry their grain, store it safely or sell together through a cooperative often get a better price. Besides, a farmer who knows his own cost per kilo knows the lowest price he can accept. See the [cost of producing rice per hectare](/blog/cost-of-producing-rice-per-hectare) for a worked example."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Small farms, aging farmers and scarce labor"
+    },
+    {
+      "type": "text",
+      "text": "Many Filipino farms are only a hectare or two, and each generation splits them further among heirs. Small fields make a tractor, a combine or a truckload of fertilizer cost more per hectare. Meanwhile, many young people leave for the city, and the farmers who stay are getting older. At transplanting and harvest, crews are hard to find.\n\nWorking with neighbors helps here. Planting at the same time lets a group hire one machine for many small lots, and it keeps pests from moving from field to field. For the hardest jobs, hire a service provider for the transplanter or the combine harvester. Our page on [agricultural technology](/blog/agricultural-technology) compares the machines a small farm can rent."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Poor records and little technical advice"
+    },
+    {
+      "type": "text",
+      "text": "Ask a farmer which of his lots made money last season, and many cannot say. Without records, the same mistakes repeat. A notebook works, as long as every cost, every bag and every sale goes in it. Our guide to [farm record keeping](/blog/farm-record-keeping) shows what to write down.\n\nAdvice is the other gap. A town may have one or two agricultural technicians for thousands of farmers, so many decisions rest on a neighbor's guess or a store clerk's tip. A good answer needs three things: what you see, the crop's age, and the weather lately."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How anee.io and Anee help with these agricultural problems"
+    },
+    {
+      "type": "text",
+      "text": "anee.io cannot stop a typhoon or set the price of palay. What it does is put the right task on the right day, warn you about the weather and keep the numbers honest."
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**A dated cropping calendar.** The [cropping calendar](/features/cropping-calendar) dates every task from each lot's own day zero, its day of sowing, transplanting or planting. When a lot runs behind, a delay counter shows it.",
+        "**Weather per lot.** Each lot's location gets its own forecast beside the plan, so a spray day with rain coming stands out.",
+        "**Satellite Weather.** A typhoon tracker centered on your farm, with a 300 km ring, rain radar and ten days of forecast for your field's exact spot. See [Satellite Weather](/features/satellite-weather).",
+        "**When to Plant.** Anee reads your town's record of storms, floods and droughts and the El Nino or La Nina outlook, then ranks the safer planting weeks for your crop. See the [When to Plant Analysis](/features/when-to-plant-analysis).",
+        "**Photo reading of pests.** Send Anee a photo of a pest or a sick plant. She reads it with the lot's crop, growth stage and weather, and answers in Tagalog or English.",
+        "**Records and reports.** Costs, labor, yield, buyers and prices stay with each lot, so the reports show what each lot cost and earned."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What it costs"
+    },
+    {
+      "type": "text",
+      "text": "The Libre plan is free and keeps your season, tasks and notes. Anee comes with Libre plus Anee, at PHP 100 a month or PHP 1,000 a year, together with Satellite Weather and the field helpers. Her answers and analyses use credits. The full reports, expenses and profit included, come with Solo Farmer at PHP 200 a month and Farm Owner at PHP 600 a month. You can pay from any bank or wallet app in the Philippines."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Start with last season's biggest loss",
+      "text": "Look back at last season and name the one problem that cost you the most. Was it a storm, a pest, a low price or a late crew? Fix that one first, then move to the next. Our guide on how to [reduce crop losses](/blog/reduce-crop-losses) walks through each stage."
+    },
+    {
+      "type": "cta",
+      "title": "Face the next season with a plan",
+      "text": "Sign up free, add your lots and planting days, and see every task dated with the weather beside it.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about problems in agriculture"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is the biggest problem in agriculture in the Philippines?",
+          "a": "For most farmers it is risk with little cushion: typhoons, floods and dry spells hit farms that already earn thin margins. Low farmgate prices and costly inputs make each loss harder to recover from."
+        },
+        {
+          "q": "What are the problems of agriculture a farmer can control?",
+          "a": "Timing, pest scouting, fertilizer rates, records and how you sell. You cannot control the weather or the market, but you can plant in a safer window, catch pests early, stop wasting fertilizer and know your cost per kilo."
+        },
+        {
+          "q": "How can technology help with problems in farming?",
+          "a": "Machines ease the labor shortage, and phone tools help with timing and advice. In anee.io, Anee, the smart farm technician, reads a photo of a pest with your lot's crop, stage and weather, and the calendar dates every task. She comes with Libre plus Anee at PHP 100 a month, and her answers use credits."
+        },
+        {
+          "q": "Is farming in the Philippines still worth it?",
+          "a": "It can be, but margins are thin, so the farms that do well watch their costs and timing closely. Our page on [farm profitability](/blog/farm-profitability) shows where the money goes."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related guides for a stronger season",
+      "items": [
+        { "label": "Typhoon preparation for farmers", "url": "/blog/typhoon-preparation-for-farmers" },
+        { "label": "El Nino and La Nina farming tips", "url": "/blog/el-nino-la-nina-farming-tips" },
+        { "label": "How to reduce crop losses", "url": "/blog/reduce-crop-losses" },
+        { "label": "Agriculture in the Philippine economy", "url": "/blog/agriculture-in-the-philippine-economy" },
+        { "label": "Farm profitability", "url": "/blog/farm-profitability" },
+        { "label": "Anee, the smart farm technician", "url": "/features/ai-agricultural-technician" }
+      ]
+    }
+  ]
+}

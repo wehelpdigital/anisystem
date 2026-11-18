@@ -1,0 +1,201 @@
+{
+  "section": "blog",
+  "slug": "fruit-and-vegetable-storage",
+  "sortOrder": 1430,
+  "lang": "en",
+  "category": "Farm Business",
+  "title": "Fruit and Vegetable Storage Without a Cold Room: A Guide for Farms",
+  "metaTitle": "Fruit and Vegetable Storage Without a Cold Room",
+  "metaDescription": "Fruit and vegetable storage for farms with no cold chain: harvest time, shade, crates, airflow, which produce to keep apart and how long each one keeps.",
+  "focusKeyword": "fruit and vegetable storage",
+  "keywords": [
+    "fruit and vegetable storage",
+    "storage of vegetables and fruits",
+    "postharvest losses",
+    "keeping vegetables fresh",
+    "evaporative cooler"
+  ],
+  "excerpt": "Good fruit and vegetable storage starts in the field: harvest in the cool of the morning, get the produce into shade within the hour, pack it in crates with air around it, and keep ripening fruit away from leafy greens. Without a cold room, these simple steps decide whether a harvest reaches the buyer fresh or ends up as feed.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-digital-farming-tools.webp",
+    "alt": "A farmer in La Trinidad, Benguet picks leafy greens into a white plastic crate inside a greenhouse, the first step of good fruit and vegetable storage",
+    "credit": "Flordeliz Ranola, CC BY 4.0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Postharvest losses hit vegetable and fruit growers hard. Produce wilts, bruises and rots between the field and the buyer, and every lost kilo is money already spent on seed, fertilizer and labor.\n\nMost of that loss happens in the first hours after harvest. The good part is that most fixes cost little. Keeping vegetables fresh takes shade, crates, clean water and a few habits, not a cold room."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why fruits and vegetables spoil after harvest"
+    },
+    {
+      "type": "text",
+      "text": "A picked tomato or pechay is still alive. It keeps breathing, burning its own sugars and losing water through its skin. Heat speeds all of that up, so produce left in the sun ages in hours instead of days.\n\nWater loss shows as wilting and shriveling, and since you sell by the kilo, it also cuts your weight. Bruises and cuts open the door to rot. Finally, ethylene, a gas that ripening fruit gives off, makes nearby produce ripen, yellow or turn bitter sooner. Good storage of vegetables and fruits slows down each of these."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Fruit and vegetable storage starts at harvest"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Harvest when it is cool.** Pick in the early morning or late afternoon, when the produce holds the least field heat. Leafy greens are crisp at dawn.",
+        "**Pick at the right stage.** For a long trip, pick tomato when it first shows pink, and mango and banana when mature but still green. Fully ripe fruit is for nearby buyers.",
+        "**Get it into shade fast.** Move each crate under a tree, a tarp or a shed right away. A crate left in the sun for an hour heats up quickly.",
+        "**Handle it gently.** Place produce in the crate instead of throwing it, and do not drop full crates."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Clean, sort and pack"
+    },
+    {
+      "type": "text",
+      "text": "Brush off soil, and wash only what needs it, using clean water. Then let the produce dry in the shade before packing, because wet produce in a closed crate rots fast. Onion, garlic, potato and kamote keep better dry and unwashed.\n\nNext, sort. Take out anything bruised, cut, diseased or overripe, since one rotting fruit spreads mold to the rest. Sell those first or use them at home. Then group the rest by size and ripeness, so each crate ripens evenly and buyers pay for the grade."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Crates instead of sacks"
+    },
+    {
+      "type": "text",
+      "text": "Sacks crush the bottom layer and trap heat in the middle. Plastic crates stack without pressing on the produce, let air through the sides and wash clean between trips. For soft fruit like tomato and mango, line the crate with old newspaper or banana leaves. Fill each crate only to the rim, so the crate on top does not press down on the fruit below."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep air moving and the heat out"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "Store in a shaded, airy room or shed, never under a metal roof in full sun.",
+        "Raise crates off the floor on pallets or bamboo slats, and leave gaps between stacks and walls.",
+        "Open the doors and windows at night, when the air is cooler, and close them in the hottest hours.",
+        "Wet the floor or hang damp sacks near leafy greens to keep the air moist, but keep water off the produce itself.",
+        "Travel at night or at dawn, with the load covered from the sun but open to the air."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Which produce to keep apart"
+    },
+    {
+      "type": "text",
+      "text": "Some fruits give off a lot of ethylene as they ripen: banana, mango, papaya, tomato, avocado, guava, jackfruit and melons. Others suffer from it. Leafy greens, cabbage, broccoli, cucumber, eggplant, okra and carrots yellow, spot or turn bitter faster near ripening fruit. So keep these two groups in separate crates and, if you can, separate rooms.\n\nYou can also use ethylene on purpose. If you want green fruit to ripen sooner, put it in a closed box with a few ripe bananas."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Too cold is also bad",
+      "text": "Tropical produce can suffer chilling injury in a cold fridge. Banana skins darken below about 13 degrees Celsius, and mango, eggplant, cucumber and tomato pit, spot or lose flavor when kept too cold. Give each crop its own temperature, as in the table below."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Simple evaporative coolers"
+    },
+    {
+      "type": "text",
+      "text": "An evaporative cooler uses water to pull heat away. The simplest one is a clay pot set inside a bigger clay pot, with wet sand between them and a damp cloth on top. A bigger version is a brick chamber with double walls filled with wet sand. As the water evaporates from the sand, it takes heat with it.\n\nBe honest with yourself about our climate, though. These coolers work best in dry, breezy weather. In our humid rainy months, the drop in temperature is small. Still, the damp air inside keeps leafy greens from wilting, which is often the bigger gain. Keep the cooler in the shade, wet the sand twice a day and clean it often."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long fruits and vegetables keep"
+    },
+    {
+      "type": "table",
+      "caption": "Typical storage life at the best temperature for each crop. These are typical ranges only, and they change with the variety, the ripeness and the handling.",
+      "rows": [
+        ["Produce", "Gives off ethylene?", "Best storage temperature", "Typical storage life there"],
+        ["Leafy greens (pechay, lettuce, mustasa)", "No, but sensitive", "0 to 5 degrees", "About 2 to 3 weeks"],
+        ["Cabbage", "No, but sensitive", "Near 0 degrees", "Several weeks"],
+        ["Tomato, mature green", "Yes", "13 to 21 degrees", "1 to 3 weeks while it ripens"],
+        ["Tomato, ripe red", "Yes", "8 to 10 degrees", "About 4 to 10 days"],
+        ["Eggplant", "No, but sensitive", "8 to 12 degrees", "About 1 to 2 weeks"],
+        ["Banana, mature green", "Yes", "13 to 15 degrees", "1 to 4 weeks"],
+        ["Mango, mature", "Yes", "About 13 degrees", "2 to 3 weeks"],
+        ["Calamansi", "Low", "9 to 10 degrees", "About 2 weeks"],
+        ["Kamote, cured", "No, but sensitive", "13 to 15 degrees", "4 to 7 months"]
+      ]
+    },
+    {
+      "type": "text",
+      "text": "Without cooling, expect much less. In an open shed, leafy greens often last only a day or two before they wilt, and ripe tomatoes a few days. Dry, cured onion and garlic keep for months in a dry, airy place. For potatoes, see our guide to the [potato tuber](/blog/potato-tuber), which covers dark, cool storage and sprouting."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Track storage losses with anee.io"
+    },
+    {
+      "type": "text",
+      "text": "You can only cut losses you can see. In anee.io, the [harvest records](/features/harvest-records) in Observations keep each lot's yield, buyer and price. They also keep how you stored the harvest, what you lost and the share the buyer rejected, and why. After two or three harvests, the records show whether the loss happens in the field, in storage or on the road.\n\nThe [cropping calendar](/features/cropping-calendar) dates the harvest from each lot's own planting day, so you can line up crates, buyers and transport before the day comes. The forecast beside the plan helps you avoid picking in the rain. If spots or mold show up on stored fruit, send Anee, the smart farm technician, a photo. She reads it with the crop and the weather and answers in Tagalog or English. Anee comes with Libre plus Anee at PHP 100 a month, and her answers use credits."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "Weigh it twice",
+      "text": "Weigh a few crates at harvest and again when you sell. The difference is your storage and transport loss, in kilos and in pesos."
+    },
+    {
+      "type": "cta",
+      "title": "See where your harvest is lost",
+      "text": "Sign up free, record each harvest with its buyer, price and losses, and plan the next pick around the weather.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about fruit and vegetable storage"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "How do you store vegetables without a refrigerator?",
+          "a": "Harvest in the cool morning, put the produce in shade right away, pack it in ventilated crates and keep it in an airy, shaded room off the floor. For leafy greens, a clay pot cooler or damp sacks nearby keep the air moist."
+        },
+        {
+          "q": "Which fruits should not be stored with vegetables?",
+          "a": "Ripe banana, mango, papaya, tomato, avocado and melons give off ethylene. Keep them away from leafy greens, cabbage, cucumber, eggplant and carrots, which spoil faster near them."
+        },
+        {
+          "q": "Should I wash vegetables before storing them?",
+          "a": "Only if they are dirty, and only in clean water. Then dry them in the shade before packing. Onion, garlic, potato and kamote keep better unwashed and dry."
+        },
+        {
+          "q": "How do I keep leafy vegetables fresh longer?",
+          "a": "Pick them at dawn, keep them shaded and moist but not dripping, and store them away from ripening fruit. In a cold room near 0 to 5 degrees, they keep for about two to three weeks."
+        },
+        {
+          "q": "Can anee.io help me cut postharvest losses?",
+          "a": "Yes. Its harvest records keep each lot's yield, storage, losses and rejects, so you see where the loss happens. You can also send Anee a photo of spoiled produce for a reading, with Libre plus Anee at PHP 100 a month."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related harvest and selling guides",
+      "items": [
+        { "label": "How to reduce crop losses", "url": "/blog/reduce-crop-losses" },
+        { "label": "The potato tuber and its storage", "url": "/blog/potato-tuber" },
+        { "label": "Palay drying and storage", "url": "/blog/palay-drying" },
+        { "label": "Farm app for vegetable growers", "url": "/blog/farm-app-for-vegetable-growers" },
+        { "label": "Online marketplaces for farmers", "url": "/blog/online-marketplace-for-farmers-philippines" },
+        { "label": "Harvest records in anee.io", "url": "/features/harvest-records" }
+      ]
+    }
+  ]
+}

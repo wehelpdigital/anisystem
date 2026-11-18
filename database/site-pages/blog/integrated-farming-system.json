@@ -1,0 +1,194 @@
+{
+  "section": "blog",
+  "slug": "integrated-farming-system",
+  "sortOrder": 1460,
+  "lang": "en",
+  "category": "Planning",
+  "title": "Integrated Farming System: How to Combine Crops, Animals and Fish",
+  "metaTitle": "Integrated Farming System in the Philippines: How to Start",
+  "metaDescription": "An integrated farming system links crops, animals and fish so one's waste feeds another. See rice fish duck farming, coconut intercropping and how to start.",
+  "focusKeyword": "integrated farming system",
+  "keywords": [
+    "integrated farming system",
+    "integrated agriculture farming",
+    "integrated farming in the Philippines",
+    "rice fish duck farming",
+    "diversified farming"
+  ],
+  "excerpt": "An integrated farming system combines crops, livestock, fish or trees on one farm so that each part feeds another. Rice straw feeds the carabao, manure feeds the compost, ducks weed the paddy and fish droppings feed the rice. Done well, it spreads your income and your risk. But it also takes more work, skill and planning than one crop.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-farm-app-for-livestock-and-crops.webp",
+    "alt": "A flock of ducklings foraging in a harvested rice field in Candaba, Pampanga, a rice and duck link in an integrated farming system",
+    "credit": "Judgefloro, Public domain, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Many Filipino farms already mix things without giving it a name. There are chickens under the mango trees, a carabao tied on the dike, a fishpond near the house and vegetables by the fence.\n\nAn integrated farm goes one step further. It plans the links on purpose, so the leftovers of one part become the feed, fertilizer or weed control of another."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is an integrated farming system?"
+    },
+    {
+      "type": "text",
+      "text": "An integrated farming system is a farm where crops, animals, fish and trees work together. Each part uses what another part leaves behind. Diversified farming only grows many things side by side. Integrated agriculture farming links them, so less goes to waste and less needs buying.\n\nHere is a simple loop on a rice farm:"
+    },
+    {
+      "type": "list",
+      "ordered": true,
+      "items": [
+        "Rice straw and bran feed the carabao, goats and chickens.",
+        "Their manure goes into a compost pile or a worm bin.",
+        "The compost goes back to the rice and the vegetable beds.",
+        "Ducks in the paddy eat weeds, insects and young golden apple snails.",
+        "After harvest, the ducks pick up the fallen grain in the stubble."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Common kinds of integrated farming in the Philippines"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice with fish"
+    },
+    {
+      "type": "text",
+      "text": "In a palayisdaan, tilapia or carp live in the flooded paddy with the rice. A deeper trench gives them shelter when the water drops. The fish eat insects and weeds, and their droppings feed the crop. In return, the field needs higher dikes, steady water and no sprays that harm fish. Our guide to [palayisdaan](/blog/palayisdaan) covers the trench, the stocking and the costs."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Rice with ducks"
+    },
+    {
+      "type": "text",
+      "text": "Ducks go into the paddy once the transplanted rice has rooted firmly, often a week or two after transplanting. They paddle through the hills eating weeds, insects and small snails, and stir the water as they go. Take them out before the panicles form, or they will start on the grain. After harvest, many farmers in Central Luzon herd ducks onto the stubble to eat the fallen grain.\n\nSome farms run rice fish duck farming, with fish in the trench and ducks on the paddy. If you try it, stock fingerlings big enough that the ducks cannot swallow them."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Crops, livestock and vermicompost"
+    },
+    {
+      "type": "text",
+      "text": "Pigs, goats, chickens and cattle turn crop leftovers and forage into meat, eggs and manure. Napier grass and kakawate leaves along the farm's edges add feed for goats and cattle. The manure then goes into compost or a worm bin with African night crawlers, and the vermicast feeds the vegetables. These [examples of organic fertilizer](/blog/organic-fertilizer-examples) show what each manure gives."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Coconut intercropping"
+    },
+    {
+      "type": "text",
+      "text": "Coconut palms stand far apart, and light reaches the ground between them. So many farmers grow banana, coffee, cacao, pineapple, root crops or corn under the palms. Others plant forage and let cattle or goats graze there. Keep a ring of about 2 meters around each trunk free of crops so the palm's roots are not disturbed. For feeding the palms themselves, see our [coconut fertilizer](/crops/coconut-fertilizer) guide."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Benefits of an integrated farming system"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**Income at different times.** Eggs every week, vegetables every month and palay every season, instead of one payday a season.",
+        "**Less risk.** If a typhoon flattens the rice, the animals and the trees can still carry the family.",
+        "**Fewer bought inputs.** Manure replaces part of the fertilizer, and leftovers replace part of the feed.",
+        "**Food at home.** Fish, eggs, vegetables and fruit for the table, not only for sale.",
+        "**Better soil.** Manure and compost build up organic matter year after year."
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The extra work and the risks"
+    },
+    {
+      "type": "text",
+      "text": "An integrated farm is never off duty. Animals need feed and water every single day, through planting, harvest and the rainy months. Each part also asks for its own skills, from fish water quality to animal health.\n\nThe parts can also hurt each other. A spray that is fine for rice can kill the fish or the ducks. Loose goats eat seedlings, and a sick flock can wipe out the profit of a season. Besides, you now have several products to sell, each with its own buyers. Start up costs for pens, trenches and stock come before any income does."
+    },
+    {
+      "type": "callout",
+      "tone": "warn",
+      "title": "Check every spray near fish and ducks",
+      "text": "Many insecticides are toxic to fish and birds. Before you spray a field with fish or ducks, read the label's warnings and follow the FPA registration. Move the animals out if the label says so. Better still, scout first and spray only when you must, as in [integrated pest management](/pests/integrated-pest-management)."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to start small"
+    },
+    {
+      "type": "steps",
+      "items": [
+        { "title": "Start from what you have", "text": "Look at your land, water, labor and money. A farm with a reliable water supply can add fish, while a dry upland farm might start with goats and a compost pile." },
+        { "title": "Add one link at a time", "text": "Begin with one connection, like a few hens whose manure goes to the vegetable beds, or ducks on the rice stubble after harvest." },
+        { "title": "Size it to your feed and time", "text": "Keep only as many animals as your farm can feed and your family can tend every day." },
+        { "title": "Keep records for each part", "text": "Write down what each part costs and earns, so you know which link pays. Our page on [farm record keeping](/blog/farm-record-keeping) shows how." },
+        { "title": "Grow the loop slowly", "text": "Once one link works for a full year, add the next. Plan the season's crops with our guide to [multiple cropping](/blog/multiple-cropping)." }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Keep the crop side on track with anee.io"
+    },
+    {
+      "type": "text",
+      "text": "anee.io is built around crops, so it has no fish or duck module and does not track animal health or feed. Still, the crop side of an integrated farm fits well. Add the paddy, the vegetable plot and the coconut block as separate [farm lots](/features/farm-lots). Then put the fish stocking, the duck days and the compost turning on the [cropping calendar](/features/cropping-calendar), right beside the rice work.\n\nKeep fish and duck counts and photos in the lot's notes, and each harvest's yield, buyer and price in the harvest records. The NPK Plus calculator counts chicken or carabao manure and vermicompost beside your fertilizer bags. When you ask Anee, the smart farm technician, about a pest, tell her the field holds fish or ducks so her advice fits. Anee and NPK Plus come with Libre plus Anee at PHP 100 a month, and Anee's answers use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Plan every part of your farm on one calendar",
+      "text": "Sign up free, add each part of the farm as a lot and see the rice, compost and duck work side by side.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about the integrated farming system"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is an integrated farming system in simple words?",
+          "a": "It is a farm that links crops, animals, fish or trees. The waste of one becomes the feed or fertilizer of another. Rice straw feeds animals, and their manure feeds the crops."
+        },
+        {
+          "q": "What is the difference between integrated and diversified farming?",
+          "a": "Diversified farming grows many crops or animals side by side. Integrated farming also links them, so each part uses what another part leaves behind."
+        },
+        {
+          "q": "How does rice fish duck farming work?",
+          "a": "Fish live in a trench and the flooded paddy. Ducks go in a week or two after transplanting to eat weeds, insects and snails. The ducks come out before the panicles form, and no spray harmful to fish or birds goes on."
+        },
+        {
+          "q": "Is an integrated farm more profitable?",
+          "a": "It can be, because you buy less fertilizer and feed and sell more kinds of products. But it takes more work and skill, and a weak link can lose money, so keep records for each part."
+        },
+        {
+          "q": "Can anee.io track my ducks and fish?",
+          "a": "Not as animals: it has no livestock or fish module. But you can put their tasks on the cropping calendar and keep counts in notes. Also tell Anee the paddy holds fish or ducks, so her pest advice fits. Anee comes with Libre plus Anee, and her answers use credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related farm planning guides",
+      "items": [
+        { "label": "Palayisdaan: rice fish farming", "url": "/blog/palayisdaan" },
+        { "label": "Multiple cropping", "url": "/blog/multiple-cropping" },
+        { "label": "Farm app for livestock and crops", "url": "/blog/farm-app-for-livestock-and-crops" },
+        { "label": "Examples of organic fertilizer", "url": "/blog/organic-fertilizer-examples" },
+        { "label": "Small farm ideas in the Philippines", "url": "/blog/small-farm-ideas-philippines" }
+      ]
+    }
+  ]
+}

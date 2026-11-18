@@ -1,0 +1,189 @@
+{
+  "section": "blog",
+  "slug": "humus-soil",
+  "sortOrder": 1420,
+  "lang": "en",
+  "category": "Yield and Fertilizer",
+  "title": "Humus Soil: What Humus Is and How to Build It on Your Farm",
+  "metaTitle": "Humus Soil: What Humus Is and How to Build It",
+  "metaDescription": "Humus soil is dark, crumbly and holds water and nutrients. Learn what humus is, the signs your soil lacks it, and how compost and residue build it up.",
+  "focusKeyword": "humus soil",
+  "keywords": [
+    "humus soil",
+    "what is humus",
+    "organic matter",
+    "compost",
+    "soil organic matter"
+  ],
+  "excerpt": "Humus soil is soil rich in humus, the dark, stable part of organic matter that is left once leaves, roots and manure have rotted beyond recognition. It holds water like a sponge, keeps nutrients from washing away and makes the ground crumbly. You build it with compost, manure, crop residue and green manure, over seasons rather than weeks.",
+  "heroImage": {
+    "src": "/images/site/guides/blog-organic-fertilizer-for-pechay.webp",
+    "alt": "Beds of young pechay beside a freshly prepared bed of dark, crumbly soil in Pulilan, Bulacan, the look of a humus soil",
+    "credit": "Judgefloro, CC0, via Wikimedia Commons"
+  },
+  "blocks": [
+    {
+      "type": "text",
+      "text": "Two neighbors can use the same seed and the same fertilizer and still harvest very different crops. Often the difference is in the soil itself, in how much humus it holds.\n\nIn our heat and rain, organic matter breaks down fast. So many Filipino farm soils carry little of it, and burning straw or leaving fields bare makes it worse. The good news is that humus can be built back, one season at a time."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "What is humus?"
+    },
+    {
+      "type": "text",
+      "text": "Soil organic matter is everything in the soil that was once alive. It has three parts. First come the living things: roots, earthworms, fungi and bacteria. Next is fresh residue still rotting, like straw, leaves and manure you can still recognize. The third part is humus.\n\nHumus is what remains after the soil life has broken that material down as far as it goes. It is dark brown to black, soft and spongy, and it no longer looks like any leaf or stalk. Unlike fresh residue, it can last in the soil for years. So when farmers ask what humus is, the short answer is the well rotted, lasting part of organic matter."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Humus, compost and organic matter are not the same"
+    },
+    {
+      "type": "text",
+      "text": "Compost is organic material you rot in a pile and then spread on the field. Once it is in the soil, part of it turns into humus over the following months. Organic matter is the wider word for all of it, the humus included. That is why a field fed with compost every season slowly becomes a humus soil, while a field that gets one big load and nothing after does not."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Why humus soil grows better crops"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "**It holds water.** Humus soaks up water and lets roots draw on it for days after the rain stops. That matters most on sandy soil and in dry spells.",
+        "**It loosens clay.** Humus glues soil grains into crumbs, so heavy clay drains better, crusts less and is easier to plow.",
+        "**It holds nutrients.** Potassium, calcium, magnesium and the ammonium from fertilizer cling to humus instead of washing down with the rain.",
+        "**It feeds the crop slowly.** As soil life breaks it down, humus releases nitrogen, phosphorus and sulfur in small amounts all season.",
+        "**It keeps the soil alive.** Earthworms and helpful microbes live on organic matter, and they keep the soil open for roots and air.",
+        "**It steadies the pH.** Soil rich in humus swings less between sour and sweet, so nutrients stay easier for roots to take up."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "As a result, fertilizer works better on a humus soil. Less of it washes away, so more ends up in the crop. Our guide to [fertilizer for sandy soil](/blog/fertilizer-for-sandy-soil) shows how much a poor, light soil loses without it."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Signs your soil is low in humus"
+    },
+    {
+      "type": "list",
+      "ordered": false,
+      "items": [
+        "The topsoil is pale, grey or light brown instead of dark.",
+        "A hard crust forms after rain, and seedlings struggle to push through.",
+        "The field dries out and cracks soon after a rain.",
+        "Plowing turns up hard clods that do not break apart.",
+        "Rain runs off or stands in puddles instead of soaking in.",
+        "You find few earthworms when you dig a hole.",
+        "The crop needs more fertilizer every year for the same harvest."
+      ]
+    },
+    {
+      "type": "text",
+      "text": "A soil test gives the real number for organic matter, along with the pH and nutrients. Your Municipal Agriculture Office can tell you where to send a sample. Fields that lose topsoil also lose humus first, so read our guide to [soil erosion](/blog/soil-erosion) if your land slopes."
+    },
+    {
+      "type": "callout",
+      "tone": "tip",
+      "title": "The squeeze test",
+      "text": "Take a handful of moist topsoil and squeeze it, then poke the ball with a finger. Soil rich in humus holds together and then crumbles easily. Poor clay stays as a sticky lump, and poor sand falls apart at once."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How to build humus soil"
+    },
+    {
+      "type": "steps",
+      "items": [
+        { "title": "Stop burning crop residue", "text": "Rice straw, corn stalks and cane trash are free organic matter. Spread them as mulch or work them into the soil, and give them a few weeks to rot before you plant." },
+        { "title": "Make and spread compost", "text": "Pile green material like fresh grass, kakawate leaves and vegetable scraps with brown material like straw and dry leaves, plus some manure. Keep the pile as damp as a squeezed sponge and turn it every week or two. In our heat it often matures in two to three months." },
+        { "title": "Use manure, composted first", "text": "Chicken, carabao, cattle, goat and pig manure all add organic matter. Compost it before use, because fresh chicken dung can burn roots and fresh manure on vegetables carries germs. These [examples of organic fertilizer](/blog/organic-fertilizer-examples) compare them." },
+        { "title": "Grow a green manure", "text": "Sow a legume such as mungbean, cowpea or sesbania between crops. Cut it or plow it under around flowering, when it holds the most nitrogen and is still soft enough to rot fast." },
+        { "title": "Try vermicompost", "text": "Worms like the African night crawler turn kitchen scraps and manure into vermicast in a few weeks. It is a rich, fine compost for seedbeds and vegetables." },
+        { "title": "Keep the ground covered and plow less", "text": "Every plowing lets air in and speeds the breakdown of organic matter. Mulch, cover crops and [no till farming](/blog/no-till-farming) all slow that loss." }
+      ]
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "How long does it take to build humus?"
+    },
+    {
+      "type": "text",
+      "text": "Compost itself takes weeks to a few months. The soil is slower. With steady compost, manure and residue, most farmers see darker, crumblier soil that holds water better within a season or two. A higher organic matter reading on a soil test usually takes several years.\n\nAlso, the work never ends in the tropics. Heat and rain keep burning up organic matter, so add some every season. If you stop, the gains slowly fade."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "What about humic acid products?"
+    },
+    {
+      "type": "text",
+      "text": "Agri stores sell humic acid and humate products as soil conditioners. They may help a little, but a few liters cannot replace the tons of compost, manure and residue a hectare needs. Spend on organic matter first. If you do buy one, follow the label."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Plan your soil building in anee.io"
+    },
+    {
+      "type": "text",
+      "text": "Building humus is many small jobs over many seasons, so they are easy to forget. In anee.io, put compost making, green manure sowing, plowing under and mulching on the [cropping calendar](/features/cropping-calendar). Each task gets its date from the lot's own day zero, so the green manure goes in early enough to rot before planting.\n\nTake a photo of the soil in each lot every season and keep it in the lot's notes, so you can compare the color and crumb year to year. The [NPK Plus calculator](/features/npk-plus-calculator) counts chicken or carabao manure and vermicompost beside your fertilizer bags, so you buy fewer bags. You can also ask Anee, the smart farm technician, in Tagalog or English how to compost what your farm has. NPK Plus and Anee come with Libre plus Anee at PHP 100 a month, and Anee's answers use credits."
+    },
+    {
+      "type": "cta",
+      "title": "Put your soil plan on the calendar",
+      "text": "Sign up free and date every compost, green manure and mulching task from each lot's planting day.",
+      "label": "Start free",
+      "url": "/signup"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Questions about humus soil"
+    },
+    {
+      "type": "faq",
+      "items": [
+        {
+          "q": "What is humus in simple words?",
+          "a": "Humus is the dark, fully rotted part of the organic matter in soil. Leaves, roots and manure turn into it after soil life breaks them down, and it can last in the soil for years."
+        },
+        {
+          "q": "Is humus the same as compost?",
+          "a": "No. Compost is material you rot in a pile and then spread. Once it is in the soil, part of it slowly turns into humus."
+        },
+        {
+          "q": "How do I know if my soil has enough humus?",
+          "a": "Dark, crumbly soil that smells earthy, soaks up rain and has plenty of earthworms usually has a good amount. For a real number, get a soil test through your Municipal Agriculture Office."
+        },
+        {
+          "q": "Can I just buy humus?",
+          "a": "You can buy compost, vermicast and humic products. They help, but a field needs tons of organic matter every year, so most of it should come from your own residue, manure and green manure."
+        },
+        {
+          "q": "Can Anee help me plan compost and green manure?",
+          "a": "Yes. Ask Anee in Tagalog or English what to compost or which green manure fits before your next crop. She reads your lots and their crops first. Anee comes with Libre plus Anee and the paid plans, and her answers use credits."
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "title": "Related soil and fertilizer guides",
+      "items": [
+        { "label": "Examples of organic fertilizer", "url": "/blog/organic-fertilizer-examples" },
+        { "label": "Soil erosion", "url": "/blog/soil-erosion" },
+        { "label": "Organic farming in the Philippines", "url": "/blog/organic-farming-philippines" },
+        { "label": "No till farming", "url": "/blog/no-till-farming" },
+        { "label": "Fertilizer for sandy soil", "url": "/blog/fertilizer-for-sandy-soil" },
+        { "label": "The NPK Plus calculator", "url": "/features/npk-plus-calculator" }
+      ]
+    }
+  ]
+}
