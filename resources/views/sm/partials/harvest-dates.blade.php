@@ -47,9 +47,10 @@
 
         return $n > 1 ? 'in ' . $n . ' days' : ($n === 1 ? 'tomorrow' : ($n === 0 ? 'today' : ($n === -1 ? 'yesterday' : abs($n) . ' days ago')));
     };
-    // Two pens: the lot is the plan's, the record is the Observations
-    // module's. A closed season takes no marks either way.
-    $hvMay = \App\Support\WorkerContext::canEdit() && \App\Support\WorkerContext::canWriteModule('observations') && ! $schedule->isLocked();
+    // The plan's pen (2026-11-18, the owner: a worker given edit saw no "Set as harvested"). Marking a lot harvested is
+    // work on the plan; its harvest record is written to Observations with it, even for a worker who cannot open
+    // Observations (the link below asks that module's own right). A closed season takes no marks.
+    $hvMay = \App\Support\WorkerContext::canEdit() && ! $schedule->isLocked();
     $hvSeeObs = \App\Support\WorkerContext::canUseModule('observations');
     $hvOwner = ! \App\Support\WorkerContext::inWorkerContext();
     $hvAllIn = $hvRows->isNotEmpty() && $hvRows->every(fn ($r) => $r['harvested'] !== null);

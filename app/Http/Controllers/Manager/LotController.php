@@ -254,15 +254,14 @@ class LotController extends BaseScheduleController
      * filed as its own observation on this lot, dated the harvest day, and
      * the lot keeps their ids so taking the mark back takes them too.
      *
-     * Two pens: the lot is the plan's (assertCanEdit, through the resolver)
-     * and the record is the Observations module's. A closed season refuses.
+     * The plan's pen (assertCanEdit, through the resolver): marking a lot
+     * harvested is work on the plan, and its record is written to
+     * Observations with it, also for a worker who cannot open Observations
+     * (2026-11-18, the owner). A closed season refuses.
      */
     public function harvest(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
-        if (! \App\Support\WorkerContext::canWriteModule('observations')) {
-            return $this->jsonFail('The farm owner has not given you Observations, where the harvest is written.', 403);
-        }
 
         $rules = [
             'lotId' => 'required|integer',
@@ -355,9 +354,6 @@ class LotController extends BaseScheduleController
     public function unharvest(Request $request)
     {
         $schedule = $this->scheduleFromRequest($request);
-        if (! \App\Support\WorkerContext::canWriteModule('observations')) {
-            return $this->jsonFail('The farm owner has not given you Observations, where the harvest is written.', 403);
-        }
         $data = Validator::make($request->all(), ['lotId' => 'required|integer'])->validate();
 
         $lot = AsScheduleLot::where('croppingScheduleId', $schedule->id)

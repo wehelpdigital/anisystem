@@ -108,10 +108,10 @@ class WorkerModuleAccess
          * a photo on an observation needs both pens. */
         ['sm.post-harvest',   'observations'],
         ['sm.post-harvest.*', 'observations'],
-        // Marking a lot harvested files its harvest record in Observations;
-        // the controller also asks the board's pen, since the lot is the plan's.
-        ['sm.lots.harvest',      'observations:edit'],
-        ['sm.lots.harvest.undo', 'observations:edit'],
+        // Marking a lot harvested is the plan's act (2026-11-18, the owner): a worker who may edit the plan may mark it,
+        // and its harvest record goes to Observations with it. The controller's resolver asks the same pen and the lock.
+        ['sm.lots.harvest',      'activities:edit'],
+        ['sm.lots.harvest.undo', 'activities:edit'],
 
         // Tags ride the activity forms, so whoever may work the board may
         // read and coin them; the writes still pass canEdit inside.
