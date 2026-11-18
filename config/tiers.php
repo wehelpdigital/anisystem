@@ -14,7 +14,7 @@
  * chat, the credit shop, Realign by Anee, every run that spends a credit --
  * and `aiAnalyses` is the four analysis wizards (What to Plant, When to
  * Plant, Variety Research, Crop Protocol). Libre has neither; Libre + Anee
- * (2026-09-18) is Libre with both, for ₱70 a month: the same farm limits,
+ * (2026-09-18) is Libre with both, for ₱100 a month (₱70 until 2026-11-18): the same farm limits,
  * no ads (Ads::showTo() shows them to Libre only), and the whole of Anee. Solo and Owner have always had both.
  *
  * Every limit the gates read lives HERE and only here. null = unlimited.
@@ -73,7 +73,7 @@ return [
         'storageGb'         => 1,
         'creditsOnGrant'    => 20,      // the starter, kept for the day they add Anee
         'creditsMonthly'    => 0,
-        'ai'                => false,   // Anee is the ₱70 step up: Libre + Anee
+        'ai'                => false,   // Anee is the ₱100 step up: Libre + Anee
         'aiAnalyses'        => false,
 
         'features' => [
@@ -105,9 +105,9 @@ return [
        Distance and How to Plant start here too. */
     'libreAnee' => [
         'name'    => 'Libre + Anee',
-        'price'   => 70,
+        'price'   => 100,   // ₱70 until 2026-11-18 (the owner); Satellite Weather came into the plan the same day
         'period'  => 'month',
-        'priceYear' => 700,
+        'priceYear' => 1000,
         'match'   => ['libre + anee', 'libre-anee', 'libre+anee', 'libre anee', 'libreanee'],
         'tagline' => 'Your free diary, with Anee beside you.',
 

@@ -2833,7 +2833,7 @@ window.creditCoin = function creditCoin(text) {
 const AU_TIERS = {
     libreAnee: {
         name: 'Libre + Anee',
-        price: auRegionTier('libreAnee', 'price', '₱70'), per: '/month', year: auRegionTier('libreAnee', 'year', 'or ₱700/year, about ₱58/mo, you save 17%'),
+        price: auRegionTier('libreAnee', 'price', '₱100'), per: '/month', year: auRegionTier('libreAnee', 'year', 'or ₱1,000/year, about ₱83/mo, you save 17%'),
         points: auRegionPoints('libreAnee', [
             'Your Libre plan exactly as it is',
             'Anee AI chat: ask anything, show a photo',

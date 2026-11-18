@@ -16,7 +16,7 @@
     "free farm advice Philippines",
     "e Extension"
   ],
-  "excerpt": "You can ask an agriculturist online for free through public services: the PhilRice Text Center (0917 111 7423) for rice, and the Farmers' Contact Center of the Agricultural Training Institute or your municipal agriculture office for any crop. Most cost you no more than a text, a call or your data. For an answer at any hour, anee.io, a farm app built for Filipino farmers, has a free farmer community. Its smart farm technician, Anee, answers in Tagalog or English on the Libre plus Anee plan for PHP 70 a month.",
+  "excerpt": "You can ask an agriculturist online for free through public services: the PhilRice Text Center (0917 111 7423) for rice, and the Farmers' Contact Center of the Agricultural Training Institute or your municipal agriculture office for any crop. Most cost you no more than a text, a call or your data. For an answer at any hour, anee.io, a farm app built for Filipino farmers, has a free farmer community. Its smart farm technician, Anee, answers in Tagalog or English on the Libre plus Anee plan for PHP 100 a month.",
   "heroImage": {
     "src": "/images/site/guides/blog-ask-an-agriculturist-online.webp",
     "alt": "An agronomist checks bean leaves with farmers in their field, the same kind of help you get when you ask an agriculturist online",
@@ -164,7 +164,7 @@
     },
     {
       "type": "text",
-      "text": "Farm problems do not keep office hours. In the [anee.io farmer community](/features/farmer-community), you can post a photo and ask growers who may have seen the same thing. The free Libre plan includes community access with photos, and Solo Farmer opens full community access.\n\nFor an answer at any hour, [Anee](/features/ai-agricultural-technician), the smart farm technician inside anee.io, answers in Tagalog, Bisaya, Ilocano, Taglish or English. She reads your farm's records first and can look at a photo. Anee uses AI and runs on credits. Plans with Anee start with Libre plus Anee, at PHP 70 a month or PHP 700 a year. She is not a licensed agriculturist, so use her to prepare for the agriculturist's visit, not to replace it. Read more on [how far to trust AI farm advice](/blog/ai-farm-advice-accuracy).\n\nTo read up on your own, [The Stash](/features/the-stash) in anee.io carries every issue of the PhilRice Magazine, free to read."
+      "text": "Farm problems do not keep office hours. In the [anee.io farmer community](/features/farmer-community), you can post a photo and ask growers who may have seen the same thing. The free Libre plan includes community access with photos, and Solo Farmer opens full community access.\n\nFor an answer at any hour, [Anee](/features/ai-agricultural-technician), the smart farm technician inside anee.io, answers in Tagalog, Bisaya, Ilocano, Taglish or English. She reads your farm's records first and can look at a photo. Anee uses AI and runs on credits. Plans with Anee start with Libre plus Anee, at PHP 100 a month or PHP 1,000 a year. She is not a licensed agriculturist, so use her to prepare for the agriculturist's visit, not to replace it. Read more on [how far to trust AI farm advice](/blog/ai-farm-advice-accuracy).\n\nTo read up on your own, [The Stash](/features/the-stash) in anee.io carries every issue of the PhilRice Magazine, free to read."
     },
     {
       "type": "cta",

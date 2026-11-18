@@ -50,7 +50,7 @@ class TierModuleAccess
         ['sm.lots.map.*', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
         ['sm.lots.pin', 'maps', 'Maps come with {plan}. Draw your lots on the satellite map, measure them and pin what matters.'],
         // Satellite Weather and the NPK Plus calculator leave Libre (2026-10-17, the owner): every
-        // page and call of both, the week pass and Anee's readings included.
+        // page and call of both, Anee's readings included. No week pass since 2026-11-18: the plan opens it.
         ['sky.*', 'skyWeather', 'Satellite Weather comes with {plan}. Watch the clouds, rain and typhoon paths over your farm and ask Anee what they mean for your lot.'],
         ['npk.*', 'npkPlus', 'The NPK Plus calculator comes with {plan}. Add up every nutrient in your fertilizer plan and see if it is enough for your crop and the yield you want.'],
     ];

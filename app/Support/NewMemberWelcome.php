@@ -35,7 +35,7 @@ class NewMemberWelcome
 
         try {
             app(\App\Services\MailService::class)->sendTemplateToUser('registration_welcome', $user, [
-                // "Kasama ako sa Libre + Anee, ₱70 lang kada buwan": the price as it is today, in their money.
+                // "Kasama ako sa Libre + Anee, ₱100 lang kada buwan": the price as it is today, in their money.
                 'plusPrice' => self::plusPrice($user),
             ]);
         } catch (\Throwable $e) {
@@ -68,7 +68,7 @@ class NewMemberWelcome
         }
     }
 
-    /** Libre + Anee's monthly price for the welcome email ("₱70"), or plain words when it cannot be read. */
+    /** Libre + Anee's monthly price for the welcome email ("₱100"), or plain words when it cannot be read. */
     public static function plusPrice(User $user): string
     {
         try {

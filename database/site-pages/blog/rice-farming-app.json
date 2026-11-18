@@ -85,7 +85,7 @@
         [
           "Typhoons and rain",
           "Rain washes off a spray",
-          "Rain reminders on spray days, and typhoon tracks in Satellite Weather, which runs on credits"
+          "Rain reminders on spray days, and typhoon tracks in Satellite Weather"
         ],
         [
           "Labor",
@@ -110,7 +110,7 @@
         [
           "Price",
           "A dollar price keeps many farmers out",
-          "Free Libre plan, paid plans from PHP 70 a month"
+          "Free Libre plan, paid plans from PHP 100 a month"
         ]
       ]
     },
@@ -153,7 +153,7 @@
         },
         {
           "title": "When a storm comes",
-          "text": "Satellite Weather, which runs on credits, shows each typhoon's path and distance from your field. Then decide early if a spray should wait."
+          "text": "Satellite Weather, which comes with the plans that include Anee, shows each typhoon's path and distance from your field. Then decide early if a spray should wait."
         },
         {
           "title": "After harvest",
@@ -191,7 +191,7 @@
       "items": [
         "**Free rice tools:** the Rice Crop Manager Advisory Service on the web. Binhing Palay and a few rice calendar apps also cost nothing on Google Play.",
         "**anee.io Libre, free:** one active season with one lot, the board, growth stages, harvest observations and the labor report, with a few ads.",
-        "**Libre plus Anee, PHP 70 a month:** adds Anee and her analyses, which use credits.",
+        "**Libre plus Anee, PHP 100 a month:** adds Anee and her analyses, which use credits.",
         "**Solo Farmer, PHP 200 a month or PHP 1,800 a year:** up to 5 lots per season, payroll, inventory, all reports, no ads.",
         "**Farm Owner, PHP 600 a month:** adds worker logins for a team."
       ]

@@ -34,7 +34,7 @@
         "Pick an app that reads the photo with your crop's age, variety, place and weather, not the photo alone.",
         "It should tell you how to confirm the problem before it tells you what to buy.",
         "It should name active ingredients, not brands, and say plainly when no spray helps, as with a virus.",
-        "In anee.io, Anee reads photos on plans with Anee, from PHP 70 a month, and the finders come with those plans too."
+        "In anee.io, Anee reads photos on plans with Anee, from PHP 100 a month, and the finders come with those plans too."
       ]
     },
     {
@@ -189,7 +189,7 @@
         ],
         [
           "Libre plus Anee",
-          "PHP 70 a month or PHP 700 a year",
+          "PHP 100 a month or PHP 1,000 a year",
           "Adds the Anee chat with photos, all her analyses and the finders, with a few ads"
         ],
         [
@@ -257,7 +257,7 @@
         },
         {
           "q": "Is there a free crop disease diagnosis app in the Philippines?",
-          "a": "Yes. Rice Doctor is free on the web and helps you identify problems in a rice crop. In anee.io, photo reading by Anee needs a plan with Anee, from PHP 70 a month, and those plans also open the Disease Finder and Pest Finder."
+          "a": "Yes. Rice Doctor is free on the web and helps you identify problems in a rice crop. In anee.io, photo reading by Anee needs a plan with Anee, from PHP 100 a month, and those plans also open the Disease Finder and Pest Finder."
         },
         {
           "q": "What if the app and my technician disagree?",

@@ -385,8 +385,8 @@
             </button>
             <div class="qa-sub-fold"><div class="qa-sub-in">
             {{-- Satellite Weather (2026-10-07): clouds, rain and typhoon
-                 tracks over the farm; a week pass in credits since 2026-10-12
-                 (App\Support\SkyPass), Anee's reading priced on its own. --}}
+                 tracks over the farm; included in the plan since 2026-11-18
+                 (no week pass), Anee's reading priced on its own. --}}
             {{-- From Libre + Anee up (2026-10-17, the owner). --}}
             @php $qSkyLocked = ! \App\Support\Tier::farmCan('skyWeather'); $qSkyRung = \App\Support\Tier::farmUnlocksAt('skyWeather'); @endphp
             @if ($qOn('sky'))
@@ -395,7 +395,7 @@
                 <span class="qa-ico"><img src="{{ asset('images/icons/storm.svg') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-txt {{ $qSkyLocked ? 'tl-dim' : '' }}">
                     <b>Satellite Weather{{ \App\Support\Tagalog::flag('satellite-weather') }}{!! $qPlus !!}</b>
-                    <i>Watch clouds, rain and typhoon paths over your farm, see where the rain is headed, and ask Anee what it means for your lot. {{ \App\Support\SkyPass::price() }} credits a week.</i>
+                    <i>Watch clouds, rain and typhoon paths over your farm, see where the rain is headed, and ask Anee what it means for your lot. Included in your plan.</i>
                 </span>
                 @if ($qSkyLocked)
                     <span class="tl-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/></svg></span>

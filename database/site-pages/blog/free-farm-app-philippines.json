@@ -193,7 +193,7 @@
         ],
         [
           "Libre + Anee",
-          "PHP 70 a month or PHP 700 a year",
+          "PHP 100 a month or PHP 1,000 a year",
           "Anee, the smart farm technician: chat, photos and all four analyses, plus the field helpers and the NPK Plus calculator. Still with ads"
         ],
         [
@@ -228,7 +228,7 @@
     },
     {
       "type": "text",
-      "text": "For many small farms, yes. If you farm one lot and do most of the work yourself, Libre and the free PhilRice tools cover the basics. You pay nothing, and you keep a clean record.\n\nUpgrade when the farm outgrows it. For example, if you hire workers and pay wages, Solo Farmer adds payroll and the labor cost of every task. If you buy fertilizer by the bag, the inventory takes each bag out of stock when you tick the task done. And if you want answers about your own crop, Libre + Anee adds Anee for PHP 70 a month. Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English, and her answers use credits. Compare every plan on the [pricing page](/pricing)."
+      "text": "For many small farms, yes. If you farm one lot and do most of the work yourself, Libre and the free PhilRice tools cover the basics. You pay nothing, and you keep a clean record.\n\nUpgrade when the farm outgrows it. For example, if you hire workers and pay wages, Solo Farmer adds payroll and the labor cost of every task. If you buy fertilizer by the bag, the inventory takes each bag out of stock when you tick the task done. And if you want answers about your own crop, Libre + Anee adds Anee for PHP 100 a month. Anee answers in Tagalog, Bisaya, Ilocano, Taglish or English, and her answers use credits. Compare every plan on the [pricing page](/pricing)."
     },
     {
       "type": "heading",
@@ -248,7 +248,7 @@
         },
         {
           "q": "Can I ask Anee questions on the free plan?",
-          "a": "Not on Libre. Anee comes with Libre + Anee for PHP 70 a month and with every paid plan, and her answers use credits. The field helpers and the NPK Plus calculator come with the same plans."
+          "a": "Not on Libre. Anee comes with Libre + Anee for PHP 100 a month and with every paid plan, and her answers use credits. The field helpers and the NPK Plus calculator come with the same plans."
         },
         {
           "q": "Which free apps does PhilRice offer?",

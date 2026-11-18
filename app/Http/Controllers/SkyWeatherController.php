@@ -15,7 +15,6 @@ use App\Support\CropCatalog;
 use App\Support\CropStages;
 use App\Support\EnsoOutlook;
 use App\Support\FieldContext;
-use App\Support\SkyPass;
 use App\Support\StormTracks;
 use App\Support\Tier;
 use App\Support\WorkerContext;
@@ -59,47 +58,14 @@ class SkyWeatherController extends Controller
     }
 
     /**
-     * The week pass (2026-10-12): the page's own reads (tiles, frames,
-     * storms, the forecast and its grid, Anee's reading) answer only a farm
-     * that holds one. Kept a minute per farm, so the tile stream does not
-     * ask the database for every square.
+     * Satellite Weather comes with the plan (2026-11-18, the owner: "remove the subscription in the satellite weather
+     * feature. it should be included now in the anee plus"): Libre + Anee and up (tier key skyWeather), no week pass.
+     * TierModuleAccess refuses sky.* to a plan without it; the page's own data calls ask again here.
      */
-    private function passOrRefuse(): ?\Illuminate\Http\JsonResponse
+    private function planOrRefuse(): ?\Illuminate\Http\JsonResponse
     {
-        $payerId = (int) WorkerContext::effectiveOwnerId();
-        $ok = Cache::remember('skypass:ok:' . $payerId, 60, fn () => SkyPass::allows($payerId) ? 1 : 0);
-
-        return $ok ? null : $this->json(false, 'Satellite Weather needs a week pass.', ['needPass' => true], 402);
-    }
-
-    public function buyPass(Request $request)
-    {
-        if (WorkerContext::inWorkerContext()) {
-            return $this->json(false, 'Only the farm owner can open Satellite Weather for the farm.', [], 403);
-        }
-        $payer = $this->payer();
-        $r = SkyPass::buy((int) $payer->id, $request->boolean('autoRenew', true));
-        Cache::forget('skypass:ok:' . $payer->id);
-        if (! $r['ok']) {
-            return $this->json(false, $r['message'], ['outOfCredits' => ($r['status'] ?? 0) === 402], $r['status'] ?? 422);
-        }
-
-        return $this->json(true, $r['message'], ['pass' => SkyPass::state((int) $payer->id), 'balance' => round($this->credits->balance($payer->id), 2)]);
-    }
-
-    /** The subscription's renewal, on or off (the farm owner). */
-    public function renewal(Request $request)
-    {
-        if (WorkerContext::inWorkerContext()) {
-            return $this->json(false, 'Only the farm owner changes the subscription.', [], 403);
-        }
-        $payer = $this->payer();
-        $on = $request->boolean('on');
-        if (! SkyPass::setAutoRenew((int) $payer->id, $on)) {
-            return $this->json(false, 'There is no running subscription to change.', [], 404);
-        }
-
-        return $this->json(true, $on ? 'It renews every week again.' : 'Renewal is off. Satellite Weather stays open until the week ends.', ['pass' => SkyPass::state((int) $payer->id)]);
+        return Tier::farmCan('skyWeather') ? null
+            : $this->json(false, 'Satellite Weather comes with ' . Tier::withPlan(Tier::farmUnlocksAt('skyWeather')) . '.', ['tierLock' => true], 403);
     }
 
     public function options()
@@ -107,16 +73,11 @@ class SkyWeatherController extends Controller
         $payer = $this->payer();
         $settings = AiSetting::current();
         $canUse = $payer->canUseAi() && $settings->isUsable() && Tier::farmCan('aiAnalyses');
-        $pass = SkyPass::state((int) $payer->id);
-        if ($pass['active'] && ! $pass['unlimited']) {
-            SkyPass::opened((int) $payer->id);
-            $pass = SkyPass::state((int) $payer->id);
-        }
+        // Someone looked at the sky: the batch keeps the national grid made ahead for two days (SkyBatchCommand).
+        Cache::put('sky:lastOpened', time(), now()->addDays(3));
 
         return $this->json(true, 'ok', [
-            'pass' => $pass + ['canBuy' => ! WorkerContext::inWorkerContext()],
-            // No pass, no map: the map key goes out only when the page will be used.
-            'mapsKey' => $pass['active'] ? (string) config('services.google_maps.key') : '',
+            'mapsKey' => (string) config('services.google_maps.key'),
             'owm' => (string) config('services.openweather.key') !== '',
             // The engine's quote (App\Support\AiPricing): the flat price unless the cost says more.
             'quote' => AiPricing::credits(self::KIND),
@@ -179,8 +140,8 @@ class SkyWeatherController extends Controller
     /** OpenWeatherMap's tiles, through our server so the key stays here. */
     public function tile(string $layer, int $z, int $x, int $y)
     {
-        if ($this->passOrRefuse()) {
-            abort(402);
+        if ($this->planOrRefuse()) {
+            abort(403);
         }
         $key = (string) config('services.openweather.key');
         abort_unless($key !== '' && in_array($layer, self::LAYERS, true) && $z >= 0 && $z <= 12, 404);
@@ -204,7 +165,7 @@ class SkyWeatherController extends Controller
      */
     public function frames()
     {
-        if ($no = $this->passOrRefuse()) {
+        if ($no = $this->planOrRefuse()) {
             return $no;
         }
         $data = Cache::remember('sky:frames', 300, function () {
@@ -256,7 +217,7 @@ class SkyWeatherController extends Controller
     /** Active typhoons near a point: the service when connected, GDACS directly when not. */
     public function storms(Request $request)
     {
-        if ($no = $this->passOrRefuse()) {
+        if ($no = $this->planOrRefuse()) {
             return $no;
         }
         $lat = is_numeric($request->query('lat')) ? (float) $request->query('lat') : null;
@@ -280,7 +241,7 @@ class SkyWeatherController extends Controller
     /** The farm's hourly forecast for five days and daily for ten. */
     public function forecast(Request $request)
     {
-        if ($no = $this->passOrRefuse()) {
+        if ($no = $this->planOrRefuse()) {
             return $no;
         }
         $lat = (float) $request->query('lat');
@@ -298,7 +259,7 @@ class SkyWeatherController extends Controller
      */
     public function forecastGrid(Request $request)
     {
-        if ($no = $this->passOrRefuse()) {
+        if ($no = $this->planOrRefuse()) {
             return $no;
         }
         $lat = (float) $request->query('lat');
@@ -431,7 +392,7 @@ class SkyWeatherController extends Controller
 
     public function generate(Request $request)
     {
-        if ($no = $this->passOrRefuse()) {
+        if ($no = $this->planOrRefuse()) {
             return $no;
         }
         if (! Tier::farmCan('aiAnalyses')) {

@@ -47,28 +47,7 @@
     .sk-tp[hidden] { display: none; }
     .sk-tp:not([data-tp="map"]) { display: grid; gap: 1rem; padding-top: .4rem; animation: skUp .34s var(--sk-ease) both; }
     .sk-tp:not([data-tp="map"])[hidden] { display: none; }
-    .sk-wall-renew { display: flex; gap: .55rem; align-items: flex-start; margin: 0 0 .8rem; font-size: .8rem; line-height: 1.45; color: #cbd5e1; text-align: left; cursor: pointer; }
-    .sk-wall-renew input { margin-top: .15rem; width: 1rem; height: 1rem; flex: none; accent-color: #f5c518; }
-    .sk-sub-card h3 { margin-bottom: .2rem; }
-    .sk-sub-state { display: flex; align-items: center; gap: .8rem; margin-top: .8rem; padding: .9rem 1rem; border-radius: 1rem; background: linear-gradient(115deg, #eef4ff, #f8fbff); border: 1px solid #c7d6f5; }
-    .sk-sub-state.is-off { background: #fff8e6; border-color: #f5d98a; }
-    .sk-sub-state i { flex: none; width: 2.6rem; height: 2.6rem; border-radius: .9rem; display: grid; place-items: center; font-style: normal; font-size: 1.3rem; background: #fff; }
-    .sk-sub-state b { display: block; font-size: .95rem; font-weight: 800; color: var(--color-gray-900); }
-    .sk-sub-state small { display: block; font-size: .8rem; color: var(--color-gray-600); line-height: 1.45; }
-    .sk-sub-row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .9rem; padding: .8rem 0; border-top: 1px dashed var(--color-gray-200); font-size: .86rem; color: var(--color-gray-700); }
-    .sk-switch { position: relative; flex: none; width: 2.9rem; height: 1.65rem; border-radius: 999px; background: var(--color-gray-300); border: 0; cursor: pointer; transition: background-color .28s var(--sk-ease); }
-    .sk-switch::after { content: ''; position: absolute; top: .2rem; left: .2rem; width: 1.25rem; height: 1.25rem; border-radius: 999px; background: #fff; box-shadow: 0 2px 5px rgb(0 0 0 / .3); transition: transform .28s var(--sk-ease); }
-    .sk-switch[aria-checked="true"] { background: #1e3a8a; }
-    .sk-switch[aria-checked="true"]::after { transform: translateX(1.25rem); }
-    .sk-sub-facts { display: grid; gap: .4rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: .4rem; }
-    @media (min-width: 640px) { .sk-sub-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-    .sk-sub-facts div { padding: .55rem .7rem; border-radius: .85rem; background: var(--color-gray-50); border: 1px solid var(--color-gray-100); }
-    .sk-sub-facts small { display: block; font-size: .64rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; color: var(--color-gray-400); }
-    .sk-sub-facts b { font-size: .92rem; color: var(--color-gray-900); }
-    html.dark .sk-sub-state { background: #101a2e; border-color: #1e3a5f; } html.dark .sk-sub-state.is-off { background: #2a2210; border-color: #5b4716; }
-    html.dark .sk-sub-state b, html.dark .sk-sub-facts b { color: #e5e7eb; } html.dark .sk-sub-state small { color: #94a3b8; } html.dark .sk-sub-state i { background: #1e293b; }
-    html.dark .sk-sub-facts div { background: #161c22; border-color: #283241; }
-    @media (prefers-reduced-motion: reduce) { .sk-switch, .sk-switch::after, .sk-tabs button { transition: none; } .sk-tp { animation: none !important; } }
+    @media (prefers-reduced-motion: reduce) { .sk-tabs button { transition: none; } .sk-tp { animation: none !important; } }
     .sk-glass { color: #e2e8f0; background: rgb(12 18 32 / .8); backdrop-filter: blur(12px) saturate(1.3); -webkit-backdrop-filter: blur(12px) saturate(1.3);
         box-shadow: 0 10px 26px -14px rgb(0 0 0 / .9), inset 0 0 0 1px rgb(255 255 255 / .07); }
 
@@ -271,33 +250,11 @@
     }
     html.sm-still .sk-badge.is-warn, html.sm-still .sk-eye::before, html.sm-still .sk-eye::after, html.sm-still .sk-day { animation: none; }
 
-    /* The week pass (2026-10-12): the wall in front of the map until the farm holds one. */
-    .sk-wall { position: absolute; inset: 0; z-index: 30; display: flex; align-items: center; justify-content: center; padding: 1rem; overflow-y: auto;
-        background: radial-gradient(120% 120% at 50% 0%, rgb(30 58 138 / .55), rgb(2 6 23 / .92)), radial-gradient(60% 40% at 20% 80%, rgb(14 165 233 / .25), transparent), #0b1222; }
-    .sk-wall[hidden] { display: none; }
-    .sk-wall-card { width: 100%; max-width: 25rem; padding: 1.3rem 1.25rem; border-radius: 1.4rem; color: #e2e8f0; text-align: center;
-        background: rgb(15 23 42 / .78); border: 1px solid rgb(148 163 184 / .25); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); animation: skWallIn .45s var(--sk-ease) both; }
-    @keyframes skWallIn { from { opacity: 0; transform: translateY(14px) scale(.98); } }
-    .sk-wall-ico { width: 4rem; height: 4rem; margin: 0 auto .7rem; border-radius: 1.2rem; display: grid; place-items: center; font-size: 2rem; background: rgb(56 189 248 / .15); animation: skFloat 4s ease-in-out infinite; }
-    @keyframes skFloat { 50% { transform: translateY(-5px); } }
-    .sk-wall h2 { font-family: var(--font-heading); font-weight: 800; font-size: 1.25rem; color: #fff; }
-    .sk-wall p { margin-top: .4rem; font-size: .85rem; line-height: 1.55; color: #cbd5e1; }
-    .sk-wall ul { margin: .9rem 0; display: grid; gap: .35rem; text-align: left; font-size: .82rem; color: #e2e8f0; }
-    .sk-wall li { display: flex; gap: .5rem; }
-    .sk-wall-price { margin: .2rem 0 .9rem; font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: #f5c518; }
-    .sk-wall-price small { display: block; font-family: inherit; font-size: .76rem; font-weight: 700; color: #94a3b8; }
-    .sk-wall-go { width: 100%; padding: .85rem 1rem; border-radius: 999px; font-weight: 800; color: #0f172a; background: #f5c518; transition: transform .28s var(--sk-ease), opacity .28s; }
-    .sk-wall-go:disabled { opacity: .55; }
-    .sk-wall-go:not(:disabled):hover { transform: translateY(-2px); }
-    .sk-wall-fine { margin-top: .7rem; font-size: .74rem !important; color: #94a3b8 !important; }
-    .sk-wall-fine a { color: #f5c518; text-decoration: underline; font-weight: 800; }
-    .sk-passline { margin-top: .5rem; font-size: .74rem; color: var(--color-gray-500); }
     /* Forecast tracks (Zoom Earth style): a time at every dot. */
     .sk-tlab { position: absolute; transform: translate(8px, -50%); white-space: nowrap; pointer-events: none; padding: .08rem .38rem; border-radius: .4rem; font-size: .64rem; font-weight: 800;
         color: #fff; background: rgb(15 23 42 / .72); box-shadow: 0 2px 6px rgb(0 0 0 / .35); }
     .sk-tlab.is-storm { background: rgb(127 29 29 / .85); }
     .sk-tlab.is-rain { background: rgb(30 64 175 / .82); }
-    @media (prefers-reduced-motion: reduce) { .sk-wall-card, .sk-wall-ico { animation: none; } }
 </style>
 
 <div class="sk-wrap">
@@ -307,28 +264,9 @@
         <button type="button" role="tab" data-tab="storms" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M12 3c5 0 8 3 8 6-3-3-8-3-11 0 5-1 9 2 9 6 0 4-4 6-8 6 2-1 3-3 3-5-2 2-6 2-8 0 3 0 5-2 5-4-3 2-7 0-7-3 2 1 4 1 5 0-3-1-4-4-3-6 1 2 3 3 5 3-2-1-2-3-1-5z"/></svg>Typhoons<em id="skTabStormN" hidden></em></button>
         <button type="button" role="tab" data-tab="days" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3M4 11h16M5 5h14a1 1 0 011 1v13a1 1 0 01-1 1H5a1 1 0 01-1-1V6a1 1 0 011-1z"/></svg>10 days</button>
         <button type="button" role="tab" data-tab="anee" aria-selected="false"><img src="{{ \App\Models\AiSetting::current()->faceUrl() }}" alt="">Ask Anee</button>
-        <button type="button" role="tab" data-tab="pass" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 7a2 2 0 012-2h12a2 2 0 012 2M4 7v10a2 2 0 002 2h12a2 2 0 002-2V7M8 12h4"/></svg>Subscription</button>
     </nav>
     <section class="sk-tp is-on" data-tp="map">
     <div class="sk-stage" id="skStage">
-        <div class="sk-wall" id="skWall" hidden>
-            <div class="sk-wall-card">
-                <div class="sk-wall-ico" aria-hidden="true">🛰️</div>
-                <h2>Satellite Weather</h2>
-                <p>The sky over your farm, the way the weather watchers see it: live satellite clouds, rain radar, every typhoon's track and cone, and the next five days played on the map with the paths the rain clouds and storms are expected to take.</p>
-                <ul>
-                    {{-- The words sit in a span of their own: the li is a flex row, and a flag loose in it would be an item of its own. --}}
-                    <li><span>☁️</span><span>Himawari clouds{{ \App\Support\Tagalog::flag('himawari') }} and rain radar{{ \App\Support\Tagalog::flag('rain-radar') }}, played back</span></li>
-                    <li><span>🌀</span><span>Typhoon tracks{{ \App\Support\Tagalog::flag('typhoon-track') }} with the time at every forecast point</span></li>
-                    <li><span>🧭</span><span>Where the rain clusters are headed, hour by hour</span></li>
-                    <li><span>📍</span><span>The distance from every storm to your farm</span></li>
-                </ul>
-                <div class="sk-wall-price"><span id="skWallPrice">30</span> credits{{ \App\Support\Tagalog::flag('credits') }}<small id="skWallFor" data-tl="pass-openings">for 7 days</small></div>
-                <label class="sk-wall-renew"><input type="checkbox" id="skWallRenew" checked><span>Renew every week{{ \App\Support\Tagalog::flag('auto-renew') }} from my credits. Cancel any time under Subscription.</span></label>
-                <button type="button" class="sk-wall-go" id="skWallGo">Subscribe</button>
-                <p class="sk-wall-fine" id="skWallFine"></p>
-            </div>
-        </div>
         <div class="sk-map" id="skMap"></div>
         <div class="sk-top">
             <button type="button" class="sk-place sk-glass" id="skPlaceBtn" aria-expanded="false" aria-controls="skPanel">
@@ -410,9 +348,6 @@
         <div class="sk-rep" id="skRep" hidden></div>
     </section>
 
-    <section class="sk-tp" data-tp="pass" hidden>
-        <div class="sk-card sk-sub-card" id="skSubCard"></div>
-    </section>
     @include('sm.partials.anee-wait')
 </div>
 
@@ -447,7 +382,6 @@
         options: @json(route('sky.options')), frames: @json(route('sky.frames')), storms: @json(route('sky.storms')), forecast: @json(route('sky.forecast')),
         tile: @json(url('/app/sky-weather/tile')), generate: @json(route('sky.generate')), job: (id) => @json(url('/app/sky-weather/job')) + '/' + id,
         list: @json(route('sky.list')), one: (id) => @json(url('/app/sky-weather/one')) + '/' + id, del: (id) => @json(url('/app/sky-weather')) + '/' + id, places: @json(route('sat.places')), grid: @json(route('sky.grid')),
-        pass: @json(route('sky.pass')), renewal: @json(route('sky.pass.renewal')), buy: @json(route('ai.credits') . '?tab=buy'),
     };
     const KEY = 'anee.skyPlace';
     let OPT = null, map = null, farm = null, farmMark = null, ring = null, FR = { clouds: [], radar: [] }, STORMS = [], FC = { hours: [], days: [] };
@@ -1098,7 +1032,6 @@
     });
 
     /* ---- boot ---- */
-    /* ---- the week pass ---- */
     /* ---- the tabs (2026-10-13): the map has the whole screen to itself ---- */
     const fit = () => {
         const st = $('skStage');
@@ -1115,7 +1048,6 @@
         document.documentElement.classList.toggle('sk-maptab', t === 'map');
         if (t === 'map') { window.scrollTo(0, 0); requestAnimationFrame(fit); }
         else window.scrollTo({ top: 0, behavior: reduce() ? 'auto' : 'smooth' });
-        if (t === 'pass') paintSub();
         if (push) { try { history.replaceState(null, '', t === 'map' ? location.pathname : location.pathname + '#' + t); } catch (_) {} }
     };
     $('skTabs').addEventListener('click', (e) => { const b = e.target.closest('[data-tab]'); if (b) showTab(b.dataset.tab); });
@@ -1123,60 +1055,16 @@
     document.documentElement.classList.add('sk-maptab');
     fit();
 
-    /* ---- the subscription ---- */
-    const paintSub = () => {
-        const P = (OPT && OPT.pass) || {};
-        const box = $('skSubCard');
-        if (!box) return;
-        if (P.unlimited) {
-            box.innerHTML = '<h3><span data-tl="subscription">Subscription</span></h3><div class="sk-sub-state"><i>♾️</i><span><b>Unlimited account</b><small>Satellite Weather is always open on this account. Nothing is charged.</small></span></div>';
-            return;
-        }
-        const renew = !!P.autoRenew;
-        // The h3 is a flex row: the word and its Tagalog flag share a span, so the flag stays snug.
-        box.innerHTML = '<h3><span data-tl="subscription">Subscription</span></h3><p class="sk-sub">Satellite Weather is ' + esc(P.price) + ' credits a week. With renewal on, a new week is taken from your credits half an hour before the old one ends, so the page never closes on you. Cancel any time: the week you paid for stays open to its end.</p>'
-            + '<div class="sk-sub-state' + (renew ? '' : ' is-off') + '"><i>' + (renew ? '🔄' : '⏳') + '</i><span><b>' + (renew ? 'Active, renews every week' : 'Active until ' + esc(P.endsAt)) + '</b><small>'
-            + (renew ? 'Next renewal: ' + esc(P.endsAt) + ', ' + esc(P.price) + ' credits.' : 'Renewal is off: it closes on ' + esc(P.endsAt) + ' and nothing more is charged.') + '</small></span></div>'
-            + '<div class="sk-sub-facts"><div><small>Price</small><b>' + esc(P.price) + ' credits / week</b></div><div><small>This week ends</small><b>' + esc(P.endsAt || '') + '</b></div>'
-            + '<div><small data-tl="pass-openings">Openings left</small><b>' + esc(P.opensLeft ?? '') + ' of ' + esc(P.fairOpens) + '</b></div><div><small data-tl="credits">Your credits</small><b>' + Number(Math.floor(OPT.balance || 0)).toLocaleString() + '</b></div></div>'
-            + (P.canBuy ? '<div class="sk-sub-row"><span><b data-tl="auto-renew">Renew every week</b><br><span class="text-xs text-gray-500">From your credits. If they run short, it simply ends; nothing is charged.</span></span><button type="button" class="sk-switch" id="skRenew" role="switch" aria-checked="' + renew + '" aria-label="Renew every week"></button></div>' : '<p class="sk-sub mt-3">The farm owner manages the subscription.</p>')
-            + '<p class="sk-sub mt-2"><a class="underline font-bold" href="' + U.buy + '">Buy credits</a> · A week covers up to ' + esc(P.fairOpens) + ' openings; when they run out, a renewing subscription starts its next week early.</p>';
-        $('skRenew')?.addEventListener('click', async (e) => {
-            const btn = e.currentTarget, on = btn.getAttribute('aria-checked') !== 'true';
-            btn.setAttribute('aria-checked', String(on));
-            try { const r = await window.api(U.renewal, { method: 'PUT', body: { on } }); OPT.pass = Object.assign({}, OPT.pass, r.data.pass); window.toast?.(r.message, 'success'); paintSub(); }
-            catch (err) { btn.setAttribute('aria-checked', String(!on)); window.toast?.(err.message, 'error'); }
-        });
-    };
-
-    const wall = (P) => {
-        $('skWall').hidden = false;
-        $('skTabs').hidden = true;
-        $('skWallPrice').textContent = P.price;
-        $('skWallFor').textContent = 'for ' + P.days + ' days, up to ' + P.fairOpens + ' openings';
-        const short = !P.unlimited && OPT && OPT.balance < P.price;
-        $('skWallGo').disabled = !P.canBuy || short;
-        $('skWallFine').innerHTML = (P.lapsed && P.lapsed.note ? esc(P.lapsed.note) + ' ' : '') + (!P.canBuy ? 'Ask the farm owner to subscribe for the farm.'
-            : 'You have ' + Number(Math.floor(OPT ? OPT.balance : 0)).toLocaleString() + ' credits.' + (short ? ' <a href="' + U.buy + '">Buy credits</a>' : ' Anee\'s reading of the sky is priced on its own.'));
-        $('skWallRenew').closest('label').hidden = !P.canBuy;
-    };
-    $('skWallGo').addEventListener('click', async () => {
-        $('skWallGo').disabled = true; $('skWallGo').textContent = 'Opening…';
-        try { const r = await window.api(U.pass, { method: 'POST', body: { autoRenew: $('skWallRenew').checked } }); window.toast?.(r.message, 'success'); location.reload(); }
-        catch (err) { window.toast?.(err.message, 'error'); $('skWallGo').disabled = false; $('skWallGo').textContent = 'Subscribe'; }
-    });
-
     const boot = async () => {
         try {
             const r = await window.api(U.options);
             OPT = r.data;
-            if (!OPT.pass || !OPT.pass.active) { wall(OPT.pass || { price: 30, days: 7, fairOpens: 40, canBuy: true }); return; }
             quote();
             $('skTabs').hidden = false;
             fit();
-            // A link to a tab (#storms, #days, #anee, #pass) opens on it.
+            // A link to a tab (#storms, #days, #anee) opens on it.
             const hashTab = (location.hash || '').slice(1);
-            if (['storms', 'days', 'anee', 'pass'].includes(hashTab)) showTab(hashTab, false);
+            if (['storms', 'days', 'anee'].includes(hashTab)) showTab(hashTab, false);
             setLot('');
             $('skLots').innerHTML = OPT.lots.filter((l) => (l.lat && l.lng) || l.place).map((l) => '<button type="button" class="sk-opt" data-lot="' + l.id + '"><span>' + esc(l.name) + '<small>' + esc(l.crop + (l.place ? ' · ' + l.place : '')) + '</small></span></button>').join('') || '<p class="text-xs text-gray-400">Pin a lot on its map and it shows here.</p>';
             $('skLots').addEventListener('click', (e) => {

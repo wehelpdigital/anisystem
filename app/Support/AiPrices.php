@@ -55,8 +55,6 @@ final class AiPrices
         // Past that allowance, one more question or one more reading of the field (5x their cost, AiPricing kinds).
         'autoAsk' => 18,
         'autoObserve' => 25,
-        // Satellite Weather, a week of the page (App\Support\SkyPass keeps it above cost).
-        'skypass' => 50,
         // 2026-10-14: the LCC Checker, Anee reading leaf photos against the leaf color chart.
         'lcc' => 30,
         // 2026-10-14: the Land Prep Planner, Anee planning every lot's land preparation.
@@ -93,7 +91,6 @@ final class AiPrices
         'npkplan' => 'NPK Plus season check (Activities, per lot)',
         'npkproto' => 'NPK Plus protocol check (Protocol Builder)',
         'auto' => 'Anee Auto, per lot (a whole season planned and kept on track by Anee)',
-        'skypass' => 'Satellite Weather, a week pass (never sold below what a week costs the house)',
         'lcc' => 'LCC Checker (Anee reads rice leaf photos against the leaf color chart)',
         'landprep' => 'Land Prep Planner, per lot (every lot\'s land preparation, around the crew and the weather)',
         'compat' => 'Compatibility Checker, the online check (Anee looks up the products the book lacks, searches the web; a flat price whatever the count)',

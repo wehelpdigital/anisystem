@@ -34,7 +34,7 @@
         "AI helps most by catching costly mistakes early: wrong diagnosis, wrong fertilizer, bad timing.",
         "Advice built from field data works. Farmers who followed Rice Crop Manager advice had higher yield and net benefit.",
         "AI is a helper, not an agriculturist. Check every pesticide against its label and FPA registration.",
-        "On anee.io, Anee comes with Libre + Anee for PHP 70 a month and with every paid plan, and she uses credits."
+        "On anee.io, Anee comes with Libre + Anee for PHP 100 a month and with every paid plan, and she uses credits."
       ]
     },
     {
@@ -182,7 +182,7 @@
         ],
         [
           "Libre + Anee",
-          "PHP 70 a month or PHP 700 a year",
+          "PHP 100 a month or PHP 1,000 a year",
           "Chat with photos, the four analyses, Realign by Anee and the NPK Plus Calculator. Buy credit packs as needed"
         ],
         [
@@ -234,7 +234,7 @@
         },
         {
           "q": "How much does it cost to use Anee?",
-          "a": "Anee comes with Libre + Anee for PHP 70 a month, and with Solo Farmer and Farm Owner. Every answer and analysis uses credits, and you can buy more credit packs when you need them."
+          "a": "Anee comes with Libre + Anee for PHP 100 a month, and with Solo Farmer and Farm Owner. Every answer and analysis uses credits, and you can buy more credit packs when you need them."
         }
       ]
     },

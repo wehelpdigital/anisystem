@@ -84,7 +84,7 @@ class PlanCompare
             ['Weather', 'M3 15a4 4 0 004 4h9a5 5 0 10-.9-9.95A5.5 5.5 0 006.5 8 4.5 4.5 0 003 15z', [
                 ['Forecast', null, fn (array $t) => $t['weatherDays'] === null ? 'Full forecast' : 'Today and tomorrow', 'forecast'],
                 ['Weather right now', 'Shown on your dashboard', $gate('weatherNow')],
-                ['Satellite Weather', 'Clouds, rain radar and typhoon paths over your farm. Opened by a weekly pass in credits', $gate('skyWeather'), 'satellite-weather'],
+                ['Satellite Weather', 'Clouds, rain radar and typhoon paths over your farm. Included, no pass to buy', $gate('skyWeather'), 'satellite-weather'],
                 ['Heat Map Forecast', "The week's heat over your lot, the best days and hours for the work, and the year month by month", $gate('heatMap'), 'heat-map-forecast'],
             ]],
             ['Workers and team', 'M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z', [

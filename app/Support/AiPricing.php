@@ -142,8 +142,6 @@ final class AiPricing
                 'search' => 2, 'om' => 10, 'omUnit' => 2, 'maps' => 1, 'mail' => 150, 'useObserve' => 10, 'useAsk' => 30],
             'autoObserve' => ['unit' => '', 'baseIn' => 11000, 'baseOut' => 4500],
             'autoAsk' => ['unit' => '', 'baseIn' => 12000, 'baseOut' => 2500],
-            // A week of Satellite Weather: per opening a Google map load plus the shared forecast grid and the tiles.
-            'skypass' => ['unit' => 'open', 'free' => 0, 'units' => 14, 'max' => 40, 'mapsUnit' => 1, 'unitUsd' => 0.0017],
             'lcc' => ['unit' => 'leaf', 'free' => 10, 'units' => 10, 'max' => 12, 'baseIn' => 4500, 'baseOut' => 3600, 'unitOut' => 150, 'outCap' => 5048],
             'landprep' => ['unit' => 'lot', 'free' => 1, 'units' => 1, 'max' => 12, 'perUnitPrice' => true, 'baseIn' => 7000, 'baseOut' => 4500, 'unitIn' => 400, 'unitOut' => 250, 'outCap' => 8048, 'om' => 3,
                 'opts' => ['research' => ['in' => 2600, 'out' => 3800, 'search' => 1]]],
@@ -415,8 +413,8 @@ final class AiPricing
         $plural = ['leaf' => 'leaves', 'variety' => 'varieties'][$k['unit']] ?? $k['unit'] . 's';
         $u = $size['units'] ?? $size[$k['unit']] ?? $size[$plural] ?? null;
         if ($u === null) {
-            // Not said: the typical size (the week pass reads its own from the passes that ended).
-            $u = $kind === 'skypass' ? self::skypassOpens() : $k['units'];
+            // Not said: the typical size.
+            $u = $k['units'];
         }
         $max = (int) $k['max'] > 0 ? (int) $k['max'] : PHP_INT_MAX;
 
@@ -664,31 +662,5 @@ final class AiPricing
             'okInputK' => round(ceil($s['minMargin'] * $costIn / $ppc * 10) / 10, 1),
             'okOutputK' => round(ceil($s['minMargin'] * $costOut / $ppc * 10) / 10, 1),
         ];
-    }
-
-    /* ============================================================ the week pass */
-
-    /**
-     * Openings per pass at p90, read from the passes that have ended once
-     * there are ten of them; the model's own number until then.
-     */
-    public static function skypassOpens(): int
-    {
-        $default = (int) (self::kind('skypass')['units'] ?? 14);
-        try {
-            return (int) Cache::remember('ai-pricing:skypass-opens', 21600, function () use ($default) {
-                if (! Schema::hasTable('as_sky_passes')) {
-                    return $default;
-                }
-                $opens = DB::table('as_sky_passes')->where('deleteStatus', 1)->where('endsAt', '<', now())->orderBy('opens')->pluck('opens')->map(fn ($o) => (int) $o)->all();
-                if (count($opens) < 10) {
-                    return $default;
-                }
-
-                return max(1, $opens[(int) floor(0.9 * (count($opens) - 1))]);
-            });
-        } catch (\Throwable $e) {
-            return $default;
-        }
     }
 }
