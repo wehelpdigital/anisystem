@@ -90,6 +90,7 @@
                     ${c.isAdmin ? '<span class="ad-badge is-admin">admin</span>' : ''}
                     ${c.role ? `<span class="ad-badge is-role">${esc(c.role)}</span>` : ''}
                     ${c.suspendedSays ? `<span class="ad-badge is-susp">suspended</span>` : ''}
+                    ${c.unfinished ? '<span class="ad-badge is-open" title="Signed up, email not confirmed yet">not complete</span>' : ''}
                 </span>
                 <span class="ad-meta is-split"><span class="ad-give">${esc(c.email)}</span><span class="ad-keep">· joined ${esc(c.registered || '')}</span></span>
             </span>
@@ -191,6 +192,7 @@
                 ${c.isAdmin ? '<span class="ad-badge is-admin">admin</span>' : ''}
                 ${c.role ? `<span class="ad-badge is-role">${esc(c.role)}</span>` : ''}
                 ${c.suspendedSays ? `<span class="ad-badge is-susp">community suspended · ${esc(c.suspendedSays)}</span>` : ''}
+                ${c.unfinished ? '<span class="ad-badge is-open">registration not complete · email not confirmed</span>' : ''}
                 <span class="badge badge-gray">${c.registered ? 'joined ' + esc(c.registered) : 'join date unknown'}</span>
                 <span class="badge badge-gray">${c.schedules} season${c.schedules === 1 ? '' : 's'}</span>
                 <a class="badge badge-gray" href="{{ route('admin.support') }}?client=${c.id}" title="Open this client's tickets">${c.tickets} ticket${c.tickets === 1 ? '' : 's'} ↗</a>

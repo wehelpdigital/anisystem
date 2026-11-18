@@ -58,7 +58,7 @@ class LoginController extends Controller
             $request->session()->put('signup.email', $user->email);
 
             return redirect()->route('verify.notice')
-                ->with('error', 'Please confirm your email first. Check your inbox for the link.');
+                ->with('error', 'Your registration is not complete yet. Tap the link we emailed you to finish it.');
         }
 
         if ($user->status !== 'active') {

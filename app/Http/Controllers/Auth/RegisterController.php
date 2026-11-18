@@ -70,7 +70,7 @@ class RegisterController extends Controller
             $request->session()->put('signup.email', $pending->email);
 
             return redirect()->route('verify.notice')
-                ->with('success', 'That email is still waiting to be confirmed. We sent you a new link.');
+                ->with('success', 'Your registration is not complete yet: that email still waits to be confirmed. We sent you a new link.');
         }
 
         $data = $request->validate([
@@ -228,10 +228,15 @@ class RegisterController extends Controller
         // the form was opened for come back from the account.
         $plan = WelcomeController::restore((int) $user->id, $request);
         $request->session()->forget('signup.email');
+        // The registration is finished at this link, not at the form (2026-11-19): the next page tells the ads so.
+        if ($fresh) {
+            $request->session()->flash('signup.done', true);
+        }
+        $done = $fresh ? 'Your registration is complete. Welcome to anee.io!' : 'Email confirmed. Thank you!';
 
         if ($plan) {
             return redirect()->route('purchase.plans', ['plan' => $plan])
-                ->with('success', 'Email confirmed. Welcome to anee.io! Pick a plan, or start free.');
+                ->with('success', $done . ' Pick a plan, or start free.');
         }
 
         // They signed up on a members' guide: they choose where to go, the guide first (2026-11-16).
@@ -240,7 +245,7 @@ class RegisterController extends Controller
         }
 
         return redirect()->route('app.dashboard')
-            ->with('success', 'Email confirmed. Welcome to anee.io! You are on the free Libre plan.');
+            ->with('success', $fresh ? $done . ' You are on the free Libre plan.' : $done);
     }
 
     private function sendVerification(User $user): void

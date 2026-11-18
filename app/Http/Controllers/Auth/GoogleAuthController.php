@@ -128,6 +128,10 @@ class GoogleAuthController extends Controller
         SignIn::user($user, true); // no box to tick at this door: kept for ten days
         $request->session()->regenerate();
         $user->forceFill(['currentSessionId' => $request->session()->getId()])->saveQuietly();
+        // Google proved the address, so the registration is finished now: the next page tells the ads so.
+        if ($fresh) {
+            $request->session()->flash('signup.done', true);
+        }
 
         if (\App\Support\UserHats::needsChoice($user)) {
             return redirect()->route('account.choose');

@@ -62,8 +62,10 @@ class AdminPanelController extends Controller
             $months[$m->format('Y-m')] = ['ym' => $m->format('Y-m'), 'label' => $m->format('M'), 'value' => 0.0];
         }
 
+        // A registration is finished when the email is confirmed (2026-11-19): a signup still waiting on its link
+        // (status pending) is not counted.
         $registrations = $months;
-        foreach (User::active()->where('created_at', '>=', $from)
+        foreach (User::active()->where('status', '!=', 'pending')->where('created_at', '>=', $from)
             ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as ym, COUNT(*) as n")
             ->groupBy('ym')->pluck('n', 'ym') as $ym => $n) {
             if (isset($registrations[$ym])) {
@@ -87,7 +89,7 @@ class AdminPanelController extends Controller
         $monthStart = $now->copy()->startOfMonth();
 
         return response()->json(['success' => true, 'message' => 'ok', 'data' => [
-            'clients' => User::active()->count(),
+            'clients' => User::active()->where('status', '!=', 'pending')->count(),
             'clientsThisMonth' => User::active()->where('created_at', '>=', $monthStart)->count(),
             'activeSubscriptions' => Subscription::where('deleteStatus', 1)->where('status', 'active')
                 ->where(fn ($w) => $w->whereNull('expiresAt')->orWhere('expiresAt', '>', $now))->count(),
@@ -221,6 +223,8 @@ class AdminPanelController extends Controller
             'suspendedUntil' => ($until && now()->lt($until)) ? $until->format('Y-m-d') : null,
             'suspendedSays' => ($until && now()->lt($until)) ? $until->format('M j, Y') : null,
             'tier' => $u->planTier(),
+            // Signed up, never tapped the confirmation link: the registration is not finished.
+            'unfinished' => $u->status === 'pending',
         ];
     }
 

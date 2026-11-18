@@ -20,6 +20,11 @@
         .vn-tips li + li { margin-top: .3rem; }
         html.dark .vn-tips { color: #d1d5db; } html.dark .vn-tips summary { color: #a8cc7e; } html.dark .vn-tips ul { background: #111827; }
         .vn-done[hidden], .vn-waiting[hidden] { display: none; }
+        /* Not finished yet (2026-11-19, the owner: "registration is not yet complete if email is not yet verified"). */
+        .vn-pill { display: inline-flex; align-items: center; gap: .4rem; margin-top: 1rem; padding: .3rem .75rem; border-radius: 999px;
+            background: #fff8e1; border: 1px solid #f3dd9a; color: #7a5b05; font-size: .76rem; font-weight: 800; }
+        .vn-pill i { width: .45rem; height: .45rem; border-radius: 999px; background: #d4a106; }
+        html.dark .vn-pill { background: #2e2a12; border-color: #5b4e17; color: #f3e6b5; }
         .vn-lock { display: flex; gap: .6rem; align-items: flex-start; margin-top: 1rem; padding: .75rem .85rem; border-radius: .9rem; text-align: left;
             background: #fff8e1; border: 1px solid #f3dd9a; color: #5b4a12; font-size: .84rem; line-height: 1.5; }
         .vn-lock svg { flex: none; width: 1.1rem; height: 1.1rem; margin-top: .1rem; color: #b8860b; }
@@ -65,11 +70,14 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
             </div>
-            <h1 class="mt-4 text-2xl font-bold text-gray-900">{{ $reading ? 'Confirm your email to keep reading' : (($existing ?? false) ? 'Confirm your email to continue' : 'Check your inbox') }}</h1>
+            @unless ($existing ?? false)
+                <p class="vn-pill"><i aria-hidden="true"></i>Registration not complete yet</p>
+            @endunless
+            <h1 class="{{ ($existing ?? false) ? 'mt-4' : 'mt-3' }} text-2xl font-bold text-gray-900">{{ $reading ? 'Confirm your email to keep reading' : (($existing ?? false) ? 'Confirm your email to continue' : 'Check your inbox') }}</h1>
             <p class="mt-2 text-sm text-gray-600 leading-relaxed">
                 We sent a confirmation link
                 @if ($email) to <span class="font-semibold text-gray-900" style="overflow-wrap:anywhere">{{ $email }}</span>@endif.
-                {{ ($existing ?? false) ? 'Every account confirms its email before it goes on. Tap the link and you are back in.' : 'Tap it to open your free account.' }}
+                {{ ($existing ?? false) ? 'Every account confirms its email before it goes on. Tap the link and you are back in.' : 'Your registration is complete only once you tap it. Then your free account opens.' }}
             </p>
             @if ($reading)
                 <div class="vn-lock">
@@ -135,8 +143,8 @@
             <div class="mx-auto w-16 h-16 rounded-full bg-brand-50 ring-1 ring-brand-100 flex items-center justify-center">
                 <svg class="w-8 h-8 text-brand-600" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>
             </div>
-            <h2 class="mt-4 text-2xl font-bold text-gray-900">Your email is confirmed</h2>
-            <p class="mt-2 text-sm text-gray-600 leading-relaxed" id="vnDoneSays">You opened the link in another app. Log in here to keep going{{ $reading ? ' with ' . $reading['title'] : '' }}.</p>
+            <h2 class="mt-4 text-2xl font-bold text-gray-900">{{ ($existing ?? false) ? 'Your email is confirmed' : 'Your registration is complete' }}</h2>
+            <p class="mt-2 text-sm text-gray-600 leading-relaxed" id="vnDoneSays">{{ ($existing ?? false) ? '' : 'Your email is confirmed. ' }}You opened the link in another app. Log in here to keep going{{ $reading ? ' with ' . $reading['title'] : '' }}.</p>
             <a href="{{ $vnLogin }}" class="btn btn-accent w-full mt-5" id="vnDoneGo">Log in</a>
         </div>
 
@@ -175,7 +183,7 @@
             done = true;
             // Opened in another tab of this same browser: this one is signed in too.
             if (signedIn) {
-                document.getElementById('vnDoneSays').textContent = 'You are in. Your free account is open.';
+                document.getElementById('vnDoneSays').textContent = @json(($existing ?? false) ? 'You are in. Your account is open.' : 'You are in. Your registration is complete and your free account is open.');
                 const go = document.getElementById('vnDoneGo');
                 go.href = @json(route('signup.welcome'));
                 go.textContent = 'Keep going';

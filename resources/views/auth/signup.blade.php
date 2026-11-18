@@ -219,7 +219,7 @@
                     <span class="su-spin" aria-hidden="true"></span>
                     <span id="suGoText">Create my free account</span>
                 </button>
-                <p class="text-center text-sm text-gray-500">We will email you a link. Tap it to open your account.</p>
+                <p class="text-center text-sm text-gray-500">We will email you a link. Your registration is complete once you tap it.</p>
             </form>
         </div>
 

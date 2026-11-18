@@ -205,6 +205,10 @@
     @if (\App\Support\Ads::wantsAdsenseScript())
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ \App\Support\Ads::adsenseClient() }}" crossorigin="anonymous"></script>
     @endif
+    {{-- The page right after the confirmation link (or a first Google login): the registration is finished, the ads hear it. --}}
+    @if (session('signup.done'))
+        @include('partials.ad-tags', ['registered' => true])
+    @endif
     @stack('head')
     {{-- Five pages pushed their whole stylesheet to a stack nobody rendered,
          and shipped unstyled because of it: the wall, saved posts, co-farmers,
