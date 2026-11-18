@@ -33,15 +33,12 @@
         };
         @if ($fast)
         /* THE FIRST SCREEN, SOONER (2026-11-18 speed audit: a phone waited 5.7 s for the home page's hero, the whole
-         * 1.2 MB document had to be parsed before the veil lifted). A page whose first screen has all its styles in
-         * the head calls this right after it, behind a [data-boot-rest] marker: the veil lifts on what is there, and
-         * what follows the marker stays hidden (html.boot-tail) until the document is parsed. Same task, one frame. */
-        window.__bootEarly = () => {
-            if (lifted) return;
-            root.classList.add('boot-tail');
-            lift();
-        };
-        const parsed = () => requestAnimationFrame(() => { lift(); root.classList.remove('boot-tail'); });
+         * 1.2 MB document had to be parsed before the veil lifted). A page whose every style is in the head (no <style>
+         * in its body, so nothing that streams in after can show undressed) calls this right after its first screen.
+         * Measured: the hero showed in half the time; hiding the rest until the end, or content-visibility on it, each
+         * cost a phone a second or more of blocked time when it was revealed, so the rest simply streams in below. */
+        window.__bootEarly = lift;
+        const parsed = () => requestAnimationFrame(lift);
         if (document.readyState === 'loading') {
             document.addEventListener('readystatechange', function ready() {
                 if (document.readyState === 'loading') return;

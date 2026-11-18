@@ -142,9 +142,9 @@
         </a>
     </section>
 
-    {{-- The first screen is whole here (its styles are all in the head): show it now, the rest stays hidden until the
-         document is parsed (partials.boot-veil, 2026-11-18 speed audit: the hero waited for 1.2 MB of page). --}}
-    <i data-boot-rest hidden></i>
+    {{-- The first screen is whole here: show it now, and the rest streams in below it (partials.boot-veil, 2026-11-18
+         speed audit: the hero waited for 1.2 MB of page). Every style this page uses is in the head, so keep it that way:
+         a <style> in the body would let what comes before it show undressed. --}}
     <script>window.__bootEarly && window.__bootEarly();</script>
 
     {{-- A tool's film on a phone, over the page (the steps' Watch buttons on a phone). --}}
