@@ -33,9 +33,7 @@
     <meta name="description" content="@yield('og-description', 'A cropping plan shared from anee.io.')">
 
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    @include('partials.fonts')
     @vite(['resources/css/app.css'])
 </head>
 <body class="min-h-screen bg-gray-50">

@@ -70,9 +70,7 @@
     {{-- Indexable only once the mother app's switch says so (App\Support\Seo). --}}
     <meta name="robots" content="{{ \App\Support\Seo::robots() }}">
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}?v=anee">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    @include('partials.fonts')
     {{-- Night mode for guests belongs to the login page alone: the app mirrors
          its theme choice into a cookie so a returning member's login screen
          matches the app they left. The marketing pages are a different

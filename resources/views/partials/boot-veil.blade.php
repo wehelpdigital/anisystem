@@ -33,8 +33,8 @@
         };
         @if ($fast)
         /* THE FIRST SCREEN, SOONER (2026-11-18 speed audit: a phone waited 5.7 s for the home page's hero, the whole
-         * 1.2 MB document had to be parsed before the veil lifted). A page whose every style is in the head (no <style>
-         * in its body, so nothing that streams in after can show undressed) calls this right after its first screen.
+         * 1.2 MB document had to be parsed before the veil lifted). A public page calls this right after its first
+         * screen; nothing that streams in after can show undressed, PublicSeoTags moves every body <style> to the head.
          * Measured: the hero showed in half the time; hiding the rest until the end, or content-visibility on it, each
          * cost a phone a second or more of blocked time when it was revealed, so the rest simply streams in below. */
         window.__bootEarly = lift;
