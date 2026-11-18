@@ -20,6 +20,16 @@
         .vn-tips li + li { margin-top: .3rem; }
         html.dark .vn-tips { color: #d1d5db; } html.dark .vn-tips summary { color: #a8cc7e; } html.dark .vn-tips ul { background: #111827; }
         .vn-done[hidden], .vn-waiting[hidden] { display: none; }
+        .vn-lock { display: flex; gap: .6rem; align-items: flex-start; margin-top: 1rem; padding: .75rem .85rem; border-radius: .9rem; text-align: left;
+            background: #fff8e1; border: 1px solid #f3dd9a; color: #5b4a12; font-size: .84rem; line-height: 1.5; }
+        .vn-lock svg { flex: none; width: 1.1rem; height: 1.1rem; margin-top: .1rem; color: #b8860b; }
+        .vn-gets { margin-top: .9rem; text-align: left; font-size: .84rem; line-height: 1.5; color: #374151; }
+        .vn-gets b { display: block; margin-bottom: .35rem; font-size: .74rem; letter-spacing: .05em; text-transform: uppercase; color: #6b7280; }
+        .vn-gets li { display: flex; gap: .5rem; align-items: flex-start; }
+        .vn-gets li + li { margin-top: .35rem; }
+        .vn-gets li svg { flex: none; width: 1rem; height: 1rem; margin-top: .2rem; color: #4a7c2a; }
+        html.dark .vn-lock { background: #2e2a12; border-color: #5b4e17; color: #f3e6b5; }
+        html.dark .vn-gets { color: #d1d5db; } html.dark .vn-gets b { color: #9ca3af; }
         @media (prefers-reduced-motion: reduce) { .vn-card { animation: none; } .vn-wait i { animation: none; opacity: 1; } }
     </style>
 @endpush
@@ -38,6 +48,12 @@
     // Just sent (the signup, or a resend): the button rests a minute, as the server does.
     $vnJustSent = (bool) session('signup.fresh') || (bool) session('success');
     $vnLogin = route('login') . ($reading ? '?read=' . urlencode((string) parse_url($reading['url'], PHP_URL_PATH)) : '');
+    // From a members' guide (2026-11-19, the owner: "persuade to verify email first"): the way back to the guide opens
+    // only once the email is confirmed (the account cannot log in before), so the page says so and what confirming
+    // opens. A guide behind Libre + Anee opens only its start on the free plan: said, as the welcome page says it.
+    $vnSection = $reading ? (explode('/', trim((string) parse_url($reading['url'], PHP_URL_PATH), '/'))[0] ?? '') : '';
+    $vnPlus = $reading && \App\Support\ContentGate::needsPlus($vnSection);
+    $vnPlusName = \App\Support\Tier::planName(\App\Support\ContentGate::PLUS_PLAN);
 @endphp
 <div class="bg-gray-50 py-10 md:py-16 px-4 min-h-[70vh] flex items-start justify-center">
     <div class="w-full max-w-md">
@@ -49,14 +65,35 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                 </svg>
             </div>
-            <h1 class="mt-4 text-2xl font-bold text-gray-900">Check your inbox</h1>
+            <h1 class="mt-4 text-2xl font-bold text-gray-900">{{ $reading ? 'Confirm your email to keep reading' : 'Check your inbox' }}</h1>
             <p class="mt-2 text-sm text-gray-600 leading-relaxed">
                 We sent a confirmation link
                 @if ($email) to <span class="font-semibold text-gray-900" style="overflow-wrap:anywhere">{{ $email }}</span>@endif.
                 Tap it to open your free account.
             </p>
             @if ($reading)
-                <p class="mt-2 text-sm text-gray-600 leading-relaxed">Then we take you back to <span class="font-semibold text-gray-900">{{ $reading['title'] }}</span>.</p>
+                <div class="vn-lock">
+                    <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>
+                    <span>
+                        @if ($vnPlus)
+                            <b>{{ $reading['title'] }}</b> waits for you behind this link. Confirm your email and we take you straight back. Your free account opens the start of this guide, and the whole guide comes with {{ $vnPlusName }}.
+                        @else
+                            The rest of <b>{{ $reading['title'] }}</b> opens the moment you confirm your email. Until then it stays locked, so tap the link now and we take you straight back to it.
+                        @endif
+                    </span>
+                </div>
+                <div class="vn-gets">
+                    <b>Confirming opens</b>
+                    <ul>
+                    @if ($vnPlus)
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Your way back to {{ $reading['title'] }}, and every pest, disease, weed and variety guide in full when you add Anee</span></li>
+                    @else
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>The whole of {{ $reading['title'] }}, and every land preparation, how to plant and nutrient guide</span></li>
+                    @endif
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Your free farm calendar, with every task dated from your planting day</span></li>
+                    <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Growth stages, notes and photos for your season, free</span></li>
+                    </ul>
+                </div>
             @endif
 
             @if ($vnApp)
