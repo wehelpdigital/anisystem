@@ -207,7 +207,7 @@
             <span class="ba-disc" aria-hidden="true"></span>
             <span class="ba-cover">
                 <img src="{{ $cover }}-800.webp" srcset="{{ $cover }}-480.webp 480w, {{ $cover }}-800.webp 800w, {{ $cover }}-1200.webp 1200w"
-                     sizes="(min-width: 1024px) 26rem, 90vw" width="1200" height="1200" alt="{{ $A::ALT }}" title="{{ $A::TITLE }}, the anee.io album" loading="lazy" decoding="async">
+                     sizes="{{ $baCompact ? '(min-width: 1024px) 13rem, (min-width: 640px) 10rem, 7.5rem' : '(min-width: 1024px) 26rem, 90vw' }}" width="1200" height="1200" alt="{{ $A::ALT }}" title="{{ $A::TITLE }}, the anee.io album" loading="lazy" decoding="async">
                 <span class="ba-cover-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>{{ count($baTracks) }} songs</span>
             </span>
         </div>

@@ -287,7 +287,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="flex items-center justify-between h-16 md:h-20">
                 <a href="{{ route('home') }}" class="flex items-center shrink-0">
-                    <img src="{{ asset('images/logo-600.webp') }}?v=anee2" alt="anee.io" title="anee.io" class="pub-logo pub-logo-day" width="600" height="92" decoding="async">
+                    <img src="{{ asset('images/logo-600.webp') }}?v=anee2" srcset="{{ asset('images/logo-400.webp') }}?v=anee2 400w, {{ asset('images/logo-600.webp') }}?v=anee2 600w" sizes="200px" alt="anee.io" title="anee.io" class="pub-logo pub-logo-day" width="600" height="92" decoding="async">
                     {{-- Night (the login page honours the app's theme cookie, 2026-10-15): the white logo. --}}
                     @hasSection('honours-theme-cookie')
                         <img src="{{ asset('images/site/logo-white-520.webp') }}?v=anee2" alt="anee.io" title="anee.io" class="pub-logo pub-logo-night" width="520" height="80" decoding="async">

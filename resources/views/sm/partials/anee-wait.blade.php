@@ -34,7 +34,7 @@
 <div class="aw-veil" id="aneeWaitVeil" hidden aria-live="polite" role="status">
     <div class="aw-card">
         <div class="aw-ring" aria-hidden="true">
-            <video class="aw-vid is-on" id="aneeWaitThink" src="{{ asset('videos/anee/thinking.mp4') }}" poster="{{ asset('videos/anee/thinking.jpg') }}"
+            <video class="aw-vid is-on" id="aneeWaitThink" src="{{ asset('videos/anee/thinking.mp4') }}" poster="{{ asset('videos/anee/thinking.webp') }}"
                    muted playsinline loop preload="auto" disablepictureinpicture disableremoteplayback tabindex="-1"></video>
             <video class="aw-vid" id="aneeWaitDone" muted playsinline preload="auto" disablepictureinpicture disableremoteplayback tabindex="-1"></video>
             <span class="aw-halo"></span>
@@ -135,7 +135,7 @@
        laptop, or her writing in her notebook -- each with its own poster so the ring never opens on the
        wrong face. */
     const THINKS = [
-        { src: @json(asset('videos/anee/thinking.mp4')), poster: @json(asset('videos/anee/thinking.jpg')) },
+        { src: @json(asset('videos/anee/thinking.mp4')), poster: @json(asset('videos/anee/thinking.webp')) },
         { src: @json(asset('videos/anee/searching.mp4')), poster: @json(asset('videos/anee/searching.jpg')) },
         { src: @json(asset('videos/anee/typing.mp4')), poster: @json(asset('videos/anee/typing.jpg')) },
         { src: @json(asset('videos/anee/writing.mp4')), poster: @json(asset('videos/anee/writing.jpg')) },

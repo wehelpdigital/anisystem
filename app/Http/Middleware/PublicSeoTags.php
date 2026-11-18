@@ -99,18 +99,25 @@ class PublicSeoTags
         $add[] = '<script type="application/ld+json">' . json_encode(['@context' => 'https://schema.org', '@graph' => $graph], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) . '</script>';
 
         $html = substr($html, 0, $cut) . "\n    " . implode("\n    ", $add) . "\n" . substr($html, $cut);
-        $html = self::hoistStyles($html);
+        $html = self::slimStyles(self::hoistStyles($html));
+
+        // Past a page's first screen (the early lift of partials.boot-veil), a picture that says nothing about
+        // loading waits until it is near the screen (2026-11-18 PageSpeed: "defer offscreen images").
+        $fold = strpos($html, 'window.__bootEarly && window.__bootEarly()');
 
         // A picture drawn as decoration (an empty alt) or with no alt at all
         // gets readable words (App\Support\ImageWords); a decorative one
         // stays out of a screen reader's way, as its empty alt kept it. Then
         // a picture with alt words carries them as its title too. Markup
         // inside a script (a string the page builds later) is left alone.
-        return preg_replace_callback('#<script\b[^>]*>.*?</script>|<img\b([^>]*)>#is', function ($m) {
-            if (strncasecmp($m[0], '<script', 7) === 0) {
-                return $m[0];
+        return preg_replace_callback('#<script\b[^>]*>.*?</script>|<img\b([^>]*)>#is', function ($m) use ($fold) {
+            if (strncasecmp($m[0][0], '<script', 7) === 0) {
+                return $m[0][0];
             }
-            $tag = $m[1];
+            $tag = $m[1][0];
+            if ($fold !== false && $m[0][1] > $fold && ! preg_match('#\bloading\s*=#i', $tag)) {
+                $tag .= ' loading="lazy"' . (preg_match('#\bdecoding\s*=#i', $tag) ? '' : ' decoding="async"');
+            }
             if (! preg_match('#\balt="[^"]+"#i', $tag) && preg_match('#\bsrc="([^"]+)"#i', $tag, $s)
                 && ($words = ImageWords::forSrc($s[1])) !== '') {
                 $decor = (bool) preg_match('#\balt=""#i', $tag);
@@ -123,7 +130,63 @@ class PublicSeoTags
             }
 
             return '<img title="' . $a[1] . '"' . $tag . '>';
-        }, $html) ?? $html;
+        }, $html, -1, $count, PREG_OFFSET_CAPTURE) ?? $html;
+    }
+
+    /**
+     * The head's styles without their notes (2026-11-18 PageSpeed: "minify CSS", 33 KB of comments and indentation
+     * on the home page alone). Comments go and runs of white space become one space; a quoted string is copied as it
+     * is, so a "/*" inside content: or a url() is safe. Only the head: after hoistStyles every page style is there.
+     */
+    private static function slimStyles(string $html): string
+    {
+        $cut = stripos($html, '</head>');
+        if ($cut === false) {
+            return $html;
+        }
+        $head = preg_replace_callback('#(<style\b[^>]*>)(.*?)(</style>)#is', fn ($m) => $m[1] . self::slimCss($m[2]) . $m[3], substr($html, 0, $cut));
+
+        return $head === null ? $html : $head . substr($html, $cut);
+    }
+
+    public static function slimCss(string $css): string
+    {
+        $out = '';
+        $n = strlen($css);
+        for ($i = 0; $i < $n; $i++) {
+            $c = $css[$i];
+            if ($c === '"' || $c === "'") {
+                $j = $i + 1;
+                while ($j < $n && $css[$j] !== $c) {
+                    $j += $css[$j] === '\\' ? 2 : 1;
+                }
+                $out .= substr($css, $i, $j - $i + 1);
+                $i = $j;
+                continue;
+            }
+            if ($c === '/' && ($css[$i + 1] ?? '') === '*') {
+                $end = strpos($css, '*/', $i + 2);
+                if ($end === false) {
+                    break;
+                }
+                $i = $end + 1;
+                continue;
+            }
+            if (ctype_space($c)) {
+                while ($i + 1 < $n && ctype_space($css[$i + 1])) {
+                    $i++;
+                }
+                $last = substr($out, -1);
+                $next = $css[$i + 1] ?? '';
+                if ($last !== '' && ! in_array($last, ['{', '}', ';', ','], true) && ! in_array($next, ['{', '}', ';'], true)) {
+                    $out .= ' ';
+                }
+                continue;
+            }
+            $out .= $c;
+        }
+
+        return trim($out);
     }
 
     /**
