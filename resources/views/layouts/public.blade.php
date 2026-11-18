@@ -91,7 +91,8 @@
         </script>
     @endif
     <script>window.ANEE_REGION = @json(\App\Support\Region::js());</script>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- resources/js/public.js: the app's core without the Collab Room's realtime libraries (2026-11-18 PageSpeed). --}}
+    @vite(['resources/css/app.css', 'resources/js/public.js'])
     {{-- Google AdSense, only where the free plan carries ads and only for the
          person who sees them (App\Support\Ads): a paid account never loads it. --}}
     @if (\App\Support\Ads::wantsAdsenseScript())
