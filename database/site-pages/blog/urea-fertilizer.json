@@ -314,6 +314,10 @@
         {
           "label": "Farm inventory and expenses",
           "url": "/features/farm-inventory-and-expenses"
+        },
+        {
+          "label": "Ammonium nitrate fertilizer",
+          "url": "/blog/ammonium-nitrate-fertilizer"
         }
       ]
     }

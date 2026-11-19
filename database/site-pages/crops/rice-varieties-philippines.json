@@ -290,6 +290,10 @@
         {
           "label": "When to Plant Analysis in anee.io",
           "url": "/features/when-to-plant-analysis"
+        },
+        {
+          "label": "Hybrid rice",
+          "url": "/blog/hybrid-rice"
         }
       ]
     },

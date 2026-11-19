@@ -287,6 +287,10 @@
         {
           "label": "Harvest records",
           "url": "/features/harvest-records"
+        },
+        {
+          "label": "Crop yield",
+          "url": "/blog/crop-yield"
         }
       ]
     }

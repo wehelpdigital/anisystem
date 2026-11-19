@@ -246,6 +246,10 @@
         {
           "label": "Corn seeds",
           "url": "/crops/corn-seeds"
+        },
+        {
+          "label": "Crop planting",
+          "url": "/blog/crop-planting"
         }
       ]
     }

@@ -1,0 +1,71 @@
+{
+  "section": "blog",
+  "slug": "organic-fertilizer-benefits",
+  "sortOrder": 1570,
+  "lang": "en",
+  "category": "Organic farming",
+  "title": "Organic Fertilizer Benefits: What It Does for Your Soil and Crop",
+  "metaTitle": "Organic Fertilizer Benefits for Soil and Crops",
+  "metaDescription": "The real organic fertilizer benefits: softer soil that holds water, steady feeding, more soil life and lower costs over time. See the limits too.",
+  "focusKeyword": "organic fertilizer benefits",
+  "keywords": ["organic fertilizer benefits", "benefits of organic fertilizer", "advantages of organic fertilizer", "soil organic matter", "compost for crops"],
+  "excerpt": "The biggest organic fertilizer benefits are in the soil, not only in the crop. Compost, manure, vermicast and crop residues make soil softer and darker, help it hold water and nutrients, and feed the earthworms and microbes that keep it alive. They release their nutrients slowly, so they rarely burn roots. Their limit is strength: they carry far less nitrogen per sack than inorganic fertilizer, so most farms use both.",
+  "heroImage": { "src": "/images/site/guides/blog-organic-fertilizer-for-pechay.webp", "alt": "Beds of young pechay beside a freshly prepared bed of dark, crumbly soil, a sign of the organic fertilizer benefits that build up over seasons", "credit": "Judgefloro, CC0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "Farmers often judge a fertilizer by how fast the leaves turn green. By that test, organic fertilizer looks weak. But its best work happens below the surface, and it adds up over several seasons.\n\nThis guide lists the benefits of organic fertilizer for your soil, your crop and your costs, and it is honest about the limits. For the materials themselves, see our list of [organic fertilizer examples](/blog/organic-fertilizer-examples)." },
+    { "type": "heading", "level": 2, "text": "The main organic fertilizer benefits" },
+    { "type": "list", "ordered": true, "items": [
+      "**Better soil structure:** sticky clay crumbles more easily, and loose sand holds together.",
+      "**More water held:** organic matter soaks up water like a sponge, so crops last longer between rains.",
+      "**Nutrients held in place:** it keeps nutrients from washing away, including those from inorganic fertilizer.",
+      "**Steady feeding:** nutrients come out slowly as the material breaks down.",
+      "**Trace elements:** it carries small amounts of zinc, sulfur and other minor nutrients.",
+      "**More soil life:** earthworms and microbes multiply, which keeps the soil loose and alive.",
+      "**Lower cost over time:** farm made compost and crop residues cost little but labor."
+    ] },
+    { "type": "heading", "level": 2, "text": "What organic fertilizer does for the soil" },
+    { "type": "text", "text": "Organic matter turns into humus, the dark, stable part of good soil. Humus binds sand grains into crumbs and opens up heavy clay, so roots go deeper and air reaches them. Our guide on [humus soil](/blog/humus-soil) explains how that works.\n\nOrganic matter also acts like a storage shelf for nutrients. It holds on to potassium, calcium and magnesium, then lets the roots take them as needed. That matters most in sandy soil, where fertilizer otherwise drains away fast. See [fertilizer for sandy soil](/blog/fertilizer-for-sandy-soil) for that problem." },
+    { "type": "callout", "tone": "info", "title": "Why burning straw costs you", "text": "Rice straw carries a large share of the potassium a palay crop took up. Burning it sends much of that organic matter into the air. Plowing the straw back in, or composting it, returns it to the field." },
+    { "type": "heading", "level": 2, "text": "What organic fertilizer does for the crop" },
+    { "type": "text", "text": "Since organic fertilizer releases slowly, crops get a steady supply instead of one big dose. That suits vegetables and fruit trees well. It also rarely burns roots or seedlings, which makes it forgiving for new growers.\n\nHealthy soil also gives stronger roots, and stronger roots find more water and food on their own. Even so, organic fertilizer alone seldom gives a high yielding rice or corn crop all the nitrogen it needs at the right time." },
+    { "type": "heading", "level": 2, "text": "Organic fertilizer benefits and limits, side by side" },
+    { "type": "table", "caption": "What to expect from organic fertilizer", "rows": [
+      ["Benefit", "Limit"],
+      ["Builds soil structure and water holding", "Takes several seasons to show fully"],
+      ["Slow, steady release that rarely burns", "Too slow for a crop that is hungry now"],
+      ["Carries trace elements", "Low in nitrogen per sack, so you need a lot of it"],
+      ["Feeds soil life", "Bulky to haul and spread on large fields"],
+      ["Cheap when farm made", "Quality changes from batch to batch"]
+    ] },
+    { "type": "heading", "level": 3, "text": "Why most farms use both" },
+    { "type": "text", "text": "The best results usually come from organic matter for the soil plus a smaller dose of inorganic fertilizer for the crop. The organic part helps the inorganic part work better and wash away less. Over time, many farms find they need fewer bags. Our comparison of [organic vs inorganic fertilizer](/blog/organic-vs-inorganic-fertilizer) shows how to balance them, and [lower fertilizer cost](/blog/lower-fertilizer-cost) shows where the savings come from." },
+    { "type": "heading", "level": 2, "text": "Organic fertilizers that work on Filipino farms" },
+    { "type": "list", "ordered": false, "items": [
+      "**Compost** from crop residues, weeds and manure.",
+      "**Vermicast** from worm bins, gentle and rich.",
+      "**Chicken manure**, composted first. See [chicken dung as fertilizer](/blog/chicken-dung-as-fertilizer).",
+      "**Rice straw** plowed back in after harvest instead of burned.",
+      "**Azolla**, a water fern that fixes nitrogen in flooded paddies.",
+      "**Mungbean or other legumes** grown between crops and plowed in as green manure."
+    ] },
+    { "type": "text", "text": "Small amounts of kitchen waste help too. Our guide on [eggshell as fertilizer](/blog/eggshell-as-fertilizer) explains what crushed shells can and cannot do. For a full farm approach, read [organic farming in the Philippines](/blog/organic-farming-philippines)." },
+    { "type": "heading", "level": 2, "text": "See the benefit in your own records" },
+    { "type": "text", "text": "Organic fertilizer benefits show slowly, so the only way to see them is to compare seasons. In anee.io, the inventory records every sack of compost, manure and fertilizer each lot used. The [Compare Reports](/features/compare-reports) view puts your seasons side by side, so you can see your yield and your fertilizer cost change after you start adding organic matter. Anee, the smart farm technician, answers questions about mixing organic and inorganic fertilizer in Tagalog or English." },
+    { "type": "cta", "title": "Compare your seasons side by side", "text": "Track what each lot used and harvested, and see whether your soil work is paying off.", "label": "See Compare Reports", "url": "/features/compare-reports" },
+    { "type": "heading", "level": 2, "text": "Questions about organic fertilizer benefits" },
+    { "type": "faq", "items": [
+      { "q": "What are the benefits of organic fertilizer?", "a": "It improves soil structure and water holding, keeps nutrients from washing away, feeds soil life, releases food slowly and rarely burns roots. Farm made organic fertilizer also costs little." },
+      { "q": "Is organic fertilizer better than inorganic?", "a": "Each does a different job. Organic fertilizer builds the soil, while inorganic fertilizer feeds the crop fast. Most farms get the best yield and cost by using both." },
+      { "q": "How long does organic fertilizer take to work?", "a": "Some nutrients become available within weeks, but the full soil benefits build over several seasons of regular use." },
+      { "q": "Can organic fertilizer burn plants?", "a": "Finished compost and vermicast rarely do. Fresh manure, especially chicken manure, can burn roots, so compost it first." },
+      { "q": "What is the cheapest organic fertilizer?", "a": "Compost made from your own crop residues, weeds and animal manure, and rice straw plowed back into the field." }
+    ] },
+    { "type": "links", "title": "More organic farming guides", "items": [
+      { "label": "Organic fertilizer examples", "url": "/blog/organic-fertilizer-examples" },
+      { "label": "Organic vs inorganic fertilizer", "url": "/blog/organic-vs-inorganic-fertilizer" },
+      { "label": "Chicken dung as fertilizer", "url": "/blog/chicken-dung-as-fertilizer" },
+      { "label": "Humus soil", "url": "/blog/humus-soil" },
+      { "label": "Organic farming in the Philippines", "url": "/blog/organic-farming-philippines" }
+    ] }
+  ]
+}

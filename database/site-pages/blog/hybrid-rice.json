@@ -1,0 +1,74 @@
+{
+  "section": "blog",
+  "slug": "hybrid-rice",
+  "sortOrder": 1610,
+  "lang": "en",
+  "category": "Rice varieties",
+  "title": "Hybrid Rice in the Philippines: Is It Worth It for Your Farm?",
+  "metaTitle": "Hybrid Rice: Yield, Seed Rate and When It Pays",
+  "metaDescription": "Hybrid rice can out yield inbred palay, but needs new seed every season and good care. See how it works, seed rates, top hybrids and when it pays.",
+  "focusKeyword": "hybrid rice",
+  "keywords": ["hybrid rice", "rice hybrid", "hybrid rice varieties in the Philippines", "hybrid vs inbred rice", "hybrid rice seed rate"],
+  "excerpt": "Hybrid rice is palay grown from seed made by crossing two different parent lines. The first generation of that cross grows with extra vigor, so a good hybrid can yield more than an inbred variety on a well managed field. But the vigor lasts only one generation. You must buy new seed every season, the seed costs more, and the crop needs good water and fertilizer to pay back the extra cost.",
+  "heroImage": { "src": "/images/site/photos/palay-heads.jpg", "alt": "Palay panicles filling their grains in a green field, the kind of heavy crop hybrid rice is grown for" },
+  "blocks": [
+    { "type": "text", "text": "Every season, seed dealers and technicians push hybrid seed with promises of more cavans. Some farmers swear by it. Others tried it once and went back to their inbred seed.\n\nBoth can be right. This guide explains what makes a rice hybrid different, how it compares with inbred palay, which hybrids are grown here, and how to tell whether one will pay on your field. To compare all varieties, see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines)." },
+    { "type": "heading", "level": 2, "text": "How hybrid rice works" },
+    { "type": "text", "text": "Rice usually pollinates itself, so an inbred variety breeds true. Seed you save from it grows into the same plant next season.\n\nA hybrid is different. Seed companies cross two carefully chosen parent lines, and the first generation of that cross, called F1, grows with what breeders call hybrid vigor. The plants tiller strongly and fill big panicles. But if you plant the seed that F1 plants make, the next generation splits into a mix of weaker types. That is why hybrid rice seed must be bought new every season." },
+    { "type": "callout", "tone": "warn", "title": "Do not replant hybrid seed", "text": "Seed saved from a hybrid crop gives an uneven field of tall and short plants, early and late, with a lower yield. Buy certified hybrid seed for every planting." },
+    { "type": "heading", "level": 2, "text": "Hybrid rice compared with inbred rice" },
+    { "type": "table", "caption": "Hybrid and inbred palay side by side", "rows": [
+      ["", "Hybrid rice", "Inbred rice"],
+      ["Seed", "Buy new every season", "Certified seed can be replanted a few seasons"],
+      ["Seed rate for transplanting", "About 15 to 20 kilograms per hectare", "About 40 kilograms per hectare"],
+      ["Seed price", "Several times higher per kilogram", "Lower"],
+      ["Yield potential", "Higher on well managed, irrigated fields", "Good, and steadier on hard fields"],
+      ["Fertilizer and water", "Needs more, and on time", "More forgiving"],
+      ["Best fit", "Irrigated fields with good management", "Rainfed, flood prone or low input fields"]
+    ] },
+    { "type": "text", "text": "The lower seed rate makes up for part of the higher seed price. Hybrids are usually transplanted at one or two young seedlings per hill, because each plant tillers so strongly. Our guide on [palay seedlings](/blog/palay-seedlings) explains seedbed size and seedling age for both types." },
+    { "type": "heading", "level": 2, "text": "Hybrid rice varieties in the Philippines" },
+    { "type": "text", "text": "Every registered variety carries an NSIC number, and hybrids end in the letter H. For example, NSIC Rc 222 is an inbred, while NSIC Rc 132H is a hybrid. Private seed companies and public breeders both release hybrids. Some well known names have their own pages on anee.io:" },
+    { "type": "list", "ordered": false, "items": [
+      "[SL 8H (NSIC Rc 132H)](/rice-varieties/nsic-rc-132h)",
+      "[Arize Bigante (NSIC Rc 124H)](/rice-varieties/nsic-rc-124h)",
+      "[Arize H64 (NSIC Rc 168H)](/rice-varieties/nsic-rc-168h)",
+      "[Arize Tej (NSIC Rc 200H)](/rice-varieties/nsic-rc-200h)",
+      "[Mestiso 20 (NSIC Rc 204H)](/rice-varieties/nsic-rc-204h), one of the public Mestiso hybrids"
+    ] },
+    { "type": "text", "text": "There are many more. The [rice variety finder](/rice-varieties) lets you filter by hybrid or inbred, maturity, yield and resistance, and each page shows the variety's record. For a popular inbred to compare against, see [NSIC Rc 222](/rice-varieties/nsic-rc-222)." },
+    { "type": "heading", "level": 2, "text": "When hybrid rice pays, and when it does not" },
+    { "type": "text", "text": "A hybrid pays when its extra harvest is worth more than its extra cost. That happens most on fields where the crop can show its full potential." },
+    { "type": "list", "ordered": false, "items": [
+      "**Good fit:** irrigated fields with steady water, a farmer who can apply fertilizer on time, and good control of pests and weeds.",
+      "**Poor fit:** rainfed fields prone to drought, fields that flood often, and seasons when cash for inputs is short.",
+      "**Watch the grain:** check that local buyers and millers accept the grain type, since some prefer certain inbreds."
+    ] },
+    { "type": "text", "text": "Before you switch, try a hybrid on part of your farm beside your usual inbred, with the same care. Then compare the harvest and the cost per cavan, not just the yield. Our guides on [the best rice variety for your area](/blog/best-rice-variety-for-my-area) and [cost of producing rice per hectare](/blog/cost-of-producing-rice-per-hectare) help with that math." },
+    { "type": "heading", "level": 2, "text": "Caring for a hybrid crop" },
+    { "type": "steps", "items": [
+      { "title": "Prepare a good seedbed", "text": "With fewer seeds per hectare, every seedling counts. Sow thinly so seedlings grow sturdy." },
+      { "title": "Transplant young seedlings", "text": "Follow the seed company's advice on seedling age, often younger than for inbreds, at one or two seedlings per hill." },
+      { "title": "Feed on time", "text": "Hybrids use more nutrients. Split the nitrogen and add potassium where the soil is short. See [fertilizer for rice](/blog/fertilizer-for-rice)." },
+      { "title": "Keep water steady", "text": "Water stress at tillering and flowering costs a hybrid more yield than it costs a hardier inbred." }
+    ] },
+    { "type": "heading", "level": 2, "text": "Compare varieties before you buy seed" },
+    { "type": "text", "text": "Choosing between a hybrid and an inbred is a money decision, so look at the numbers first. In anee.io, [Variety Research](/features/variety-research) compares varieties for your town and season, using their records and your local weather. The cropping calendar then dates the seedbed, transplanting and each fertilizer for the variety you pick, and the reports show your cost and yield per lot. Variety Research and Anee come with Libre plus Anee at PHP 100 a month." },
+    { "type": "cta", "title": "Compare hybrid and inbred for your farm", "text": "Let Anee compare varieties for your town, season and field before you spend on seed.", "label": "See Variety Research", "url": "/features/variety-research" },
+    { "type": "heading", "level": 2, "text": "Questions about hybrid rice" },
+    { "type": "faq", "items": [
+      { "q": "What is hybrid rice?", "a": "Rice grown from first generation seed of a cross between two parent lines. It grows with extra vigor and can yield more than inbred rice when well managed." },
+      { "q": "Can I replant seed from hybrid rice?", "a": "No. The next generation grows unevenly and yields less. Buy new certified hybrid seed every season." },
+      { "q": "How many kilograms of hybrid seed per hectare?", "a": "About 15 to 20 kilograms per hectare for transplanting, compared with about 40 kilograms for inbred seed. Follow the seed company's advice." },
+      { "q": "How do I know if a variety is a hybrid?", "a": "Its NSIC number ends in H, as in NSIC Rc 132H. Inbred varieties, like NSIC Rc 222, have no H." },
+      { "q": "Is hybrid rice better than inbred rice?", "a": "On irrigated, well managed fields it often yields more. On rainfed or flood prone fields, or with tight cash, a good inbred is often the safer choice." }
+    ] },
+    { "type": "links", "title": "More rice variety guides", "items": [
+      { "label": "Rice varieties in the Philippines", "url": "/crops/rice-varieties-philippines" },
+      { "label": "Rice variety finder", "url": "/rice-varieties" },
+      { "label": "Best rice variety for my area", "url": "/blog/best-rice-variety-for-my-area" },
+      { "label": "Palay seedlings", "url": "/blog/palay-seedlings" },
+      { "label": "Increase rice yield per hectare", "url": "/blog/increase-rice-yield-per-hectare" }
+    ] }
+  ]
+}

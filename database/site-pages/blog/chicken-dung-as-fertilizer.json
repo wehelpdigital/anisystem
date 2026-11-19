@@ -1,0 +1,72 @@
+{
+  "section": "blog",
+  "slug": "chicken-dung-as-fertilizer",
+  "sortOrder": 1550,
+  "lang": "en",
+  "category": "Organic farming",
+  "title": "Chicken Dung as Fertilizer: How to Use It Safely",
+  "metaTitle": "Chicken Dung as Fertilizer: Safe Use and Rates",
+  "metaDescription": "Chicken dung as fertilizer is rich in nitrogen and phosphorus, but raw manure burns roots. Learn how to compost it, how much to use, and on which crops.",
+  "focusKeyword": "chicken dung as fertilizer",
+  "keywords": ["chicken dung as fertilizer", "chicken manure fertilizer", "ipot ng manok", "poultry manure", "composting chicken manure"],
+  "excerpt": "Chicken dung as fertilizer is one of the richest organic feeds a farm can get. It carries more nitrogen and phosphorus than cow or carabao manure, plus calcium and organic matter that improve the soil. But fresh chicken manure, ipot ng manok, is strong enough to burn roots and can carry germs. Composted or well aged first, it becomes a safe, slow feed for vegetables, corn, fruit trees and potted plants.",
+  "heroImage": { "src": "/images/site/guides/blog-organic-fertilizer-examples.webp", "alt": "A wooden bin full of dark, sifted organic fertilizer, the crumbly finish that composted chicken manure should reach", "credit": "Renatotcm, CC BY SA 4.0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "Many Filipino farms sit near a poultry house, and the manure is cheap or free. That makes chicken manure one of the easiest ways to cut fertilizer cost. Still, it is easy to misuse.\n\nThis guide explains what is in chicken manure, why it must be composted, how much to apply, and which crops gain the most. For other options, see our list of [organic fertilizer examples](/blog/organic-fertilizer-examples)." },
+    { "type": "heading", "level": 2, "text": "What chicken dung as fertilizer gives your crop" },
+    { "type": "text", "text": "Chickens eat a feed rich in protein and minerals, so their droppings are richer than the dung of animals that graze. Dried chicken manure often tests somewhere around 1 to 4 percent nitrogen, with a fair share of phosphate and less potash. Layer manure also carries calcium from the shell grit in the feed.\n\nBut every batch is different. Manure from broilers raised on rice hull bedding is mixed with ipa, so it is lighter and lower in nutrients per sack. Manure left in the rain loses much of its nitrogen. So treat any number as a rough guide, not a promise." },
+    { "type": "table", "caption": "Chicken manure compared with other farm manures", "rows": [
+      ["Manure", "Nutrient strength", "Burns roots if fresh?"],
+      ["Chicken", "High in nitrogen and phosphorus", "Yes, it must be composted or aged"],
+      ["Goat and sheep", "Medium", "Less, but aging still helps"],
+      ["Hog", "Medium, often wet", "Yes, compost it first"],
+      ["Cow and carabao", "Lower", "Rarely, but weed seeds are common"]
+    ] },
+    { "type": "heading", "level": 2, "text": "Why you must compost chicken manure first" },
+    { "type": "list", "ordered": false, "items": [
+      "**Root burn:** fresh manure releases ammonia and salts that scorch young roots and seedlings.",
+      "**Germs:** raw manure can carry bacteria that make people sick, a real risk on vegetables eaten fresh.",
+      "**Smell and flies:** fresh piles draw flies and annoy neighbors.",
+      "**Lost nitrogen:** spread fresh on dry soil, much of the nitrogen escapes into the air as ammonia."
+    ] },
+    { "type": "text", "text": "Many organic growing rules ask for about three to four months between applying raw manure and harvesting vegetables that people eat fresh. Composting first is the safer and simpler habit." },
+    { "type": "heading", "level": 2, "text": "How to compost chicken manure" },
+    { "type": "steps", "items": [
+      { "title": "Mix with dry, brown material", "text": "Chicken manure is wet and rich, so mix it with rice straw, ipa, dry leaves or sawdust. About two to three parts dry material to one part manure is a good start." },
+      { "title": "Keep the pile moist and covered", "text": "It should feel like a squeezed sponge. Cover it from heavy rain, which washes the nutrients away." },
+      { "title": "Turn it every week or two", "text": "Turning brings air in and keeps the pile hot, which kills many germs and weed seeds." },
+      { "title": "Wait until it is dark and crumbly", "text": "After about two to three months, finished compost smells like soil, not ammonia. Then it is ready to use." }
+    ] },
+    { "type": "text", "text": "Vermicomposting works too, but feed the worms aged manure, because fresh chicken manure is too strong for them. Our guide on [humus soil](/blog/humus-soil) explains why that dark, finished material holds water and feeds roots so well." },
+    { "type": "heading", "level": 2, "text": "How much chicken manure to apply" },
+    { "type": "text", "text": "Because it is rich, use less chicken manure than you would cow manure. For vegetables, a common range is about 2 to 5 tons of composted chicken manure per hectare, or roughly 200 to 500 grams per square meter of bed, worked into the soil a week or two before planting.\n\nAdjust that to your soil and crop. Leafy vegetables like pechay respond well, while fruiting crops also need potassium later. Our guide on [organic fertilizer for pechay](/blog/organic-fertilizer-for-pechay) shows a full program for one crop." },
+    { "type": "callout", "tone": "tip", "title": "Mix organic and inorganic", "text": "Chicken manure alone rarely gives a high yielding field crop all the nitrogen it needs on time. Many farmers apply composted manure before planting, then top up with a little urea or complete fertilizer. See [organic vs inorganic fertilizer](/blog/organic-vs-inorganic-fertilizer)." },
+    { "type": "heading", "level": 2, "text": "Which crops gain the most" },
+    { "type": "list", "ordered": false, "items": [
+      "**Leafy vegetables:** pechay, mustasa, kangkong and lettuce love the nitrogen.",
+      "**Fruiting vegetables:** tomato, eggplant, ampalaya and pepper, with potassium added at flowering.",
+      "**Corn:** as part of the basal application, before planting.",
+      "**Fruit trees:** spread in a ring under the canopy, not against the trunk. See [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees).",
+      "**Potted plants:** small amounts of fully composted manure or pellets mixed into the potting soil."
+    ] },
+    { "type": "text", "text": "For lowland palay, most farmers use rice straw, azolla and inorganic fertilizer instead, because hauling enough manure for a flooded hectare costs too much labor." },
+    { "type": "heading", "level": 2, "text": "Track your organic inputs in anee.io" },
+    { "type": "text", "text": "Organic fertilizer works slowly, so timing and records matter even more. In anee.io, the [cropping calendar](/features/cropping-calendar) dates your basal manure, each top up and every harvest for each lot. The inventory records how many sacks of manure and fertilizer each lot used, so the expenses report shows whether the switch saved you money. Anee, the smart farm technician, answers questions about organic fertilizer in Tagalog or English." },
+    { "type": "cta", "title": "See what your fertilizer really costs", "text": "Record every sack of manure and fertilizer per lot, and compare your costs and yield season after season.", "label": "See the expenses report", "url": "/features/expenses-report" },
+    { "type": "heading", "level": 2, "text": "Questions about chicken dung as fertilizer" },
+    { "type": "faq", "items": [
+      { "q": "Is chicken dung a good fertilizer?", "a": "Yes. It is richer in nitrogen and phosphorus than most farm manures and adds organic matter. Compost or age it first so it does not burn roots." },
+      { "q": "Can I use fresh chicken manure on plants?", "a": "Not directly. Fresh manure can burn roots and carry germs. Compost it for about two to three months, or age it well, before use." },
+      { "q": "How long should chicken manure age before use?", "a": "A well managed compost pile is usually ready in about two to three months. It is ready when it is dark, crumbly and smells like soil." },
+      { "q": "Is chicken manure good for vegetables?", "a": "Yes, especially leafy vegetables. Work composted manure into the bed before planting, and add potassium for fruiting crops at flowering." },
+      { "q": "What is chicken manure called in Tagalog?", "a": "It is ipot ng manok. Organic fertilizer in general is often called pataba or organikong abono." }
+    ] },
+    { "type": "links", "title": "More organic farming guides", "items": [
+      { "label": "Organic fertilizer examples", "url": "/blog/organic-fertilizer-examples" },
+      { "label": "Organic fertilizer benefits", "url": "/blog/organic-fertilizer-benefits" },
+      { "label": "Eggshell as fertilizer", "url": "/blog/eggshell-as-fertilizer" },
+      { "label": "Organic farming in the Philippines", "url": "/blog/organic-farming-philippines" },
+      { "label": "Humus soil", "url": "/blog/humus-soil" }
+    ] }
+  ]
+}

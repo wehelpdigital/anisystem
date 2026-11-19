@@ -1,0 +1,78 @@
+{
+  "section": "blog",
+  "slug": "drip-irrigation-system",
+  "sortOrder": 1670,
+  "lang": "en",
+  "category": "Irrigation",
+  "title": "Drip Irrigation System: Parts, Setup and Costs for Small Farms",
+  "metaTitle": "Drip Irrigation System: Parts, Setup and Care",
+  "metaDescription": "A drip irrigation system waters each plant at the root through tubes and emitters. See its parts, setup, pros and cons, and how to care for it.",
+  "focusKeyword": "drip irrigation system",
+  "keywords": ["drip irrigation system", "drip irrigation systems", "drip tape", "surface irrigation", "fertigation", "irrigation for vegetables"],
+  "excerpt": "A drip irrigation system delivers water slowly, drop by drop, right at the base of each plant through tubes with small emitters. Very little water is lost to runoff or wet soil between rows, so it uses much less water than flooding or watering cans. Drip irrigation systems suit vegetables, fruit trees and other high value crops, and they can carry fertilizer in the water too.",
+  "heroImage": { "src": "/images/site/land/cucurbit-land-preparation.webp", "alt": "Ampalaya seedlings planted through plastic mulch on raised beds, the kind of bed a drip irrigation system often runs under" },
+  "blocks": [
+    { "type": "text", "text": "Water is often the limit on a vegetable farm in the dry season. A drip system stretches each liter further, so the same well or tank can water more plants.\n\nThis guide explains the parts of a drip irrigation system, how to set one up, what it costs in time and money, and how it compares with surface irrigation. For all the irrigation methods side by side, see our guide on [irrigation systems](/blog/irrigation-systems)." },
+    { "type": "heading", "level": 2, "text": "How a drip irrigation system works" },
+    { "type": "text", "text": "Water flows from a source through a filter, then along a main pipe to thin lines that run beside each row. Small emitters on those lines let the water out at a slow, steady rate. The water soaks down into the root zone, while the soil between rows stays dry.\n\nBecause the leaves stay dry and the paths stay dry, there are fewer leaf diseases and fewer weeds between rows. And since the water goes exactly where the roots are, you can also feed fertilizer through it, which is called fertigation." },
+    { "type": "heading", "level": 2, "text": "The parts of a drip irrigation system" },
+    { "type": "table", "caption": "What a basic drip setup needs", "rows": [
+      ["Part", "What it does"],
+      ["Water source", "A well, tank, pond or canal"],
+      ["Pump or raised tank", "Gives pressure, and a tank raised a meter or two can run a small plot by gravity"],
+      ["Filter", "Stops sand and dirt that clog the emitters, the part you must never skip"],
+      ["Main and sub main pipes", "Carry water from the source to each block of beds"],
+      ["Drip tape or drip line", "The thin laterals along each row, with built in emitters"],
+      ["Valves, connectors and end caps", "Control each block and close the ends of the lines"],
+      ["Fertilizer injector (optional)", "Adds liquid fertilizer into the water"]
+    ] },
+    { "type": "heading", "level": 3, "text": "Drip tape or drip line?" },
+    { "type": "text", "text": "Drip tape is thin walled and cheaper. It usually lasts one or two seasons and suits short vegetable crops. Drip line has a thicker wall, costs more and lasts years, which suits fruit trees and permanent beds. For vegetables, emitters spaced about 20 to 30 centimeters apart are common." },
+    { "type": "heading", "level": 2, "text": "How to set up a small drip irrigation system" },
+    { "type": "steps", "items": [
+      { "title": "Measure your beds and water", "text": "Note how many beds, how long, and how much water your source can give in an hour. That tells you how many lines you can run at once." },
+      { "title": "Place the filter at the start", "text": "Install it right after the pump or tank outlet, where all the water passes through." },
+      { "title": "Lay the main pipe along the head of the beds", "text": "Run it across the top of the field, with a connector for each row." },
+      { "title": "Run a lateral down each row", "text": "Lay the tape or line beside the plants, emitters facing up, under plastic mulch if you use it. Close each end with a cap or a fold." },
+      { "title": "Flush and test", "text": "Open the ends, flush out the dirt, close them, then check that every emitter drips evenly along the whole row." }
+    ] },
+    { "type": "callout", "tone": "tip", "title": "How long to run it", "text": "There is no single rule, because crop, soil and weather all change it. Dig a little near a plant an hour after watering. If the soil is moist down to the roots, that run time is enough. Sandy soil needs shorter, more frequent runs than clay." },
+    { "type": "heading", "level": 2, "text": "Drip irrigation compared with surface irrigation" },
+    { "type": "table", "caption": "Drip and surface irrigation side by side", "rows": [
+      ["", "Drip irrigation", "Surface irrigation (flood, furrow, basin)"],
+      ["Water use", "Low, water goes to the roots", "High, much is lost to runoff and soaking"],
+      ["Setup cost", "Higher", "Low"],
+      ["Labor", "Low once installed", "Higher, water must be guided"],
+      ["Best for", "Vegetables, fruit trees, high value crops", "Rice, and field crops on level land"],
+      ["Upkeep", "Filters and lines need care", "Canals and levees need repair"]
+    ] },
+    { "type": "text", "text": "Lowland rice still needs surface irrigation, because the paddy must stay flooded for much of the season. Our guide on [alternate wetting and drying](/blog/alternate-wetting-and-drying) shows how rice farmers can save water another way. For vegetables and orchards, drip pays back fastest in the dry season, when water is scarce." },
+    { "type": "heading", "level": 2, "text": "Caring for drip irrigation systems" },
+    { "type": "list", "ordered": false, "items": [
+      "**Clean the filter often,** more often if your water is muddy.",
+      "**Flush the lines** every few weeks by opening the ends.",
+      "**Watch for rats and insects** that chew holes in tape, and patch them quickly.",
+      "**Rinse after fertigation** by running clean water for a few minutes, so fertilizer does not dry inside the emitters.",
+      "**Roll up and store tape** out of the sun between seasons if you plan to reuse it."
+    ] },
+    { "type": "text", "text": "Drip works best with good beds and good feeding. See [vegetable farming](/blog/vegetable-farming) for the full growing plan and [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines) for what to feed through the lines." },
+    { "type": "heading", "level": 2, "text": "Schedule your watering with anee.io" },
+    { "type": "text", "text": "Even a drip system needs someone to turn it on at the right time. In anee.io, irrigation days go on the [cropping calendar](/features/cropping-calendar) for each lot, beside the fertilizer and spray tasks. The [farm weather forecast](/features/farm-weather-forecast) for each lot shows when rain is coming, so you skip a run and save water and fuel. Anee, the smart farm technician, answers your watering questions in Tagalog or English." },
+    { "type": "cta", "title": "Water on the right days", "text": "Put your irrigation on the calendar beside the week's weather for each lot.", "label": "See the weather forecast", "url": "/features/farm-weather-forecast" },
+    { "type": "heading", "level": 2, "text": "Questions about the drip irrigation system" },
+    { "type": "faq", "items": [
+      { "q": "What is a drip irrigation system?", "a": "A way of watering that delivers water slowly through tubes and emitters right at the base of each plant, so little is wasted." },
+      { "q": "What are the main parts of a drip irrigation system?", "a": "A water source, a pump or raised tank, a filter, main pipes, drip tape or drip line with emitters, valves and end caps." },
+      { "q": "Is drip irrigation good for rice?", "a": "Lowland rice is grown flooded, so it uses surface irrigation. Drip suits vegetables, fruit trees and other high value crops." },
+      { "q": "How long does drip tape last?", "a": "Thin drip tape usually lasts one or two seasons. Thicker drip line lasts several years." },
+      { "q": "Can I put fertilizer in a drip system?", "a": "Yes, that is fertigation. Use fully soluble fertilizer, keep the filter clean, and flush the lines with clean water afterward." }
+    ] },
+    { "type": "links", "title": "More irrigation guides", "items": [
+      { "label": "Irrigation systems", "url": "/blog/irrigation-systems" },
+      { "label": "Alternate wetting and drying", "url": "/blog/alternate-wetting-and-drying" },
+      { "label": "Vegetable farming", "url": "/blog/vegetable-farming" },
+      { "label": "Fertilizer for vegetables", "url": "/blog/fertilizer-for-vegetables-philippines" },
+      { "label": "Soil degradation", "url": "/blog/soil-degradation" }
+    ] }
+  ]
+}

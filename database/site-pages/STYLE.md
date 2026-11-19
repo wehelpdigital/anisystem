@@ -488,7 +488,15 @@ Blog:
 /blog/organic-farming-philippines, /blog/problems-in-agriculture, /blog/no-till-farming,
 /blog/humus-soil, /blog/fruit-and-vegetable-storage, /blog/potato-tuber,
 /blog/transplanting-meaning, /blog/integrated-farming-system,
-/blog/agricultural-technology, /blog/native-plow
+/blog/agricultural-technology, /blog/native-plow,
+/blog/fertilizer-for-flowering-plants, /blog/why-fertilizer-is-important,
+/blog/crop-planting, /blog/corn-scientific-name, /blog/top-dressing-fertilizer,
+/blog/osmocote-fertilizer, /blog/chicken-dung-as-fertilizer,
+/blog/eggshell-as-fertilizer, /blog/organic-fertilizer-benefits,
+/blog/fertilizer-in-tagalog, /blog/fertilizer-high-in-phosphorus,
+/blog/ammonium-nitrate-fertilizer, /blog/hybrid-rice,
+/blog/when-fertilization-occurs, /blog/palay-seedlings, /blog/crop-yield,
+/blog/vegetable-farming, /blog/soil-degradation, /blog/drip-irrigation-system
 
 ## 9. Keywords per page
 

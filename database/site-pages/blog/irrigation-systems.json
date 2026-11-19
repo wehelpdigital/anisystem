@@ -229,7 +229,7 @@
         {
           "label": "Farm weather forecast",
           "url": "/features/farm-weather-forecast"
-        }
+        }, { "label": "Drip irrigation system", "url": "/blog/drip-irrigation-system" }
       ]
     }
   ]

@@ -227,6 +227,10 @@
         {
           "label": "Can anee.io increase my yield?",
           "url": "/blog/can-anee-io-increase-my-yield"
+        },
+        {
+          "label": "Crop yield",
+          "url": "/blog/crop-yield"
         }
       ]
     }

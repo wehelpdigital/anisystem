@@ -1,0 +1,66 @@
+{
+  "section": "blog",
+  "slug": "crop-yield",
+  "sortOrder": 1640,
+  "lang": "en",
+  "category": "Farm management",
+  "title": "Crop Yield: What It Means, How to Measure It and How to Raise It",
+  "metaTitle": "Crop Yield: Meaning, How to Compute and Raise It",
+  "metaDescription": "Crop yield is how much you harvest per hectare. Learn how to measure it with a crop cut, adjust for moisture, compare with averages and raise it.",
+  "focusKeyword": "crop yield",
+  "keywords": ["crop yield", "yield per hectare", "cavans per hectare", "how to compute yield", "crop cut", "increase crop yield"],
+  "excerpt": "Crop yield is the amount of harvest you get from a given area, usually written as tons or cavans per hectare. It is the simplest measure of how well a season went. For palay, the national average sits around 4 tons per hectare, while well managed irrigated farms often reach 5 to 6 tons or more. This guide shows how to measure your own crop yield and where the extra cavans usually hide.",
+  "heroImage": { "src": "/images/site/harvest-hands.jpg", "alt": "Workers harvesting a field by hand, the moment crop yield is finally counted" },
+  "blocks": [
+    { "type": "text", "text": "Most farmers know their harvest in sacks, but fewer know their yield per hectare. Yet that one number tells you whether a new variety, fertilizer plan or planting date actually worked.\n\nThis guide explains what crop yield means, how to measure it fairly, how to compare it, and what raises it. For forecasting a harvest before it comes in, see [crop yield forecasting](/blog/crop-yield-forecasting)." },
+    { "type": "heading", "level": 2, "text": "What crop yield means" },
+    { "type": "text", "text": "Yield is harvest divided by area. If a 2 hectare farm gives 10 tons of palay, its yield is 5 tons per hectare. Writing it per hectare lets you compare a small lot with a big one, and this season with the last.\n\nFor palay, many farmers count in cavans. A cavan of palay is usually taken as 50 kilograms, so 100 cavans per hectare equals 5 tons per hectare." },
+    { "type": "table", "caption": "Converting palay yield", "rows": [
+      ["Cavans per hectare", "Tons per hectare"],
+      ["60", "3.0"],
+      ["80", "4.0"],
+      ["100", "5.0"],
+      ["120", "6.0"]
+    ] },
+    { "type": "heading", "level": 2, "text": "How to measure crop yield with a crop cut" },
+    { "type": "text", "text": "You do not need to weigh the whole field to know your yield. A crop cut, done carefully, gives a good estimate a few days before harvest." },
+    { "type": "steps", "items": [
+      { "title": "Mark sample areas", "text": "Pick three spots that look average, not the best or worst. Mark an area of 5 square meters in each, for example 2.5 by 2 meters." },
+      { "title": "Harvest and thresh", "text": "Cut all the plants inside each area, thresh them, and clean the grain." },
+      { "title": "Weigh and check moisture", "text": "Weigh the grain from each area and note its moisture. Fresh palay is often above 20 percent moisture." },
+      { "title": "Adjust to 14 percent moisture", "text": "Multiply the weight by (100 minus the moisture) and divide by 86. That gives the weight at 14 percent moisture, the usual standard for dry palay." },
+      { "title": "Scale to a hectare", "text": "Average the three areas and multiply by 2,000, because a hectare holds 2,000 areas of 5 square meters. The answer is kilograms per hectare." }
+    ] },
+    { "type": "text", "text": "For example, say an average 5 square meter area gives 3 kilograms of palay at 22 percent moisture. First, 3 times 78 divided by 86 is about 2.7 kilograms at 14 percent. Then 2.7 times 2,000 is about 5,400 kilograms, or 5.4 tons per hectare." },
+    { "type": "heading", "level": 2, "text": "Why your yield differs from your neighbor's" },
+    { "type": "list", "ordered": false, "items": [
+      "**Variety:** some varieties simply carry more grain. See [the best rice variety for your area](/blog/best-rice-variety-for-my-area).",
+      "**Planting date:** heat or drought at flowering empties grains. See [when fertilization occurs](/blog/when-fertilization-occurs).",
+      "**Fertilizer:** the right amount at the right stage. See [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage).",
+      "**Water:** stress at tillering and flowering costs the most.",
+      "**Pests, diseases and weeds:** each takes a share, and together they take a lot.",
+      "**Harvest and drying losses:** late harvest and slow drying lose grain after it has grown. See [palay drying](/blog/palay-drying)."
+    ] },
+    { "type": "heading", "level": 2, "text": "How to raise crop yield" },
+    { "type": "text", "text": "Big jumps rarely come from one new product. They come from fixing the weakest link, then the next one. Start with the steps that cost little: good seed, a level field, timely weeding and fertilizer on the right days.\n\nOur guides on [increasing rice yield per hectare](/blog/increase-rice-yield-per-hectare) and [increasing corn yield per hectare](/blog/increase-corn-yield-per-hectare) go through each step for those crops. For vegetables, see [vegetable farming](/blog/vegetable-farming)." },
+    { "type": "callout", "tone": "info", "title": "Yield is not profit", "text": "A higher yield that costs more to grow may earn less. Track your cost per kilogram as well as your yield per hectare. Our guide on [farm profitability](/blog/farm-profitability) explains how." },
+    { "type": "heading", "level": 2, "text": "Can anee.io raise your crop yield?" },
+    { "type": "text", "text": "Yes. Most lost cavans come from tasks done late or forgotten, and anee.io keeps every task on its day. The [cropping calendar](/features/cropping-calendar) dates each fertilizer, spray and irrigation from each lot's planting day. [Harvest records](/features/harvest-records) store the yield of every lot, and the reports set your yield beside your costs. Compare Reports then shows season against season, so you see what worked. Read [can anee.io increase my yield](/blog/can-anee-io-increase-my-yield) for how it all fits." },
+    { "type": "cta", "title": "Record and compare your yields", "text": "Log each lot's harvest, see your yield and cost per hectare, and compare season after season.", "label": "See harvest records", "url": "/features/harvest-records" },
+    { "type": "heading", "level": 2, "text": "Questions about crop yield" },
+    { "type": "faq", "items": [
+      { "q": "What is crop yield?", "a": "The amount harvested from a given area, usually in tons or cavans per hectare." },
+      { "q": "How do you compute yield per hectare?", "a": "Harvest three 5 square meter sample areas, adjust the grain to 14 percent moisture, average them and multiply by 2,000 to get kilograms per hectare." },
+      { "q": "What is the average palay yield per hectare in the Philippines?", "a": "Around 4 tons per hectare nationally. Well managed irrigated farms often reach 5 to 6 tons or more." },
+      { "q": "How many kilograms is one cavan of palay?", "a": "Usually 50 kilograms, so 100 cavans per hectare equals 5 tons per hectare." },
+      { "q": "What lowers yield the most?", "a": "Usually a mix of late planting, water stress at flowering, fertilizer at the wrong time, pests and weeds, and losses at harvest and drying." }
+    ] },
+    { "type": "links", "title": "More yield guides", "items": [
+      { "label": "Crop yield forecasting", "url": "/blog/crop-yield-forecasting" },
+      { "label": "Increase rice yield per hectare", "url": "/blog/increase-rice-yield-per-hectare" },
+      { "label": "Increase corn yield per hectare", "url": "/blog/increase-corn-yield-per-hectare" },
+      { "label": "Reduce crop losses", "url": "/blog/reduce-crop-losses" },
+      { "label": "Can anee.io increase my yield", "url": "/blog/can-anee-io-increase-my-yield" }
+    ] }
+  ]
+}

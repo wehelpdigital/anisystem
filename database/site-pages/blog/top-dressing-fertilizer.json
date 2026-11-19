@@ -1,0 +1,70 @@
+{
+  "section": "blog",
+  "slug": "top-dressing-fertilizer",
+  "sortOrder": 1530,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Top Dressing Fertilizer: When and How to Apply It",
+  "metaTitle": "Top Dressing Fertilizer: When and How to Apply It",
+  "metaDescription": "Top dressing fertilizer goes on a growing crop, not at planting. See when to top dress rice and corn, which fertilizer to use, and how to avoid waste.",
+  "focusKeyword": "top dressing fertilizer",
+  "keywords": ["top dressing fertilizer", "topdressing rice", "side dressing corn", "urea top dressing", "split fertilizer application"],
+  "excerpt": "Top dressing fertilizer is fertilizer you spread on a crop that is already growing, instead of mixing it into the soil at planting. Farmers top dress to feed the crop at the stages when it uses the most, usually with nitrogen. For palay, the usual top dressings fall at active tillering and at panicle initiation. For corn, they fall a few weeks after planting and again before tasseling.",
+  "heroImage": { "src": "/images/site/guides/blog-fertilizer-for-rice-tillering.webp", "alt": "Young rice hills in a wet paddy, each a dense clump of new tillers, the stage for the first top dressing fertilizer", "credit": "Aerospectra, CC BY 4.0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "A crop does not eat all its food on the first day. It uses a little while young, a lot while it grows fast, and then it shifts its food into grain. So putting all the fertilizer in at planting wastes much of it, because rain and water carry it away before the crop needs it.\n\nTop dressing solves that. You split the fertilizer and give each part when the crop can use it. This guide explains when to top dress, which fertilizer to use, and how to do it without waste." },
+    { "type": "heading", "level": 2, "text": "Basal application and top dressing fertilizer" },
+    { "type": "text", "text": "The first fertilizer, at or just before planting, is the **basal application**. It is usually a complete or phosphorus rich grade worked into the soil, so young roots find phosphorus and potassium close by.\n\nEverything after that is top dressing. In upland crops planted in rows, like corn, farmers often place it beside the row and call it **side dressing**. Both words mean the same idea: feeding the crop while it grows. Our guide on [fertilizer application methods](/blog/fertilizer-application-methods) covers broadcast, band and foliar methods in more detail." },
+    { "type": "heading", "level": 2, "text": "When to top dress rice" },
+    { "type": "table", "caption": "Usual top dressing times for transplanted palay of about 110 to 120 days", "rows": [
+      ["Stage", "About when", "What it does"],
+      ["Active tillering", "About 20 to 25 days after transplanting", "More tillers, so more panicles per hill"],
+      ["Panicle initiation", "About 40 to 45 days after transplanting, or 60 days before harvest", "Bigger panicles with more grains"],
+      ["Late boost (optional)", "Around flowering, only if the leaves turn pale", "Helps grain filling"]
+    ] },
+    { "type": "text", "text": "These days shift with the variety and the season. So go by the crop stage, not the calendar alone. Our guides on [fertilizer for rice tillering](/blog/fertilizer-for-rice-tillering) and [fertilizer for rice grain filling](/blog/fertilizer-for-rice-grain-filling) explain each stage. A [leaf color chart](/blog/leaf-color-chart-rice) tells you whether the plants need nitrogen at all before you spend on it." },
+    { "type": "heading", "level": 2, "text": "When to top dress corn" },
+    { "type": "list", "ordered": false, "items": [
+      "**First side dressing:** about 20 to 30 days after planting, when the plants have several leaves and start to grow fast.",
+      "**Second side dressing:** before tasseling, often around 40 to 45 days after planting for many hybrids.",
+      "**Always on moist soil:** hill up or cover the fertilizer, because urea left on dry soil loses nitrogen to the air."
+    ] },
+    { "type": "text", "text": "Corn takes up most of its nitrogen in the weeks before tasseling. A crop that runs short then gives small ears with missing kernels. See our guide to [increasing corn yield per hectare](/blog/increase-corn-yield-per-hectare) for the full program." },
+    { "type": "heading", "level": 2, "text": "Which fertilizer to use for top dressing" },
+    { "type": "text", "text": "Top dressing is mostly about nitrogen, because the crop needs it all season and it washes away fastest. Potassium joins it on soils that are short of potassium, especially at panicle initiation in rice." },
+    { "type": "table", "caption": "Common top dressing fertilizers", "rows": [
+      ["Fertilizer", "Grade", "Best use"],
+      ["Urea", "46 0 0", "The usual nitrogen top dressing for rice and corn"],
+      ["Ammonium sulfate", "21 0 0 with sulfur", "Nitrogen plus sulfur, good on sulfur poor or alkaline soils"],
+      ["Muriate of potash", "0 0 60", "Added at panicle initiation where potassium is low"],
+      ["Complete", "14 14 14", "Sometimes used on vegetables as a side dressing"]
+    ] },
+    { "type": "text", "text": "Read more in our guides on [urea fertilizer](/blog/urea-fertilizer), [ammonium sulfate](/blog/ammonium-sulfate-21-0-0) and [potash fertilizer](/blog/potash-fertilizer)." },
+    { "type": "heading", "level": 2, "text": "How to top dress without wasting fertilizer" },
+    { "type": "steps", "items": [
+      { "title": "Lower the water in rice", "text": "Drain the paddy to a thin layer or saturated soil, broadcast the fertilizer, then let the water back in after a day or two. That way the fertilizer works into the soil instead of floating away." },
+      { "title": "Never top dress before heavy rain", "text": "A downpour right after spreading can wash it into the canal. Check the forecast first, and see our guide on [rain before spraying](/blog/rain-before-spraying)." },
+      { "title": "Spread evenly", "text": "Uneven spreading gives patches of tall, lodging rice beside pale, hungry rice. Divide the bags by area and walk in lanes." },
+      { "title": "Keep it off wet leaves", "text": "Granules stuck on wet leaves can scorch them. Spread when the leaves are dry." }
+    ] },
+    { "type": "callout", "tone": "warn", "title": "Late nitrogen invites trouble", "text": "Heavy nitrogen top dressing late in the season makes rice soft and lush. It lodges more easily and draws planthoppers and sheath blight. Stop the nitrogen once the panicles are out, unless the leaves are clearly pale." },
+    { "type": "heading", "level": 2, "text": "Never miss a top dressing date" },
+    { "type": "text", "text": "Top dressing works only on time, and the date is different for every lot. In anee.io, the [cropping calendar](/features/cropping-calendar) counts the days after transplanting or sowing for each lot and puts every top dressing on the right day. The weather forecast for each lot shows when rain is coming. The inventory records each bag you use, so you know your fertilizer cost per lot. Anee, the smart farm technician, can also look at a photo of your crop and tell you whether it needs nitrogen now." },
+    { "type": "cta", "title": "Get every top dressing on the right day", "text": "Set your planting date and anee.io dates each top dressing for every lot, with the weather beside it.", "label": "See the cropping calendar", "url": "/features/cropping-calendar" },
+    { "type": "heading", "level": 2, "text": "Questions about top dressing fertilizer" },
+    { "type": "faq", "items": [
+      { "q": "What is top dressing fertilizer?", "a": "It is fertilizer spread on a crop that is already growing, usually nitrogen like urea, given at the stages when the crop uses the most." },
+      { "q": "When should I top dress rice?", "a": "Usually at active tillering, about 20 to 25 days after transplanting, and at panicle initiation, about 40 to 45 days after transplanting. Follow the crop stage of your variety." },
+      { "q": "What is the difference between top dressing and side dressing?", "a": "Top dressing spreads fertilizer over the crop, as in rice. Side dressing places it beside the row, as in corn. Both feed a growing crop." },
+      { "q": "Can I use complete fertilizer for top dressing?", "a": "You can, but it wastes phosphorus that the crop needed at planting. Urea, ammonium sulfate and potash are the usual top dressings." },
+      { "q": "Should I flood the field after top dressing rice?", "a": "Let the water back in a day or two after spreading on a shallow or drained field. Spreading into deep, flowing water wastes fertilizer." }
+    ] },
+    { "type": "links", "title": "More fertilizer guides", "items": [
+      { "label": "Fertilizer timing by growth stage", "url": "/blog/fertilizer-timing-by-growth-stage" },
+      { "label": "Rice fertilizer schedule", "url": "/blog/rice-fertilizer-schedule" },
+      { "label": "Fertilizer application methods", "url": "/blog/fertilizer-application-methods" },
+      { "label": "Urea fertilizer", "url": "/blog/urea-fertilizer" },
+      { "label": "Bags of fertilizer per hectare", "url": "/blog/bags-of-fertilizer-per-hectare" }
+    ] }
+  ]
+}

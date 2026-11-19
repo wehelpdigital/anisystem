@@ -1,0 +1,74 @@
+{
+  "section": "blog",
+  "slug": "soil-degradation",
+  "sortOrder": 1660,
+  "lang": "en",
+  "category": "Soil",
+  "title": "Soil Degradation: Causes, Signs and How to Restore Degraded Soil",
+  "metaTitle": "Soil Degradation: Causes, Signs and How to Fix It",
+  "metaDescription": "Soil degradation slowly cuts your harvest. Learn its causes on Filipino farms, the signs of degraded soil, and the steps that bring a tired field back.",
+  "focusKeyword": "soil degradation",
+  "keywords": ["soil degradation", "degraded soil", "causes of soil degradation", "soil fertility loss", "restore soil", "soil compaction"],
+  "excerpt": "Soil degradation is the slow loss of a soil's ability to grow crops. The topsoil washes away, organic matter burns off, nutrients run down, and the soil turns hard, acid or salty. A degraded soil needs more fertilizer every year for the same harvest. The good news is that most degraded soil on Filipino farms can be brought back with organic matter, cover, the right amendments and less damage from tillage.",
+  "heroImage": { "src": "/images/site/land/sodic-alkaline-soil-preparation.webp", "alt": "Hard plowed clods under a white salt crust, a field showing soil degradation", "credit": "Michaila vnuk, CC BY SA 4.0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "Soil does not wear out in one season. It degrades quietly, a little each year, until a farmer notices that the same field needs twice the fertilizer it used to.\n\nThis guide explains the kinds and causes of soil degradation, the signs to watch for, and the steps that restore a degraded soil. For the erosion side of the problem in detail, see our guide on [soil erosion](/blog/soil-erosion)." },
+    { "type": "heading", "level": 2, "text": "What soil degradation means" },
+    { "type": "text", "text": "Soil is more than dirt. Good soil has structure, organic matter, nutrients, the right acidity, and a living community of earthworms and microbes. Soil degradation is when any of those runs down faster than it is rebuilt.\n\nIt comes in three kinds, and a tired field often has all three at once." },
+    { "type": "table", "caption": "The three kinds of soil degradation", "rows": [
+      ["Kind", "What happens", "Examples"],
+      ["Physical", "The soil loses its structure or its topsoil", "Erosion, compaction, crusting, waterlogging"],
+      ["Chemical", "The balance of nutrients and acidity goes wrong", "Nutrient depletion, acidification, salt buildup, pollution"],
+      ["Biological", "The soil loses organic matter and life", "Fewer earthworms and microbes, less humus"]
+    ] },
+    { "type": "heading", "level": 2, "text": "Causes of soil degradation on Filipino farms" },
+    { "type": "list", "ordered": false, "items": [
+      "**Erosion on slopes:** upland corn planted up and down the slope, year after year, loses its topsoil to the rains.",
+      "**Taking more than you return:** harvests carry nutrients away, and burning or hauling the straw takes even more.",
+      "**Burning residues:** fire destroys organic matter that would have fed the soil.",
+      "**Heavy tillage and machines:** repeated plowing breaks down soil crumbs, and heavy machines on wet soil press a hard layer below.",
+      "**Too much ammonium fertilizer for too long:** ammonium based fertilizers slowly make soil more acid when it is never limed.",
+      "**Salt:** coastal fields take in seawater from storm surges and saltwater creeping into wells.",
+      "**Pollution:** mine tailings and dumped waste spoil soil near some farms."
+    ] },
+    { "type": "heading", "level": 2, "text": "Signs of degraded soil" },
+    { "type": "text", "text": "Degraded soil rarely announces itself. Instead, watch for these signs, especially when several show up together." },
+    { "type": "list", "ordered": false, "items": [
+      "**The same inputs give a smaller harvest** each season.",
+      "**A hard crust** forms on the surface after rain, and seedlings struggle to break through.",
+      "**Rills and gullies** appear on slopes, or pale subsoil shows where dark topsoil used to be.",
+      "**Water runs off** instead of soaking in, and the soil dries out fast.",
+      "**Few earthworms** turn up when you dig.",
+      "**A white crust** after dry weather, a sign of salt."
+    ] },
+    { "type": "heading", "level": 2, "text": "How to restore degraded soil" },
+    { "type": "steps", "items": [
+      { "title": "Add organic matter every season", "text": "Plow back rice straw instead of burning it, and add compost or composted manure. Organic matter is the base of nearly every fix. See [organic fertilizer benefits](/blog/organic-fertilizer-benefits) and [humus soil](/blog/humus-soil)." },
+      { "title": "Keep the soil covered", "text": "Bare soil erodes and bakes. Grow a cover crop or a legume like mungbean between seasons, or leave the residue on top." },
+      { "title": "Farm across the slope", "text": "Plant along the contour. On steep land, add terraces or hedgerows of shrubs along the contour, as in sloping agricultural land technology. They slow the water and catch the soil." },
+      { "title": "Till less", "text": "Fewer plowing passes keep the soil crumbs whole. See [no till farming](/blog/no-till-farming)." },
+      { "title": "Fix the chemistry", "text": "Lime acid soils, use gypsum on sodic soils, and flush salt with good drainage. A soil test from your Municipal Agriculture Office tells you which one your field needs." },
+      { "title": "Rotate crops", "text": "A legume after rice or corn adds nitrogen and breaks pest cycles. See [multiple cropping](/blog/multiple-cropping)." }
+    ] },
+    { "type": "text", "text": "For problem soils, our land preparation guides go step by step: [acidic soil preparation](/land-preparation/acidic-soil-preparation), [saline soil preparation](/land-preparation/saline-soil-preparation) and [sodic and alkaline soil preparation](/land-preparation/sodic-alkaline-soil-preparation)." },
+    { "type": "callout", "tone": "info", "title": "Recovery takes seasons", "text": "Soil degradation built up over years, and recovery takes time too. Expect the first gains in water holding and workability after a season or two of organic matter. Steady yield gains follow after that." },
+    { "type": "heading", "level": 2, "text": "Track your soil and its harvest in anee.io" },
+    { "type": "text", "text": "You cannot see soil degradation in one season, but you can see it in your records. In anee.io, [Global Lots](/features/farm-lots) keep each field's soil and water profile, answered once and read by every analysis. The reports log yield and fertilizer per lot, and Compare Reports sets the seasons side by side, so a slow decline, or a recovery, becomes plain to see. Anee, the smart farm technician, reads your lot's soil before answering your questions in Tagalog or English." },
+    { "type": "cta", "title": "See your soil's story in your harvests", "text": "Log each lot's soil, fertilizer and yield, and compare seasons to see whether your soil is improving.", "label": "See farm lots", "url": "/features/farm-lots" },
+    { "type": "heading", "level": 2, "text": "Questions about soil degradation" },
+    { "type": "faq", "items": [
+      { "q": "What is soil degradation?", "a": "The decline of a soil's ability to grow crops, through erosion, loss of organic matter, nutrient depletion, compaction, acidity or salt." },
+      { "q": "What causes soil degradation?", "a": "Erosion on slopes, burning residues, harvests that take more than is returned, heavy tillage, long use of acidifying fertilizer without lime, salt intrusion and pollution." },
+      { "q": "What are the signs of degraded soil?", "a": "Smaller harvests from the same inputs, a hard surface crust, gullies on slopes, water running off, few earthworms and white salt crusts." },
+      { "q": "Can degraded soil be restored?", "a": "Usually yes. Organic matter, cover crops, contour farming, less tillage and the right amendments such as lime or gypsum bring most fields back over a few seasons." },
+      { "q": "What is the difference between soil erosion and soil degradation?", "a": "Erosion is one kind of soil degradation, the loss of topsoil to water or wind. Soil degradation also includes chemical and biological decline." }
+    ] },
+    { "type": "links", "title": "More soil guides", "items": [
+      { "label": "Soil erosion", "url": "/blog/soil-erosion" },
+      { "label": "Humus soil", "url": "/blog/humus-soil" },
+      { "label": "No till farming", "url": "/blog/no-till-farming" },
+      { "label": "Acidic soil preparation", "url": "/land-preparation/acidic-soil-preparation" },
+      { "label": "Organic farming in the Philippines", "url": "/blog/organic-farming-philippines" }
+    ] }
+  ]
+}

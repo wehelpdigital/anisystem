@@ -1,0 +1,66 @@
+{
+  "section": "blog",
+  "slug": "palay-seedlings",
+  "sortOrder": 1630,
+  "lang": "en",
+  "category": "Palay",
+  "title": "Palay Seedlings: How to Raise Strong Punla for Transplanting",
+  "metaTitle": "Palay Seedlings: Seedbed, Seed Rate and Age",
+  "metaDescription": "Raise strong palay seedlings: how much seed per hectare, how to soak palay seeds, wet bed and dapog seedbeds, and the right seedling age to transplant.",
+  "focusKeyword": "palay seedlings",
+  "keywords": ["palay seedlings", "palay seeds", "punla", "seedbed for rice", "wet bed method", "dapog"],
+  "excerpt": "Strong palay seedlings, the punla, are the start of a good rice harvest. They come from good palay seeds soaked and sprouted the right way, sown thinly in a well prepared seedbed, and pulled at the right age. For transplanted inbred rice, most farmers use about 40 kilograms of seed per hectare in a seedbed of about 400 square meters, and transplant at about 18 to 25 days.",
+  "heroImage": { "src": "/images/site/photos/transplant.jpg", "alt": "Farmers transplanting palay seedlings into a flooded paddy" },
+  "blocks": [
+    { "type": "text", "text": "A seedling that starts weak never fully catches up. It tillers late, flowers unevenly and yields less than its neighbors. So the two or three weeks in the seedbed decide a lot of the harvest.\n\nThis guide covers choosing palay seeds, soaking and sprouting them, the main seedbed methods, caring for the seedlings and pulling them at the right age. For the whole season from seed to harvest, see [pagtatanim ng palay](/crops/pagtatanim-ng-palay)." },
+    { "type": "heading", "level": 2, "text": "Start with good palay seeds" },
+    { "type": "text", "text": "Use certified seed of a variety that fits your season and field. Certified seed is pure, cleaned and tested for germination, so more of it grows into even seedlings. Our [rice variety finder](/rice-varieties) and guide to [the best rice variety for your area](/blog/best-rice-variety-for-my-area) help you choose.\n\nIf you use your own saved seed from an inbred variety, sort it first. Drop the seeds in water and remove the ones that float, because those are light, empty or damaged. Never save seed from a hybrid crop. See [hybrid rice](/blog/hybrid-rice) for why." },
+    { "type": "table", "caption": "How much seed per hectare", "rows": [
+      ["Seed type", "Seed per hectare", "Seedbed area"],
+      ["Inbred, transplanted", "About 40 kilograms", "About 400 square meters"],
+      ["Hybrid, transplanted", "About 15 to 20 kilograms", "Smaller, by the seed company's advice"],
+      ["Inbred, direct seeded", "Usually more, sown straight into the field", "No seedbed"]
+    ] },
+    { "type": "heading", "level": 2, "text": "Soak and sprout the seeds" },
+    { "type": "steps", "items": [
+      { "title": "Soak for about 24 hours", "text": "Put the seed in a sack and soak it in clean water. Change the water if it starts to smell." },
+      { "title": "Incubate for about 24 to 48 hours", "text": "Drain the sack and keep it in a shaded, warm place, covered. Turn it now and then so the seeds sprout evenly." },
+      { "title": "Sow when the sprouts are short", "text": "Sow once the white tip shows and the sprouts are just a couple of millimeters long. Long, tangled sprouts break when you sow them." }
+    ] },
+    { "type": "heading", "level": 2, "text": "Seedbed methods for palay seedlings" },
+    { "type": "heading", "level": 3, "text": "Wet bed method" },
+    { "type": "text", "text": "This is the most common method on irrigated farms. Plow and harrow a small area until it is soft and muddy, then shape raised beds about 1 meter wide with small canals between them. Sow the sprouted seed evenly at about 100 grams per square meter, which spreads 40 kilograms over about 400 square meters.\n\nKeep the soil saturated at first, then raise the water slowly as the seedlings grow. Pull them at about 18 to 25 days, when they have about four to five leaves." },
+    { "type": "heading", "level": 3, "text": "Dapog method" },
+    { "type": "text", "text": "In the dapog method, seeds grow densely on banana leaves or plastic laid over a flat surface, with no soil underneath. The seedlings are ready in about 9 to 14 days and are rolled up like a mat to carry to the field. Dapog saves seedbed space, but the young seedlings need a level field and very good water control after transplanting." },
+    { "type": "heading", "level": 3, "text": "Trays for machine transplanting" },
+    { "type": "text", "text": "Mechanical transplanters use seedlings grown in plastic trays on a thin layer of soil or compost. The seedlings are usually ready in about two to three weeks. Follow the machine operator's guide on tray soil, seed rate and seedling age." },
+    { "type": "callout", "tone": "tip", "title": "Feed the seedbed lightly", "text": "A little compost or complete fertilizer worked into the seedbed gives short, sturdy seedlings with strong roots. Too much nitrogen makes them tall and soft, and they wilt more after transplanting." },
+    { "type": "heading", "level": 2, "text": "Caring for palay seedlings in the seedbed" },
+    { "type": "list", "ordered": false, "items": [
+      "**Water:** keep the soil saturated, then shallow standing water as they grow. Never let the bed dry out and crack.",
+      "**Birds and rats:** cover with net or watch the bed in the first days after sowing.",
+      "**Golden apple snails:** pick them out and keep the water shallow. See [golden apple snail](/pests/golden-apple-snail).",
+      "**Pests and diseases:** check every few days for leaf damage or yellowing patches."
+    ] },
+    { "type": "heading", "level": 2, "text": "Pulling and transplanting palay seedlings" },
+    { "type": "text", "text": "Water the bed the day before pulling so the roots come out with less damage. Pull small bunches gently, wash off the mud, and keep them in the shade until planting. Transplant the same day if you can.\n\nPlant two to three seedlings per hill for inbred varieties, or one to two for hybrids, at the spacing you planned, often 20 by 20 centimeters. Our guide on [transplanting meaning](/blog/transplanting-meaning) compares transplanting with direct seeding, and [crop planting](/blog/crop-planting) covers the steps for any crop." },
+    { "type": "heading", "level": 2, "text": "Keep every seedbed and transplanting date in one place" },
+    { "type": "text", "text": "The day you transplant becomes day zero for the whole crop. In anee.io, the [cropping calendar](/features/cropping-calendar) dates the soaking, the sowing, the pulling and every task after transplanting for each lot. It counts days after transplanting, so each fertilizer and spray falls on time. If your seedlings look yellow or eaten, send a photo to Anee, the smart farm technician, and ask in Tagalog or English what to do." },
+    { "type": "cta", "title": "Plan your seedbed and transplanting days", "text": "Set your sowing date and anee.io dates the pulling, transplanting and every task after it, lot by lot.", "label": "Start free", "url": "/signup" },
+    { "type": "heading", "level": 2, "text": "Questions about palay seedlings" },
+    { "type": "faq", "items": [
+      { "q": "How many days before transplanting palay seedlings?", "a": "For the wet bed method, about 18 to 25 days, when the seedlings have about four to five leaves. Dapog seedlings are ready in about 9 to 14 days." },
+      { "q": "How many kilos of palay seeds per hectare?", "a": "About 40 kilograms of inbred seed for transplanting, or about 15 to 20 kilograms of hybrid seed. Direct seeding uses more." },
+      { "q": "How big should the seedbed be for one hectare?", "a": "About 400 square meters for 40 kilograms of inbred seed, sown at about 100 grams per square meter." },
+      { "q": "How long do I soak palay seeds?", "a": "Soak for about 24 hours, then incubate for about 24 to 48 hours until short white sprouts appear." },
+      { "q": "What is punla?", "a": "Punla is the Tagalog word for seedlings, especially rice seedlings grown in a seedbed for transplanting." }
+    ] },
+    { "type": "links", "title": "More palay guides", "items": [
+      { "label": "Pagtatanim ng palay", "url": "/crops/pagtatanim-ng-palay" },
+      { "label": "Transplanting meaning", "url": "/blog/transplanting-meaning" },
+      { "label": "Hybrid rice", "url": "/blog/hybrid-rice" },
+      { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
+      { "label": "How to plant rice", "url": "/how-to-plant/rice" }
+    ] }
+  ]
+}

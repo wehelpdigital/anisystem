@@ -190,7 +190,7 @@
         { "label": "Pagtatanim ng palay", "url": "/crops/pagtatanim-ng-palay" },
         { "label": "Rice land preparation", "url": "/land-preparation/rice-land-preparation" },
         { "label": "Fertilizer for rice tillering", "url": "/blog/fertilizer-for-rice-tillering" },
-        { "label": "The cropping calendar in anee.io", "url": "/features/cropping-calendar" }
+        { "label": "The cropping calendar in anee.io", "url": "/features/cropping-calendar" }, { "label": "Palay seedlings", "url": "/blog/palay-seedlings" }
       ]
     }
   ]

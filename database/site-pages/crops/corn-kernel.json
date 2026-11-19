@@ -320,6 +320,10 @@
         {
           "label": "Growth stages and weather on anee.io",
           "url": "/features/growth-stages-and-weather"
+        },
+        {
+          "label": "Corn scientific name",
+          "url": "/blog/corn-scientific-name"
         }
       ]
     }

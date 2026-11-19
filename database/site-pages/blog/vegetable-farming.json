@@ -1,0 +1,63 @@
+{
+  "section": "blog",
+  "slug": "vegetable-farming",
+  "sortOrder": 1650,
+  "lang": "en",
+  "category": "Vegetables",
+  "title": "Vegetable Farming: How to Start and Make It Pay",
+  "metaTitle": "Vegetable Farming: A Practical Guide for Beginners",
+  "metaDescription": "Start vegetable farming the right way: pick crops for your market and season, prepare beds, plant, feed, water and protect them, and sell at a profit.",
+  "focusKeyword": "vegetable farming",
+  "keywords": ["vegetable farming", "farming of vegetables", "vegetable crops", "crops and vegetables", "lowland vegetables", "highland vegetables"],
+  "excerpt": "Vegetable farming can earn more per square meter than most field crops, because many vegetable crops are ready in one to three months and sell for a good price. But vegetables need more care: steady water, rich soil, careful pest control and a buyer lined up before harvest. This guide walks through farming of vegetables from choosing the crop to selling it, for both lowland and highland farms.",
+  "heroImage": { "src": "/images/site/guides/blog-farm-app-for-vegetable-growers.webp", "alt": "Vegetable beds of different crops on a small farm in Santa Maria, Bulacan, a typical vegetable farming setup", "credit": "FBenjr123, CC BY SA 4.0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "A small vegetable plot can feed a family and pay school fees, while a bad season can wipe out the capital. The difference is usually planning, not luck.\n\nThis guide covers each step of vegetable farming: the market, the crop, the soil, planting, feeding, water, pests and selling. For a list of the vegetables grown here and their seasons, see [vegetables in the Philippines](/crops/vegetables-philippines), and for the Tagalog version of these steps, [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)." },
+    { "type": "heading", "level": 2, "text": "Step 1: start vegetable farming from the market" },
+    { "type": "text", "text": "Before you buy seed, find out who will buy your harvest. Visit the nearest public market, talk to traders and ask what sells and when. A big harvest with no buyer is the most common way new growers lose money.\n\nAlso watch the prices through the year. Prices of many vegetables often rise in the rainy months, when typhoons and floods cut supply. Growers who can produce in those months, under shade nets or plastic, often earn the most." },
+    { "type": "heading", "level": 2, "text": "Step 2: choose the right vegetable crops" },
+    { "type": "text", "text": "Choose crops that fit your climate, your water and your market. Lowland farms grow different crops from the cool highlands." },
+    { "type": "table", "caption": "Common vegetable crops and their usual time to first harvest", "rows": [
+      ["Crop", "Where it grows best", "About when first harvest comes"],
+      ["Pechay", "Lowland and highland", "About 30 to 45 days after sowing"],
+      ["Kangkong", "Lowland, wet spots", "About 25 to 30 days after planting"],
+      ["Okra", "Lowland", "About 45 to 55 days after sowing"],
+      ["Sitaw", "Lowland", "About 50 to 60 days after sowing"],
+      ["Ampalaya", "Lowland", "About 60 to 70 days after sowing"],
+      ["Tomato", "Lowland dry season, highland", "About 60 to 75 days after transplanting"],
+      ["Cabbage and carrots", "Highland", "Mostly cool, high places like Benguet"]
+    ] },
+    { "type": "text", "text": "Mix fast crops with slower ones so money comes in while the bigger crops grow. Our guide on [high value crops](/crops/high-value-crops-philippines) lists the vegetables and fruits that pay best per hectare, and [multiple cropping](/blog/multiple-cropping) shows how to grow more than one crop on the same land." },
+    { "type": "heading", "level": 2, "text": "Step 3: prepare the soil and beds" },
+    { "type": "text", "text": "Vegetables need loose, rich, well drained soil. Plow and harrow, mix in compost or composted manure, and shape raised beds so roots never sit in water. Many growers lay plastic mulch over the beds to cut weeds and keep the soil moist.\n\nOur guide to [vegetable land preparation](/land-preparation/vegetable-land-preparation) shows the passes and bed sizes. For the benefits of organic matter, see [organic fertilizer benefits](/blog/organic-fertilizer-benefits)." },
+    { "type": "heading", "level": 2, "text": "Step 4: plant, feed and water" },
+    { "type": "list", "ordered": false, "items": [
+      "**Seedlings:** raise tomato, eggplant, pepper and cabbage in seedling trays, then transplant strong seedlings. Sow pechay, okra and sitaw directly.",
+      "**Fertilizer:** a basal application at planting, then side dressings as the crop grows. See [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines).",
+      "**Water:** steady water matters more for vegetables than for most field crops. A [drip irrigation system](/blog/drip-irrigation-system) saves water and labor."
+    ] },
+    { "type": "heading", "level": 2, "text": "Step 5: protect the crop" },
+    { "type": "text", "text": "Vegetables draw many pests, like the diamondback moth on cabbage, fruit flies on ampalaya and the eggplant fruit and shoot borer. Scout every few days, because small problems grow fast.\n\nUse resistant varieties, crop rotation, clean fields and traps first, and spray only when the damage is worth it. Always follow the product label and its FPA registration. Our guide to [integrated pest management](/pests/integrated-pest-management) explains the approach, and [crop pests in the Philippines](/pests/crop-pests-philippines) shows the common pests." },
+    { "type": "callout", "tone": "warn", "title": "Respect the waiting days", "text": "Every pesticide label gives the number of days between the last spray and harvest. Vegetables are often eaten fresh, so never harvest before that waiting period ends." },
+    { "type": "heading", "level": 2, "text": "Step 6: harvest, store and sell" },
+    { "type": "text", "text": "Harvest in the cool morning, keep produce in the shade, and handle it gently. Bruised vegetables lose price fast. Our guide on [fruit and vegetable storage](/blog/fruit-and-vegetable-storage) shows how to keep them fresh longer.\n\nKeep a record of what you sold, at what price and to whom. After two or three seasons, those records show which crops and months pay best on your farm." },
+    { "type": "heading", "level": 2, "text": "Run your vegetable farm with anee.io" },
+    { "type": "text", "text": "Vegetable farming means many crops on many beds, each at a different stage. In anee.io, each bed or lot gets its own planting day, and the [cropping calendar](/features/cropping-calendar) dates every task for it: transplanting, side dressing, spraying and harvest. Growth stages cover the common vegetables, and the reports show your costs, sales and profit per crop. Anee, the smart farm technician, can look at a photo of a sick leaf and tell you in Tagalog or English what it is. See also our [farm app for vegetable growers](/blog/farm-app-for-vegetable-growers)." },
+    { "type": "cta", "title": "Keep every bed on schedule", "text": "Give each bed its own planting day and let anee.io date every task, from transplanting to harvest.", "label": "Start free", "url": "/signup" },
+    { "type": "heading", "level": 2, "text": "Questions about vegetable farming" },
+    { "type": "faq", "items": [
+      { "q": "How do I start vegetable farming?", "a": "Find your buyers first, pick crops that fit your season and water, prepare rich raised beds, plant good seed or seedlings, feed and water steadily, and scout for pests every few days." },
+      { "q": "What vegetables are easiest to grow for beginners?", "a": "Pechay, kangkong, okra and sitaw are forgiving and quick, with first harvests in about one to two months." },
+      { "q": "Is vegetable farming profitable in the Philippines?", "a": "It can be, because many vegetables sell well and grow fast. Profit depends on having a buyer, timing your harvest and keeping costs and losses down." },
+      { "q": "What vegetables grow in the highlands?", "a": "Cool weather crops like cabbage, carrots, potato, lettuce and broccoli grow best in high places like Benguet." },
+      { "q": "When is the best season for vegetable farming?", "a": "The dry season is easier for most vegetables, with fewer diseases, if you have water. Rainy season crops are harder to grow but often sell for more." }
+    ] },
+    { "type": "links", "title": "More vegetable guides", "items": [
+      { "label": "Vegetables in the Philippines", "url": "/crops/vegetables-philippines" },
+      { "label": "Pagtatanim ng gulay", "url": "/crops/pagtatanim-ng-gulay" },
+      { "label": "Fertilizer for vegetables", "url": "/blog/fertilizer-for-vegetables-philippines" },
+      { "label": "Crop monitoring for vegetable farmers", "url": "/blog/crop-monitoring-for-vegetable-farmers" },
+      { "label": "Drip irrigation system", "url": "/blog/drip-irrigation-system" }
+    ] }
+  ]
+}

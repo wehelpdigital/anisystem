@@ -1,0 +1,75 @@
+{
+  "section": "blog",
+  "slug": "crop-planting",
+  "sortOrder": 1510,
+  "lang": "en",
+  "category": "Planting",
+  "title": "Crop Planting: How to Plant Crops the Right Way",
+  "metaTitle": "Crop Planting: Steps for Planting Crops Right",
+  "metaDescription": "Crop planting sets up the whole season. Learn how to pick the date, prepare the field, choose seed, plant at the right depth and spacing, and care after.",
+  "focusKeyword": "crop planting",
+  "keywords": ["crop planting", "planting crops", "methods of planting", "planting depth", "plant spacing", "direct seeding"],
+  "excerpt": "Crop planting is the step that decides the rest of the season. Plant on the right date, in a well prepared field, with good seed at the right depth and spacing, and the crop starts strong. Get one of those wrong and you spend the season catching up. This guide walks through planting crops step by step, with the methods Filipino farmers use for palay, mais, vegetables, root crops and fruit trees.",
+  "heroImage": { "src": "/images/site/land/corn-land-preparation.webp", "alt": "Young corn seedlings in straight rows on freshly plowed ground in Bulacan, a few days after crop planting" },
+  "blocks": [
+    { "type": "text", "text": "Every crop is different, but the steps of planting are the same everywhere. First you choose what and when. Then you get the field and the seed ready. After that comes the planting itself, and the first two weeks of care that decide how many plants survive.\n\nFor exact steps by crop, our [How to Plant](/how-to-plant) guides cover rice, corn, vegetables and fruit trees one by one. This page gives you the method behind all of them." },
+    { "type": "heading", "level": 2, "text": "Step 1: choose the crop and the crop planting date" },
+    { "type": "text", "text": "The date matters as much as the seed. Plant too early in the dry season and the crop may run out of water at flowering. Plant too late in the wet season and a typhoon may hit at harvest.\n\nSo start with your water. Irrigated lowland fields can plant palay twice a year. Rainfed fields usually plant once the rains settle in, then follow with a short crop like mungbean or corn. Our guides on [what crop to plant this season](/blog/what-crop-to-plant-this-season) and [the best time to plant rice](/blog/best-time-to-plant-rice-philippines) help you choose." },
+    { "type": "heading", "level": 2, "text": "Step 2: prepare the field" },
+    { "type": "text", "text": "Good land preparation kills weeds, loosens the soil and levels the field so water spreads evenly. For lowland rice that means plowing, harrowing and puddling. For corn and vegetables it means plowing, harrowing and making furrows or raised beds.\n\nGive the weeds time to sprout and get killed by the next pass. Our guide to [land preparation in the Philippines](/land-preparation/land-preparation-philippines) shows the passes and the days between them for each crop." },
+    { "type": "heading", "level": 2, "text": "Step 3: choose good seed or planting material" },
+    { "type": "text", "text": "Weak seed cannot make a strong crop, whatever you do after. Buy certified seed from a trusted dealer, and check the date and the germination rate on the tag. For crops grown from cuttings or suckers, pick material from healthy, high yielding mother plants." },
+    { "type": "list", "ordered": false, "items": [
+      "**Seed:** palay, corn, mungbean, pechay, tomato and most vegetables.",
+      "**Cuttings:** cassava stakes and kamote vine tips.",
+      "**Suckers:** banana and pineapple.",
+      "**Setts:** pieces of cane stalk for sugarcane.",
+      "**Grafted seedlings:** mango, rambutan and most fruit trees."
+    ] },
+    { "type": "heading", "level": 2, "text": "The main methods of planting crops" },
+    { "type": "table", "caption": "Planting methods and the crops that use them", "rows": [
+      ["Method", "How it works", "Common crops"],
+      ["Direct seeding", "Seed goes straight into the field, in rows, hills or broadcast", "Corn, mungbean, peanut, direct seeded rice, pechay"],
+      ["Transplanting", "Seedlings grow in a seedbed or tray, then move to the field", "Palay, tomato, eggplant, pepper, onion, cabbage"],
+      ["Cuttings", "A piece of stem roots in the field", "Cassava, kamote"],
+      ["Suckers and setts", "A shoot or stalk piece from a mother plant", "Banana, pineapple, sugarcane"],
+      ["Grafted seedlings", "A nursery tree is planted in a prepared hole", "Mango, citrus, rambutan, durian"]
+    ] },
+    { "type": "text", "text": "Transplanting costs more labor but gives the crop a head start over weeds. Direct seeding saves labor and seedbed work, but it needs a level field and good weed control. Our guide on [transplanting meaning](/blog/transplanting-meaning) compares the two for palay." },
+    { "type": "heading", "level": 2, "text": "Planting depth and spacing" },
+    { "type": "text", "text": "A simple rule for depth: plant a seed about two to three times as deep as it is wide. Tiny seeds like pechay go barely under the surface. Corn goes about 3 to 5 centimeters deep, a little deeper in dry, sandy soil.\n\nSpacing decides how many plants share the sunlight, water and fertilizer. Too close and they compete. Too far and you waste land." },
+    { "type": "list", "ordered": false, "items": [
+      "**Transplanted palay:** often 20 by 20 or 25 by 25 centimeters between hills.",
+      "**Hybrid yellow corn:** often 75 centimeters between rows and 20 to 25 centimeters between hills, one seed per hill.",
+      "**Fruiting vegetables:** wider rows, so you can walk, spray and harvest without breaking plants."
+    ] },
+    { "type": "callout", "tone": "tip", "title": "Plant with your neighbors", "text": "When the farms around you plant within the same two weeks, pests like the rice bug and the [Asian corn borer](/pests/asian-corn-borer) spread over many fields at once instead of piling onto the last one planted. Talk to your neighbors before you fix your date." },
+    { "type": "heading", "level": 2, "text": "The first two weeks after planting" },
+    { "type": "steps", "items": [
+      { "title": "Water evenly", "text": "Keep the soil moist, not soaked, until the seedlings are up. In rice, keep the water shallow so young plants are not drowned." },
+      { "title": "Replant the gaps", "text": "Fill missing hills within about a week, while the new plants can still catch up with the rest." },
+      { "title": "Stop the early weeds", "text": "Weeds that grow with the crop in the first weeks take the most yield. Weed or apply a labeled herbicide on time." },
+      { "title": "Watch for early pests", "text": "Golden apple snails attack young rice, and cutworms cut young corn at the base. Scout every few days." },
+      { "title": "Apply the basal fertilizer", "text": "Most crops get their first fertilizer at or soon after planting. See [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage)." }
+    ] },
+    { "type": "heading", "level": 2, "text": "Plan your crop planting in anee.io" },
+    { "type": "text", "text": "The planting day is day zero for everything that follows. In anee.io, you set that date for each lot, and the [cropping calendar](/features/cropping-calendar) dates every task after it: replanting, weeding, each fertilizer, each spray and the harvest. If you are not sure when to plant, the [When to Plant Analysis](/features/when-to-plant-analysis) reads your town's weather to suggest the date. Anee, the smart farm technician, answers your planting questions in Tagalog or English." },
+    { "type": "cta", "title": "Find your best planting date", "text": "Let anee.io read your town's weather and suggest when to plant, then date the whole season from that day.", "label": "See When to Plant Analysis", "url": "/features/when-to-plant-analysis" },
+    { "type": "heading", "level": 2, "text": "Questions about crop planting" },
+    { "type": "faq", "items": [
+      { "q": "What is crop planting?", "a": "It is putting seed, seedlings or planting material into a prepared field at the right date, depth and spacing. It includes the first care that helps the young plants survive." },
+      { "q": "What are the methods of planting crops?", "a": "Direct seeding, transplanting, planting cuttings, planting suckers or setts, and planting grafted seedlings. The crop decides which method fits." },
+      { "q": "When is the best time to plant crops in the Philippines?", "a": "It depends on your water. Irrigated rice is planted twice a year, while rainfed fields plant once the wet season rains are steady. Check your town's weather before you fix the date." },
+      { "q": "How deep should I plant seeds?", "a": "About two to three times the width of the seed. Small seeds go just under the surface, while corn goes about 3 to 5 centimeters deep." },
+      { "q": "What should I do right after planting?", "a": "Keep the soil moist, replant missing hills within a week, control early weeds, watch for snails and cutworms, and apply the basal fertilizer." }
+    ] },
+    { "type": "links", "title": "More planting guides", "items": [
+      { "label": "How to plant every crop", "url": "/how-to-plant" },
+      { "label": "How to plant rice", "url": "/how-to-plant/rice" },
+      { "label": "How to plant yellow corn", "url": "/how-to-plant/yellow-corn" },
+      { "label": "Palay seedlings", "url": "/blog/palay-seedlings" },
+      { "label": "Staggered planting schedule", "url": "/blog/staggered-planting-schedule" },
+      { "label": "Land preparation in the Philippines", "url": "/land-preparation/land-preparation-philippines" }
+    ] }
+  ]
+}

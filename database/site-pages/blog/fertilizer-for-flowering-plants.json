@@ -1,0 +1,81 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-for-flowering-plants",
+  "sortOrder": 1490,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Fertilizer for Flowering Plants: What to Use for More Blooms",
+  "metaTitle": "Fertilizer for Flowering Plants: What Makes Them Bloom",
+  "metaDescription": "The right fertilizer for flowering plants feeds leaves first, then more phosphorus and potassium before buds. See what to use, when, and how much.",
+  "focusKeyword": "fertilizer for flowering plants",
+  "keywords": ["fertilizer for flowering plants", "bloom fertilizer", "fertilizer for bougainvillea", "fertilizer for gumamela", "high phosphorus fertilizer", "leaves but no flowers"],
+  "excerpt": "A good fertilizer for flowering plants does two jobs. First it feeds the leaves and roots so the plant is strong enough to bloom. Then, a few weeks before the buds form, it gives more phosphorus and potassium and less nitrogen, so the plant puts its energy into flowers instead of new leaves. That simple switch works for gumamela, bougainvillea, roses, sampaguita and orchids, and for flowering crops like ampalaya and tomato.",
+  "heroImage": { "src": "/images/site/guides/blog-fertilizer-for-orchids.webp", "alt": "Rows of young orchids in clay pots on benches under shade netting, flowering plants that need a light, regular fertilizer", "credit": "Judgefloro, Public domain, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "Many plant owners feed their plants often and still get few flowers. Usually the fertilizer is not the wrong brand. It is the wrong balance, or it comes at the wrong time.\n\nThis guide explains what each nutrient does for blooms, how to read the numbers on the sack, when to feed, and why a plant can stay green and leafy without a single flower. For the basics of feeding any plant, start with our guide on [fertilizer for plants](/blog/fertilizer-for-plants)." },
+    { "type": "heading", "level": 2, "text": "What flowering plants need from fertilizer" },
+    { "type": "text", "text": "Every plant needs nitrogen, phosphorus and potassium, the N, P and K printed on each fertilizer sack. But each one pushes the plant in a different direction. So the best fertilizer for flowering plants is the one that matches the stage your plant is in." },
+    { "type": "table", "caption": "What N, P and K do for a flowering plant", "rows": [
+      ["Nutrient", "What it does", "Signs of too little"],
+      ["Nitrogen (N)", "Green leaves and fast new growth", "Pale, yellowing older leaves and slow growth"],
+      ["Phosphorus (P)", "Roots, buds and flower formation", "Few buds, dark or purplish leaves, weak roots"],
+      ["Potassium (K)", "Stronger stems, flower color and longer lasting blooms", "Brown, scorched leaf edges and weak stems"]
+    ] },
+    { "type": "text", "text": "Calcium and magnesium matter too. Calcium builds firm cell walls, while magnesium sits at the center of the green color in every leaf. Most garden soils and composts supply enough of both, so the main choice is still your N, P and K balance." },
+    { "type": "heading", "level": 2, "text": "How to read the numbers on a fertilizer for flowering plants" },
+    { "type": "text", "text": "The three numbers on a sack are the percent of N, P and K, always in that order. For example, [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14) has equal parts of all three. That makes it a fair everyday feed while a plant is still growing.\n\nFor the bloom stage, look for a higher middle number or a higher last number. A [16 20 0 fertilizer](/blog/16-20-0-fertilizer) leans toward phosphorus. Muriate of potash, sold as 0 0 60, is pure potassium, and our guide on [potash fertilizer](/blog/potash-fertilizer) explains how to use it. Many foliar bloom products also carry a high middle number, so read the label before you buy." },
+    { "type": "list", "ordered": false, "items": [
+      "**Growing stage:** a balanced grade such as 14 14 14, or compost with a little complete fertilizer.",
+      "**Before buds:** a grade with more P and K than N.",
+      "**During bloom:** light feeding only, mostly potassium, to keep flowers coming.",
+      "**After a flush of flowers:** a balanced feed again so the plant can rebuild."
+    ] },
+    { "type": "heading", "level": 2, "text": "When to feed for more flowers" },
+    { "type": "steps", "items": [
+      { "title": "Feed the growth first", "text": "Give a balanced fertilizer while the plant is making new shoots. A weak plant cannot carry many flowers, no matter what you feed it later." },
+      { "title": "Switch about three to four weeks before blooming", "text": "Move to a grade with more phosphorus and potassium. For plants that bloom all year, like gumamela, make this switch after each pruning." },
+      { "title": "Feed lightly during bloom", "text": "Small, regular doses work better than one big dose. Too much salt near the roots can make buds drop." },
+      { "title": "Water before and after", "text": "Fertilizer on dry soil can burn the roots. So water the soil first, apply, then water again." }
+    ] },
+    { "type": "heading", "level": 3, "text": "Potted plants and garden beds" },
+    { "type": "text", "text": "Pots hold little soil, and every watering washes some nutrients out. That is why a slow release fertilizer suits them well. Our guide on [Osmocote fertilizer](/blog/osmocote-fertilizer) explains how those coated granules feed a pot for months.\n\nGarden beds forgive more. Mix compost or well rotted manure into the bed, then side dress with a little complete or potash fertilizer as the plants near their bloom time." },
+    { "type": "callout", "tone": "warn", "title": "Too much nitrogen means leaves, not flowers", "text": "Urea and other high nitrogen fertilizers make a plant lush and green. Given too often, they keep it growing leaves and delay its flowers. Use them only when the plant is pale and slow, never as the main feed for a flowering plant." },
+    { "type": "heading", "level": 2, "text": "Organic fertilizer for flowering plants" },
+    { "type": "text", "text": "Organic matter feeds slowly and improves the soil at the same time. It rarely burns roots, which makes it a safe base for any flowering plant. Still, it acts more slowly than a sack fertilizer, so plan ahead." },
+    { "type": "list", "ordered": false, "items": [
+      "**Vermicast and compost:** gentle, balanced, and good for the soil itself.",
+      "**Composted chicken manure:** richer in nitrogen and phosphorus than most manures. Read our guide on [chicken dung as fertilizer](/blog/chicken-dung-as-fertilizer) before you use it.",
+      "**Eggshells:** a slow source of calcium, not of N, P or K. See [eggshell as fertilizer](/blog/eggshell-as-fertilizer).",
+      "**Bone meal:** a slow source of phosphorus for bulbs and new plantings."
+    ] },
+    { "type": "text", "text": "For more choices and how they compare with sack fertilizers, see our list of [organic fertilizer examples](/blog/organic-fertilizer-examples)." },
+    { "type": "heading", "level": 2, "text": "Why a plant has leaves but no flowers" },
+    { "type": "text", "text": "If the plant looks healthy but will not bloom, fertilizer is only one possible cause. So check these first before you buy another product." },
+    { "type": "list", "ordered": true, "items": [
+      "**Too much nitrogen.** Lush, dark green growth with no buds usually means this. Stop the nitrogen and switch to a P and K feed.",
+      "**Too little sun.** Bougainvillea, gumamela and roses need several hours of direct sun a day to bloom well.",
+      "**Pruning at the wrong time.** Bougainvillea flowers on new growth, so cutting it back during bloom removes the next flowers.",
+      "**Too much water.** Bougainvillea in particular blooms better when the soil dries a little between waterings.",
+      "**A plant that is still young.** Some plants need to reach a certain size before they flower at all."
+    ] },
+    { "type": "heading", "level": 2, "text": "Flowering crops on the farm" },
+    { "type": "text", "text": "The same rule holds in the field. Ampalaya, tomato, eggplant and mango all need potassium and phosphorus as they flower and set fruit. That is why most crop guides move from nitrogen to potash around flowering. Our guide on [fertilizer for fruit trees](/blog/fertilizer-for-fruit-trees) shows this for mango and other orchard crops.\n\nIn anee.io, the [growth stages](/features/growth-stages-and-weather) view shows each lot's stage on any date, including the day flowering begins. So you see when to switch the feed before the buds appear. If a crop is not flowering well, send a photo to Anee, the smart farm technician, and ask in Tagalog or English what the plant lacks." },
+    { "type": "cta", "title": "Know when your crop starts to flower", "text": "Set your planting date in anee.io and see the flowering stage of every lot, with what to apply and what to watch for.", "label": "Start free", "url": "/signup" },
+    { "type": "heading", "level": 2, "text": "Questions about fertilizer for flowering plants" },
+    { "type": "faq", "items": [
+      { "q": "What is the best fertilizer for flowering plants?", "a": "A balanced fertilizer such as 14 14 14 while the plant grows, then a grade with more phosphorus and potassium than nitrogen a few weeks before it blooms. Compost or vermicast under both keeps the soil healthy." },
+      { "q": "Is 14 14 14 good for flowering plants?", "a": "Yes, as an everyday feed while the plant is growing. For heavier blooming, add some potash or switch to a higher phosphorus grade before the buds form." },
+      { "q": "Can I use urea on flowering plants?", "a": "Only a little, and only when the plant is pale and growing slowly. Urea is almost all nitrogen, so regular use gives you leaves and fewer flowers." },
+      { "q": "How often should I fertilize a flowering plant?", "a": "Most potted flowering plants do well with a light feed every two to four weeks, or one dose of slow release fertilizer every few months. Always follow the product label." },
+      { "q": "What fertilizer makes bougainvillea flower?", "a": "A fertilizer with more phosphorus and potassium than nitrogen, plus full sun and soil that dries a little between waterings. Too much nitrogen or too much water keeps it leafy." }
+    ] },
+    { "type": "links", "title": "More fertilizer guides", "items": [
+      { "label": "Fertilizer for plants", "url": "/blog/fertilizer-for-plants" },
+      { "label": "Fertilizer for orchids", "url": "/blog/fertilizer-for-orchids" },
+      { "label": "Potash fertilizer", "url": "/blog/potash-fertilizer" },
+      { "label": "Complete fertilizer 14 14 14", "url": "/blog/complete-fertilizer-14-14-14" },
+      { "label": "Osmocote fertilizer", "url": "/blog/osmocote-fertilizer" },
+      { "label": "Foliar fertilizer", "url": "/blog/foliar-fertilizer" }
+    ] }
+  ]
+}

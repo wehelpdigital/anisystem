@@ -1,0 +1,69 @@
+{
+  "section": "blog",
+  "slug": "corn-scientific-name",
+  "sortOrder": 1520,
+  "lang": "en",
+  "category": "Corn",
+  "title": "Corn Scientific Name: Zea mays and the Types of Corn",
+  "metaTitle": "Corn Scientific Name: Zea mays Explained",
+  "metaDescription": "The corn scientific name is Zea mays, a grass like palay and sugarcane. Learn what the name means, its family, and the names of sweet, dent and waxy corn.",
+  "focusKeyword": "corn scientific name",
+  "keywords": ["corn scientific name", "Zea mays", "scientific name of maize", "corn family", "sweet corn scientific name", "types of corn"],
+  "excerpt": "The corn scientific name is Zea mays. Corn belongs to the grass family, Poaceae, the same family as palay, sugarcane and sorghum. The botanist Carl Linnaeus gave it that name in 1753, so you will often see it written as Zea mays L. In the Philippines we call it mais, and it is the second most planted grain crop after rice.",
+  "heroImage": { "src": "/images/site/corn-rows.jpg", "alt": "Rows of young corn, the plant whose scientific name is Zea mays, growing in a field" },
+  "blocks": [
+    { "type": "text", "text": "Every plant has one scientific name that botanists everywhere agree on. Local names change from town to town, but the scientific name stays the same. So when a seed catalog, a pesticide label or a school book says Zea mays, it means the same corn you plant in your field.\n\nThis guide explains what the name means, where corn sits in the plant family tree, and the scientific names of the corn types Filipino farmers grow." },
+    { "type": "heading", "level": 2, "text": "What the corn scientific name means" },
+    { "type": "text", "text": "A scientific name has two parts. The first word is the genus, a group of close relatives. The second word is the species. Both are written in italics in print, with the genus starting in a capital letter.\n\n**Zea** comes from an old Greek word for a kind of grain. **Mays** comes from mahiz, the word the Taino people of the Caribbean used for the plant. Spanish sailors carried that word home as maiz, and English took it as maize. That is why the scientific name of maize and corn is the same: they are one plant with two common names." },
+    { "type": "heading", "level": 2, "text": "Where corn sits in the plant family tree" },
+    { "type": "table", "caption": "How corn is classified", "rows": [
+      ["Rank", "Name", "What it means"],
+      ["Kingdom", "Plantae", "Plants"],
+      ["Family", "Poaceae", "The grass family, with rice, sugarcane, sorghum and bamboo"],
+      ["Genus", "Zea", "Corn and its wild relatives, the teosintes"],
+      ["Species", "Zea mays", "Corn, or maize"],
+      ["Subspecies", "Zea mays subsp. mays", "The corn that farmers grow"]
+    ] },
+    { "type": "text", "text": "Corn came from a wild grass called teosinte, which still grows in Mexico. Farmers there began selecting it about nine thousand years ago. Over many generations they turned a grass with a few hard seeds into the big eared corn we plant today." },
+    { "type": "heading", "level": 2, "text": "Scientific names of the types of corn" },
+    { "type": "text", "text": "All corn is Zea mays, but botanists also group the main types by their kernels. These names help when you read seed catalogs or older books. Still, seed companies sell by hybrid name, so you rarely need them at the dealer." },
+    { "type": "table", "caption": "Corn types and their scientific names", "rows": [
+      ["Type", "Scientific name", "Where you see it here"],
+      ["Dent corn", "Zea mays var. indentata", "Most yellow corn hybrids, grown for feed"],
+      ["Flint corn", "Zea mays var. indurata", "Many native white corn types, hard kernels"],
+      ["Sweet corn", "Zea mays var. saccharata", "Sweet corn sold boiled or grilled"],
+      ["Waxy corn", "Zea mays var. ceratina", "Glutinous or malagkit corn"],
+      ["Popcorn", "Zea mays var. everta", "Popcorn, mostly imported"],
+      ["Flour corn", "Zea mays var. amylacea", "Soft kernels, rare here"]
+    ] },
+    { "type": "text", "text": "Yellow corn goes mostly to animal feed, while white corn is eaten as food, as corn grits or as a rice substitute in parts of the Visayas and Mindanao. Our guide to the [corn kernel](/crops/corn-kernel) explains how the types differ inside the kernel." },
+    { "type": "heading", "level": 2, "text": "Corn is a grass, and that matters in the field" },
+    { "type": "text", "text": "Because corn is a grass, it shares a lot with palay and sugarcane. Some grass weeds compete hard with it, and some pests move between grass crops. For example, the [Asian corn borer](/pests/asian-corn-borer) also feeds on sorghum.\n\nCorn also uses a C4 type of photosynthesis, like sugarcane. That lets it grow fast in strong sun and heat, which is why it fits the Philippine dry season so well. But it needs plenty of nitrogen to match that growth, so a corn crop runs out of fertilizer faster than many farmers expect." },
+    { "type": "heading", "level": 2, "text": "The parts of the corn plant" },
+    { "type": "list", "ordered": false, "items": [
+      "**Tassel:** the male flower at the top, which sheds pollen.",
+      "**Silks:** the female flower parts, one silk for every kernel on the ear.",
+      "**Ear:** the cob with its kernels, wrapped in the husk.",
+      "**Prop roots:** the roots that grow from the lower stem and keep the plant standing."
+    ] },
+    { "type": "text", "text": "Each silk must catch pollen for its kernel to form. Our guide on [when fertilization occurs](/blog/when-fertilization-occurs) explains why heat or drought at silking leaves ears with missing kernels." },
+    { "type": "heading", "level": 2, "text": "Growing corn with anee.io" },
+    { "type": "text", "text": "Knowing the scientific name is a start. Growing a good crop is about timing. In anee.io, the [growth stages](/features/growth-stages-and-weather) view shows when each corn lot reaches knee high, tasseling and silking, and what to apply and watch at each stage. The cropping calendar dates every fertilizer and spray from your planting day. If something looks wrong, send a photo to Anee, the smart farm technician. For the steps from seed to harvest, see [pagtatanim ng mais](/crops/pagtatanim-ng-mais) and our guide to [increasing corn yield per hectare](/blog/increase-corn-yield-per-hectare)." },
+    { "type": "cta", "title": "Follow your corn stage by stage", "text": "Set your planting date and see when each lot reaches tasseling and silking, with what to apply and watch.", "label": "Start free", "url": "/signup" },
+    { "type": "heading", "level": 2, "text": "Questions about the corn scientific name" },
+    { "type": "faq", "items": [
+      { "q": "What is the scientific name of corn?", "a": "Zea mays. It is often written Zea mays L., the L. standing for Linnaeus, the botanist who named it in 1753." },
+      { "q": "What family does corn belong to?", "a": "Corn belongs to Poaceae, the grass family. Rice, sugarcane, sorghum, wheat and bamboo are in the same family." },
+      { "q": "What is the scientific name of sweet corn?", "a": "Sweet corn is still Zea mays. Botanists often write it as Zea mays var. saccharata to set it apart from field corn." },
+      { "q": "Are maize and corn the same?", "a": "Yes. Maize and corn are two common names for the same plant, Zea mays. Maize comes from the Taino word mahiz." },
+      { "q": "Is corn a grass or a vegetable?", "a": "Botanically corn is a grass, and the kernel is a grain. Sweet corn eaten fresh is treated as a vegetable in the kitchen." }
+    ] },
+    { "type": "links", "title": "More corn guides", "items": [
+      { "label": "Corn kernel", "url": "/crops/corn-kernel" },
+      { "label": "Corn seeds", "url": "/crops/corn-seeds" },
+      { "label": "Pagtatanim ng mais", "url": "/crops/pagtatanim-ng-mais" },
+      { "label": "Increase corn yield per hectare", "url": "/blog/increase-corn-yield-per-hectare" },
+      { "label": "When fertilization occurs", "url": "/blog/when-fertilization-occurs" }
+    ] }
+  ]
+}

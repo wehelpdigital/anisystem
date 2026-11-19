@@ -218,6 +218,10 @@
         {
           "label": "Farm Maps in anee.io",
           "url": "/features/farm-maps"
+        },
+        {
+          "label": "Soil degradation",
+          "url": "/blog/soil-degradation"
         }
       ]
     }

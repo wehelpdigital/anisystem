@@ -1,0 +1,62 @@
+{
+  "section": "blog",
+  "slug": "fertilizer-high-in-phosphorus",
+  "sortOrder": 1590,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Fertilizer High in Phosphorus: Grades, Uses and Timing",
+  "metaTitle": "Fertilizer High in Phosphorus: Which Grade to Use",
+  "metaDescription": "Compare each fertilizer high in phosphorus sold here: 16 20 0, 18 46 0, 0 18 0 and more. Learn when to apply it, how much, and why acid soil locks it up.",
+  "focusKeyword": "fertilizer high in phosphorus",
+  "keywords": ["fertilizer high in phosphorus", "fertilizer with phosphorus", "phosphorus fertilizer", "18 46 0", "solophos", "phosphorus deficiency"],
+  "excerpt": "A fertilizer high in phosphorus is one with a big middle number on the sack. Here the common ones are 16 20 0, diammonium phosphate 18 46 0, monoammonium phosphate 11 52 0, single superphosphate 0 18 0 and triple superphosphate 0 46 0. Phosphorus builds roots, tillers and flowers, and it moves very little in the soil. So it works best placed near the roots at planting, not spread on top later.",
+  "heroImage": { "src": "/images/site/guides/blog-inorganic-fertilizer-examples.webp", "alt": "A dish of pale diammonium phosphate granules, a common fertilizer high in phosphorus", "credit": "Suyash Dwivedi, CC BY SA 4.0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "Nitrogen gets most of the attention, because a crop short of it turns yellow fast. Phosphorus works more quietly. A crop short of it just stays small, tillers less and matures late, and many farmers never connect the poor harvest to the missing nutrient.\n\nThis guide shows which fertilizer with phosphorus to buy, how to read the numbers, when to apply it, and why some soils hold phosphorus back. For the basics of fertilizer grades, see [what is fertilizer](/blog/what-is-fertilizer)." },
+    { "type": "heading", "level": 2, "text": "What phosphorus does for your crop" },
+    { "type": "list", "ordered": false, "items": [
+      "**Roots:** strong early roots that find water and food.",
+      "**Tillers and branches:** more tillers in rice, more branches in vegetables.",
+      "**Flowers and grain:** good flowering, seed set and grain filling.",
+      "**Even maturity:** a crop that ripens on time instead of dragging late."
+    ] },
+    { "type": "text", "text": "Signs of too little phosphorus include stunted plants, dark green or purplish leaves, few tillers and late maturity. These signs are easy to miss, so a soil test is the surest guide. Our guide to [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice) shows them with photos." },
+    { "type": "heading", "level": 2, "text": "Each common fertilizer high in phosphorus" },
+    { "type": "text", "text": "The middle number on a sack is the percent of phosphate, written as P2O5, not pure phosphorus. So a 50 kilogram bag of 16 20 0 holds 10 kilograms of phosphate." },
+    { "type": "table", "caption": "Phosphorus fertilizers you will find at a dealer", "rows": [
+      ["Fertilizer", "Grade (N P K)", "Good to know"],
+      ["Ammonium phosphate (ammophos)", "16 20 0", "The common basal fertilizer for palay and corn"],
+      ["Diammonium phosphate (DAP)", "18 46 0", "Very concentrated, a little goes far"],
+      ["Monoammonium phosphate (MAP)", "11 52 0", "The most phosphorus per bag, also used in liquid feeds"],
+      ["Single superphosphate (solophos)", "0 18 0", "Also gives calcium and sulfur"],
+      ["Triple superphosphate", "0 46 0", "Phosphorus with no nitrogen"],
+      ["Complete", "14 14 14", "Some phosphorus with N and K, a balanced start"]
+    ] },
+    { "type": "text", "text": "Our guides on [16 20 0 fertilizer](/blog/16-20-0-fertilizer) and [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14) explain the two most used grades in detail. Organic sources like bone meal, rock phosphate and [chicken dung as fertilizer](/blog/chicken-dung-as-fertilizer) also add phosphorus, but slowly." },
+    { "type": "heading", "level": 2, "text": "When to apply fertilizer with phosphorus" },
+    { "type": "text", "text": "Phosphorus barely moves in the soil. Roots must grow to it, so it needs to sit where the young roots are. That is why phosphorus goes in as the **basal application**, at or just before planting.\n\nFor transplanted palay, farmers usually apply it at the last harrowing or soon after transplanting. For corn and vegetables, it goes in the furrow or planting hole, mixed with soil so it does not touch the seed. Spreading phosphorus on top late in the season mostly wastes it. Our guide on [top dressing fertilizer](/blog/top-dressing-fertilizer) explains what belongs in the later applications instead." },
+    { "type": "heading", "level": 2, "text": "How much phosphorus to apply" },
+    { "type": "text", "text": "A soil test tells you how much your field needs. You can get one through your Municipal Agriculture Office. Once you know the amount of phosphate needed, the math is simple: divide by the percent on the bag.\n\nFor example, to give 30 kilograms of phosphate per hectare with 16 20 0, divide 30 by 0.20. That is 150 kilograms, or three bags. With 18 46 0, the same 30 kilograms takes about 65 kilograms, a little over one bag. Our guide on [fertilizer calculation](/blog/fertilizer-calculation) walks through it step by step." },
+    { "type": "heading", "level": 2, "text": "Why acid soil locks phosphorus away" },
+    { "type": "text", "text": "In very acid soils, phosphorus binds with iron and aluminum and becomes hard for roots to take. Very alkaline soils tie it up with calcium. So you can apply plenty and the crop still runs short.\n\nLiming acid soil helps free it, and so does organic matter. Our guide on [acidic soil preparation](/land-preparation/acidic-soil-preparation) explains how to lime a field. Placing the fertilizer in a band near the roots also helps, because less of it touches the soil that locks it up." },
+    { "type": "callout", "tone": "warn", "title": "More is not better", "text": "Heavy phosphorus year after year builds up in the soil and can make zinc harder for the crop to take up, especially in flooded rice. Apply what the soil test calls for, and watch for zinc deficiency on fields with a long history of heavy phosphorus." },
+    { "type": "heading", "level": 2, "text": "Put the right phosphorus in at the right time" },
+    { "type": "text", "text": "Getting phosphorus right means the right grade, the right amount and the right day. In anee.io, the [NPK Plus calculator](/features/npk-plus-calculator) works out how much of each grade a lot needs from its crop, soil and target yield. The cropping calendar puts the basal application on planting day, and the inventory tracks every bag. NPK Plus and Anee come with Libre plus Anee at PHP 100 a month." },
+    { "type": "cta", "title": "Work out your fertilizer, bag by bag", "text": "Let the NPK Plus calculator turn your lot's needs into bags of the grades you can buy.", "label": "See the NPK Plus calculator", "url": "/features/npk-plus-calculator" },
+    { "type": "heading", "level": 2, "text": "Questions about fertilizer high in phosphorus" },
+    { "type": "faq", "items": [
+      { "q": "Which fertilizer is high in phosphorus?", "a": "Grades with a big middle number: 16 20 0, 18 46 0, 11 52 0, 0 18 0 and 0 46 0. Diammonium phosphate (18 46 0) and monoammonium phosphate (11 52 0) carry the most." },
+      { "q": "Is 16 20 0 a fertilizer with phosphorus?", "a": "Yes. It has 20 percent phosphate and 16 percent nitrogen, and it is a common basal fertilizer for palay and corn." },
+      { "q": "When should I apply phosphorus fertilizer?", "a": "At or just before planting, close to where the roots will grow. Phosphorus moves very little in the soil, so late top dressing wastes most of it." },
+      { "q": "What is solophos?", "a": "Solophos is the common name for single superphosphate, 0 18 0. It gives phosphorus plus calcium and sulfur." },
+      { "q": "Can you use too much phosphorus?", "a": "Yes. Too much builds up in the soil, wastes money and can make zinc harder for crops to take up." }
+    ] },
+    { "type": "links", "title": "More fertilizer guides", "items": [
+      { "label": "16 20 0 fertilizer", "url": "/blog/16-20-0-fertilizer" },
+      { "label": "Complete fertilizer 14 14 14", "url": "/blog/complete-fertilizer-14-14-14" },
+      { "label": "Potash fertilizer", "url": "/blog/potash-fertilizer" },
+      { "label": "Fertilizer calculation", "url": "/blog/fertilizer-calculation" },
+      { "label": "Inorganic fertilizer examples", "url": "/blog/inorganic-fertilizer-examples" }
+    ] }
+  ]
+}

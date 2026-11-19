@@ -1,0 +1,63 @@
+{
+  "section": "blog",
+  "slug": "when-fertilization-occurs",
+  "sortOrder": 1620,
+  "lang": "en",
+  "category": "Crop science",
+  "title": "When Fertilization Occurs in Plants, and Why It Matters on the Farm",
+  "metaTitle": "When Fertilization Occurs in Plants and Crops",
+  "metaDescription": "When fertilization occurs in plants, a pollen tube reaches the ovule soon after pollination. See how it works in palay and corn and what ruins it.",
+  "focusKeyword": "when fertilization occurs",
+  "keywords": ["when fertilization occurs", "fertilization in plants", "pollination and fertilization", "double fertilization", "rice flowering", "corn silking"],
+  "excerpt": "In plants, fertilization occurs shortly after pollination, usually within hours to about a day. Pollen lands on the stigma, grows a tiny tube down to the ovule, and delivers the sperm cells that join with the egg. That moment decides whether a grain of palay, a kernel of corn or a mango fruit forms at all. This guide explains when fertilization occurs in the crops you grow, and what in the field can stop it.",
+  "heroImage": { "src": "/images/site/guides/blog-increase-corn-yield-per-hectare.webp", "alt": "Corn plants with tassels, silks and young ears in a maize field, the stage when fertilization occurs in corn", "credit": "JFVelasquez Floro, CC0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "Many people use pollination and fertilization as if they meant the same thing. They are two steps, one right after the other. Pollination moves the pollen, and fertilization is what happens when the pollen reaches the egg.\n\nFor a farmer, this short window is the most fragile part of the season. A crop can look perfect for two months and still lose half its harvest in a few hot or dry days at flowering. This guide is about fertilization in plants and crops." },
+    { "type": "heading", "level": 2, "text": "Pollination comes first, then fertilization occurs" },
+    { "type": "steps", "items": [
+      { "title": "Pollination", "text": "Pollen moves from the male part of a flower, the anther, to the female part, the stigma. Wind, insects or the flower itself does the moving." },
+      { "title": "The pollen tube grows", "text": "Each grain of pollen that lands on a stigma grows a thin tube down through the flower toward the ovule." },
+      { "title": "Fertilization", "text": "The tube delivers two sperm cells. One joins the egg to start the seed's embryo. The other joins two other cells to start the endosperm, the food store of the seed." },
+      { "title": "The seed or fruit grows", "text": "Once fertilization occurs, the ovule becomes a seed and the flower base often swells into a fruit." }
+    ] },
+    { "type": "text", "text": "Botanists call that two part event double fertilization. It matters to every rice and corn farmer, because the endosperm is the starchy part we eat. When fertilization fails, no endosperm forms, and the grain stays empty." },
+    { "type": "heading", "level": 2, "text": "When fertilization occurs in palay" },
+    { "type": "text", "text": "Rice pollinates itself. Each tiny flower, the spikelet, opens for only an hour or two, mostly in the morning, roughly between 8 and 11 o'clock. As it opens, the anthers burst and drop pollen on the stigma of the same flower. Fertilization follows within a few hours.\n\nA panicle flowers over about a week, from the top down. After that, the grains fill for about 30 days through the milk, dough and mature stages. Our guide on [fertilizer for rice grain filling](/blog/fertilizer-for-rice-grain-filling) covers what the crop needs in those weeks." },
+    { "type": "callout", "tone": "warn", "title": "Heat at flowering empties grains", "text": "When the air goes above about 35 degrees Celsius while rice flowers are open, pollen can fail and the spikelets stay empty. That is why the hottest weeks of the dry season are a poor time for a rice crop to flower." },
+    { "type": "heading", "level": 2, "text": "When fertilization occurs in corn" },
+    { "type": "text", "text": "Corn has separate male and female flowers on the same plant. The tassel at the top sheds pollen, and the wind carries it to the silks coming out of the young ear. Every silk leads to one ovule, which will become one kernel.\n\nWhen a pollen grain lands on a silk, its tube grows down the silk to the ovule, and fertilization usually follows within about a day. If a silk never catches pollen, its kernel never forms. That is why poorly pollinated ears have gaps or a bare tip. Our guide on the [corn scientific name](/blog/corn-scientific-name) explains the parts of the corn plant." },
+    { "type": "list", "ordered": false, "items": [
+      "**Drought delays the silks.** The tassel keeps its schedule, but the silks come out late, after most pollen has fallen.",
+      "**Heat dries the pollen.** Very hot, dry days shorten the life of pollen grains.",
+      "**Silk feeding pests cut silks.** Pests that clip silks early stop them from catching pollen."
+    ] },
+    { "type": "heading", "level": 2, "text": "Fertilization in fruit and vegetable crops" },
+    { "type": "text", "text": "Many fruit and vegetable crops need insects to carry pollen. Ampalaya, squash, cucumber and upo have separate male and female flowers, and bees carry pollen between them. Mango flowers are visited by flies and bees, and long rains at flowering cut fruit set, partly because [anthracnose](/diseases/anthracnose) attacks the flowers.\n\nWhen bees are scarce, some growers of squash and other cucurbits pollinate by hand in the morning, brushing a male flower onto the female flowers." },
+    { "type": "heading", "level": 2, "text": "How to protect the fertilization window" },
+    { "type": "list", "ordered": true, "items": [
+      "**Time your planting** so flowering avoids the hottest weeks and the peak of the typhoon season. See [the best time to plant rice](/blog/best-time-to-plant-rice-philippines).",
+      "**Keep water steady at flowering.** Rice and corn both lose the most yield from drought at this stage.",
+      "**Spray with care.** Avoid insecticides on open flowers in the morning, when bees are working.",
+      "**Feed potassium in time.** Potassium supports flowering and grain filling. See [potash fertilizer](/blog/potash-fertilizer).",
+      "**Do not add late nitrogen** that makes the crop lush and draws pests at flowering."
+    ] },
+    { "type": "heading", "level": 2, "text": "Know when each lot will flower" },
+    { "type": "text", "text": "The surest way to protect flowering is to know when it will happen. In anee.io, the [growth stages](/features/growth-stages-and-weather) view shows the date each lot reaches flowering, counted from its own planting day, beside the week's weather forecast for that lot. So you see a heat wave or a dry spell coming before it lands on your flowering crop. The [When to Plant Analysis](/features/when-to-plant-analysis) also helps pick a planting date that keeps flowering out of the riskiest weeks." },
+    { "type": "cta", "title": "See your flowering date before it arrives", "text": "Set your planting date and anee.io shows when each lot flowers, with the weather beside it.", "label": "See growth stages and weather", "url": "/features/growth-stages-and-weather" },
+    { "type": "heading", "level": 2, "text": "Questions about when fertilization occurs" },
+    { "type": "faq", "items": [
+      { "q": "When does fertilization occur in plants?", "a": "Shortly after pollination, usually within hours to about a day, once the pollen tube reaches the ovule and delivers the sperm cells." },
+      { "q": "What is the difference between pollination and fertilization?", "a": "Pollination moves pollen to the stigma. Fertilization happens after, when the sperm from the pollen joins the egg inside the ovule." },
+      { "q": "What time of day does rice flower?", "a": "Mostly in the morning, roughly between 8 and 11 o'clock, with each spikelet open for only an hour or two." },
+      { "q": "Why are some rice grains empty?", "a": "Often because fertilization failed, from heat or drought at flowering, strong wind or rain on open flowers, or pests and diseases at that stage." },
+      { "q": "Why does a corn ear have missing kernels?", "a": "The silks for those kernels did not catch pollen, often because drought delayed the silks or heat killed the pollen." }
+    ] },
+    { "type": "links", "title": "More crop guides", "items": [
+      { "label": "Corn scientific name", "url": "/blog/corn-scientific-name" },
+      { "label": "Fertilizer for rice grain filling", "url": "/blog/fertilizer-for-rice-grain-filling" },
+      { "label": "Crop growth stage monitoring", "url": "/blog/crop-growth-stage-monitoring" },
+      { "label": "Best time to plant rice", "url": "/blog/best-time-to-plant-rice-philippines" },
+      { "label": "Palay", "url": "/crops/palay" }
+    ] }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "section": "blog",
+  "slug": "osmocote-fertilizer",
+  "sortOrder": 1540,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Osmocote Fertilizer: How Slow Release Feeding Works",
+  "metaTitle": "Osmocote Fertilizer: How to Use It on Plants",
+  "metaDescription": "Osmocote fertilizer is a coated slow release feed that lasts months in a pot. See how it works, which grade to buy, how to apply it, and when to skip it.",
+  "focusKeyword": "Osmocote fertilizer",
+  "keywords": ["Osmocote fertilizer", "controlled release fertilizer", "slow release fertilizer", "Osmocote 14 14 14", "fertilizer for potted plants"],
+  "excerpt": "Osmocote fertilizer is a brand of controlled release fertilizer. Each round granule holds nutrients inside a thin resin coat. Water slips in, dissolves the nutrients, and they seep out a little at a time for months. So one application can feed a potted plant for a whole season instead of a weekly feed. It is popular for orchids, ornamentals, nursery seedlings and container vegetables.",
+  "heroImage": { "src": "/images/site/guides/blog-what-is-fertilizer.webp", "alt": "Granules of a fertilizer in several colors spilling from a scoop, the round shape that slow release fertilizers like Osmocote come in", "credit": "Wee Hong, CC BY SA 4.0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "Plants in pots lose food every time you water them, because the water drains out the bottom and carries nutrients with it. That is why potted plants need feeding more often than plants in the ground.\n\nA controlled release fertilizer like Osmocote fixes that by letting the food out slowly. This guide explains how it works, which grade fits which plant, how much to use, and when a cheaper fertilizer does the job just as well. For feeding plants in general, see our guide on [fertilizer for plants](/blog/fertilizer-for-plants)." },
+    { "type": "heading", "level": 2, "text": "How Osmocote fertilizer works" },
+    { "type": "text", "text": "Each granule is a small ball of fertilizer wrapped in a coat of resin. After you apply it, moisture passes through the coat and dissolves the nutrients inside. The dissolved nutrients then move out through the coat into the soil, slowly and steadily.\n\nThe speed depends mostly on temperature. Warm soil makes the granules release faster, while cool soil slows them. How much you water matters much less, so one dose behaves about the same in a wet week or a dry one. When a granule is empty, only the soft shell is left." },
+    { "type": "callout", "tone": "info", "title": "In our heat, expect the shorter end", "text": "The months printed on a controlled release bag assume a mild temperature. In the Philippine lowlands the soil in a pot is often warmer, so the granules empty sooner. If the label says three to four months, plan on about three." },
+    { "type": "heading", "level": 2, "text": "Which Osmocote grade to buy" },
+    { "type": "text", "text": "The numbers on the bag are N, P and K, the same as on any sack. The grade you see most in local garden shops is the balanced 14 14 14. Other grades exist, some with added trace elements and a longer release time." },
+    { "type": "table", "caption": "Picking a controlled release grade", "rows": [
+      ["What you grow", "What to look for", "Why"],
+      ["Foliage plants and young seedlings", "A balanced grade such as 14 14 14", "Steady growth of leaves and roots"],
+      ["Flowering ornamentals and orchids", "Balanced, or a grade a little higher in K", "Keeps plants strong without pushing only leaves"],
+      ["Container vegetables", "Balanced, with trace elements if offered", "A full season of feeding in limited soil"],
+      ["Long lived potted trees", "A longer release time", "Fewer reapplications"]
+    ] },
+    { "type": "text", "text": "For flowering plants, our guide on [fertilizer for flowering plants](/blog/fertilizer-for-flowering-plants) explains when to shift toward more phosphorus and potassium. For orchids, see [fertilizer for orchids](/blog/fertilizer-for-orchids)." },
+    { "type": "heading", "level": 2, "text": "How to apply Osmocote fertilizer" },
+    { "type": "steps", "items": [
+      { "title": "Measure by pot size", "text": "The label gives the amount for each pot size. Use a measuring spoon, not a guess, because too much still burns roots." },
+      { "title": "Mix in or scatter on top", "text": "When potting, mix the granules into the potting mix. For a plant already potted, scatter them on the surface and scratch them in lightly." },
+      { "title": "Water as usual", "text": "Watering starts the release. You do not need to water more than normal." },
+      { "title": "Mark the date", "text": "Write down when you applied it, so you know when the granules will run out and the next dose is due." }
+    ] },
+    { "type": "callout", "tone": "warn", "title": "Do not stack it with liquid feeds", "text": "A pot that already has a full dose of controlled release fertilizer rarely needs a weekly liquid feed on top. Doubling up builds salts in the mix, which shows as brown leaf tips and a white crust on the soil." },
+    { "type": "heading", "level": 2, "text": "Osmocote fertilizer compared with other feeds" },
+    { "type": "table", "caption": "Controlled release and the usual alternatives", "rows": [
+      ["Feed", "How long it lasts", "Cost", "Best for"],
+      ["Controlled release (Osmocote)", "Months", "High per kilogram", "Pots, nurseries, orchids"],
+      ["Complete 14 14 14", "A few weeks", "Low", "Garden beds and field crops"],
+      ["Foliar fertilizer", "Days", "Medium", "Quick fixes and trace elements"],
+      ["Compost and vermicast", "Months, slowly", "Low if homemade", "Building soil in beds and pots"]
+    ] },
+    { "type": "text", "text": "Controlled release fertilizer costs several times more per kilogram than ordinary sack fertilizer. In a pot, that does not matter much, because you use only a spoonful. On a hectare of palay or corn, it rarely pays. For field crops, splitting [urea fertilizer](/blog/urea-fertilizer) or [complete fertilizer 14 14 14](/blog/complete-fertilizer-14-14-14) over the season gives the same steady feeding for far less money. Read more in [foliar fertilizer](/blog/foliar-fertilizer)." },
+    { "type": "heading", "level": 2, "text": "When it is worth it, and when it is not" },
+    { "type": "list", "ordered": false, "items": [
+      "**Worth it:** potted ornamentals, orchids, nursery trays, rooftop and balcony vegetables, and plants you cannot feed every week.",
+      "**Not worth it:** large garden beds and field crops, where split sack fertilizer costs far less.",
+      "**Still needed alongside it:** good potting mix with organic matter, because coated granules feed the plant but do not build the soil."
+    ] },
+    { "type": "heading", "level": 2, "text": "Keep track of feeding with anee.io" },
+    { "type": "text", "text": "Whether you feed with coated granules or with sack fertilizer, the hard part is remembering when you last did it. In anee.io, the [cropping calendar](/features/cropping-calendar) dates each feeding for every lot or bed, and the inventory records what you bought and used. For nursery and vegetable growers, Anee, the smart farm technician, can look at a photo of a plant with yellow or burnt leaves and tell you in Tagalog or English whether it is hungry or overfed." },
+    { "type": "cta", "title": "Never forget a feeding date", "text": "Put every fertilizer application on one calendar and track what each bed or lot used.", "label": "Start free", "url": "/signup" },
+    { "type": "heading", "level": 2, "text": "Questions about Osmocote fertilizer" },
+    { "type": "faq", "items": [
+      { "q": "What is Osmocote fertilizer?", "a": "It is a brand of controlled release fertilizer. Its granules have a resin coat that lets nutrients out slowly, so one dose feeds a plant for months." },
+      { "q": "How long does Osmocote last?", "a": "The label gives a number of months, often three to four for the common grade. In hot Philippine conditions it releases faster, so expect the shorter end." },
+      { "q": "Is Osmocote good for orchids?", "a": "Many orchid growers use a small amount of controlled release fertilizer in the pot. Use less than for other plants, because orchid roots are sensitive to salts." },
+      { "q": "Can I use Osmocote on vegetables?", "a": "Yes, for container and rooftop vegetables. In field beds, ordinary complete fertilizer and compost cost much less for the same result." },
+      { "q": "Should I put Osmocote on top of the soil or mix it in?", "a": "Either works. Mixing into the potting mix spreads it evenly. Scattering on top and scratching it in is fine for plants already potted." }
+    ] },
+    { "type": "links", "title": "More fertilizer guides", "items": [
+      { "label": "Fertilizer for flowering plants", "url": "/blog/fertilizer-for-flowering-plants" },
+      { "label": "Fertilizer for orchids", "url": "/blog/fertilizer-for-orchids" },
+      { "label": "Fertilizer for plants", "url": "/blog/fertilizer-for-plants" },
+      { "label": "Foliar fertilizer", "url": "/blog/foliar-fertilizer" },
+      { "label": "Complete fertilizer 14 14 14", "url": "/blog/complete-fertilizer-14-14-14" }
+    ] }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "section": "blog",
+  "slug": "why-fertilizer-is-important",
+  "sortOrder": 1500,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Why Fertilizer Is Important in Agriculture",
+  "metaTitle": "Why Fertilizer Is Important in Agriculture",
+  "metaDescription": "Why fertilizer is important: every harvest carries nutrients out of your field. Learn what it does, what happens without it, and how to use less.",
+  "focusKeyword": "why fertilizer is important",
+  "keywords": ["why fertilizer is important", "fertilizer in agriculture", "importance of fertilizer", "role of fertilizer", "nutrients removed by crops"],
+  "excerpt": "Here is why fertilizer is important: every harvest carries nutrients out of your field, in the grain, the fruit and often the straw. The soil holds only so much, and it does not refill itself fast enough to keep up with two crops a year. Fertilizer puts those nutrients back, so the next crop yields as well as the last one. Used with care, it is also one of the cheapest ways to raise your harvest per hectare.",
+  "heroImage": { "src": "/images/site/guides/blog-increase-rice-yield-per-hectare.webp", "alt": "A Filipino farmer holds heavy, ripening palay panicles in his palm, the kind of harvest that shows why fertilizer is important", "credit": "Department of Foreign Affairs and Trade, CC BY 2.0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "Ask an old farmer and you will hear the same story. The first seasons on a new field gave a big harvest with little fertilizer. Then each year gave a little less, until the field needed abono just to stay where it was.\n\nThat story is the whole reason fertilizer exists. This guide explains what fertilizer does in agriculture, what happens when a field goes without it, and why more is not always better. If you are new to the word, read [what is fertilizer](/blog/what-is-fertilizer) first." },
+    { "type": "heading", "level": 2, "text": "Why fertilizer is important: the short answer" },
+    { "type": "list", "ordered": false, "items": [
+      "**Harvests remove nutrients.** Grain, fruit and straw all carry nitrogen, phosphorus and potassium away from the field.",
+      "**Soils differ.** Some fields are low in a nutrient from the start, like phosphorus in many acid upland soils.",
+      "**Modern varieties yield more.** A variety that can give 6 tons of palay needs more food than one that gives 3.",
+      "**Two crops a year is fast.** The soil cannot rebuild its supply between a dry season crop and a wet season crop."
+    ] },
+    { "type": "heading", "level": 2, "text": "What a harvest takes from the soil" },
+    { "type": "text", "text": "Think of the soil as a bank account. Each harvest makes a withdrawal. For example, a rice crop takes up roughly 15 to 18 kilograms of nitrogen for every ton of palay it makes, counting the grain and the straw. It takes a similar amount of potassium and a smaller amount of phosphorus.\n\nSo a 5 ton harvest moves a lot of nutrients off the field. If you burn or haul away the straw, even more potassium leaves with it. That is why fields where straw is removed every season often run short of potassium first." },
+    { "type": "callout", "tone": "info", "title": "The soil supplies some, never all", "text": "Rain, irrigation water, decaying roots and soil minerals all release some nutrients each season. On a good lowland field that natural supply can carry a modest crop. But a high yield always needs more than the soil gives on its own." },
+    { "type": "heading", "level": 2, "text": "The role of fertilizer in agriculture" },
+    { "type": "text", "text": "Fertilizer in agriculture does more than feed one crop. It keeps whole farming areas productive year after year. Without it, the same land would feed far fewer people, and farmers would need to clear more land to grow the same food.\n\nFor a single farm, the role is simpler. Fertilizer is often the input that gives back the most for each peso spent, as long as it goes on at the right time and rate. Our guide on [increasing rice yield per hectare](/blog/increase-rice-yield-per-hectare) shows how fertilizer fits with seed, water and pest control." },
+    { "type": "heading", "level": 2, "text": "What happens when a field goes without fertilizer" },
+    { "type": "text", "text": "Crops rarely die from a lack of fertilizer. Instead, they quietly yield less. The plant shows it first in the leaves, then in fewer tillers, shorter panicles and lighter grain." },
+    { "type": "list", "ordered": false, "items": [
+      "**Low nitrogen:** pale, yellowing older leaves and fewer tillers. See [yellow rice leaves](/blog/yellow-rice-leaves).",
+      "**Low phosphorus:** stunted, dark plants with weak roots and late maturity.",
+      "**Low potassium:** brown leaf edges, weak stems that lodge, and more disease.",
+      "**Season after season:** the soil supply runs down, so each harvest is smaller than the last."
+    ] },
+    { "type": "text", "text": "Our guide to [nutrient deficiency in rice](/blog/nutrient-deficiency-in-rice) shows each sign with photos and what to apply." },
+    { "type": "heading", "level": 2, "text": "Fertilizer is important, but more is not better" },
+    { "type": "text", "text": "Every bag past what the crop can use is money lost. Too much nitrogen makes rice lush and soft, so it lodges in strong wind and attracts planthoppers. Extra fertilizer also washes into canals and rivers, where it feeds algae instead of your palay.\n\nThe answer is balance, not a bigger dose. Get a soil test from your Municipal Agriculture Office when you can, then match the grade and rate to what your field lacks. Our guides on [balanced fertilization for rice](/blog/balanced-fertilization-for-rice) and [lower fertilizer cost](/blog/lower-fertilizer-cost) show how." },
+    { "type": "heading", "level": 3, "text": "Organic and inorganic together" },
+    { "type": "text", "text": "Organic fertilizer builds the soil, while inorganic fertilizer feeds the crop fast. Most farms do best with some of both. Our comparison of [organic vs inorganic fertilizer](/blog/organic-vs-inorganic-fertilizer) and our list of [organic fertilizer benefits](/blog/organic-fertilizer-benefits) explain how to mix them." },
+    { "type": "heading", "level": 2, "text": "How to make every bag count" },
+    { "type": "steps", "items": [
+      { "title": "Know your soil", "text": "A soil test tells you which nutrient is short. Without one, follow the usual rate for your crop and watch the leaves." },
+      { "title": "Pick the right grade", "text": "Complete, urea, ammonium sulfate or potash each fill a different need. Our guide on [fertilizer for rice](/blog/fertilizer-for-rice) compares them." },
+      { "title": "Apply at the right stage", "text": "Split the nitrogen across the stages when the crop uses it most. See [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage)." },
+      { "title": "Place it well", "text": "Basal, broadcast, banded or foliar each suit a different job. Our guide on [fertilizer application methods](/blog/fertilizer-application-methods) explains them." },
+      { "title": "Keep a record", "text": "Write down what went on, when, and what you harvested. Then next season you know what paid off." }
+    ] },
+    { "type": "text", "text": "anee.io does the remembering for you. The [cropping calendar](/features/cropping-calendar) dates every fertilizer task from each lot's own planting day. The inventory tracks every bag you buy and use. With Libre plus Anee at PHP 100 a month, the NPK Plus calculator works out how much each lot needs, and Anee, the smart farm technician, answers your questions in Tagalog or English." },
+    { "type": "cta", "title": "Put the right fertilizer on the right day", "text": "Let anee.io date every fertilizer application from your planting day, and track every bag in the inventory.", "label": "See the NPK Plus calculator", "url": "/features/npk-plus-calculator" },
+    { "type": "heading", "level": 2, "text": "Questions about why fertilizer is important" },
+    { "type": "faq", "items": [
+      { "q": "Why is fertilizer important to plants?", "a": "Plants need nitrogen, phosphorus and potassium to grow, and most soils cannot supply enough for a high yield. Fertilizer adds what the soil lacks and replaces what each harvest takes away." },
+      { "q": "What are the three main nutrients in fertilizer?", "a": "Nitrogen (N) for leaves and growth, phosphorus (P) for roots and flowers, and potassium (K) for strong stems, grain filling and disease resistance." },
+      { "q": "Can crops grow without fertilizer?", "a": "Yes, but they yield less, and each season tends to yield less than the last as the soil runs down. Organic matter and legumes can carry some of the load." },
+      { "q": "Is organic fertilizer enough on its own?", "a": "For a home garden it can be. For high yielding field crops, organic fertilizer alone rarely supplies enough nitrogen in time, so most farmers use it with some inorganic fertilizer." },
+      { "q": "What happens if you use too much fertilizer?", "a": "Money is wasted, roots can burn, rice lodges and draws more pests, and the extra washes into waterways. Balance beats volume." }
+    ] },
+    { "type": "links", "title": "More fertilizer guides", "items": [
+      { "label": "What is fertilizer", "url": "/blog/what-is-fertilizer" },
+      { "label": "Fertilizer for rice", "url": "/blog/fertilizer-for-rice" },
+      { "label": "Balanced fertilization for rice", "url": "/blog/balanced-fertilization-for-rice" },
+      { "label": "Organic fertilizer benefits", "url": "/blog/organic-fertilizer-benefits" },
+      { "label": "Fertilizer calculation", "url": "/blog/fertilizer-calculation" }
+    ] }
+  ]
+}

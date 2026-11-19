@@ -1,0 +1,66 @@
+{
+  "section": "blog",
+  "slug": "ammonium-nitrate-fertilizer",
+  "sortOrder": 1600,
+  "lang": "en",
+  "category": "Fertilizer",
+  "title": "Ammonium Nitrate Fertilizer: What It Is and What to Use Instead",
+  "metaTitle": "Ammonium Nitrate Fertilizer: Uses and Alternatives",
+  "metaDescription": "Ammonium nitrate fertilizer is a fast 34 0 0 nitrogen feed, but it suits flooded rice poorly and its sale is controlled. See how it compares with urea.",
+  "focusKeyword": "ammonium nitrate fertilizer",
+  "keywords": ["ammonium nitrate fertilizer", "ammonia nitrate fertilizer", "34 0 0 fertilizer", "calcium nitrate", "nitrogen fertilizer"],
+  "excerpt": "Ammonium nitrate fertilizer is a nitrogen fertilizer with about 34 percent nitrogen, sold as 34 0 0. Half of its nitrogen is ammonium and half is nitrate, so it acts fast. Many people search for it as ammonia nitrate fertilizer, but the right name is ammonium nitrate. Here it is rarely sold to farmers, because the law controls it and because it works poorly in flooded rice. Urea and ammonium sulfate do the same job for less.",
+  "heroImage": { "src": "/images/site/guides/blog-ammonium-sulfate-21-0-0.webp", "alt": "Clear crystals of ammonium sulfate, a nitrogen fertilizer farmers here use in place of ammonium nitrate fertilizer", "credit": "Runcyclexcski, CC BY SA 4.0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "Ammonium nitrate is one of the most used nitrogen fertilizers in some countries, so it shows up often in foreign farming videos and books. That makes many Filipino farmers wonder whether they should look for it.\n\nThis guide explains what it is, how it works, why it is uncommon here, and which nitrogen fertilizer to buy instead for palay, corn and vegetables. For nitrogen basics, see our guide on [urea fertilizer](/blog/urea-fertilizer)." },
+    { "type": "heading", "level": 2, "text": "What ammonium nitrate fertilizer is" },
+    { "type": "text", "text": "Ammonium nitrate is a salt made from ammonia and nitric acid. As a fertilizer it comes as small white prills or granules with about 34 percent nitrogen and no phosphorus or potassium. So its grade is written 34 0 0.\n\nWhat sets it apart is its two forms of nitrogen. The **nitrate** half is ready for roots the moment it dissolves. The **ammonium** half sticks to soil particles and feeds the crop a little later. That gives a quick green up plus a short follow on supply." },
+    { "type": "heading", "level": 2, "text": "Why it is uncommon on Filipino farms" },
+    { "type": "list", "ordered": false, "items": [
+      "**The law controls it.** Ammonium nitrate can be misused to make explosives, so its import and sale are regulated. Most farm stores do not carry it.",
+      "**It suits flooded rice poorly.** In a flooded paddy, nitrate is lost quickly as gas, so much of the nitrogen never reaches the palay.",
+      "**It washes away fast.** Nitrate moves with water, so heavy rain carries it below the roots.",
+      "**It absorbs moisture.** In our humid weather it cakes and turns sticky in an open bag.",
+      "**Urea is cheaper per kilogram of nitrogen.** For most crops, urea does the job for less money."
+    ] },
+    { "type": "heading", "level": 2, "text": "Ammonium nitrate compared with other nitrogen fertilizers" },
+    { "type": "table", "caption": "Nitrogen fertilizers and where each fits", "rows": [
+      ["Fertilizer", "Grade", "Best for", "Watch out for"],
+      ["Ammonium nitrate", "34 0 0", "Upland crops abroad, quick green up", "Controlled sale, nitrate losses in flooded fields"],
+      ["Urea", "46 0 0", "Palay, corn and most crops", "Losses to the air if left on dry soil"],
+      ["Ammonium sulfate", "21 0 0 plus sulfur", "Rice and corn on sulfur poor or alkaline soil", "Lower nitrogen per bag, acidifies soil over time"],
+      ["Calcium nitrate", "15.5 0 0 plus calcium", "Vegetables, especially tomato and pepper, and drip feeding", "Costly per kilogram of nitrogen"],
+      ["Complete", "14 14 14", "A balanced basal feed", "Not a nitrogen top dressing"]
+    ] },
+    { "type": "text", "text": "For palay, [urea](/blog/urea-fertilizer) and [ammonium sulfate](/blog/ammonium-sulfate-21-0-0) are the usual choices, because their ammonium form holds in a flooded soil. For vegetables that need calcium, calcium nitrate gives fast nitrate nitrogen plus calcium, and many growers feed it through a [drip irrigation system](/blog/drip-irrigation-system)." },
+    { "type": "heading", "level": 2, "text": "How to get the same result with urea" },
+    { "type": "text", "text": "The main reason people want ammonium nitrate is its fast action. You can get close with urea if you apply it well." },
+    { "type": "steps", "items": [
+      { "title": "Split the dose", "text": "Give nitrogen in two or three parts at the stages when the crop uses most, instead of one big dose. See [top dressing fertilizer](/blog/top-dressing-fertilizer)." },
+      { "title": "Work it into moist soil", "text": "In rice, broadcast urea on a drained or shallow paddy, then let the water back in after a day or two. In corn, cover it with soil." },
+      { "title": "Avoid heavy rain", "text": "Check the forecast before spreading so a downpour does not wash it into the canal." },
+      { "title": "Use the leaf color", "text": "A leaf color chart tells you whether the crop needs nitrogen now. See [leaf color chart for rice](/blog/leaf-color-chart-rice)." }
+    ] },
+    { "type": "callout", "tone": "warn", "title": "If you ever handle ammonium nitrate", "text": "Store it dry and cool, away from fuel, oil, heat and flames, and keep it in its original labeled bag. Never mix it with other chemicals at home. Follow the label and the rules of the seller." },
+    { "type": "heading", "level": 2, "text": "What the nitrogen numbers mean" },
+    { "type": "text", "text": "The first number on any sack is the percent of nitrogen. So a 50 kilogram bag of 34 0 0 holds 17 kilograms of nitrogen, while a bag of urea holds 23 kilograms. To compare prices fairly, divide the bag price by the kilograms of nitrogen inside. Our guide on [fertilizer calculation](/blog/fertilizer-calculation) shows how, and [fertilizer price in the Philippines](/blog/fertilizer-price-philippines) lists the current ranges." },
+    { "type": "heading", "level": 2, "text": "Plan your nitrogen with anee.io" },
+    { "type": "text", "text": "Whatever nitrogen fertilizer you use, timing decides how much reaches the crop. In anee.io, the [NPK Plus calculator](/features/npk-plus-calculator) works out how many bags of urea, ammonium sulfate or complete each lot needs. The cropping calendar dates every top dressing, and the [Range Effect calendar](/features/residual-effect-calendar) shows day by day how long each application keeps feeding the crop. NPK Plus, Range Effect and Anee come with Libre plus Anee at PHP 100 a month." },
+    { "type": "cta", "title": "Turn your nitrogen plan into bags and dates", "text": "Let the NPK Plus calculator work out the bags, and the calendar put each top dressing on its day.", "label": "See the NPK Plus calculator", "url": "/features/npk-plus-calculator" },
+    { "type": "heading", "level": 2, "text": "Questions about ammonium nitrate fertilizer" },
+    { "type": "faq", "items": [
+      { "q": "What is ammonium nitrate fertilizer?", "a": "A nitrogen fertilizer with about 34 percent nitrogen, half as ammonium and half as nitrate. Its grade is 34 0 0." },
+      { "q": "Is ammonia nitrate the same as ammonium nitrate?", "a": "Yes. Ammonia nitrate is a common misspelling. The correct name is ammonium nitrate." },
+      { "q": "Can I buy ammonium nitrate in the Philippines?", "a": "It is rarely sold to farmers, because its import and sale are controlled by law. Urea and ammonium sulfate are the usual nitrogen fertilizers here." },
+      { "q": "Is ammonium nitrate good for rice?", "a": "Not for flooded rice. Its nitrate half is lost quickly in a flooded paddy. Urea and ammonium sulfate work better." },
+      { "q": "What can I use instead of ammonium nitrate?", "a": "Urea for most crops, ammonium sulfate where sulfur is short, and calcium nitrate for vegetables that need calcium." }
+    ] },
+    { "type": "links", "title": "More fertilizer guides", "items": [
+      { "label": "Urea fertilizer", "url": "/blog/urea-fertilizer" },
+      { "label": "Ammonium sulfate 21 0 0", "url": "/blog/ammonium-sulfate-21-0-0" },
+      { "label": "Inorganic fertilizer examples", "url": "/blog/inorganic-fertilizer-examples" },
+      { "label": "Top dressing fertilizer", "url": "/blog/top-dressing-fertilizer" },
+      { "label": "Fertilizer for rice", "url": "/blog/fertilizer-for-rice" }
+    ] }
+  ]
+}

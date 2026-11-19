@@ -1,0 +1,71 @@
+{
+  "section": "blog",
+  "slug": "eggshell-as-fertilizer",
+  "sortOrder": 1560,
+  "lang": "en",
+  "category": "Organic farming",
+  "title": "Eggshell as Fertilizer: What It Does and How to Use It",
+  "metaTitle": "Eggshell as Fertilizer: Does It Really Work?",
+  "metaDescription": "Eggshell as fertilizer adds calcium, not nitrogen. Learn what crushed eggshells do for soil and plants, how to prepare them, and what they cannot fix.",
+  "focusKeyword": "eggshell as fertilizer",
+  "keywords": ["eggshell as fertilizer", "eggshells for plants", "eggshell powder", "calcium for tomatoes", "blossom end rot"],
+  "excerpt": "Using eggshell as fertilizer works, but only for one thing: calcium. Eggshells are almost pure calcium carbonate, the same material as garden lime. Crushed fine and mixed into the soil, they release calcium slowly and can raise the pH of acid soil a little. They add almost no nitrogen, phosphorus or potassium, so they cannot replace compost or a real fertilizer.",
+  "heroImage": { "src": "/images/site/how-to-plant/tomato.webp", "alt": "Tomatoes ripening on the vine, a crop that gardeners often feed with eggshell as fertilizer for calcium", "credit": "Naposia, CC BY SA 3.0, via Wikimedia Commons" },
+  "blocks": [
+    { "type": "text", "text": "Every kitchen throws away eggshells, so it is natural to ask whether they can feed the garden. The honest answer is yes, a little, in a slow and narrow way.\n\nThis guide explains what eggshells contain, how to prepare them, which plants gain, and the problems eggshells will not solve. For stronger organic choices, see our list of [organic fertilizer examples](/blog/organic-fertilizer-examples)." },
+    { "type": "heading", "level": 2, "text": "What is in eggshell as fertilizer" },
+    { "type": "text", "text": "An eggshell is mostly calcium carbonate, about nine tenths or more of its weight. The rest is a thin protein membrane and very small amounts of magnesium, phosphorus and other minerals. So, as a fertilizer, an eggshell is really a slow form of lime.\n\nCalcium matters to plants. It builds strong cell walls, helps roots grow, and keeps fruit firm. But most soils already hold some calcium, and acid soils are the ones most likely to lack it." },
+    { "type": "table", "caption": "Eggshells compared with common soil amendments", "rows": [
+      ["Material", "Main nutrient", "Speed"],
+      ["Crushed eggshells", "Calcium", "Very slow if coarse, slow if powdered"],
+      ["Agricultural lime", "Calcium", "Slow, for raising soil pH"],
+      ["Dolomite", "Calcium and magnesium", "Slow, for acid soils short of magnesium"],
+      ["Compost", "A little of everything", "Slow, builds the soil"],
+      ["Complete 14 14 14", "Nitrogen, phosphorus, potassium", "Fast"]
+    ] },
+    { "type": "heading", "level": 2, "text": "How to prepare eggshells for plants" },
+    { "type": "steps", "items": [
+      { "title": "Rinse them", "text": "Wash out the egg white so the shells do not smell or draw ants and rats." },
+      { "title": "Dry them", "text": "Sun dry them for a day or two. Some people also bake them briefly, which makes them easier to crush." },
+      { "title": "Grind them fine", "text": "This is the step that matters most. Big pieces sit in the soil for years. A fine powder, made in a mortar or an old blender, releases calcium much faster." },
+      { "title": "Mix into the soil or compost", "text": "Work the powder into the planting hole or bed, or add the shells to your compost pile, where they break down along with everything else." }
+    ] },
+    { "type": "callout", "tone": "info", "title": "Eggshell water gives very little", "text": "Soaking shells in water and pouring it on plants is popular online, but calcium carbonate barely dissolves in plain water. The plant gets very little from it. Powder in the soil does more." },
+    { "type": "heading", "level": 2, "text": "Which plants gain from eggshell as fertilizer" },
+    { "type": "list", "ordered": false, "items": [
+      "**Tomato, pepper and eggplant:** fruiting crops that need steady calcium.",
+      "**Cabbage, pechay and other leafy greens:** they use calcium for firm, healthy leaves.",
+      "**Plants in acid soil:** where calcium is short and a little lime helps.",
+      "**Potted plants:** a pinch of powder in the potting mix at planting."
+    ] },
+    { "type": "text", "text": "Skip eggshells on soils that are already alkaline, or for plants that like acid soil, because adding lime there pushes the pH the wrong way. If you are not sure of your soil, a soil test from your Municipal Agriculture Office tells you. Our guide on [acidic soil preparation](/land-preparation/acidic-soil-preparation) explains liming on a field scale." },
+    { "type": "heading", "level": 2, "text": "Eggshells and blossom end rot in tomatoes" },
+    { "type": "text", "text": "Blossom end rot is the dark, sunken spot at the bottom of a tomato fruit. It comes from too little calcium reaching the fruit. So many gardeners reach for eggshells.\n\nBut the cause is usually water, not a lack of calcium in the soil. When watering swings between dry and soaked, the plant cannot move calcium into the fruit fast enough, even in soil that has plenty. Shells added after the problem appears also break down too slowly to help that season. Even watering and mulch fix blossom end rot faster. Our guide on [fertilizer for tomatoes](/blog/fertilizer-for-tomatoes) covers the full feeding plan." },
+    { "type": "heading", "level": 2, "text": "What eggshells cannot do" },
+    { "type": "list", "ordered": false, "items": [
+      "**They do not feed leaves.** A pale, yellow plant needs nitrogen, which eggshells do not have.",
+      "**They do not replace fertilizer.** For real growth you still need compost, manure or a fertilizer with N, P and K.",
+      "**They are a weak pest barrier.** Crushed shells around plants slow some snails and slugs a little, but do not count on them.",
+      "**They work slowly.** Think of them as a soil builder over many months, not a quick fix."
+    ] },
+    { "type": "text", "text": "For richer organic feeding, compare [chicken dung as fertilizer](/blog/chicken-dung-as-fertilizer) and see our list of [organic fertilizer benefits](/blog/organic-fertilizer-benefits)." },
+    { "type": "heading", "level": 2, "text": "Get the real answer for your plants" },
+    { "type": "text", "text": "A sick plant can look short of calcium when the real cause is water, a pest or another nutrient. In anee.io, send a photo to Anee, the smart farm technician, and ask in Tagalog or English what is wrong. Anee reads the photo along with your lot's crop, stage and weather before answering. The [cropping calendar](/features/cropping-calendar) then dates the fix and every feeding after it." },
+    { "type": "cta", "title": "Ask Anee about your plant", "text": "Take a photo of the leaf or fruit and get an answer in Tagalog or English, with what to do next.", "label": "Meet Anee", "url": "/features/ai-agricultural-technician" },
+    { "type": "heading", "level": 2, "text": "Questions about eggshell as fertilizer" },
+    { "type": "faq", "items": [
+      { "q": "Is eggshell a good fertilizer?", "a": "It is a slow source of calcium, not a complete fertilizer. It adds almost no nitrogen, phosphorus or potassium." },
+      { "q": "How do I use eggshells as fertilizer?", "a": "Rinse and dry them, grind them into a fine powder, and mix the powder into the soil or the planting hole, or add them to compost." },
+      { "q": "Do eggshells stop blossom end rot?", "a": "Not quickly. Blossom end rot usually comes from uneven watering, and shells break down too slowly to fix it in the same season." },
+      { "q": "Which plants like eggshells?", "a": "Tomato, pepper, eggplant and leafy greens, especially in acid soil. Avoid them in alkaline soil or for plants that like acid soil." },
+      { "q": "How long do eggshells take to break down?", "a": "Coarse pieces can last years. A fine powder releases calcium over months, faster in acid soil." }
+    ] },
+    { "type": "links", "title": "More organic farming guides", "items": [
+      { "label": "Chicken dung as fertilizer", "url": "/blog/chicken-dung-as-fertilizer" },
+      { "label": "Organic fertilizer examples", "url": "/blog/organic-fertilizer-examples" },
+      { "label": "Fertilizer for tomatoes", "url": "/blog/fertilizer-for-tomatoes" },
+      { "label": "Organic fertilizer benefits", "url": "/blog/organic-fertilizer-benefits" },
+      { "label": "Acidic soil preparation", "url": "/land-preparation/acidic-soil-preparation" }
+    ] }
+  ]
+}
