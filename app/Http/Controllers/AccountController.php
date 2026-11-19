@@ -127,6 +127,8 @@ class AccountController extends Controller
             'headline' => ['nullable', 'string', 'max:120'],
             'bio' => ['nullable', 'string', 'max:500'],
             'profession' => ['nullable', 'string', 'max:60'],
+            // Farmer, student or other (2026-11-19): the newsletter's segments read it.
+            'occupation' => ['nullable', 'in:' . implode(',', array_keys(\App\Models\User::OCCUPATIONS))],
             'yearsFarming' => ['nullable', 'integer', 'min:0', 'max:120'],
             'farmSize' => ['nullable', 'string', 'max:60'],
             'cropsGrown' => ['nullable', 'string', 'max:255'],
@@ -155,7 +157,15 @@ class AccountController extends Controller
             $data['coverPos'] = max(0, min(100, (int) $request->input('coverPos')));
         }
 
+        // Left unanswered, the answer they gave stays.
+        if (empty($data['occupation'])) {
+            unset($data['occupation']);
+        }
+        $whoBefore = $request->user()->occupation;
         $request->user()->update($data);
+        if (isset($data['occupation']) && $data['occupation'] !== $whoBefore) {
+            \App\Support\Newsletter\Audience::touchUser((int) $request->user()->id);
+        }
 
         return redirect()->route('account.index')->with('success', 'Profile updated.');
     }

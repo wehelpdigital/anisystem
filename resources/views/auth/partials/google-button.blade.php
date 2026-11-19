@@ -2,7 +2,7 @@
      OAuth client is configured; without it the email form stands alone.
      Expects nothing. --}}
 @if (filled(config('services.google.client_id')))
-    <a href="{{ route('google.redirect') }}"
+    <a href="{{ route('google.redirect') }}" data-google-go
        class="w-full inline-flex items-center justify-center gap-3 rounded-full border border-gray-300 bg-white px-5 py-3 text-sm font-bold text-gray-700 hover:bg-gray-50 transition">
         <svg class="w-5 h-5" viewBox="0 0 48 48" aria-hidden="true">
             <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>

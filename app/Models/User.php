@@ -49,6 +49,7 @@ class User extends Authenticatable
         'bio',
         'headline',
         'profession',
+        'occupation',
         'yearsFarming',
         'farmSize',
         'cropsGrown',
@@ -179,6 +180,12 @@ class User extends Authenticatable
      * panel's lists leave them out.
      */
     public const SYSTEM_EMAILS = ['ai-technician@anisenso.system', 'technician@anee.io'];
+
+    /**
+     * Who the member is, asked at signup (2026-11-19, the owner: "a farmer, student, others ... so that we can
+     * segment later on"). The key is what is saved and what Acumbamail's `occupation` field holds.
+     */
+    public const OCCUPATIONS = ['farmer' => 'Farmer', 'student' => 'Student', 'other' => 'Other'];
 
     public function isSuperAdmin(): bool
     {

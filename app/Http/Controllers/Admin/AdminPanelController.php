@@ -225,6 +225,8 @@ class AdminPanelController extends Controller
             'tier' => $u->planTier(),
             // Signed up, never tapped the confirmation link: the registration is not finished.
             'unfinished' => $u->status === 'pending',
+            // Farmer, student or other, from the signup (2026-11-19).
+            'occupation' => User::OCCUPATIONS[(string) $u->occupation] ?? null,
         ];
     }
 

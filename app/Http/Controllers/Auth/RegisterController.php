@@ -65,6 +65,10 @@ class RegisterController extends Controller
             ->first();
 
         if ($pending) {
+            // Their answer to "which best describes you" may have changed since the first try.
+            if (array_key_exists((string) $request->input('occupation'), User::OCCUPATIONS)) {
+                $pending->forceFill(['occupation' => (string) $request->input('occupation')])->saveQuietly();
+            }
             $this->sendVerification($pending);
             WelcomeController::keep((int) $pending->id, $request);
             $request->session()->put('signup.email', $pending->email);
@@ -95,8 +99,12 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8'],
             // The End User License Agreement (2026-10-28), ticked.
             'eula' => ['accepted'],
+            // Who they are (2026-11-19, the owner): farmer, student or other, for the newsletter's segments.
+            'occupation' => ['required', 'in:' . implode(',', array_keys(User::OCCUPATIONS))],
         ], [
             'eula.accepted' => 'Please read and tick the agreement to create your account.',
+            'occupation.required' => 'Please choose the one that fits you best.',
+            'occupation.in' => 'Please choose the one that fits you best.',
             'phone.regex' => $phoneRule['error'],
             'phone.required' => 'Please enter your mobile number.',
             'firstName.required' => 'Please enter your first name.',
@@ -114,6 +122,7 @@ class RegisterController extends Controller
             'country' => $country,
             'email' => $data['email'],
             'password' => $data['password'],
+            'occupation' => $data['occupation'],
             'status' => 'pending',
             'deleteStatus' => 1,
         ]);
@@ -243,9 +252,36 @@ class RegisterController extends Controller
         if ($fresh && \App\Support\ContentGate::waiting()) {
             return redirect()->route('signup.welcome');
         }
+        // An account that asked for its link from a members' guide (verify.mine): straight back to that guide.
+        if (! $fresh && ($w = \App\Support\ContentGate::waiting())) {
+            $request->session()->forget('gate.read');
+
+            return redirect()->to($w['url'])->with('success', $done);
+        }
 
         return redirect()->route('app.dashboard')
             ->with('success', $fresh ? $done . ' You are on the free Libre plan.' : $done);
+    }
+
+    /**
+     * A signed in account whose email is not confirmed asks for its link from a members' guide (2026-11-19: the
+     * guides open to a confirmed email only). The guide is kept, so the link brings them back to it.
+     */
+    public function sendMine(Request $request)
+    {
+        $user = $request->user();
+        \App\Support\ContentGate::remember((string) $request->input('read'));
+        if (! empty($user->emailVerifiedAt)) {
+            return back()->with('success', 'Your email is confirmed already.');
+        }
+        if (! \App\Support\EmailConfirm::reachable($user)) {
+            return back()->with('gate.sent', 'This address cannot receive our mail. Tell us on the contact page and we fix it.');
+        }
+        $sent = \App\Support\EmailConfirm::send($user);
+
+        return back()->with('gate.sent', $sent
+            ? 'Sent. Look in your inbox for a mail from anee.io and tap the link.'
+            : 'A link went out a minute ago. Look in your inbox, or ask again in a minute.');
     }
 
     private function sendVerification(User $user): void

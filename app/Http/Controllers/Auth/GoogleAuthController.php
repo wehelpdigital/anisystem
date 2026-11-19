@@ -31,6 +31,10 @@ class GoogleAuthController extends Controller
 
         $state = Str::random(40);
         $request->session()->put('google.state', $state);
+        // The signup form's "which best describes you", carried on the button (2026-11-19).
+        if (array_key_exists((string) $request->query('occupation'), User::OCCUPATIONS)) {
+            $request->session()->put('signup.occupation', (string) $request->query('occupation'));
+        }
 
         return redirect('https://accounts.google.com/o/oauth2/v2/auth?'.http_build_query([
             'client_id' => config('services.google.client_id'),
@@ -114,6 +118,7 @@ class GoogleAuthController extends Controller
                 // Nobody knows this password, and that is the point — the
                 // account opens with Google (or a password reset later).
                 'password' => Str::random(40),
+                'occupation' => $request->session()->pull('signup.occupation'),
                 'status' => 'pending',
                 'deleteStatus' => 1,
             ]);

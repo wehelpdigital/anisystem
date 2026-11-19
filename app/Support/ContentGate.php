@@ -56,13 +56,31 @@ class ContentGate
     }
 
     /**
+     * Who the members' guides open for: signed in AND the email confirmed (2026-11-19, the owner: "gated contents
+     * should not be accessible if registration email is not verified"). A super admin always. Everyone else signed in
+     * with an unconfirmed address (a crew login, an old account) meets the gate, asked to confirm (unconfirmed()).
+     */
+    public static function member(): bool
+    {
+        $u = Auth::user();
+
+        return $u !== null && $u->status === 'active' && (! empty($u->emailVerifiedAt) || $u->isSuperAdmin());
+    }
+
+    /** Signed in, but the email is not confirmed yet: the gate asks for the link, not for a signup. */
+    public static function unconfirmed(): bool
+    {
+        return Auth::check() && ! self::member();
+    }
+
+    /**
      * Whether this visitor meets the gate on a page of this section: every
      * guest, and a member who asked to see the page as a guest (?guest=1,
      * the link on the members' marker), so the owner can check it signed in.
      */
     public static function applies(?string $section): bool
     {
-        return self::gatedSection($section) && (! Auth::check() || self::previewing() || self::upgradeView($section));
+        return self::gatedSection($section) && (! self::member() || self::previewing() || self::upgradeView($section));
     }
 
     /** Whether the section's full pages come with Libre + Anee (not with a free account). */
@@ -74,13 +92,13 @@ class ContentGate
     /** Whether the signed in visitor's farm has Libre + Anee or above (the field helpers' plan). */
     public static function hasPlus(): bool
     {
-        return Auth::check() && Tier::farmCan('fieldHelpers');
+        return self::member() && Tier::farmCan('fieldHelpers');
     }
 
     /** A signed in member whose plan does not open this section: invited to upgrade, not to register. */
     public static function upgradeView(?string $section): bool
     {
-        return Auth::check() && ! self::previewing() && self::needsPlus($section) && ! self::hasPlus();
+        return self::member() && ! self::previewing() && self::needsPlus($section) && ! self::hasPlus();
     }
 
     /** Whether this visitor meets the gate on a finder that is not a section front (a crop's variety finder). */
@@ -102,19 +120,19 @@ class ContentGate
      */
     public static function guestView(): bool
     {
-        return ! Auth::check() || self::previewing();
+        return ! self::member() || self::previewing();
     }
 
     /** A signed in member looking at the page as a guest would. */
     public static function previewing(): bool
     {
-        return Auth::check() && request()->query('guest') === '1';
+        return self::member() && request()->query('guest') === '1';
     }
 
     /** A signed in member reading a gated page in full: the marker shows where guests stop. */
     public static function opensFor(?string $section): bool
     {
-        return self::gatedSection($section) && Auth::check() && ! self::previewing() && ! self::upgradeView($section);
+        return self::gatedSection($section) && self::member() && ! self::previewing() && ! self::upgradeView($section);
     }
 
     /**

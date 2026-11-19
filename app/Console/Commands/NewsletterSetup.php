@@ -12,7 +12,7 @@ use Illuminate\Console\Command;
 
 /**
  * The newsletter's one-off jobs (2026-10-17):
- *   --fields    add the "name" field to each of the eight lists
+ *   --fields    add the "name", "greet" and "occupation" fields to each of the eight lists (only the missing ones)
  *   --sync      put everyone on the lists they belong on now
  *   --pull      read every list's unsubscribes (ten reads a minute, so slow)
  *   --import    bring the Acumbamail sequence into the regular line (--dry to only look)
@@ -39,7 +39,8 @@ class NewsletterSetup extends Command
 
                     continue;
                 }
-                foreach (['name', 'greet'] as $field) {
+                // occupation (2026-11-19): farmer, student or other, from the signup, for segments.
+                foreach (['name', 'greet', 'occupation'] as $field) {
                     if (in_array($field, $have, true)) {
                         $this->line(str_pad($key, 10) . $field . ' is there already');
 

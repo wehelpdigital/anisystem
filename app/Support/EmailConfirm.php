@@ -29,17 +29,23 @@ final class EmailConfirm
         if (! $user || $user->status !== 'active' || ! empty($user->emailVerifiedAt) || $user->isSuperAdmin()) {
             return false;
         }
+        if (! self::reachable($user)) {
+            return false;
+        }
+
+        return ! self::crewLogin((int) $user->id);
+    }
+
+    /** Whether a link mailed to this account could reach a person: not a house account, not a test or demo address. */
+    public static function reachable(User $user): bool
+    {
         $email = mb_strtolower(trim((string) $user->email));
         if ($email === '' || in_array($email, User::SYSTEM_EMAILS, true)) {
             return false;
         }
         $domain = (string) substr((string) strrchr($email, '@'), 1);
 
-        if ($domain === '' || preg_match('/(^|\.)(test|invalid|local|localhost)$|^example\.(com|net|org)$/', $domain)) {
-            return false;
-        }
-
-        return ! self::crewLogin((int) $user->id);
+        return $domain !== '' && ! preg_match('/(^|\.)(test|invalid|local|localhost)$|^example\.(com|net|org)$/', $domain);
     }
 
     /** @var array<int, bool> */

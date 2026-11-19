@@ -584,8 +584,6 @@ Route::middleware(['guest', 'no-cache'])->group(function () {
         ->name('verify.status')->middleware('throttle:40,10');
     Route::post('/verify-resend', [App\Http\Controllers\Auth\RegisterController::class, 'resend'])
         ->name('verify.resend')->middleware('throttle:5,10');
-    Route::get('/verify-email/{id}/{hash}', [App\Http\Controllers\Auth\RegisterController::class, 'verify'])
-        ->name('verify.email')->middleware('signed');
 
     // "Continue with Google" — the buttons render only when configured.
     Route::get('/auth/google', [App\Http\Controllers\Auth\GoogleAuthController::class, 'redirect'])->name('google.redirect');
@@ -598,6 +596,14 @@ Route::middleware(['guest', 'no-cache'])->group(function () {
 });
 
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout')->middleware('auth');
+
+// The link a confirmation mail carries. Not a guest door since 2026-11-19: a signed in account whose email was never
+// confirmed (a crew login asked by a members' guide) taps it too, and it logs the person in either way.
+Route::get('/verify-email/{id}/{hash}', [App\Http\Controllers\Auth\RegisterController::class, 'verify'])
+    ->name('verify.email')->middleware(['signed', 'no-cache']);
+// A signed in account asks for its link from a members' guide (2026-11-19: the guides open to a confirmed email).
+Route::post('/verify-mine', [App\Http\Controllers\Auth\RegisterController::class, 'sendMine'])
+    ->name('verify.mine')->middleware(['auth', 'throttle:5,10']);
 
 /*
 |--------------------------------------------------------------------------

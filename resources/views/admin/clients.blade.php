@@ -193,6 +193,7 @@
                 ${c.role ? `<span class="ad-badge is-role">${esc(c.role)}</span>` : ''}
                 ${c.suspendedSays ? `<span class="ad-badge is-susp">community suspended · ${esc(c.suspendedSays)}</span>` : ''}
                 ${c.unfinished ? '<span class="ad-badge is-open">registration not complete · email not confirmed</span>' : ''}
+                ${c.occupation ? `<span class="badge badge-gray">${esc(c.occupation)}</span>` : ''}
                 <span class="badge badge-gray">${c.registered ? 'joined ' + esc(c.registered) : 'join date unknown'}</span>
                 <span class="badge badge-gray">${c.schedules} season${c.schedules === 1 ? '' : 's'}</span>
                 <a class="badge badge-gray" href="{{ route('admin.support') }}?client=${c.id}" title="Open this client's tickets">${c.tickets} ticket${c.tickets === 1 ? '' : 's'} ↗</a>

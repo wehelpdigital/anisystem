@@ -69,6 +69,22 @@
         .su-go .su-spin { display: none; width: 1.1rem; height: 1.1rem; border-radius: 999px; border: 2.5px solid rgb(26 26 26 / .25); border-top-color: #1a1a1a; animation: suSpin .8s linear infinite; }
         .su-go.is-busy .su-spin { display: inline-block; }
         @keyframes suSpin { to { transform: rotate(360deg); } }
+        /* "Which best describes you?" (2026-11-19): three big choices, one tap. */
+        .su-who { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; margin: 0; padding: 0; border: 0; }
+        .su-who-o { position: relative; display: flex; flex-direction: column; align-items: center; gap: .3rem; padding: .75rem .35rem .65rem;
+            border: 1.5px solid #d1d5db; border-radius: .95rem; background: #fff; cursor: pointer; text-align: center;
+            font-size: .86rem; font-weight: 800; color: #374151;
+            transition: border-color .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+        .su-who-o input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+        .su-who-i { font-size: 1.35rem; line-height: 1; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+        .su-who-o:hover { border-color: #9cbf7a; }
+        .su-who-o.is-on { border-color: #4a7c2a; background: #f3f8ec; color: #2d5016; box-shadow: 0 0 0 3px rgb(74 124 42 / .16); }
+        .su-who-o.is-on .su-who-i { transform: scale(1.12); }
+        .su-who-o:has(input:focus-visible) { outline: 2px solid #4a7c2a; outline-offset: 2px; }
+        .su-who-wrong .su-who-o { border-color: #f87171; }
+        html.dark .su-who-o { background: #111827; border-color: #4b5563; color: #e5e7eb; }
+        html.dark .su-who-o.is-on { background: #142010; border-color: #a8cc7e; color: #d9ebc4; box-shadow: 0 0 0 3px rgb(168 204 126 / .18); }
+        @media (prefers-reduced-motion: reduce) { .su-who-o, .su-who-i { transition: none; } .su-who-o.is-on .su-who-i { transform: none; } }
         @media (prefers-reduced-motion: reduce) { .su-sum, .su-read, .su-mean, .su-form .form-error { animation: none; } .su-go .su-spin { animation-duration: 2.4s; } }
     </style>
 @endpush
@@ -127,6 +143,25 @@
                 @if ($plan)
                     <input type="hidden" name="plan" value="{{ $plan }}">
                 @endif
+
+                {{-- Who they are (2026-11-19, the owner): saved with the account and on the newsletter lists, so the
+                     guides and news we send can fit a farmer, a student or anyone else. --}}
+                @php $suWho = old('occupation', is_string(request('occupation')) ? request('occupation') : ''); @endphp
+                <div data-field>
+                    <p class="form-label" id="whoLabel">Which best describes you?</p>
+                    <fieldset class="su-who @error('occupation') su-who-wrong @enderror" aria-labelledby="whoLabel" id="suWho">
+                        @foreach (['farmer' => '🌾', 'student' => '🎓', 'other' => '🙋'] as $k => $icon)
+                            <label class="su-who-o {{ $suWho === $k ? 'is-on' : '' }}">
+                                <input type="radio" name="occupation" value="{{ $k }}" id="who_{{ $k }}" @checked($suWho === $k) required
+                                    @if ($loop->first) data-need="Please choose the one that fits you best." @endif
+                                    @error('occupation') aria-invalid="true" aria-describedby="whoErr" @enderror>
+                                <span class="su-who-i" aria-hidden="true">{{ $icon }}</span>
+                                <span>{{ \App\Models\User::OCCUPATIONS[$k] }}</span>
+                            </label>
+                        @endforeach
+                    </fieldset>
+                    @error('occupation') <p class="form-error" id="whoErr" data-server-err>{{ $message }}</p> @enderror
+                </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div data-field>
@@ -262,6 +297,7 @@
         // ---- the checks, as they type (the server still has the last word) ----
         const wrong = (f) => {
             if (f.type === 'checkbox') return f.checked ? '' : f.dataset.need;
+            if (f.type === 'radio') return form.querySelector('[name="' + f.name + '"]:checked') ? '' : f.dataset.need;
             const v = f.value.trim();
             if (!v) return f.dataset.need || '';
             if (f === email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return 'That email address does not look right. Please check it.';
@@ -296,11 +332,27 @@
         const fields = [...form.querySelectorAll('[data-need]')];
         fields.forEach((f) => {
             // Judged when they leave the field, and cleared the moment it is right.
-            f.addEventListener('blur', () => { if (f === phone) tidy(); if (f.type !== 'checkbox' && (f.value.trim() || f.dataset.touched)) say(f, wrong(f)); f.dataset.touched = '1'; });
+            f.addEventListener('blur', () => { if (f === phone) tidy(); if (f.type !== 'checkbox' && f.type !== 'radio' && (f.value.trim() || f.dataset.touched)) say(f, wrong(f)); f.dataset.touched = '1'; });
             f.addEventListener(f.type === 'checkbox' ? 'change' : 'input', () => {
                 if (f.getAttribute('aria-invalid') === 'true') say(f, wrong(f));
             });
         });
+
+        // ---- "Which best describes you?": the chosen card lights, the error goes, Google carries the answer ----
+        const who = [...form.querySelectorAll('[name="occupation"]')];
+        const google = document.querySelector('[data-google-go]');
+        const paintWho = () => {
+            const on = who.find((r) => r.checked);
+            who.forEach((r) => r.closest('.su-who-o')?.classList.toggle('is-on', r === on));
+            if (on) { $('suWho')?.classList.remove('su-who-wrong'); if (who[0].getAttribute('aria-invalid') === 'true') say(who[0], ''); }
+            if (google) {
+                const u = new URL(google.href, location.href);
+                on ? u.searchParams.set('occupation', on.value) : u.searchParams.delete('occupation');
+                google.href = u.toString();
+            }
+        };
+        who.forEach((r) => r.addEventListener('change', paintWho));
+        paintWho();
 
         // ---- the password counts down to eight ----
         const count = $('pwCount'), countText = $('pwCountText');
@@ -363,6 +415,7 @@
             if (sent) { e.preventDefault(); return; }
             let first = null;
             fields.forEach((f) => { const m = wrong(f); say(f, m); if (m && !first) first = f; });
+            $('suWho')?.classList.toggle('su-who-wrong', !who.some((r) => r.checked));
             if (first) {
                 e.preventDefault();
                 const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;

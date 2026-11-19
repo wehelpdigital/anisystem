@@ -170,6 +170,20 @@
                     @error('bio') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
 
+                {{-- Who they are, asked at signup (2026-11-19): farmer, student or other. --}}
+                @php $acWho = old('occupation', $user->occupation); @endphp
+                <div>
+                    <label for="occupation" class="form-label">Which best describes you?</label>
+                    <select id="occupation" name="occupation" class="form-select">
+                        @unless ($acWho)<option value="">Choose one…</option>@endunless
+                        @foreach (\App\Models\User::OCCUPATIONS as $k => $label)
+                            <option value="{{ $k }}" @selected($acWho === $k)>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                    <p class="form-hint">So the guides and news we send you fit you.</p>
+                    @error('occupation') <p class="form-error">{{ $message }}</p> @enderror
+                </div>
+
                 {{-- Farming profile — surfaced on the community profile so co-farmers
                      can see each other's experience and what they grow. --}}
                 <div class="pt-2">

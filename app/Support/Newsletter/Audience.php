@@ -72,10 +72,11 @@ final class Audience
         $now = Carbon::now('Asia/Manila');
         $out = [];
 
+        $who = self::occupationKept();
         $users = DB::table('anisystem_users')
             ->where('deleteStatus', 1)->where('status', 'active')
             ->when($only !== null, fn ($q) => $q->whereIn(DB::raw('LOWER(email)'), $only ?: ['-']))
-            ->get(['id', 'email', 'firstName', 'lastName', 'adminUserId', 'panelAdmin']);
+            ->get(array_merge(['id', 'email', 'firstName', 'lastName', 'adminUserId', 'panelAdmin'], $who ? ['occupation'] : []));
         $ids = $users->pluck('id')->all();
 
         // The plan in force, per member, read in one go (User::activeSubscription's rules).
@@ -103,7 +104,8 @@ final class Audience
             if (isset($credits[$u->id])) {
                 $cells[] = Seg::CREDITS;
             }
-            $out[$email] = ['name' => trim($u->firstName . ' ' . $u->lastName), 'userId' => (int) $u->id, 'cells' => $cells];
+            $out[$email] = ['name' => trim($u->firstName . ' ' . $u->lastName), 'userId' => (int) $u->id, 'cells' => $cells,
+                'occupation' => array_key_exists((string) ($u->occupation ?? ''), User::OCCUPATIONS) ? (string) $u->occupation : ''];
         }
 
         // Visitors who left an email on Try and Ask Anee, and anyone a lead
@@ -125,7 +127,7 @@ final class Audience
             if (isset($out[$email]) || self::skip($email)) {
                 continue;
             }
-            $out[$email] = ['name' => $name, 'userId' => null, 'cells' => [Seg::ALL, Seg::NONUSERS]];
+            $out[$email] = ['name' => $name, 'userId' => null, 'cells' => [Seg::ALL, Seg::NONUSERS], 'occupation' => ''];
         }
 
         return $out;
@@ -229,10 +231,10 @@ final class Audience
                 }
                 $rows = [];
                 foreach ($chunk as $email => $name) {
-                    $rows[] = self::fieldsFor($email, $name);
+                    $rows[] = self::fieldsFor($email, $name, $want[$email]['occupation'] ?? '');
                 }
                 $res = count($rows) === 1
-                    ? ($am->listAdd($listId, $rows[0]['email'], $rows[0]['name'], $rows[0]['greet']) ? [$rows[0]['email'] => ''] : null)
+                    ? ($am->listAdd($listId, $rows[0]['email'], $rows[0]['name'], $rows[0]['greet'], $rows[0]['occupation'] ?? '') ? [$rows[0]['email'] => ''] : null)
                     : $am->listBatchAdd($listId, $rows);
                 if ($res === null) {
                     $why = $am->lastError() ?: 'Acumbamail refused.';
@@ -255,6 +257,40 @@ final class Audience
                 }
             }
         }
+        // Who they are, given or changed (2026-11-19): written onto the lists the address was on already (an add above
+        // carried it to the new ones). The mirror keeps what Acumbamail was last given, so this runs once per change.
+        $whoSent = [];
+        if (self::occupationKept()) {
+            foreach ($want as $email => $w) {
+                $row = $have[$email] ?? null;
+                $o = (string) ($w['occupation'] ?? '');
+                if ($o === '' || ! $row || (int) $row->unsubscribed === 1 || (string) ($row->occupation ?? '') === $o) {
+                    continue;
+                }
+                $held = array_values(array_intersect(
+                    array_values(array_filter((array) json_decode((string) $row->cells, true), 'is_string')),
+                    $w['cells']
+                ));
+                $ok = true;
+                foreach ($held as $cell) {
+                    $listId = (int) ($lists[$cell] ?? 0);
+                    if ($listId <= 0) {
+                        continue;
+                    }
+                    if (microtime(true) - $started > $budgetSeconds) {
+                        $stats['done'] = false;
+                        $ok = false;
+                        break 2;
+                    }
+                    $f = self::fieldsFor($email, (string) $w['name'], $o);
+                    $ok = $am->listAdd($listId, $email, $f['name'], $f['greet'], $o) && $ok;
+                }
+                if ($ok) {
+                    $whoSent[$email] = $o;
+                }
+            }
+        }
+
         foreach ($removes as $cell => $emails) {
             $listId = (int) ($lists[$cell] ?? 0);
             foreach ($emails as $email) {
@@ -293,9 +329,15 @@ final class Audience
                 $fields['name'] = mb_substr($w['name'], 0, 190) ?: ($row->name ?? null);
                 $fields['userId'] = $w['userId'];
             }
+            // What Acumbamail holds for who they are: given with an add now, or written onto the old lists above.
+            $whoNow = $whoSent[$email] ?? (! $row && ! empty($gained[$email]) && ($w['occupation'] ?? '') !== '' ? $w['occupation'] : null);
+            if ($whoNow !== null) {
+                $fields['occupation'] = $whoNow;
+            }
             if ($row) {
                 $same = $row->cells === $fields['cells'] && (string) $row->error === (string) $fields['error']
-                    && (! $w || ((string) $row->name === (string) $fields['name'] && (int) $row->userId === (int) $w['userId']));
+                    && (! $w || ((string) $row->name === (string) $fields['name'] && (int) $row->userId === (int) $w['userId']))
+                    && $whoNow === null;
                 if ($same && empty($gained[$email]) && empty($lost[$email])) {
                     continue;
                 }
@@ -432,12 +474,27 @@ final class Audience
         return $out;
     }
 
-    /** A subscriber's list fields: *|NAME|* the first name, *|GREET|* the same or "kaibigan" (MergeTags). */
-    public static function fieldsFor(string $email, string $name): array
+    /**
+     * A subscriber's list fields: *|NAME|* the first name, *|GREET|* the same or "kaibigan" (MergeTags), and
+     * *|OCCUPATION|* farmer, student or other when the member said (2026-11-19, for segments).
+     */
+    public static function fieldsFor(string $email, string $name, string $occupation = ''): array
     {
         $first = self::firstName($name);
+        $row = ['email' => $email, 'name' => $first, 'greet' => $first !== '' ? $first : MergeTags::GREET_FALLBACK];
+        if ($occupation !== '') {
+            $row['occupation'] = $occupation;
+        }
 
-        return ['email' => $email, 'name' => $first, 'greet' => $first !== '' ? $first : MergeTags::GREET_FALLBACK];
+        return $row;
+    }
+
+    /** Whether the occupation columns are there (the migration of 2026-11-19 ran), asked once a run. */
+    private static function occupationKept(): bool
+    {
+        static $kept = null;
+
+        return $kept ??= Schema::hasColumn('anisystem_users', 'occupation') && Schema::hasColumn('as_nl_audience', 'occupation');
     }
 
     /**
@@ -467,7 +524,7 @@ final class Audience
             }
             $rows = [];
             foreach (DB::table('as_nl_audience')->where('unsubscribed', 0)->where('cells', 'like', '%"' . $cell . '"%')->get(['email', 'name']) as $r) {
-                $rows[] = self::fieldsFor($r->email, (string) ($want[$r->email]['name'] ?? $r->name));
+                $rows[] = self::fieldsFor($r->email, (string) ($want[$r->email]['name'] ?? $r->name), (string) ($want[$r->email]['occupation'] ?? ''));
             }
             if (! $rows) {
                 $out[$cell] = 'nobody on it';

@@ -16,8 +16,13 @@
     // The page's main gate answers to #spGateCard; a finder's own gate has none.
     $cardId = $cardId ?? 'spGateCard';
     $G = \App\Support\ContentGate::class;
-    // Signed in, not looking as a guest: the gate is only up because the plan does not open it.
-    $member = auth()->check() && ! $G::previewing();
+    // Signed in with a confirmed email, not looking as a guest: the gate is only up because the plan does not open it.
+    $member = $G::member() && ! $G::previewing();
+    // Signed in, the email never confirmed (2026-11-19): the gate asks for the link, the guide opens after it.
+    $unconfirmed = $G::unconfirmed();
+    if ($unconfirmed) {
+        $title = $tl ? 'Kumpirmahin ang email mo para mabasa ang buong pahina' : 'Confirm your email to read the whole page';
+    }
     $planItem = $plus ? \App\Support\ManualPay::item($G::PLUS_PLAN . ':month') : null;
     $planName = \App\Support\Tier::planName($G::PLUS_PLAN);
     $price = $planItem ? \App\Support\Region::money($planItem['price'], 0) : null;
@@ -30,16 +35,28 @@
             : 'Register for free on anee.io to read the whole page, and every guide on crops and land preparation.'));
 @endphp
 <div class="sp-gate-card" @if ($cardId) id="{{ $cardId }}" @endif data-gate-card
-     data-track-section="content_gate" data-track-view="content_gate_view" data-track-gate_for="{{ $member ? 'member' : 'guest' }}">
+     data-track-section="content_gate" data-track-view="content_gate_view" data-track-gate_for="{{ $member ? 'member' : ($unconfirmed ? 'unconfirmed' : 'guest') }}">
     @if ($G::previewing())
         <div class="sp-gate-as">{{ $tl ? 'Ganito ito nakikita ng bisita.' : 'This is what a guest sees.' }}
             <a href="{{ url($here) }}">{{ $tl ? 'Bumalik sa buong pahina ›' : 'Back to the full page ›' }}</a></div>
     @endif
     <div class="sp-gate-lock" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg></div>
     <h2>{{ $title }}</h2>
-    <p>{{ $lead }}</p>
+    @if ($unconfirmed)
+        <p>{{ $tl
+            ? 'Hindi pa tapos ang pag-register mo hangga\'t hindi mo napipindot ang link na ipapadala namin sa email mo. Pindutin ito at bubukas ang pahina.'
+            : 'Your registration is not complete until you tap the link we email you. Tap it and the page opens.' }}</p>
+    @else
+        <p>{{ $lead }}</p>
+    @endif
     <div class="sp-gate-acts">
-        @if ($plus && $member)
+        @if ($unconfirmed)
+            <form method="POST" action="{{ route('verify.mine') }}">
+                @csrf
+                <input type="hidden" name="read" value="{{ $here }}">
+                <button type="submit" class="btn btn-accent">{{ $tl ? 'Ipadala ang link' : 'Send me the link' }}</button>
+            </form>
+        @elseif ($plus && $member)
             <a href="{{ $planItem ? route('checkout', ['item' => $G::PLUS_PLAN . ':month']) : route('account.subscription') }}" class="btn btn-accent">{{ $tl ? 'Mag-upgrade sa ' . $planName : 'Upgrade to ' . $planName }}</a>
             <a href="{{ route('account.subscription') }}" class="btn btn-outline">{{ $tl ? 'Tingnan ang lahat ng plan' : 'See every plan' }}</a>
         {{-- nofollow (2026-11-18): every guide's card links its own /signup?read= and /login?read= address, and
@@ -52,7 +69,9 @@
             <a href="{{ route('login') }}?read={{ urlencode($here) }}" rel="nofollow" class="btn btn-outline">{{ $tl ? 'May account na ako' : 'I have an account' }}</a>
         @endif
     </div>
-    @if ($plus && $member)
+    @if ($unconfirmed)
+        <p class="sp-gate-free" aria-live="polite">{{ session('gate.sent') ?: (($tl ? 'Ipapadala sa ' : 'It goes to ') . auth()->user()->email . '.') }}</p>
+    @elseif ($plus && $member)
         <p class="sp-gate-free">{{ $tl
             ? ($price ? $price . ' kada buwan. ' : '') . 'Naroon pa rin lahat ng nasa Libre mo, dagdag ang mga field helper at si Anee.'
             : ($price ? $price . ' a month. ' : '') . 'It keeps everything you have on Libre and adds the field helpers and Anee.' }}</p>
