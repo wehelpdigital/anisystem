@@ -1846,9 +1846,9 @@
             <div class="hp-head reveal">
                 <p class="hp-kick">Farm guides</p>
                 <h2 class="hp-h2">Read Guides Made <em>for Filipino Farmers.</em></h2>
-                {{-- The pest, disease, weed, nutrient and variety guides open in full with
-                     Libre + Anee since 2026-10-17 (App\Support\ContentGate::PLUS_SECTIONS). --}}
-                <p class="hp-p">How to plant palay and mais, what to do about the rice bug and the rice black bug, and how much fertilizer a hectare needs. Written for Philippine farms. The crop guides and the farm news are free to read, and the guides to pests, diseases, weeds, nutrients and varieties open in full with {{ config('tiers.' . \App\Support\ContentGate::PLUS_PLAN . '.name') }}.</p>
+                {{-- Since 2026-11-19 every guide opens on a free account; what to spray or apply comes with
+                     Libre + Anee (App\Support\ContentGate::SOLUTION_SECTIONS). --}}
+                <p class="hp-p">How to plant palay and mais, what to do about the rice bug and the rice black bug, and how much fertilizer a hectare needs. Written for Philippine farms. The crop guides and the farm news are free to read, the guides to pests, diseases, weeds, nutrients and varieties open when you register for free, and what to spray or apply comes with {{ config('tiers.' . \App\Support\ContentGate::PLUS_PLAN . '.name') }}.</p>
             </div>
             {{-- What farmers search for most, each a link to the guide that answers it. --}}
             <div class="hp-topics reveal">

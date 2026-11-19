@@ -37,6 +37,13 @@
     $gateSplit = (! ($preview ?? false) && \App\Support\ContentGate::applies($page->section)) ? \App\Support\ContentGate::split($blocks) : null;
     // A member reads it all; a thin marker shows where a guest would stop.
     $memberSplit = ($gateSplit === null && ! ($preview ?? false) && \App\Support\ContentGate::opensFor($page->section)) ? \App\Support\ContentGate::split($blocks) : null;
+    // A free member on a pest, disease, weed or deficiency guide (2026-11-19): it reads in full but its solution part,
+    // which is blurred under the module's card (partials/content-solution).
+    $solutionRuns = ($gateSplit === null && ! ($preview ?? false) && \App\Support\ContentGate::solutionLocked($page->section)) ? \App\Support\ContentGate::solutionRuns($blocks) : null;
+    if ($solutionRuns !== null) {
+        $memberSplit = null;
+    }
+    $solutionOpen = $solutionRuns !== null ? \App\Support\ContentGate::openOf($solutionRuns) : null;
     // Behind the wall, a visitor's copy of the structured data carries only the open part: the answers and steps it
     // would otherwise spell out go to proven crawlers alone, with the page (App\Support\Crawler, 2026-11-16).
     $schemaOpen = $gateSplit !== null && ! \App\Support\Crawler::trusted();
@@ -122,7 +129,7 @@
     <meta name="twitter:description" content="{{ $page->metaDescription }}">
     @if ($heroSrc)<meta name="twitter:image" content="{{ $heroSrc }}">@endif
     {{-- One graph, every node tied to the others (App\Support\PageSchema). --}}
-    <script type="application/ld+json">{!! json_encode(\App\Support\PageSchema::graph($page, $schemaOpen ? $gateSplit['open'] : $blocks, $meta, $canonical, $schemaOpen ? $S::faq($gateSplit['open']) : $faq), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
+    <script type="application/ld+json">{!! json_encode(\App\Support\PageSchema::graph($page, $schemaOpen ? $gateSplit['open'] : ($solutionOpen ?? $blocks), $meta, $canonical, $schemaOpen ? $S::faq($gateSplit['open']) : ($solutionOpen !== null ? $S::faq($solutionOpen) : $faq)), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>
 @endpush
 
 @section('content')
@@ -186,6 +193,10 @@
                                 : (\App\Support\ContentGate::needsPlus($page->section)
                                     ? ($tl ? 'Mababasa lahat sa Libre + Anee' : 'Read it all with Libre + Anee')
                                     : ($tl ? 'Mag-register nang libre para mabasa lahat' : 'Register for free to read it all')) }}</a>
+                        @elseif ($solutionRuns !== null)
+                            <a href="#spGateCard" class="sp-meta-gate"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>{{ $tl
+                                ? 'Nasa Libre + Anee ang solusyon'
+                                : ($page->section === 'nutrient-deficiencies' ? 'What to apply comes with Libre + Anee' : 'What to spray comes with Libre + Anee') }}</a>
                         @elseif ($memberSplit !== null)
                             <span class="sp-meta-gate is-open"><svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.5-2"/></svg>{{ $tl ? 'Gabay ng miyembro, bukas sa iyo' : 'Members\' guide, open for you' }}</span>
                         @endif
@@ -248,6 +259,16 @@
                     @if ($gateSplit !== null)
                         @include('public.site.blocks', ['blocks' => $gateSplit['open']])
                         @include('public.site.partials.content-gate', ['gated' => $gateSplit['gated']])
+                    @elseif ($solutionRuns !== null)
+                        @php $solFirst = true; @endphp
+                        @foreach ($solutionRuns as $run)
+                            @if ($run['locked'])
+                                @include('public.site.partials.content-solution', ['locked' => $run['blocks'], 'first' => $solFirst])
+                                @php $solFirst = false; @endphp
+                            @else
+                                @include('public.site.blocks', ['blocks' => $run['blocks']])
+                            @endif
+                        @endforeach
                     @elseif ($memberSplit !== null)
                         @include('public.site.blocks', ['blocks' => $memberSplit['open']])
                         @include('public.site.partials.content-gate-member')

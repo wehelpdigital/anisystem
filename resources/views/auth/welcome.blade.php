@@ -55,7 +55,7 @@
                     <span class="wc-k block">Keep reading</span>
                     <span class="wc-t block">{{ $reading['title'] }}</span>
                     <span class="wc-s block">{{ $plusOnly
-                        ? 'Your free account opens the start of this guide. The whole guide comes with ' . \App\Support\Tier::planName(\App\Support\ContentGate::PLUS_PLAN) . '.'
+                        ? 'The whole guide is open to you now. How to stop it and what to spray come with ' . \App\Support\Tier::planName(\App\Support\ContentGate::PLUS_PLAN) . '.'
                         : 'The whole guide is open to you now.' }}</span>
                     <span class="wc-go">Back to the guide</span>
                 </span>

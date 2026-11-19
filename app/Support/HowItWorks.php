@@ -120,8 +120,8 @@ class HowItWorks
         'lcc' => [null, 'aiAnalyses', 'Anee reading your photos'],
         'capture' => [null, 'videoRecording', 'Quick Record video'],
         'documentation' => [null, 'docUploads', 'File uploads'],
-        // The pest, disease and weed guides open in full with the field helpers' plan (ContentGate, 2026-10-17).
-        'guides' => [null, 'fieldHelpers', 'The whole guide'],
+        // The guides open on a free account; how to stop each problem comes with the field helpers' plan (ContentGate, 2026-11-19).
+        'guides' => [null, 'fieldHelpers', 'How to stop each one'],
     ];
 
     /**

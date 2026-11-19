@@ -57,7 +57,8 @@
     // only once the email is confirmed (the account cannot log in before), so the page says so and what confirming
     // opens. A guide behind Libre + Anee opens only its start on the free plan: said, as the welcome page says it.
     $vnSection = $reading ? (explode('/', trim((string) parse_url($reading['url'], PHP_URL_PATH), '/'))[0] ?? '') : '';
-    $vnPlus = $reading && \App\Support\ContentGate::needsPlus($vnSection);
+    // A guide whose solution part comes with Libre + Anee (2026-11-19): the free account opens the rest of it.
+    $vnPlus = $reading && \App\Support\ContentGate::solutionSection($vnSection);
     $vnPlusName = \App\Support\Tier::planName(\App\Support\ContentGate::PLUS_PLAN);
 @endphp
 <div class="bg-gray-50 py-10 md:py-16 px-4 min-h-[70vh] flex items-start justify-center">
@@ -84,7 +85,7 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/></svg>
                     <span>
                         @if ($vnPlus)
-                            <b>{{ $reading['title'] }}</b> waits for you behind this link. Confirm your email and we take you straight back. Your free account opens the start of this guide, and the whole guide comes with {{ $vnPlusName }}.
+                            <b>{{ $reading['title'] }}</b> waits for you behind this link. Confirm your email and we take you straight back. Your free account opens the whole guide, and how to stop it and what to spray come with {{ $vnPlusName }}.
                         @else
                             The rest of <b>{{ $reading['title'] }}</b> opens the moment you confirm your email. Until then it stays locked, so tap the link now and we take you straight back to it.
                         @endif
@@ -94,7 +95,7 @@
                     <b>Confirming opens</b>
                     <ul>
                     @if ($vnPlus)
-                        <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>Your way back to {{ $reading['title'] }}, and every pest, disease, weed and variety guide in full when you add Anee</span></li>
+                        <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>The whole of {{ $reading['title'] }}, and every pest, disease, weed, deficiency and variety guide, with what to spray when you add Anee</span></li>
                     @else
                         <li><svg fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg><span>The whole of {{ $reading['title'] }}, and every land preparation, how to plant and nutrient guide</span></li>
                     @endif

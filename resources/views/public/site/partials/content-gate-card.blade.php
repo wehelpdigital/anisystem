@@ -28,8 +28,8 @@
     $price = $planItem ? \App\Support\Region::money($planItem['price'], 0) : null;
     $lead = $lead ?? ($plus
         ? ($tl
-            ? 'Bukas ang buong pahina sa ' . $planName . ', pati ang bawat gabay sa binhi, peste, sakit, damo at kakulangan sa sustansya, at ang mga field helper sa loob ng anee.io.'
-            : 'The whole page is open with ' . $planName . ', and so is every guide on varieties, pests, diseases, weeds and nutrient deficiencies, with the field helpers inside anee.io.')
+            ? 'Mag-register nang libre para mabasa ang buong pahina. Nasa ' . $planName . ' ang kung ano ang i-spray at ilalagay, at ang mga field helper sa loob ng anee.io.'
+            : 'Register for free to read the whole page. What to spray or apply, and the field helpers inside anee.io, come with ' . $planName . '.')
         : ($tl
             ? 'Mag-register nang libre sa anee.io para mabasa ang buong pahina, pati ang bawat gabay sa pananim at paghahanda ng lupa.'
             : 'Register for free on anee.io to read the whole page, and every guide on crops and land preparation.'));

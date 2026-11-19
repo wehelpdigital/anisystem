@@ -37,7 +37,8 @@ class ContentGate
     public const HUBS = ['pests', 'diseases', 'weeds', 'rice-varieties', 'nutrient-deficiencies'];
 
     /**
-     * The sections whose full pages come with Libre + Anee and up (2026-10-17, the owner:
+     * The field helpers' sections (2026-10-17). Since 2026-11-19 a free account reads their pages in full and only
+     * the solution part is locked (SOLUTION_SECTIONS); the note below is the old rule. (2026-10-17, the owner:
      * "registering does not give them those details because the feature is only available
      * for libre plus"): the guides behind the field helpers. A free account reads them as a
      * guest does and is invited to upgrade. Land preparation stays open on a free account.
@@ -46,6 +47,32 @@ class ContentGate
 
     /** The plan that opens them, and its checkout item. */
     public const PLUS_PLAN = 'libreAnee';
+
+    /**
+     * Since 2026-11-19 (the owner: "after registration (free), the public gated pages should be readable. however,
+     * the solution part is still gated and advertize the module of anee and say to upgrade to get it"): a free
+     * account reads every guide in full, and only the solution part of these sections (how to control it, the
+     * sprays, what to apply) stays locked, under a card naming the module inside anee.io that holds it. The modules
+     * themselves stay locked on the free plan (FieldPackGate). The variety guides have no solution part: they open
+     * in full on a free account.
+     */
+    public const SOLUTION_SECTIONS = ['pests', 'diseases', 'weeds', 'nutrient-deficiencies'];
+
+    /** The module inside anee.io for each section: its name and its field helper (route fh.page). */
+    public const MODULES = [
+        'pests' => ['Pest Finder', 'pests'],
+        'diseases' => ['Disease Finder', 'diseases'],
+        'weeds' => ['Weed Control Helper', 'weeds'],
+        'nutrient-deficiencies' => ['Nutrient Deficiency Finder', 'nutrients'],
+        'crop-varieties' => ['Variety Finder', 'varieties'],
+        'rice-varieties' => ['Variety Finder', 'varieties'],
+    ];
+
+    /** A heading that opens a solution part ("How to control", "Active ingredients", "What to apply", "Chemical control"). */
+    private const SOLUTION_HEADING = '/\b(control|controlling|controls|manage|management|managing|treat|treatment|treating|cure|spray|sprays|spraying|insecticides?|fungicides?|herbicides?|pesticides?|bactericides?|nematicides?|miticides?|molluscicides?|rodenticides?|active ingredients?|what to apply|what to do at each|get rid|when to act|how to fix|fertili[sz]ers? (sold here|that supply))\b/i';
+
+    /** A question in a page's FAQ that asks for the solution ("Which insecticide works", "What fertilizer fixes"). */
+    private const SOLUTION_QUESTION = '/\b(control|controlling|treat|treatment|cure|spray|spraying|insecticides?|fungicides?|herbicides?|pesticides?|chemicals?|active ingredients?|get rid|kill|fertili[sz]ers?\s+(fix|fixes|for|cures?|to use|works?)|what to apply|what (should|do) i (apply|use|put)|fix(es)?\s+\w+\s+deficiency|how much \w+ (should|do) i (use|apply)|best (source|fertili[sz]er|product|insecticide|fungicide|herbicide)s?)\b/i';
 
     /** The class the gated part wears; the structured data names it. */
     public const SELECTOR = '.sp-gated';
@@ -80,7 +107,7 @@ class ContentGate
      */
     public static function applies(?string $section): bool
     {
-        return self::gatedSection($section) && (! self::member() || self::previewing() || self::upgradeView($section));
+        return self::gatedSection($section) && (! self::member() || self::previewing());
     }
 
     /** Whether the section's full pages come with Libre + Anee (not with a free account). */
@@ -104,13 +131,13 @@ class ContentGate
     /** Whether this visitor meets the gate on a finder that is not a section front (a crop's variety finder). */
     public static function finderApplies(string $section): bool
     {
-        return self::guestView() || self::upgradeView($section);
+        return self::guestView();
     }
 
     /** Whether this visitor meets the gate on a section's front page. */
     public static function hubApplies(?string $section): bool
     {
-        return in_array((string) $section, self::HUBS, true) && (self::guestView() || self::upgradeView($section));
+        return in_array((string) $section, self::HUBS, true) && self::guestView();
     }
 
     /**
@@ -132,7 +159,94 @@ class ContentGate
     /** A signed in member reading a gated page in full: the marker shows where guests stop. */
     public static function opensFor(?string $section): bool
     {
-        return self::gatedSection($section) && self::member() && ! self::previewing() && ! self::upgradeView($section);
+        return self::gatedSection($section) && self::member() && ! self::previewing();
+    }
+
+    /** Whether the section's guides have a solution part that comes with Libre + Anee. */
+    public static function solutionSection(?string $section): bool
+    {
+        return in_array((string) $section, self::SOLUTION_SECTIONS, true);
+    }
+
+    /** A member without Libre + Anee reading such a guide: everything opens but the solution part. */
+    public static function solutionLocked(?string $section): bool
+    {
+        return self::solutionSection($section) && self::member() && ! self::previewing() && ! self::hasPlus();
+    }
+
+    /**
+     * A page cut into runs, open and locked, in order (keys kept, so the headings' anchors still match the
+     * contents). A locked run starts at a solution heading and holds everything under it until a heading at the same
+     * level or above that is not one (a "What to apply" H3 ends at the next nutrient's H2). The questions and answers
+     * stay open, except the questions that ask for the solution, which ride in a locked copy of the block. The links
+     * and sources stay open. Null when the page has no solution part.
+     *
+     * @return list<array{locked: bool, blocks: array}>|null
+     */
+    public static function solutionRuns(array $blocks): ?array
+    {
+        $runs = [];
+        $put = function (bool $locked, $key, array $block) use (&$runs) {
+            $last = array_key_last($runs);
+            if ($last === null || $runs[$last]['locked'] !== $locked) {
+                $runs[] = ['locked' => $locked, 'blocks' => []];
+                $last = array_key_last($runs);
+            }
+            $runs[$last]['blocks'][$key] = $block;
+        };
+        $inside = false;
+        $level = 0;
+        $any = false;
+        foreach ($blocks as $k => $b) {
+            $type = (string) ($b['type'] ?? '');
+            if ($type === 'heading') {
+                $l = (int) ($b['level'] ?? 2);
+                $hit = (bool) preg_match(self::SOLUTION_HEADING, strip_tags((string) ($b['text'] ?? '')));
+                if ($inside && $l <= $level && ! $hit) {
+                    $inside = false;
+                }
+                if ($hit && (! $inside || $l < $level)) {
+                    $inside = true;
+                    $level = $l;
+                }
+            } elseif (in_array($type, ['faq', 'links', 'sources'], true)) {
+                $inside = false;
+            }
+            if ($type === 'faq' && ! $inside) {
+                $open = [];
+                $shut = [];
+                foreach ((array) ($b['items'] ?? []) as $item) {
+                    $q = strip_tags((string) ($item['q'] ?? ''));
+                    preg_match(self::SOLUTION_QUESTION, $q) ? $shut[] = $item : $open[] = $item;
+                }
+                if ($open) {
+                    $put(false, $k, ['items' => $open] + $b);
+                }
+                if ($shut) {
+                    $put(true, $k . ':locked', ['items' => $shut] + $b);
+                    $any = true;
+                }
+
+                continue;
+            }
+            $any = $any || $inside;
+            $put($inside, $k, $b);
+        }
+
+        return $any ? $runs : null;
+    }
+
+    /** The open runs' blocks, together (what a free member's copy of the structured data may carry). */
+    public static function openOf(array $runs): array
+    {
+        $out = [];
+        foreach ($runs as $r) {
+            if (! $r['locked']) {
+                $out += $r['blocks'];
+            }
+        }
+
+        return $out;
     }
 
     /**

@@ -34,7 +34,8 @@ class WelcomeController extends Controller
         return view('auth.welcome', [
             'reading' => $reading,
             // A guide behind Libre + Anee opens only its start on the free plan: said, not hidden.
-            'plusOnly' => ContentGate::needsPlus($section) && ! ContentGate::hasPlus(),
+            // Since 2026-11-19 a free account reads the whole guide; only the solution part comes with Libre + Anee.
+            'plusOnly' => ContentGate::solutionSection($section) && ! ContentGate::hasPlus(),
             'first' => trim((string) $request->user()->firstName),
         ]);
     }
