@@ -93,6 +93,14 @@ class EmailSkin
             '<div class="ae-pre" style="display:none;font-size:1px;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;mso-hide:all;">'
             . $pre . str_repeat('&#8199;&#65279;&#847; ', 40) . '</div>';
 
+        // Gmail turns a bare "anee.io" into a link of its own, in its own blue (2026-11-19, the owner: the welcome's
+        // headline "Welcome sa anee.io" came out blue on the green masthead, where the body's link color does not
+        // reach). The masthead's words get our own link instead, in their own color and without an underline.
+        $own = fn (string $html, string $color) => (string) preg_replace('/(?<![\w.\/@-])anee\.io(?![\w\/-]|\.\w)/i',
+            '<a href="' . $home . '" style="color:' . $color . ';text-decoration:none;">anee.io</a>', $html);
+        $eyebrow = $own($eyebrow, '#E8BE1C');
+        $title = $own($title, '#ffffff');
+
         $eyebrowHtml = $eyebrow === '' ? '' :
             '<div style="margin:0 0 6px;font-family:' . $font . ';font-size:12px;line-height:1.4;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#E8BE1C;">'
             . $eyebrow . '</div>';
@@ -125,6 +133,8 @@ table{border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt;}
 img{-ms-interpolation-mode:bicubic;}
 .ae-body p{margin:0 0 16px;}
 .ae-body a{color:#3d6b22;}
+.ae-h1 a{color:#ffffff !important;text-decoration:none !important;}
+a[x-apple-data-detectors]{color:inherit !important;text-decoration:none !important;font-size:inherit !important;font-family:inherit !important;font-weight:inherit !important;line-height:inherit !important;}
 @media only screen and (max-width:620px){
   .ae-outer{padding:12px 8px 20px !important;}
   .ae-pad{padding-left:22px !important;padding-right:22px !important;}
@@ -189,7 +199,7 @@ img{-ms-interpolation-mode:bicubic;}
         <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tr>
           <td valign="middle" style="padding-right:12px;"><img src="{$mark}" width="40" height="23" alt="" style="display:block;width:40px;height:23px;border:0;"></td>
           <td valign="middle" class="ae-muted" style="font-family:{$font};font-size:13px;line-height:1.5;color:#5f6b55;">
-            <strong class="ae-ink" style="color:#2B3A1C;">anee.io</strong> &middot; your season, planned with Anee
+            <a href="{$home}" class="ae-ink" style="color:#2B3A1C;text-decoration:none;font-weight:700;">anee.io</a> &middot; your season, planned with Anee
           </td>
         </tr></table>
       </td></tr>
