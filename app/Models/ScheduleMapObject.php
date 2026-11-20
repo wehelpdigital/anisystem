@@ -12,7 +12,7 @@ class ScheduleMapObject extends BaseModel
     protected $table = 'as_schedule_map_objects';
 
     protected $fillable = [
-        'scheduleId', 'userId', 'kind', 'color', 'width', 'font', 'fill', 'points', 'label', 'deleteStatus',
+        'scheduleId', 'userId', 'kind', 'color', 'width', 'font', 'fill', 'points', 'label', 'name', 'hidden', 'locked', 'deleteStatus',
     ];
 
     protected $casts = [
@@ -20,6 +20,8 @@ class ScheduleMapObject extends BaseModel
         'userId' => 'integer',
         'width' => 'integer',
         'fill' => 'integer',
+        'hidden' => 'boolean',
+        'locked' => 'boolean',
         'deleteStatus' => 'integer',
     ];
 
@@ -43,6 +45,11 @@ class ScheduleMapObject extends BaseModel
             'fill' => $this->fill,
             'points' => json_decode((string) $this->points, true) ?: [],
             'label' => $this->label,
+            // Its layer (2026-11-20): what the Layers list calls it (null = its kind and number), whether it is off
+            // the screen, and whether it is locked against picking up, moving, reshaping and erasing.
+            'name' => $this->name,
+            'hidden' => (bool) $this->hidden,
+            'locked' => (bool) $this->locked,
             'userId' => (int) $this->userId,
         ];
     }

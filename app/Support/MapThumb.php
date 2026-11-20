@@ -21,6 +21,8 @@ final class MapThumb
         if (! function_exists('imagecreatetruecolor')) {
             return null;
         }
+        // A hidden layer is off the screen, so it is out of the picture too (2026-11-20).
+        $objects = array_values(array_filter($objects, fn ($o) => empty($o['hidden'])));
         $pts = [];
         foreach ($objects as $o) {
             foreach ((array) ($o['points'] ?? []) as $p) {

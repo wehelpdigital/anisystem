@@ -187,6 +187,8 @@
                     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 15l7-7 6 6-4 4H8l-4-3z"/><path stroke-linecap="round" d="M8 18h11"/></svg>
                     <span>Erase a shape</span>
                 </button>
+                {{-- The hold menu (2026-11-20): said once here, where tools are looked up. --}}
+                <p class="cmap-text-hint" style="margin:.5rem .25rem 0">Hold a point of a shape, or a pin, for a moment to delete it.</p>
                 {{-- Opening and saving used to live at the bottom of this
                      list, under ten drawing tools. They are not tools — they
                      are what you do with the map — so they have their own
@@ -444,8 +446,15 @@
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6.5"/><path stroke-linecap="round" d="M12 2v3.5M12 18.5V22M2 12h3.5M18.5 12H22M12 12h.01"/></svg>
         </button>
         @endif
+        {{-- A globe since 2026-11-20: the stacked sheets went to Layers, the meaning they carry everywhere else. --}}
         <button type="button" class="cmap-tool is-active" id="cmapLayer" title="Switch between map and satellite" aria-label="Switch between map and satellite view" aria-pressed="true">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></svg>
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path stroke-linecap="round" stroke-linejoin="round" d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.1 3.6 8.5s-1.2 6.2-3.6 8.5M12 3.5C9.6 5.8 8.4 8.6 8.4 12s1.2 6.2 3.6 8.5"/></svg>
+        </button>
+        {{-- Layers (2026-11-20, the owner): every shape listed, to pick, hide or lock. Opens a panel over the map
+             that does not cover it, so the drawing goes on while it is open. The number counts hidden shapes. --}}
+        <button type="button" class="cmap-tool cmap-layersbtn" id="cmapLayersBtn" title="Layers: pick, hide or lock a shape" aria-label="Layers" aria-pressed="false" aria-controls="cmapLayers">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 17.5l9 5 9-5"/></svg>
+            <span class="cmap-lcount" id="cmapLayersHid" hidden></span>
         </button>
         {{-- The pins away and back, for this screen only (see setPinsShown).
              A way of reading the map, like the satellite beside it, so it is
@@ -549,6 +558,28 @@
                 <circle class="cmap-hold-arc" cx="22" cy="22" r="19"></circle>
             </svg>
             <span class="cmap-hold-dot"></span>
+        </div>
+        {{-- Hold a point or a pin: what can be done with it. See showHoldMenu(). --}}
+        <div class="cmap-holdmenu" id="cmapHoldMenu" role="menu" aria-label="Point options"></div>
+        {{-- Layers: the shapes of this map, newest on top. See drawLayers(). --}}
+        <div class="cmap-layers" id="cmapLayers" aria-hidden="true">
+            <div class="cmap-lhead">
+                <b>Layers</b>
+                <span class="cmap-lnum" id="cmapLayersCount"></span>
+                <button type="button" class="cmap-lx" id="cmapLayersClose" aria-label="Close layers">
+                    <svg fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+            </div>
+            @if ($cmapMayDraw)
+            <p class="cmap-lhint">Tap a shape to pick it. The eye hides it. The lock keeps it still, so you can draw over it.</p>
+            @else
+            <p class="cmap-lhint">Tap a shape to find it on the map.</p>
+            @endif
+            <div class="cmap-llist" id="cmapLayersList" role="list"></div>
+            <div class="cmap-lfoot" id="cmapLayersFoot" hidden>
+                <button type="button" id="cmapLayersShowAll" hidden>Show all</button>
+                <button type="button" id="cmapLayersUnlockAll" hidden>Unlock all</button>
+            </div>
         </div>
         <div class="cmap-editbar hidden" id="cmapEditBar">
             <span class="cmap-editbar-lbl" id="cmapEditLbl">Editing</span>
@@ -878,6 +909,101 @@
     .cmap-placehit .cmap-saverow-s { white-space: normal; }
     @keyframes cmapHitIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
     @media (prefers-reduced-motion: reduce) { .cmap-placehit { animation: none; } }
+    /* Layers (2026-11-20): a floating panel over the map's top left, not a sheet, so the map stays in reach.
+       Clear of the loader (top centre), the Saved word (top right) and the edit bar (bottom centre). */
+    .cmap-layersbtn { position: relative; }
+    .cmap-lcount { position: absolute; top: -.3rem; right: -.3rem; min-width: 1.05rem; height: 1.05rem; padding: 0 .25rem;
+        border-radius: 999px; background: #f5c518; color: #1f2937; font-size: .6rem; font-weight: 900; line-height: 1.05rem;
+        text-align: center; box-shadow: 0 0 0 2px #fff; }
+    .cmap-layers { position: absolute; top: .6rem; left: .6rem; z-index: 7; width: 17.5rem; max-width: calc(100% - 1.2rem);
+        max-height: calc(100% - 5.2rem); display: flex; flex-direction: column; border-radius: 1rem;
+        background: rgb(255 255 255 / .97); box-shadow: 0 16px 40px -12px rgb(0 0 0 / .45); overflow: hidden;
+        opacity: 0; visibility: hidden; transform: translateY(-.5rem) scale(.98); transform-origin: top left; pointer-events: none;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), visibility 0s linear .28s; }
+    .cmap-layers.is-open { opacity: 1; visibility: visible; transform: none; pointer-events: auto;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), visibility 0s; }
+    .cmap-lhead { display: flex; align-items: center; gap: .45rem; padding: .6rem .6rem .2rem .85rem; }
+    .cmap-lhead b { font-size: .88rem; font-weight: 800; color: var(--color-gray-900); }
+    .cmap-lnum { font-size: .7rem; font-weight: 800; color: var(--color-gray-500); background: var(--color-gray-100);
+        border-radius: 999px; padding: .05rem .45rem; }
+    .cmap-lnum:empty { display: none; }
+    .cmap-lx { margin-left: auto; width: 1.9rem; height: 1.9rem; border-radius: .55rem; display: grid; place-items: center; color: var(--color-gray-500);
+        transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-lx:hover { background: var(--color-gray-100); color: var(--color-gray-800); }
+    .cmap-lx svg { width: 1rem; height: 1rem; }
+    .cmap-lhint { margin: 0; padding: 0 .85rem .45rem; font-size: .7rem; line-height: 1.35; color: var(--color-gray-500); }
+    .cmap-llist { overflow-y: auto; padding: 0 .35rem .4rem; overscroll-behavior: contain; }
+    .cmap-lrow { display: flex; align-items: center; gap: .15rem; border-radius: .7rem; padding: .1rem .15rem;
+        animation: cmapLIn .28s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--i, 0) * 20ms);
+        transition: background .28s cubic-bezier(.22,1,.36,1), opacity .28s cubic-bezier(.22,1,.36,1); }
+    @keyframes cmapLIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+    .cmap-lrow:hover { background: var(--color-gray-50); }
+    .cmap-lrow.is-held { background: var(--color-brand-50); box-shadow: inset 0 0 0 1.5px var(--color-brand-300); }
+    .cmap-lrow.is-hidden .cmap-lpick { opacity: .45; }
+    .cmap-lpick { flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: .55rem; padding: .35rem .3rem; text-align: left; border-radius: .6rem; }
+    .cmap-lico { flex: none; width: 1.75rem; height: 1.75rem; border-radius: .5rem; display: grid; place-items: center;
+        color: var(--c, #f5c518); background: color-mix(in srgb, var(--c, #f5c518) 16%, transparent); }
+    .cmap-lico svg { width: 1.05rem; height: 1.05rem; }
+    .cmap-ltext { min-width: 0; display: flex; flex-direction: column; }
+    .cmap-lname { font-size: .8rem; font-weight: 800; color: var(--color-gray-900); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .cmap-lmeta { font-size: .68rem; font-weight: 700; color: var(--color-gray-500); white-space: nowrap; }
+    .cmap-lrename { width: 100%; min-width: 0; font-size: .8rem; font-weight: 800; padding: .25rem .4rem; border-radius: .45rem;
+        border: 1.5px solid var(--color-brand-400); background: #fff; color: var(--color-gray-900); outline: none; }
+    .cmap-lbtn { flex: none; width: 1.95rem; height: 1.95rem; border-radius: .55rem; display: grid; place-items: center; color: var(--color-gray-400);
+        transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-lbtn svg { width: 1.05rem; height: 1.05rem; }
+    .cmap-lbtn:hover { background: var(--color-gray-100); color: var(--color-gray-800); }
+    .cmap-lbtn:active { transform: scale(.9); }
+    .cmap-lbtn.is-on { color: #b45309; background: #fef3c7; }
+    .cmap-lbtn[data-lrename] { opacity: 0; }
+    .cmap-lrow:hover .cmap-lbtn[data-lrename], .cmap-lrow.is-held .cmap-lbtn[data-lrename], .cmap-lbtn[data-lrename]:focus-visible { opacity: 1; }
+    @media (hover: none) { .cmap-lbtn[data-lrename] { opacity: 1; } }
+    .cmap-lempty { margin: 0; padding: 1rem .6rem 1.1rem; text-align: center; font-size: .76rem; color: var(--color-gray-500); }
+    .cmap-lfoot { display: flex; gap: .4rem; padding: .45rem .6rem .6rem; border-top: 1px solid var(--color-gray-100); }
+    .cmap-lfoot button { flex: 1 1 0; font-size: .72rem; font-weight: 800; padding: .4rem .5rem; border-radius: 999px;
+        background: var(--color-gray-100); color: var(--color-gray-700); transition: background .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-lfoot button:hover { background: var(--color-gray-200); }
+    @media (max-width: 640px) {
+        .cmap-layers { width: calc(100% - 1.2rem); max-height: 46%; }
+    }
+    html.dark .cmap-layers { background: rgb(21 27 18 / .97); }
+    html.dark .cmap-lhead b, html.dark .cmap-lname { color: #e8efe1; }
+    html.dark .cmap-lnum { background: #243019; color: #a9b89b; }
+    html.dark .cmap-lrow:hover { background: #1c2416; }
+    html.dark .cmap-lrow.is-held { background: #22301a; box-shadow: inset 0 0 0 1.5px #4f7a2c; }
+    html.dark .cmap-lbtn:hover, html.dark .cmap-lx:hover { background: #243019; color: #e8efe1; }
+    html.dark .cmap-lbtn.is-on { background: #3a2e0b; color: #fcd34d; }
+    html.dark .cmap-lfoot { border-color: #2b3a1c; }
+    html.dark .cmap-lfoot button { background: #243019; color: #cdd8c0; }
+    html.dark .cmap-lrename { background: #141a10; color: #e8efe1; }
+    html.dark .cmap-lcount { box-shadow: 0 0 0 2px #1c2416; }
+    @media (prefers-reduced-motion: reduce) {
+        .cmap-layers, .cmap-layers.is-open { transition: opacity .01s linear, visibility 0s; transform: none; }
+        .cmap-lrow { animation: none; }
+    }
+    /* The hold menu (2026-11-20): beside the point or pin that was held. */
+    .cmap-holdmenu { position: absolute; z-index: 8; min-width: 11.5rem; max-width: calc(100% - 1rem); display: flex; flex-direction: column; gap: .25rem; padding: .45rem;
+        border-radius: .95rem; background: rgb(255 255 255 / .98); box-shadow: 0 16px 36px -10px rgb(0 0 0 / .5);
+        opacity: 0; visibility: hidden; transform: translateY(.4rem) scale(.96); pointer-events: none;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), visibility 0s linear .28s; }
+    .cmap-holdmenu.is-open { opacity: 1; visibility: visible; transform: none; pointer-events: auto;
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), visibility 0s; }
+    .cmap-hmt { margin: 0; padding: .15rem .5rem .3rem; font-size: .7rem; font-weight: 800; color: var(--color-gray-500);
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 16rem; }
+    .cmap-holdmenu button { text-align: left; font-size: .84rem; font-weight: 800; padding: .6rem .75rem; border-radius: .65rem;
+        color: var(--color-gray-800); background: var(--color-gray-50);
+        transition: background .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .cmap-holdmenu button:hover { background: var(--color-gray-100); }
+    .cmap-holdmenu button:active { transform: scale(.97); }
+    .cmap-holdmenu button.is-danger { background: #fee2e2; color: #b91c1c; }
+    .cmap-holdmenu button.is-danger:hover { background: #fecaca; }
+    .cmap-holdmenu button.is-quiet { background: transparent; color: var(--color-gray-500); text-align: center; }
+    html.dark .cmap-holdmenu { background: rgb(21 27 18 / .98); }
+    html.dark .cmap-holdmenu button { background: #1c2416; color: #e8efe1; }
+    html.dark .cmap-holdmenu button:hover { background: #243019; }
+    html.dark .cmap-holdmenu button.is-danger { background: #3b1717; color: #fca5a5; }
+    html.dark .cmap-holdmenu button.is-quiet { background: transparent; color: #a9b89b; }
+    @media (prefers-reduced-motion: reduce) { .cmap-holdmenu, .cmap-holdmenu.is-open { transition: opacity .01s linear, visibility 0s; transform: none; } }
     /* Select-tool action bar: floats over the map while a shape is held. */
     .cmap-editbar { position: absolute; left: 50%; bottom: .85rem; transform: translateX(-50%) translateY(0);
         z-index: 6; display: flex; align-items: center; gap: .4rem; padding: .4rem .55rem; border-radius: 999px;
@@ -1381,10 +1507,12 @@
     function vertexPins(parts, o, pts, colorStr) {
         pts.forEach((p, i) => {
             const m = new (G().Marker)({
-                map: pinMap(), position: LL(p), draggable: true, crossOnDrag: false,
+                map: pinMap(), position: LL(p), draggable: !o.locked, clickable: !o.locked, crossOnDrag: false,
                 icon: pinIcon(colorStr, 1.2),
             });
             m.__pin = true;
+            // A locked shape's corners show where they are and do nothing else.
+            if (o.locked) { parts.push(m); return; }
             m.addListener('drag', (ev) => {
                 const path = parts[0].getPath ? parts[0].getPath() : null;
                 if (path) path.setAt(i, ev.latLng);
@@ -1426,7 +1554,8 @@
             let lpTimer = null;
             m.addListener('mousedown', () => {
                 clearTimeout(lpTimer);
-                lpTimer = setTimeout(() => beginExtend(o, i, m), 550);
+                // The menu (2026-11-20): delete this point, or draw on from it.
+                lpTimer = setTimeout(() => pointMenu(o, i, m), HOLD_MS);
             });
             m.addListener('mouseup', () => clearTimeout(lpTimer));
             m.addListener('dragstart', () => {
@@ -1434,6 +1563,8 @@
                 if (extending && extending.id === o.id && extending.index === i) cancelExtend();
             });
             m.addListener('click', () => {
+                // The finger lifting off after a hold is not a tap.
+                if (holdTail()) return;
                 if (extending && extending.id === o.id) {
                     if (Date.now() - extending.at < 700) return;  // the long-press's own tail
                     if (extending.index === i) { cancelExtend(); if (window.toast) toast('Done drawing from that point.'); return; }
@@ -1653,12 +1784,28 @@
     function renderObject(o) {
         if (layers.has(o.id)) return;
         objIndex.set(o.id, o);
+        // Its place in the stack: kept when only its layer changed (setLayer),
+        // else the newest is on top.
+        const z = (o.__keepZ && o.__z) ? o.__z : ++zTop;
+        delete o.__keepZ;
+        o.__z = z;
+        // A hidden layer (2026-11-20) is drawn as nothing at all: no outline, no
+        // pins, no numbers, nothing to tap. Everything that walks `layers` finds
+        // an empty list and moves on, so nothing else here has to know.
+        if (o.hidden) {
+            layers.set(o.id, []);
+            if (pendingEdit === o.id) pendingEdit = null;
+            layersTouch();
+            return;
+        }
+        // A locked layer catches no taps: they fall through to the map, so a
+        // shape can be drawn over it, and it cannot be picked up, moved or erased.
+        const locked = !!o.locked;
         const parts = [];
         // The numbers this shape can show, gathered so one badge can reveal
         // or hide them all together.
         const mlabels = [];
-        const z = ++zTop;
-        const style = { map, strokeColor: o.color || '#f5c518', strokeWeight: o.width || 3, clickable: true, zIndex: z };
+        const style = { map, strokeColor: o.color || '#f5c518', strokeWeight: o.width || 3, clickable: !locked, zIndex: z };
         const pts = o.points;
         if (o.kind === 'pen' || o.kind === 'line' || o.kind === 'path' || o.kind === 'arrow') {
             parts.push(new (G().Polyline)({ ...style, path: pts.map(LL),
@@ -1712,7 +1859,7 @@
                moving it, not deleting it and starting again. Its tip is the
                point, so what you grab is exactly what you placed. */
             const pm = new (G().Marker)({
-                map: pinMap(), position: LL(pts[0]), draggable: true, clickable: true,
+                map: pinMap(), position: LL(pts[0]), draggable: !locked, clickable: true,
                 /* The drawn pin, not a stroked symbol.
                  *
                  * labelOrigin puts the name ABOVE the head rather than
@@ -1740,6 +1887,13 @@
                 if (editing && editing.o.id === o.id) return;
                 commitPinMove(o, ev.latLng);
             });
+            // Hold it still for its menu (2026-11-20): delete it, or open it.
+            if (!locked) {
+                let pinHold = null;
+                pm.addListener('mousedown', () => { clearTimeout(pinHold); pinHold = setTimeout(() => pinMenu(o, pm), HOLD_MS); });
+                pm.addListener('mouseup', () => clearTimeout(pinHold));
+                pm.addListener('dragstart', () => clearTimeout(pinHold));
+            }
             pm.__pin = true;
             parts.push(pm);
         } else if (o.kind === 'text') {
@@ -1751,12 +1905,12 @@
             tm.setLabel(textLabelOpts(o));
             // Labels are decoration, but a text OBJECT must catch taps or it
             // could never be erased, moved or rewritten.
-            tm.setClickable(true);
+            tm.setClickable(!locked);
             // Press the words and they come with you. Every other shape is
             // moved by picking it up with Select & edit first; a label is the
             // one thing on this map small enough that finding it, tapping it
             // and then dragging it is three gestures to do one thing.
-            tm.setDraggable(textDraggable());
+            tm.setDraggable(textDraggable() && !locked);
             tm.addListener('dragend', (ev) => {
                 // A picked-up label is already owed this save by beginEdit's
                 // own dragend, which goes through scheduleSave. Both firing
@@ -1769,6 +1923,15 @@
         // Taps on a shape route by tool: erase removes it for everyone, edit
         // picks it up for dragging and reshaping.
         parts.forEach((p) => p.addListener && p.addListener('click', () => {
+            // The finger lifting off after a hold is not a tap.
+            if (holdTail()) return;
+            // Locked: nothing is picked up, moved or erased. A pin still opens
+            // its place, which is reading it, not changing it.
+            const now = objIndex.get(o.id) || o;
+            if (now.locked) {
+                if (o.kind === 'pin') openPinSheet(now, 'open');
+                return;
+            }
             if (tool === 'erase') {
                 pushHist({ type: 'remove', object: objIndex.get(o.id) || o, measured: wasMeasured(o.id) });
                 api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: o.id } }).catch(() => {});
@@ -1802,6 +1965,7 @@
         }));
         if (pendingEdit === o.id) { pendingEdit = null; beginEdit(o, parts); }
         layers.set(o.id, parts);
+        layersTouch();
     }
     /* `forget` separates a shape being REMOVED from a shape being REDRAWN.
      *
@@ -1820,6 +1984,7 @@
         // A shape that no longer exists should not keep a place in the
         // remembered set — a season of edits would fill it with ghosts.
         if (forget && measureOpen.delete(String(id))) saveMeasure();
+        layersTouch();
     }
     /* Carry the open flag onto the id that replaces it. Several edits do not
      * update a shape but mint a new one — a dragged box corner becomes an area,
@@ -1844,7 +2009,465 @@
      * with them all put away, every single time. Stale ids cost a few bytes in
      * localStorage and are pruned by the removal paths; a map that forgets what
      * you asked to see costs the point of the feature. */
-    function dropAll() { canvasGen++; clearTemp(); cancelExtend(); endEdit(); pendingPoint = null; layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); }
+    function dropAll() { canvasGen++; clearTemp(); cancelExtend(); endEdit(); pendingPoint = null; layers.forEach((parts) => parts.forEach((p) => p.setMap(null))); layers.clear(); objIndex.clear(); measures.clear(); layersTouch(); closeHoldMenu(); }
+
+    /* ---------- layers (2026-11-20) ----------
+     *
+     * The owner: "have the option to have layers module so that i can easily
+     * select and lock a layer shape like a whole square or rectangle or lot or
+     * hide it so that i don't need to see it while working on another one in
+     * the same drawing".
+     *
+     * Every shape on the canvas is a layer. The panel lists them in the order
+     * they stack, newest on top, and each row does three things: a tap picks
+     * the shape up (the Select tool, the map brought to it), the eye hides it
+     * (off the screen and out of saved pictures), the lock keeps it still (no
+     * picking up, moving, reshaping or erasing, and taps fall through to the
+     * map so another shape can be drawn over it). A pencil renames it.
+     *
+     * All three live on the shape (`hidden`, `locked`, `name`), so a teammate,
+     * a reload and a saved map see the same layers. A hidden shape renders as
+     * no overlays at all and a locked one renders unclickable (renderObject),
+     * which is why the rest of this file did not have to learn about either. */
+    const MAY_DRAW = @json((bool) $cmapMayDraw);
+    let layersOpen = false, layersFrame = 0, layersRenaming = null;
+    const LAYER_NOUN = { line: 'Line', path: 'Path', rect: 'Box', area: 'Area', pen: 'Freehand', arrow: 'Arrow', text: 'Text', pin: 'Pin' };
+    const LAYER_ICON = {
+        Line: '<path stroke-linecap="round" d="M4 20L20 4"/>',
+        'Plain line': '<path stroke-linecap="round" d="M4 20L20 4"/>',
+        Path: '<path stroke-linecap="round" stroke-linejoin="round" d="M3 17l5-6 4 3 6-8"/>',
+        Box: '<rect x="4" y="6" width="16" height="12" rx="1.5"/>',
+        Rectangle: '<rect x="4" y="6" width="16" height="12" rx="1"/>',
+        Area: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 3l8 6-3 10H7L4 9l8-6z"/>',
+        Freehand: '<path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L18 9l-3-3L5 16l-1 4z"/>',
+        Arrow: '<path stroke-linecap="round" stroke-linejoin="round" d="M4 20L18 6M18 6h-7M18 6v7"/>',
+        Circle: '<circle cx="12" cy="12" r="8"/>',
+        Triangle: '<path stroke-linejoin="round" d="M12 4l9 16H3z"/>',
+        Diamond: '<path stroke-linejoin="round" d="M12 3l9 9-9 9-9-9z"/>',
+        Hexagon: '<path stroke-linejoin="round" d="M7.5 4h9L21 12l-4.5 8h-9L3 12z"/>',
+        Star: '<path stroke-linejoin="round" d="M12 3l2.7 5.8 6.3.8-4.6 4.4 1.2 6.3L12 17.2l-5.6 3.1 1.2-6.3L3 9.6l6.3-.8z"/>',
+        Cross: '<path stroke-linecap="round" d="M5 5l14 14M19 5L5 19"/>',
+        Shape: '<path stroke-linejoin="round" d="M5 7l7-4 7 4v10l-7 4-7-4z"/>',
+        Text: '<path stroke-linecap="round" d="M5 6h14M12 6v13M9 19h6"/>',
+        Pin: '<path stroke-linecap="round" stroke-linejoin="round" d="M12 21s7-7.5 7-12a7 7 0 10-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/>',
+    };
+    const LAYER_SVG = {
+        pen: '<path stroke-linecap="round" stroke-linejoin="round" d="M4 20l4-1L18 9l-3-3L5 16l-1 4z"/>',
+        eye: '<path stroke-linecap="round" stroke-linejoin="round" d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/>',
+        eyeOff: '<path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18M10.6 5.6A9.6 9.6 0 0112 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 01-3.1 3.9M6.4 6.5C3.9 8.2 2.5 12 2.5 12S6 18.5 12 18.5a9.3 9.3 0 004.6-1.2M9.9 10a2.8 2.8 0 004 4"/>',
+        lock: '<rect x="5" y="11" width="14" height="9.5" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 018 0v3"/>',
+        unlock: '<rect x="5" y="11" width="14" height="9.5" rx="2"/><path stroke-linecap="round" d="M8 11V8a4 4 0 017.6-1.7"/>',
+    };
+    const svgOf = (inner) => '<svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">' + inner + '</svg>';
+    /* A drawn shape keeps no name of its own (see SKETCH), but its ring says
+       which tool drew it: the circle has 64 points, the star 10, the cross 12. */
+    function sketchNoun(o) {
+        const p = o.points || [];
+        if (p.length >= 32) return 'Circle';
+        if (p.length === 10) return 'Star';
+        if (p.length === 12) return 'Cross';
+        if (p.length === 3) return 'Triangle';
+        if (p.length === 6) return 'Hexagon';
+        if (p.length === 4) {
+            const near = (a, b) => Math.abs(a - b) < 1e-9;
+            const lats = [], lngs = [];
+            p.forEach((q) => {
+                if (!lats.some((x) => near(x, q[0]))) lats.push(q[0]);
+                if (!lngs.some((x) => near(x, q[1]))) lngs.push(q[1]);
+            });
+            if (lats.length === 2 && lngs.length === 2) return 'Rectangle';
+            if (lats.length === 3 && lngs.length === 3) return 'Diamond';
+        }
+        return 'Shape';
+    }
+    function layerNoun(o) {
+        if (o.kind === 'sketch') return sketchNoun(o);
+        if (o.kind === 'pen' && (o.points || []).length === 2) return 'Plain line';
+        return LAYER_NOUN[o.kind] || 'Shape';
+    }
+    /* What each layer is called: its own name, else a label's or a pin's words,
+       else its kind and a number counted oldest first, so "Box 2" stays Box 2
+       however many shapes are drawn after it. */
+    function layerNames() {
+        const seq = {}, out = new Map();
+        [...objIndex.values()].sort((a, b) => a.id - b.id).forEach((o) => {
+            const own = String(o.name || '').trim();
+            if (own) { out.set(o.id, own); return; }
+            const words = String(o.label || '').trim();
+            if ((o.kind === 'text' || o.kind === 'pin') && words) { out.set(o.id, words.split('\n')[0].slice(0, 60)); return; }
+            const noun = layerNoun(o);
+            seq[noun] = (seq[noun] || 0) + 1;
+            out.set(o.id, noun + ' ' + seq[noun]);
+        });
+        return out;
+    }
+    /* The one number worth reading off a layer: its area, or its length. */
+    function layerMeta(o, named) {
+        try {
+            if (o.kind === 'rect') return fmtA(areaOf(ringOf(o)));
+            if (o.kind === 'area' && o.points.length > 2) return fmtA(areaOf(o.points));
+            if (o.kind === 'line' || o.kind === 'path') {
+                let t = 0;
+                for (let i = 0; i < o.points.length - 1; i++) t += dist(o.points[i], o.points[i + 1]);
+                return fmtM(t);
+            }
+        } catch (_) {}
+        // A named label or pin still says what it is.
+        return named ? layerNoun(o) : '';
+    }
+    /* Many changes land in one moment (a map opening is hundreds of renders),
+       so the list is redrawn once, on the next frame. */
+    function layersTouch() {
+        if (layersFrame) return;
+        layersFrame = requestAnimationFrame(() => { layersFrame = 0; drawLayers(); });
+    }
+    function drawLayers() {
+        const all = [...objIndex.values()];
+        const hiddenN = all.filter((o) => o.hidden).length;
+        const lockedN = all.filter((o) => o.locked).length;
+        // The button keeps count of what is out of sight, so a hidden shape is
+        // never forgotten with the panel closed.
+        const badge = document.getElementById('cmapLayersHid');
+        if (badge) {
+            badge.hidden = !hiddenN;
+            badge.textContent = hiddenN ? String(hiddenN) : '';
+            const btn = document.getElementById('cmapLayersBtn');
+            if (btn) btn.title = hiddenN ? 'Layers: ' + hiddenN + ' hidden' : 'Layers: pick, hide or lock a shape';
+        }
+        if (!layersOpen) return;
+        // Never rebuilt under a name being typed.
+        if (layersRenaming != null) return;
+        const list = document.getElementById('cmapLayersList');
+        if (!list) return;
+        document.getElementById('cmapLayersCount').textContent = all.length ? String(all.length) : '';
+        const names = layerNames();
+        const heldId = editing ? editing.o.id : null;
+        all.sort((a, b) => (b.__z || 0) - (a.__z || 0) || b.id - a.id);
+        list.innerHTML = all.length ? all.map((o, i) => {
+            const name = names.get(o.id) || layerNoun(o);
+            const named = !!String(o.name || '').trim() || ((o.kind === 'text' || o.kind === 'pin') && !!String(o.label || '').trim());
+            const meta = layerMeta(o, named);
+            const icon = LAYER_ICON[layerNoun(o)] || LAYER_ICON.Shape;
+            const colour = /^#[0-9a-f]{3,8}$/i.test(o.color || '') ? o.color : '#f5c518';
+            const cls = 'cmap-lrow' + (o.id === heldId ? ' is-held' : '') + (o.hidden ? ' is-hidden' : '') + (o.locked ? ' is-locked' : '');
+            const pickSay = o.hidden ? 'Hidden. Tap the eye to show it' : (o.locked ? 'Locked. Find it on the map' : (MAY_DRAW ? 'Pick this shape' : 'Find it on the map'));
+            return '<div class="' + cls + '" role="listitem" data-lid="' + o.id + '" style="--i:' + Math.min(i, 12) + '">'
+                + '<button type="button" class="cmap-lpick" data-lpick title="' + esc(pickSay) + '">'
+                + '<span class="cmap-lico" style="--c:' + esc(colour) + '">' + svgOf(icon) + '</span>'
+                + '<span class="cmap-ltext"><span class="cmap-lname">' + esc(name) + '</span>'
+                + (meta ? '<span class="cmap-lmeta">' + esc(meta) + '</span>' : '') + '</span></button>'
+                + (MAY_DRAW
+                    ? '<button type="button" class="cmap-lbtn" data-lrename title="Rename" aria-label="Rename ' + esc(name) + '">' + svgOf(LAYER_SVG.pen) + '</button>'
+                    + '<button type="button" class="cmap-lbtn' + (o.hidden ? ' is-on' : '') + '" data-leye aria-pressed="' + (o.hidden ? 'true' : 'false') + '"'
+                    + ' title="' + (o.hidden ? 'Show it' : 'Hide it') + '" aria-label="' + (o.hidden ? 'Show ' : 'Hide ') + esc(name) + '">' + svgOf(o.hidden ? LAYER_SVG.eyeOff : LAYER_SVG.eye) + '</button>'
+                    + '<button type="button" class="cmap-lbtn' + (o.locked ? ' is-on' : '') + '" data-llock aria-pressed="' + (o.locked ? 'true' : 'false') + '"'
+                    + ' title="' + (o.locked ? 'Unlock it' : 'Lock it') + '" aria-label="' + (o.locked ? 'Unlock ' : 'Lock ') + esc(name) + '">' + svgOf(o.locked ? LAYER_SVG.lock : LAYER_SVG.unlock) + '</button>'
+                    : '')
+                + '</div>';
+        }).join('') : '<p class="cmap-lempty">No shapes yet. Everything you draw shows up here.</p>';
+        const foot = document.getElementById('cmapLayersFoot');
+        if (foot) {
+            foot.hidden = !MAY_DRAW || !(hiddenN || lockedN);
+            document.getElementById('cmapLayersShowAll').hidden = !hiddenN;
+            document.getElementById('cmapLayersUnlockAll').hidden = !lockedN;
+        }
+        // The shape in hand stays in view in a long list.
+        const held = list.querySelector('.cmap-lrow.is-held');
+        if (held && held.scrollIntoView) held.scrollIntoView({ block: 'nearest' });
+    }
+    function setLayersOpen(on) {
+        layersOpen = !!on;
+        const panel = document.getElementById('cmapLayers');
+        const btn = document.getElementById('cmapLayersBtn');
+        if (!panel) return;
+        panel.classList.toggle('is-open', layersOpen);
+        panel.setAttribute('aria-hidden', layersOpen ? 'false' : 'true');
+        if (btn) {
+            btn.classList.toggle('is-active', layersOpen);
+            btn.setAttribute('aria-pressed', layersOpen ? 'true' : 'false');
+        }
+        try { localStorage.setItem('cmapLayersOpen', layersOpen ? '1' : '0'); } catch (_) {}
+        if (layersOpen) drawLayers();
+    }
+    function shapeBounds(o) {
+        const b = new (G().LatLngBounds)();
+        (o.kind === 'rect' ? ringOf(o) : (o.points || [])).forEach((p) => b.extend(LL(p)));
+        return b;
+    }
+    /* Where is it: a line or an outline thickens for a moment, a pin hops. */
+    function flashLayer(id) {
+        const o = objIndex.get(id);
+        const first = (layers.get(id) || [])[0];
+        if (!o || !first) return;
+        try {
+            if (first.getPath) {
+                const w = o.width || 3;
+                first.setOptions({ strokeWeight: w + 5 });
+                setTimeout(() => { try { first.setOptions({ strokeWeight: w }); } catch (_) {} }, 650);
+            } else if (o.kind === 'pin' && first.setAnimation) {
+                first.setAnimation(G().Animation.BOUNCE);
+                setTimeout(() => { try { first.setAnimation(null); } catch (_) {} }, 1400);
+            }
+        } catch (_) {}
+    }
+    function pickLayer(id) {
+        const o = objIndex.get(id);
+        if (!o || !map) return;
+        if (o.hidden) { if (window.toast) toast('This shape is hidden. Tap the eye to show it.'); return; }
+        try { map.panToBounds(shapeBounds(o), 64); } catch (_) {}
+        if (o.locked || !MAY_DRAW) {
+            flashLayer(id);
+            if (o.locked && MAY_DRAW && window.toast) toast('Locked. Tap the lock to change it.');
+            return;
+        }
+        if (tool !== 'edit') setTool('edit');
+        const parts = layers.get(id);
+        if (parts && parts.length) beginEdit(objIndex.get(id), parts);
+        flashLayer(id);
+    }
+    /* One door for every layer change. Shown at once, written after, and put
+       back if the write is refused. Its place in the stack is kept, and only
+       hiding and locking redraw it (a name is the list's alone). */
+    async function setLayer(id, patch) {
+        const o = objIndex.get(id);
+        if (!o || !MAY_DRAW) return false;
+        const before = {};
+        Object.keys(patch).forEach((k) => { before[k] = k === 'name' ? (o[k] ?? null) : !!o[k]; });
+        const visual = ('hidden' in patch) || ('locked' in patch);
+        const apply = (vals) => {
+            const cur = objIndex.get(id);
+            if (!cur) return;
+            if (!visual) { Object.assign(cur, vals); layersTouch(); return; }
+            const next = Object.assign({}, cur, vals, { __keepZ: true, __z: cur.__z });
+            if (editing && editing.o.id === id && (next.hidden || next.locked)) endEdit();
+            dropObject(id);
+            renderObject(next);
+        };
+        apply(patch);
+        try {
+            await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: Object.assign({ id }, patch) });
+            // An opened map writes itself back: its file keeps the layers too.
+            markMapDirty();
+            return true;
+        } catch (e) {
+            apply(before);
+            if (window.toast) toast((e && e.message) || 'That layer could not be changed. Try again.', 'error');
+            return false;
+        }
+    }
+    async function layersAll(field) {
+        const ids = [...objIndex.values()].filter((o) => o[field]).map((o) => o.id);
+        for (const id of ids) {
+            if (!(await setLayer(id, { [field]: false }))) break;
+        }
+    }
+    function startRename(row, id) {
+        const o = objIndex.get(id);
+        const nameEl = row && row.querySelector('.cmap-lname');
+        if (!o || !nameEl) return;
+        const shown = layerNames().get(id) || '';
+        layersRenaming = id;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'cmap-lrename';
+        input.maxLength = 80;
+        input.value = shown;
+        input.setAttribute('aria-label', 'Layer name');
+        input.setAttribute('enterkeyhint', 'done');
+        nameEl.replaceWith(input);
+        input.focus();
+        input.select();
+        let done = false;
+        const finish = (keep) => {
+            if (done) return;
+            done = true;
+            layersRenaming = null;
+            const v = input.value.trim().slice(0, 80);
+            // Left as it was, or emptied back to the kind and number: say so.
+            if (keep && v !== shown) setLayer(id, { name: v || null });
+            else layersTouch();
+        };
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); finish(true); }
+            else if (e.key === 'Escape') { e.preventDefault(); finish(false); }
+        });
+        input.addEventListener('blur', () => finish(true));
+        // A tap inside the box is typing, not picking the shape.
+        input.addEventListener('click', (e) => e.stopPropagation());
+    }
+    function onLayersClick(e) {
+        const row = e.target.closest('.cmap-lrow');
+        if (!row) return;
+        const id = Number(row.dataset.lid);
+        const o = objIndex.get(id);
+        if (!o) return;
+        if (e.target.closest('[data-leye]')) { setLayer(id, { hidden: !o.hidden }); return; }
+        if (e.target.closest('[data-llock]')) { setLayer(id, { locked: !o.locked }); return; }
+        if (e.target.closest('[data-lrename]')) { startRename(row, id); return; }
+        if (e.target.closest('[data-lpick]')) pickLayer(id);
+    }
+
+    /* ---------- hold a point or a pin for its menu (2026-11-20) ----------
+     *
+     * The owner: "have an option to delete a pin or point of a shape by holding
+     * it and have the option showing to delete".
+     *
+     * Hold a corner point or a placed pin for about half a second, without
+     * dragging, and a small menu opens beside it:
+     *   - a shape's point: Delete this point. A box has no loose points, so it
+     *     loses the corner and becomes a three cornered area, the same way a
+     *     dragged box corner turns it into an area. A shape already at its
+     *     fewest points offers to delete the whole shape instead.
+     *   - a line or a path also keeps Draw on from here, which is what the hold
+     *     did on its own before.
+     *   - a pin: Delete this pin, or Open this place (its sheet).
+     * A tap still does what it always did. Locked shapes and view only maps
+     * have no menu. The release that ends a hold is not a tap (holdTail). */
+    const HOLD_MS = 550;
+    let holdAt = 0;
+    function holdTail() { return Date.now() - holdAt < 800; }
+    function closeHoldMenu() {
+        const m = document.getElementById('cmapHoldMenu');
+        if (m) m.classList.remove('is-open');
+    }
+    function showHoldMenu(latLng, title, actions) {
+        holdAt = Date.now();
+        const menu = document.getElementById('cmapHoldMenu');
+        const stage = menu && menu.parentElement;
+        const pr = proj && proj.getProjection && proj.getProjection();
+        if (!menu || !stage) return;
+        menu.innerHTML = '<p class="cmap-hmt">' + esc(title) + '</p>'
+            + actions.map((a, i) => '<button type="button" role="menuitem" data-hm="' + i + '"' + (a.danger ? ' class="is-danger"' : '') + '>' + esc(a.label) + '</button>').join('')
+            + '<button type="button" role="menuitem" data-hm="x" class="is-quiet">Cancel</button>';
+        menu.querySelectorAll('[data-hm]').forEach((b) => b.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeHoldMenu();
+            const a = actions[Number(b.dataset.hm)];
+            if (a) a.run();
+        }));
+        // Above the point, or under it near the top edge, and always inside the map.
+        const at = pr && latLng ? pr.fromLatLngToContainerPixel(latLng) : null;
+        const W = stage.clientWidth, H = stage.clientHeight, w = menu.offsetWidth, h = menu.offsetHeight;
+        const px = at ? at.x : W / 2, py = at ? at.y : H / 2;
+        let x = px - w / 2, y = py - h - 26;
+        if (y < 8) y = py + 22;
+        x = Math.max(8, Math.min(W - w - 8, x));
+        y = Math.max(8, Math.min(H - h - 8, y));
+        menu.style.left = Math.round(x) + 'px';
+        menu.style.top = Math.round(y) + 'px';
+        menu.classList.add('is-open');
+        try { if (navigator.vibrate) navigator.vibrate(12); } catch (_) {}
+    }
+    function pointMenu(o, i, marker) {
+        if (!MAY_DRAW || !objIndex.has(o.id)) return;
+        const cur = objIndex.get(o.id);
+        if (cur.locked || cur.hidden) return;
+        const ring = cur.kind === 'rect' ? ringOf(cur) : (cur.points || []);
+        const min = cur.kind === 'area' ? 3 : 2;
+        const actions = [];
+        if (cur.kind === 'rect') actions.push({ label: 'Delete this corner', danger: true, run: () => deletePoint(cur.id, i) });
+        else if (ring.length > min) actions.push({ label: 'Delete this point', danger: true, run: () => deletePoint(cur.id, i) });
+        else actions.push({ label: 'Delete the whole shape', danger: true, run: () => removeShape(cur.id) });
+        if (cur.kind === 'line' || cur.kind === 'path') actions.push({ label: 'Draw on from here', run: () => beginExtend(cur, i, marker) });
+        const name = layerNames().get(cur.id) || layerNoun(cur);
+        showHoldMenu(marker.getPosition(), 'Point ' + (i + 1) + ' of ' + ring.length + ', ' + name, actions);
+    }
+    function pinMenu(o, marker) {
+        if (!MAY_DRAW || !objIndex.has(o.id)) return;
+        const cur = objIndex.get(o.id);
+        if (cur.locked) return;
+        showHoldMenu(marker.getPosition(), String(cur.label || '').trim() || 'This pin', [
+            { label: 'Delete this pin', danger: true, run: () => deletePin(cur) },
+            { label: 'Open this place', run: () => openPinSheet(cur, 'open') },
+        ]);
+    }
+    async function deletePoint(id, i) {
+        const cur = objIndex.get(id);
+        if (!cur) return;
+        // A box keeps its corners together: losing one makes it an area.
+        if (cur.kind === 'rect') {
+            try {
+                const res = await api(`${URLS.push}?scheduleId=${SID}`, {
+                    method: 'POST', body: { kind: 'area', points: ringOf(cur).filter((_, j) => j !== i), color: cur.color, width: cur.width, label: cur.label, fill: cur.fill ?? null, name: cur.name || null },
+                });
+                carryMeasure(cur.id, res.data.object.id);
+                renderObject(res.data.object);
+                // One action, one undo step, as a dragged corner does.
+                pushHist({ type: 'swap', added: res.data.object, removed: cur });
+                await api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id: cur.id } }).catch(() => {});
+                dropObject(cur.id, true);
+                if (window.toast) toast('Corner deleted. The box is now an area.');
+            } catch (e) { if (window.toast) toast(e.message, 'error'); }
+            return;
+        }
+        const np = (cur.points || []).filter((_, j) => j !== i);
+        const held = editing && editing.o.id === id;
+        try {
+            const res = await api(`${URLS.update}?scheduleId=${SID}`, { method: 'POST', body: { id, points: np } });
+            if (!objIndex.has(id)) return;
+            pushHist({ type: 'update', id, before: cur.points, after: res.data.object.points });
+            if (held) pendingEdit = id;           // still holding the shape
+            dropObject(id);
+            renderObject(res.data.object);
+            if (window.toast) toast('Point deleted.');
+        } catch (e) { if (window.toast) toast(e.message, 'error'); }
+    }
+    function removeShape(id) {
+        const o = objIndex.get(id);
+        if (!o) return;
+        if (editing && editing.o.id === id) endEdit();
+        pushHist({ type: 'remove', object: o, measured: wasMeasured(id) });
+        api(`${URLS.remove}?scheduleId=${SID}`, { method: 'DELETE', body: { id } }).catch(() => {});
+        dropObject(id, true);
+        if (window.toast) toast('Removed from the map.');
+    }
+    /* The one way a pin leaves, from its sheet or from its hold menu. */
+    async function deletePin(o) {
+        if (!o) return;
+        pushHist({ type: 'remove', object: objIndex.get(o.id) || o, measured: false });
+        try {
+            await api(URLS.remove + '?scheduleId=' + SID, { method: 'DELETE', body: { id: o.id } });
+        } catch (_) { /* the map is already without it; the server catches up */ }
+        dropObject(o.id, true);
+        // On a lot's map the last pin standing IS the lot's place. Taking it
+        // off the map used to leave the coordinates on the record, so the
+        // Lots module went on offering "Open in Google Maps" for a pin that
+        // was no longer anywhere. The map keeps its link either way — the
+        // pin and the map are two different things a lot can have.
+        if (CHROME === 'lot' && ATTACH && ATTACH.pinned) {
+            let pinsLeft = 0;
+            for (const obj of objIndex.values()) if (obj.kind === 'pin') pinsLeft++;
+            if (!pinsLeft) unpinTheLot();
+        }
+        markMapDirty();
+    }
+    function wireHoldMenu() {
+        if (!map || wireHoldMenu.done) return;
+        wireHoldMenu.done = true;
+        ['click', 'dragstart', 'zoom_changed'].forEach((ev) => map.addListener(ev, () => { if (!holdTail()) closeHoldMenu(); }));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeHoldMenu(); });
+        document.addEventListener('pointerdown', (e) => {
+            const m = document.getElementById('cmapHoldMenu');
+            if (m && m.classList.contains('is-open') && !m.contains(e.target) && !holdTail()) closeHoldMenu();
+        }, true);
+    }
+
+    function wireLayers() {
+        const btn = document.getElementById('cmapLayersBtn');
+        if (!btn || btn.__wired) return;
+        btn.__wired = true;
+        btn.addEventListener('click', () => setLayersOpen(!layersOpen));
+        document.getElementById('cmapLayersClose')?.addEventListener('click', () => setLayersOpen(false));
+        document.getElementById('cmapLayersList')?.addEventListener('click', onLayersClick);
+        document.getElementById('cmapLayersShowAll')?.addEventListener('click', () => layersAll('hidden'));
+        document.getElementById('cmapLayersUnlockAll')?.addEventListener('click', () => layersAll('locked'));
+        // Left open last time on this device: open again.
+        let wasOpen = false;
+        try { wasOpen = localStorage.getItem('cmapLayersOpen') === '1'; } catch (_) {}
+        if (wasOpen) setLayersOpen(true);
+        drawLayers();
+    }
+
 
     /* Undo is a history of inverse calls against the same endpoints the
        actions used, so every step also lands live for the team. Re-adding a
@@ -1909,7 +2532,8 @@
         const res = await api(`${URLS.push}?scheduleId=${SID}`, {
             // font travels with it, or undoing the deletion of a label would
             // put the words back in a face nobody chose.
-            method: 'POST', body: { kind: object.kind, points: object.points, color: object.color, width: object.width, font: object.font || null, fill: object.fill ?? null, label: object.label },
+            method: 'POST', body: { kind: object.kind, points: object.points, color: object.color, width: object.width, font: object.font || null, fill: object.fill ?? null, label: object.label,
+                name: object.name || null, hidden: !!object.hidden, locked: !!object.locked },
         });
         renderObject(res.data.object);
         return res.data.object;
@@ -2307,7 +2931,7 @@
         objIndex.forEach((o, id) => {
             if (o.kind !== 'text') return;
             const m = (layers.get(id) || [])[0];
-            if (m && m.setDraggable) m.setDraggable(textDraggable());
+            if (m && m.setDraggable) m.setDraggable(textDraggable() && !o.locked);
         });
     }
     /* Where a dragged label landed, made to stick.
@@ -2348,6 +2972,7 @@
     }
     function setTool(t) {
         tool = t;
+        closeHoldMenu();
         clearTemp();
         cancelExtend();
         // Pinning a place with the pins away would drop one nobody can see.
@@ -2601,22 +3226,7 @@
         const o = pinOpen;
         if (!o) return;
         window.closeSheet && window.closeSheet('cmapPinSheet');
-        pushHist({ type: 'remove', object: objIndex.get(o.id) || o, measured: false });
-        try {
-            await api(URLS.remove + '?scheduleId=' + SID, { method: 'DELETE', body: { id: o.id } });
-        } catch (_) { /* the map is already without it; the server catches up */ }
-        dropObject(o.id, true);
-        // On a lot's map the last pin standing IS the lot's place. Taking it
-        // off the map used to leave the coordinates on the record, so the
-        // Lots module went on offering "Open in Google Maps" for a pin that
-        // was no longer anywhere. The map keeps its link either way — the
-        // pin and the map are two different things a lot can have.
-        if (CHROME === 'lot' && ATTACH && ATTACH.pinned) {
-            let pinsLeft = 0;
-            for (const obj of objIndex.values()) if (obj.kind === 'pin') pinsLeft++;
-            if (!pinsLeft) unpinTheLot();
-        }
-        markMapDirty();
+        await deletePin(o);
     });
 
     function onTap(latLng) {
@@ -2736,7 +3346,8 @@
     let editing = null, saveTimer = null, pendingEdit = null, selVertex = null, pendingPoint = null;
     function showEditBar(o) {
         const KINDS = { pen: 'drawing', line: 'line', path: 'path', rect: 'box', area: 'area', text: 'label', arrow: 'arrow', sketch: 'shape' };
-        document.getElementById('cmapEditLbl').textContent = 'Editing ' + (KINDS[o.kind] || 'shape');
+        // A layer with a name of its own is called by it (2026-11-20).
+        document.getElementById('cmapEditLbl').textContent = 'Editing ' + ((o.name || '').trim() || KINDS[o.kind] || 'shape');
         document.getElementById('cmapDelPoint').hidden = true;
         // Only a label has words behind it.
         document.getElementById('cmapEditText').hidden = o.kind !== 'text';
@@ -2866,11 +3477,14 @@
     }
     function beginEdit(o, parts) {
         if (editing && editing.o.id === o.id) return;
+        // A locked or hidden layer is never picked up (2026-11-20).
+        const cur = objIndex.get(o.id) || o;
+        if (cur.locked || cur.hidden || !parts || !parts.length) return;
         endEdit();
         const first = parts[0];
         // The shape in hand is the one being changed, so it is on top of
         // whatever it overlaps while it is moved and reshaped.
-        raise(first);
+        o.__z = raise(first);
         if (first.setOptions) {
             first.setOptions({
                 draggable: true,
@@ -2908,6 +3522,7 @@
             if ((o.points || []).length < 32) showTurnHandle(o, parts);
             showGrowHandle(o, parts);
         }
+        layersTouch();
     }
     function endEdit() {
         if (!editing) return;
@@ -2920,8 +3535,9 @@
         // selection down must not quietly take that away — and this runs on
         // every tool change, which is exactly when it would have. `tool` is
         // already the new one by the time setTool gets here.
-        if (editing.o.kind === 'text' && first.setDraggable) first.setDraggable(textDraggable());
+        if (editing.o.kind === 'text' && first.setDraggable) first.setDraggable(textDraggable() && !(objIndex.get(editing.o.id) || editing.o).locked);
         editing = null;
+        layersTouch();
         clearSelVertex();
         dropSizeHandle();
         dropTurnHandle();
@@ -3421,7 +4037,7 @@
         if (!pr) return null;
         let best = null;
         objIndex.forEach((o) => {
-            if (!INSERTABLE.includes(o.kind)) return;
+            if (!INSERTABLE.includes(o.kind) || o.locked || o.hidden) return;
             const ring = ringOf(o);
             if (ring.length < 2) return;
             const closed = (o.kind === 'rect' || o.kind === 'area');
@@ -3919,7 +4535,7 @@
             if (!fit) return false;
             const b = new (G().LatLngBounds)();
             let any = false;
-            (r.data.objects || []).forEach((o) => o.kind !== 'text' && o.points.forEach((p) => { b.extend(LL(p)); any = true; }));
+            (r.data.objects || []).forEach((o) => o.kind !== 'text' && !o.hidden && o.points.forEach((p) => { b.extend(LL(p)); any = true; }));
             if (any) { map.fitBounds(b, 48); G().event.addListenerOnce(map, 'idle', dropVeil); }
             return any;
         });
@@ -4041,6 +4657,8 @@
         };
 
         [...objIndex.values()].forEach((o) => {
+            // A hidden layer is off the screen, so it is out of the picture (2026-11-20).
+            if (o.hidden) return;
             const colour = o.color || '#f5c518';
             const pts = o.kind === 'rect' ? ringOf(o) : o.points;
             const closed = (o.kind === 'rect' || o.kind === 'area' || o.kind === 'sketch');
@@ -4883,6 +5501,8 @@
             e.currentTarget.setAttribute('aria-pressed', satOn ? 'true' : 'false');
         });
         document.getElementById('cmapPins')?.addEventListener('click', () => setPinsShown(pinsHidden));
+        wireLayers();
+        wireHoldMenu();
         document.getElementById('cmapFindMe')?.addEventListener('click', (e) => findMe(e.currentTarget));
         document.getElementById('cmapGps')?.addEventListener('click', (e) => toggleGps(e.currentTarget));
         document.getElementById('cmapClear')?.addEventListener('click', async () => {
