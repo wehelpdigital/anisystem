@@ -47,9 +47,11 @@ class ScheduleMapObject extends BaseModel
             'label' => $this->label,
             // Its layer (2026-11-20): what the Layers list calls it (null = its kind and number), whether it is off
             // the screen, and whether it is locked against picking up, moving, reshaping and erasing.
-            'name' => $this->name,
-            'hidden' => (bool) $this->hidden,
-            'locked' => (bool) $this->locked,
+            'name' => $this->getAttribute('name'),
+            // getAttribute, not $this->hidden: inside the model that name is Eloquent's own list of fields kept
+            // out of JSON (an empty array), so it read false for every shape.
+            'hidden' => (bool) $this->getAttribute('hidden'),
+            'locked' => (bool) $this->getAttribute('locked'),
             'userId' => (int) $this->userId,
         ];
     }
