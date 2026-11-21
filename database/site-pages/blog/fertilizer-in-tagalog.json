@@ -10,7 +10,11 @@
   "focusKeyword": "fertilizer in Tagalog",
   "keywords": ["fertilizer in Tagalog", "abono", "pataba", "organic fertilizer in Tagalog", "apply fertilizer in Tagalog"],
   "excerpt": "The usual word for fertilizer in Tagalog is abono. Farmers also say pataba, from the root taba, which means fat or rich, because fertilizer makes the soil rich. In the field you will hear both, often mixed with English names like urea, complete and potash. This guide lists the Tagalog fertilizer words farmers really use, with what each one means.",
-  "heroImage": { "src": "/images/site/photos/sacks-shed.jpg", "alt": "A farmer reading a list beside stacks of fertilizer sacks, the sako ng abono that the Tagalog word for fertilizer names" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-in-tagalog.webp",
+    "alt": "Big white bags of fertilizer, or abono, lined up under a tree on a farm",
+    "credit": "Cjp24, CC BY SA 3.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Ask a farmer in Nueva Ecija about fertilizing and you may hear, \"Mag aabono ako sa Lunes.\" Ask what they will use and they will likely name it in English: urea, complete or ammosul. That mix of Tagalog and English is how fertilizer is really talked about on Filipino farms.\n\nSo this guide gives you both: the Tagalog words, and the English names that farmers use beside them. For more farm words, see our guide to [farm words in Tagalog](/blog/farm-words-in-tagalog)." },
     { "type": "heading", "level": 2, "text": "Fertilizer in Tagalog: abono and pataba" },

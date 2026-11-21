@@ -10,7 +10,11 @@
   "focusKeyword": "eggshell as fertilizer",
   "keywords": ["eggshell as fertilizer", "eggshells for plants", "eggshell powder", "calcium for tomatoes", "blossom end rot"],
   "excerpt": "Using eggshell as fertilizer works, but only for one thing: calcium. Eggshells are almost pure calcium carbonate, the same material as garden lime. Crushed fine and mixed into the soil, they release calcium slowly and can raise the pH of acid soil a little. They add almost no nitrogen, phosphorus or potassium, so they cannot replace compost or a real fertilizer.",
-  "heroImage": { "src": "/images/site/how-to-plant/tomato.webp", "alt": "Tomatoes ripening on the vine, a crop that gardeners often feed with eggshell as fertilizer for calcium", "credit": "Naposia, CC BY SA 3.0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-eggshell-as-fertilizer.webp",
+    "alt": "A broken eggshell used as a tiny pot for a small succulent, one way to put eggshell back into the garden",
+    "credit": "Albarubescens, CC BY SA 4.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Every kitchen throws away eggshells, so it is natural to ask whether they can feed the garden. The honest answer is yes, a little, in a slow and narrow way.\n\nThis guide explains what eggshells contain, how to prepare them, which plants gain, and the problems eggshells will not solve. For stronger organic choices, see our list of [organic fertilizer examples](/blog/organic-fertilizer-examples)." },
     { "type": "heading", "level": 2, "text": "What is in eggshell as fertilizer" },

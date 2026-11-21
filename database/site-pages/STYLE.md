@@ -166,8 +166,12 @@ A good page shape: excerpt, 2 to 3 text paragraphs, H2 sections with text,
 lists, tables or steps as the content needs, a callout, a mid page cta, an
 faq block, a links block to 3 to 6 related pages, and a sources block last when it has a source that may show.
 
-Images: use a site image from the list in section 6, or propose one Wikimedia
-Commons photo in `heroImage` as `{ "src": "commons:File:Exact_file_name.jpg",
+Images: every written guide has a hero of its own (2026-11-21: no two guides
+share one; the generated variety, deficiency and How to Plant pages are the
+only exception). Propose one Wikimedia Commons photo that no other page shows,
+saved as /images/site/guides/{section}-{slug}.webp (1200x800, with -800 and
+-480 twins); a site image from section 6 is only a stand in until then. Give
+it in `heroImage` as `{ "src": "commons:File:Exact_file_name.jpg",
 "alt": "...", "credit": "Author, License" }` using only CC0, public domain,
 CC BY or CC BY SA files. Check the file page to be sure the name and licence
 are right. Do not use an image that does not show what the page is about.

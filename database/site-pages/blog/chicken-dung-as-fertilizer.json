@@ -10,7 +10,11 @@
   "focusKeyword": "chicken dung as fertilizer",
   "keywords": ["chicken dung as fertilizer", "chicken manure fertilizer", "ipot ng manok", "poultry manure", "composting chicken manure"],
   "excerpt": "Chicken dung as fertilizer is one of the richest organic feeds a farm can get. It carries more nitrogen and phosphorus than cow or carabao manure, plus calcium and organic matter that improve the soil. But fresh chicken manure, ipot ng manok, is strong enough to burn roots and can carry germs. Composted or well aged first, it becomes a safe, slow feed for vegetables, corn, fruit trees and potted plants.",
-  "heroImage": { "src": "/images/site/guides/blog-organic-fertilizer-examples.webp", "alt": "A wooden bin full of dark, sifted organic fertilizer, the crumbly finish that composted chicken manure should reach", "credit": "Renatotcm, CC BY SA 4.0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-chicken-dung-as-fertilizer.webp",
+    "alt": "A hen standing on a farm heap of chicken dung and straw, the raw stuff of chicken dung as fertilizer",
+    "credit": "Herzi Pinki, CC BY SA 3.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Many Filipino farms sit near a poultry house, and the manure is cheap or free. That makes chicken manure one of the easiest ways to cut fertilizer cost. Still, it is easy to misuse.\n\nThis guide explains what is in chicken manure, why it must be composted, how much to apply, and which crops gain the most. For other options, see our list of [organic fertilizer examples](/blog/organic-fertilizer-examples)." },
     { "type": "heading", "level": 2, "text": "What chicken dung as fertilizer gives your crop" },

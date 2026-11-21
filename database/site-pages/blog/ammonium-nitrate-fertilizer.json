@@ -10,7 +10,11 @@
   "focusKeyword": "ammonium nitrate fertilizer",
   "keywords": ["ammonium nitrate fertilizer", "ammonia nitrate fertilizer", "34 0 0 fertilizer", "calcium nitrate", "nitrogen fertilizer"],
   "excerpt": "Ammonium nitrate fertilizer is a nitrogen fertilizer with about 34 percent nitrogen, sold as 34 0 0. Half of its nitrogen is ammonium and half is nitrate, so it acts fast. Many people search for it as ammonia nitrate fertilizer, but the right name is ammonium nitrate. Here it is rarely sold to farmers, because the law controls it and because it works poorly in flooded rice. Urea and ammonium sulfate do the same job for less.",
-  "heroImage": { "src": "/images/site/guides/blog-ammonium-sulfate-21-0-0.webp", "alt": "Clear crystals of ammonium sulfate, a nitrogen fertilizer farmers here use in place of ammonium nitrate fertilizer", "credit": "Runcyclexcski, CC BY SA 4.0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-ammonium-nitrate-fertilizer.webp",
+    "alt": "White ammonium nitrate fertilizer granules heaped on a dish",
+    "credit": "Teravolt, Public domain, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Ammonium nitrate is one of the most used nitrogen fertilizers in some countries, so it shows up often in foreign farming videos and books. That makes many Filipino farmers wonder whether they should look for it.\n\nThis guide explains what it is, how it works, why it is uncommon here, and which nitrogen fertilizer to buy instead for palay, corn and vegetables. For nitrogen basics, see our guide on [urea fertilizer](/blog/urea-fertilizer)." },
     { "type": "heading", "level": 2, "text": "What ammonium nitrate fertilizer is" },

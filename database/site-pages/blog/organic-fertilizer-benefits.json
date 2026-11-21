@@ -10,7 +10,11 @@
   "focusKeyword": "organic fertilizer benefits",
   "keywords": ["organic fertilizer benefits", "benefits of organic fertilizer", "advantages of organic fertilizer", "soil organic matter", "compost for crops"],
   "excerpt": "The biggest organic fertilizer benefits are in the soil, not only in the crop. Compost, manure, vermicast and crop residues make soil softer and darker, help it hold water and nutrients, and feed the earthworms and microbes that keep it alive. They release their nutrients slowly, so they rarely burn roots. Their limit is strength: they carry far less nitrogen per sack than inorganic fertilizer, so most farms use both.",
-  "heroImage": { "src": "/images/site/guides/blog-organic-fertilizer-for-pechay.webp", "alt": "Beds of young pechay beside a freshly prepared bed of dark, crumbly soil, a sign of the organic fertilizer benefits that build up over seasons", "credit": "Judgefloro, CC0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-organic-fertilizer-benefits.webp",
+    "alt": "A steaming pile of hot compost being turned, the organic fertilizer whose benefits the guide explains",
+    "credit": "SB Johnny, CC BY SA 3.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Farmers often judge a fertilizer by how fast the leaves turn green. By that test, organic fertilizer looks weak. But its best work happens below the surface, and it adds up over several seasons.\n\nThis guide lists the benefits of organic fertilizer for your soil, your crop and your costs, and it is honest about the limits. For the materials themselves, see our list of [organic fertilizer examples](/blog/organic-fertilizer-examples)." },
     { "type": "heading", "level": 2, "text": "The main organic fertilizer benefits" },

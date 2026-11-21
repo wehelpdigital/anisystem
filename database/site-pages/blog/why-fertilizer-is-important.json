@@ -10,7 +10,11 @@
   "focusKeyword": "why fertilizer is important",
   "keywords": ["why fertilizer is important", "fertilizer in agriculture", "importance of fertilizer", "role of fertilizer", "nutrients removed by crops"],
   "excerpt": "Here is why fertilizer is important: every harvest carries nutrients out of your field, in the grain, the fruit and often the straw. The soil holds only so much, and it does not refill itself fast enough to keep up with two crops a year. Fertilizer puts those nutrients back, so the next crop yields as well as the last one. Used with care, it is also one of the cheapest ways to raise your harvest per hectare.",
-  "heroImage": { "src": "/images/site/guides/blog-increase-rice-yield-per-hectare.webp", "alt": "A Filipino farmer holds heavy, ripening palay panicles in his palm, the kind of harvest that shows why fertilizer is important", "credit": "Department of Foreign Affairs and Trade, CC BY 2.0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-why-fertilizer-is-important.webp",
+    "alt": "A lush green rice field in the wet season, the kind of stand that shows why fertilizer is important",
+    "credit": "Mao Piseth, CC BY SA 4.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Ask an old farmer and you will hear the same story. The first seasons on a new field gave a big harvest with little fertilizer. Then each year gave a little less, until the field needed abono just to stay where it was.\n\nThat story is the whole reason fertilizer exists. This guide explains what fertilizer does in agriculture, what happens when a field goes without it, and why more is not always better. If you are new to the word, read [what is fertilizer](/blog/what-is-fertilizer) first." },
     { "type": "heading", "level": 2, "text": "Why fertilizer is important: the short answer" },

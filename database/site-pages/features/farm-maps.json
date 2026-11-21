@@ -18,9 +18,9 @@
   ],
   "excerpt": "A farm map in anee.io starts from a satellite view of your land. Trace each field, and the app tells you its area and the length of its sides. Drop pins on the pump or the drying area, save the map as your own, and use it in any season, on any lot.",
   "heroImage": {
-    "src": "/images/site/fields-aerial.jpg",
-    "alt": "Aerial view of green rice paddies divided by bunds and an irrigation canal, the kind of land you trace on a farm map",
-    "credit": ""
+    "src": "/images/site/guides/features-farm-maps.webp",
+    "alt": "Farm plots of many shapes seen from the air, the kind of land you trace on a farm map",
+    "credit": "Saiphani02, CC BY SA 4.0, via Wikimedia Commons"
   },
   "blocks": [
     {

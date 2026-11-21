@@ -10,7 +10,11 @@
   "focusKeyword": "drip irrigation system",
   "keywords": ["drip irrigation system", "drip irrigation systems", "drip tape", "surface irrigation", "fertigation", "irrigation for vegetables"],
   "excerpt": "A drip irrigation system delivers water slowly, drop by drop, right at the base of each plant through tubes with small emitters. Very little water is lost to runoff or wet soil between rows, so it uses much less water than flooding or watering cans. Drip irrigation systems suit vegetables, fruit trees and other high value crops, and they can carry fertilizer in the water too.",
-  "heroImage": { "src": "/images/site/land/cucurbit-land-preparation.webp", "alt": "Ampalaya seedlings planted through plastic mulch on raised beds, the kind of bed a drip irrigation system often runs under" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-drip-irrigation-system.webp",
+    "alt": "Rows of young vegetables, each fed by a button dripper on a drip irrigation system line",
+    "credit": "Borisshin, CC BY SA 4.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Water is often the limit on a vegetable farm in the dry season. A drip system stretches each liter further, so the same well or tank can water more plants.\n\nThis guide explains the parts of a drip irrigation system, how to set one up, what it costs in time and money, and how it compares with surface irrigation. For all the irrigation methods side by side, see our guide on [irrigation systems](/blog/irrigation-systems)." },
     { "type": "heading", "level": 2, "text": "How a drip irrigation system works" },

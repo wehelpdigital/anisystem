@@ -10,7 +10,11 @@
   "focusKeyword": "top dressing fertilizer",
   "keywords": ["top dressing fertilizer", "topdressing rice", "side dressing corn", "urea top dressing", "split fertilizer application"],
   "excerpt": "Top dressing fertilizer is fertilizer you spread on a crop that is already growing, instead of mixing it into the soil at planting. Farmers top dress to feed the crop at the stages when it uses the most, usually with nitrogen. For palay, the usual top dressings fall at active tillering and at panicle initiation. For corn, they fall a few weeks after planting and again before tasseling.",
-  "heroImage": { "src": "/images/site/guides/blog-fertilizer-for-rice-tillering.webp", "alt": "Young rice hills in a wet paddy, each a dense clump of new tillers, the stage for the first top dressing fertilizer", "credit": "Aerospectra, CC BY 4.0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-top-dressing-fertilizer.webp",
+    "alt": "A tractor spreader putting nitrogen prills on a young wheat crop, top dressing fertilizer at work",
+    "credit": "Michael Trolove, CC BY SA 2.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "A crop does not eat all its food on the first day. It uses a little while young, a lot while it grows fast, and then it shifts its food into grain. So putting all the fertilizer in at planting wastes much of it, because rain and water carry it away before the crop needs it.\n\nTop dressing solves that. You split the fertilizer and give each part when the crop can use it. This guide explains when to top dress, which fertilizer to use, and how to do it without waste." },
     { "type": "heading", "level": 2, "text": "Basal application and top dressing fertilizer" },

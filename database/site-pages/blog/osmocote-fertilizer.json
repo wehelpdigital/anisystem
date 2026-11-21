@@ -10,7 +10,11 @@
   "focusKeyword": "Osmocote fertilizer",
   "keywords": ["Osmocote fertilizer", "controlled release fertilizer", "slow release fertilizer", "Osmocote 14 14 14", "fertilizer for potted plants"],
   "excerpt": "Osmocote fertilizer is a brand of controlled release fertilizer. Each round granule holds nutrients inside a thin resin coat. Water slips in, dissolves the nutrients, and they seep out a little at a time for months. So one application can feed a potted plant for a whole season instead of a weekly feed. It is popular for orchids, ornamentals, nursery seedlings and container vegetables.",
-  "heroImage": { "src": "/images/site/guides/blog-what-is-fertilizer.webp", "alt": "Granules of a fertilizer in several colors spilling from a scoop, the round shape that slow release fertilizers like Osmocote come in", "credit": "Wee Hong, CC BY SA 4.0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-osmocote-fertilizer.webp",
+    "alt": "An open tub of slow release fertilizer granules like Osmocote, each bead coated to feed plants for months",
+    "credit": "clinton155, Public domain, via Flickr"
+  },
   "blocks": [
     { "type": "text", "text": "Plants in pots lose food every time you water them, because the water drains out the bottom and carries nutrients with it. That is why potted plants need feeding more often than plants in the ground.\n\nA controlled release fertilizer like Osmocote fixes that by letting the food out slowly. This guide explains how it works, which grade fits which plant, how much to use, and when a cheaper fertilizer does the job just as well. For feeding plants in general, see our guide on [fertilizer for plants](/blog/fertilizer-for-plants)." },
     { "type": "heading", "level": 2, "text": "How Osmocote fertilizer works" },

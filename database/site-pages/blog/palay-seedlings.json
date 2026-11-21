@@ -10,7 +10,11 @@
   "focusKeyword": "palay seedlings",
   "keywords": ["palay seedlings", "palay seeds", "punla", "seedbed for rice", "wet bed method", "dapog"],
   "excerpt": "Strong palay seedlings, the punla, are the start of a good rice harvest. They come from good palay seeds soaked and sprouted the right way, sown thinly in a well prepared seedbed, and pulled at the right age. For transplanted inbred rice, most farmers use about 40 kilograms of seed per hectare in a seedbed of about 400 square meters, and transplant at about 18 to 25 days.",
-  "heroImage": { "src": "/images/site/photos/transplant.jpg", "alt": "Farmers transplanting palay seedlings into a flooded paddy" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-palay-seedlings.webp",
+    "alt": "Bundles of young palay seedlings resting in a muddy paddy, ready for transplanting",
+    "credit": "Undeka 11, CC BY SA 4.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "A seedling that starts weak never fully catches up. It tillers late, flowers unevenly and yields less than its neighbors. So the two or three weeks in the seedbed decide a lot of the harvest.\n\nThis guide covers choosing palay seeds, soaking and sprouting them, the main seedbed methods, caring for the seedlings and pulling them at the right age. For the whole season from seed to harvest, see [pagtatanim ng palay](/crops/pagtatanim-ng-palay)." },
     { "type": "heading", "level": 2, "text": "Start with good palay seeds" },

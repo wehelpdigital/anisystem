@@ -10,7 +10,11 @@
   "focusKeyword": "when fertilization occurs",
   "keywords": ["when fertilization occurs", "fertilization in plants", "pollination and fertilization", "double fertilization", "rice flowering", "corn silking"],
   "excerpt": "In plants, fertilization occurs shortly after pollination, usually within hours to about a day. Pollen lands on the stigma, grows a tiny tube down to the ovule, and delivers the sperm cells that join with the egg. That moment decides whether a grain of palay, a kernel of corn or a mango fruit forms at all. This guide explains when fertilization occurs in the crops you grow, and what in the field can stop it.",
-  "heroImage": { "src": "/images/site/guides/blog-increase-corn-yield-per-hectare.webp", "alt": "Corn plants with tassels, silks and young ears in a maize field, the stage when fertilization occurs in corn", "credit": "JFVelasquez Floro, CC0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-when-fertilization-occurs.webp",
+    "alt": "A corn tassel shedding pollen against the sky, the first step before fertilization occurs in the ear",
+    "credit": "Knowledge and philosophy, CC BY SA 4.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Many people use pollination and fertilization as if they meant the same thing. They are two steps, one right after the other. Pollination moves the pollen, and fertilization is what happens when the pollen reaches the egg.\n\nFor a farmer, this short window is the most fragile part of the season. A crop can look perfect for two months and still lose half its harvest in a few hot or dry days at flowering. This guide is about fertilization in plants and crops." },
     { "type": "heading", "level": 2, "text": "Pollination comes first, then fertilization occurs" },

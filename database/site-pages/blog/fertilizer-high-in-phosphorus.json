@@ -10,7 +10,11 @@
   "focusKeyword": "fertilizer high in phosphorus",
   "keywords": ["fertilizer high in phosphorus", "fertilizer with phosphorus", "phosphorus fertilizer", "18 46 0", "solophos", "phosphorus deficiency"],
   "excerpt": "A fertilizer high in phosphorus is one with a big middle number on the sack. Here the common ones are 16 20 0, diammonium phosphate 18 46 0, monoammonium phosphate 11 52 0, single superphosphate 0 18 0 and triple superphosphate 0 46 0. Phosphorus builds roots, tillers and flowers, and it moves very little in the soil. So it works best placed near the roots at planting, not spread on top later.",
-  "heroImage": { "src": "/images/site/guides/blog-inorganic-fertilizer-examples.webp", "alt": "A dish of pale diammonium phosphate granules, a common fertilizer high in phosphorus", "credit": "Suyash Dwivedi, CC BY SA 4.0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-high-in-phosphorus.webp",
+    "alt": "Tubs of bone meal, a fertilizer high in phosphorus, at an old bone mill",
+    "credit": "Arnoldius, CC BY SA 4.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Nitrogen gets most of the attention, because a crop short of it turns yellow fast. Phosphorus works more quietly. A crop short of it just stays small, tillers less and matures late, and many farmers never connect the poor harvest to the missing nutrient.\n\nThis guide shows which fertilizer with phosphorus to buy, how to read the numbers, when to apply it, and why some soils hold phosphorus back. For the basics of fertilizer grades, see [what is fertilizer](/blog/what-is-fertilizer)." },
     { "type": "heading", "level": 2, "text": "What phosphorus does for your crop" },

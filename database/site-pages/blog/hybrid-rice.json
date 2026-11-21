@@ -10,7 +10,11 @@
   "focusKeyword": "hybrid rice",
   "keywords": ["hybrid rice", "rice hybrid", "hybrid rice varieties in the Philippines", "hybrid vs inbred rice", "hybrid rice seed rate"],
   "excerpt": "Hybrid rice is palay grown from seed made by crossing two different parent lines. The first generation of that cross grows with extra vigor, so a good hybrid can yield more than an inbred variety on a well managed field. But the vigor lasts only one generation. You must buy new seed every season, the seed costs more, and the crop needs good water and fertilizer to pay back the extra cost.",
-  "heroImage": { "src": "/images/site/photos/palay-heads.jpg", "alt": "Palay panicles filling their grains in a green field, the kind of heavy crop hybrid rice is grown for" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-hybrid-rice.webp",
+    "alt": "A field of ripening rice in an inland valley, the kind of stand farmers plant hybrid rice to get",
+    "credit": "Africa Rice Center, CC BY SA 3.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Every season, seed dealers and technicians push hybrid seed with promises of more cavans. Some farmers swear by it. Others tried it once and went back to their inbred seed.\n\nBoth can be right. This guide explains what makes a rice hybrid different, how it compares with inbred palay, which hybrids are grown here, and how to tell whether one will pay on your field. To compare all varieties, see our guide to [rice varieties in the Philippines](/crops/rice-varieties-philippines)." },
     { "type": "heading", "level": 2, "text": "How hybrid rice works" },

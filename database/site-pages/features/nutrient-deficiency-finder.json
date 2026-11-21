@@ -17,9 +17,9 @@
  ],
  "excerpt": "The nutrient deficiency finder in anee.io turns yellow, purple or burnt leaves into an answer. Pick your crop and say where the change started and what it looks like. It then lists the nutrients your crop is likely short of. Each one comes with how to be sure, what to apply and the fertilizers sold in the Philippines that supply it.",
  "heroImage": {
-  "src": "/images/site/deficiencies/general-k.webp",
-  "alt": "Leaf edges scorched brown from potassium deficiency, the kind of sign the nutrient deficiency finder reads",
-  "credit": "Scot Nelson, CC0 1.0, via Flickr"
+   "src": "/images/site/guides/features-nutrient-deficiency-finder.webp",
+   "alt": "A grape leaf turning red at the edges, the kind of sign a nutrient deficiency finder helps you read",
+   "credit": "kvins.com, CC BY 2.0, via Wikimedia Commons"
  },
  "blocks": [
   {

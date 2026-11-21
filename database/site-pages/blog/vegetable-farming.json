@@ -10,7 +10,11 @@
   "focusKeyword": "vegetable farming",
   "keywords": ["vegetable farming", "farming of vegetables", "vegetable crops", "crops and vegetables", "lowland vegetables", "highland vegetables"],
   "excerpt": "Vegetable farming can earn more per square meter than most field crops, because many vegetable crops are ready in one to three months and sell for a good price. But vegetables need more care: steady water, rich soil, careful pest control and a buyer lined up before harvest. This guide walks through farming of vegetables from choosing the crop to selling it, for both lowland and highland farms.",
-  "heroImage": { "src": "/images/site/guides/blog-farm-app-for-vegetable-growers.webp", "alt": "Vegetable beds of different crops on a small farm in Santa Maria, Bulacan, a typical vegetable farming setup", "credit": "FBenjr123, CC BY SA 4.0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-vegetable-farming.webp",
+    "alt": "Raised beds of leafy vegetables along a muddy stream, small scale vegetable farming",
+    "credit": "Mammysou17, CC BY SA 4.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "A small vegetable plot can feed a family and pay school fees, while a bad season can wipe out the capital. The difference is usually planning, not luck.\n\nThis guide covers each step of vegetable farming: the market, the crop, the soil, planting, feeding, water, pests and selling. For a list of the vegetables grown here and their seasons, see [vegetables in the Philippines](/crops/vegetables-philippines), and for the Tagalog version of these steps, [pagtatanim ng gulay](/crops/pagtatanim-ng-gulay)." },
     { "type": "heading", "level": 2, "text": "Step 1: start vegetable farming from the market" },

@@ -10,7 +10,11 @@
   "focusKeyword": "soil degradation",
   "keywords": ["soil degradation", "degraded soil", "causes of soil degradation", "soil fertility loss", "restore soil", "soil compaction"],
   "excerpt": "Soil degradation is the slow loss of a soil's ability to grow crops. The topsoil washes away, organic matter burns off, nutrients run down, and the soil turns hard, acid or salty. A degraded soil needs more fertilizer every year for the same harvest. The good news is that most degraded soil on Filipino farms can be brought back with organic matter, cover, the right amendments and less damage from tillage.",
-  "heroImage": { "src": "/images/site/land/sodic-alkaline-soil-preparation.webp", "alt": "Hard plowed clods under a white salt crust, a field showing soil degradation", "credit": "Michaila vnuk, CC BY SA 4.0, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-soil-degradation.webp",
+    "alt": "Bare ground breaking away into a raw cliff where the topsoil is gone, a sign of soil degradation",
+    "credit": "Gladys Gibbs, CC BY SA 4.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Soil does not wear out in one season. It degrades quietly, a little each year, until a farmer notices that the same field needs twice the fertilizer it used to.\n\nThis guide explains the kinds and causes of soil degradation, the signs to watch for, and the steps that restore a degraded soil. For the erosion side of the problem in detail, see our guide on [soil erosion](/blog/soil-erosion)." },
     { "type": "heading", "level": 2, "text": "What soil degradation means" },

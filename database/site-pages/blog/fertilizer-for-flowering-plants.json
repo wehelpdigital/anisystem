@@ -10,7 +10,11 @@
   "focusKeyword": "fertilizer for flowering plants",
   "keywords": ["fertilizer for flowering plants", "bloom fertilizer", "fertilizer for bougainvillea", "fertilizer for gumamela", "high phosphorus fertilizer", "leaves but no flowers"],
   "excerpt": "A good fertilizer for flowering plants does two jobs. First it feeds the leaves and roots so the plant is strong enough to bloom. Then, a few weeks before the buds form, it gives more phosphorus and potassium and less nitrogen, so the plant puts its energy into flowers instead of new leaves. That simple switch works for gumamela, bougainvillea, roses, sampaguita and orchids, and for flowering crops like ampalaya and tomato.",
-  "heroImage": { "src": "/images/site/guides/blog-fertilizer-for-orchids.webp", "alt": "Rows of young orchids in clay pots on benches under shade netting, flowering plants that need a light, regular fertilizer", "credit": "Judgefloro, Public domain, via Wikimedia Commons" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-fertilizer-for-flowering-plants.webp",
+    "alt": "Potted crown of thorns and croton plants in bloom along a garden walk, the kind of plants a fertilizer for flowering plants feeds",
+    "credit": "Dolon Prova, CC BY SA 4.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Many plant owners feed their plants often and still get few flowers. Usually the fertilizer is not the wrong brand. It is the wrong balance, or it comes at the wrong time.\n\nThis guide explains what each nutrient does for blooms, how to read the numbers on the sack, when to feed, and why a plant can stay green and leafy without a single flower. For the basics of feeding any plant, start with our guide on [fertilizer for plants](/blog/fertilizer-for-plants)." },
     { "type": "heading", "level": 2, "text": "What flowering plants need from fertilizer" },

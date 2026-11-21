@@ -10,7 +10,11 @@
   "focusKeyword": "corn scientific name",
   "keywords": ["corn scientific name", "Zea mays", "scientific name of maize", "corn family", "sweet corn scientific name", "types of corn"],
   "excerpt": "The corn scientific name is Zea mays. Corn belongs to the grass family, Poaceae, the same family as palay, sugarcane and sorghum. The botanist Carl Linnaeus gave it that name in 1753, so you will often see it written as Zea mays L. In the Philippines we call it mais, and it is the second most planted grain crop after rice.",
-  "heroImage": { "src": "/images/site/corn-rows.jpg", "alt": "Rows of young corn, the plant whose scientific name is Zea mays, growing in a field" },
+  "heroImage": {
+    "src": "/images/site/guides/blog-corn-scientific-name.webp",
+    "alt": "Close up of the male flowers of Zea mays, the corn scientific name, hanging from the tassel",
+    "credit": "Rasbak, CC BY SA 3.0, via Wikimedia Commons"
+  },
   "blocks": [
     { "type": "text", "text": "Every plant has one scientific name that botanists everywhere agree on. Local names change from town to town, but the scientific name stays the same. So when a seed catalog, a pesticide label or a school book says Zea mays, it means the same corn you plant in your field.\n\nThis guide explains what the name means, where corn sits in the plant family tree, and the scientific names of the corn types Filipino farmers grow." },
     { "type": "heading", "level": 2, "text": "What the corn scientific name means" },
