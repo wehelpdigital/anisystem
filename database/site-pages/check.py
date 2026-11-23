@@ -51,7 +51,9 @@ SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/
              # How to Plant (2026-10-19): the hub, and the members' tool a page opens (guests are asked to sign in).
              "/how-to-plant", "/app/how-to-plant",
              # The Nutrients guides (2026-10-30): one page per plant nutrient and the overview.
-             "/nutrients"}
+             "/nutrients",
+             # The landing pages for farm management searches (2026-11-18 app, 2026-11-24 software and farm management).
+             "/best-farm-management-app-philippines", "/best-farm-management-software-philippines", "/best-farm-management-philippines"}
 
 
 def url_map():

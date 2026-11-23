@@ -81,7 +81,28 @@ class PublicController extends Controller
      */
     public function bestApp()
     {
-        $facts = \Illuminate\Support\Facades\Cache::remember('public.best-app-facts', 3600, function () {
+        return view('public.best-farm-app', ['facts' => $this->landingFacts()]);
+    }
+
+    /**
+     * The farm management software page (2026-11-24, the owner: anee.io shows for "best farm management app in ph"
+     * but "for best farm management software in ph or just best farm management in ph, anee is nowhere").
+     */
+    public function bestSoftware()
+    {
+        return view('public.best-farm-software', ['facts' => $this->landingFacts()]);
+    }
+
+    /** Farm management in the Philippines (2026-11-24, same ask): the practice, and the system that carries it. */
+    public function farmManagement()
+    {
+        return view('public.farm-management', ['facts' => $this->landingFacts()]);
+    }
+
+    /** The live counts the landing pages print, rounded down and kept an hour. */
+    private function landingFacts(): array
+    {
+        return \Illuminate\Support\Facades\Cache::remember('public.best-app-facts', 3600, function () {
             $down = fn (int $n, int $step) => $n >= $step ? number_format(intdiv($n, $step) * $step) : (string) $n;
             $stages = \App\Support\HowItWorks::stages();
             $out = [
@@ -100,8 +121,6 @@ class PublicController extends Controller
 
             return $out;
         });
-
-        return view('public.best-farm-app', ['facts' => $facts]);
     }
 
     /** Anee Auto (2026-10-29): the season Anee plans and re-plans every morning, step by step. */

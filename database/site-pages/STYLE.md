@@ -267,7 +267,9 @@ season (a "cropping schedule"). It has:
 
 Site: / (home), /features, /pricing, /about, /tutorial, /contact, /signup,
 /crops, /problems, /pests, /diseases, /weeds, /land-preparation, /blog,
-/rice-varieties
+/rice-varieties, and the farm management landing pages
+/best-farm-management-app-philippines, /best-farm-management-software-philippines,
+/best-farm-management-philippines
 
 How to plant (2026-10-19): /how-to-plant is the hub, and every crop has a page
 at /how-to-plant/{crop}, for example /how-to-plant/rice,

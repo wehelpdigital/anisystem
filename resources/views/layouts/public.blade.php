@@ -303,7 +303,7 @@
                     <a href="{{ route('home') }}" class="nav-xl nav-home hover:text-brand-600 {{ request()->routeIs('home', 'ph.home') ? 'text-brand-700' : '' }}">Home</a>
                     {{-- How It Works, with Features under it (2026-10-01). The words themselves still open the steps. --}}
                     <div class="relative" x-data="{ h: false }" @mouseenter="h = true" @mouseleave="h = false" @focusin="h = true" @focusout="h = $el.contains($event.relatedTarget)">
-                        <a href="{{ route('how') }}" class="inline-flex items-center gap-1 whitespace-nowrap hover:text-brand-600 {{ request()->routeIs('how', 'ph.how', 'how.why', 'ph.how.why', 'how.vs', 'ph.how.vs', 'how.auto', 'ph.how.auto', 'how.easy', 'ph.how.easy', 'best.app', 'ph.best.app', 'features', 'ph.features', 'site.features.show') ? 'text-brand-700' : '' }}" :aria-expanded="h">
+                        <a href="{{ route('how') }}" class="inline-flex items-center gap-1 whitespace-nowrap hover:text-brand-600 {{ request()->routeIs('how', 'ph.how', 'how.why', 'ph.how.why', 'how.vs', 'ph.how.vs', 'how.auto', 'ph.how.auto', 'how.easy', 'ph.how.easy', 'best.app', 'ph.best.app', 'best.software', 'ph.best.software', 'farm.management', 'ph.farm.management', 'features', 'ph.features', 'site.features.show') ? 'text-brand-700' : '' }}" :aria-expanded="h">
                             How It Works
                             <svg class="w-3.5 h-3.5 transition-transform duration-300" :class="h && 'rotate-180'" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                         </a>
@@ -332,6 +332,10 @@
                                 <a href="{{ route('best.app') }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50 {{ request()->routeIs('best.app', 'ph.best.app') ? 'bg-brand-50' : '' }}">
                                     <span class="block text-sm font-bold text-gray-900">Farm Management App</span>
                                     <span class="block text-xs font-medium text-gray-500">Why farms here choose anee.io</span>
+                                </a>
+                                <a href="{{ route('best.software') }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50 {{ request()->routeIs('best.software', 'ph.best.software') ? 'bg-brand-50' : '' }}">
+                                    <span class="block text-sm font-bold text-gray-900">Farm Management Software</span>
+                                    <span class="block text-xs font-medium text-gray-500">One system for the season, stock, crew and money</span>
                                 </a>
                                 <a href="{{ route('features') }}" class="block rounded-xl px-3 py-2.5 hover:bg-brand-50 {{ request()->routeIs('features', 'ph.features', 'site.features.show') ? 'bg-brand-50' : '' }}">
                                     <span class="block text-sm font-bold text-gray-900">Features</span>
@@ -419,6 +423,7 @@
                 ['how.auto', 'Anee Auto', 'M12 8v4l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z'],
                 ['how.easy', 'Easy to Use', 'M14 10h4.8a2 2 0 011.9 2.6l-2.4 7A2 2 0 0116.4 21H9a2 2 0 01-2-2v-8.4a2 2 0 01.6-1.4l4.2-4.2a1.5 1.5 0 012.5 1.2L14 10zM3 11h3v10H3z'],
                 ['best.app', 'Farm Management App', 'M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z'],
+                ['best.software', 'Farm Management Software', 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'],
                 ['features', 'Features', 'M4 5h6v6H4zM14 5h6v6h-6zM4 15h6v4H4zM14 15h6v4h-6z'],
                 ['pricing', 'Pricing', 'M7 7h.01M3 12l9-9h8v8l-9 9-8-8z'],
                 ['pricing.compare', 'Compare plans', 'M9 17V7m0 10H5a2 2 0 01-2-2V9a2 2 0 012-2h4m0 10h6m-6-10h6m0 10V7m0 10h4a2 2 0 002-2V9a2 2 0 00-2-2h-4'],
@@ -522,6 +527,8 @@
                         <li><a href="{{ route('how.auto') }}">Anee Auto</a></li>
                         <li><a href="{{ route('how.easy') }}">Easy to use</a></li>
                         <li><a href="{{ route('best.app') }}">Best farm management app in the Philippines</a></li>
+                        <li><a href="{{ route('best.software') }}">Best farm management software in the Philippines</a></li>
+                        <li><a href="{{ route('farm.management') }}">Farm management in the Philippines</a></li>
                         <li><a href="{{ route('features') }}">Features</a></li>
                         <li><a href="{{ url('/ask-anee') }}">Ask Anee for free</a></li>
                         <li><a href="{{ url('/questions') }}">Farmers' questions</a></li>

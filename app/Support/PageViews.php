@@ -271,7 +271,7 @@ final class PageViews
             in_array($first, ['how-it-works', 'features-tour'], true) => 'how-it-works',
             $first === 'ask-anee' => 'ask-anee',
             $first === 'start' => 'ad-landing',
-            $first === 'best-farm-management-app-philippines' => 'best-app',
+            in_array($first, ['best-farm-management-app-philippines', 'best-farm-management-software-philippines', 'best-farm-management-philippines'], true) => 'best-app',
             in_array($first, ['legal', 'privacy', 'terms', 'cookies'], true) => 'legal',
             in_array($first, ['about', 'contact'], true) => 'about',
             default => 'other',
@@ -410,7 +410,7 @@ final class PageViews
         $mine = [
             'home' => 'Home page', 'pricing' => 'Pricing and checkout', 'account' => 'Sign up and log in',
             'how-it-works' => 'How it works', 'ask-anee' => 'Ask Anee', 'ad-landing' => 'Ad landing page',
-            'best-app' => 'Best farm app page', 'legal' => 'Legal pages', 'about' => 'About and contact',
+            'best-app' => 'Best farm app pages', 'legal' => 'Legal pages', 'about' => 'About and contact',
             'app' => 'Inside the app', 'other' => 'Other pages',
         ];
 

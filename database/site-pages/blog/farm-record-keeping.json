@@ -232,6 +232,7 @@
       "type": "links",
       "title": "Related guides",
       "items": [
+        {"label": "Farm management in the Philippines", "url": "/best-farm-management-philippines"},
         {
           "label": "Farm records for loans and insurance",
           "url": "/blog/farm-records-for-loans-and-insurance"

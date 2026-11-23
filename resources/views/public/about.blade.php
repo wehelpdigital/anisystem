@@ -55,8 +55,10 @@
                     <span class="hp-mark"><span class="hp-shimmer">{{ $ph ? 'Filipino Farmers.' : 'Every Farmer.' }}</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M6 13 Q 150 27, 294 5"/></svg></span>
                 </h1>
                 <p class="ab-lede animate-fade-up" style="animation-delay:.12s">
-                    anee.io started as the system our own agronomists and technicians use on client farms. Now it is open
-                    to every farmer, with one goal: a higher yield and a better income from the same land.
+                    {{-- 2026-11-24, the owner: we use it on our own farms to get the most from them, and now share it with
+                         farmers (it was "used on client farms"). --}}
+                    anee.io started as the system we use on our own farms to get the highest yield from every hectare.
+                    Now we are sharing it with {{ $ph ? 'every Filipino farmer' : 'every farmer' }}, with one goal: a higher yield and a better income from the same land.
                 </p>
                 <div class="ab-ctas animate-fade-up" style="animation-delay:.18s">
                     <a href="{{ $signup }}" class="btn btn-accent btn-lg hp-go">Create your free account {!! $arrow !!}</a>
@@ -101,7 +103,7 @@
             <ol class="ab-chapters">
                 @foreach ([
                     ['Years in the field', 'Our team has helped farmers grow bigger harvests of ' . \App\Support\Region::t('rice') . ', ' . \App\Support\Region::t('corn') . ' and more through research, technician support, fertilization and farm management, with results recognized here and abroad.', 'team-thumbs', 'Two farmers giving a thumbs up beside their rice field'],
-                    ['The system behind the results', 'To run client farms well, our technicians built a cropping schedule manager: every task counted from day zero, every cost written down, every season kept on record.', 'transplant', 'A farmer following his plan on a phone at transplanting time'],
+                    ['The system behind the results', 'To get the most from our own farms, our agronomists and technicians built a cropping schedule manager: every task counted from day zero, every cost written down, every season kept on record.', 'transplant', 'A farmer following his plan on a phone at transplanting time'],
                     ['Now in your hands', 'anee.io puts that same system on your phone, with Anee, the smart farm technician, to answer when a technician cannot be there.', 'anee-chat-hand', 'A hand holding a phone with Anee answering in the middle of a rice field'],
                 ] as $i => [$t, $p, $img, $alt])
                     @php $ch = $pic($img); @endphp

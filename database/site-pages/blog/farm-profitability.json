@@ -198,6 +198,7 @@
       "type": "links",
       "title": "Related guides",
       "items": [
+        {"label": "Farm management in the Philippines", "url": "/best-farm-management-philippines"},
         {
           "label": "Cost of producing rice per hectare",
           "url": "/blog/cost-of-producing-rice-per-hectare"
