@@ -292,8 +292,9 @@ final class PageViews
             if ($crop === null && $second) {
                 $crop = self::cropOf(explode('-', strtolower($second)));
             }
-            // A pest, disease or weed page's address may not name its crop; its title usually does.
-            if ($crop === null && $title && in_array($section, ['pests', 'diseases', 'weeds', 'nutrient-deficiencies', 'problems', 'questions'], true)) {
+            // A pest, disease or weed page's address may not name its crop; its title usually does. Not a section's
+            // own list page, whose title names several crops ("Palay, Mais, Pests").
+            if ($crop === null && $second && $title && in_array($section, ['pests', 'diseases', 'weeds', 'nutrient-deficiencies', 'problems', 'questions'], true)) {
                 $crop = self::cropOf(preg_split('/[^\p{L}]+/u', mb_strtolower($title), -1, PREG_SPLIT_NO_EMPTY));
             }
         }
