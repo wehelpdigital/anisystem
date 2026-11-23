@@ -7,7 +7,7 @@
 {{-- Arrived through "Edit profile" on the community profile: the arrow
      leads back there, so editing is a detour and not a dead end. --}}
 @if (request()->query('from') === 'community')
-    @section('back', route('community.connect.profile', ['userId' => auth()->id()]))
+    @section('back', \App\Support\Community::open() ? route('community.connect.profile', ['userId' => auth()->id()]) : route('app.dashboard'))
 @endif
 
 @section('content')

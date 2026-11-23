@@ -8,7 +8,8 @@
     // not so anyone can go and look at it: there is no wall to read, nobody
     // to follow, and nothing there but the answers already on this page.
     // Gated here, so every screen that draws a member gets it for free.
-    $doLink = ($link ?? true) && $user && ! $user->is_assistant;
+    // No link to a profile while the Community is closed (App\Support\Community, 2026-11-24).
+    $doLink = ($link ?? true) && $user && ! $user->is_assistant && \App\Support\Community::open();
     $hue = \App\Support\CommunityAvatar::hue(optional($user)->full_name ?: '?');
     $photo = optional($user)->avatarPath;
     /* Her face, wherever she turns up.

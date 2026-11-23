@@ -5,7 +5,13 @@
      A card with Anee in a turning halo, the sun, the rain and the crop circling her (2026-10-28, again the owner). It
      opens the tour (app.how-tour) full screen in partials/story-modal's shell: fetched the first time, Anee's face
      while it loads, drawn once. #how-it-works in the address opens it on arrival. --}}
-@php $hwcStages = \App\Support\HowItWorks::stages(); @endphp
+@php
+    $hwcStages = \App\Support\HowItWorks::stages();
+    // Without the Community's tool while it is closed (App\Support\Community, 2026-11-24).
+    if (! \App\Support\Community::open()) {
+        $hwcStages = array_map(fn ($st) => array_replace($st, ['items' => array_values(array_filter($st['items'], fn ($it) => $it && $it['key'] !== 'community'))]), $hwcStages);
+    }
+@endphp
 @include('partials.story-modal')
 
 @push('head')

@@ -393,7 +393,7 @@
 </div>{{-- /plaza-center --}}
 <aside class="plaza-side plaza-side-right">
     {{-- The rail is the reader's own chats and feed, which belong to their own account. --}}
-    @if (\App\Support\WorkerContext::canUseCommunity())
+    @if (\App\Support\WorkerContext::canUseCommunity() && \App\Support\Community::open())
         @include('community.partials.plaza-rail', ['rail' => ['posts', 'chats', 'discussions']])
     @endif
 </aside>

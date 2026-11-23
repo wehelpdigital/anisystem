@@ -11,6 +11,10 @@
     use Illuminate\Support\Facades\Route;
 
     $htStages = HowItWorks::stages();
+    // The Community's tool stays out of the tour while it is closed (App\Support\Community, 2026-11-24).
+    if (! \App\Support\Community::open()) {
+        $htStages = array_map(fn ($st) => array_replace($st, ['items' => array_values(array_filter($st['items'], fn ($it) => $it && $it['key'] !== 'community'))]), $htStages);
+    }
     $htFace = fn (string $f) => \App\Support\AneeEmoji::url($f);
     // A tool's door inside the app, the way the public tour's app mode finds it.
     $htLink = function (array $it) {

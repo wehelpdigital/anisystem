@@ -304,7 +304,14 @@
                              owner): there a tap opens the notice that the
                              Community lives in the worker's own account, with
                              the switch (partials.worker-community-switch). --}}
-                        <a href="{{ route('community.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('community.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Community</a>
+                        @if (\App\Support\Community::open())
+                            <a href="{{ route('community.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('community.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Community</a>
+                        @else
+                            {{-- The Community is closed for now (App\Support\Community, 2026-11-24): the Tech Blog it carried
+                                 gets its own link, and the Shop, coming soon, takes the Community's place. --}}
+                            <a href="{{ route('community.blog') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('community.blog', 'community.blog.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Blog</a>
+                            <a href="{{ route('shop.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('shop.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Shop</a>
+                        @endif
                         {{-- Tutorials left this row: the How-to-use module is
                              that door now, and two ways in read as two
                              different things. The page itself still answers
@@ -851,10 +858,18 @@
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 5h13v13a2 2 0 002 2H6a2 2 0 01-2-2V5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 9h3v9a2 2 0 01-2 2M8 9h5M8 13h5M8 17h3"/></svg>
             <span>Blog</span>
         </a>
-        <a href="{{ route('community.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('community.*') && ! $__onBlog ? 'is-active' : '' }}">
-            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
-            <span>Community</span>
-        </a>
+        @if (\App\Support\Community::open())
+            <a href="{{ route('community.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('community.*') && ! $__onBlog ? 'is-active' : '' }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
+                <span>Community</span>
+            </a>
+        @else
+            {{-- The Community is closed for now (2026-11-24, the owner): its seat goes to the Shop, coming soon. --}}
+            <a href="{{ route('shop.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('shop.*') ? 'is-active' : '' }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l1.2-4.2A2 2 0 016.1 3.5h11.8a2 2 0 011.9 1.3L21 9M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9M3 9h18M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+                <span>Shop</span>
+            </a>
+        @endif
     </nav>
 
     {{-- Navigation veil: the app answers a tap on a place-to-go immediately,
@@ -1064,7 +1079,7 @@
          card there opens a chat window inside it. --}}
     @auth
         @php $msgrHome = request()->is('app') || request()->routeIs('app.dashboard'); @endphp
-        @if (\App\Support\WorkerContext::canUseCommunity() && ($msgrHome || request()->is('app/community') || request()->is('app/community/*')))
+        @if (\App\Support\WorkerContext::canUseCommunity() && \App\Support\Community::open() && ($msgrHome || request()->is('app/community') || request()->is('app/community/*')))
             @include('community.partials.messenger', ['launcher' => ! $msgrHome])
             {{-- Emoji picker + photo lightbox for the dock (guarded singletons —
                  safe even when the page already includes them). --}}

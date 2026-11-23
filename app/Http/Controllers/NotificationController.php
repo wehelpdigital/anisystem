@@ -19,6 +19,7 @@ class NotificationController extends Controller
 
         $items = AnisystemNotification::active()
             ->forUser($userId)
+            ->shown()
             ->orderByDesc('id')
             ->limit(30)
             ->get()
@@ -81,7 +82,7 @@ class NotificationController extends Controller
     public function count()
     {
         $userId = Auth::id();
-        $latest = AnisystemNotification::active()->forUser($userId)->unread()->orderByDesc('id')->first();
+        $latest = AnisystemNotification::active()->forUser($userId)->shown()->unread()->orderByDesc('id')->first();
 
         return response()->json([
             'success' => true,
@@ -121,6 +122,6 @@ class NotificationController extends Controller
 
     private function unreadCount($userId): int
     {
-        return AnisystemNotification::active()->forUser($userId)->unread()->count();
+        return AnisystemNotification::active()->forUser($userId)->shown()->unread()->count();
     }
 }

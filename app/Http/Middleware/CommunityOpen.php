@@ -23,6 +23,14 @@ class CommunityOpen
 {
     public function handle(Request $request, Closure $next): Response
     {
+        /* The Community closed for now (App\Support\Community, 2026-11-24): a page of it, opened from an old link or a
+         * notification, lands on Home (a public post link on the website's home). Its JSON endpoints keep answering,
+         * because nothing on screen calls them any more and a half finished request should not break. */
+        if ($request->isMethod('GET') && ! $request->expectsJson() && ! $request->ajax()
+            && \App\Support\Community::isSocialPath($request->path()) && ! \App\Support\Community::open()) {
+            return redirect($request->is('pw/*') ? '/' : '/app');
+        }
+
         if (! $request->is('app/community*')) {
             return $next($request);
         }

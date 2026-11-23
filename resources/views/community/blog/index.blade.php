@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Technician\'s Blog · Community')
+@section('title', \App\Support\Community::open() ? 'Technician\'s Blog · Community' : 'Technician\'s Blog')
 @section('body-class', 'plaza-ground')
-@section('page-title', 'Community')
+{{-- "Blog" while the Community is closed (App\Support\Community, 2026-11-24). --}}
+@section('page-title', \App\Support\Community::open() ? 'Community' : 'Blog')
 @section('help-key', 'community-blog')
 @section('page-subtitle', 'Technician\'s Blog')
 
@@ -252,7 +253,10 @@
 @endpush
 
 @section('content')
+{{-- The Community's sections, only while it is open (App\Support\Community, closed for now since 2026-11-24). --}}
+@if (\App\Support\Community::open())
 @include('community.partials.nav', ['active' => 'blog'])
+@endif
 
 {{-- Two columns on a wide screen: the page, and its rail (the wall, your chats, the rooms). --}}
 <div class="plaza-shell">
@@ -341,7 +345,7 @@
 </div>{{-- /plaza-center --}}
 <aside class="plaza-side plaza-side-right">
     {{-- The rail is the reader's own chats and feed, which belong to their own account. --}}
-    @if (\App\Support\WorkerContext::canUseCommunity())
+    @if (\App\Support\WorkerContext::canUseCommunity() && \App\Support\Community::open())
         @include('community.partials.plaza-rail', ['rail' => ['posts', 'chats', 'discussions']])
     @endif
 </aside>

@@ -882,7 +882,8 @@
             {{-- Neither for a worker standing in somebody else's farm: the
                  community is not part of a worker's account, so its level
                  and its seat have nothing to say on this greeting. --}}
-            @if (\App\Support\WorkerContext::canUseCommunity())
+            {{-- And not while the Community is closed (App\Support\Community, 2026-11-24). --}}
+            @if (\App\Support\WorkerContext::canUseCommunity() && \App\Support\Community::open())
                 @include('community.partials.rank-badge', ['rankUser' => $user, 'rankChipLike' => true])
                 {{-- And your seat, on the days you hold one. It is the fact most
                      worth seeing on your own greeting, because it is the one that
@@ -1410,7 +1411,8 @@
                 </div>
             @endif
 
-            @if (\App\Support\WorkerContext::canUseCommunity())
+            {{-- The News Feed, only while the Community is open (closed for now since 2026-11-24). --}}
+            @if (\App\Support\WorkerContext::canUseCommunity() && \App\Support\Community::open())
             <div>
                 <div class="flex items-center justify-between gap-3 mb-3 px-1">
                     {{-- The signpost, drawn, in place of the house emoji.
@@ -1517,8 +1519,9 @@
                 </section>
             @endif
 
-            @if (! \App\Support\WorkerContext::canUseCommunity())
-                {{-- No discussions for a worker: the community is not part of a worker's account. --}}
+            @if (! \App\Support\WorkerContext::canUseCommunity() || ! \App\Support\Community::open())
+                {{-- No discussions for a worker: the community is not part of a worker's account. Nor for anyone
+                     while the Community is closed (2026-11-24). --}}
             @elseif ($latestDiscussions->isEmpty())
                 {{-- Nothing has been said yet. A list headed "Latest
                      Discussions" with one grey row saying so is a card that

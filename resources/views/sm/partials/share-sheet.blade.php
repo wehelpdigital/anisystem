@@ -43,13 +43,15 @@
             </div>
         </div>
 
-        {{-- Community PM --}}
+        {{-- Community PM, only while the Community is open (App\Support\Community). --}}
+        @if (\App\Support\Community::open())
         <div>
             <label class="form-label">Send to a cofarmer</label>
             <div id="shareCofarmers" class="space-y-1 max-h-56 overflow-y-auto rounded-xl border border-gray-100 p-1">
                 <p class="text-sm text-gray-400 px-2 py-3 text-center" id="shareCofarmersHint">Loading…</p>
             </div>
         </div>
+        @endif
     </div>
 </div>
 
@@ -100,6 +102,7 @@
     async function loadCofarmers() {
         if (cofarmersLoaded) return;
         const box = $('shareCofarmers');
+        if (!box) return;   // the Community is closed: no cofarmer list on this sheet
         try {
             const res = await window.api(COFARMERS_URL);
             const items = (res.data && res.data.items) || [];

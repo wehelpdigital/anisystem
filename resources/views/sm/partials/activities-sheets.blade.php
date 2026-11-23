@@ -1770,7 +1770,8 @@
                 More…
             </button>
         </div>
-        {{-- Send this day straight to a community connection --}}
+        {{-- Send this day straight to a community connection (only while the Community is open, App\Support\Community). --}}
+        @if (\App\Support\Community::open())
         <div>
             <label class="form-label">Send to a cofarmer</label>
             <div class="js-share-cofarmers space-y-1 max-h-52 overflow-y-auto rounded-xl border border-gray-100 p-1" data-link-input="dayShareLink">
@@ -1778,6 +1779,7 @@
             </div>
             <p class="form-hint">Only your accepted connections show here. They open the public link with no login.</p>
         </div>
+        @endif
     </div>
 </div>
 
@@ -1812,6 +1814,7 @@
             </div>
         </div>
 
+        @if (\App\Support\Community::open())
         <div class="border-t border-gray-200"></div>
 
         <div>
@@ -1821,6 +1824,7 @@
                 <p class="text-sm text-gray-400 px-2 py-3 text-center">Loading…</p>
             </div>
         </div>
+        @endif
 
         <div class="border-t border-gray-200"></div>
 

@@ -66,6 +66,10 @@ class UpdateLastSeen
      */
     private function cheerRankUp(int $userId): void
     {
+        // The ladder lives in the Community, closed for now (App\Support\Community): no bell for a page nobody can open.
+        if (! \App\Support\Community::open()) {
+            return;
+        }
         $last = (int) \Illuminate\Support\Facades\DB::table('anisystem_users')
             ->where('id', $userId)->value('lastRankNotified');
         $rank = \App\Support\CommunityRank::rankFor($userId);

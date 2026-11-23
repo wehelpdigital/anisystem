@@ -193,6 +193,14 @@ class AppController extends Controller
 
         $meId = (int) $user->id;
 
+        // The Community closed for now (App\Support\Community, 2026-11-24): its feed and discussions are not drawn,
+        // so they are not asked for either.
+        $latestDiscussions = collect();
+        $connectedWall = collect();
+        $wallFollowing = [];
+        $wallSaved = [];
+        $friendIds = [];
+        if (\App\Support\Community::open()) {
         // Community — latest discussion posts from the groups I belong to,
         // loaded like the wall (with replies + reactions) so the dashboard can
         // render the real post card + inline reply box.
@@ -268,6 +276,7 @@ class AppController extends Controller
          * handing it the facts here, so the identical post said less on the
          * homepage than it did one page over. */
         $social->attachAuthorFacts($connectedWall, $meId);
+        }
 
         // AI — my most recent chats.
         $recentChats = \App\Models\AiConversation::where('userId', $meId)
