@@ -1,0 +1,61 @@
+{
+    "section": "blog",
+    "slug": "paano-pataasin-ang-ani-ng-palay",
+    "sortOrder": -7693,
+    "lang": "tl",
+    "category": "Palay",
+    "title": "Paano Pataasin ang Ani ng Palay: Siyam na Pagsusuri Mula Binhi Hanggang Pagpapatuyo",
+    "metaTitle": "Paano Pataasin ang Ani ng Palay Bawat Ektarya",
+    "metaDescription": "Paano pataasin ang ani ng palay: magandang binhi, patag na bukid, abono ayon sa yugto, tamang tubig, maagang pagpuksa ng peste at tamang oras ng anihan.",
+    "focusKeyword": "paano pataasin ang ani ng palay",
+    "keywords": ["paano pataasin ang ani ng palay", "ani ng palay bawat ektarya", "pampataas ng ani ng palay", "cavan bawat ektarya", "increase rice yield per hectare"],
+    "excerpt": "Paano pataasin ang ani ng palay? Hanapin at ayusin ang pinakamahinang bahagi ng iyong taniman, sa halip na magdagdag lang ng abono. Siyam na pagsusuri ang sumasaklaw sa buong taniman, mula sa magandang binhi at patag na bukid hanggang sa sapat na tubig at tamang anihan. Umabot sa halos 7 tonelada bawat ektarya sa tag araw ang mga trial na sumunod dito, samantalang nasa 4 tonelada ang karaniwang ani sa bansa. Inilalagay ng anee.io ang bawat pagsusuri sa kalendaryong may petsa para sa bawat lote.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-paano-pataasin-ang-ani-ng-palay.webp",
+      "alt": "Kamay na may hawak na malusog at mabigat na uhay ng palay, ang layunin ng pagpapataas ng ani ng palay",
+      "credit": "Photobyamin, CC BY SA 4.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Tatlong numero ang bumubuo sa ani mo: ilang uhay ang nakatayo sa bawat metro kwadrado, ilang butil ang napupuno sa bawat uhay, at gaano kabigat ang mga butil na iyon. Bawat magandang gawain ay nagdaragdag o nagpoprotekta sa isa sa tatlong ito. Kaya bago bumili ng isa pang sako ng urea, itanong muna kung alin sa tatlo ang kulang sa bukid mo.\n\nGumagana ang listahan sa ibaba sa isang kapat na ektarya man o sampung ektarya. Sakop nito ang buong taniman, mula binhi hanggang pagpapatuyo."},
+        {"type": "list", "ordered": false, "items": ["**Bilangin ang uhay, hindi ang sako.** Layunin ang 300 uhay bawat metro kwadrado sa lipat tanim at 350 sa sabog tanim.", "**Magsimula sa magandang binhi.** Kaya ng magandang binhi na itaas ang ani nang 5 hanggang 20 porsyento.", "**Mag abono ayon sa yugto.** Pinakamahalaga ang sustansya mula pagsusuwi hanggang paglilihi at pamumulaklak.", "**Umani sa tamang oras.** Umani kapag 85 hanggang 90 porsyento na ng butil ang ginintuan.", "**Itala ang ani bawat lote.** Mas maaasahan ang aning nakasulat kaysa sa aning naaalala lang."]},
+        {"type": "heading", "level": 2, "text": "Bakit hindi tumataas ang ani ng palay ko?"},
+        {"type": "text", "text": "Sa karamihan ng bukid, nasa pamamahala ang problema, hindi sa barayti. Sa mga pagsusuri ng maayos na pamamahala ng palay sa Nueva Ecija, Isabela at Albay, umabot sa 7 tonelada bawat ektarya ang ani sa tag araw. Malayo iyon sa 4 toneladang karaniwan noon.\n\nKulang din ang abono sa maraming bukid. Sa isang survey ng mga bukid na may irigasyon, mga 9 kilo lang ng phosphorus bawat ektarya ang nailalagay sa tag ulan, samantalang 28 kilo ang karaniwang rekomendasyon. Halos ganoon din ang kulang sa potassium. Kaya sa karamihan ng bukid, ang pagtaas ng ani ay nagsisimula sa pagpuno sa mga kakulangang ito, hindi sa bagong barayti."},
+        {"type": "heading", "level": 2, "text": "Paano pataasin ang ani ng palay: ang siyam na pagsusuri"},
+        {"type": "text", "text": "Ang magandang pamamahala ay siyam na pagsusuring nakikita mo mismo sa bukid. May target ang bawat isa, kaya malalaman mo agad kung naabot mo ito. Gamitin ang talahanayan bilang scorecard ng taniman."},
+        {"type": "table", "caption": "Ang siyam na pagsusuri at ang target ng bawat isa", "rows": [
+            ["Pagsusuri", "Target"],
+            ["1. Magandang binhi", "Certified seed ng barayting bagay sa inyong lugar"],
+            ["2. Patag na bukid", "Walang bahaging lubog sa higit 5 cm na tubig, walang nakausling lupa"],
+            ["3. Sabay na pagtatanim", "Pinagpahinga ang bukid nang 30 araw, nagtanim sa loob ng 14 na araw ng iskedyul ng lugar"],
+            ["4. Sapat at malusog na punla", "20 hanggang 40 kilong binhi bawat ektarya, 25 puno bawat metro kwadrado kung lipat tanim"],
+            ["5. Sapat na sustansya", "Walang palatandaan ng kakulangan mula pagsusuwi hanggang pamumulaklak"],
+            ["6. Walang kakulangan sa tubig", "Walang tagtuyot mula punla hanggang malagatas na butil"],
+            ["7. Mababang pinsala ng peste", "Walang malaking nawala sa insekto, sakit, damo, daga, kuhol o ibon"],
+            ["8. Tamang oras ng anihan", "85 hanggang 90 porsyentong ginintuang butil, giniik sa loob ng isa o dalawang araw"],
+            ["9. Tamang pagpapatuyo", "Natuyo sa loob ng 12 hanggang 24 oras hanggang 12 hanggang 14 porsyentong moisture"]
+        ]},
+        {"type": "heading", "level": 3, "text": "Binhi, bukid at punla ang nauuna"},
+        {"type": "text", "text": "Ang unang apat na pagsusuri ang nagtatakda ng bilang ng uhay bago pa maglagay ng abono. Pantay ang tubo ng certified seed, kaya sabay sabay ang paglaki ng tanim. Basahin ang gabay namin sa [paghahanda ng lupa para sa palay](/land-preparation/rice-land-preparation).\n\nMahalaga rin ang patag na bukid. Natutuyo at tinutubuan ng damo ang mataas na bahagi, at nalulunod ang punla sa mababa. Kapag naman huli ka nang ilang linggo sa mga kapitbahay, lilipat sa bukid mo ang pesteng dumami sa kanila."},
+        {"type": "heading", "level": 3, "text": "Sustansya, tubig at proteksyon sa peste"},
+        {"type": "text", "text": "Gumagana lang ang abono sa malusog na tanim, at mas mahalaga ang oras kaysa sa dami. Nasa gabay namin sa [tamang oras ng abono ayon sa yugto](/blog/fertilizer-timing-by-growth-stage) kung kailan dapat ilagay ang bawat dosis. Pagkatapos mag abono, panatilihing sapat ang tubig hanggang pamumulaklak at bantayan ang [mga insekto ng palay](/pests/rice-insects) bago kumalat. Kung natutumba ang palay mo bago anihan, basahin ang [pagdapa ng palay](/blog/pagdapa-ng-palay)."},
+        {"type": "callout", "tone": "tip", "title": "Bilangin ang uhay sa yugtong malakatas", "text": "Maglatag ng kwadradong 1 metro por 1 metro sa tatlong lugar nang pahilis sa bukid, isang metro man lang mula sa pilapil. Bilangin ang uhay sa loob ng bawat isa at kunin ang average. Kung mas mababa sa 300 sa lipat tanim, balikan ang bilang ng punla at ang maagang nitrogen bago sisihin ang barayti."},
+        {"type": "heading", "level": 2, "text": "Paano nakakatulong ang anee.io sa ani ng palay"},
+        {"type": "text", "text": "Inaalis ng anee.io ang hula hula sa mga pagsusuring nagpapasya ng ani. Nilalagyan ng [cropping calendar](/features/cropping-calendar) ng petsa ang bawat gawain mula sa sariling araw ng tanim ng bawat lote, kaya sa tamang araw ang basal at bawat top dressing. Ipinapakita naman ng [growth stages at weather](/features/growth-stages-and-weather) ang yugto ng bawat lote at kung may darating na ulan.\n\nPagkatapos ng anihan, itinatala ng [harvest records](/features/harvest-records) ang ani, moisture, buyer at presyo ng bawat lote. Sa susunod na taniman, mapaghahambing mo ang dalawang taniman, at ipapaliwanag ni Anee, ang smart farm technician, kung ano ang nagbago. Sumasagot siya sa Tagalog o English. Kasama siya sa Libre plus Anee sa halagang PHP 100 kada buwan."},
+        {"type": "cta", "title": "Ilagay ang siyam na pagsusuri sa sarili mong kalendaryo", "text": "Mag sign up nang libre, ilagay ang mga lote at petsa ng tanim, at ang anee.io na ang magtatakda ng petsa ng bawat gawain.", "label": "Magsimula nang libre", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Mga tanong tungkol sa ani ng palay"},
+        {"type": "faq", "items": [
+            {"q": "Ilang cavan bawat ektarya ang magandang ani ng palay?", "a": "Nasa 4 tonelada bawat ektarya ang karaniwang ani sa bansa, mga 80 cavan na tig 50 kilo. Umabot sa 7 tonelada sa tag araw ang mga maayos na pinamahalaang trial. Ang unang target ay ang malampasan ang sarili mong dating ani."},
+            {"q": "Talaga bang may epekto ang certified seed?", "a": "Oo. Mas maganda ang tubo, mas pantay ang tanim, mas kaunti ang muling pagtatanim at mas malakas ang maagang paglaki. Kaya nitong itaas ang ani nang 5 hanggang 20 porsyento."},
+            {"q": "Bakit mas mababa ang ani ko sa tag ulan kaysa tag araw?", "a": "Mas maaraw sa tag araw, kaya karaniwang mas mataas ang ani. Pero kaya pa rin ng maayos na pamamahala ang mga 5 hanggang 6 na tonelada sa tag ulan."},
+            {"q": "Tataas ba ang ani kung dadagdagan ko lang ang abono?", "a": "Hindi kung iba ang problema. Kapag sobra ang nitrogen, nadadapa ang palay at dumarami ang peste at sakit. Balansehin ang nitrogen sa phosphorus at potassium, at ayusin muna ang binhi, ang agwat at ang tubig."},
+            {"q": "May English na bersyon ba ito?", "a": "Mayroon. Basahin ang [increase rice yield per hectare](/blog/increase-rice-yield-per-hectare) sa English."}
+        ]},
+        {"type": "links", "title": "Kaugnay na gabay", "items": [
+            {"label": "Increase rice yield per hectare (English)", "url": "/blog/increase-rice-yield-per-hectare"},
+            {"label": "Paano pataasin ang ani", "url": "/blog/paano-pataasin-ang-ani"},
+            {"label": "Pagdapa ng palay", "url": "/blog/pagdapa-ng-palay"},
+            {"label": "Pagtatanim ng palay", "url": "/crops/pagtatanim-ng-palay"},
+            {"label": "Atangya sa palay", "url": "/blog/atangya-sa-palay"}
+        ]}
+    ]
+}

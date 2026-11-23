@@ -1,0 +1,62 @@
+{
+    "section": "blog",
+    "slug": "pagdapa-ng-palay",
+    "sortOrder": -7689,
+    "lang": "tl",
+    "category": "Palay",
+    "title": "Pagdapa ng Palay: Bakit Natutumba ang Palay at Paano Ito Mapipigilan",
+    "metaTitle": "Pagdapa ng Palay: Sanhi, Pag iwas at Gagawin Kapag Natumba",
+    "metaDescription": "Pagdapa ng palay: bakit natutumba ang palay bago anihan, paano patibayin ang tangkay gamit ang tamang abono at barayti, at ano ang gagawin kapag natumba na.",
+    "focusKeyword": "pagdapa ng palay",
+    "keywords": ["pagdapa ng palay", "natumbang palay", "nadapang palay", "paano maiwasan ang pagdapa ng palay", "lodging in rice"],
+    "excerpt": "Ang pagdapa ng palay ay kapag yumuko o nabali ang tangkay malapit sa puno at humiga ang palay bago anihan. Kadalasan ay dahil sa matangkad at mahinang tangkay, sobrang nitrogen, siksik na tanim, o malakas na hangin at ulan habang naglalaman ang butil. Hindi napupuno ang butil ng nadapang palay, puwede itong tumubo o mabulok sa tubig, at mahirap at magastos anihin. Para manatiling nakatayo ang palay, pumili ng matibay na barayti, hatiin ang nitrogen, magbigay ng sapat na potassium at itapat ang anihan bago ang buwan ng bagyo.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-pagdapa-ng-palay.webp",
+      "alt": "Palayang nadapa matapos ang bagyo, halimbawa ng pagdapa ng palay",
+      "credit": "多摩に暇人, CC BY SA 3.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Kilala ng bawat magsasaka ang tanawing ito: isang mahanging gabi bago anihan, at ang mabigat at berdeng palayan ay nakahiga na parang banig. Natumba, humiga o nadapa, iisa ang ibig sabihin. May mawawalang butil, oras at pera.\n\nAng magandang balita, hindi lang malas sa panahon ang pagdapa ng palay. Karamihan ng natutumbang bukid ay mahina na bago pa dumating ang bagyo. Kaya ang mga hakbang na nagpapatibay sa tangkay ay magagawa mula sa unang araw ng taniman."},
+        {"type": "heading", "level": 2, "text": "Ano ang nagagawa ng pagdapa ng palay sa ani"},
+        {"type": "text", "text": "Hindi na gaanong naipapasa ng nadapang halaman ang pagkain mula dahon papunta sa butil, kaya magaan at hindi napupuno ang butil. Kapag nakalubog sa tubig ang uhay, puwedeng tumubo ang butil sa halaman o mabulok. Mas madali ring maabot ng daga, ibon at sakit ang nakahigang palay.\n\nDepende sa yugto ang laki ng pinsala. Pinakamalaki ito kapag nadapa sa pamumulaklak o simula ng paglalaman, dahil halos wala pang laman ang butil. Kapag ilang araw na lang bago anihan, mas kaunti ang nawawalang butil pero mabagal at mahirap ang paggapas. Nahihirapan din ang combine harvester sa nakahigang palay, kaya puwedeng mas mahal ang upa."},
+        {"type": "heading", "level": 2, "text": "Bakit natutumba ang palay"},
+        {"type": "list", "ordered": false, "items": [
+            "**Matangkad na barayti.** Mas mahabang tangkay, mas madaling mabaluktot ng parehong hangin.",
+            "**Sobra o huling nitrogen.** Ang maraming urea ay nagbibigay ng matangkad, malambot at mabigat na tanim.",
+            "**Kulang sa potassium at silicon.** Pareho silang nagpapakapal at nagpapatigas sa pader ng tangkay.",
+            "**Masyadong siksik na tanim.** Payat ang tangkay kapag nag aagawan sa liwanag.",
+            "**Laging malalim ang tubig.** Mababaw ang ugat at mahina ang tangkay kapag hindi natutuyo ang bukid.",
+            "**Peste at sakit sa puno.** Binubutas ng [stem borer](/pests/rice-stem-borer) ang tangkay, at binubulok ito ng [sheath blight](/diseases/sheath-blight).",
+            "**Hangin at malakas na ulan habang naglalaman.** Kahit magandang bukid ay natutumba sa bagyo, pero nauuna ang mahihina."
+        ]},
+        {"type": "heading", "level": 2, "text": "Paano maiwasan ang pagdapa ng palay"},
+        {"type": "steps", "items": [
+            {"title": "Pumili ng mas maikli at matibay na barayti", "text": "Nakasulat ang taas ng halaman sa bawat pahina ng aming [rice variety finder](/rice-varieties). Sa mahangin at madalas bagyuhing lugar, piliin ang mas maikli at matibay ang tangkay."},
+            {"title": "Hatiin ang nitrogen at huwag sobrahan", "text": "Ibigay ang nitrogen nang paunti unti mula pagsusuwi hanggang paglilihi. Iwasan ang maraming urea pagkatapos ng paglilihi, dahil ang huling nitrogen ang nagpapabigat at nagpapalambot sa itaas ng halaman."},
+            {"title": "Sapat na potassium", "text": "Pinakakapal ng potassium ang tangkay at tinutulungan ang paglalaman ng butil. Kulang ito sa maraming bukid, kaya tingnan ang plano mo sa gabay namin sa [potash fertilizer](/blog/potash-fertilizer)."},
+            {"title": "Ibalik ang silicon sa bukid", "text": "Maraming silicon ang kinukuha ng palay, at ito ang nagpapatigas sa tangkay at dahon. Ibalik ang dayami, abo ng ipa o carbonized rice hull sa bukid sa halip na sunugin lahat."},
+            {"title": "Tamang agwat", "text": "Sundin ang tamang dami ng binhi para sa paraan ng pagtatanim mo. Payat ang tangkay ng siksik na tanim at nagsasandalan sila."},
+            {"title": "Patuyuin paminsan minsan ang bukid", "text": "Ang maikling pagpapatuyo habang nagsusuwi, o ang salitang basa at tuyo, ay nagpapalalim sa ugat at nagpapatigas sa lupa sa paligid nito."},
+            {"title": "Itapat ang taniman sa labas ng panahon ng bagyo", "text": "Itakda ang petsa ng tanim para matapos ang paglalaman at anihan bago ang mga buwang madalas ang bagyo sa inyong lugar. Patuyuin ang bukid mga dalawang linggo bago anihan."}
+        ]},
+        {"type": "callout", "tone": "tip", "title": "Hindi laging pinakamaganda ang pinakaberdeng palayan", "text": "Ang sobrang berde at sobrang tangkad na palay sa paglilihi ay madalas na senyales ng sobrang nitrogen. Mukhang mataba, pero ito ang pinakamadaling madapa. Makakatulong ang leaf color chart para ibigay lang ang kailangan ng tanim."},
+        {"type": "heading", "level": 2, "text": "Ano ang gagawin kapag nadapa na ang palay"},
+        {"type": "text", "text": "Una, patuyuin agad ang bukid para hindi nakalubog ang uhay. Sa mainit na panahon, puwedeng tumubo ang butil na ilang araw nang nakababad. Kapag nadapa sa huling bahagi ng paglalaman, mag ani agad kapag ginintuan na ang karamihan ng butil.\n\nMay mga magsasakang nagtatali ng ilang puno para magsuportahan sila. Matrabaho, pero nakakaligtas ng butil sa maliit na lote. Patuyuin agad ang ani, dahil mas basa at mas madaling masira ang butil mula sa nadapang bukid. Nasa gabay namin sa [paano pataasin ang ani ng palay](/blog/paano-pataasin-ang-ani-ng-palay) ang tamang oras ng anihan."},
+        {"type": "heading", "level": 2, "text": "Paano pinapanatiling nakatayo ng anee.io ang palay mo"},
+        {"type": "text", "text": "Nagsisimula ang pagdapa sa mga desisyong ginawa ilang linggo bago ang bagyo, at tinutulungan ka ng anee.io na maitama ang mga ito. Hinahati ng [cropping calendar](/features/cropping-calendar) ang bawat dosis ng nitrogen ayon sa bilang ng araw ng lote mo, kaya walang urea na huli. Tinitingnan ng [NPK Plus calculator](/features/npk-plus-calculator) kung sapat ang potassium sa plano mo.\n\nSinusundan ng [Satellite Weather](/features/satellite-weather) ang mga bagyo malapit sa mga lote mo, kaya may oras kang magpatuyo at mag ani. Kapag hindi sigurado, tanungin si Anee, ang smart farm technician, sa Tagalog o English. Binabasa niya ang barayti, ang yugto at ang forecast bago siya sumagot."},
+        {"type": "cta", "title": "Planuhin ang taniman na hindi madadapa", "text": "Ilagay ang mga lote, barayti at petsa ng tanim, at itatakda ng anee.io ang bawat dosis at magbababala bago ang bagyo.", "label": "Magsimula nang libre", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Mga tanong tungkol sa pagdapa ng palay"},
+        {"type": "faq", "items": [
+            {"q": "Ano ang sanhi ng pagdapa ng palay?", "a": "Matangkad at mahinang tangkay dahil sa sobrang nitrogen, siksik na tanim, kulang sa potassium at silicon, mababaw na ugat sa malalim na tubig, stem borer o sheath blight, at malakas na hangin at ulan habang naglalaman ang butil."},
+            {"q": "Anong abono ang pampatibay ng tangkay ng palay?", "a": "Walang iisang abonong pipigil dito, pero malaki ang tulong ng balanseng plano. Hatiin ang nitrogen at iwasan ang maraming huling dosis, magbigay ng sapat na potassium, at ibalik ang silicon sa pamamagitan ng dayami o abo ng ipa."},
+            {"q": "Maaani pa ba ang nadapang palay?", "a": "Oo. Patuyuin ang bukid, mag ani agad kapag hinog na ang karamihan ng butil at patuyuin agad ang palay. Asahan ang mas mabagal na paggapas at kaunting bawas sa kalidad."},
+            {"q": "May English na bersyon ba ito?", "a": "Mayroon. Basahin ang [lodging in rice](/blog/lodging-in-rice) sa English."}
+        ]},
+        {"type": "links", "title": "Kaugnay na gabay", "items": [
+            {"label": "Lodging in rice (English)", "url": "/blog/lodging-in-rice"},
+            {"label": "Paano pataasin ang ani ng palay", "url": "/blog/paano-pataasin-ang-ani-ng-palay"},
+            {"label": "Paghahanda ng bukid sa kalamidad", "url": "/blog/paghahanda-ng-bukid-sa-kalamidad"},
+            {"label": "Pagtatanim ng palay", "url": "/crops/pagtatanim-ng-palay"}
+        ]}
+    ]
+}

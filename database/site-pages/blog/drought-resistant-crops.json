@@ -1,0 +1,67 @@
+{
+    "section": "blog",
+    "slug": "drought-resistant-crops",
+    "sortOrder": -7698,
+    "lang": "en",
+    "category": "Weather",
+    "title": "Drought Resistant Crops for the Philippines, and How to Save Your Harvest in a Dry Year",
+    "metaTitle": "Drought Resistant Crops in the Philippines: What to Plant",
+    "metaDescription": "Drought resistant crops for Filipino farms: sorghum, cassava, kamote, mongo, peanut and more, plus how to protect palay and mais in an El Nino year.",
+    "focusKeyword": "drought resistant crops",
+    "keywords": ["drought resistant crops", "drought tolerant crops", "crops for the dry season", "drought tolerant rice varieties", "how to protect crops from drought", "El Nino farming", "tagtuyot"],
+    "excerpt": "Drought resistant crops for the Philippines include sorghum, cassava, kamote, mongo, peanut, pigeon pea, cowpea, sesame and fruit trees like mango, cashew, tamarind and dragon fruit. They root deep, close their pores in the heat or finish before the soil runs dry. For palay and mais, use a drought tolerant variety, plant earlier and save water for flowering. Our farm app, anee.io, reads twenty years of your town's weather and the El Nino outlook. So you know a dry season is coming before you plant.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-drought-resistant-crops.webp",
+      "alt": "A sorghum field in the Philippines, one of the most drought resistant crops a Filipino farm can grow",
+      "credit": "Zarate123, CC BY SA 4.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "A dry spell does not hurt every crop the same way. Rice and most vegetables suffer within days when the soil cracks. Sorghum or cassava can wait for the next rain. So in a dry year, first decide what to plant. Then plan how to carry the crop through its thirsty weeks.\n\nThis matters more in an El Nino year, when the rains start late and stop early. Then a farmer who switched a rainfed lot to mongo still harvests. A neighbor who forced a second rice crop may lose it."},
+        {"type": "heading", "level": 2, "text": "Drought resistant crops you can grow in the Philippines"},
+        {"type": "text", "text": "Each crop below handles dry weeks in its own way. Some send roots deep, some store water in a tuber, and some simply finish before the soil gives out. Follow each link for the planting guide."},
+        {"type": "table", "caption": "Drought resistant crops for Philippine farms and why they hold up", "rows": [
+            ["Crop", "Why it holds up", "Good for"],
+            ["Sorghum", "Deep roots, and it pauses growth in drought then resumes after rain", "Grain and feed on rainfed upland"],
+            ["Cassava", "Roots store water, and it drops leaves to survive long dry spells", "Poor, dry soils"],
+            ["Kamote (sweet potato)", "Spreading vines shade the soil, and it matures in about four months", "Food and feed after rice"],
+            ["Mongo (mung bean)", "Short season of about 60 to 70 days", "Planting right after the rice harvest"],
+            ["Peanut", "Deep taproot, and it fixes its own nitrogen", "Sandy and light soils"],
+            ["Pigeon pea (kadios)", "Very deep roots, it keeps growing into the dry months", "Field borders and poor soils"],
+            ["Cowpea (paayap)", "Tolerates heat and dry soil, and it fixes nitrogen", "Rotation after rice or corn"],
+            ["Sesame (linga)", "Needs little water once established", "Dry season cash crop"],
+            ["Mango, cashew, tamarind", "Deep roots, and the trees ride out months without rain", "Long term income on dry land"],
+            ["Dragon fruit", "A cactus that stores water in its stems", "Hot, dry and rocky lots"]
+        ]},
+        {"type": "text", "text": "Planting guides for these crops are on our [how to plant](/how-to-plant) pages, for example [sorghum](/how-to-plant/sorghum), [mungbean](/how-to-plant/mungbean), [peanut](/how-to-plant/peanut) and [cassava](/how-to-plant/cassava). Moringa, or malunggay, also tolerates drought well and gives leaves all year."},
+        {"type": "heading", "level": 2, "text": "Drought tolerant rice varieties"},
+        {"type": "text", "text": "You do not always have to give up palay. Some varieties were bred for rainfed fields that dry out between rains. NSIC Rc 192, sold as Sahod Ulan 1, carries drought tolerance for transplanted rainfed rice. NSIC Rc 480, known as GSR 8, tolerates both drought and salty soil. The Sahod Ulan line has many more for rainfed fields. Our [rice variety finder](/rice-varieties) lists each one with its maturity and yield.\n\nAlso, a shorter maturing variety helps in any dry year. A crop that finishes ten days earlier needs ten fewer days of water. It also often escapes the driest weeks at the end."},
+        {"type": "heading", "level": 2, "text": "How to protect crops from drought"},
+        {"type": "steps", "items": [
+            {"title": "Plant as soon as the rains allow", "text": "In a dry year, every week of delay pushes flowering into hotter, drier weather. Plant early in the season, and pick a variety whose flowering will still find water in the soil."},
+            {"title": "Save water for flowering", "text": "Flowering and early grain filling are the stages that drought hurts most. If water is short, let the crop go a little dry during tillering and keep the water for those weeks."},
+            {"title": "Water rice the thrifty way", "text": "Alternate wetting and drying lets the field dry for a few days between irrigations during tillering. It saves a good share of the water. Our guide to [alternate wetting and drying](/blog/alternate-wetting-and-drying) shows how to do it with a simple pipe."},
+            {"title": "Cover the soil", "text": "Rice straw, crop residue or plastic mulch keeps the soil cooler and slows evaporation. For vegetables, a [drip irrigation system](/blog/drip-irrigation-system) puts each liter right at the roots."},
+            {"title": "Build organic matter", "text": "Compost and manure help the soil hold more water between rains. The effect grows each season you add them."},
+            {"title": "Feed only into moist soil", "text": "Fertilizer on dry soil sits unused and can burn the roots. Wait for rain or irrigate first, and do not skip potassium, which helps plants manage their water."}
+        ]},
+        {"type": "callout", "tone": "info", "title": "Watch the El Nino outlook before you plan", "text": "El Nino usually brings below normal rain, often from late in the year into the next dry season. Our guide to [El Nino and La Nina farming tips](/blog/el-nino-la-nina-farming-tips) explains what to change in each phase."},
+        {"type": "heading", "level": 2, "text": "How anee.io warns you about a dry season"},
+        {"type": "text", "text": "Drought is easier to beat when you see it coming. The anee.io app keeps twenty years of rain and heat for your town, plus the latest El Nino or La Nina outlook. So [When to Plant Analysis](/features/when-to-plant-analysis) names a window that keeps flowering away from the driest weeks. Then [What to Plant Analysis](/features/what-to-plant-analysis) tells you when a lot is better off with mongo or peanut.\n\nAnee, the smart farm technician, also knows every drought, flood and typhoon recorded in your town since 2005. Ask her in Tagalog or English if your lot can carry a second rice crop. She answers from that record and your lot's soil. Libre is free, and Anee comes with Libre plus Anee at PHP 100 a month."},
+        {"type": "cta", "title": "Plan this season around the weather", "text": "Add your lots and let anee.io pick the planting window from your town's own weather record.", "label": "Start free", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Questions about drought resistant crops"},
+        {"type": "faq", "items": [
+            {"q": "What is the most drought resistant crop in the Philippines?", "a": "Among field crops, cassava and sorghum handle long dry spells best. Among food legumes, pigeon pea and cowpea hold up well. For trees, mango, cashew and tamarind ride out months without rain once they are established."},
+            {"q": "What can I plant after rice when water runs out?", "a": "Mongo, peanut, cowpea and kamote are common choices. Mongo is ready in about 60 to 70 days, so it uses the moisture left after the rice harvest."},
+            {"q": "Are there rice varieties that survive drought?", "a": "Yes. NSIC Rc 192 (Sahod Ulan 1) and NSIC Rc 480 (GSR 8) carry drought tolerance. The Sahod Ulan line has more for rainfed fields. Check each one in our [rice variety finder](/rice-varieties)."},
+            {"q": "How do I know if a dry season is coming?", "a": "Watch the El Nino outlook and your town's past rain. The anee.io app shows both. Anee can also tell you how dry seasons like this one went before."},
+            {"q": "Is there a Filipino version of this guide?", "a": "Yes. Read [pananim na matibay sa tagtuyot](/blog/pananim-na-matibay-sa-tagtuyot) in Filipino."}
+        ]},
+        {"type": "links", "title": "Related guides", "items": [
+            {"label": "Pananim na matibay sa tagtuyot (Filipino)", "url": "/blog/pananim-na-matibay-sa-tagtuyot"},
+            {"label": "How to increase crop yield", "url": "/blog/how-to-increase-crop-yield"},
+            {"label": "Climate resilient agriculture", "url": "/blog/climate-resilient-agriculture"},
+            {"label": "Irrigation systems for small farms", "url": "/blog/irrigation-systems"},
+            {"label": "What crop to plant this season", "url": "/blog/what-crop-to-plant-this-season"}
+        ]}
+    ]
+}

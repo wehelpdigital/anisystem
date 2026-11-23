@@ -1,0 +1,65 @@
+{
+    "section": "blog",
+    "slug": "how-to-increase-vegetable-yield",
+    "sortOrder": -7699,
+    "lang": "en",
+    "category": "Yield and Fertilizer",
+    "title": "How to Increase Vegetable Yield: Tomato, Eggplant, Ampalaya, Okra and More",
+    "metaTitle": "How to Increase Vegetable Yield on a Philippine Farm",
+    "metaDescription": "How to increase vegetable yield: strong seedlings, raised beds, feeding for fruit, pollination, early pest control and picking often, crop by crop.",
+    "focusKeyword": "how to increase vegetable yield",
+    "keywords": ["how to increase vegetable yield", "how to increase yield of tomatoes", "how to increase eggplant yield", "how to increase yield of bitter gourd", "how to increase okra yield", "how to increase chilli yield", "how to increase cucumber yield", "vegetable production"],
+    "excerpt": "How to increase vegetable yield starts with strong seedlings, raised beds that drain in the rainy season and feeding that switches from leaves to fruit at the right time. Then help the flowers set fruit, stop the fruit borers and fruit flies early and pick often, because many vegetables bear more when you harvest more. anee.io, the farm app for Filipino farmers, dates each of these tasks for every bed and lot, and Anee, its smart farm technician, names a pest from one photo.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-how-to-increase-vegetable-yield.webp",
+      "alt": "Rows of staked tomato plants on mulched beds, a simple way to increase vegetable yield",
+      "credit": "Dwight Sipler, CC BY 2.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Vegetables pay well per square meter, but they also lose fast. One week of fruit flies can spoil a whole picking of ampalaya, and one heavy rain can drown a bed of tomato seedlings. So a good vegetable harvest is less about one big input and more about many small things done on time.\n\nThe good news is that most of those things cost little. Below are the habits that raise yield across most vegetables grown in the Philippines, then the main thief of each crop and how to stop it."},
+        {"type": "heading", "level": 2, "text": "How to increase vegetable yield on any farm"},
+        {"type": "steps", "items": [
+            {"title": "Raise strong seedlings", "text": "Sow in trays or a clean seedbed with good potting mix, and harden the seedlings in full sun for a few days before you transplant. A stunted seedling never catches up, so throw out the weak ones. Our [how to plant tomato](/how-to-plant/tomato) guide shows the seedling stage step by step."},
+            {"title": "Plant on raised beds that drain", "text": "Most vegetables hate wet feet. In the rainy season, beds 20 to 30 cm high keep roots breathing and cut root rot and wilt. Our [vegetable land preparation](/land-preparation/vegetable-land-preparation) guide gives bed sizes."},
+            {"title": "Use mulch", "text": "Plastic mulch or rice straw keeps the soil moist in the dry months, keeps soil off the fruit when it rains and holds back weeds. It also keeps fertilizer from washing away."},
+            {"title": "Feed for leaves first, then for fruit", "text": "Young plants need nitrogen to build leaves. Once flowers appear, shift the balance to potassium, and add calcium and boron, which help fruit set and stop blossom end rot in tomato. Our guide on [fertilizer for vegetables](/blog/fertilizer-for-vegetables-philippines) gives the rates."},
+            {"title": "Give vines something to climb", "text": "Ampalaya, cucumber, sitaw and patola give more and cleaner fruit on a trellis. The leaves get more sun, air moves through the vines and the fruit hangs straight."},
+            {"title": "Help the flowers set fruit", "text": "Squash, ampalaya and cucumber need bees to carry pollen. If few bees visit, pollinate by hand in the early morning. Also, spray only late in the day so you do not kill the bees that work for you."},
+            {"title": "Pick often", "text": "Okra, sitaw, ampalaya, eggplant and chili keep flowering when you keep picking. A fruit left to grow old tells the plant to slow down, so harvest every one or two days at the right size."}
+        ]},
+        {"type": "heading", "level": 2, "text": "The biggest yield thief of each vegetable"},
+        {"type": "text", "text": "Each crop has one problem that takes more than all the others. Stop that one, and most of the lost harvest comes back. The table names it for the vegetables Filipino farmers grow most."},
+        {"type": "table", "caption": "Common vegetables, what takes their yield and the first move against it", "rows": [
+            ["Vegetable", "Main yield thief", "First move"],
+            ["Eggplant", "Fruit and shoot borer", "Cut and bury wilted shoots every week, net the seedbed, scout from first flowers"],
+            ["Tomato", "Bacterial wilt and leaf curl virus", "Raised beds, resistant or grafted seedlings, control whiteflies early"],
+            ["Ampalaya, cucumber, patola", "Melon fly", "Bag young fruit, hang fly traps, bury fallen fruit"],
+            ["Okra", "Old pods and aphids", "Pick every day or two, check the shoot tips"],
+            ["Chili and pepper", "Thrips, mites and fruit rot", "Scout under leaves, avoid overhead water in the rainy season"],
+            ["Cabbage and pechay", "Diamondback moth", "Rotate products by mode of action, plant away from old crucifer fields"],
+            ["Squash", "Poor fruit set", "Hand pollinate in the morning, protect the bees"]
+        ]},
+        {"type": "text", "text": "Our pest guides go deeper: the [eggplant fruit and shoot borer](/pests/eggplant-fruit-and-shoot-borer), the [melon fly](/pests/melon-fly), [bacterial wilt](/diseases/bacterial-wilt) and the [diamondback moth](/pests/diamondback-moth). If you are not sure which pest you have, start there before you buy a spray."},
+        {"type": "callout", "tone": "warn", "title": "Read the label before every spray", "text": "Vegetables reach the table fast, so the days between the last spray and the harvest matter. Use only products registered for that crop, follow the label and the FPA registration, and respect the waiting period printed on it."},
+        {"type": "heading", "level": 2, "text": "How to increase yield of tomatoes, eggplant and ampalaya"},
+        {"type": "text", "text": "For tomatoes, keep one or two main stems and remove the side shoots below the first flower cluster. Then stake or trellis the plants, because fruit lying on wet soil rots. In the rainy season, a simple plastic rain shelter keeps the leaves dry and cuts disease a lot.\n\nFor eggplant, the borer decides the harvest. So cut every wilted shoot tip the day you see it, and bury or burn it, since the larva is still inside. After that, keep picking the fruits young and shiny, before the seeds harden.\n\nFor ampalaya, a trellis and fruit bags do most of the work. Bag each young fruit when it is about the size of your finger, and pick it before it turns yellow. If bees are scarce, hand pollination in the morning raises fruit set."},
+        {"type": "heading", "level": 2, "text": "How anee.io helps you raise your vegetable harvest"},
+        {"type": "text", "text": "Vegetable work runs on short cycles, and anee.io keeps track of them for you. Each bed or field becomes a lot with its own crop and planting day. Then the [cropping calendar](/features/cropping-calendar) dates the transplanting, each side dressing, the staking and every scouting walk.\n\nWhen a leaf curls or a fruit has a hole, send Anee, the smart farm technician, a photo. She names the likely pest or disease, says what works and reminds you of the label, in Tagalog or English. The [pest and disease finders](/features/pest-and-disease-finders) help you check it yourself too. Then, at the end of each cycle, the reports show what each lot cost and earned, so you know which crop is worth planting again. Our page on the [farm app for vegetable growers](/blog/farm-app-for-vegetable-growers) shows the whole setup."},
+        {"type": "cta", "title": "Plan your next vegetable cycle", "text": "Add your beds as lots, set the planting days and let anee.io remind you of every side dressing, picking and scouting walk.", "label": "Start free", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Questions about vegetable yield"},
+        {"type": "faq", "items": [
+            {"q": "What fertilizer increases vegetable fruiting?", "a": "Potassium, with calcium and boron. Feed nitrogen while the plant builds leaves, then shift to a potassium rich fertilizer once flowers appear. Too much nitrogen at fruiting gives big leaves and few fruits."},
+            {"q": "Why do my vegetable flowers fall off without fruit?", "a": "The usual causes are poor pollination, heat, drought stress or too much nitrogen. Protect the bees, water steadily during flowering and hand pollinate squash and ampalaya if few bees come."},
+            {"q": "Does picking more often really increase yield?", "a": "Yes, for crops like okra, sitaw, ampalaya, eggplant and chili. Each fruit left to age slows the plant down, while regular picking keeps it flowering."},
+            {"q": "How do I grow vegetables in the rainy season without losing them?", "a": "Use raised beds, mulch and good drainage, pick varieties that tolerate rain, and give tomatoes and chili a simple rain shelter. Scout often, because diseases spread fast in wet weather."},
+            {"q": "Is this guide available in Filipino?", "a": "Yes. Read [paano pataasin ang ani ng gulay](/blog/paano-pataasin-ang-ani-ng-gulay) for the same guide in Filipino."}
+        ]},
+        {"type": "links", "title": "Related guides", "items": [
+            {"label": "Paano pataasin ang ani ng gulay (Filipino)", "url": "/blog/paano-pataasin-ang-ani-ng-gulay"},
+            {"label": "How to increase crop yield", "url": "/blog/how-to-increase-crop-yield"},
+            {"label": "Vegetable farming in the Philippines", "url": "/blog/vegetable-farming"},
+            {"label": "Fertilizer for tomatoes", "url": "/blog/fertilizer-for-tomatoes"},
+            {"label": "Crop protection", "url": "/blog/crop-protection"}
+        ]}
+    ]
+}

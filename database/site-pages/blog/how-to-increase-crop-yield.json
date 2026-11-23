@@ -1,0 +1,72 @@
+{
+    "section": "blog",
+    "slug": "how-to-increase-crop-yield",
+    "sortOrder": -7700,
+    "lang": "en",
+    "category": "Yield and Fertilizer",
+    "title": "How to Increase Crop Yield: 12 Ways to Harvest More and Lose Less",
+    "metaTitle": "How to Increase Crop Yield: 12 Ways to Harvest More",
+    "metaDescription": "How to increase crop yield in the Philippines: plant on the best date, feed by stage, catch pests early and guard against drought, typhoons and lodging.",
+    "focusKeyword": "how to increase crop yield",
+    "keywords": ["how to increase crop yield", "how to increase yield", "ways to increase crop yield", "methods to increase crop yield", "crop yield increase", "crop yield improvement", "how can farmers increase yield", "how to increase crop yield naturally", "how to improve crop yield with technology", "higher yield"],
+    "excerpt": "How to increase crop yield comes down to two jobs: help every plant reach its full size, and stop the losses that take the harvest away. Plant a fitting variety on the best date, feed the crop by its growth stage, water it when it counts and catch pests on the first day. Then guard the field against drought, typhoons, floods and lodging. anee.io, the farm app made for Filipino farmers, plans all of this for each lot, and Anee, its smart farm technician, tells you what to do and when.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-how-to-increase-crop-yield.webp",
+      "alt": "A farmer harvests a heavy, golden rice crop with a sickle, the reward of knowing how to increase crop yield",
+      "credit": "Nanditha Gogate (WELL Labs), CC BY SA 4.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Every harvest is decided by two numbers. The first is how much the crop can make. The second is how much of it reaches your sack. Most farms lose on both, and most of the loss comes from decisions, not from bad luck.\n\nTake palay. Its national average sits near 4 tons per hectare, yet well managed trials reached about 7 tons in the dry season. The seed was not magic. Those farmers simply planted on time, fed the crop on the right days, kept water steady and stopped pests early. So the gap between an ordinary harvest and a good one is mostly a gap in timing."},
+        {"type": "list", "ordered": false, "items": ["**Plan before you plant.** The variety, the planting date and the plant count set the ceiling of your harvest.", "**Feed by stage, not by habit.** The same sack gives more when it lands in the right week.", "**Catch problems on day one.** A pest found early costs one spray. Found late, it costs part of the harvest.", "**Guard against the weather.** Drought, typhoons, floods and lodging take more grain than most pests.", "**Write it down.** Records per lot show which change raised your yield."]},
+        {"type": "heading", "level": 2, "text": "How to increase crop yield in 12 steps"},
+        {"type": "text", "text": "These twelve steps work for palay, mais and most vegetables. Each one either adds to what the crop can make or protects what it already made. Start with the steps your farm misses most, because a fix there pays first."},
+        {"type": "steps", "items": [
+            {"title": "1. Choose a variety that fits the lot", "text": "A variety bred for irrigated land will struggle on a rainfed field, and a tall variety falls over in a windy spot. Match the variety to your water, your soil and the pests of your town. Our guide to the [best rice variety for your area](/blog/best-rice-variety-for-my-area) shows how to compare them."},
+            {"title": "2. Start with good seed", "text": "Certified seed comes up evenly, so you replant less and the crop grows as one. For rice, good seed alone can raise yield by 5 to 20 percent. Saved seed loses vigor after a few seasons and often carries disease."},
+            {"title": "3. Plant on the best date", "text": "The planting date decides what weather each stage meets. Flowering in the hottest dry weeks gives empty grains, and grain filling during typhoon season invites lodging. Read our guide on the [best time to plant rice](/blog/best-time-to-plant-rice-philippines) before you set the date."},
+            {"title": "4. Prepare and level the field", "text": "A level field holds water evenly, so weeds have fewer dry spots to grow in and seedlings do not drown in the low corners. Our [land preparation guide](/land-preparation/land-preparation-philippines) covers each crop."},
+            {"title": "5. Get the plant count right", "text": "Missing plants are missing heads, ears and fruits that no fertilizer can bring back. Aim for about 25 hills per square meter in transplanted rice and 75,000 plants per hectare in hybrid corn."},
+            {"title": "6. Test the soil and fix the pH", "text": "A soil test from your Municipal Agriculture Office tells you what is short. On acid soil, lime first, because fertilizer cannot work well below the pH the crop likes."},
+            {"title": "7. Feed the crop by growth stage", "text": "Split the nitrogen instead of putting it all at planting. Then time each top dressing to the stage that needs it most. Our page on [fertilizer timing by growth stage](/blog/fertilizer-timing-by-growth-stage) gives the days for rice and corn."},
+            {"title": "8. Add what the soil lacks", "text": "Potassium fills the grain and makes stems stronger. Zinc matters on wet, heavy soils. Compost and crop residue feed the soil life and hold water, so every bag works harder."},
+            {"title": "9. Give water when it counts", "text": "Drought at flowering hurts the most, so protect that stage first. In rice, alternate wetting and drying saves water during tillering without cutting the harvest."},
+            {"title": "10. Win the first month against weeds", "text": "Weeds steal the most during the first 30 to 40 days. Clean that window, and the crop shades out most of what comes later."},
+            {"title": "11. Scout every week and act early", "text": "Walk the field once a week and look under the leaves. If you are not sure what you see, our guide on [pest or disease](/blog/pest-or-disease-how-to-tell) helps you tell them apart before you buy anything."},
+            {"title": "12. Harvest on time and dry fast", "text": "Grain left too long shatters, and grain left wet rots. For palay, cut when 85 to 90 percent of the grains turn golden, then dry them within a day."}
+        ]},
+        {"type": "callout", "tone": "tip", "title": "The cheapest extra harvest is the one you do not lose", "text": "Before you spend more on inputs, list what took grain from you last season: a pest found late, a dry spell at flowering, a storm before harvest. Fixing one of those often adds more than one more bag of urea."},
+        {"type": "heading", "level": 2, "text": "Protect the harvest from pests, drought, typhoons and lodging"},
+        {"type": "text", "text": "A big crop in the field is not a big harvest yet. Between flowering and drying, a lot can still lose a large share of its grain. So a plan to raise your yield must also guard it. The table shows the threats that take the most from Filipino farms and the first move against each."},
+        {"type": "table", "caption": "The main threats to a harvest and the first move against each", "rows": [
+            ["Threat", "When it hurts most", "First move"],
+            ["Pests and diseases found late", "Any stage, worst at flowering and grain filling", "Weekly scouting, a photo to Anee the first day you see damage"],
+            ["Drought", "Flowering and early grain filling", "Plant early, mulch, save water for the flowering weeks"],
+            ["Typhoons and floods", "Grain filling to harvest", "Plant so harvest comes before the stormy months, drain fast"],
+            ["Lodging", "Late flowering to maturity", "Shorter variety, split nitrogen, enough potassium"],
+            ["Heat", "Flowering", "Set the planting date so flowering misses the hottest weeks"]
+        ]},
+        {"type": "text", "text": "Each threat has its own guide. Read about [drought resistant crops](/blog/drought-resistant-crops) for dry areas and El Nino years, and about [lodging in rice](/blog/lodging-in-rice) if your palay falls over before harvest. For pests, diseases and weeds together, see our [crop protection](/blog/crop-protection) guide. Then, for the season as a whole, our page on [climate resilient agriculture](/blog/climate-resilient-agriculture) puts it all in one plan."},
+        {"type": "heading", "level": 2, "text": "How to increase crop yield naturally"},
+        {"type": "text", "text": "You can raise yield with fewer chemicals if the soil does more of the work. Add compost, animal manure or rice straw every season, because organic matter holds water and feeds the soil life. Rotate rice with mongo, peanut or another legume when the field allows, since legumes leave nitrogen behind.\n\nAlso, plant at the same time as your neighbors. Pests that build up on an early field move to the late one, so a whole area planted together breaks their cycle. Then keep friendly insects alive by spraying only when a pest passes its threshold. Our guide to [integrated pest management](/pests/integrated-pest-management) explains those thresholds."},
+        {"type": "heading", "level": 2, "text": "How to improve crop yield with technology"},
+        {"type": "text", "text": "You do not need sensors or a drone. A phone is enough when the app on it knows your farm. anee.io is a farm management app built for Filipino farmers, and it turns each of the twelve steps into a dated task for each lot.\n\nThe [cropping calendar](/features/cropping-calendar) counts the days from each lot's own planting day, so every top dressing, weeding and spray lands on time. [When to Plant Analysis](/features/when-to-plant-analysis) reads twenty years of your town's weather and the El Nino or La Nina outlook, then names the safest window. [Satellite Analysis](/features/satellite-analysis) shows which part of a field falls behind, and Satellite Weather tracks typhoons near your lots.\n\nWhen something looks wrong, send Anee a photo. She reads your lot, its crop and stage and the forecast before she answers, in Tagalog or English, so there is no guessing game. Libre is free forever, and Anee with her analyses comes with Libre plus Anee at PHP 100 a month."},
+        {"type": "cta", "title": "Plan a bigger harvest for every lot", "text": "Sign up free, add your lots and planting dates, and let anee.io date every task from land preparation to harvest.", "label": "Start free", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Questions about how to increase crop yield"},
+        {"type": "faq", "items": [
+            {"q": "What is the fastest way to increase crop yield?", "a": "Stop the biggest loss first. On most farms that is a pest or disease found late, fertilizer in the wrong week, or a dry spell at flowering. Fixing one of these raises the harvest in the very next season."},
+            {"q": "How can farmers increase yield without spending more?", "a": "Use the same inputs at better times. Split the nitrogen by growth stage, plant on the best date, weed in the first month and scout every week. Timing costs nothing, yet it decides how much each sack gives back."},
+            {"q": "Does more fertilizer always increase yield?", "a": "No. Too much nitrogen makes rice lodge and invites pests and diseases. Feed by a soil test and by growth stage, and add potassium and the missing micronutrients before you add more urea."},
+            {"q": "Which app helps Filipino farmers increase crop yield?", "a": "anee.io. It dates every task from each lot's planting day, picks the planting window from twenty years of local weather, names pests and diseases from a photo and keeps the harvest records that show what worked. Anee, its smart farm technician, answers in Tagalog or English."},
+            {"q": "Can anee.io increase my yield?", "a": "Yes. anee.io raises yield by getting the season's decisions right for each lot: the variety, the planting date, the fertilizer and its timing, the water and how fast a pest is stopped. Read the full answer on [can anee.io increase my yield](/blog/can-anee-io-increase-my-yield)."},
+            {"q": "Is there a Tagalog version of this guide?", "a": "Yes. Read [paano pataasin ang ani](/blog/paano-pataasin-ang-ani) for the same steps in Filipino."}
+        ]},
+        {"type": "links", "title": "Related guides", "items": [
+            {"label": "Paano pataasin ang ani (Filipino)", "url": "/blog/paano-pataasin-ang-ani"},
+            {"label": "Increase rice yield per hectare", "url": "/blog/increase-rice-yield-per-hectare"},
+            {"label": "Increase corn yield per hectare", "url": "/blog/increase-corn-yield-per-hectare"},
+            {"label": "How to increase vegetable yield", "url": "/blog/how-to-increase-vegetable-yield"},
+            {"label": "Crop protection", "url": "/blog/crop-protection"},
+            {"label": "Can anee.io increase my yield?", "url": "/blog/can-anee-io-increase-my-yield"}
+        ]}
+    ]
+}

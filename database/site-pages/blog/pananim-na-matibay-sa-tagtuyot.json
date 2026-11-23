@@ -1,0 +1,64 @@
+{
+    "section": "blog",
+    "slug": "pananim-na-matibay-sa-tagtuyot",
+    "sortOrder": -7690,
+    "lang": "tl",
+    "category": "Weather",
+    "title": "Mga Pananim na Matibay sa Tagtuyot, at Paano Iligtas ang Ani sa Taon ng El Nino",
+    "metaTitle": "Mga Pananim na Matibay sa Tagtuyot sa Pilipinas",
+    "metaDescription": "Mga pananim na matibay sa tagtuyot: sorghum, kamoteng kahoy, kamote, munggo, mani, kadyos at iba pa, at paano iligtas ang palay at mais sa taon ng El Nino.",
+    "focusKeyword": "pananim na matibay sa tagtuyot",
+    "keywords": ["pananim na matibay sa tagtuyot", "tagtuyot", "El Nino sa pagsasaka", "ano ang itatanim sa tag araw", "barayti ng palay para sa tagtuyot", "drought resistant crops"],
+    "excerpt": "Ang mga pananim na matibay sa tagtuyot sa Pilipinas ay ang sorghum, kamoteng kahoy, kamote, munggo, mani, kadyos, paayap, linga, at mga punong tulad ng mangga, kasoy, sampalok at dragon fruit. Malalim ang ugat nila, nag iimbak ng tubig, o natatapos bago matuyo ang lupa. Para sa palay at mais, gumamit ng barayting matibay sa tagtuyot, magtanim nang mas maaga at itabi ang tubig para sa pamumulaklak. Binabasa ng anee.io ang dalawampung taon ng panahon sa inyong bayan at ang lagay ng El Nino, kaya alam mo bago magtanim kung tuyong taniman ang darating.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-pananim-na-matibay-sa-tagtuyot.webp",
+      "alt": "Taniman ng munggo, isa sa mga pananim na matibay sa tagtuyot",
+      "credit": "Shanmugamp7, CC BY SA 3.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Hindi pare pareho ang tama ng tagtuyot sa bawat pananim. Ilang araw lang na bitak ang lupa, nahihirapan na ang palay at karamihan ng gulay. Ang sorghum at kamoteng kahoy naman ay kayang maghintay sa susunod na ulan. Kaya sa tuyong taon, ang unang desisyon ay kung ano ang itatanim. Ang pangalawa ay kung paano dadalhin ang tanim sa mga linggong uhaw ito.\n\nMas mahalaga ito sa taon ng El Nino, kapag huli dumating ang ulan at maaga itong tumigil. Ang magsasakang naglipat ng sahod ulan na lote sa munggo ay nakakaani pa rin. Ang kapitbahay na pinilit ang pangalawang tanim na palay ay puwedeng mawalan."},
+        {"type": "heading", "level": 2, "text": "Mga pananim na matibay sa tagtuyot sa Pilipinas"},
+        {"type": "table", "caption": "Mga pananim na matibay sa tagtuyot at kung bakit", "rows": [
+            ["Pananim", "Bakit matibay", "Bagay sa"],
+            ["Sorghum", "Malalim ang ugat, humihinto sa paglaki sa tagtuyot at bumabawi pagkaulan", "Butil at pagkain ng hayop sa mataas na lupa"],
+            ["Kamoteng kahoy", "Nag iimbak ng tubig ang ugat, naglalagas ng dahon para mabuhay", "Mahirap at tuyong lupa"],
+            ["Kamote", "Natatakpan ng baging ang lupa, mga apat na buwan lang", "Pagkain at pakain pagkatapos ng palay"],
+            ["Munggo", "Maikli, mga 60 hanggang 70 araw", "Pagtatanim agad pagkaani ng palay"],
+            ["Mani", "Malalim ang ugat at gumagawa ng sariling nitrogen", "Mabuhangin at magaang lupa"],
+            ["Kadyos", "Napakalalim ng ugat, lumalaki pa rin sa tag araw", "Gilid ng bukid at mahirap na lupa"],
+            ["Paayap", "Kaya ang init at tuyong lupa, gumagawa ng nitrogen", "Salitan pagkatapos ng palay o mais"],
+            ["Linga", "Kaunting tubig lang kapag nakatayo na", "Pananim na pagkakakitaan sa tag araw"],
+            ["Mangga, kasoy, sampalok", "Malalim ang ugat, tumatagal nang ilang buwang walang ulan", "Pangmatagalang kita sa tuyong lupa"],
+            ["Dragon fruit", "Cactus na nag iimbak ng tubig sa tangkay", "Mainit, tuyo at mabatong lote"]
+        ]},
+        {"type": "text", "text": "Nasa mga pahina namin ng [paano magtanim](/how-to-plant) ang gabay sa bawat isa, gaya ng [sorghum](/how-to-plant/sorghum), [munggo](/how-to-plant/mungbean), [mani](/how-to-plant/peanut) at [kamoteng kahoy](/how-to-plant/cassava). Matibay din sa tagtuyot ang malunggay, at nagbibigay ito ng dahon buong taon."},
+        {"type": "heading", "level": 2, "text": "Mga barayti ng palay na matibay sa tagtuyot"},
+        {"type": "text", "text": "Hindi laging kailangang bitawan ang palay. May mga barayting ginawa para sa sahod ulan na natutuyo sa pagitan ng ulan. Ang NSIC Rc 192, na kilala bilang Sahod Ulan 1, ay matibay sa tagtuyot para sa lipat tanim na sahod ulan. Ang NSIC Rc 480, o GSR 8, ay matibay sa tagtuyot at sa maalat na lupa. Marami pang kasunod sa serye ng Sahod Ulan, at nakalista ang bawat isa sa aming [rice variety finder](/rice-varieties).\n\nNakakatulong din ang mas maikling barayti. Ang tanim na mas maagang natatapos nang sampung araw ay sampung araw ding mas kaunti ang kailangang tubig."},
+        {"type": "heading", "level": 2, "text": "Paano protektahan ang pananim sa tagtuyot"},
+        {"type": "steps", "items": [
+            {"title": "Magtanim agad pagdating ng ulan", "text": "Sa tuyong taon, bawat linggong pagkaantala ay nagtutulak sa pamumulaklak sa mas mainit at mas tuyong panahon."},
+            {"title": "Itabi ang tubig para sa pamumulaklak", "text": "Ang pamumulaklak at simula ng paglalaman ng butil ang pinakatinatamaan ng tagtuyot. Kapag kulang ang tubig, hayaang medyo matuyo habang nagsusuwi at itabi ang tubig para sa mga linggong iyon."},
+            {"title": "Magtipid ng tubig sa palay", "text": "Sa salitang basa at tuyo, hinahayaang matuyo ang bukid nang ilang araw sa pagitan ng patubig habang nagsusuwi. Malaki ang natitipid na tubig. Basahin ang gabay namin sa [alternate wetting and drying](/blog/alternate-wetting-and-drying)."},
+            {"title": "Takpan ang lupa", "text": "Pinalalamig ng dayami o mulch ang lupa at pinababagal ang pagsingaw ng tubig. Sa gulay, ang [drip irrigation](/blog/drip-irrigation-system) ang naghahatid ng tubig diretso sa ugat."},
+            {"title": "Dagdagan ang organikong bagay", "text": "Mas maraming tubig ang naiimbak ng lupang may compost at dumi ng hayop. Lumalaki ang epekto bawat taniman."},
+            {"title": "Mag abono lang sa basang lupa", "text": "Nakatiwangwang lang ang abono sa tuyong lupa at puwede pang makasunog ng ugat. Maghintay ng ulan o magpatubig muna, at huwag kaligtaan ang potassium."}
+        ]},
+        {"type": "callout", "tone": "info", "title": "Bantayan ang El Nino bago magplano", "text": "Karaniwang mas kaunti ang ulan kapag El Nino, madalas mula huling bahagi ng taon hanggang sa susunod na tag araw. Basahin ang gabay namin sa [El Nino at La Nina](/blog/el-nino-la-nina-farming-tips)."},
+        {"type": "heading", "level": 2, "text": "Paano nagbababala ang anee.io sa darating na tagtuyot"},
+        {"type": "text", "text": "Mas madaling talunin ang tagtuyot kapag nakikita mo itong paparating. Itinatago ng anee.io ang dalawampung taon ng ulan at init sa inyong bayan, pati ang pinakabagong lagay ng El Nino o La Nina. Kaya ang [When to Plant Analysis](/features/when-to-plant-analysis) ay pumipili ng petsang malayo sa pinakatuyong linggo ang pamumulaklak. Sinasabi naman ng [What to Plant Analysis](/features/what-to-plant-analysis) kung mas mabuti sa isang lote ang munggo o mani ngayong taniman.\n\nAlam din ni Anee, ang smart farm technician, ang bawat tagtuyot, baha at bagyong naitala sa inyong bayan mula 2005. Tanungin siya sa Tagalog kung kaya ng lote mo ang pangalawang tanim na palay ngayong taon. Libre ang Libre, at kasama si Anee sa Libre plus Anee sa halagang PHP 100 kada buwan."},
+        {"type": "cta", "title": "Planuhin ang taniman ayon sa panahon", "text": "Ilagay ang mga lote at hayaang piliin ng anee.io ang petsa ng tanim mula sa talaan ng panahon ng inyong bayan.", "label": "Magsimula nang libre", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Mga tanong tungkol sa pananim na matibay sa tagtuyot"},
+        {"type": "faq", "items": [
+            {"q": "Ano ang pinakamatibay na pananim sa tagtuyot?", "a": "Sa mga pananim sa bukid, ang kamoteng kahoy at sorghum ang pinakamatibay sa mahabang tagtuyot. Sa mga legume, matibay ang kadyos at paayap. Sa mga puno, tumatagal ang mangga, kasoy at sampalok nang ilang buwang walang ulan."},
+            {"q": "Ano ang itatanim pagkatapos ng palay kapag wala nang tubig?", "a": "Munggo, mani, paayap at kamote ang karaniwang pinipili. Handa nang anihin ang munggo sa mga 60 hanggang 70 araw, kaya nagagamit nito ang natitirang basa ng lupa."},
+            {"q": "May barayti ba ng palay na kaya ang tagtuyot?", "a": "Mayroon. Ang NSIC Rc 192 (Sahod Ulan 1) at NSIC Rc 480 (GSR 8) ay matibay sa tagtuyot, at marami pa sa serye ng Sahod Ulan para sa sahod ulan na bukid."},
+            {"q": "May English na bersyon ba ito?", "a": "Mayroon. Basahin ang [drought resistant crops](/blog/drought-resistant-crops) sa English."}
+        ]},
+        {"type": "links", "title": "Kaugnay na gabay", "items": [
+            {"label": "Drought resistant crops (English)", "url": "/blog/drought-resistant-crops"},
+            {"label": "Paghahanda ng bukid sa kalamidad", "url": "/blog/paghahanda-ng-bukid-sa-kalamidad"},
+            {"label": "Paano pataasin ang ani", "url": "/blog/paano-pataasin-ang-ani"},
+            {"label": "Proteksyon ng pananim", "url": "/blog/proteksyon-ng-pananim"}
+        ]}
+    ]
+}

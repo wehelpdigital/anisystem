@@ -208,14 +208,23 @@
         "/images/site/guides/blog-chicken-dung-as-fertilizer.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Chicken_on_the_manure,_Styria.jpg"
         },
+        "/images/site/guides/blog-climate-resilient-agriculture.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Rice_fields_submerged_in_flooding_in_Naga,_Camarines_Sur.jpg"
+        },
         "/images/site/guides/blog-corn-scientific-name.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Zea_mays_stamens_(2)bewerkt.jpg"
         },
         "/images/site/guides/blog-crop-planting.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Women_Farmers_Sowing_in_Karnataka,_India.jpg"
         },
+        "/images/site/guides/blog-crop-protection.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Sulawesi_trsr_DSCN0949.JPG"
+        },
         "/images/site/guides/blog-drip-irrigation-system.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Button_dripper.JPG"
+        },
+        "/images/site/guides/blog-drought-resistant-crops.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Sorghum_fields_in_the_Philippines_19.jpg"
         },
         "/images/site/guides/blog-eggshell-as-fertilizer.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Guscio_d%27uovo_come_un_vaso.jpg"
@@ -247,6 +256,12 @@
         "/images/site/guides/blog-fungicides.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Pesticide_spraying_in_cultivation_in_Andhra_Pradesh.jpg"
         },
+        "/images/site/guides/blog-how-to-increase-crop-yield.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Farmer_manually_harvesting_rice_in_Raichur,_Karnataka.jpg"
+        },
+        "/images/site/guides/blog-how-to-increase-vegetable-yield.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Tomato_Support_(5843173257).jpg"
+        },
         "/images/site/guides/blog-humus-soil.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Germination_and_humus.jpg"
         },
@@ -262,8 +277,14 @@
         "/images/site/guides/blog-irrigation-systems.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:An_irrigation_canal_and_road_accompanying_near_Kovvali,_Eluru.jpg"
         },
+        "/images/site/guides/blog-kaya-ba-ng-anee-io-na-pataasin-ang-ani.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:DSC7192_(5154975822).jpg"
+        },
         "/images/site/guides/blog-leaf-color-chart-rice.webp": {
             "page": "https://www.flickr.com/photos/86712369@N00/16618072535"
+        },
+        "/images/site/guides/blog-lodging-in-rice.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:%E4%BB%A4%E5%92%8C8%E5%B9%B48%E6%9C%88%E5%8D%83%E8%91%89%E8%B1%AA%E9%9B%A8%E3%81%AB%E3%82%88%E3%82%8A%E3%81%AA%E3%81%8E%E5%80%92%E3%81%95%E3%82%8C%E3%81%9F%E3%82%A4%E3%83%8D.jpg"
         },
         "/images/site/guides/blog-native-plow.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Plowing_paddy_field_with_a_water_buffalo.jpg"
@@ -277,17 +298,41 @@
         "/images/site/guides/blog-osmocote-fertilizer.webp": {
             "page": "https://www.flickr.com/photos/192011878@N05/51906365056"
         },
+        "/images/site/guides/blog-paano-pataasin-ang-ani-ng-gulay.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Momordica_charantia_08052014.jpg"
+        },
+        "/images/site/guides/blog-paano-pataasin-ang-ani-ng-mais.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Maize_field,_Aduwan,_Kafanchan,_Nigeria.jpg"
+        },
+        "/images/site/guides/blog-paano-pataasin-ang-ani-ng-palay.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:A_healthy_rice_grain.jpg"
+        },
+        "/images/site/guides/blog-paano-pataasin-ang-ani.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Rice_threshing_using_a_mechanical_thresher_in_rural_Bangladesh_2026_08.jpg"
+        },
+        "/images/site/guides/blog-pagdapa-ng-palay.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:%E5%80%92%E4%BC%8F%E3%81%97%E3%81%9F%E7%A8%B2.JPG"
+        },
+        "/images/site/guides/blog-paghahanda-ng-bukid-sa-kalamidad.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Super_Typhoon_Noru_Landfalls_in_the_Philippines_(CIRA_2022-09-25).png"
+        },
         "/images/site/guides/blog-palay-price-philippines.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Bulakenyo_farmers_Palay_drying_with_Walis_Tingting_03.jpg"
         },
         "/images/site/guides/blog-palay-seedlings.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Bundles_of_young_rice_seedlings_in_a_muddy_paddy_field_in_Padang,_West_Sumatra,_Indonesia.jpg"
         },
+        "/images/site/guides/blog-pananim-na-matibay-sa-tagtuyot.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Mung_bean_field.jpg"
+        },
         "/images/site/guides/blog-potato-tuber.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Potato_tubers_in_pail.jpg"
         },
         "/images/site/guides/blog-problems-in-agriculture.webp": {
             "page": "https://commons.wikimedia.org/wiki/File:Klimawandel_003_2016_06_06.jpg"
+        },
+        "/images/site/guides/blog-proteksyon-ng-pananim.webp": {
+            "page": "https://commons.wikimedia.org/wiki/File:Paddyfield_in_Kadapa_district,_Andhra_Pradesh_PIC_0001.jpg"
         },
         "/images/site/guides/blog-rice-fertilizer-schedule.webp": {
             "page": "https://www.flickr.com/photos/56796376@N00/2068840278"

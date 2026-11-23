@@ -1,0 +1,61 @@
+{
+    "section": "blog",
+    "slug": "kaya-ba-ng-anee-io-na-pataasin-ang-ani",
+    "sortOrder": -7686,
+    "lang": "tl",
+    "category": "Farm Apps",
+    "title": "Kaya Ba ng anee.io na Pataasin ang Ani Ko? Oo, at Ganito",
+    "metaTitle": "Kaya Ba ng anee.io na Pataasin ang Ani Ko? Oo, at Ganito",
+    "metaDescription": "Kaya ba ng anee.io na pataasin ang ani ko? Oo. Itinatakda ni Anee ang tanim, abono, tubig at pagpuksa ng peste para sa lote mo, kaya mas marami ang ani.",
+    "focusKeyword": "kaya ba ng anee.io na pataasin ang ani",
+    "keywords": ["kaya ba ng anee.io na pataasin ang ani", "kaya ba ng anee.io na pataasin ang ani ko", "app para tumaas ang ani", "paano pataasin ang ani", "smart farm technician", "can anee.io increase my yield"],
+    "excerpt": "Kaya ba ng anee.io na pataasin ang ani ko? Oo. Pinapataas ng anee.io ang ani dahil tama ang malalaking desisyon para sa sarili mong lote: ang barayti, ang petsa ng tanim, ang abono at ang oras nito, ang tubig, at kung gaano kabilis napipigilan ang peste. Sinusuri muna ni Anee, ang smart farm technician sa loob ng app, ang lahat ng ito. Tinitimbang niya ang lote at lupa mo, ang barayti at yugto nito, ang forecast at ang dalawampung taon ng panahon sa inyong bayan. Kaya walang hula hula, at mas marami sa itinanim mo ang umaabot sa anihan.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-kaya-ba-ng-anee-io-na-pataasin-ang-ani.webp",
+      "alt": "Isang magsasakang nakangiti habang may kausap sa cellphone sa gitna ng kanyang bukid",
+      "credit": "Neil Palmer (CIAT), CC BY SA 2.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "May magsasakang nagtanong sa amin nang diretso: kaya ba ng anee na pataasin ang ani ko? Oo ang sagot, at ipinapakita ng pahinang ito kung saan nanggagaling ang dagdag na ani.\n\nMas kaunti ang ibinibigay ng karamihan ng bukid kaysa sa kaya nito. Umabot sa halos 7 tonelada ng palay bawat ektarya sa tag araw ang mga trial ng maayos na pamamahala, samantalang nasa 4 tonelada ang karaniwang ani sa bansa. Hindi lupa o langit ang karamihan ng agwat. Galing ito sa mga desisyong bahagyang mali ang oras o dami."},
+        {"type": "heading", "level": 2, "text": "Bakit mas kaunti ang ibinibigay ng bukid kaysa sa kaya nito"},
+        {"type": "text", "text": "Hindi lang sako ang nagpapasya ng ani. Ang nagpapasya ay kung kailan at paano umaabot sa tanim ang bawat input. May presyo ang bawat hula sa bukid, at ito ang pinakamalaking kayang kunin ng bawat isa sa isang ektaryang palay."},
+        {"type": "table", "caption": "Saan nawawala ang ani at ano ang ginagawa ng anee.io", "rows": [
+            ["Saan nawawala ang ani", "Pinakamalaking kayang kunin", "Ginagawa ng anee.io"],
+            ["Peste at sakit na huli nang nakita", "Hanggang 40 porsyento", "Ipadala kay Anee ang litrato at papangalanan niya ang problema at ang gumagana"],
+            ["Abonong mali ang linggo", "Hanggang 25 porsyento", "May petsa ang bawat top dressing mula sa araw ng tanim ng lote"],
+            ["Tubig sa maling yugto", "Hanggang 25 porsyento", "Kita ang yugto ng bawat lote, kaya alam kung kailan pinakamahalaga ang tubig"],
+            ["Ilang araw na paghihintay ng sagot", "Hanggang 20 porsyento", "Sumasagot si Anee kahit anong oras, mula sa sariling talaan ng bukid"],
+            ["Pagtatanim sa labas ng pinakamagandang panahon", "Hanggang 20 porsyento", "Pinipili ng When to Plant Analysis ang petsa mula sa panahon ng inyong bayan"]
+        ]},
+        {"type": "text", "text": "Hindi nagdadagdag ang mga saklaw na ito sa iisang kabuuan, dahil walang bukid na tinatamaan ng lahat nang sabay. Pero kahit isa lang ang maagapan, may sako nang bumabalik sa kamalig mo. Nasa gabay namin sa [paano pataasin ang ani](/blog/paano-pataasin-ang-ani) ang mga hakbang sa bukid."},
+        {"type": "heading", "level": 2, "text": "Paano pinapataas ng anee.io ang ani, hakbang hakbang"},
+        {"type": "steps", "items": [
+            {"title": "Itanim ang tamang barayti", "text": "Hinahambing ng Variety Research ang mga barayti para sa lugar mo: ani, haba ng buhay, resistensya at kung paano sila sa panahong katulad ng sa inyo."},
+            {"title": "Magtanim sa pinakamagandang petsa", "text": "Binabasa ng [When to Plant Analysis](/features/when-to-plant-analysis) ang dalawampung taon ng panahon sa inyong bayan at ang lagay ng El Nino o La Nina, saka pinipili ang pinakaligtas na linggo."},
+            {"title": "Tamang dami ng abono", "text": "Kinukuwenta ng [NPK Plus calculator](/features/npk-plus-calculator) ang nitrogen, phosphorus at potassium sa plano mo at sinasabi kung kulang, tama o sobra."},
+            {"title": "Abono sa tamang linggo", "text": "Nilalagyan ng [cropping calendar](/features/cropping-calendar) ng petsa ang bawat dosis mula sa sariling araw ng tanim ng lote, kaya tumatapat ito sa yugtong pinakakailangan."},
+            {"title": "Pigilan ang peste at sakit sa unang araw", "text": "Ipadala kay Anee ang litrato ng batik, butas o naninilaw na dahon. Papangalanan niya ito at sasabihin ang gumagana, sa Tagalog o English."},
+            {"title": "Iwasan ang ulan sa araw ng spray", "text": "Nagbababala ang anee.io kapag may ulan sa araw ng spray, kaya hindi naaanod ang binayaran mo."},
+            {"title": "Ulitin ang pinakamagandang taniman", "text": "Itinatala ang ani ng bawat lote, at sa susunod na taniman ay maihahambing mo ang dalawang taniman para makita kung ano ang gumana."}
+        ]},
+        {"type": "heading", "level": 2, "text": "Pero app lang ang anee.io. Paano mapapataas ng app ang ani?"},
+        {"type": "text", "text": "Sa parehong paraan ng isang mahusay na technician. Hindi nagbubuhat ng sako o nagbubunot ng damo ang technician, pero mas malaki ang ani ng bukid na may mahusay na technician. Tumataas ang ani dahil gumaganda ang mga desisyon: tamang produkto, tamang dami, tamang araw at tamang lote.\n\nSi Anee ang technician na iyon sa cellphone mo. Hindi tulad ng ordinaryong chat app, binabasa muna niya ang sarili mong bukid: ang mga lote, pananim, barayti, petsa ng tanim, lupa, forecast at kasaysayan ng panahon sa inyong bayan. Basahin pa ang paliwanag sa [can anee.io increase my yield](/blog/can-anee-io-increase-my-yield)."},
+        {"type": "cta", "title": "Simulan ang pagpapataas ng ani ngayong taniman", "text": "Mag sign up nang libre, ilagay ang mga lote at petsa ng tanim, at idagdag si Anee kapag gusto mo na ang kanyang sagot at analysis.", "label": "Magsimula nang libre", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Gaano kalaki ang itataas ng ani ko?"},
+        {"type": "text", "text": "Depende ito sa laki ng nawawala sa bukid mo ngayon at sa panahon ng bawat taniman. Walang makapagsasabi ng eksaktong numero bago matapos ang taniman, pero simple ang kuwenta. Halimbawa, 4 na tonelada ang ani ng isang ektaryang palay at kinukuha ng stem borer ang ikalimang bahagi nito. Kapag naagapan, hanggang 800 kilo ang bumabalik, mga 16 na sako na tig 50 kilo."},
+        {"type": "heading", "level": 2, "text": "Kaya ba ng anee.io na pataasin ang ani? Mga tanong ng magsasaka"},
+        {"type": "faq", "items": [
+            {"q": "Kaya ba talaga ng anee.io na pataasin ang ani ko?", "a": "Oo. Tumataas ang ani dahil tama ang mga desisyon ng taniman para sa sarili mong lote: ang barayti, ang petsa ng tanim, ang dami at oras ng abono, ang tubig, at kung gaano kabilis napipigilan ang peste. Tinitimbang ni Anee ang lote, lupa, barayti, yugto, forecast at dalawampung taon ng panahon sa inyong bayan bago siya sumagot."},
+            {"q": "Gaano kabilis ko makikita ang mas mataas na ani?", "a": "Sa unang taniman pa lang. May petsa na ang bawat gawain sa unang plano, at napapangalanan sa parehong araw ang unang pesteng ilitrato mo. Mula sa pangalawang taniman, ipapakita ng sarili mong talaan kung ano ang pinakagumana sa bawat lote."},
+            {"q": "Para lang ba sa palay ang anee.io?", "a": "Hindi. Para ito sa 85 pananim sa Pilipinas, mula palay at mais hanggang gulay, niyog at mga punong namumunga. May sariling kalendaryo ang bawat lote."},
+            {"q": "Kailangan ko ba ng sensor o drone?", "a": "Hindi. Sapat na ang cellphone. Binabasa ng anee.io ang lokasyon ng lote para sa panahon at ang mga litrato mo para sa peste at sakit."},
+            {"q": "Libre ba ang anee.io?", "a": "Oo. Libre habang buhay ang Libre na plan, kasama ang isang aktibong cropping schedule at ang buong kalendaryo. Kasama si Anee at ang kanyang mga analysis sa Libre plus Anee sa halagang PHP 100 kada buwan."}
+        ]},
+        {"type": "links", "title": "Kaugnay na gabay", "items": [
+            {"label": "Can anee.io increase my yield? (English)", "url": "/blog/can-anee-io-increase-my-yield"},
+            {"label": "Paano pataasin ang ani", "url": "/blog/paano-pataasin-ang-ani"},
+            {"label": "Paano pataasin ang ani ng palay", "url": "/blog/paano-pataasin-ang-ani-ng-palay"},
+            {"label": "Paano pataasin ang ani ng mais", "url": "/blog/paano-pataasin-ang-ani-ng-mais"}
+        ]}
+    ]
+}

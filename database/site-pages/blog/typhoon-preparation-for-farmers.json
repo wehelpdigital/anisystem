@@ -267,6 +267,8 @@
       "type": "links",
       "title": "Related guides",
       "items": [
+        {"label": "Climate resilient agriculture", "url": "/blog/climate-resilient-agriculture"},
+        {"label": "Lodging in rice", "url": "/blog/lodging-in-rice"},
         {
           "label": "Track typhoons near your farm",
           "url": "/blog/track-typhoons-near-my-farm"

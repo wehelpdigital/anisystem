@@ -1,0 +1,72 @@
+{
+    "section": "blog",
+    "slug": "paano-pataasin-ang-ani",
+    "sortOrder": -7694,
+    "lang": "tl",
+    "category": "Yield and Fertilizer",
+    "title": "Paano Pataasin ang Ani: 12 Paraan Para Mas Marami ang Maani at Mas Kaunti ang Masayang",
+    "metaTitle": "Paano Pataasin ang Ani: 12 Paraan Para sa Mas Malaking Ani",
+    "metaDescription": "Paano pataasin ang ani ng palay, mais at gulay: tamang petsa ng tanim, abono ayon sa yugto, maagang pagpuksa ng peste at proteksyon sa tagtuyot at bagyo.",
+    "focusKeyword": "paano pataasin ang ani",
+    "keywords": ["paano pataasin ang ani", "pampataas ng ani", "paano dumami ang ani", "paano palakihin ang ani", "mas malaking ani", "how to increase crop yield"],
+    "excerpt": "Paano pataasin ang ani? Dalawa ang trabaho: tulungan ang bawat halaman na lumaki nang buo, at pigilan ang mga pinsalang umaagaw sa ani. Magtanim ng tamang barayti sa tamang petsa, mag abono ayon sa yugto ng tanim, magpatubig kapag kailangan at puksain ang peste sa unang araw pa lang. Pagkatapos, protektahan ang bukid sa tagtuyot, bagyo, baha at pagdapa ng palay. Ang anee.io, ang farm app na gawa para sa magsasakang Pilipino, ay nagpaplano nito para sa bawat lote, at si Anee, ang smart farm technician nito, ang nagsasabi kung ano ang gagawin at kailan.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-paano-pataasin-ang-ani.webp",
+      "alt": "Mga magsasakang gumigiik ng bagong aning palay gamit ang thresher, ang bunga ng pag alam kung paano pataasin ang ani",
+      "credit": "A S M Jobaer, CC BY SA 4.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Dalawang numero ang nagpapasya sa bawat anihan. Una, gaano karami ang kayang gawin ng tanim. Pangalawa, gaano karami doon ang talagang umaabot sa sako. Sa karamihan ng bukid, may nasasayang sa dalawa, at kadalasan ay dahil sa desisyon, hindi sa malas.\n\nHalimbawa ang palay. Nasa 4 tonelada bawat ektarya ang karaniwang ani sa buong bansa, pero umabot sa halos 7 tonelada ang mga maayos na pinamahalaang trial sa tag araw. Hindi mahiwaga ang binhi nila. Nagtanim lang sila sa tamang oras, nag abono sa tamang araw, pinanatiling sapat ang tubig at maagang pinuksa ang peste."},
+        {"type": "list", "ordered": false, "items": ["**Magplano bago magtanim.** Ang barayti, ang petsa ng tanim at ang dami ng halaman ang nagtatakda ng pinakamataas na kayang anihin.", "**Mag abono ayon sa yugto, hindi sa nakasanayan.** Mas malaki ang balik ng parehong sako kapag tama ang linggo.", "**Puksain ang problema sa unang araw.** Isang spray lang ang gastos ng pesteng maagang nakita.", "**Bantayan ang panahon.** Mas malaki pa ang kinukuha ng tagtuyot, bagyo, baha at pagdapa kaysa sa karamihan ng peste.", "**Isulat ang lahat.** Ang talaan bawat lote ang magsasabi kung aling pagbabago ang nagpataas ng ani."]},
+        {"type": "heading", "level": 2, "text": "Paano pataasin ang ani sa 12 hakbang"},
+        {"type": "text", "text": "Gumagana ang labindalawang hakbang na ito sa palay, mais at karamihan ng gulay. Bawat isa ay nagdaragdag sa kayang gawin ng tanim o nagpoprotekta sa nagawa na nito. Unahin ang mga hakbang na pinakamadalas mong makaligtaan, dahil doon unang babalik ang ani."},
+        {"type": "steps", "items": [
+            {"title": "1. Pumili ng barayting bagay sa lote", "text": "Mahihirapan sa sahod ulan ang barayting para sa may irigasyon, at madaling madapa ang matangkad na barayti sa mahanging lugar. Itugma ang barayti sa tubig, lupa at peste ng inyong bayan. Basahin ang gabay namin sa [pinakamagandang barayti ng palay para sa lugar mo](/blog/best-rice-variety-for-my-area)."},
+            {"title": "2. Magsimula sa magandang binhi", "text": "Pantay ang pagtubo ng certified seed, kaya mas kaunti ang pagtatanim muli at sabay sabay ang paglaki. Sa palay, kaya ng magandang binhi na itaas ang ani nang 5 hanggang 20 porsyento."},
+            {"title": "3. Magtanim sa pinakamagandang petsa", "text": "Ang petsa ng tanim ang nagpapasya kung anong panahon ang sasalubong sa bawat yugto. Kapag tumapat ang pamumulaklak sa pinakamainit na linggo, maraming hungkag na butil. Kapag tumapat ang paglalaman ng butil sa panahon ng bagyo, madalas madapa ang palay."},
+            {"title": "4. Ihanda at patagin ang bukid", "text": "Pantay ang tubig sa patag na bukid, kaya kaunti ang tuyong bahagi kung saan tumutubo ang damo. Hindi rin nalulunod ang punla sa mababang sulok. May gabay kami sa [paghahanda ng lupa](/land-preparation/land-preparation-philippines) para sa bawat pananim."},
+            {"title": "5. Tamang dami ng halaman", "text": "Ang bawat nawawalang halaman ay nawawalang uhay, puso o bunga na hindi na maibabalik ng abono. Sa lipat tanim na palay, mga 25 puno bawat metro kwadrado. Sa hybrid na mais, mga 75,000 halaman bawat ektarya."},
+            {"title": "6. Ipasuri ang lupa at ayusin ang pH", "text": "Ang soil test mula sa Municipal Agriculture Office ang magsasabi kung ano ang kulang. Kung maasim ang lupa, mag apog muna, dahil hindi gaanong gumagana ang abono sa lupang masyadong maasim."},
+            {"title": "7. Mag abono ayon sa yugto ng tanim", "text": "Hatiin ang nitrogen sa halip na ibuhos lahat sa pagtatanim. Itapat ang bawat top dressing sa yugtong pinakakailangan ito. Nasa gabay namin sa [tamang oras ng abono ayon sa yugto](/blog/fertilizer-timing-by-growth-stage) ang mga araw para sa palay at mais."},
+            {"title": "8. Idagdag ang kulang sa lupa", "text": "Ang potassium ang nagpupuno sa butil at nagpapatibay sa tangkay. Mahalaga ang zinc sa basa at malagkit na lupa. Ang compost at dayami ay nagpapakain sa buhay sa lupa at nag iimbak ng tubig."},
+            {"title": "9. Magpatubig kapag kailangan", "text": "Pinakamasakit ang tagtuyot sa pamumulaklak, kaya unahin ang yugtong iyon. Sa palay, ang salitang basa at tuyo ay nakakatipid ng tubig habang nagsusuwi nang hindi bumababa ang ani."},
+            {"title": "10. Talunin ang damo sa unang buwan", "text": "Sa unang 30 hanggang 40 araw pinakamaraming naaagaw ng damo. Linisin ang panahong iyon, at matatakpan na ng tanim ang karamihan ng sumunod na damo."},
+            {"title": "11. Maglibot linggo linggo at kumilos agad", "text": "Lakarin ang bukid minsan isang linggo at tingnan ang ilalim ng dahon. Kung hindi sigurado kung peste o sakit ang nakikita mo, basahin muna ang gabay namin sa [peste o sakit](/blog/pest-or-disease-how-to-tell) bago bumili ng kahit ano."},
+            {"title": "12. Umani sa tamang oras at magpatuyo agad", "text": "Nalalagas ang butil na matagal nang hinog, at nabubulok ang basang butil. Sa palay, umani kapag 85 hanggang 90 porsyento na ng butil ang ginintuan, saka patuyuin sa loob ng isang araw."}
+        ]},
+        {"type": "callout", "tone": "tip", "title": "Ang pinakamurang dagdag na ani ay ang hindi nasayang", "text": "Bago gumastos ng mas maraming abono, ilista kung ano ang umagaw ng ani mo noong nakaraang taniman: pesteng huli nang nakita, tagtuyot sa pamumulaklak, o bagyong dumating bago anihan. Kadalasan, mas malaki ang naibabalik ng pag ayos sa isa sa mga iyon kaysa sa isang dagdag na sako ng urea."},
+        {"type": "heading", "level": 2, "text": "Protektahan ang ani sa peste, tagtuyot, bagyo at pagdapa"},
+        {"type": "text", "text": "Hindi pa ani ang magandang tanim sa bukid. Mula pamumulaklak hanggang pagpapatuyo, malaki pa ang puwedeng mawala. Kaya ang plano para tumaas ang ani ay dapat ding magbantay dito."},
+        {"type": "table", "caption": "Ang mga pangunahing banta sa ani at ang unang hakbang laban sa bawat isa", "rows": [
+            ["Banta", "Kailan pinakamasakit", "Unang hakbang"],
+            ["Peste at sakit na huli nang nakita", "Kahit anong yugto, lalo na sa pamumulaklak", "Lingguhang paglilibot, litrato kay Anee sa unang araw"],
+            ["Tagtuyot", "Pamumulaklak at simula ng paglalaman", "Maagang tanim, mulch, itabi ang tubig para sa pamumulaklak"],
+            ["Bagyo at baha", "Paglalaman hanggang anihan", "Itapat ang anihan bago ang buwan ng bagyo, linisin ang kanal"],
+            ["Pagdapa ng palay", "Huling pamumulaklak hanggang hinog", "Mas maikling barayti, hatiin ang nitrogen, sapat na potassium"],
+            ["Init", "Pamumulaklak", "Itapat ang tanim para hindi mamulaklak sa pinakamainit na linggo"]
+        ]},
+        {"type": "text", "text": "May sariling gabay ang bawat banta. Basahin ang [mga pananim na matibay sa tagtuyot](/blog/pananim-na-matibay-sa-tagtuyot) para sa tuyong lugar at taon ng El Nino, at ang [pagdapa ng palay](/blog/pagdapa-ng-palay) kung natutumba ang palay mo bago anihan. Para sa peste, sakit at damo, nandiyan ang [proteksyon ng pananim](/blog/proteksyon-ng-pananim). Para sa buong taniman, basahin ang [paghahanda ng bukid sa kalamidad](/blog/paghahanda-ng-bukid-sa-kalamidad)."},
+        {"type": "heading", "level": 2, "text": "Paano pataasin ang ani nang natural"},
+        {"type": "text", "text": "Kaya mong itaas ang ani nang mas kaunti ang kemikal kung mas marami ang ginagawa ng lupa. Maglagay ng compost, dumi ng hayop o dayami bawat taniman, dahil nag iimbak ito ng tubig at nagpapakain sa buhay sa lupa. Kung kaya, salitan ang palay ng munggo, mani o ibang legume, dahil nag iiwan sila ng nitrogen.\n\nMagtanim din nang sabay sa mga kapitbahay. Lumilipat ang peste mula sa maagang bukid papunta sa huli, kaya ang sabay na pagtatanim ang pumuputol sa kanilang siklo. Mag spray lang kapag lampas na sa threshold ang peste, para mabuhay ang mga kaibigang insekto. Ipinaliliwanag ito ng gabay namin sa [integrated pest management](/pests/integrated-pest-management)."},
+        {"type": "heading", "level": 2, "text": "Paano nakakatulong ang anee.io para tumaas ang ani"},
+        {"type": "text", "text": "Hindi mo kailangan ng sensor o drone. Sapat na ang cellphone kapag kilala ng app ang bukid mo. Ang anee.io ay farm management app na gawa para sa magsasakang Pilipino, at ginagawa nitong may petsang gawain ang bawat isa sa labindalawang hakbang para sa bawat lote.\n\nBinibilang ng [cropping calendar](/features/cropping-calendar) ang mga araw mula sa sariling petsa ng tanim ng bawat lote, kaya sa tamang araw ang bawat top dressing, paggamas at spray. Binabasa ng [When to Plant Analysis](/features/when-to-plant-analysis) ang dalawampung taon ng panahon sa inyong bayan at ang lagay ng El Nino o La Nina, saka pinipili ang pinakaligtas na petsa.\n\nKapag may mali sa tanim, ipadala kay Anee ang litrato. Binabasa niya ang lote mo, ang pananim, ang yugto nito at ang forecast bago siya sumagot, sa Tagalog o English. Kaya walang hula hula. Libre habang buhay ang Libre, at kasama si Anee at ang kanyang mga analysis sa Libre plus Anee sa halagang PHP 100 kada buwan."},
+        {"type": "cta", "title": "Planuhin ang mas malaking ani sa bawat lote", "text": "Mag sign up nang libre, ilagay ang mga lote at petsa ng tanim, at hayaang ang anee.io ang magtakda ng petsa ng bawat gawain mula paghahanda ng lupa hanggang anihan.", "label": "Magsimula nang libre", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Mga tanong tungkol sa pagpapataas ng ani"},
+        {"type": "faq", "items": [
+            {"q": "Ano ang pinakamabilis na paraan para tumaas ang ani?", "a": "Unahin ang pinakamalaking nasasayang. Sa karamihan ng bukid, iyon ay pesteng huli nang nakita, abonong mali ang linggo, o tagtuyot sa pamumulaklak. Kapag naayos ang isa, sa susunod na taniman pa lang ay tataas na ang ani."},
+            {"q": "Ano ang pampataas ng ani na hindi dagdag gastos?", "a": "Tamang oras. Hatiin ang nitrogen ayon sa yugto, magtanim sa tamang petsa, gumamas sa unang buwan at maglibot linggo linggo. Walang bayad ang tamang oras, pero ito ang nagpapasya kung gaano kalaki ang balik ng bawat sako."},
+            {"q": "Tataas ba ang ani kapag dinagdagan ang abono?", "a": "Hindi palagi. Kapag sobra ang nitrogen, nadadapa ang palay at dumarami ang peste at sakit. Mag abono ayon sa soil test at sa yugto, at idagdag muna ang potassium at kulang na micronutrient bago dagdagan ang urea."},
+            {"q": "Anong app ang makakatulong sa magsasakang Pilipino na pataasin ang ani?", "a": "Ang anee.io. Nilalagyan nito ng petsa ang bawat gawain mula sa araw ng tanim ng bawat lote, pinipili ang petsa ng tanim mula sa dalawampung taon ng panahon sa bayan mo, kinikilala ang peste at sakit mula sa litrato at itinatala ang ani para makita kung ano ang gumana."},
+            {"q": "Kaya ba ng anee.io na pataasin ang ani ko?", "a": "Oo. Tumataas ang ani dahil tama ang mga desisyon sa bawat lote: ang barayti, ang petsa ng tanim, ang abono at ang oras nito, ang tubig, at kung gaano kabilis napigilan ang peste. Basahin ang buong sagot sa [kaya ba ng anee.io na pataasin ang ani](/blog/kaya-ba-ng-anee-io-na-pataasin-ang-ani)."},
+            {"q": "May English na bersyon ba ang gabay na ito?", "a": "Mayroon. Basahin ang [how to increase crop yield](/blog/how-to-increase-crop-yield) sa English."}
+        ]},
+        {"type": "links", "title": "Kaugnay na gabay", "items": [
+            {"label": "How to increase crop yield (English)", "url": "/blog/how-to-increase-crop-yield"},
+            {"label": "Paano pataasin ang ani ng palay", "url": "/blog/paano-pataasin-ang-ani-ng-palay"},
+            {"label": "Paano pataasin ang ani ng mais", "url": "/blog/paano-pataasin-ang-ani-ng-mais"},
+            {"label": "Paano pataasin ang ani ng gulay", "url": "/blog/paano-pataasin-ang-ani-ng-gulay"},
+            {"label": "Proteksyon ng pananim", "url": "/blog/proteksyon-ng-pananim"},
+            {"label": "Kaya ba ng anee.io na pataasin ang ani?", "url": "/blog/kaya-ba-ng-anee-io-na-pataasin-ang-ani"}
+        ]}
+    ]
+}

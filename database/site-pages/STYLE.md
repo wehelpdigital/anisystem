@@ -500,7 +500,18 @@ Blog:
 /blog/fertilizer-in-tagalog, /blog/fertilizer-high-in-phosphorus,
 /blog/ammonium-nitrate-fertilizer, /blog/hybrid-rice,
 /blog/when-fertilization-occurs, /blog/palay-seedlings, /blog/crop-yield,
-/blog/vegetable-farming, /blog/soil-degradation, /blog/drip-irrigation-system
+/blog/vegetable-farming, /blog/soil-degradation, /blog/drip-irrigation-system,
+/blog/how-to-increase-crop-yield, /blog/how-to-increase-vegetable-yield,
+/blog/drought-resistant-crops, /blog/lodging-in-rice, /blog/crop-protection,
+/blog/climate-resilient-agriculture
+
+Filipino twins of English guides (2026-11-23, `SitePages::TWINS` links each pair
+with a language switch): /blog/paano-pataasin-ang-ani,
+/blog/paano-pataasin-ang-ani-ng-palay, /blog/paano-pataasin-ang-ani-ng-mais,
+/blog/paano-pataasin-ang-ani-ng-gulay, /blog/pananim-na-matibay-sa-tagtuyot,
+/blog/pagdapa-ng-palay, /blog/proteksyon-ng-pananim,
+/blog/paghahanda-ng-bukid-sa-kalamidad,
+/blog/kaya-ba-ng-anee-io-na-pataasin-ang-ani
 
 ## 9. Keywords per page
 

@@ -22,6 +22,12 @@
     @media (max-width: 639.98px) { .sp-finder-link { display: flex; margin: .35rem 0 0; } }
     .sp-chip { display: inline-flex; align-items: center; gap: .35rem; font-size: .72rem; font-weight: 800; letter-spacing: .06em;
         text-transform: uppercase; color: #2d5016; background: #e4efd4; border-radius: 999px; padding: .3rem .7rem; }
+    /* The same guide in the other language (2026-11-23): a pill beside the category chip, the brand yellow on hover. */
+    .sp-lang { display: inline-flex; align-items: center; gap: .35rem; margin-left: .35rem; padding: .28rem .75rem .28rem .55rem; border-radius: 999px;
+        font-size: .78rem; font-weight: 800; color: #1f1500; background: #fff7d6; box-shadow: inset 0 0 0 1px #f3e2a6; text-decoration: none; vertical-align: middle;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .sp-lang svg { width: .95rem; height: .95rem; color: #8a6400; }
+    .sp-lang:hover, .sp-lang:focus-visible { background: #f5c518; box-shadow: inset 0 0 0 1px #f5c518; }
     .sp-h1 { font-family: var(--font-heading); font-weight: 800; color: #14210c; font-size: clamp(1.9rem, 4.2vw, 2.9rem);
         line-height: 1.15; letter-spacing: -.01em; text-wrap: balance; }
     .sp-lead { font-size: 1.12rem; line-height: 1.7; color: #374151; }

@@ -1,0 +1,58 @@
+{
+    "section": "blog",
+    "slug": "proteksyon-ng-pananim",
+    "sortOrder": -7688,
+    "lang": "tl",
+    "category": "Crop Health",
+    "title": "Proteksyon ng Pananim: Paano Bantayan ang Ani Laban sa Peste, Sakit, Damo at Masamang Panahon",
+    "metaTitle": "Proteksyon ng Pananim Laban sa Peste, Sakit at Bagyo",
+    "metaDescription": "Proteksyon ng pananim sa apat na antas: iwasan, bantayan, kumilos at bumawi. Protektahan ang palay, mais at gulay sa peste, sakit, damo, bagyo at tagtuyot.",
+    "focusKeyword": "proteksyon ng pananim",
+    "keywords": ["proteksyon ng pananim", "paano protektahan ang pananim", "pagpuksa ng peste", "integrated pest management", "crop protection"],
+    "excerpt": "Ang proteksyon ng pananim ay ang pagbabantay sa itinanim mo hanggang makarating ito sa sako: laban sa insekto, sakit, damo, daga, ibon at masamang panahon. Apat ang antas nito. Iwasan ang problema sa malinis na binhi, tamang barayti at tamang oras. Bantayan ang bukid linggo linggo. Kumilos agad gamit ang tamang produkto, sa tamang dami, sa araw na walang ulan. Saka bumawi agad at magtala. Tumutulong ang anee.io sa bawat antas, at kinikilala ni Anee, ang smart farm technician, ang peste o sakit mula sa isang litrato.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-proteksyon-ng-pananim.webp",
+      "alt": "Isang malawak na berdeng palayan na binabantayan ng magsasaka, bahagi ng proteksyon ng pananim",
+      "credit": "PJeganathan, CC BY SA 4.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Para sa maraming magsasaka, ang proteksyon ng pananim ay ang pag spray. Pero pangatlong depensa lang ang spray, at madalas ito pa ang pinakamahal. Nauuna ang mas murang depensa: ano ang itinanim mo, kailan mo ito itinanim, at gaano kadalas mo itong tinitingnan.\n\nIpinaliliwanag ng gabay na ito ang apat na antas ng magandang plano para sa palay, mais at gulay. Sakop nito ang buhay na banta tulad ng peste at sakit, at ang banta ng panahon tulad ng bagyo, baha at tagtuyot, dahil pareho silang kumukuha sa iisang ani."},
+        {"type": "heading", "level": 2, "text": "Ang apat na antas ng proteksyon ng pananim"},
+        {"type": "steps", "items": [
+            {"title": "Iwasan", "text": "Magtanim ng malinis na certified seed ng barayting may resistensya sa peste ng inyong bayan. Magtanim sa loob ng dalawang linggo ng mga kapitbahay para hindi makalipat lipat ang peste. Magsalitan ng pananim, linisin ang damo sa pilapil na tinitirhan ng insekto, at patagin ang bukid."},
+            {"title": "Bantayan", "text": "Lakarin ang bukid minsan isang linggo, mas madalas sa pamumulaklak. Silipin ang ilalim ng dahon, ang puno ng tangkay at ang gilid ng bukid kung saan unang dumarating ang peste. Isulat ang nakita at kung saan."},
+            {"title": "Kumilos", "text": "Kumilos kapag lampas na sa threshold ang peste, hindi sa unang insektong nakita. Pumili ng produktong rehistrado para sa pesteng iyon sa pananim na iyon, sundin ang label at ang FPA registration, at mag spray sa kalmado at tuyong araw. Salitan ang mga produkto ayon sa mode of action."},
+            {"title": "Bumawi", "text": "Pagkatapos ng bagyo o pagdami ng peste, patuyuin ang bukid, alisin ang pinakamasamang halaman at abonohan muli ang tanim. Itago ang talaan at resibo, dahil kailangan ang mga ito sa claim sa crop insurance o sa utang."}
+        ]},
+        {"type": "heading", "level": 2, "text": "Proteksyon laban sa peste, sakit at damo"},
+        {"type": "text", "text": "Pinagsasama ng integrated pest management ang apat na antas. Gumagamit ito ng resistant na barayti, mga kaibigang insekto, kalinisan ng bukid at spray sa tamang oras, kaya mas kaunti ang spray at mas kaunti ang nasasayang. Nasa gabay namin sa [integrated pest management](/pests/integrated-pest-management) ang mga threshold ng karaniwang peste.\n\nPinakamahalaga ang mga unang araw. Isang spray lang sa isang sulok ang gastos ng pesteng nakita sa unang araw. Kapag dalawang linggo pa bago napansin, buong bukid na at bahagi ng ani ang kapalit. Para sa damo, ang unang 30 hanggang 40 araw ang nagpapasya, at nasa gabay namin sa [weed management in rice](/weeds/weed-management-in-rice) ang detalye."},
+        {"type": "table", "caption": "Mga karaniwang banta, ang unang palatandaan at ang unang hakbang", "rows": [
+            ["Banta", "Unang palatandaan", "Unang hakbang"],
+            ["Stem borer sa palay", "Patay na suwi, puting uhay sa pamumulaklak", "Lingguhang paglilibot, kumilos sa threshold"],
+            ["Fall armyworm sa mais", "Butas na parang bintana at dumi sa ubod", "Silipin ang ubod mula sa unang dahon"],
+            ["Rice blast", "Batik na hugis diyamante sa dahon", "Resistant na barayti, huwag sobrahan ang nitrogen"],
+            ["Bacterial wilt sa gulay", "Biglang pagkalanta sa tanghali", "Bunutin ang may sakit, magsalitan ng pananim"],
+            ["Damo", "Berdeng banig sa pagitan ng hanay sa unang buwan", "Gumamas o mag spray sa loob ng 30 araw"],
+            ["Daga", "Putol na suwi na nakahanay mula pilapil", "Sabay sabay na pain at bitag bago mamulaklak"]
+        ]},
+        {"type": "callout", "tone": "warn", "title": "Sayang ang pera sa maling produkto", "text": "Bilhin lang ang sinasabi ng label na gumagana sa peste mo at sa pananim mo. Nasa gabay namin kung paano [iwasang bumili ng maling pesticide](/blog/avoid-buying-the-wrong-pesticide) ang dapat tingnan sa tindahan."},
+        {"type": "heading", "level": 2, "text": "Proteksyon laban sa bagyo, baha at tagtuyot"},
+        {"type": "text", "text": "Nagsisimula sa kalendaryo ang proteksyon laban sa panahon. Itakda ang petsa ng tanim para matapos ang paglalaman at anihan bago ang buwan ng bagyo sa inyong lugar. Sa lote na madalas bahain, magtanim ng barayting nabubuhay kahit ilang araw na nakalubog, tulad ng NSIC Rc 194 (Submarino 1). Sa tuyong lugar, pumili mula sa aming listahan ng [pananim na matibay sa tagtuyot](/blog/pananim-na-matibay-sa-tagtuyot).\n\nKapag may bagyong paparating, anihin ang handa na, linisin ang kanal, at ilipat sa mataas na lugar ang binhi, abono at gamit. Patibayin din ang tangkay buong taniman para hindi madapa ang palay, gaya ng paliwanag sa [pagdapa ng palay](/blog/pagdapa-ng-palay)."},
+        {"type": "heading", "level": 2, "text": "Paano pinoprotektahan ng anee.io ang ani mo"},
+        {"type": "text", "text": "Nasa iisang screen ng anee.io ang apat na antas para sa bawat lote. Itinatakda ng [cropping calendar](/features/cropping-calendar) ang bawat paglilibot at spray ayon sa bilang ng araw ng lote mo. Tinutulungan ka ng [pest and disease finders](/features/pest-and-disease-finders) na pangalanan ang nakikita mo, kasama ang mga active ingredient na rehistrado laban dito.\n\nKapag may duda, ipadala kay Anee ang litrato. Binabasa niya ito kasama ang pananim, yugto at panahon ng lote mo, at sumasagot sa Tagalog o English. Ipinapakita ng [Range Effect calendar](/features/residual-effect-calendar) kung ilang araw pa gumagana ang bawat spray at abono, kaya kita mo ang butas bago pa ito makita ng peste. Sinusundan ng Satellite Weather ang mga bagyo malapit sa lote mo. Libre ang Libre, at kasama si Anee sa Libre plus Anee sa halagang PHP 100 kada buwan."},
+        {"type": "cta", "title": "Ilagay ang plano ng proteksyon sa iisang kalendaryo", "text": "Mag sign up nang libre, ilagay ang mga lote, at itatakda ng anee.io ang paglilibot, spray at paghahanda sa bagyo ng bawat isa.", "label": "Magsimula nang libre", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Mga tanong tungkol sa proteksyon ng pananim"},
+        {"type": "faq", "items": [
+            {"q": "Ano ang proteksyon ng pananim sa simpleng salita?", "a": "Lahat ng ginagawa mo para hindi makuha ng peste, sakit, damo, hayop at masamang panahon ang ani mo. Isang bahagi lang nito ang pag spray."},
+            {"q": "Ano ang pinakamurang paraan ng proteksyon?", "a": "Ang pag iwas at maagang pagbabantay. Mura ang resistant na barayti, sabay na pagtatanim, malinis na pilapil at lingguhang paglilibot, pero sila ang pinakamalaking natitipid."},
+            {"q": "Gaano kadalas dapat mag spray?", "a": "Kapag lampas na sa threshold ang peste o sakit, hindi ayon sa nakasanayang iskedyul. Pinapatay ng spray ayon sa kalendaryo ang mga kaibigang insekto at nagiging resistant ang peste."},
+            {"q": "May English na bersyon ba ito?", "a": "Mayroon. Basahin ang [crop protection](/blog/crop-protection) sa English."}
+        ]},
+        {"type": "links", "title": "Kaugnay na gabay", "items": [
+            {"label": "Crop protection (English)", "url": "/blog/crop-protection"},
+            {"label": "Paano pataasin ang ani", "url": "/blog/paano-pataasin-ang-ani"},
+            {"label": "Atangya sa palay", "url": "/blog/atangya-sa-palay"},
+            {"label": "Paghahanda ng bukid sa kalamidad", "url": "/blog/paghahanda-ng-bukid-sa-kalamidad"}
+        ]}
+    ]
+}

@@ -218,6 +218,8 @@
       "type": "links",
       "title": "Related weather and planting guides",
       "items": [
+        {"label": "Drought resistant crops", "url": "/blog/drought-resistant-crops"},
+        {"label": "Climate resilient agriculture", "url": "/blog/climate-resilient-agriculture"},
         {
           "label": "Best time to plant rice",
           "url": "/blog/best-time-to-plant-rice-philippines"

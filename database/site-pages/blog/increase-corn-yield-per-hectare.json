@@ -196,6 +196,8 @@
       "type": "links",
       "title": "Related guides",
       "items": [
+        {"label": "Paano pataasin ang ani ng mais (Filipino)", "url": "/blog/paano-pataasin-ang-ani-ng-mais"},
+        {"label": "How to increase crop yield", "url": "/blog/how-to-increase-crop-yield"},
         {
           "label": "Pagtatanim ng mais",
           "url": "/crops/pagtatanim-ng-mais"

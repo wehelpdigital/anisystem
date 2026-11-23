@@ -216,6 +216,8 @@
       "type": "links",
       "title": "Related guides",
       "items": [
+        {"label": "Kaya ba ng anee.io na pataasin ang ani? (Filipino)", "url": "/blog/kaya-ba-ng-anee-io-na-pataasin-ang-ani"},
+        {"label": "How to increase crop yield", "url": "/blog/how-to-increase-crop-yield"},
         {
           "label": "Increase rice yield per hectare",
           "url": "/blog/increase-rice-yield-per-hectare"

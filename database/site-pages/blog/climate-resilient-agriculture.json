@@ -1,0 +1,57 @@
+{
+    "section": "blog",
+    "slug": "climate-resilient-agriculture",
+    "sortOrder": -7695,
+    "lang": "en",
+    "category": "Weather",
+    "title": "Climate Resilient Agriculture: A Plan for Filipino Farms Against Typhoons, Floods, Drought and Heat",
+    "metaTitle": "Climate Resilient Agriculture: A Plan for Filipino Farms",
+    "metaDescription": "Climate resilient agriculture for Filipino farmers: know your farm's hazards, plant around them, pick tolerant varieties, spread your risk and keep records.",
+    "focusKeyword": "climate resilient agriculture",
+    "keywords": ["climate resilient agriculture", "climate smart agriculture", "climate change and agriculture in the Philippines", "flood tolerant rice", "submergence tolerant rice", "El Nino", "La Nina", "typhoon"],
+    "excerpt": "Climate resilient agriculture means farming so that a bad season costs you less and you recover faster. For a Filipino farm, that means knowing which typhoons, floods, dry spells and heat waves hit your town, planting so the crop meets them at its strongest, choosing tolerant varieties, spreading your risk across crops and keeping records for insurance and loans. anee.io reads twenty years of your town's weather and every storm, flood and drought since 2005, so your plan starts from your own farm's history.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-climate-resilient-agriculture.webp",
+      "alt": "Rice fields in Naga, Camarines Sur under floodwater after a storm, the risk climate resilient agriculture plans for",
+      "credit": "Naga City Government, Public domain, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Typhoons, floods, El Nino droughts and hotter days are part of farming in the Philippines. No farm can stop them. But two neighbors can face the same storm and come out of it very differently, because one planned for it and one did not.\n\nThat difference is what people mean by resilience. A resilient farm still has bad seasons. It simply loses less in them, saves some of the harvest every time and gets back to planting faster."},
+        {"type": "heading", "level": 2, "text": "What climate resilient agriculture means for a small farm"},
+        {"type": "list", "ordered": false, "items": [
+            "**Know your hazards.** Which months bring typhoons to your town, which lots flood and how often the rains fail.",
+            "**Plant around them.** Set the season so the weakest stages miss the riskiest weeks.",
+            "**Choose tolerant crops and varieties.** Some rice survives days under water, and some crops shrug off drought.",
+            "**Spread the risk.** Several crops, staggered planting and some livestock keep one disaster from taking everything.",
+            "**Guard soil and water.** Organic matter, drainage and water storage carry the farm through extremes.",
+            "**Keep records and a cushion.** Receipts and harvest records support insurance claims and loans after a loss."
+        ]},
+        {"type": "heading", "level": 2, "text": "Step one: know the hazards of your own farm"},
+        {"type": "text", "text": "General advice about the climate is not enough, because hazards differ from town to town. A lot in Cagayan meets more typhoons than a lot in Mindanao. A low field near a river floods when an upland field only gets wet.\n\nSo start with your own record. List the storms, floods and dry spells of the last ten years, the months they came and what each one cost you. Then mark which lots flooded and which dried out first. That list tells you where to change the plan."},
+        {"type": "heading", "level": 2, "text": "Step two: plant around the riskiest weeks"},
+        {"type": "text", "text": "Every crop has a weak stage. For rice, it is flowering and grain filling. For corn, it is tasseling and silking. So the planting date decides whether those weeks meet a typhoon, a dry spell or a heat wave.\n\nIn typhoon areas, plant so the harvest comes before the stormiest months. In El Nino years, plant early and pick a shorter variety. Our guides to the [best time to plant rice](/blog/best-time-to-plant-rice-philippines) and to [El Nino and La Nina farming tips](/blog/el-nino-la-nina-farming-tips) go deeper."},
+        {"type": "heading", "level": 2, "text": "Step three: choose crops and varieties that tolerate the weather"},
+        {"type": "text", "text": "For flood prone fields, submergence tolerant rice like NSIC Rc 194 (Submarino 1) can survive about two weeks under water and still give a harvest. For dry, rainfed fields, NSIC Rc 192 (Sahod Ulan 1) and NSIC Rc 480 (GSR 8) carry drought tolerance. Our [rice variety finder](/rice-varieties) lists each one.\n\nFor lots that dry out every year, switch part of the farm to [drought resistant crops](/blog/drought-resistant-crops) like mongo, peanut or sorghum. Also, choose shorter, sturdier rice where strong winds are common, because tall palay falls over first, as our guide on [lodging in rice](/blog/lodging-in-rice) shows."},
+        {"type": "heading", "level": 2, "text": "Step four: spread the risk and protect soil and water"},
+        {"type": "text", "text": "A farm with one crop planted on one day can lose everything in one storm. A farm with two or three crops, planted a few weeks apart, rarely does. Our pages on a [staggered planting schedule](/blog/staggered-planting-schedule) and the [integrated farming system](/blog/integrated-farming-system) show how to set this up.\n\nThen look after the soil. Compost and crop residue help it hold water in drought and drain better after floods. Keep canals and drains clear before the rainy season, and if you can, dig a small farm pond to store water for the dry months."},
+        {"type": "callout", "tone": "tip", "title": "Records are part of resilience", "text": "After a disaster, insurers, lenders and aid programs ask what you planted, when and what you lost. A farmer with dated records and receipts gets help faster. Our guide to [farm records for loans and insurance](/blog/farm-records-for-loans-and-insurance) shows what to keep."},
+        {"type": "heading", "level": 2, "text": "How anee.io makes your farm climate resilient"},
+        {"type": "text", "text": "anee.io starts from your own farm's history. Anee, the smart farm technician, knows twenty years of rain and heat for your town, every typhoon, flood and drought recorded there since 2005, and the latest El Nino or La Nina outlook. So [When to Plant Analysis](/features/when-to-plant-analysis) can pick a planting window that keeps the weak stages away from the riskiest weeks.\n\n[Satellite Weather](/features/satellite-weather) follows every active storm and tells you how far its eye is from your field. After a storm or a dry spell, [Realign by Anee](/features/realign-by-anee) reads what your lot went through and names the stage the crop is really in. Then the [cropping calendar](/features/cropping-calendar) and your harvest records keep the history that the next plan, and your next insurance claim, will need. Libre is free, and Anee comes with Libre plus Anee at PHP 100 a month."},
+        {"type": "cta", "title": "Build your farm's own weather plan", "text": "Add your lots and let Anee read your town's storms, floods and dry spells before you set the next planting date.", "label": "Meet Anee", "url": "/features/ai-agricultural-technician"},
+        {"type": "heading", "level": 2, "text": "Questions about climate resilient agriculture"},
+        {"type": "faq", "items": [
+            {"q": "What is climate resilient agriculture in simple words?", "a": "Farming so that typhoons, floods, droughts and heat cost you less and you recover faster. It mixes good timing, tolerant varieties, spread out risk, healthy soil and good records."},
+            {"q": "Is climate resilient agriculture the same as climate smart agriculture?", "a": "They overlap. Climate smart agriculture also aims to cut farm emissions. For a small Filipino farm, the first goal of both is the same: a harvest that survives a bad season."},
+            {"q": "Which rice varieties survive floods?", "a": "Submergence tolerant varieties like NSIC Rc 194 (Submarino 1) can live through about two weeks under water. Check our rice variety finder for the ones suited to your area."},
+            {"q": "How can an app help my farm face the climate?", "a": "anee.io reads your town's weather and hazard record, picks a safer planting window, tracks typhoons near your lots and keeps the records you need after a loss. Anee answers your questions in Tagalog or English."},
+            {"q": "Is there a Filipino version of this guide?", "a": "Yes. Read [paghahanda ng bukid sa kalamidad](/blog/paghahanda-ng-bukid-sa-kalamidad) in Filipino."}
+        ]},
+        {"type": "links", "title": "Related guides", "items": [
+            {"label": "Paghahanda ng bukid sa kalamidad (Filipino)", "url": "/blog/paghahanda-ng-bukid-sa-kalamidad"},
+            {"label": "Typhoon preparation for farmers", "url": "/blog/typhoon-preparation-for-farmers"},
+            {"label": "Drought resistant crops", "url": "/blog/drought-resistant-crops"},
+            {"label": "Crop protection", "url": "/blog/crop-protection"},
+            {"label": "How to increase crop yield", "url": "/blog/how-to-increase-crop-yield"}
+        ]}
+    ]
+}

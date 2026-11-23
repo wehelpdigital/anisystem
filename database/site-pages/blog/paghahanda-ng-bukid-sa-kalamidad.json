@@ -1,0 +1,56 @@
+{
+    "section": "blog",
+    "slug": "paghahanda-ng-bukid-sa-kalamidad",
+    "sortOrder": -7687,
+    "lang": "tl",
+    "category": "Weather",
+    "title": "Paghahanda ng Bukid sa Kalamidad: Plano Laban sa Bagyo, Baha, Tagtuyot at Init",
+    "metaTitle": "Paghahanda ng Bukid sa Kalamidad: Bagyo, Baha at Tagtuyot",
+    "metaDescription": "Paghahanda ng bukid sa kalamidad: alamin ang panganib sa inyong bayan, itapat ang tanim, pumili ng matibay na barayti, hatiin ang panganib at magtala.",
+    "focusKeyword": "paghahanda ng bukid sa kalamidad",
+    "keywords": ["paghahanda ng bukid sa kalamidad", "paghahanda sa bagyo", "pagsasaka at bagyo", "barayti ng palay na matibay sa baha", "climate resilient agriculture"],
+    "excerpt": "Ang paghahanda ng bukid sa kalamidad ay pagsasaka sa paraang mas kaunti ang nawawala sa masamang taniman at mas mabilis ang pagbangon. Para sa bukid sa Pilipinas, ibig sabihin nito ay alamin kung anong bagyo, baha, tagtuyot at init ang tumatama sa inyong bayan, magtanim para salubungin sila ng tanim sa pinakamalakas nitong yugto, pumili ng matibay na barayti, hatiin ang panganib sa iba ibang pananim at magtala para sa insurance at utang. Binabasa ng anee.io ang dalawampung taon ng panahon sa inyong bayan at bawat bagyo, baha at tagtuyot mula 2005.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-paghahanda-ng-bukid-sa-kalamidad.webp",
+      "alt": "Larawan mula sa satellite ng isang malakas na bagyo na tumatama sa Pilipinas, dahilan ng paghahanda ng bukid sa kalamidad",
+      "credit": "Himawari imagery by CSU CIRA, JMA and JAXA, Public domain, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Bahagi na ng pagsasaka sa Pilipinas ang bagyo, baha, tagtuyot ng El Nino at mas mainit na mga araw. Walang bukid na makakapigil sa kanila. Pero puwedeng harapin ng dalawang magkapitbahay ang iisang bagyo at magkaiba ang kinalabasan, dahil naghanda ang isa at ang isa ay hindi.\n\nIyan ang ibig sabihin ng matatag na bukid. May masamang taniman pa rin ito. Mas kaunti lang ang nawawala, may naililigtas na ani bawat beses, at mas mabilis itong nakakabalik sa pagtatanim."},
+        {"type": "heading", "level": 2, "text": "Ano ang paghahanda ng bukid sa kalamidad"},
+        {"type": "list", "ordered": false, "items": [
+            "**Alamin ang panganib.** Anong buwan dumarating ang bagyo sa inyong bayan, aling lote ang binabaha at gaano kadalas pumapalya ang ulan.",
+            "**Itapat ang tanim.** Itakda ang taniman para hindi tumapat ang pinakamahinang yugto sa pinakamapanganib na linggo.",
+            "**Pumili ng matibay na pananim at barayti.** May palay na nabubuhay nang ilang araw na nakalubog, at may pananim na kayang ang tagtuyot.",
+            "**Hatiin ang panganib.** Ilang pananim, magkakaibang petsa ng tanim at kaunting hayop, para hindi makuha ng iisang kalamidad ang lahat.",
+            "**Alagaan ang lupa at tubig.** Organikong bagay, maayos na kanal at imbakan ng tubig.",
+            "**Magtala at mag ipon.** Ang resibo at talaan ng ani ang kailangan sa insurance at utang pagkatapos ng pinsala."
+        ]},
+        {"type": "heading", "level": 2, "text": "Unang hakbang: alamin ang panganib ng sarili mong bukid"},
+        {"type": "text", "text": "Hindi sapat ang pangkalahatang payo tungkol sa klima, dahil iba iba ang panganib sa bawat bayan. Mas madalas bagyuhin ang lote sa Cagayan kaysa sa lote sa Mindanao. Ang mababang bukid malapit sa ilog ay binabaha, habang nababasa lang ang nasa mataas na lugar.\n\nKaya magsimula sa sariling talaan. Ilista ang mga bagyo, baha at tagtuyot sa nakaraang sampung taon, ang buwan nila at ang nawala sa iyo sa bawat isa. Markahan kung aling lote ang binaha at alin ang unang natuyo. Iyan ang listahang magsasabi kung saan babaguhin ang plano."},
+        {"type": "heading", "level": 2, "text": "Pangalawang hakbang: magtanim nang malayo sa pinakamapanganib na linggo"},
+        {"type": "text", "text": "May mahinang yugto ang bawat pananim. Sa palay, ito ang pamumulaklak at paglalaman ng butil. Sa mais, ang tasseling at silking. Kaya ang petsa ng tanim ang nagpapasya kung sasalubong ang mga linggong iyon sa bagyo, tagtuyot o init.\n\nSa lugar na madalas bagyuhin, magtanim para maani bago ang mga buwang pinakamaraming bagyo. Sa taon ng El Nino, magtanim nang maaga at pumili ng mas maikling barayti. Basahin din ang gabay namin sa [pananim na matibay sa tagtuyot](/blog/pananim-na-matibay-sa-tagtuyot)."},
+        {"type": "heading", "level": 2, "text": "Pangatlong hakbang: pumili ng barayting matibay sa panahon"},
+        {"type": "text", "text": "Para sa bukid na madalas bahain, ang NSIC Rc 194 (Submarino 1) ay kayang mabuhay nang mga dalawang linggong nakalubog at mamunga pa rin. Para sa tuyong sahod ulan, matibay sa tagtuyot ang NSIC Rc 192 (Sahod Ulan 1) at NSIC Rc 480 (GSR 8). Nakalista ang bawat isa sa aming [rice variety finder](/rice-varieties).\n\nSa mahanging lugar, pumili ng mas maikli at matibay na palay, dahil ang matangkad ang unang natutumba. Ipinaliliwanag ito sa gabay namin sa [pagdapa ng palay](/blog/pagdapa-ng-palay)."},
+        {"type": "heading", "level": 2, "text": "Pang apat na hakbang: hatiin ang panganib at alagaan ang lupa"},
+        {"type": "text", "text": "Ang bukid na may iisang pananim na itinanim sa iisang araw ay puwedeng mawalan ng lahat sa iisang bagyo. Ang bukid na may dalawa o tatlong pananim na ilang linggo ang pagitan ay bihirang mangyari iyon. Nasa gabay namin sa [staggered planting schedule](/blog/staggered-planting-schedule) kung paano ito ayusin.\n\nAlagaan din ang lupa. Ang compost at dayami ay tumutulong sa lupa na mag imbak ng tubig sa tagtuyot at mas mabilis matuyo pagkatapos ng baha. Linisin ang kanal bago mag tag ulan, at kung kaya, gumawa ng maliit na imbakan ng tubig para sa tag araw."},
+        {"type": "callout", "tone": "tip", "title": "Bahagi ng paghahanda ang talaan", "text": "Pagkatapos ng kalamidad, itatanong ng insurance, nagpapautang at programa ng tulong kung ano ang itinanim mo, kailan, at ano ang nawala. Mas mabilis matulungan ang magsasakang may talaang may petsa at resibo."},
+        {"type": "heading", "level": 2, "text": "Paano tinutulungan ng anee.io ang bukid mo na maging handa"},
+        {"type": "text", "text": "Nagsisimula ang anee.io sa kasaysayan ng sarili mong bukid. Alam ni Anee, ang smart farm technician, ang dalawampung taon ng ulan at init sa inyong bayan, ang bawat bagyo, baha at tagtuyot na naitala doon mula 2005, at ang pinakabagong lagay ng El Nino o La Nina. Kaya ang [When to Plant Analysis](/features/when-to-plant-analysis) ay pumipili ng petsa na malayo sa pinakamapanganib na linggo ang mahihinang yugto.\n\nSinusundan ng [Satellite Weather](/features/satellite-weather) ang bawat bagyo at sinasabi kung gaano kalayo ang mata nito sa bukid mo. Pagkatapos ng bagyo o tagtuyot, binabasa ng [Realign by Anee](/features/realign-by-anee) ang pinagdaanan ng lote at sinasabi kung anong yugto talaga ang tanim. Itinatago ng [cropping calendar](/features/cropping-calendar) at ng talaan ng ani ang kasaysayang kailangan ng susunod mong plano at claim. Kasama si Anee sa Libre plus Anee sa halagang PHP 100 kada buwan."},
+        {"type": "cta", "title": "Gawin ang plano ng bukid mo laban sa panahon", "text": "Ilagay ang mga lote at hayaang basahin ni Anee ang bagyo, baha at tagtuyot ng inyong bayan bago mo itakda ang susunod na petsa ng tanim.", "label": "Kilalanin si Anee", "url": "/features/ai-agricultural-technician"},
+        {"type": "heading", "level": 2, "text": "Mga tanong tungkol sa paghahanda ng bukid sa kalamidad"},
+        {"type": "faq", "items": [
+            {"q": "Paano maghanda ang magsasaka sa bagyo?", "a": "Itapat ang anihan bago ang buwan ng bagyo, linisin ang kanal, anihin ang handa na, at ilipat sa mataas na lugar ang binhi, abono at gamit. Basahin din ang gabay namin sa [typhoon preparation for farmers](/blog/typhoon-preparation-for-farmers)."},
+            {"q": "Anong palay ang kayang mabuhay sa baha?", "a": "Ang mga barayting matibay sa pagkalubog tulad ng NSIC Rc 194 (Submarino 1), na kayang mabuhay nang mga dalawang linggong nakalubog."},
+            {"q": "Paano makakatulong ang app sa paghahanda sa kalamidad?", "a": "Binabasa ng anee.io ang panahon at kasaysayan ng kalamidad sa inyong bayan, pumipili ng mas ligtas na petsa ng tanim, sinusundan ang bagyo malapit sa lote mo at itinatago ang talaang kailangan pagkatapos ng pinsala."},
+            {"q": "May English na bersyon ba ito?", "a": "Mayroon. Basahin ang [climate resilient agriculture](/blog/climate-resilient-agriculture) sa English."}
+        ]},
+        {"type": "links", "title": "Kaugnay na gabay", "items": [
+            {"label": "Climate resilient agriculture (English)", "url": "/blog/climate-resilient-agriculture"},
+            {"label": "Pananim na matibay sa tagtuyot", "url": "/blog/pananim-na-matibay-sa-tagtuyot"},
+            {"label": "Pagdapa ng palay", "url": "/blog/pagdapa-ng-palay"},
+            {"label": "Proteksyon ng pananim", "url": "/blog/proteksyon-ng-pananim"},
+            {"label": "Paano pataasin ang ani", "url": "/blog/paano-pataasin-ang-ani"}
+        ]}
+    ]
+}

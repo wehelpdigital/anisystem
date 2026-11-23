@@ -77,7 +77,9 @@
     // A Tagalog page speaks Tagalog around its content too: the reading time,
     // the date, the contents, the credits and the "read next" headings.
     $tl = $page->lang === 'tl';
-    $months = ['Enero', 'Pebrero', 'Marso', 'Abril', 'Mayo', 'Hunyo', 'Hulyo', 'Agosto', 'Setyembre', 'Oktubre', 'Nobyembre', 'Disyembre'];
+    // The same guide in the other language (SitePages::TWINS, 2026-11-23): a switch above the title, hreflang in the head.
+    $twin = $page->exists ? $S::twin($page) : null;
+    $months =['Enero', 'Pebrero', 'Marso', 'Abril', 'Mayo', 'Hunyo', 'Hulyo', 'Agosto', 'Setyembre', 'Oktubre', 'Nobyembre', 'Disyembre'];
     $day = $updated->copy()->timezone('Asia/Manila');
     $updatedText = $tl ? 'Binago noong ' . $months[$day->month - 1] . ' ' . $day->day . ', ' . $day->year : 'Updated ' . $day->format('F j, Y');
     // A Tagalog reader's next reads: the other Tagalog pages of the section
@@ -106,6 +108,10 @@
 
 @push('head')
     <link rel="canonical" href="{{ $canonical }}">
+    @if ($twin)
+        <link rel="alternate" hreflang="{{ $tl ? 'tl-PH' : 'en-PH' }}" href="{{ $canonical }}">
+        <link rel="alternate" hreflang="{{ $twin['lang'] === 'tl' ? 'tl-PH' : 'en-PH' }}" href="{{ $twin['url'] }}">
+    @endif
     <meta property="og:type" content="article">
     <meta property="og:title" content="{{ $seoTitle }}">
     <meta property="og:description" content="{{ $page->metaDescription }}">
@@ -165,6 +171,13 @@
                         <a href="{{ $S::url('weeds') }}?group={{ $weed['group'] }}#catalogue" class="sp-chip">{{ $page->category }}</a>
                     @elseif ($page->category)
                         <span class="sp-chip">{{ $page->category }}</span>
+                    @endif
+                    @if ($twin)
+                        {{-- The other language's copy of this guide (SitePages::TWINS). --}}
+                        <a href="{{ $twin['url'] }}" class="sp-lang" hreflang="{{ $twin['lang'] === 'tl' ? 'tl' : 'en' }}" lang="{{ $twin['lang'] === 'tl' ? 'fil' : 'en' }}">
+                            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9s1.3-6.4 3.8-9z"/></svg>
+                            <span>{{ $twin['lang'] === 'tl' ? 'Basahin sa Filipino' : 'Read in English' }}</span>
+                        </a>
                     @endif
                     <h1 class="sp-h1 mt-3">{{ $page->title }}</h1>
                     @if ($page->excerpt)<p class="sp-lead mt-4">{!! $S::inline($page->excerpt) !!}</p>@endif

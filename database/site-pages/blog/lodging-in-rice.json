@@ -1,0 +1,65 @@
+{
+    "section": "blog",
+    "slug": "lodging-in-rice",
+    "sortOrder": -7697,
+    "lang": "en",
+    "category": "Palay",
+    "title": "Lodging in Rice: Why Palay Falls Over and How to Keep It Standing",
+    "metaTitle": "Lodging in Rice: Causes, Prevention and What to Do",
+    "metaDescription": "Lodging in rice can cut the harvest and spoil the grain. Learn why palay falls over, how to keep stems strong and what to do once a field has lodged.",
+    "focusKeyword": "lodging in rice",
+    "keywords": ["lodging in rice", "rice lodging", "lodging in rice plant", "how to prevent lodging in rice", "anti lodging", "lodged rice", "natumbang palay", "pagdapa ng palay"],
+    "excerpt": "Lodging in rice is when the palay bends or breaks near the base and lies flat before harvest. It usually comes from tall, weak stems, too much nitrogen, a crowded stand or strong wind and rain during grain filling. Lodged grain fills poorly, can sprout or rot in the water and is slow and costly to harvest. To keep palay standing, pick a sturdy variety, split the nitrogen, give enough potassium and time the season so harvest misses the stormy months. anee.io plans each of these steps for every lot.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-lodging-in-rice.webp",
+      "alt": "Ripening rice flattened by heavy rain, a field showing lodging in rice",
+      "credit": "Misei sen, CC0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Farmers know the sight: one windy night near harvest, and a green, heavy field lies flat like a mat. Some call it natumbang palay, others say the palay humiga or nadapa. Whatever the name, it costs grain, time and money.\n\nThe good news is that lodging is not only bad luck with the weather. Most fields that fall over were weak before the storm came. So the steps that keep stems strong are steps you can take from the first day of the season."},
+        {"type": "heading", "level": 2, "text": "What lodging in rice does to your harvest"},
+        {"type": "text", "text": "A lodged plant cannot move food from its leaves to the grain as well, so grains fill poorly and stay light. If the panicles lie in water, the grain can sprout on the plant or rot. Rats, birds and diseases also find the flattened field easy to reach.\n\nThe loss depends on when the field goes down. Lodging at flowering or early grain filling costs the most, because the grain has barely started to fill. Lodging a few days before harvest costs less grain but makes cutting slow and threshing harder. Combine harvesters struggle with flat palay too, so hired harvest can cost more."},
+        {"type": "heading", "level": 2, "text": "Why rice plants fall over"},
+        {"type": "list", "ordered": false, "items": [
+            "**Tall varieties.** A taller stem acts like a longer lever, so the same wind bends it more.",
+            "**Too much nitrogen, or nitrogen too late.** Heavy urea makes tall, soft, lush stems and big top heavy plants.",
+            "**Too little potassium and silicon.** Both build thicker, stiffer stem walls.",
+            "**A crowded stand.** Plants packed too close grow thin and reach for light.",
+            "**Deep standing water.** Roots stay shallow and stems weaken when the field never dries.",
+            "**Pests and diseases at the base.** [Rice stem borers](/pests/rice-stem-borer) hollow the stem, and [sheath blight](/diseases/sheath-blight) rots it from outside.",
+            "**Wind and heavy rain at grain filling.** A typhoon or a strong habagat storm brings down even good fields, but weak ones go first."
+        ]},
+        {"type": "heading", "level": 2, "text": "How to prevent lodging in rice"},
+        {"type": "steps", "items": [
+            {"title": "Choose a shorter, sturdy variety", "text": "Each variety page in our [rice variety finder](/rice-varieties) lists the plant height. In windy, typhoon prone areas, favor the shorter varieties with strong stems."},
+            {"title": "Split the nitrogen and do not overdo it", "text": "Give nitrogen in parts across tillering and panicle initiation instead of one big dose. Avoid heavy urea after panicle initiation, since late nitrogen makes the top heavy and soft. Our guide on [fertilizer for rice tillering](/blog/fertilizer-for-rice-tillering) gives the timing."},
+            {"title": "Give enough potassium", "text": "Potassium thickens the stem and helps grain fill. Many Filipino fields get far less than the crop needs, so check your plan against our page on [potash fertilizer](/blog/potash-fertilizer)."},
+            {"title": "Return silicon to the field", "text": "Rice takes up a lot of silicon, which stiffens stems and leaves. Return rice straw, rice hull ash or carbonized rice hull to the field instead of burning it all."},
+            {"title": "Keep the right spacing", "text": "Follow the seeding rate for your planting method. A stand that is too thick gives thin stems that lean on each other."},
+            {"title": "Let the field dry now and then", "text": "A short drying during tillering, or alternate wetting and drying, pushes roots deeper and firms the soil around them."},
+            {"title": "Time the season around the storms", "text": "Set the planting date so grain filling and harvest come before the months with the most typhoons in your area. Then drain the field about two weeks before harvest."},
+            {"title": "Control stem borers and sheath blight", "text": "Both weaken the base of the stem before you notice. Scout from tillering on and act at the threshold."}
+        ]},
+        {"type": "callout", "tone": "tip", "title": "The lush green field is not always the best field", "text": "A very dark green, very tall crop at panicle initiation often means too much nitrogen. It looks rich, but it is the field most likely to lie flat. A leaf color chart helps you feed only what the crop needs."},
+        {"type": "heading", "level": 2, "text": "What to do when your palay has already lodged"},
+        {"type": "text", "text": "First, drain the field right away so the panicles do not sit in water. Grain that touches water for a few days in warm weather can start to sprout. Then, where the field went down late in grain filling, plan an early harvest as soon as most grains are golden.\n\nSome farmers tie a few hills together so they hold each other up. It takes labor but can save grain on a small lot. Finally, dry the harvest fast, since grain from a lodged field is often wetter and spoils sooner. Our guide on [when to harvest rice](/blog/when-to-harvest-rice) covers the signs of maturity, and our [typhoon preparation](/blog/typhoon-preparation-for-farmers) guide covers the days before a storm."},
+        {"type": "heading", "level": 2, "text": "How anee.io keeps your palay standing"},
+        {"type": "text", "text": "Lodging starts with choices made weeks before the storm, and anee.io helps you get them right. The [cropping calendar](/features/cropping-calendar) splits each nitrogen dose by your lot's own day count, so no urea lands too late. The [NPK Plus calculator](/features/npk-plus-calculator) checks that your plan carries enough potassium for the yield you aim for.\n\nNext, the Range Effect calendar shows, day by day, when your lot runs lush on nitrogen and when potassium and silicon run short. [Satellite Weather](/features/satellite-weather) tracks typhoons near your lots, so you can drain and harvest in time. When you are unsure, ask Anee, the smart farm technician, in Tagalog or English. She reads your variety, its stage and the forecast before she answers."},
+        {"type": "cta", "title": "Plan a season that stays standing", "text": "Add your lots, your variety and your planting date, and let anee.io time every dose and warn you before a storm.", "label": "Start free", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Questions about lodging in rice"},
+        {"type": "faq", "items": [
+            {"q": "What causes lodging in rice?", "a": "Tall, weak stems from too much nitrogen, a crowded stand, low potassium and silicon, shallow roots in deep water, stem borers or sheath blight, and strong wind and rain during grain filling."},
+            {"q": "Which fertilizer prevents lodging in rice?", "a": "No fertilizer alone prevents it, but a balanced plan helps a lot. Split the nitrogen and avoid heavy late doses, give enough potassium, and return silicon through rice straw or rice hull ash."},
+            {"q": "Can lodged rice still be harvested?", "a": "Yes. Drain the field, harvest as soon as most grains are mature and dry the grain fast. Expect slower cutting and some loss in grain quality."},
+            {"q": "At what stage is lodging most damaging?", "a": "At flowering and early grain filling, because the grain has not filled yet. Lodging close to maturity costs less grain but makes the harvest harder."},
+            {"q": "Is there a Filipino version of this guide?", "a": "Yes. Read [pagdapa ng palay](/blog/pagdapa-ng-palay) in Filipino."}
+        ]},
+        {"type": "links", "title": "Related guides", "items": [
+            {"label": "Pagdapa ng palay (Filipino)", "url": "/blog/pagdapa-ng-palay"},
+            {"label": "Increase rice yield per hectare", "url": "/blog/increase-rice-yield-per-hectare"},
+            {"label": "Typhoon preparation for farmers", "url": "/blog/typhoon-preparation-for-farmers"},
+            {"label": "Leaf color chart for rice", "url": "/blog/leaf-color-chart-rice"},
+            {"label": "How to increase crop yield", "url": "/blog/how-to-increase-crop-yield"}
+        ]}
+    ]
+}

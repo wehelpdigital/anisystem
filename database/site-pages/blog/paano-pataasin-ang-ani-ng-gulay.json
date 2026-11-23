@@ -1,0 +1,59 @@
+{
+    "section": "blog",
+    "slug": "paano-pataasin-ang-ani-ng-gulay",
+    "sortOrder": -7691,
+    "lang": "tl",
+    "category": "Vegetables",
+    "title": "Paano Pataasin ang Ani ng Gulay: Kamatis, Talong, Ampalaya, Okra at Iba Pa",
+    "metaTitle": "Paano Pataasin ang Ani ng Gulay sa Bukid at Bakuran",
+    "metaDescription": "Paano pataasin ang ani ng gulay: malakas na punla, mataas na kama, abono para sa bunga, polinasyon, maagang pagpuksa ng peste at madalas na pamimitas.",
+    "focusKeyword": "paano pataasin ang ani ng gulay",
+    "keywords": ["paano pataasin ang ani ng gulay", "pampadami ng bunga", "paano pabungahin ang talong", "abono sa kamatis", "how to increase vegetable yield"],
+    "excerpt": "Paano pataasin ang ani ng gulay? Magsimula sa malakas na punla, mataas na kama na hindi nababahaan sa tag ulan, at abonong lumilipat mula dahon papunta sa bunga sa tamang oras. Tulungan ang bulaklak na mamunga, puksain agad ang uod ng talong at ang langaw ng prutas, at mamitas nang madalas, dahil mas namumunga ang maraming gulay kapag madalas pinipitasan. Nilalagyan ng anee.io ng petsa ang bawat gawaing ito para sa bawat kama, at kinikilala ni Anee ang peste mula sa isang litrato.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-paano-pataasin-ang-ani-ng-gulay.webp",
+      "alt": "Isang batang bunga ng ampalaya sa baging, gulay na mas namumunga kapag alam kung paano pataasin ang ani ng gulay",
+      "credit": "Joydeep, CC BY SA 3.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Malaki ang kita ng gulay sa bawat metro kwadrado, pero mabilis din itong masira. Isang linggo lang ng langaw ng prutas, puwede nang masira ang isang buong pitasan ng ampalaya. Isang malakas na ulan, puwedeng malunod ang buong kama ng punla ng kamatis. Kaya ang magandang ani ng gulay ay hindi galing sa iisang malaking input, kundi sa maraming maliliit na gawaing ginawa sa oras.\n\nAng magandang balita, mura ang karamihan sa mga gawaing iyon. Narito ang mga gawi na nagpapataas ng ani sa karamihan ng gulay sa Pilipinas, at ang pangunahing magnanakaw ng ani sa bawat pananim."},
+        {"type": "heading", "level": 2, "text": "Paano pataasin ang ani ng gulay sa kahit anong taniman"},
+        {"type": "steps", "items": [
+            {"title": "Magpalaki ng malakas na punla", "text": "Magpunla sa tray o malinis na punlaan gamit ang magandang lupa, at ibilad ang punla sa araw nang ilang araw bago ilipat. Hindi na humahabol ang bansot na punla, kaya itapon ang mahihina. Nasa gabay namin sa [pagtatanim ng kamatis](/how-to-plant/tomato) ang yugto ng punla."},
+            {"title": "Magtanim sa mataas na kama", "text": "Ayaw ng karamihan ng gulay ang basang ugat. Sa tag ulan, ang kamang 20 hanggang 30 cm ang taas ay nagpapahinga sa ugat at nagbabawas ng bulok at pagkalanta."},
+            {"title": "Gumamit ng mulch", "text": "Pinapanatili ng plastic mulch o dayami na basa ang lupa sa tag araw, inilalayo ang lupa sa bunga kapag umuulan at pinipigilan ang damo. Hindi rin agad naaanod ang abono."},
+            {"title": "Abono para sa dahon muna, saka para sa bunga", "text": "Kailangan ng batang halaman ng nitrogen para sa dahon. Kapag may bulaklak na, dagdagan ang potassium, pati calcium at boron na tumutulong sa pamumunga at pumipigil sa pagkabulok ng puwitan ng kamatis. Nasa gabay namin sa [abono para sa gulay](/blog/fertilizer-for-vegetables-philippines) ang mga rate."},
+            {"title": "Bigyan ng balag ang mga baging", "text": "Mas marami at mas malinis ang bunga ng ampalaya, pipino, sitaw at patola sa balag. Mas naaarawan ang dahon, mas mahangin, at diretso ang bunga."},
+            {"title": "Tulungang mamunga ang bulaklak", "text": "Kailangan ng kalabasa, ampalaya at pipino ng bubuyog para sa polinasyon. Kapag kaunti ang bubuyog, mag polinasyon gamit ang kamay sa umaga. Mag spray lang sa hapon para hindi mapatay ang mga bubuyog."},
+            {"title": "Mamitas nang madalas", "text": "Patuloy na namumulaklak ang okra, sitaw, ampalaya, talong at sili kapag madalas pinipitasan. Kapag pinatanda ang bunga, bumabagal ang halaman, kaya mamitas tuwing isa o dalawang araw."}
+        ]},
+        {"type": "heading", "level": 2, "text": "Ang pinakamalaking magnanakaw ng ani sa bawat gulay"},
+        {"type": "table", "caption": "Mga karaniwang gulay, ang umaagaw ng ani at ang unang hakbang", "rows": [
+            ["Gulay", "Pangunahing problema", "Unang hakbang"],
+            ["Talong", "Uod ng bunga at talbos", "Putulin at ibaon ang nalantang talbos linggo linggo, bantayan mula unang bulaklak"],
+            ["Kamatis", "Bacterial wilt at leaf curl virus", "Mataas na kama, resistant o grafted na punla, kontrolin agad ang whitefly"],
+            ["Ampalaya, pipino, patola", "Langaw ng prutas (melon fly)", "Balutin ang batang bunga, magsabit ng fly trap, ibaon ang nahulog na bunga"],
+            ["Okra", "Matandang bunga at aphids", "Mamitas tuwing isa o dalawang araw, silipin ang dulo ng talbos"],
+            ["Sili", "Thrips, mites at bulok ng bunga", "Silipin ang ilalim ng dahon, iwasang diligan mula sa itaas sa tag ulan"],
+            ["Repolyo at pechay", "Diamondback moth", "Salitan ang produkto ayon sa mode of action"]
+        ]},
+        {"type": "text", "text": "Mas malalim ang mga gabay namin sa [uod ng talong](/pests/eggplant-fruit-and-shoot-borer), sa [melon fly](/pests/melon-fly) at sa [bacterial wilt](/diseases/bacterial-wilt). Basahin muna ang mga ito bago bumili ng spray."},
+        {"type": "callout", "tone": "warn", "title": "Basahin ang label bago mag spray", "text": "Mabilis umaabot sa hapag kainan ang gulay, kaya mahalaga ang bilang ng araw mula huling spray hanggang anihan. Gumamit lang ng produktong rehistrado para sa pananim na iyon, sundin ang label at ang FPA registration, at hintayin ang araw na nakasulat dito."},
+        {"type": "heading", "level": 2, "text": "Paano nakakatulong ang anee.io sa ani ng gulay"},
+        {"type": "text", "text": "Maikli ang siklo ng gulay, at ang anee.io ang nagbabantay nito para sa iyo. Nagiging lote ang bawat kama o taniman, may sariling pananim at araw ng tanim. Nilalagyan ng [cropping calendar](/features/cropping-calendar) ng petsa ang paglilipat, bawat side dressing, pagtutulos at bawat paglilibot.\n\nKapag kumulot ang dahon o may butas ang bunga, ipadala kay Anee, ang smart farm technician, ang litrato. Pangangalanan niya ang posibleng peste o sakit at sasabihin kung ano ang gumagana, sa Tagalog o English. Matutulungan ka rin ng [pest and disease finders](/features/pest-and-disease-finders). Sa dulo ng bawat siklo, ipapakita ng mga report kung magkano ang gastos at kita ng bawat lote."},
+        {"type": "cta", "title": "Planuhin ang susunod mong taniman ng gulay", "text": "Ilagay ang mga kama bilang lote, itakda ang araw ng tanim, at ipapaalala ng anee.io ang bawat side dressing, pitasan at paglilibot.", "label": "Magsimula nang libre", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Mga tanong tungkol sa ani ng gulay"},
+        {"type": "faq", "items": [
+            {"q": "Anong abono ang pampadami ng bunga ng gulay?", "a": "Potassium, kasama ang calcium at boron. Nitrogen habang nagpapalaki ng dahon, saka lumipat sa abonong mataas sa potassium kapag may bulaklak na. Kapag sobra ang nitrogen sa pamumunga, malalaki ang dahon pero kaunti ang bunga."},
+            {"q": "Bakit nalalagas ang bulaklak ng gulay ko nang walang bunga?", "a": "Kadalasan ay kulang sa polinasyon, sobrang init, kulang sa tubig o sobra sa nitrogen. Protektahan ang bubuyog, diligan nang tuloy tuloy sa pamumulaklak, at mag polinasyon gamit ang kamay sa kalabasa at ampalaya."},
+            {"q": "Talaga bang dumarami ang ani kapag madalas pinipitasan?", "a": "Oo, sa okra, sitaw, ampalaya, talong at sili. Bawat bungang pinatanda ay nagpapabagal sa halaman, samantalang ang madalas na pitas ay nagpapatuloy sa pamumulaklak."},
+            {"q": "May English na bersyon ba ito?", "a": "Mayroon. Basahin ang [how to increase vegetable yield](/blog/how-to-increase-vegetable-yield) sa English."}
+        ]},
+        {"type": "links", "title": "Kaugnay na gabay", "items": [
+            {"label": "How to increase vegetable yield (English)", "url": "/blog/how-to-increase-vegetable-yield"},
+            {"label": "Paano pataasin ang ani", "url": "/blog/paano-pataasin-ang-ani"},
+            {"label": "Pagtatanim ng gulay", "url": "/crops/pagtatanim-ng-gulay"},
+            {"label": "Proteksyon ng pananim", "url": "/blog/proteksyon-ng-pananim"}
+        ]}
+    ]
+}

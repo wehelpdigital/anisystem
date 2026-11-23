@@ -204,6 +204,9 @@
       "type": "links",
       "title": "Related guides",
       "items": [
+        {"label": "Paano pataasin ang ani ng palay (Filipino)", "url": "/blog/paano-pataasin-ang-ani-ng-palay"},
+        {"label": "How to increase crop yield", "url": "/blog/how-to-increase-crop-yield"},
+        {"label": "Lodging in rice", "url": "/blog/lodging-in-rice"},
         {
           "label": "Fertilizer for rice: a season plan",
           "url": "/blog/fertilizer-for-rice"

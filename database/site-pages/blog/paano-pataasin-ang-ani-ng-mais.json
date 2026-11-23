@@ -1,0 +1,61 @@
+{
+    "section": "blog",
+    "slug": "paano-pataasin-ang-ani-ng-mais",
+    "sortOrder": -7692,
+    "lang": "tl",
+    "category": "Corn",
+    "title": "Paano Pataasin ang Ani ng Mais: Tamang Dami ng Halaman, Abono at Tubig",
+    "metaTitle": "Paano Pataasin ang Ani ng Mais Bawat Ektarya",
+    "metaDescription": "Paano pataasin ang ani ng mais: 75,000 halaman bawat ektarya, abono mula sa soil test, hating nitrogen, malinis na unang buwan at tubig sa pamumulaklak.",
+    "focusKeyword": "paano pataasin ang ani ng mais",
+    "keywords": ["paano pataasin ang ani ng mais", "ani ng mais bawat ektarya", "abono sa mais", "pampataas ng ani ng mais", "increase corn yield"],
+    "excerpt": "Paano pataasin ang ani ng mais? Ayusin muna ang tatlong bagay bago gumastos ng mas maraming abono: sapat na halaman bawat ektarya, abonong tugma sa soil test at bukid na malinis sa damo sa unang buwan. Ang target sa certified hybrid ay 8 tonelada bawat ektarya mula sa 75,000 halaman man lang. Ilagay ang lahat ng phosphorus at potassium sa pagtatanim, at ang kalahati ng nitrogen kapag hanggang tuhod na ang mais. Nilalagyan ng anee.io ng petsa ang bawat gawaing ito para sa bawat lote.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-paano-pataasin-ang-ani-ng-mais.webp",
+      "alt": "Malusog na taniman ng mais na pantay ang tubo, ang unang hakbang sa pagpapataas ng ani ng mais",
+      "credit": "Kambai Akau, CC BY SA 4.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Malaki ang agwat ng karaniwang ani at ng magandang ani sa mais. Sa Cagayan Valley, na nagtatanim ng malaking bahagi ng mais ng bansa, mga 4 na tonelada bawat ektarya ang naging karaniwang ani ng dilaw na mais, samantalang 8 tonelada ang target ng certified hybrid. Hindi panahon lang ang dahilan. Karamihan ng agwat ay galing sa ilang gawi sa bukid na kayang ayusin.\n\nNarito kung saan unang titingin, ayon sa pagkakasunod ng taniman."},
+        {"type": "list", "ordered": false, "items": ["**Bilang ng halaman ang nauuna.** 75,000 bawat ektarya sa hybrid, 50,000 sa open pollinated.", "**Mag abono ayon sa soil test.** May sariling rate ang bawat antas ng lupa.", "**Hatiin ang nitrogen.** Kalahati sa pagtatanim, ang natitira sa ikaapat na linggo o kapag hanggang tuhod na.", "**Linisin ang damo sa unang 30 araw.** Dito pinakamalaki ang pinsala ng damo sa mais.", "**Bantayan ang tubig sa pamumulaklak.** Kapag natuyo sa silking, kaunti ang mapupunong butil."]},
+        {"type": "heading", "level": 2, "text": "Bakit mababa ang ani ng mais ko?"},
+        {"type": "text", "text": "Unahin ang pagbilang ng halaman. Kailangan ng hybrid ng 18 hanggang 20 cm sa pagitan ng puno at 70 cm sa pagitan ng tudling para umabot sa 75,000 halaman bawat ektarya. Mga 22 hanggang 24 na kilong binhi ang kailangan dito. Bawat nawawalang puno ay nawawalang puso na hindi na maibabalik ng abono.\n\nSunod, tingnan ang lupa. Pinakamaganda ang mais sa pH 5.5 hanggang 7.0. Kapag mas mababa sa 5.4, mag apog muna bago mag abono. Pagkatapos, bantayan ang damo sa unang buwan, ang [fall armyworm](/pests/fall-armyworm), ang [Asian corn borer](/pests/asian-corn-borer) at ang tagtuyot sa pamumulaklak."},
+        {"type": "heading", "level": 2, "text": "Paano pataasin ang ani ng mais, hakbang hakbang"},
+        {"type": "steps", "items": [
+            {"title": "Ipasuri ang lupa at ayusin ang pH", "text": "Magpadala ng sample ng lupa sa soil laboratory ng probinsya o sa pamamagitan ng inyong agricultural technician. Kung maasim, mag apog muna. Nasa gabay namin sa [paghahanda ng maasim na lupa](/land-preparation/acidic-soil-preparation) ang tungkol sa apog."},
+            {"title": "Pumili ng binhing bagay sa lugar", "text": "Pumili ng certified hybrid o open pollinated na may resistensya sa peste ng inyong bayan. Basahin ang gabay namin sa [corn seeds](/crops/corn-seeds)."},
+            {"title": "Magtanim para sa tamang dami", "text": "Isang binhi bawat butas, tabunan ng mga 3.5 cm na lupa. Sa open pollinated, 25 cm sa pagitan ng puno at 75 cm sa pagitan ng tudling."},
+            {"title": "Mag abono sa pagtatanim at kapag hanggang tuhod", "text": "Ilagay ang lahat ng phosphorus, lahat ng potassium at kalahati ng nitrogen sa guhit na 5 cm sa gilid ng binhi at 5 cm sa ilalim nito. Ilagay ang natitirang nitrogen sa ikaapat na linggo, o kapag 30 hanggang 48 cm na ang taas ng mais."},
+            {"title": "Gumamas nang maaga, saka magbuburol", "text": "Mag off bar sa 15 hanggang 20 araw pagkatanim kung makapal ang damo. Magburol sa 21 hanggang 30 araw, kasabay ng side dressing."},
+            {"title": "Bantayan ang tubig hanggang silking, saka umani sa oras", "text": "Magpatubig kung natutuyo ang lupa sa tasseling at silking. Hinog ang mais mga 40 hanggang 45 araw pagkatapos ng silking."}
+        ]},
+        {"type": "heading", "level": 2, "text": "Gaano karaming abono ang kailangan ng mais?"},
+        {"type": "text", "text": "Depende sa soil test mo. Nasa talahanayan ang rate sa kilo bawat ektarya. Dagdagan pa ito ng sampung sako man lang ng organic fertilizer bawat ektarya sa huling suyod, bago magtudling."},
+        {"type": "table", "caption": "Rate ng N, P at K para sa mais ayon sa soil test, sa kilo bawat ektarya", "rows": [
+            ["Resulta ng soil test", "Hybrid na mais N, P, K", "Open pollinated N, P, K"],
+            ["Mababa", "120, 60, 60", "80, 60, 60"],
+            ["Medyo mababa", "100, 40, 45", "60, 40, 45"],
+            ["Medyo mataas", "80, 20, 30", "40, 20, 30"],
+            ["Mataas", "60, 7, 7", "20, 7, 7"]
+        ]},
+        {"type": "callout", "tone": "warn", "title": "Huwag idikit ang abono sa binhi", "text": "Kapag masyadong malapit ang abono sa binhi, puwedeng masunog ang batang halaman. Ilagay ito 5 cm sa gilid at 5 cm sa ilalim. Sa side dressing, 4 hanggang 5 cm man lang mula sa puno, at sa basang lupa lang."},
+        {"type": "heading", "level": 2, "text": "Paano nakakatulong ang anee.io sa ani ng mais"},
+        {"type": "text", "text": "Binibilang ang gawain sa mais sa araw pagkatanim, at ang anee.io ang bumibilang para sa iyo. Nilalagyan ng [cropping calendar](/features/cropping-calendar) ng petsa ang basal, ang off bar, ang pagburol at ang side dressing mula sa araw ng tanim ng bawat lote. Ipinapakita ng [growth stages at weather](/features/growth-stages-and-weather) ang yugto ng bawat lote katabi ng forecast, kaya makakapag side dress ka bago umulan at hindi habang bumubuhos.\n\nKinukuwenta ng [NPK Plus calculator](/features/npk-plus-calculator) ang nitrogen, phosphorus at potassium sa plano mo at sinasabi kung kulang, tama o sobra para sa mais. Kapag may uod, ipadala kay Anee ang litrato. Pangangalanan niya ang peste at ang mga active ingredient na rehistrado laban dito. Sundin palagi ang label at ang FPA registration."},
+        {"type": "cta", "title": "Planuhin ang mais mo nang may petsa", "text": "Mag sign up nang libre, ilagay ang mga lote at araw ng tanim, at hayaang ang anee.io ang magbilang ng bawat gawain.", "label": "Magsimula nang libre", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Mga tanong tungkol sa ani ng mais"},
+        {"type": "faq", "items": [
+            {"q": "Ilang halaman ng mais ang dapat sa isang ektarya?", "a": "75,000 man lang para sa hybrid, mga 18 hanggang 20 cm sa pagitan ng puno at 70 cm sa pagitan ng tudling. Sa open pollinated, 50,000 man lang, 25 cm por 75 cm."},
+            {"q": "Kailan dapat mag side dress ng urea sa mais?", "a": "Mga ikaapat na linggo pagkatanim, o kapag hanggang tuhod na ang mais, 30 hanggang 48 cm. Gawin ito habang basa ang lupa, kadalasan kasabay ng pagburol sa 21 hanggang 30 araw."},
+            {"q": "Tataas ba ang ani kung urea lang ang dadagdagan?", "a": "Kung nitrogen lang talaga ang kulang. Kapag kaunti ang halaman, maasim ang lupa, madamo sa unang buwan o tuyo sa silking, hindi tataas ang ani kahit dagdagan ang urea. Ayusin muna ang mga iyon."},
+            {"q": "Kailan aanihin ang mais?", "a": "Hinog ang mais mga 40 hanggang 45 araw pagkatapos ng silking, kapag tuyo na ang balat at ilang dahon. Kung maghihintay pa ng isang linggo, bababa ang moisture ng butil sa mga 20 hanggang 25 porsyento."},
+            {"q": "May English na bersyon ba ito?", "a": "Mayroon. Basahin ang [increase corn yield per hectare](/blog/increase-corn-yield-per-hectare) sa English."}
+        ]},
+        {"type": "links", "title": "Kaugnay na gabay", "items": [
+            {"label": "Increase corn yield per hectare (English)", "url": "/blog/increase-corn-yield-per-hectare"},
+            {"label": "Paano pataasin ang ani", "url": "/blog/paano-pataasin-ang-ani"},
+            {"label": "Pagtatanim ng mais", "url": "/crops/pagtatanim-ng-mais"},
+            {"label": "Pananim na matibay sa tagtuyot", "url": "/blog/pananim-na-matibay-sa-tagtuyot"},
+            {"label": "Proteksyon ng pananim", "url": "/blog/proteksyon-ng-pananim"}
+        ]}
+    ]
+}

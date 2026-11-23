@@ -56,6 +56,8 @@
       { "q": "What lowers yield the most?", "a": "Usually a mix of late planting, water stress at flowering, fertilizer at the wrong time, pests and weeds, and losses at harvest and drying." }
     ] },
     { "type": "links", "title": "More yield guides", "items": [
+      {"label": "How to increase crop yield", "url": "/blog/how-to-increase-crop-yield"},
+      {"label": "How to increase vegetable yield", "url": "/blog/how-to-increase-vegetable-yield"},
       { "label": "Crop yield forecasting", "url": "/blog/crop-yield-forecasting" },
       { "label": "Increase rice yield per hectare", "url": "/blog/increase-rice-yield-per-hectare" },
       { "label": "Increase corn yield per hectare", "url": "/blog/increase-corn-yield-per-hectare" },

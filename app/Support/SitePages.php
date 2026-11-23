@@ -282,6 +282,42 @@ class SitePages
         return self::url($p->section, $p->slug);
     }
 
+    /**
+     * Guides written twice, in English and in Filipino (2026-11-23, the owner: content for "how to increase yield"
+     * searches, "also have options for filipino or ph on it as well"). English key => Filipino twin; each page shows a
+     * switch to the other and both carry hreflang links, so search engines serve the right one.
+     */
+    public const TWINS = [
+        'blog/how-to-increase-crop-yield' => 'blog/paano-pataasin-ang-ani',
+        'blog/increase-rice-yield-per-hectare' => 'blog/paano-pataasin-ang-ani-ng-palay',
+        'blog/increase-corn-yield-per-hectare' => 'blog/paano-pataasin-ang-ani-ng-mais',
+        'blog/how-to-increase-vegetable-yield' => 'blog/paano-pataasin-ang-ani-ng-gulay',
+        'blog/drought-resistant-crops' => 'blog/pananim-na-matibay-sa-tagtuyot',
+        'blog/lodging-in-rice' => 'blog/pagdapa-ng-palay',
+        'blog/crop-protection' => 'blog/proteksyon-ng-pananim',
+        'blog/climate-resilient-agriculture' => 'blog/paghahanda-ng-bukid-sa-kalamidad',
+        'blog/can-anee-io-increase-my-yield' => 'blog/kaya-ba-ng-anee-io-na-pataasin-ang-ani',
+    ];
+
+    /**
+     * The same guide in the other language, when it is live: ['url', 'lang' (en|tl), 'title'].
+     */
+    public static function twin(AsSitePage $page): ?array
+    {
+        $key = $page->section . '/' . $page->slug;
+        $other = self::TWINS[$key] ?? (array_search($key, self::TWINS, true) ?: null);
+        if (! $other) {
+            return null;
+        }
+        [$section, $slug] = explode('/', $other, 2);
+        $row = collect(self::inSection($section))->firstWhere('slug', $slug);
+        if (! $row) {
+            return null;
+        }
+
+        return ['url' => self::url($section, $slug), 'lang' => $row->lang === 'tl' ? 'tl' : 'en', 'title' => (string) $row->title];
+    }
+
     /** A live page, or null. */
     public static function find(string $section, string $slug): ?AsSitePage
     {

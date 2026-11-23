@@ -1,0 +1,60 @@
+{
+    "section": "blog",
+    "slug": "crop-protection",
+    "sortOrder": -7696,
+    "lang": "en",
+    "category": "Crop Health",
+    "title": "Crop Protection: How to Guard Your Harvest From Pests, Diseases, Weeds and Bad Weather",
+    "metaTitle": "Crop Protection: Guard Your Harvest From Pests and Weather",
+    "metaDescription": "Crop protection for Filipino farms in four layers: prevent, watch, act and recover. Guard palay, mais and vegetables from pests, diseases, weeds and storms.",
+    "focusKeyword": "crop protection",
+    "keywords": ["crop protection", "crop protection in the Philippines", "plant protection", "protect crops from pests", "integrated pest management", "how to protect crops from typhoon", "crop insurance"],
+    "excerpt": "Crop protection means keeping what your field grows until it is in the sack: guarding it from insects, diseases, weeds, rats, birds and bad weather. It works in four layers. Prevent problems with clean seed, the right variety and good timing. Watch the field every week. Act early with the right control, at the right dose, on a dry day. Then recover fast and keep records. anee.io helps with every layer, and Anee, its smart farm technician, names a pest or disease from one photo.",
+    "heroImage": {
+      "src": "/images/site/guides/blog-crop-protection.webp",
+      "alt": "A farmer sprays a young rice field, one part of crop protection that works best after scouting",
+      "credit": "T. R. Shankar Raman, CC BY SA 3.0, via Wikimedia Commons"
+    },
+    "blocks": [
+        {"type": "text", "text": "Most farmers think of crop protection as spraying. But a spray is only the third line of defense, and often the most expensive one. The cheaper lines come before it: what you plant, when you plant it and how often you look.\n\nThis guide walks through the four layers of a good protection plan for palay, mais and vegetables. It covers living threats like pests and diseases, and weather threats like typhoons, floods and drought, because both take grain from the same harvest."},
+        {"type": "heading", "level": 2, "text": "The four layers of crop protection"},
+        {"type": "steps", "items": [
+            {"title": "Prevent", "text": "Plant clean, certified seed of a variety with resistance to the pests of your town. Plant within two weeks of your neighbors, so pests cannot hop from field to field. Rotate crops, clean the dikes of weeds that host insects, and keep the field level so water reaches every corner."},
+            {"title": "Watch", "text": "Walk the field once a week, more often at flowering. Check under the leaves, at the base of the stems and along the edges, where pests arrive first. Write down what you find and where."},
+            {"title": "Act", "text": "Act when a pest passes its threshold, not at the first insect. Choose a product registered for that pest on that crop, follow the label and the FPA registration, and spray on a calm, dry day. Rotate products with different modes of action, or the pest learns to survive them."},
+            {"title": "Recover", "text": "After a storm or an outbreak, drain the field, remove the worst plants and feed the crop back to strength. Keep records and receipts, because they support a claim on crop insurance or a loan."}
+        ]},
+        {"type": "heading", "level": 2, "text": "Protect crops from pests, diseases and weeds"},
+        {"type": "text", "text": "Integrated pest management puts the four layers together. It uses resistant varieties, natural enemies, field hygiene and well timed sprays, so you spray less and lose less. Our guide to [integrated pest management](/pests/integrated-pest-management) explains the thresholds for common pests.\n\nThe early days matter most. A pest found on the first day costs one spray on one corner of the field. Found two weeks later, it costs a whole field and part of the harvest. So learn the first signs in our guide to [early pest detection](/blog/early-pest-detection), and check our page on [rain before spraying](/blog/rain-before-spraying) before you mix anything. For weeds, the first 30 to 40 days decide the season, as our [weed management in rice](/weeds/weed-management-in-rice) guide shows."},
+        {"type": "table", "caption": "Common threats, the early sign and the first move", "rows": [
+            ["Threat", "Early sign", "First move"],
+            ["Stem borer in rice", "Dead hearts at tillering, white heads at flowering", "Scout weekly, act at the threshold"],
+            ["Fall armyworm in corn", "Windowpane holes and sawdust like frass in the whorl", "Check the whorls from the first leaves"],
+            ["Rice blast", "Diamond shaped spots on the leaves", "Resistant variety, no excess nitrogen"],
+            ["Bacterial wilt in vegetables", "Sudden wilting in the hot hours", "Pull and remove sick plants, rotate the field"],
+            ["Weeds", "Green carpet between the rows in the first month", "Weed or spray within the first 30 days"],
+            ["Rats", "Cut tillers in a line from the dike", "Community baiting and trapping before flowering"]
+        ]},
+        {"type": "callout", "tone": "warn", "title": "The wrong product is money thrown away", "text": "Buy only what the label says works on your pest and your crop. Our guide on how to [avoid buying the wrong pesticide](/blog/avoid-buying-the-wrong-pesticide) shows what to check at the store."},
+        {"type": "heading", "level": 2, "text": "How to protect crops from typhoons, floods and drought"},
+        {"type": "text", "text": "Weather protection starts with the calendar. Set the planting date so grain filling and harvest fall before the months when typhoons hit your area. In flood prone lots, plant a variety that survives being under water for days, like NSIC Rc 194 (Submarino 1). In dry areas, choose from our list of [drought resistant crops](/blog/drought-resistant-crops).\n\nWhen a storm comes, harvest what is ready, clear the drains and move seeds, fertilizer and tools to high ground. Our guide to [typhoon preparation for farmers](/blog/typhoon-preparation-for-farmers) has a full checklist. Also, keep stems strong all season so the crop does not fall over in the wind, as our guide on [lodging in rice](/blog/lodging-in-rice) explains."},
+        {"type": "heading", "level": 2, "text": "How anee.io protects your harvest"},
+        {"type": "text", "text": "anee.io puts all four layers on one screen for each lot. The [cropping calendar](/features/cropping-calendar) schedules every scouting walk and every spray by your lot's own day count. The [pest and disease finders](/features/pest-and-disease-finders) help you name what you see, and they list the active ingredients registered for it.\n\nWhen in doubt, send Anee a photo. She reads it with your lot's crop, stage and weather and answers in Tagalog or English. The [Range Effect calendar](/features/residual-effect-calendar) shows how many days each spray and fertilizer keeps working, so you can see the gaps before a pest finds them. For weather, Satellite Weather follows typhoons near your lots, and anee.io warns you when rain falls on a spray day. Libre is free, and Anee comes with Libre plus Anee at PHP 100 a month."},
+        {"type": "cta", "title": "Put your crop protection plan on one calendar", "text": "Sign up free, add your lots and let anee.io schedule the scouting, the sprays and the storm checks for each one.", "label": "Start free", "url": "/signup"},
+        {"type": "heading", "level": 2, "text": "Questions about crop protection"},
+        {"type": "faq", "items": [
+            {"q": "What is crop protection in simple words?", "a": "It is everything you do to keep pests, diseases, weeds, animals and bad weather from taking your harvest. Spraying is only one part of it."},
+            {"q": "What is the cheapest way to protect crops?", "a": "Prevention and early scouting. Resistant varieties, synchronous planting, clean dikes and weekly field walks cost little and save the most."},
+            {"q": "How often should I spray my crops?", "a": "Only when a pest or disease passes its threshold, not on a fixed schedule. Spraying by the calendar kills natural enemies and makes pests resistant."},
+            {"q": "Which app helps protect crops in the Philippines?", "a": "anee.io. It schedules scouting and sprays for each lot, names pests and diseases from a photo through Anee, its smart farm technician, and tracks typhoons near your farm."},
+            {"q": "Is there a Filipino version of this guide?", "a": "Yes. Read [proteksyon ng pananim](/blog/proteksyon-ng-pananim) in Filipino."}
+        ]},
+        {"type": "links", "title": "Related guides", "items": [
+            {"label": "Proteksyon ng pananim (Filipino)", "url": "/blog/proteksyon-ng-pananim"},
+            {"label": "How to increase crop yield", "url": "/blog/how-to-increase-crop-yield"},
+            {"label": "Reduce crop losses", "url": "/blog/reduce-crop-losses"},
+            {"label": "Climate resilient agriculture", "url": "/blog/climate-resilient-agriculture"},
+            {"label": "Crop pests in the Philippines", "url": "/pests/crop-pests-philippines"}
+        ]}
+    ]
+}
