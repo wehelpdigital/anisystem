@@ -104,18 +104,19 @@
                     <span class="hp-mark"><span class="hp-rot" data-words="Higher,Stable,Bigger,Better,Steady,Secured,Record,Greater,Maximum"><span class="hp-rot-w hp-shimmer">Higher</span></span> <span class="hp-shimmer">Yield.</span><svg class="hp-mark-line" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path class="a" d="M6 13 Q 150 27, 294 5"/></svg></span>
                 </h1>
                 <p class="hp-lede animate-fade-up" style="animation-delay:.12s">
+                    {{-- The promise is the harvest and its safety (2026-11-23, the owner: "change this to focus to increase yield
+                         and secure from disaster like pests, drought, lodging, and more"). The marked words are the yield; the
+                         tools count (2026-10-19) stays, said plainly at the end. --}}
                     @if ($ph)
-                        {{-- "More than 50 tools" (2026-10-19, the owner), counted down to the ten from How It Works' own list,
-                             marked so it is seen (2026-10-28, the owner: "make this bold or highlighted ... from the planning
-                             to post harvest analysis ... to the space"). --}}
-                        The farm app for Filipino farmers who grow palay, mais and gulay:
-                        <strong class="hp-lede-tools"><span>more than {{ intdiv(max(10, $tools->count() - 1), 10) * 10 }} tools</span> to help you farm</strong>,
-                        from planning the season to the analysis after the harvest, from the price ahead to your field seen from space,
-                        with Anee, your smart farm technician, all in one place. Successful businesses run on systems. Smart farmers run on anee.io.
+                        The farm app for Filipino farmers who grow palay, mais and gulay.
+                        <strong class="hp-lede-tools"><span>Grow a bigger harvest</span> and keep it safe</strong>
+                        from pests, diseases, drought, floods, typhoons and lodging. Anee, your smart farm technician, watches your
+                        field and the weather ahead, and tells you what to do and when, before the damage is done.
+                        More than {{ intdiv(max(10, $tools->count() - 1), 10) * 10 }} tools, all in one app.
                     @else
-                        anee.io puts your whole season on your phone: every field counted from its own day zero, every
-                        task on its right day, every dollar written down, and Anee, your smart farm technician, ready with
-                        answers day and night.
+                        <strong class="hp-lede-tools"><span>Grow a bigger harvest</span> and keep it safe</strong>
+                        from pests, diseases, drought, floods, storms and lodging. Anee, your smart farm technician, watches your
+                        field and the weather ahead, and tells you what to do and when, before the damage is done.
                     @endif
                 </p>
                 <div class="hp-hero-acts animate-fade-up" style="animation-delay:.18s">
