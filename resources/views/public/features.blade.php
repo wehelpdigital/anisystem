@@ -212,37 +212,42 @@
     }
     .fz-or { display: flex; align-items: center; gap: .8rem; margin-top: 2.4rem; font-size: .76rem; font-weight: 900; letter-spacing: .1em; text-transform: uppercase; color: #4a7c2a; }
     .fz-or::before, .fz-or::after { content: ''; flex: 1; border-top: 2px dashed #c9dcb4; }
+    .fz-new-in { display: none; }
     /* A phone (2026-10-13, the owner: it felt cluttered): one tool to a row,
        its icon, its name and its line, and a play button that opens its film
-       full size. The little screens were too small to read, so they go. */
+       full size. The little screens were too small to read, so they go.
+       Redone 2026-11-23 (the owner: "features page ... is destroyed in mobile"): the "How it helps" box came later and
+       fell into the icon's column, which crushed Anee Auto's name to a few letters a line, and the New tag sat on long
+       names. Now the icon, name and line make the top row with the play button in its corner, the New tag rides beside
+       the name, and everything under them (how it helps, the plan, the guide) has the card's whole width. */
     @media (max-width: 559.98px) {
-        .fz-tools { grid-template-columns: minmax(0, 1fr); gap: .55rem; }
-        .fz-tool { flex-direction: row; align-items: center; border-radius: 1.1rem; }
+        .fz-tools { grid-template-columns: minmax(0, 1fr); gap: .6rem; }
+        .fz-tool { flex-direction: column; align-items: stretch; border-radius: 1.1rem; }
         .fz-tool:hover { transform: none; }
-        .fz-shot { order: 2; flex: none; width: auto; height: auto; padding: 0 .85rem 0 .3rem; background: none; overflow: visible; border: 0; }
+        .fz-shot { position: absolute; z-index: 2; right: .75rem; top: .75rem; width: auto; height: auto; padding: 0; background: none; overflow: visible; border: 0; }
         .fz-dev { display: none; }
         .fz-play { position: static; width: 2.6rem; height: 2.6rem; box-shadow: 0 0 0 4px rgb(245 197 24 / .22), 0 8px 16px -8px rgb(0 0 0 / .45); }
-        .fz-tool-body { order: 1; flex: 1; min-width: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .75rem; row-gap: .12rem;
-            align-items: center; padding: .8rem .2rem .8rem .8rem; }
-        .fz-ico { grid-row: 1 / span 4; align-self: start; width: 2.7rem; height: 2.7rem; margin-top: 0; border-radius: .85rem; }
+        .fz-tool-body { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: .75rem; row-gap: .15rem; align-items: start; padding: .85rem .9rem .9rem; }
+        .fz-tool.no-film .fz-tool-body { padding-top: .85rem; }
+        .fz-ico { grid-column: 1; grid-row: 1 / span 2; width: 2.7rem; height: 2.7rem; margin-top: 0; border-radius: .85rem; }
         .fz-ico img { width: 1.7rem; height: 1.7rem; }
-        .fz-tool h4 { margin-top: 0; font-size: .95rem; }
-        .fz-short { font-size: .8rem; line-height: 1.4; }
+        .fz-tool h4 { grid-column: 2; margin-top: .05rem; font-size: .95rem; }
+        .fz-short { grid-column: 2; font-size: .8rem; line-height: 1.4; }
+        /* Clear of the play button in the corner. */
+        .fz-tool:not(.no-play) h4, .fz-tool:not(.no-play) .fz-short { padding-right: 3.1rem; }
+        .fz-tool-body > .fz-what, .fz-tool-body > .fz-helps, .fz-tool-body > .fz-plan, .fz-tool-body > .fz-auto-steps, .fz-tool-body > .fz-go { grid-column: 1 / -1; }
         .fz-what { display: none; }
-        .fz-plan { grid-column: 2; font-size: .72rem; }
-        .fz-go { grid-column: 2; padding-top: .2rem; font-size: .76rem; }
-        .fz-new { left: auto; right: 4.1rem; top: .5rem; font-size: .55rem; padding: .1rem .45rem; }
-        .fz-tool.no-film .fz-new, .fz-tool.no-play .fz-new { right: .8rem; }
-        .fz-tool.no-film .fz-tool-body, .fz-tool.no-play .fz-tool-body { padding: .8rem .9rem .8rem .8rem; }
+        .fz-helps { margin-top: .55rem; }
+        .fz-plan { margin-top: .45rem; font-size: .74rem; }
+        .fz-go { justify-self: start; padding-top: .3rem; font-size: .78rem; }
+        .fz-new { display: none; }
+        .fz-new-in { display: inline-block; margin-left: .4rem; padding: .08rem .45rem; border-radius: 999px; vertical-align: .12em; font-style: normal; font-size: .58rem;
+            font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: #1f1500; background: #f5c518; }
         /* A screen with no film has nothing to play on a phone, where the little screens are hidden. */
         .fz-shot.is-still { display: none; }
-        /* Anee Auto keeps its six steps under the words. */
-        .fz-step.is-auto .fz-tool { flex-direction: column; align-items: stretch; }
-        .fz-step.is-auto .fz-shot { order: 0; position: absolute; right: .3rem; top: .9rem; z-index: 2; }
-        .fz-step.is-auto .fz-tool-body { padding: .9rem .9rem 1rem; }
-        .fz-step.is-auto .fz-tool h4 { padding-right: 3.2rem; }
-        .fz-auto-steps { grid-column: 1 / -1; }
-        .fz-step.is-auto .fz-what { display: block; grid-column: 1 / -1; margin-top: .4rem; font-size: .84rem; }
+        /* Anee Auto keeps what it does and its six steps under the words. */
+        .fz-step.is-auto .fz-tool-body { padding: .95rem .95rem 1.05rem; }
+        .fz-step.is-auto .fz-what { display: block; margin-top: .5rem; font-size: .86rem; }
         .fz-step-head { gap: .75rem; }
         .fz-step-n { width: 2.3rem; height: 2.3rem; font-size: 1rem; }
     }
@@ -377,7 +382,7 @@
                                 @if (in_array($it['key'], $fNew, true))<span class="fz-new">New</span>@endif
                                 <div class="fz-tool-body">
                                     <span class="fz-ico{{ str_starts_with($it['icon'], 'anee/') ? ' is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy" width="40" height="40"></span>
-                                    <h4>{{ $it['name'] }}@if ($it['anee'])<i class="fz-anee">Anee</i>@endif</h4>
+                                    <h4>{{ $it['name'] }}@if ($it['anee'])<i class="fz-anee">Anee</i>@endif @if (in_array($it['key'], $fNew, true))<i class="fz-new-in">New</i>@endif</h4>
                                     <p class="fz-short">{{ $it['short'] }}</p>
                                     <p class="fz-what">{{ $it['what'] }}</p>
                                     @if (! empty($it['helps']))
