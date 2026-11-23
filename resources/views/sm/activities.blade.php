@@ -5363,6 +5363,19 @@
         // Tell the module it is on screen — a kept pane may want to refresh
         // what it shows (the Maps shelf re-reads its saved maps, for one).
         document.dispatchEvent(new CustomEvent('sm:module-shown', { detail: { key } }));
+        // The admin panel's Interests report hears which module came up: the shell swaps modules without a page
+        // load (App\Support\PageViews::seen, 2026-11-23). Sent once the address below is the module's own; the
+        // server drops a repeat of the page load that just showed the same module.
+        setTimeout(() => {
+            try {
+                fetch(@json(route('pageviews.seen')), {
+                    method: 'POST', keepalive: true, credentials: 'same-origin',
+                    headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content || '' },
+                    body: JSON.stringify({ path: location.pathname + location.search, title: document.title }),
+                }).catch(() => {});
+            } catch (_) { /* a lost count is a lost count */ }
+        }, 0);
         // The entry says how deep it is and which module was under it, so a
         // reload on it (or a page left and walked back to) still knows the way
         // back (2026-11-03, the owner: Back from Lots went to the season's

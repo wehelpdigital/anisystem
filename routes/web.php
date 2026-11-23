@@ -612,6 +612,8 @@ Route::post('/verify-mine', [App\Http\Controllers\Auth\RegisterController::class
 */
 
 Route::middleware('auth')->group(function () {
+    // The season shell's module switch, told to the Interests report (App\Support\PageViews::seen, 2026-11-23).
+    Route::post('/app/page-seen', App\Http\Controllers\PageSeenController::class)->middleware('throttle:120,1')->name('pageviews.seen');
     // Orders paid by hand (2026-09-30): one page from choosing how to pay to
     // the outcome. Signed-in only (never the subscription gate: Libre buys here).
     Route::get('/checkout', [App\Http\Controllers\CheckoutController::class, 'page'])->name('checkout');
@@ -808,6 +810,10 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
     Route::get('/reports', [App\Http\Controllers\Admin\AdminReportsController::class, 'page'])->name('admin.reports');
     Route::get('/data/reports', [App\Http\Controllers\Admin\AdminReportsController::class, 'reports'])->name('admin.data.reports');
     Route::put('/report/{id}/status', [App\Http\Controllers\Admin\AdminReportsController::class, 'setStatus'])->whereNumber('id')->name('admin.report.status');
+    // Interests (2026-11-23): what people read and use, and one member's pages in the client sheet.
+    Route::get('/interests', [App\Http\Controllers\Admin\AdminInterestsController::class, 'page'])->name('admin.interests');
+    Route::get('/data/interests', [App\Http\Controllers\Admin\AdminInterestsController::class, 'data'])->name('admin.data.interests');
+    Route::get('/data/client/{id}/views', [App\Http\Controllers\Admin\AdminInterestsController::class, 'clientViews'])->whereNumber('id')->name('admin.data.client.views');
     // Sales Analysis: what a peso of advertising actually bought.
     Route::get('/sales', [App\Http\Controllers\Admin\AdminSalesController::class, 'page'])->name('admin.sales');
     Route::get('/data/sales', [App\Http\Controllers\Admin\AdminSalesController::class, 'list'])->name('admin.data.sales');

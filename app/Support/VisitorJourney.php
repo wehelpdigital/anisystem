@@ -43,12 +43,15 @@ final class VisitorJourney
 
     private const SKIP = ['app', 'admin', 'mother-api', 'api', 'deploy-check', 'launch.html', 'offline', 'sw.js', 'storage', 'build', 'livewire', 'up'];
 
-    /** After a page was answered: a step for a guest's own visit, written once the answer is out. */
-    public static function note(Request $request, Response $response): void
+    /**
+     * After a page was answered: a step for a guest's own visit, written once the answer is out. Answers the browser's
+     * id when the visit counted (App\Support\PageViews files the same view under it), else null.
+     */
+    public static function note(Request $request, Response $response): ?string
     {
         try {
             if (! self::counts($request, $response)) {
-                return;
+                return null;
             }
             $vid = self::vid($request);
             $isNew = $vid === null;
@@ -66,8 +69,11 @@ final class VisitorJourney
             app()->terminating(function () use ($vid, $step, $first) {
                 self::write($vid, $step, $first);
             });
+
+            return $vid;
         } catch (\Throwable $e) {
             // Never a page for a step.
+            return null;
         }
     }
 
@@ -96,6 +102,11 @@ final class VisitorJourney
             ]);
         } catch (\Throwable $e) {
             report($e);
+        } finally {
+            // The pages this browser opened as a guest are the new member's too (the Interests report).
+            if (isset($vid) && $vid) {
+                PageViews::claim((int) $user->id, $vid);
+            }
         }
     }
 
@@ -188,6 +199,24 @@ final class VisitorJourney
     /** Whether this answer is a person's own page view worth a step. */
     private static function counts(Request $request, Response $response): bool
     {
+        if (! self::isPageView($request, $response)) {
+            return false;
+        }
+        $first = strtolower((string) explode('/', ltrim($request->path(), '/'))[0]);
+        if (in_array($first, self::SKIP, true)) {
+            return false;
+        }
+        // The road is the one before the account; a member's pages are App\Support\PageViews' (2026-11-23).
+        if (Auth::check()) {
+            return false;
+        }
+
+        return self::isPerson($request);
+    }
+
+    /** A whole page opened in the browser's own window: not a fetch, a prefetch, a frame, an error or a file. */
+    public static function isPageView(Request $request, Response $response): bool
+    {
         if (! $request->isMethod('GET') || $request->ajax() || $request->expectsJson() || $response->getStatusCode() !== 200) {
             return false;
         }
@@ -197,17 +226,13 @@ final class VisitorJourney
         // Prefetches and frames are not visits.
         $purpose = strtolower((string) ($request->header('Sec-Purpose') ?: $request->header('Purpose')));
         $dest = (string) $request->header('Sec-Fetch-Dest');
-        if (str_contains($purpose, 'prefetch') || ($dest !== '' && $dest !== 'document')) {
-            return false;
-        }
-        $first = strtolower((string) explode('/', ltrim($request->path(), '/'))[0]);
-        if (in_array($first, self::SKIP, true)) {
-            return false;
-        }
-        // A member's own clicks are their own business; the road is the one before the account.
-        if (Auth::check()) {
-            return false;
-        }
+
+        return ! str_contains($purpose, 'prefetch') && ($dest === '' || $dest === 'document');
+    }
+
+    /** A person's browser rather than a robot, a link preview or a test run. */
+    public static function isPerson(Request $request): bool
+    {
         $ua = (string) $request->userAgent();
         // A person's browser always says which languages it reads; most robots do not.
         if ($ua === '' || preg_match(self::BOTS, $ua) || blank($request->header('Accept-Language'))) {
@@ -217,7 +242,21 @@ final class VisitorJourney
         return Crawler::name($request) === null;
     }
 
-    private static function vid(Request $request): ?string
+    /** The page's own title, read off the top of the page, without the site's name on the end. */
+    public static function title(Response $response): ?string
+    {
+        $body = $response->getContent();
+        if (is_string($body) && preg_match('#<title[^>]*>(.*?)</title>#is', substr($body, 0, 8000), $m)) {
+            $t = trim(html_entity_decode(strip_tags($m[1]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            $t = trim((string) preg_replace('/\s*[|·]\s*anee\.io\s*$/iu', '', $t));
+
+            return $t !== '' ? mb_substr($t, 0, 140) : null;
+        }
+
+        return null;
+    }
+
+    public static function vid(Request $request): ?string
     {
         $v = $request->cookie(self::COOKIE);
 
@@ -237,15 +276,9 @@ final class VisitorJourney
         if ($q) {
             $step['q'] = $q;
         }
-        // The page's own title, read off the top of the page.
-        $body = $response->getContent();
-        if (is_string($body) && preg_match('#<title[^>]*>(.*?)</title>#is', substr($body, 0, 8000), $m)) {
-            $t = trim(html_entity_decode(strip_tags($m[1]), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
-            // Without the site's name on the end: every page carries it.
-            $t = trim((string) preg_replace('/\s*[|·]\s*anee\.io\s*$/iu', '', $t));
-            if ($t !== '') {
-                $step['n'] = mb_substr($t, 0, 140);
-            }
+        // The page's own title, read off the top of the page (every page carries the site's name; it is cut).
+        if ($t = self::title($response)) {
+            $step['n'] = $t;
         }
         if ($r = self::referrer($request, false)) {
             $step['r'] = $r;
@@ -258,7 +291,7 @@ final class VisitorJourney
     }
 
     /** Another site that sent this visit: its host, or the whole address (trimmed) for the row's first referrer. */
-    private static function referrer(Request $request, bool $whole): ?string
+    public static function referrer(Request $request, bool $whole): ?string
     {
         $ref = (string) $request->headers->get('referer');
         $host = strtolower((string) parse_url($ref, PHP_URL_HOST));

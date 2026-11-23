@@ -176,6 +176,9 @@ return Application::configure(basePath: dirname(__DIR__))
         // Visitor journeys nobody claimed with a signup, gone after 90 days (App\Support\VisitorJourney).
         $schedule->call(fn () => \App\Support\VisitorJourney::prune())
             ->name('visitor-journeys-prune')->dailyAt('03:10')->timezone('Asia/Manila');
+        // Page views: guests' after 180 days, everyone's after 400 (App\Support\PageViews, 2026-11-23).
+        $schedule->call(fn () => \App\Support\PageViews::prune())
+            ->name('page-views-prune')->dailyAt('03:20')->timezone('Asia/Manila');
         // Proof the scheduler runs (Laravel Cloud's toggle, 2026-10-07):
         // /deploy-check shows the last tick, written to the shared settings.
         $schedule->call(fn () => \App\Models\AsSiteSetting::put('scheduler.tick', now()->toIso8601String()))

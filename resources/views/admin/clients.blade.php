@@ -78,6 +78,7 @@
         tier: (id) => '{{ url('/admin/client') }}/' + id + '/tier',
         delCaptcha: (id) => '{{ url('/admin/client') }}/' + id + '/delete-captcha',
         destroy: (id) => '{{ url('/admin/client') }}/' + id,
+        views: (id) => '{{ url('/admin/data/client') }}/' + id + '/views',
     };
 
     /* ---------------- the list ---------------- */
@@ -112,18 +113,26 @@
     /* ---------------- the sheet ---------------- */
     let CUR = null;
 
-    document.addEventListener('click', async (e) => {
-        const b = e.target.closest('[data-client]');
-        if (!b) return;
+    async function openClient(id) {
         openSheet('clSheet');
         $id('clTitle').textContent = 'Client';
         $id('clBody').innerHTML = '<div class="ad-skel h-24 w-full"></div><div class="ad-skel h-40 w-full mt-3"></div>';
         try {
-            const res = await api(U.one(b.getAttribute('data-client')), { method: 'GET' });
+            const res = await api(U.one(id), { method: 'GET' });
             CUR = res.data;
             paint();
         } catch (err) { toast(err.message, 'error'); closeSheet('clSheet'); }
+    }
+    document.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-client]');
+        if (b) openClient(b.getAttribute('data-client'));
     });
+    // /admin/clients?client=12 opens that client straight away (the Interests report links here).
+    const wanted = new URLSearchParams(location.search).get('client');
+    if (wanted && /^\d+$/.test(wanted)) {
+        if (window.api && window.openSheet) openClient(wanted);
+        else window.addEventListener('load', () => openClient(wanted), { once: true });
+    }
 
     /* The pages they opened before signing up (App\Support\VisitorJourney, 2026-11-16): where they
        came from, the first page, and every page after it in order, a new visit after half an hour away. */
@@ -182,6 +191,54 @@
         if (!b) return;
         b.closest('.card').querySelectorAll('[data-jstep][hidden]').forEach((x) => { x.hidden = false; });
         b.remove();
+    });
+
+    /* Every page they opened, newest first, and what that says they care about (App\Support\PageViews,
+       2026-11-23): the sections they read most, the app tools they use most, the crops they read about. */
+    const viewLine = (v) => `
+        <li class="flex gap-2 items-baseline ${v.before ? 'opacity-60' : ''}">
+            <span class="shrink-0 w-24 text-[11px] text-gray-400">${esc(v.at)}</span>
+            <span class="min-w-0">
+                <span class="block text-xs font-semibold text-gray-900 break-words">${esc(v.title)}</span>
+                <span class="block text-[11px] text-gray-400 break-all">${esc(v.what)}${v.crop ? ' · ' + esc(v.crop) : ''} · ${esc(v.path)}${v.from ? ' · from ' + esc(v.from) : ''}${v.before ? ' · before signing up' : ''}</span>
+            </span></li>`;
+    function interestsCard(p) {
+        if (!p || !p.total) {
+            return `<div class="card p-3.5 space-y-1.5">
+                <p class="font-bold text-sm text-gray-900">What they open</p>
+                <p class="text-xs text-gray-400">No pages on record yet. Pages are counted from Nov 23, 2026 on, inside the app and on the website.</p>
+            </div>`;
+        }
+        const chips = (list, cls) => list.map((x) => `<span class="badge ${cls}">${esc(x.label)} · ${x.n}</span>`).join(' ');
+        const group = (title, list, cls) => list && list.length ? `<div><p class="text-[11px] font-extrabold uppercase tracking-wider text-gray-400 mb-1">${title}</p><div class="flex flex-wrap gap-1.5">${chips(list, cls)}</div></div>` : '';
+        const rec = p.recent || { rows: [] };
+        return `<div class="card p-3.5 space-y-2.5" id="ceViews">
+            <p class="font-bold text-sm text-gray-900">What they open</p>
+            <div class="flex flex-wrap gap-1.5 text-xs">
+                <span class="badge badge-gray">${p.views90} page${p.views90 === 1 ? '' : 's'} in the last 90 days</span>
+                <span class="badge badge-gray">on ${p.days90} day${p.days90 === 1 ? '' : 's'}</span>
+                ${p.lastAt ? `<span class="badge badge-green">last seen ${esc(p.lastAt)}</span>` : ''}
+                <span class="badge badge-gray">${p.total} in all since ${esc(p.firstAt || '')}</span>
+            </div>
+            ${group('Reads most', p.kinds, 'badge-blue')}
+            ${group('Uses most in the app', p.tools, 'badge-green')}
+            ${group('Crops they read about', p.crops, 'badge-yellow')}
+            <ol class="space-y-1.5 border-l-2 border-gray-100 dark:border-gray-700 pl-2.5" id="ceViewList">${rec.rows.map(viewLine).join('')}</ol>
+            ${rec.nextCursor ? `<button type="button" class="btn btn-white btn-sm w-full" id="ceViewMore" data-cursor="${rec.nextCursor}">Show older pages</button>` : ''}
+        </div>`;
+    }
+    document.addEventListener('click', async (e) => {
+        const b = e.target.closest('#ceViewMore');
+        if (!b || !CUR || b.disabled) return;
+        b.disabled = true;
+        b.textContent = 'Loading…';
+        try {
+            const res = await api(U.views(CUR.id) + '?cursor=' + encodeURIComponent(b.dataset.cursor), { method: 'GET' });
+            const page = res.data || { rows: [] };
+            $id('ceViewList').insertAdjacentHTML('beforeend', page.rows.map(viewLine).join(''));
+            if (page.nextCursor) { b.dataset.cursor = page.nextCursor; b.disabled = false; b.textContent = 'Show older pages'; }
+            else b.remove();
+        } catch (err) { toast(err.message, 'error'); b.disabled = false; b.textContent = 'Show older pages'; }
     });
 
     function paint() {
@@ -257,6 +314,8 @@
             </div>
 
             ${journeyCard(c.journey)}
+
+            ${interestsCard(c.interests)}
 
             <div class="card p-3.5 space-y-2.5">
                 <p class="font-bold text-sm text-gray-900">Community</p>

@@ -280,9 +280,10 @@
         $adminHere = request()->routeIs('admin.clients') ? 'Clients'
             : (request()->routeIs('admin.support') ? 'Support'
             : (request()->routeIs('admin.reports') ? 'Reports'
+            : (request()->routeIs('admin.interests') ? 'Interests'
             : (request()->routeIs('admin.sales') ? 'Sales Analysis'
             : (request()->routeIs('admin.orders') ? 'Orders'
-            : (request()->routeIs('admin.newsletter') ? 'Newsletter' : 'Dashboard')))));
+            : (request()->routeIs('admin.newsletter') ? 'Newsletter' : 'Dashboard'))))));
     @endphp
     <header class="ad-top">
         <div class="ad-top-in">
@@ -327,6 +328,10 @@
             <a class="ad-nav-row {{ request()->routeIs('admin.clients') ? 'is-on' : '' }}" href="{{ route('admin.clients') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-1.33-7.77"/></svg>
                 <span class="min-w-0"><b>Clients</b><i>Every account and what you can do for it</i></span>
+            </a>
+            <a class="ad-nav-row {{ request()->routeIs('admin.interests') ? 'is-on' : '' }}" href="{{ route('admin.interests') }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span class="min-w-0"><b>Interests</b><i>What people read and use, and the crops they care about</i></span>
             </a>
             <a class="ad-nav-row {{ request()->routeIs('admin.support') ? 'is-on' : '' }}" href="{{ route('admin.support') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8m-8 4h5m-9 7l3.5-3.5H19a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14z"/></svg>

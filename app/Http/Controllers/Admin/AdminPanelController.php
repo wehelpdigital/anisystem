@@ -203,6 +203,8 @@ class AdminPanelController extends Controller
             'storageCapGb' => $u->tierConfig()['storageGb'] ?? null,
             // The pages they opened before signing up, first to last (App\Support\VisitorJourney, 2026-11-16).
             'journey' => rescue(fn () => \App\Support\VisitorJourney::forUser((int) $u->id), null, false),
+            // Every page they opened since, sorted by section, tool and crop (App\Support\PageViews, 2026-11-23).
+            'interests' => rescue(fn () => \App\Support\PageViews::profile((int) $u->id) + ['recent' => \App\Support\PageViews::forUser((int) $u->id)], null, false),
         ]]);
     }
 
