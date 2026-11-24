@@ -95,12 +95,15 @@
     /* ===================== EASY TO USE, THE PAGE (ezp-) ===================== */
     .ezp { overflow-x: clip; }
     .ezp-hero { position: relative; overflow: hidden; background: radial-gradient(50rem 28rem at 100% 0%, #fde9a8, transparent 60%), radial-gradient(40rem 30rem at 0% 100%, #dcefc8, transparent 60%), #fffdf6; }
-    .ezp-hero-grid { display: grid; gap: 2.5rem; align-items: center; padding-block: 3rem 4.5rem; }
+    .ezp-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; align-items: center; padding-block: 3rem 4.5rem; }
     @media (min-width: 1024px) { .ezp-hero-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 3.5rem; padding-block: 4.5rem 6rem; } }
     .ezp-crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; font-size: .82rem; font-weight: 700; color: #6b7280; }
     .ezp-crumbs a { color: #4a7c2a; text-decoration: none; }
     .ezp-crumbs svg { width: .8rem; height: .8rem; opacity: .6; }
     .ezp-h1 { margin-top: 1.1rem; font-family: var(--font-heading); font-weight: 800; letter-spacing: -.02em; line-height: 1.05; font-size: clamp(2.3rem, 5.6vw, 3.9rem); color: #14210c; text-wrap: balance; }
+    /* "The App Should Be Easy." is one unbreakable marked line (hp-mark, nowrap): under a desk it is sized by the screen
+       so it always fits; at 2.3rem it was wider than a 390px phone and pushed the whole hero past the edge. */
+    @media (max-width: 1023.98px) { .ezp-h1 { font-size: clamp(1.75rem, 7.6vw, 3.9rem); } }
     .ezp-h1 .hp-shimmer { background-image: linear-gradient(100deg, #4a7c2a 0%, #84cc16 35%, #4a7c2a 60%, #2f5219 85%, #4a7c2a 100%); }
     .ezp-lede { margin-top: 1.4rem; max-width: 36rem; font-size: clamp(1.02rem, 1.6vw, 1.15rem); line-height: 1.7; color: #4b5563; }
     .ezp-lede b { color: #14210c; }
@@ -111,10 +114,13 @@
     .ezp-ctas { margin-top: 1.8rem; display: flex; flex-wrap: wrap; gap: .8rem; }
     /* Anee greets you, in four languages. */
     .ezp-hello { position: relative; display: grid; place-items: center; min-height: 22rem; }
-    .ezp-hello-face { position: relative; margin-top: 3.2rem; width: 11rem; aspect-ratio: 1; border-radius: 999px; overflow: hidden; box-shadow: 0 0 0 6px #fff, 0 0 0 10px #f5c518, 0 30px 60px -20px rgb(120 90 0 / .6); animation: ezpBob 6s ease-in-out infinite; }
+    /* The face and its ripples share one square box, so the rings spread from the middle of her face (2026-11-24: they
+       were centred on the whole greeting, bubble and language pills included, and sat high). The box bobs; the rings ride along. */
+    .ezp-hello-me { position: relative; display: grid; place-items: center; margin-top: 3.2rem; animation: ezpBob 6s ease-in-out infinite; }
+    .ezp-hello-face { position: relative; width: 11rem; aspect-ratio: 1; border-radius: 999px; overflow: hidden; box-shadow: 0 0 0 6px #fff, 0 0 0 10px #f5c518, 0 30px 60px -20px rgb(120 90 0 / .6); }
     .ezp-hello-face img { width: 100%; height: 100%; object-fit: cover; }
     @keyframes ezpBob { 50% { translate: 0 -8px; } }
-    .ezp-wave { position: absolute; width: 15rem; aspect-ratio: 1; border-radius: 999px; border: 2px solid rgb(245 197 24 / .5); animation: ezpWave 3s ease-out infinite; }
+    .ezp-wave { position: absolute; inset: -18%; border-radius: 999px; border: 2px solid rgb(245 197 24 / .5); animation: ezpWave 3s ease-out infinite; }
     .ezp-wave.w2 { animation-delay: 1s; } .ezp-wave.w3 { animation-delay: 2s; }
     @keyframes ezpWave { from { transform: scale(.7); opacity: .9; } to { transform: scale(1.7); opacity: 0; } }
     .ezp-bubble { position: absolute; top: 0; left: 50%; width: min(19rem, 88vw); padding: .85rem 1rem; border-radius: 1.2rem 1.2rem 1.2rem .35rem; background: #fff; transform: translateX(-30%);
@@ -123,6 +129,8 @@
     .ezp-bubble p { margin-top: .4rem; font-size: .98rem; font-weight: 700; line-height: 1.45; color: #14210c; transition: opacity .3s var(--hp-ease), transform .3s var(--hp-ease); }
     .ezp-bubble.is-swap p, .ezp-bubble.is-swap small { opacity: 0; transform: translateY(6px); }
     .ezp-bubble small { transition: opacity .3s var(--hp-ease), transform .3s var(--hp-ease); }
+    /* On a phone the bubble sits square over her head: pushed to the right it ran off the screen. */
+    @media (max-width: 639.98px) { .ezp-bubble { transform: translateX(-50%); } }
     .ezp-langs { position: absolute; bottom: 0; left: 50%; display: flex; gap: .4rem; transform: translateX(-50%); }
     .ezp-langs span { padding: .3rem .65rem; border-radius: 999px; font-size: .74rem; font-weight: 900; color: #4b5563; background: #fff; box-shadow: 0 0 0 1px #e5e7eb; transition: background-color .3s, color .3s, box-shadow .3s; }
     .ezp-langs span.is-on { color: #14210c; background: #f5c518; box-shadow: none; }
@@ -231,9 +239,11 @@
                 </div>
             </div>
             <div class="ezp-hello animate-fade-up" style="animation-delay:.14s" data-ezp-hello data-hellos='@json($hellos)' aria-label="Anee greets you in Tagalog, Bisaya, Ilocano and English">
-                <span class="ezp-wave" aria-hidden="true"></span><span class="ezp-wave w2" aria-hidden="true"></span><span class="ezp-wave w3" aria-hidden="true"></span>
                 <div class="ezp-bubble"><small data-ezp-lang>{{ $hellos[0][0] }}</small><p data-ezp-say>{{ $hellos[0][1] }}</p></div>
-                <span class="ezp-hello-face"><img src="{{ $emo('wave') }}" alt="" width="256" height="256"></span>
+                <span class="ezp-hello-me">
+                    <span class="ezp-wave" aria-hidden="true"></span><span class="ezp-wave w2" aria-hidden="true"></span><span class="ezp-wave w3" aria-hidden="true"></span>
+                    <span class="ezp-hello-face"><img src="{{ $emo('wave') }}" alt="" width="256" height="256"></span>
+                </span>
                 <div class="ezp-langs" aria-hidden="true">@foreach ($hellos as $i => $h)<span class="{{ $i === 0 ? 'is-on' : '' }}">{{ $h[0] }}</span>@endforeach</div>
             </div>
         </div>
