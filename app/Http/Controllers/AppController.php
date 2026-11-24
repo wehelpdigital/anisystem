@@ -109,6 +109,21 @@ class AppController extends Controller
             $scheduleNext[(int) $sid] = $days[0] + ['days' => $days];
         }
 
+        /* The day in one line at the top of the dashboard (2026-11-25, the owner: "fix the presentation of
+         * dashboard inside anee to make it easier to understand"): the tasks due today and tomorrow across every
+         * season, and on a quiet two days the next task ahead, so the home screen always answers "what now?". */
+        $dueToday = $upcoming->filter(fn ($a) => $a->targetDate && $a->targetDate->isSameDay($today))->count();
+        $dueTomorrow = $upcoming->filter(fn ($a) => $a->targetDate && $a->targetDate->isSameDay($tomorrow))->count();
+        $nextAhead = null;
+        if ($dueToday + $dueTomorrow === 0 && ($first = $upcoming->first())) {
+            $nextAhead = [
+                'title' => (string) $first->activityTitle,
+                'date' => $first->targetDate,
+                'scheduleId' => (int) $first->croppingScheduleId,
+                'schedule' => (string) $schedulesQ()->whereKey($first->croppingScheduleId)->value('title'),
+            ];
+        }
+
         /* The dashboard shelf shows ONLY the seasons with work on the board
          * today or tomorrow — a quiet two days means no shelf at all (the
          * schedules page still lists everything). scheduleNext above already
@@ -318,6 +333,9 @@ class AppController extends Controller
             'latestBlog' => $latestBlog,
             'latestNews' => $latestNews,
             'scheduleNext' => $scheduleNext,
+            'dueToday' => $dueToday,
+            'dueTomorrow' => $dueTomorrow,
+            'nextAhead' => $nextAhead,
             'latestDiscussions' => $latestDiscussions,
             'connectedWall' => $connectedWall,
             'followingIds' => $wallFollowing,

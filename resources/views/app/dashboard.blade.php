@@ -582,6 +582,34 @@
     .dash-stat.is-lead b { color: #3d6823; }
     .dash-stat.is-lead i { color: #6b9f3d; }
     .dash-stat.is-warn b { color: #c2410c; }
+    /* Tasks due today (2026-11-25): gold while there is work, a tap away from it. */
+    .dash-stat.is-due { background: #fff8dc; border-color: #f2d16b; }
+    .dash-stat.is-due b { color: #8a5a00; }
+    .dash-stat.is-due i { color: #a16207; }
+    html.dark .dash-stat.is-due { background: rgb(245 197 24 / .12); border-color: rgb(245 197 24 / .45); }
+    html.dark .dash-stat.is-due b { color: #f5d34a; }
+    html.dark .dash-stat.is-due i { color: #d9b84a; }
+    /* TODAY sits under the tiles; a jump to it stops below the sticky header. */
+    .dash-today { scroll-margin-top: 5rem; }
+    /* A quiet two days: one card that says so, and what is next. */
+    .dash-quiet { display: flex; align-items: flex-start; gap: .85rem; padding: 1rem; border-radius: 1rem; background: var(--color-white);
+        border: 1px solid var(--color-gray-200); animation: dashQuietIn .5s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes dashQuietIn { from { opacity: 0; transform: translateY(6px); } }
+    .dash-quiet-ico { flex: none; display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: .85rem; color: #3d6823; background: #eef6e4; }
+    .dash-quiet-ico svg { width: 1.45rem; height: 1.45rem; }
+    .dash-quiet-txt { min-width: 0; flex: 1; }
+    .dash-quiet-txt b { display: block; font-size: .98rem; font-weight: 800; color: var(--color-gray-900); }
+    .dash-quiet-txt p { margin-top: .25rem; font-size: .84rem; line-height: 1.5; color: var(--color-gray-600); }
+    .dash-quiet-txt p strong { color: var(--color-gray-900); }
+    .dash-quiet-go { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .9rem; margin-top: .75rem; }
+    .dash-quiet-alt { font-size: .84rem; font-weight: 700; color: var(--color-brand-700); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: none; }
+    .dash-quiet-alt:hover { text-decoration: underline; }
+    html.dark .dash-quiet { background: #151b12; border-color: #2b3a1c; }
+    html.dark .dash-quiet-ico { color: #a5c97e; background: rgb(107 159 61 / .18); }
+    html.dark .dash-quiet-txt b, html.dark .dash-quiet-txt p strong { color: #e8efe1; }
+    html.dark .dash-quiet-txt p { color: #a9b99a; }
+    html.dark .dash-quiet-alt { color: #a5c97e; }
+    @media (prefers-reduced-motion: reduce) { .dash-quiet { animation: none; } }
     html.dark .dash-stat { background: #151b12; border-color: #2b3a1c; }
     html.dark .dash-stat b { color: #e8efe1; }
     html.dark .dash-stat.is-lead { background: rgb(61 104 35 / .22); border-color: #3f5626; }
@@ -932,59 +960,33 @@
          "Active plan" and "Days left" — a row of blanks about somebody
          else's business, on the first screen of their day. --}}
     @unless (\App\Support\WorkerContext::inWorkerContext())
+    {{-- Said plainly (2026-11-25, the owner: the dashboard "easier to understand"): how many schedules are
+         running, how many tasks are due today (a tap goes to them), and the plan, without the "(assigned)" an
+         admin's grant adds to its name. The days left stay on the greeting's chip, said once. --}}
+    @php
+        $dsPlan = $isSuperAdmin ? 'Admin' : ($isActive ? trim(preg_replace('/\s*\(assigned\)\s*$/i', '', (string) $subscription->planName)) : ($isLibre ? config('tiers.libre.name', 'Libre') : 'None'));
+    @endphp
     <div class="dash-stats">
         <a href="{{ route('sm.index') }}" class="dash-stat is-lead">
             <b>{{ number_format($scheduleCount) }}</b>
-            <i>{{ \Illuminate\Support\Str::plural('Schedule', $scheduleCount) }}</i>
+            <i>{{ $scheduleCount === 1 ? 'Schedule running' : 'Schedules running' }}</i>
         </a>
-        <div class="dash-stat">
-            <b class="dash-stat-word">{{ $isSuperAdmin ? 'Admin' : ($isActive ? $subscription->planName : ($isLibre ? config('tiers.libre.name', 'Libre') : 'None')) }}</b>
-            <i>Active plan</i>
-        </div>
-        <div class="dash-stat {{ $expiringSoon ? 'is-warn' : '' }}">
-            <b>{{ $isSuperAdmin || $isLibre ? '∞' : ($isActive ? ($daysRemaining !== null ? number_format($daysRemaining) : '∞') : '0') }}</b>
-            <i>Days left</i>
-        </div>
+        <a href="#dashToday" class="dash-stat {{ $dueToday ? 'is-due' : '' }}" data-dash-jump>
+            <b>{{ number_format($dueToday) }}</b>
+            <i>{{ $dueToday === 1 ? 'Task due today' : 'Tasks due today' }}</i>
+        </a>
+        <a href="{{ route('account.subscription') }}" class="dash-stat">
+            <b class="dash-stat-word">{{ $dsPlan }}</b>
+            <i>Your plan</i>
+        </a>
     </div>
     @endunless
 
-    {{-- The AI technician's one thing worth knowing today. It sat at the
-         bottom of the schedules page, where a page of seasons is what people
-         scroll past it to reach; here it is read on the way in. --}}
-    @include('sm.partials.tip-of-day', [
-        'tip' => $tip ?? null,
-        'aiHref' => (($canUseAi ?? false) && $latestSchedules->isNotEmpty())
-            ? route('sm.ai', ['id' => $latestSchedules->first()->id, 'from' => 'dashboard'])
-            : null,
-    ])
-
-    {{-- How anee.io works: a card that opens the seven step tour full screen
-         (the public /how-it-works picture, its links opening the app). --}}
-    @include('app.partials.how-card')
-
-    {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
-    @include('partials.ad-slot', ['placement' => 'dashboard'])
-
-    {{-- Anee Auto (2026-10-12), shown off to the farm owner: Anee plans the
-         season. A simple card that opens (2026-10-14, the owner). --}}
-    @unless (\App\Support\WorkerContext::inWorkerContext())
-        @include('auto.partials.card')
-        @include('auto.partials.start')
-    @endunless
-
-    {{-- ============== Global and Quick Tools ==============
-         The cross-season doors and the quick add tools, above today's
-         seasons (the owner's call, 2026-09-15): the things you reach for
-         on any visit come before the shelf of what is due today. --}}
-    <div>
-        @include('partials.global-tools')
-        {{-- The Stash (2026-10-07): partners' resources, folded under the tools. --}}
-        @include('partials.stash-card')
-    </div>
-
-    {{-- My Cropping Schedules — ONLY the seasons with work on the board
-         today. A quiet day shows no shelf at all; the schedules page
-         still lists every season. --}}
+    {{-- TODAY, first under the tiles (2026-11-25, the owner: the dashboard "easier to understand"). The work
+         due today and tomorrow is what a farmer opens the app for, so it no longer waits under the tools
+         (it sat seven phone screens down once the tools grew to thirty). The shelf shows the seasons with
+         work today or tomorrow; a quiet day gets one card that says so, and what is next. --}}
+    <section id="dashToday" class="dash-today">
     @if ($latestSchedules->isNotEmpty())
     <div>
         <div class="flex items-center justify-between gap-3 mb-3 px-1">
@@ -994,10 +996,10 @@
                  the leaf on it sways. --}}
             <h2 class="text-base md:text-lg font-bold text-gray-900 flex items-center gap-2">
                 <span class="dash-sched-cal fs-slot" data-fs-act="quiet" data-fs-size="26" aria-hidden="true"></span>
-                My Cropping Schedules
+                Work for Today and Tomorrow
             </h2>
             @if ($latestSchedules->isNotEmpty())
-                <a href="{{ route('sm.index') }}" class="text-sm font-bold text-brand-700 hover:underline shrink-0">View all</a>
+                <a href="{{ route('sm.index') }}" class="text-sm font-bold text-brand-700 hover:underline shrink-0">All schedules</a>
             @endif
         </div>
 
@@ -1201,7 +1203,52 @@
                  was a full-width green bar under every visit, for the one
                  errand nobody opens the dashboard to do. --}}
     </div>
+    @else
+    {{-- A quiet two days still answers "what now?": no schedule yet (start one, or take the tour), or
+         nothing due today or tomorrow, and the next task ahead with the way to it. --}}
+    <div class="dash-quiet">
+        <span class="dash-quiet-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/>@if ($scheduleCount > 0)<path d="M9 15l2 2 4-4"/>@endif</svg>
+        </span>
+        <div class="dash-quiet-txt">
+            @if ($scheduleCount === 0)
+                <b>No cropping schedule yet</b>
+                <p>A cropping schedule is your season's calendar: every task on its day, for each of your lots. Start one and its work shows here each day.</p>
+                <div class="dash-quiet-go">
+                    @unless (\App\Support\WorkerContext::inWorkerContext())
+                        <a href="{{ route('sm.index') }}" class="btn btn-primary btn-sm">Start your first schedule</a>
+                    @endunless
+                    <button type="button" class="dash-quiet-alt" data-open-tour>See how anee.io works</button>
+                </div>
+            @else
+                <b>Nothing due today or tomorrow</b>
+                @if ($nextAhead)
+                    <p>Next: <strong>{{ $nextAhead['title'] }}</strong> on {{ $nextAhead['date']->format('l, F j') }}{{ $nextAhead['schedule'] !== '' ? ', in ' . $nextAhead['schedule'] : '' }}.</p>
+                    <div class="dash-quiet-go">
+                        <a href="{{ route('sm.activities', ['id' => $nextAhead['scheduleId'], 'from' => 'dashboard']) }}" class="btn btn-primary btn-sm">Open that schedule</a>
+                        <a href="{{ route('sm.index') }}" class="dash-quiet-alt">All schedules</a>
+                    </div>
+                @else
+                    <p>Your {{ $scheduleCount === 1 ? 'schedule has' : $scheduleCount . ' schedules have' }} no task on a coming day yet.</p>
+                    <div class="dash-quiet-go">
+                        <a href="{{ route('sm.index') }}" class="btn btn-primary btn-sm">Open my schedules</a>
+                    </div>
+                @endif
+            @endif
+        </div>
+    </div>
     @endif
+    </section>
+
+    {{-- The AI technician's one thing worth knowing today. It sat at the
+         bottom of the schedules page, where a page of seasons is what people
+         scroll past it to reach; here it is read on the way in. --}}
+    @include('sm.partials.tip-of-day', [
+        'tip' => $tip ?? null,
+        'aiHref' => (($canUseAi ?? false) && $latestSchedules->isNotEmpty())
+            ? route('sm.ai', ['id' => $latestSchedules->first()->id, 'from' => 'dashboard'])
+            : null,
+    ])
 
             @if ($openTickets->isNotEmpty())
                 <section class="card">
@@ -1228,6 +1275,19 @@
                     </div>
                 </section>
             @endif
+
+    {{-- The free plan carries an advertisement here; a paid plan sees nothing. --}}
+    @include('partials.ad-slot', ['placement' => 'dashboard'])
+
+    {{-- ============== Global and Quick Tools ==============
+         The cross-season doors and the quick add tools, above today's
+         seasons (the owner's call, 2026-09-15): the things you reach for
+         on any visit come before the shelf of what is due today. --}}
+    <div>
+        @include('partials.global-tools')
+        {{-- The Stash (2026-10-07): partners' resources, folded under the tools. --}}
+        @include('partials.stash-card')
+    </div>
 
             {{-- ===================== Meet the technician =====================
                  Above the wall on purpose: a farmer who has arrived with a
@@ -1284,6 +1344,17 @@
                 </a>
 
             </section>
+
+    {{-- How anee.io works: a card that opens the seven step tour full screen
+         (the public /how-it-works picture, its links opening the app). --}}
+    @include('app.partials.how-card')
+
+    {{-- Anee Auto (2026-10-12), shown off to the farm owner: Anee plans the
+         season. A simple card that opens (2026-10-14, the owner). --}}
+    @unless (\App\Support\WorkerContext::inWorkerContext())
+        @include('auto.partials.card')
+        @include('auto.partials.start')
+    @endunless
 
             {{-- THE SONG.
                  Not a feature, and that is the point: a farm app that has a
@@ -1588,6 +1659,23 @@
 @endsection
 
 @push('scripts')
+{{-- The "tasks due today" tile glides to TODAY, and a quiet day's "See how anee.io works" opens the tour card's
+     own story (2026-11-25). --}}
+<script>
+(() => {
+    const still = () => matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('sm-still');
+    document.querySelectorAll('[data-dash-jump]').forEach((a) => a.addEventListener('click', (e) => {
+        const to = document.getElementById('dashToday');
+        if (!to) return;
+        e.preventDefault();
+        to.scrollIntoView({ behavior: still() ? 'auto' : 'smooth', block: 'start' });
+    }));
+    document.querySelectorAll('[data-open-tour]').forEach((b) => b.addEventListener('click', () => {
+        const open = document.getElementById('hwcOpen');
+        if (open) open.click(); else location.hash = 'how-it-works';
+    }));
+})();
+</script>
 {{-- The co-farmer feed reuses the wall's post cards, so it needs the same
      community JS: reactions, comment form, emoji, photo, mentions, modal. --}}
 @include('community.partials.emoji-js')

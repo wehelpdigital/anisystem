@@ -188,6 +188,35 @@
         html.dark .qa-gallery .qa-ico { background: rgb(29 78 216 / .22); color: #9fc0f5; }
         html.dark .qa-cap .qa-ico { background: rgb(61 104 35 / .25); color: #a5c97e; }
         html.dark .qa-rec .qa-ico { background: rgb(185 28 28 / .2); color: #f0a3a3; }
+
+        /* ---- The launcher (2026-11-25, the owner: the dashboard "easier to understand") ----
+           Thirty tools as long rows, each with two or three lines under its name, made this panel seven phone
+           screens tall and buried the day's work under it. Now they stand as a grid of icons with their names,
+           three to a row on a phone and four on a wider screen, like the apps on a phone's home screen. What a
+           tool does is still one tap away: its Preview film, its Taglish tag (top left), and on a computer the
+           old line as the tile's tooltip. Anee's tag becomes her face in the top right corner: gold where she
+           does the work, pale where you can ask her inside. */
+        .qa-panel.is-grid .qa-sub-in { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; }
+        @media (min-width: 560px) { .qa-panel.is-grid .qa-sub-in { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+        @media (min-width: 1200px) { .qa-panel.is-grid .qa-sub-in { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+        .qa-panel.is-grid .qa-tile { position: relative; flex-direction: column; justify-content: flex-start; gap: .45rem;
+            min-height: 7.6rem; padding: 1.9rem .35rem .6rem; text-align: center; }
+        .qa-panel.is-grid .qa-tile .qa-ico { width: 2.9rem; height: 2.9rem; border-radius: .9rem; }
+        .qa-panel.is-grid .qa-tile .qa-ico img { width: 1.7rem !important; height: 1.7rem !important; }
+        .qa-panel.is-grid .qa-tile .qa-ico svg { width: 1.45rem; height: 1.45rem; }
+        .qa-panel.is-grid .qa-tile .qa-txt { flex: 1 1 auto; align-items: center; width: 100%; gap: 0; }
+        .qa-panel.is-grid .qa-tile .qa-txt > b { font-size: .76rem; line-height: 1.22; overflow-wrap: anywhere; hyphens: auto; }
+        .qa-panel.is-grid .qa-tile .qa-txt > i { display: none; }
+        .qa-panel.is-grid .qa-tile .qa-go { display: none; }
+        .qa-panel.is-grid .qa-tile .qa-anee.is-mini { position: absolute; top: .4rem; right: .4rem; margin: 0; padding: .14rem; gap: 0;
+            font-size: 0; letter-spacing: 0; vertical-align: 0; }
+        .qa-panel.is-grid .qa-tile .qa-anee.is-mini img { width: 1.1rem; height: 1.1rem; }
+        .qa-panel.is-grid .qa-tile .tlx { position: absolute !important; top: .62rem; left: .5rem; margin: 0 !important; line-height: 1 !important; }
+        .qa-panel.is-grid .qa-tile .tl-lock { position: absolute; top: 3.4rem; left: calc(50% + .95rem); margin: 0; transform: scale(.85); }
+        .qa-panel.is-grid .qa-tile .qa-trash-n, .qa-panel.is-grid .qa-tile .qa-lots-old { margin-left: .25rem; }
+        .qa-panel.is-grid .qa-prev { align-self: center; margin-top: auto; padding-top: .14rem; }
+        .qa-panel.is-grid .qa-tile .qa-txt > b + .qa-prev { margin-top: .5rem; }
+        @media (hover: hover) { .qa-panel.is-grid .qa-tile:hover { transform: translateY(-2px); } }
 </style>
 @endpush
 @endonce
@@ -230,12 +259,12 @@
             $qShowPanel = $qShowAnee || $qShowInside || $qShowRecords;
         @endphp
         @if ($qShowPanel)
-        <section class="qa-panel" id="globalTools">
+        <section class="qa-panel is-grid" id="globalTools">
             <button type="button" class="qa-panel-head" id="globalToolsHead" aria-expanded="true" aria-controls="globalToolsBody">
                 <span class="qa-panel-ico"><img src="{{ asset('images/icons/tool-box.png') }}" alt="" style="width:1.5rem;height:1.5rem;object-fit:contain"></span>
                 <span class="qa-panel-txt">
                     <b>Global and Quick Tools</b>
-                    <i>Planting analyses, satellite, NPK Plus, notes, maps and more, in one place.</i>
+                    <i>Every tool in one place. Tap one to open it, or Preview to watch how it works.</i>
                 </span>
                 <svg class="qa-panel-chev" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             </button>
@@ -928,6 +957,16 @@
                 set(f);
                 try { localStorage.setItem(subKey, f ? '1' : '0'); } catch (_) {}
             });
+        });
+
+        // In the grid a tile shows its name only; the line that says what it does becomes its tooltip, and
+        // what a screen reader hears beside the name (2026-11-25).
+        panel.querySelectorAll('.qa-tile').forEach((t) => {
+            const say = t.querySelector('.qa-txt > i');
+            const words = say ? say.textContent.trim() : '';
+            if (!words) return;
+            if (!t.title) t.title = words;
+            t.setAttribute('aria-description', words);
         });
 
         // A tile opens a module; it is never "selected". Drop the focus a
