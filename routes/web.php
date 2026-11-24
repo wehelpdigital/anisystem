@@ -1007,6 +1007,9 @@ Route::middleware(['auth', 'subscription'])->group(function () {
     })->name('offline.manifest');
     // The storefront's promise, ahead of the storefront.
     Route::view('/app/shop', 'shop.index')->name('shop.index');
+    // Level Up Farmers, Anee's Facebook group (2026-11-24): the bottom bar's Group seat, and the answer to its popup.
+    Route::get('/app/group', [App\Http\Controllers\GroupInviteController::class, 'page'])->name('group.index');
+    Route::post('/app/group/answer', [App\Http\Controllers\GroupInviteController::class, 'answer'])->middleware('throttle:30,1')->name('group.answer');
     // When to Plant — a bought analysis: wizard in, planting window out.
     Route::get('/app/when-to-plant', [App\Http\Controllers\WhenToPlantController::class, 'page'])->name('wtp.page');
     Route::get('/app/when-to-plant/options', [App\Http\Controllers\WhenToPlantController::class, 'options'])->name('wtp.options');

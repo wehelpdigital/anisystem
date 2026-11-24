@@ -308,9 +308,9 @@
                             <a href="{{ route('community.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('community.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Community</a>
                         @else
                             {{-- The Community is closed for now (App\Support\Community, 2026-11-24): the Tech Blog it carried
-                                 gets its own link, and the Shop, coming soon, takes the Community's place. --}}
+                                 gets its own link, and the Group (Level Up Farmers on Facebook) takes the Community's place. --}}
                             <a href="{{ route('community.blog') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('community.blog', 'community.blog.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Blog</a>
-                            <a href="{{ route('shop.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('shop.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Shop</a>
+                            <a href="{{ route('group.index') }}" class="px-3 py-2 rounded-lg {{ request()->routeIs('group.*') ? 'bg-brand-50 text-brand-700' : 'text-gray-600 hover:bg-gray-100' }}">Group</a>
                         @endif
                         {{-- Tutorials left this row: the How-to-use module is
                              that door now, and two ways in read as two
@@ -864,10 +864,11 @@
                 <span>Community</span>
             </a>
         @else
-            {{-- The Community is closed for now (2026-11-24, the owner): its seat goes to the Shop, coming soon. --}}
-            <a href="{{ route('shop.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('shop.*') ? 'is-active' : '' }}">
-                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l1.2-4.2A2 2 0 016.1 3.5h11.8a2 2 0 011.9 1.3L21 9M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9M3 9h18M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
-                <span>Shop</span>
+            {{-- The Community is closed for now (2026-11-24, the owner): its seat is the Group, Level Up Farmers,
+                 Anee's Facebook group (App\Support\GroupInvite). The Shop, coming soon, keeps its card on Home. --}}
+            <a href="{{ route('group.index') }}" data-nav-loader class="tabbar-item {{ request()->routeIs('group.*') ? 'is-active' : '' }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-1a4 4 0 00-4-4h-1M9 11a4 4 0 100-8 4 4 0 000 8zm8 0a3 3 0 100-6M2 20v-1a5 5 0 015-5h4a5 5 0 015 5v1H2z"/></svg>
+                <span>Group</span>
             </a>
         @endif
     </nav>
@@ -1147,6 +1148,10 @@
          so those screens need nothing in their own views. --}}
     @unless ($isEmbed)
     @include('partials.tutorial-modal')
+    {{-- Level Up Farmers, now and then, for someone who has not answered yet (App\Support\GroupInvite, 2026-11-24). --}}
+    @if (\App\Support\GroupInvite::shouldAsk() && ! request()->routeIs('group.*'))
+        @include('partials.group-invite')
+    @endif
     @include('partials.tutorial-offer', ['byRoute' => true, 'keys' => [], 'auto' => null])
     {{-- "How to chat with Anee", full screen, for the link on every chat's how-to-ask card. --}}
     @auth
