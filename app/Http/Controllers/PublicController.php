@@ -15,7 +15,7 @@ class PublicController extends Controller
         \App\Support\SignupSource::remember($request);
 
         return view('public.home', [
-            'tiers' => \Illuminate\Support\Arr::except(config('tiers'), ['admin']),
+            'tiers' => \App\Support\Community::plans(\Illuminate\Support\Arr::except(config('tiers'), ['admin'])),
             'stats' => $this->liveStats(),
             // The guides are written for Philippine farms: the /ph face only.
             'guides' => \App\Support\Region::ph() ? \App\Support\SitePages::homePicks() : [],
@@ -140,7 +140,7 @@ class PublicController extends Controller
         // The same table the in-app gates read — the page can never promise
         // a wall the app doesn't have.
         return view('public.pricing', [
-            'tiers' => \Illuminate\Support\Arr::except(config('tiers'), ['admin']),
+            'tiers' => \App\Support\Community::plans(\Illuminate\Support\Arr::except(config('tiers'), ['admin'])),
         ]);
     }
 

@@ -235,8 +235,8 @@
                     </div>
                     <p class="text-xs text-gray-500 mt-1">{{ $tier['tagline'] }}</p>
                     <ul>
-                        @foreach ($tier['features'] as $f)<li><span class="text-brand-600">✓</span><span>{{ $f }}</span></li>@endforeach
-                        @foreach ($tier['excludes'] as $f)<li class="x"><span>✕</span><span>{{ $f }}</span></li>@endforeach
+                        @foreach (\App\Support\Community::planLines($tier['features']) as $f)<li><span class="text-brand-600">✓</span><span>{{ $f }}</span></li>@endforeach
+                        @foreach (\App\Support\Community::planLines($tier['excludes']) as $f)<li class="x"><span>✕</span><span>{{ $f }}</span></li>@endforeach
                     </ul>
                     @if ($month && ! $isAdmin && ! $isWorker)
                         <div class="sp-buy">

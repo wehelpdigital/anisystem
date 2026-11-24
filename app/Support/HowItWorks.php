@@ -467,10 +467,12 @@ class HowItWorks
                         'Guides to the pests, diseases and weeds of Philippine crops: how to spot them, why they come and what to do about them.',
                         ['Written for Philippine farms', 'What to look for, with pictures', 'What to do, step by step'],
                         null, null, '/problems') : null,
-                    self::item('community', 'Farmer community', 'Ask growers who have seen it before', 'community-post.png', false,
+                    // Off every list (How It Works, Features, About, the landing pages, the in-app tour) while the
+                    // Community is closed: no page should show a tool nobody can open (2026-11-24).
+                    Community::open() ? self::item('community', 'Farmer community', 'Ask growers who have seen it before', 'community-post.png', false,
                         'Post a photo to the feed or ask in a discussion room. Growers trade what worked for them and warn each other early.',
                         ['A news feed and discussion rooms', 'Messages with photos and voice', 'A ladder of 100 levels for helping out'],
-                        'farmer-community', 'community.index'),
+                        'farmer-community', 'community.index') : null,
                 ])),
             ],
             [

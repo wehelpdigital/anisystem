@@ -39,6 +39,7 @@ class PlanCompare
         // Kept reading both wordings (label-style: stored text other code reads).
         $adFree = fn (array $t) => (bool) array_intersect(['No ads', 'Ad-free'], $t['features'] ?? []);
         $ph = Region::ph();
+        $open = Community::open();
 
         return [
             ['Seasons and fields', 'M12 21v-9m0 0C12 7 8 5 4 5c0 4 3 7 8 7zm0 0c0-4 3-7 8-7 0 4-4 7-8 7z', [
@@ -108,14 +109,16 @@ class PlanCompare
                 ['Labor report and observations', null, $all(), 'labor-report'],
                 ['Expenses, profit and every other report', 'Anee Season Report, Analyze So Far, View as Protocol and Compare Reports included', $gate('reportsAll'), 'compare-reports'],
             ]],
-            ['Community and news', 'M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-1.4-.6M15 4H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l4-4h4a2 2 0 002-2V6a2 2 0 00-2-2z', array_values(array_filter([
-                ['Community feed', 'Post and read with photos', $all()],
+            // While the Community is closed (App\Support\Community) its rows are out of the table: a plan does not sell rooms
+            // nobody can open. The news and The Stash stay.
+            [$open ? 'Community and news' : 'News and reading', 'M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a2 2 0 01-1.4-.6M15 4H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l4-4h4a2 2 0 002-2V6a2 2 0 00-2-2z', array_values(array_filter([
+                $open ? ['Community feed', 'Post and read with photos', $all()] : null,
                 $ph ? ['Latest in Agriculture', 'The farm news every few days, with what it means for your farm in Taglish and English', $all()] : null,
                 ['The Stash', 'Partners\' magazines and guides, read in the app', $all()],
-                ['Video and voice posts', null, $gate('communityVideo')],
-                ['Discussion rooms to join', null, fn (array $t) => $t['discussionJoin'] === null ? 'Unlimited' : (string) $t['discussionJoin']],
-                ['Private rooms', 'Password and approval rooms', $gate('discussionPrivateJoin')],
-                ['Create your own rooms', null, $gate('discussionCreate')],
+                $open ? ['Video and voice posts', null, $gate('communityVideo')] : null,
+                $open ? ['Discussion rooms to join', null, fn (array $t) => $t['discussionJoin'] === null ? 'Unlimited' : (string) $t['discussionJoin']] : null,
+                $open ? ['Private rooms', 'Password and approval rooms', $gate('discussionPrivateJoin')] : null,
+                $open ? ['Create your own rooms', null, $gate('discussionCreate')] : null,
             ]))],
             // Said as what the reader sees, not as a tick for "No ads": a
             // dash under "No ads" was a double negative on a phone.

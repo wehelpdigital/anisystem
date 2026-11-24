@@ -226,7 +226,7 @@
                     ['Do my workers need their own subscriptions?', 'No. On ' . $faqOwner . ', workers log in under your plan: you invite them, choose what each one may see or edit, and they use anee.io for free. On ' . $faqSolo . ' you keep their attendance and their pay in your own account, without giving them a login.'],
                     ['What happens when my plan ends?', 'Your data stays safe and you can still read it. Renew any time and pick up where the season left off. If you renew early, the new days are added on top, so nothing is wasted.'],
                     ['Can I use it on a computer too?', 'Yes. anee.io is a web app. It is made first for phones in the field, and the same account works in any browser.'],
-                    ['Is my farm data private?', 'Yes. Your seasons, notes and money figures are yours alone unless you publish something to the community on purpose.'],
+                    ['Is my farm data private?', 'Yes. Your seasons, notes and money figures are yours alone. Nothing leaves your account unless you share it on purpose.'],
                 ])) as [$q, $a])
                     <details class="group rounded-2xl bg-white ring-1 ring-gray-200 px-5 py-4 reveal">
                         <summary class="cursor-pointer list-none flex items-center justify-between gap-3 font-heading font-bold text-ink">
