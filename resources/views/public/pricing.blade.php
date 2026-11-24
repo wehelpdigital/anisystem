@@ -27,6 +27,44 @@
         </div>
     </section>
 
+    {{-- ================= WHICH PLAN FITS YOUR FARM (2026-11-24) =================
+         The owner: "check the other pages that are hard to understand and in a viewer perspective make it better and
+         persuasive". Four plans read one at a time is a lot to weigh, so the page first asks the question a farmer can
+         answer: which of these sounds like you? Each answer names its plan and deals that card to the front of the deck
+         below. Prices from the plans' own table (config/tiers through Region). --}}
+    @php
+        $fitFor = [
+            ['libre', '📒', 'I farm on my own and want my season in order', 'The calendar by day count, lots, notes, photos and the weather, even without signal.'],
+            ['libreAnee', '🧑‍🌾', 'I want answers: when to plant, what is attacking my crop, what fertilizer to use', 'Anee and every analysis, the pest, disease and nutrient finders, Satellite Weather and NPK Plus.'],
+            ['solo', '💰', 'I pay workers and buy my own inputs, and I want to see my profit', 'Workers and payroll, inventory, every report and three seasons at once.'],
+            ['owner', '👥', 'I run a farm with a katiwala or a crew', 'Logins for each worker with the access you choose, the Collab Room and the Logs diary.'],
+        ];
+    @endphp
+    <section class="py-12 sm:py-14 bg-white fit-sec" data-track-section="plan-fit">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <div class="text-center reveal">
+                <p class="text-sm font-bold uppercase tracking-wider text-brand-600">Not sure which plan?</p>
+                <h2 class="mt-2 font-heading text-3xl sm:text-4xl font-bold text-ink text-balance">Which One <span class="text-brand-600">Sounds Like You?</span></h2>
+                <p class="mt-3 text-gray-600">Tap the one closest to your farm. You can start free and change plans any time.</p>
+            </div>
+            <div class="fit-grid">
+                @foreach ($fitFor as $i => [$key, $em, $say, $gets])
+                    @continue(! isset($tiers[$key]))
+                    @php $fitM = \App\Support\Region::tierPrice($key, 'month'); @endphp
+                    <button type="button" class="fit-card reveal" data-fit="{{ $key }}" style="--reveal-delay: {{ $i * 0.06 }}s">
+                        <i aria-hidden="true">{{ $em }}</i>
+                        <b class="fit-say">"{{ $say }}"</b>
+                        <span class="fit-gets">{{ $gets }}</span>
+                        <span class="fit-plan">
+                            <span>{{ $tiers[$key]['name'] }}</span>
+                            <em>{{ $fitM ? \App\Support\Region::priceTag($fitM) . ' a month' : 'Free forever' }}</em>
+                        </span>
+                    </button>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     {{-- ================= THE PLANS, AS A HAND OF CARDS =================
          One plan is read at a time. Libre stands in front when the page
          opens, and the other plans fan out behind it from left to right in
@@ -368,6 +406,22 @@
     html.sm-still .pd-inner, html.sm-still .pd-fog, html.sm-still .pd-card .pr-flag { transition: none !important; }
     html.sm-still .pd-card .pr-price, html.sm-still .pd-card .pr-year, html.sm-still .pd-card .pr-day { animation: none; }
     html.sm-still .pr-faq details::details-content, html.sm-still .pr-faq-plus { transition: none; }
+    /* Which plan fits your farm (2026-11-24): four sayings, each dealing its plan to the front. */
+    .pd-section { scroll-margin-top: 3.5rem; }
+    .fit-grid { display: grid; gap: .75rem; margin-top: 1.8rem; }
+    @media (min-width: 640px) { .fit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) { .fit-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .fit-card { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; padding: 1.1rem 1.05rem 1rem; border-radius: 1.2rem; text-align: left;
+        background: #fbfdf8; border: 1.5px solid #e1ead6; cursor: pointer;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), border-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1); }
+    .fit-card:hover, .fit-card.is-on { transform: translateY(-3px); border-color: #4a7c2a; box-shadow: 0 22px 40px -30px rgb(20 33 12 / .7); background: #fff; }
+    .fit-card i { font-style: normal; font-size: 1.6rem; line-height: 1; }
+    .fit-say { font-family: var(--font-heading); font-size: 1rem; font-weight: 800; line-height: 1.3; color: #14210c; }
+    .fit-gets { font-size: .86rem; line-height: 1.5; color: #4b5563; }
+    .fit-plan { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; width: 100%; margin-top: auto; padding-top: .7rem; border-top: 1px dashed #cfe3b8; }
+    .fit-plan span { font-weight: 900; color: #2d5016; }
+    .fit-plan em { font-style: normal; font-size: .82rem; font-weight: 800; color: #1f1500; background: #f5c518; padding: .15rem .55rem; border-radius: 999px; white-space: nowrap; }
+    @media (prefers-reduced-motion: reduce) { .fit-card { transition: none; } }
 </style>
 @endpush
 
@@ -646,5 +700,17 @@
             };
         };
     })();
+</script>
+<script>
+(() => {
+    /* Which plan fits your farm: a saying deals its plan to the front of the deck, then the deck comes into view. */
+    document.querySelectorAll('[data-fit]').forEach((b) => b.addEventListener('click', () => {
+        document.querySelectorAll('[data-fit]').forEach((x) => x.classList.toggle('is-on', x === b));
+        const tab = document.getElementById('pd-tab-' + b.dataset.fit);
+        tab?.click();
+        const deck = document.querySelector('.pd-section');
+        deck?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    }));
+})();
 </script>
 @endpush

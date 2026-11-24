@@ -1102,6 +1102,17 @@
     .hw.is-ready .hw-stage.is-deck.is-in .hw-stats li { opacity: 1; transform: none; }
 
     /* Rows of cards; a short last row sits in the middle. Two to a row on a phone, three on a tablet, the deck's own on a desk. */
+    /* A long step folded to six (2026-11-24): the rest rise in on "See all". */
+    .hw-deck:not(.is-all) .hw-item.is-extra { display: none; }
+    .hw-deck.is-all .hw-item.is-extra { animation: hwExtraIn .5s var(--ease) both; animation-delay: calc((var(--i) - 6) * .05s); }
+    @keyframes hwExtraIn { from { opacity: 0; transform: translateY(12px) scale(.97); } }
+    .hw-deck-foot { grid-column: 1 / -1; position: relative; z-index: 2; display: flex; justify-content: center; margin-top: 1rem; }
+    /* Solid underneath, so the spine running behind the button does not show through its words. */
+    .hw-deck-more { display: inline-flex; align-items: center; gap: .45rem; padding: .6rem 1.1rem; border-radius: 999px; font-size: .88rem; font-weight: 800;
+        color: #f5c518; background: linear-gradient(rgb(245 197 24 / .1), rgb(245 197 24 / .1)), #121c0e; border: 1.5px solid rgb(245 197 24 / .45); cursor: pointer;
+        transition: background-color .28s var(--ease), color .28s var(--ease); }
+    .hw-deck-more:hover { background: #f5c518; color: #1f1500; }
+    @media (prefers-reduced-motion: reduce) { .hw-deck.is-all .hw-item.is-extra { animation: none; } }
     .hw-deck { --c: 2; --g: .6rem; position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: var(--g); margin-top: 1.3rem; }
     @media (min-width: 640px) { .hw-deck { --c: 3; } }
     .hw-stage.is-deck .hw-item { flex: 0 0 calc((100% - (var(--c) - 1) * var(--g)) / var(--c)); width: auto; max-width: none; min-width: 0; }
@@ -1316,8 +1327,13 @@
                     $dkAnee = count(array_filter($st['items'], fn ($t) => $t['anee']));
                     // On a desk, the columns that leave the fewest gaps in the last row (four when it is a tie).
                     $dkN = count($st['items']);
-                    $dkCols = collect([4, 5, 3])->sortBy(fn ($c) => [($c - $dkN % $c) % $c, $c === 4 ? 0 : 1])->first();
-                    $dkCols = min($dkCols, max(1, $dkN));
+                    /* A long step shows its first six tools and folds the rest behind "See all" (2026-11-24, the owner:
+                       pages "hard to understand ... make it better and persuasive"): fifteen cards at once read as a
+                       wall. The columns are counted for what shows. */
+                    $dkFold = $dkN > 8;
+                    $dkShow = $dkFold ? 6 : $dkN;
+                    $dkCols = collect([4, 5, 3])->sortBy(fn ($c) => [($c - $dkShow % $c) % $c, $c === 4 ? 0 : 1])->first();
+                    $dkCols = min($dkCols, max(1, $dkShow));
                 @endphp
                 <section class="hw-stage is-deck" id="hw-step-{{ $st['key'] }}" data-stage="{{ $st['key'] }}" data-pattern="{{ $st['pattern'] }}" aria-labelledby="hw-h-{{ $st['key'] }}">
                     <svg class="hw-svg" aria-hidden="true"></svg>
@@ -1342,7 +1358,7 @@
                                 $uid = 'hw-' . $st['key'] . '-' . $it['key'];
                                 $dkIsFree = ($it['plan']['tier'] ?? '') === $hwFreeTier;
                             @endphp
-                            <div class="hw-item" style="--i: {{ $i }}" @if ($it['video']) data-video="{{ $it['video'][0] }}" data-poster="{{ $it['video'][1] }}" @endif>
+                            <div class="hw-item {{ $dkFold && $i >= $dkShow ? 'is-extra' : '' }}" style="--i: {{ $i }}" @if ($it['video']) data-video="{{ $it['video'][0] }}" data-poster="{{ $it['video'][1] }}" @endif>
                                 <button type="button" class="hw-chip" id="{{ $uid }}-b" aria-haspopup="dialog">
                                     <span class="hw-ico {{ str_starts_with($it['icon'], 'anee/') ? 'is-face' : '' }}"><img src="{{ asset('images/' . $it['icon']) }}" alt="" loading="lazy"></span>
                                     <span class="hw-txt"><b>{{ $it['name'] }}</b><small>{{ $it['short'] }}</small></span>
@@ -1373,6 +1389,11 @@
                             </div>
                         @endforeach
                     </div>
+                    @if ($dkFold)
+                        <div class="hw-deck-foot">
+                            <button type="button" class="hw-deck-more" data-deck-more aria-expanded="false" data-all="See all {{ $dkN }} tools in this step" data-few="Show fewer tools">See all {{ $dkN }} tools in this step</button>
+                        </div>
+                    @endif
                 </section>
             @else
             <section class="hw-stage" id="hw-step-{{ $st['key'] }}" data-stage="{{ $st['key'] }}" data-pattern="{{ $st['pattern'] }}" aria-labelledby="hw-h-{{ $st['key'] }}">
@@ -1932,7 +1953,8 @@
         const items = [...st.querySelectorAll('.hw-item')];
         let k = -1, timer = 0, first = true;
         const clear = () => items.forEach((it) => it.classList.remove('is-spot'));
-        const tick = () => { clear(); k = (k + 1) % items.length; items[k].classList.add('is-spot'); };
+        // Only the cards on show take the light (a folded step hides some).
+        const tick = () => { clear(); const live = items.filter((it) => it.offsetParent !== null); if (!live.length) return; k = (k + 1) % live.length; live[k].classList.add('is-spot'); };
         const run = (on) => {
             clearInterval(timer); timer = 0;
             if (on && !still() && items.length) timer = setInterval(tick, 1600); else clear();
@@ -1948,6 +1970,17 @@
             run(e.isIntersecting);
         }), { threshold: 0.12 }).observe(st);
     }
+
+    /* A folded step: "See all" opens the rest of its tools, and closes them again. */
+    document.querySelectorAll('[data-deck-more]').forEach((b) => b.addEventListener('click', () => {
+        const deckEl = b.closest('.hw-stage')?.querySelector('.hw-deck');
+        if (!deckEl) return;
+        const open = !deckEl.classList.contains('is-all');
+        deckEl.classList.toggle('is-all', open);
+        b.setAttribute('aria-expanded', String(open));
+        b.textContent = open ? b.dataset.few : b.dataset.all;
+        if (!open) b.closest('.hw-stage').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
 
     function field(st) {
         if (st.classList.contains('is-deck')) { deck(st); return; }

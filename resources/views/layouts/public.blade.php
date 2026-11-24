@@ -657,6 +657,10 @@
         </div>
     </footer>
 
+    {{-- The way in, one tap away on a phone, on the selling pages (2026-11-24): guests only. --}}
+    @if (! auth()->check() && request()->routeIs('home', 'ph.home', 'how', 'ph.how', 'how.*', 'ph.how.*', 'features', 'ph.features', 'site.features.show', 'pricing', 'ph.pricing', 'pricing.compare', 'ph.pricing.compare', 'about', 'ph.about', 'best.app', 'ph.best.app', 'best.software', 'ph.best.software', 'farm.management', 'ph.farm.management'))
+        @include('public.partials.sticky-cta')
+    @endif
     @stack('scripts')
     <script>
         /* Every accordion on the public pages opens and shuts by gliding.

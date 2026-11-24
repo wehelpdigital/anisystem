@@ -1513,6 +1513,37 @@
         </div>
     </section>
 
+    {{-- ================= LEVEL UP FARMERS, WHILE THE COMMUNITY IS CLOSED (2026-11-24) =================
+         The Community inside the app is closed for now (App\Support\Community), so this seat invites farmers to Level
+         Up Farmers, Anee's Facebook group (App\Support\GroupInvite), instead of showing rooms nobody can open. It is
+         also much shorter, which the page needed (the owner: pages "hard to understand ... make it better"). --}}
+    @if (! \App\Support\Community::open())
+    <section class="hp-sec hp-lu">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 hp-lu-in">
+            <div class="hp-lu-pic reveal">
+                <img src="{{ asset('images/site/photos/team-thumbs-800.webp') }}" srcset="{{ asset('images/site/photos/team-thumbs-480.webp') }} 480w, {{ asset('images/site/photos/team-thumbs-800.webp') }} 800w" sizes="(min-width: 900px) 28rem, 92vw" alt="Two farmers giving a thumbs up beside their rice field" loading="lazy" width="800" height="462">
+                <span class="hp-lu-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path fill="#fff" d="M13.4 19.5v-6.1h2.05l.31-2.38H13.4V9.5c0-.69.19-1.16 1.18-1.16h1.26V6.21a16.9 16.9 0 00-1.84-.09c-1.82 0-3.07 1.11-3.07 3.15v1.75H8.87v2.38h2.06v6.1h2.47z"/></svg>Facebook group</span>
+            </div>
+            <div class="reveal" style="--reveal-delay:.08s">
+                <p class="hp-kick">Level Up Farmers</p>
+                <h2 class="hp-h2">You Are Not Farming <em>Alone.</em></h2>
+                <p class="hp-p">Join Level Up Farmers, the free Facebook group of anee.io. Ask with a photo, learn from farmers who have seen it before, and get tips from our own technicians.</p>
+                <ul class="hp-lu-list">
+                    <li>{!! $tick !!}Answers from farmers who have been there</li>
+                    <li>{!! $tick !!}Tips from the technicians who built anee.io on our own farms</li>
+                    <li>{!! $tick !!}Warnings when a typhoon or a pest heads your way</li>
+                </ul>
+                <div class="hp-cta is-left">
+                    <div class="hp-cta-row">
+                        <a href="{{ \App\Support\GroupInvite::URL }}" target="_blank" rel="noopener" class="btn btn-accent btn-lg hp-go">Join Level Up Farmers {!! $arrow !!}</a>
+                        <a href="{{ $signup }}" class="hp-alt">Create your free account</a>
+                    </div>
+                    <p class="hp-cta-note">Free to join. Tagalog and English.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    @else
     {{-- ================= THE COMMUNITY ================= --}}
     {{-- The anee.io community (2026-10-06): a feed post that gathers
          reactions and a reply from a fellow grower, the discussion rooms with new
@@ -1613,6 +1644,7 @@
             </div>
         </div>
     </section>
+    @endif
 
     {{-- ================= TRADITIONAL vs ANEE.IO ================= --}}
     <section class="hp-sec bg-gray-50">
@@ -1655,7 +1687,7 @@
                         ['Expert advice', $R::t('techVisit'), 'Anee answers crop questions any time' . ($ph ? ', in Tagalog or English,' : '') . ' even from a photo of a leaf.'],
                         ['A sick plant', 'Guess the problem and buy what the store suggests.', 'Send a photo. Anee tells you what it is and what to do, with your lot and its stage in mind.'],
                         ['Learning about pests', 'Ask around and hope the advice fits your crop.', 'Guides to the pests, diseases and weeds of your crops, with what to do step by step, and finders that match what you see.'],
-                        ['Other farmers\' experience', 'Only the neighbors you happen to meet.', 'A community of growers who trade what worked, with photos and voice.'],
+                        ['Other farmers\' experience', 'Only the neighbors you happen to meet.', \App\Support\Community::open() ? 'A community of growers who trade what worked, with photos and voice.' : 'Level Up Farmers, our Facebook group of growers who trade what worked.'],
                         ['Halfway through the season', 'You find out how it went at harvest.', 'Anee checks the season so far and names the risks in the coming weeks.'],
                     ]],
                     ['Materials and money', 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', [
@@ -2184,6 +2216,18 @@
         .hp-hero-in { gap: 1.5rem; padding-bottom: 2.5rem; }
         .hp-hero-stage { padding: .5rem 0 3.6rem; }
     }
+    /* Level Up Farmers, in the community's seat while it is closed (2026-11-24). */
+    .hp-lu { background: linear-gradient(180deg, #f6faf1, #fff); }
+    .hp-lu-in { display: grid; gap: 2rem; align-items: center; }
+    @media (min-width: 900px) { .hp-lu-in { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 3rem; } }
+    .hp-lu-pic { position: relative; margin: 0; }
+    .hp-lu-pic img { display: block; width: 100%; height: auto; border-radius: 1.6rem; box-shadow: 0 34px 60px -38px rgb(20 33 12 / .7); }
+    .hp-lu-badge { position: absolute; left: 1rem; bottom: 1rem; display: inline-flex; align-items: center; gap: .45rem; padding: .35rem .8rem .35rem .35rem;
+        border-radius: 999px; font-size: .82rem; font-weight: 800; color: #14210c; background: #fff; box-shadow: 0 10px 24px -12px rgb(0 0 0 / .5); }
+    .hp-lu-badge svg { width: 1.4rem; height: 1.4rem; }
+    .hp-lu-list { display: grid; gap: .55rem; margin-top: 1.2rem; }
+    .hp-lu-list li { display: flex; align-items: flex-start; gap: .55rem; font-size: 1rem; line-height: 1.5; color: #374151; }
+    .hp-lu-list svg { flex: none; width: 1.15rem; height: 1.15rem; margin-top: .2rem; color: #3f8f3a; }
 </style>
 @endpush
 
