@@ -233,7 +233,7 @@ class NotesHubController extends Controller
         try {
             $out = VideoOptimizer::storeCompressed($request->file('video'), 'notes/videos');
         } catch (\Throwable $e) {
-            return response()->json(['success' => false, 'message' => 'The video could not be saved: ' . $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => $e->getMessage() ?: 'The video could not be saved.'], 422);
         }
         // Kept where it landed on the bucket; on a disk a deploy clears, the mother app keeps it (a global note's
         // video once "was not added" because the file was gone by the time anyone looked).

@@ -52,6 +52,20 @@ class VideoOptimizer
 
         $ffmpeg = self::binary();
 
+        // Sent in pieces (App\Support\ClipUpload): it is on the bucket already, so it is joined, not saved. Its length
+        // is read where it lies; one that will not say is let through, as below.
+        if ($file instanceof StoredClip) {
+            $path = $file->settle();
+            $seconds = self::usable($ffmpeg) ? self::seconds($ffmpeg, ClipUpload::address($path), 8) : null;
+            if ($seconds !== null && $seconds > self::MAX_SECONDS + 0.75) {
+                Storage::disk('public')->delete($path);
+                throw new \RuntimeException(self::tooLong($seconds));
+            }
+            VideoSqueeze::enqueue($path);
+
+            return ['video' => $path, 'poster' => null];
+        }
+
         // No ffmpeg on this server? Keep the video anyway.
         //
         // A recording is somebody standing in a field holding a phone at a
@@ -75,10 +89,7 @@ class VideoOptimizer
          * somebody away. */
         $seconds = self::seconds($ffmpeg, $input);
         if ($seconds !== null && $seconds > self::MAX_SECONDS + 0.75) {
-            throw new \RuntimeException(sprintf(
-                'That clip is %s long. Clips can be up to one minute. Trim it and try again.',
-                self::spell($seconds)
-            ));
+            throw new \RuntimeException(self::tooLong($seconds));
         }
 
         // Saved as filmed, then compressed by the scheduler (App\Support\VideoSqueeze). The front door
@@ -101,13 +112,27 @@ class VideoOptimizer
      * — and ffmpeg's own report of the file where there is not, which every
      * install of ffmpeg can do.
      */
-    private static function seconds(string $ffmpeg, string $input): ?float
+    private static function seconds(string $ffmpeg, string $input, int $patience = 30): ?float
+    {
+        try {
+            return self::readSeconds($ffmpeg, $input, $patience);
+        } catch (\Symfony\Component\Process\Exception\ProcessTimedOutException $e) {
+            return null;
+        }
+    }
+
+    private static function tooLong(float $seconds): string
+    {
+        return sprintf('That clip is %s long. Clips can be up to one minute. Trim it and try again.', self::spell($seconds));
+    }
+
+    private static function readSeconds(string $ffmpeg, string $input, int $patience): ?float
     {
         $probe = preg_replace('~ffmpeg(\.exe)?$~i', 'ffprobe$1', $ffmpeg);
         if ($probe !== $ffmpeg && (@is_file($probe) || $probe === 'ffprobe')) {
             $p = new Process([$probe, '-v', 'error', '-show_entries', 'format=duration',
                 '-of', 'default=noprint_wrappers=1:nokey=1', $input]);
-            $p->setTimeout(30);
+            $p->setTimeout($patience);
             $p->run();
             $out = trim($p->getOutput());
             if ($p->isSuccessful() && is_numeric($out)) {
@@ -116,7 +141,7 @@ class VideoOptimizer
         }
 
         $p = new Process([$ffmpeg, '-i', $input]);
-        $p->setTimeout(30);
+        $p->setTimeout($patience);
         $p->run();   // ffmpeg exits non-zero with no output file; the report is what we want
         if (preg_match('~Duration:\s+(\d+):(\d+):(\d+(?:\.\d+)?)~', $p->getErrorOutput(), $m)) {
             return ((int) $m[1]) * 3600 + ((int) $m[2]) * 60 + (float) $m[3];

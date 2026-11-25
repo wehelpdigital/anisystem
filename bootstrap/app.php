@@ -54,6 +54,8 @@ return Application::configure(basePath: dirname(__DIR__))
             // phone walking from wifi to mobile data lost its session every
             // time, and the logout took the remember cookie with it.
             \App\Http\Middleware\EnforceSingleSession::class,
+            // A video sent in pieces, handed to its door as a file (2026-11-26).
+            \App\Http\Middleware\TakesClipToken::class,
             \App\Http\Middleware\RefreshRememberCookie::class,
             \App\Http\Middleware\UpdateLastSeen::class,
             // Every account confirms its email first (2026-11-19, the owner): a signed in account whose address was

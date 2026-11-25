@@ -10,9 +10,13 @@
      only itself, and a dropped line says how far it got. Photos go through Quick Capture's door and clips through Quick
      Record's, which is the one that asks about the video right and the plan. The Global Gallery alone has its own door.
 
-     Only what the person chose goes in, and a video meets two walls the phone can see coming: Cloudflare turns away a request
-     over 100 MB before it reaches us (measured 2026-11-06: 90 MB passes, 120 MB is a 413), and a clip may run one minute
-     (VideoOptimizer::MAX_SECONDS). Those are marked on their tile and left out, rather than sent to be refused. --}}
+     Only what the person chose goes in, and a video meets two walls the phone can see coming: 300 MB, and one minute
+     (VideoOptimizer). Those are marked on their tile and left out, rather than sent to be refused. A video goes up in
+     pieces since 2026-11-26 (partials/clip-upload), so Cloudflare's 100 MB for one request is no wall any more, and a
+     signal that drops costs one piece and not the whole clip. --}}
+@push('scripts')
+@include('partials.clip-upload')
+@endpush
 @php
     $giSeason = $season ?? null;
     $giSeasons = $seasons ?? collect();
@@ -127,7 +131,7 @@
     const CLIP = @json(route('quick-record.clip'));
     const ALBUMS = @json(route('quick-capture.albums'));
     const PHOTO_MAX = 8 * 1024 * 1024;   // what the server takes, QuickCaptureController::storeGallery
-    const CLIP_MAX = @json(min(95 * 1024 * 1024, \Illuminate\Http\UploadedFile::getMaxFilesize()));   // under Cloudflare's 100 MB, or this server's own limit if lower
+    const CLIP_MAX = @json(\App\Support\VideoOptimizer::MAX_BYTES);   // sent in pieces, so no one request is this big
     const CLIP_SECONDS = @json(\App\Support\VideoOptimizer::MAX_SECONDS);
     const LIMIT_WORDS = 'A video can be up to 1 minute long and ' + Math.floor(CLIP_MAX / 1048576) + ' MB.';
     const FLASH = 'anee.galleryImport';
@@ -332,7 +336,8 @@
         let done = 0, trouble = left ? LIMIT_WORDS : '', clipsShut = false;
         for (let i = 0; i < list.length; i++) {
             const video = isVideo(list[i]);
-            busy.say('Importing ' + (i + 1) + ' of ' + list.length + '…' + (video ? ' A video takes longer. Keep this page open.' : ''));
+            const at = 'Importing ' + (i + 1) + ' of ' + list.length + '…';
+            busy.say(at + (video ? ' A video takes longer. Keep this page open.' : ''));
             if (video && clipsShut) continue;
             let file = list[i];
             if (!video) {
@@ -341,21 +346,47 @@
                 if (file.size > PHOTO_MAX) { trouble = trouble || 'A photo was over 8 MB.'; continue; }
             }
             const fd = new FormData();
+            if (video) {
+                // The video first, in pieces. What is left to ask the door is small.
+                try {
+                    await window.aneeClip.into(fd, 'clip', file, {
+                        onProgress: (f) => busy.say(at + ' ' + Math.round(f * 100) + '%. Keep this page open.'),
+                        onWait: (w) => busy.say(at + ' ' + w),
+                    });
+                } catch (e) {
+                    trouble = trouble || e.message;
+                    if ([401, 419].includes(e.status)) break;
+                    continue;
+                }
+                busy.say(at + ' Saving the video.');
+            }
             if (toGlobal) {
-                fd.append(video ? 'clip' : 'image', file);
+                if (!video) fd.append('image', file);
             } else if (video) {
                 fd.append('scheduleId', sid);
                 if (albumId) fd.append('albumId', albumId); else fd.append('albumTitle', albumName);
                 fd.append('target', 'gallery');
                 fd.append('title', albumName);   // or it is captioned "Quick record" and the hour
-                fd.append('clip', file);
             } else {
                 fd.append('scheduleId', sid);
                 if (albumId) fd.append('albumId', albumId); else fd.append('albumTitle', albumName);
                 fd.append('images[0]', file);
             }
+            if (video) {
+                // Asked again if the answer is lost: the door knows the clip and will not file it twice.
+                try {
+                    const data = await window.aneeClip.send(toGlobal ? GLOBAL_SAVE : CLIP, fd, { onWait: (w) => busy.say(at + ' ' + w) });
+                    done++;
+                    albumId = albumId || String(data.albumId || '');
+                } catch (e) {
+                    trouble = trouble || e.message;
+                    if (e.status === 403) clipsShut = true;   // no clips for this season or plan: the photos can still go
+                    if ([401, 419, 423].includes(e.status)) break;
+                }
+                continue;
+            }
             try {
-                const res = await fetch(toGlobal ? GLOBAL_SAVE : (video ? CLIP : SAVE), { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' }, body: fd, credentials: 'same-origin' });
+                const res = await fetch(toGlobal ? GLOBAL_SAVE : SAVE, { method: 'POST', headers: { 'X-CSRF-TOKEN': csrf(), Accept: 'application/json' }, body: fd, credentials: 'same-origin' });
                 const data = await res.json().catch(() => ({}));
                 if (res.ok && data.success) {
                     done++;
@@ -365,15 +396,12 @@
                 }
                 // A validation reply names the field ("images.0"), which helps nobody.
                 const said = data.errors ? 'A file was in a format the app cannot take.' : data.message;
-                trouble = trouble || said || (res.status === 413 ? 'A video was too big to send.' : 'One could not be saved.');
-                // No clips for this season or plan: the photos can still go.
-                if (video && res.status === 403) { clipsShut = true; continue; }
+                trouble = trouble || said || 'One could not be saved.';
                 // Refused outright: the next one would hear the same.
                 if ([401, 403, 419, 423].includes(res.status)) break;
             } catch (_) {
                 trouble = trouble || 'The connection dropped.';
-                // A long video can lose its send alone and the next file still go. A photo losing it means the line is gone.
-                if (!video) break;
+                break;
             }
         }
         busy.close();

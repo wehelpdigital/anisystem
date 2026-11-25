@@ -184,6 +184,7 @@
 @endpush
 
 @push('scripts')
+@include('partials.clip-upload')
 {{-- Its quick tutorial: the words and clips for the card, offered as the
      sheet opens. --}}
 @include('partials.tutorial-offer', ['keys' => ['quick.record'], 'auto' => null])
@@ -347,6 +348,25 @@
         });
     }
 
+    /* In pieces (partials/clip-upload), so a dropped signal costs one piece. Nobody reached at all, with Offline Mode
+       on, is the old road: the whole clip waits in the outbox. */
+    async function sendClip(form, file) {
+        const asFile = () => { const f = new FormData(); for (const [k, v] of form.entries()) f.append(k, v); f.append('clip', file, file.name || 'recording.webm'); return f; };
+        if (!window.aneeClip || window.aneeOffline?.isDown?.()) return wire(CLIP_URL, asFile());
+        const sized = new FormData();
+        for (const [k, v] of form.entries()) sized.append(k, v);
+        const onWait = (w) => { $('qrBusyPct').textContent = w; };
+        try {
+            await window.aneeClip.into(sized, 'clip', file.name ? file : new File([file], 'recording.webm', { type: file.type }), {
+                onProgress: (f) => busyPct(Math.round(f * 100)), onWait,
+            });
+            return await window.aneeClip.send(CLIP_URL, sized, { onWait });
+        } catch (err) {
+            if (err.line && window.aneeOffline?.on()) return wire(CLIP_URL, asFile());
+            throw err;
+        }
+    }
+
     $('qrSave').addEventListener('click', async () => {
         const title = $('qrTitle').value.trim();
         if (!clip) { window.toast?.('Record or choose a clip first.', 'error'); return; }
@@ -357,7 +377,6 @@
         busyShow();
 
         const form = new FormData();
-        form.append('clip', clip, clip.name || 'recording.webm');
         form.append('scheduleId', $('qrSchedule').value);
         form.append('title', title);
         form.append('note', $('qrNote').value.trim());
@@ -372,7 +391,7 @@
         }
 
         try {
-            const json = await wire(CLIP_URL, form);
+            const json = await sendClip(form, clip);
             busyHide();
             window.toast?.(json.message);
             close();

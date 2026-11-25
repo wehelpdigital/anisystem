@@ -40,6 +40,7 @@
          one is unharmed by asking again. --}}
     @include('community.partials.video-js')
     @include('sm.partials.media-picker')
+    @include('partials.clip-upload')
 @endonce
 
 <div class="ab" @isset($barId) id="{{ $barId }}" @endisset
@@ -133,6 +134,19 @@
     .ab-up.is-error { border-color: #fecaca; background: #fef2f2; }
     .ab-up.is-error .ab-up-top { color: #b91c1c; }
     .ab-up.is-error .ab-up-fill { background: #ef4444; }
+    /* What went wrong, and the two ways on. It used to say Failed and vanish in four seconds. */
+    .ab-up-why { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.22,1,.36,1); }
+    .ab-up.is-error .ab-up-why { grid-template-rows: 1fr; }
+    .ab-up-why > div { overflow: hidden; min-height: 0; }
+    .ab-up:not(.is-error) .ab-up-why { visibility: hidden; }
+    .ab-up-why p { margin-top: .35rem; font-size: .75rem; line-height: 1.4; color: #b91c1c; }
+    .ab-up-acts { display: flex; gap: .4rem; margin-top: .4rem; }
+    .ab-up-acts button { padding: .3rem .75rem; border-radius: 999px; font-size: .72rem; font-weight: 800; cursor: pointer; border: 1px solid #fecaca; background: #fff; color: #b91c1c;
+        transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .ab-up-acts [data-up-again] { background: #f5c518; border-color: #f5c518; color: #1f2937; }
+    html.dark .ab-up.is-error { border-color: #7f1d1d; background: rgb(127 29 29 / .25); }
+    html.dark .ab-up.is-error .ab-up-top, html.dark .ab-up-why p { color: #fca5a5; }
+    html.dark .ab-up-acts [data-up-drop] { background: transparent; border-color: #7f1d1d; color: #fca5a5; }
     html.dark .ab-btn { background: #1c2416; border-color: #2b3a1c; color: #cdd8c0; }
     html.dark .ab-btn:hover { background: #24301a; border-color: #3d6823; }
     html.dark .ab-up { border-color: #2b3a1c; }
@@ -173,13 +187,52 @@
         const row = document.createElement('div');
         row.className = 'ab-up';
         row.innerHTML = '<div class="ab-up-top"><span class="ab-up-name"></span><span class="ab-up-pct">0%</span></div>'
-            + '<div class="ab-up-bar"><div class="ab-up-fill"></div></div>';
+            + '<div class="ab-up-bar"><div class="ab-up-fill"></div></div>'
+            + '<div class="ab-up-why"><div><p></p><div class="ab-up-acts"><button type="button" data-up-again>Try again</button>'
+            + '<button type="button" data-up-drop>Leave it out</button></div></div></div>';
         row.querySelector('.ab-up-name').textContent = (file.name || 'File') + (file.size ? ' · ' + fmtSize(file.size) : '');
         bar.querySelector('.ab-ups').appendChild(row);
         const pct = row.querySelector('.ab-up-pct');
         const fill = row.querySelector('.ab-up-fill');
 
-        return new Promise((resolve, reject) => {
+        /* A failed file keeps its row, says why, and waits: again, or left out. Resolves with the server's data, or
+           rejects with nothing once it is left out. */
+        const settle = (send) => new Promise((resolve, reject) => {
+            const go = () => {
+                row.classList.remove('is-error');
+                pct.textContent = '0%';
+                fill.style.width = '0%';
+                send().then((data) => {
+                    pct.textContent = 'Done';
+                    fill.style.width = '100%';
+                    row.classList.add('is-done');
+                    setTimeout(() => row.remove(), 700);
+                    resolve(data || {});
+                }, (err) => {
+                    row.querySelector('.ab-up-why p').textContent = err.message;
+                    row.classList.add('is-error');
+                    pct.textContent = 'Not sent yet';
+                });
+            };
+            row.querySelector('[data-up-again]').addEventListener('click', go);
+            row.querySelector('[data-up-drop]').addEventListener('click', () => { row.remove(); reject(null); });
+            go();
+        });
+
+        // A video goes up in pieces (partials/clip-upload): a dropped signal costs one piece, and Try again goes on.
+        if (window.aneeClip && isVideo(file)) {
+            return settle(async () => {
+                const form = new FormData();
+                await window.aneeClip.into(form, field, file, {
+                    onProgress: (f) => { pct.textContent = Math.min(99, Math.round(f * 100)) + '%'; fill.style.width = (f * 100) + '%'; },
+                    onWait: (w) => { pct.textContent = w; },
+                });
+                pct.textContent = 'Saving…';
+                return (await window.aneeClip.send(url, form, { onWait: (w) => { pct.textContent = w; } })).data;
+            });
+        }
+
+        return settle(() => new Promise((resolve, reject) => {
             const form = new FormData();
             form.append(field, file);
             const xhr = new XMLHttpRequest();
@@ -194,24 +247,17 @@
                 fill.style.width = n + '%';
             });
             xhr.upload.addEventListener('load', () => { pct.textContent = 'Processing…'; fill.style.width = '100%'; });
-            const fail = (msg) => {
-                row.classList.add('is-error');
-                pct.textContent = 'Failed';
-                setTimeout(() => row.remove(), 4000);
-                reject(new Error(msg));
-            };
+            const fail = (msg) => reject(new Error(msg));
             xhr.addEventListener('load', () => {
                 let json = null;
                 try { json = JSON.parse(xhr.responseText); } catch (_) { /* handled below */ }
-                if (!json || !json.success) return fail((json && json.message) || 'Upload failed.');
-                pct.textContent = 'Done';
-                setTimeout(() => row.remove(), 700);
+                if (!json || !json.success) return fail((json && json.message) || 'It could not be saved.');
                 resolve(json.data || {});
             });
-            xhr.addEventListener('error', () => fail('Upload failed. Check your connection.'));
-            xhr.addEventListener('abort', () => fail('Upload cancelled.'));
+            xhr.addEventListener('error', () => fail('The connection dropped.'));
+            xhr.addEventListener('abort', () => fail('It was stopped before it finished.'));
             xhr.send(form);
-        });
+        }));
     }
 
     /** One file, sent to whichever endpoint its kind belongs to. */
@@ -235,7 +281,7 @@
                 source,
             });
         } catch (err) {
-            say(err.message, 'error');
+            if (err) say(err.message, 'error');   // nothing: left out on purpose, and its row said why
         }
     }
 

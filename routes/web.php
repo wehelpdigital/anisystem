@@ -709,6 +709,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/app/workers/{id}', [App\Http\Controllers\GlobalWorkerController::class, 'update'])->whereNumber('id')->name('workers.global.update');
     Route::delete('/app/workers/{id}', [App\Http\Controllers\GlobalWorkerController::class, 'destroy'])->whereNumber('id')->name('workers.global.delete');
     Route::post('/app/workers/{id}/season', [App\Http\Controllers\GlobalWorkerController::class, 'addToSeason'])->whereNumber('id')->name('workers.global.season');
+    // A video in 5 MB pieces, each sent again on its own when the signal drops (App\Support\ClipUpload). The door the
+    // clip is for takes the finished token (TakesClipToken) and asks about rights and plans itself.
+    Route::post('/app/clip-upload/start', [App\Http\Controllers\ClipUploadController::class, 'start'])->middleware('throttle:120,1')->name('clip-upload.start');
+    Route::post('/app/clip-upload/part', [App\Http\Controllers\ClipUploadController::class, 'part'])->middleware('throttle:600,1')->name('clip-upload.part');
+    Route::post('/app/clip-upload/drop', [App\Http\Controllers\ClipUploadController::class, 'drop'])->middleware('throttle:120,1')->name('clip-upload.drop');
     // Every picture from every season, the way Global Notes gathers the words.
     Route::get('/app/gallery', [App\Http\Controllers\GalleryHubController::class, 'index'])->name('gallery.hub');
     // Import from phone with no cropping schedule: the person's own, like a global note.

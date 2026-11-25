@@ -227,7 +227,7 @@ class NoteController extends BaseScheduleController
         try {
             $out = VideoOptimizer::storeCompressed($request->file('video'), 'schedule-notes/' . $schedule->id . '/videos');
         } catch (\Throwable $e) {
-            return $this->jsonFail('The video could not be saved: ' . $e->getMessage(), 500);
+            return $this->jsonFail($e->getMessage() ?: 'The video could not be saved.', 422);
         }
         $out = \App\Support\MediaStore::keepClip($out, 'notes', $schedule->id, $bytes);
 

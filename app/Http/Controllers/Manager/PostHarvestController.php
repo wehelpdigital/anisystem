@@ -219,7 +219,7 @@ class PostHarvestController extends BaseScheduleController
         try {
             $out = VideoOptimizer::storeCompressed($request->file('video'), 'schedule-post-harvest/' . $schedule->id . '/videos');
         } catch (\Throwable $e) {
-            return $this->jsonFail('The video could not be saved: ' . $e->getMessage(), 500);
+            return $this->jsonFail($e->getMessage() ?: 'The video could not be saved.', 422);
         }
         $out = MediaStore::keepClip($out, 'schedule-post-harvest', $schedule->id, $bytes);
 

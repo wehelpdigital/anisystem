@@ -307,6 +307,7 @@
     }
 </style>
 
+@include('partials.clip-upload')
 <script>
 (() => {
     const init = () => {
@@ -516,7 +517,18 @@
                     const fd = new FormData();
                     if (leg.text) fd.append('body', leg.text);
                     if (leg.photo) fd.append('image', leg.photo);
-                    if (leg.clip) { fd.append('clip', leg.clip, leg.clip.name || 'clip'); fd.append('kind', kind); }
+                    if (leg.clip) {
+                        // A video in pieces, so a dropped signal does not lose it. A voice note is small and goes as it is.
+                        if (window.aneeClip && kind === 'video') {
+                            await window.aneeClip.into(fd, 'clip', leg.clip.name ? leg.clip : new File([leg.clip], 'clip.webm', { type: leg.clip.type }), {
+                                onProgress: (f) => sayRec('Sending… ' + Math.round(f * 100) + '%', true),
+                                onWait: (w) => sayRec(w, true),
+                            });
+                        } else {
+                            fd.append('clip', leg.clip, leg.clip.name || 'clip');
+                        }
+                        fd.append('kind', kind);
+                    }
                     const res = await api(`${U.send}?scheduleId=${SCHEDULE_ID}`, { method: 'POST', body: fd });
                     const m = res.data.message;
                     bubble(m, { showSender: true });

@@ -345,6 +345,7 @@
 @endpush
 
 @push('scripts')
+@include('partials.clip-upload')
 <script>
 (() => {
 const __init = () => {
@@ -770,6 +771,31 @@ const __init = () => {
         const fill = row.querySelector('.note-up-fill');
 
         uploadsInFlight++;
+        // A video goes up in pieces (partials/clip-upload): a dropped signal costs one piece, not the whole clip.
+        if (field === 'video' && window.aneeClip) {
+            return (async () => {
+                const form = new FormData();
+                Object.entries(extra || {}).forEach(([k, v]) => {
+                    if (v !== null && v !== undefined && v !== '') form.append(k, v);
+                });
+                try {
+                    await window.aneeClip.into(form, field, file, {
+                        onProgress: (f) => { pct.textContent = Math.min(99, Math.round(f * 100)) + '%'; fill.style.width = (f * 100) + '%'; },
+                        onWait: (w) => { pct.textContent = w; },
+                    });
+                    pct.textContent = 'Saving…';
+                    const json = await window.aneeClip.send(url, form, { onWait: (w) => { pct.textContent = w; } });
+                    pct.textContent = 'Done';
+                    setTimeout(() => row.remove(), 700);
+                    return json;
+                } catch (err) {
+                    row.classList.add('is-error');
+                    pct.textContent = 'Not sent';
+                    setTimeout(() => row.remove(), 9000);
+                    throw err;
+                }
+            })().finally(() => { uploadsInFlight--; });
+        }
         return new Promise((resolve, reject) => {
             const form = new FormData();
             form.append(field, file);

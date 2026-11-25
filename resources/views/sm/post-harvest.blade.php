@@ -788,6 +788,13 @@ const __init = () => {
         const id = fld('phId').value;
         const title = fld('phTitle').value.trim();
         if (!title) { toast('Give this observation a title.', 'error'); return; }
+        // Saved now, the observation would go without a file that is still on its way up.
+        const going = attachBar.querySelector('.ab-up:not(.is-done)');
+        if (going) {
+            toast(going.classList.contains('is-error') ? 'One file is not sent yet. Try it again, or leave it out.' : 'Wait for the file to finish sending.', 'error');
+            going.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
 
         const vals = readFields();
         // Five of these have had columns since the beginning; the rest are
