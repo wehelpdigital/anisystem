@@ -75,7 +75,10 @@
          * slow file is worse than one icon arriving late, and the 6-second
          * backstop below still has the last word either way. */
         const dressed = () => {
-            const shots = [...document.images].filter((i) => i.loading !== 'lazy' && !i.complete && i.src);
+            // Only the ones that would be seen: a picture inside a sheet nobody has opened held the season's board for a
+            // second and a half on a slow line (2026-11-26).
+            const seen = (i) => { const r = i.getBoundingClientRect(); return r.width > 0 && r.height > 0 && r.top < innerHeight && r.bottom > 0 && r.left < innerWidth && r.right > 0; };
+            const shots = [...document.images].filter((i) => i.loading !== 'lazy' && !i.complete && i.src && seen(i));
             if (!shots.length) return Promise.resolve();
 
             return Promise.race([
