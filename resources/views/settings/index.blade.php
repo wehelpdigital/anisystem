@@ -148,6 +148,13 @@
                 </span>
                 <span class="st-knob" aria-hidden="true"></span>
             </button>
+            <button type="button" class="st-switch" id="stLite" role="switch" aria-checked="false">
+                <span class="st-switch-txt">
+                    <b>Lighter app for slow phones</b>
+                    <span>The small moving drawings rest and nothing is blurred, so taps answer faster. A slow phone turns this on by itself; what you choose here stays.</span>
+                </span>
+                <span class="st-knob" aria-hidden="true"></span>
+            </button>
         </div>
 
         @if (\App\Support\Tagalog::on())
@@ -222,6 +229,8 @@
     wire('stContrast', 'sm-contrast', 'sm-a11y-contrast');
     wire('stUnderline', 'sm-underline', 'sm-a11y-underline');
     wire('stMotion', 'sm-still', 'sm-a11y-motion');
+    wire('stLite', 'sm-lite', 'sm-lite');
+    document.getElementById('stLite')?.addEventListener('click', () => document.dispatchEvent(new CustomEvent('anee:lite')));
 
     /* ---- Taglish help: on by default, so the class marks it off ---- */
     (() => {

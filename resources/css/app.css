@@ -1587,6 +1587,19 @@ html.sm-still *, html.sm-still *::before, html.sm-still *::after {
     scroll-behavior: auto !important;
 }
 
+/* A slow phone (layouts/app's head; resources/js/calm.js): nothing is blurred behind a sheet. Blurring a whole screen is
+   the dearest thing a small phone can be asked to draw. */
+html.sm-lite *, html.sm-lite *::before, html.sm-lite *::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* A tap answers at once, before anything else does: the thing under the finger dims. In the base layer and with no
+   weight of its own, so a button that says its own opacity keeps it. */
+@layer base {
+    :where(a[href]:active, button:not(:disabled):active, [role="button"]:active, summary:active) { opacity: .72; }
+}
+
 /* Links that look like links, for anyone who cannot rely on colour. */
 html.sm-underline main a:not(.btn):not(.badge):not([class*="tile"]):not([class*="card"]):not(.tabbar-item) {
     text-decoration: underline;

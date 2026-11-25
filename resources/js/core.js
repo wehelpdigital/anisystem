@@ -2277,16 +2277,48 @@ document.addEventListener('pointerdown', (e) => {
        every one of them through the service worker, so their copies are on
        the shelf before the signal goes.
 
-       The server's list is now every room in the app except the ones that
-       need a model over the wire (see /app/offline-manifest) — around a
-       hundred pages rather than the four it used to name, which is why
-       this no longer takes the first sixteen and stops.
+       The server's list is what the field can open (/app/offline-manifest),
+       about thirty pages since 2026-11-26. It named 189 of them before, and
+       fetched them three at a time from a second and a half after the app
+       was opened: on a slow phone that was most of what was slow.
 
-       Three at a time: one at a time took the better part of a minute on a
-       phone and the browser wandered off before it finished; all at once
-       is a hundred renders landing on the server in one breath. One page
-       failing is never a reason to stop the rest. */
-    const WARM_LANES = 3;
+       So: after the page has settled and nobody has touched it for a moment,
+       one page at a time, skipping what is already on the shelf and fresh.
+       The instant somebody goes to another page it stops, and the next page
+       carries on from what is missing. */
+    const SLOW_LINE = () => {
+        const c = navigator.connection;
+        return document.documentElement.classList.contains('sm-lite') || !!c?.saveData || /2g|3g/.test(c?.effectiveType || '');
+    };
+    let touchedAt = performance.now();
+    ['pointerdown', 'touchmove', 'wheel', 'keydown'].forEach((t) => window.addEventListener(t, () => { touchedAt = performance.now(); }, { passive: true, capture: true }));
+    let warming = null;
+    const stopWarming = () => { warming?.abort(); };
+    window.addEventListener('pagehide', stopWarming);
+    try { window.navigation?.addEventListener?.('navigate', (e) => { if (!e.hashChange && !e.destination.sameDocument && e.downloadRequest === null) stopWarming(); }); } catch (_) { /* older browsers stop at pagehide */ }
+    const nap = (ms) => new Promise((r) => setTimeout(r, ms));
+    const quiet = async (signal) => {
+        while (!signal.aborted && (document.readyState !== 'complete' || document.visibilityState !== 'visible' || performance.now() - touchedAt < 5000)) await nap(700);
+    };
+    // How old the copy on the shelf is, by the date the server put on it.
+    const keptFor = async (u) => {
+        try {
+            const r = await (await caches.open('anee-offline-runtime-v1')).match(u, { ignoreVary: true });
+            const at = r ? Date.parse(r.headers.get('date') || '') : 0;
+
+            return at ? Date.now() - at : Infinity;
+        } catch (_) { return Infinity; }
+    };
+    // Read to the end: an answer whose body nobody reads goes on arriving while the next is asked for.
+    const take = async (u, headers, signal) => {
+        const res = await fetch(u, { credentials: 'same-origin', headers, signal, priority: 'low' });
+        const body = res.body?.getReader?.();
+        if (body) { while (!(await body.read()).done) { /* only so that it has all come */ } }
+    };
+    const HOUR = 3600000;
+    const staleAfter = (u) => (SLOW_LINE() ? 3 : 1) * (/^\/app(\/sm-activities)?($|\?)/.test(u) ? 2 * HOUR : 8 * HOUR);
+
+    const WARM_LANES = 3;   // only while somebody stands there waiting for it
 
     /* THE LOADER, BECAUSE FILLING A SHELF IS WORK A PERSON SHOULD SEE.
      *
@@ -2331,15 +2363,17 @@ document.addEventListener('pointerdown', (e) => {
            once, the lazy ones too, on a farmer's mobile data and in every
            crawler's render (2026-11-05). */
         if (!document.querySelector('meta[name="anee-offline"]')) return;
+        if (warming) return;
         try {
-            if (!force) {
-                const at = Number(sessionStorage.getItem('anee-offline-warmed') || 0);
-                if (Date.now() - at < 1800000) return;
-            }
-            sessionStorage.setItem('anee-offline-warmed', String(Date.now()));
+            const at = Number(sessionStorage.getItem('anee-offline-warmed') || 0);
+            if (!force && Date.now() - at < 1800000) return;
         } catch (_) { /* private mode: warm anyway */ }
+        const ctl = warming = new AbortController();
+        const signal = ctl.signal;
         try {
-            const res = await fetch('/app/offline-manifest', { headers: { Accept: 'application/json' }, credentials: 'same-origin' });
+            if (!loud) await quiet(signal);
+            if (signal.aborted) return;
+            const res = await fetch('/app/offline-manifest', { headers: { Accept: 'application/json' }, credentials: 'same-origin', signal });
             const data = ((await res.json()) || {}).data || {};
             const urls = data.urls || [];
             /* THE BUNDLE FIRST, BEFORE ANY PAGE.
@@ -2353,10 +2387,12 @@ document.addEventListener('pointerdown', (e) => {
              *
              * The artwork rides with them for the same reason: a logo that
              * never loaded is a broken-image glyph, and a farmer reads that
-             * as a broken app. */
+             * as a broken app. Only pictures this page has already drawn: a
+             * lazy one further down is not asked for on its behalf. */
             const local = [
                 ...document.querySelectorAll('link[rel="stylesheet"][href], script[src], img[src]'),
             ]
+                .filter((el) => el.tagName !== 'IMG' || el.complete)
                 .map((el) => el.href || el.src)
                 .filter((u) => u && u.startsWith(location.origin));
             const assets = [...new Set([...local, ...(data.assets || []).map((a) => location.origin + a)])];
@@ -2365,25 +2401,22 @@ document.addEventListener('pointerdown', (e) => {
             let done = 0;
             if (loud) warmSay(0, total);
 
-            for (const a of assets) {
-                try { await fetch(a, { credentials: 'same-origin' }); } catch (_) { /* next */ }
-                done++;
-                if (loud && done % 4 === 0) warmSay(done, total);
-            }
-
+            const jobs = [...assets.map((u) => ({ u, age: 7 * 24 * HOUR })), ...urls.map((u) => ({ u, age: staleAfter(u), page: true }))];
             let at = 0;
             const lane = async () => {
-                while (at < urls.length) {
-                    const u = urls[at++];
-                    /* A module fragment has to be asked for the way the shell
-                       asks for it, or the server answers with the whole page
-                       and the shelf keeps something that will not slot in. */
-                    const head = u.includes('partial=1')
-                        ? { Accept: 'text/html', 'X-Requested-With': 'XMLHttpRequest' }
-                        : { Accept: 'text/html' };
-                    try {
-                        await fetch(u, { credentials: 'same-origin', headers: head });
-                    } catch (_) { /* next */ }
+                while (at < jobs.length && !signal.aborted) {
+                    const { u, age, page } = jobs[at++];
+                    if (force || (await keptFor(u)) > age) {
+                        if (!loud) await quiet(signal);
+                        if (signal.aborted) return;
+                        /* A module fragment has to be asked for the way the shell
+                           asks for it, or the server answers with the whole page
+                           and the shelf keeps something that will not slot in. */
+                        const head = !page ? {} : (u.includes('partial=1')
+                            ? { Accept: 'text/html', 'X-Requested-With': 'XMLHttpRequest' }
+                            : { Accept: 'text/html' });
+                        try { await take(u, head, signal); } catch (_) { /* next */ }
+                    }
                     done++;
                     if (loud && done % 3 === 0) warmSay(done, total);
                     // The line can drop mid-warm; there is no point shouting
@@ -2391,11 +2424,17 @@ document.addEventListener('pointerdown', (e) => {
                     if (!navigator.onLine) return;
                 }
             };
-            await Promise.all(Array.from({ length: WARM_LANES }, lane));
+            // The stylesheets and the script stand first in the list, so one lane reaches them before any page.
+            await Promise.all(Array.from({ length: loud ? WARM_LANES : 1 }, lane));
+            if (done >= jobs.length && !signal.aborted) {
+                try { sessionStorage.setItem('anee-offline-warmed', String(Date.now())); } catch (_) { /* private mode */ }
+            }
             if (loud) warmDone(navigator.onLine ? 'Ready for offline: ' + done + ' pages and files saved' : 'Signal lost. Saved ' + done);
             document.dispatchEvent(new CustomEvent('anee:offline-warmed', { detail: { count: total } }));
         } catch (_) {
             if (loud) warmDone('Could not finish getting ready');
+        } finally {
+            if (warming === ctl) warming = null;
         }
     }
     /* What the shelf actually holds, for the Settings page's count and for
@@ -2409,7 +2448,7 @@ document.addEventListener('pointerdown', (e) => {
     }
 
     window.addEventListener('offline', paintBar);
-    window.addEventListener('online', () => setTimeout(() => warm(false, true), 2000));
+    window.addEventListener('online', () => setTimeout(() => warm(), 2000));
     paintBar();
     tellSw(on());
     /* A worker that takes over mid-visit starts with no memory of this
@@ -2421,13 +2460,13 @@ document.addEventListener('pointerdown', (e) => {
     try {
         navigator.serviceWorker?.addEventListener?.('controllerchange', () => {
             tellSw(on());
-            if (on()) setTimeout(() => warm(true), 1200);
+            if (on()) setTimeout(() => warm(), 1200);
         });
     } catch (_) { /* no service worker here */ }
     drain();
     // After the service worker has been told the marker is on — a warm
     // fetch that beats the message would pass the SW uncopied.
-    setTimeout(() => warm(), 1500);
+    setTimeout(() => warm(), SLOW_LINE() ? 15000 : 7000);
 
     /* KEPT FRESH, NOT KEPT ONCE.
      *

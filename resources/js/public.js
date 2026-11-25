@@ -3,4 +3,5 @@
    the bundle every phone downloaded beside the home page's hero. No public page uses them. */
 import './phone-camera';
 import './site-events';
+import './calm';
 import './core';

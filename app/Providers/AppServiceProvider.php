@@ -20,6 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Our notes in the pages' styles and scripts are not sent to the phones.
+        \Illuminate\Support\Facades\Blade::precompiler([\App\Support\LeanViews::class, 'strip']);
         // The public site's routes carry a {face} segment (/ph, /en). Its
         // per-request value is set by ResolveRegion; this is the floor for
         // URLs built where there is no request — mail, artisan, queued jobs.

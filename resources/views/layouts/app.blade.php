@@ -136,6 +136,11 @@
             root.classList.toggle('sm-contrast', get('sm-a11y-contrast') === '1');
             root.classList.toggle('sm-still', get('sm-a11y-motion') === '1');
             root.classList.toggle('sm-underline', get('sm-a11y-underline') === '1');
+            // A slow phone (2026-11-26): fewer things move and nothing is blurred (resources/js/calm.js). Chosen in
+            // Settings, or judged by what the phone says of itself and by the work it was timed on.
+            const lite = get('sm-lite'), n = navigator;
+            root.classList.toggle('sm-lite', lite ? lite === '1'
+                : (n.deviceMemory || 8) <= 2 || (n.hardwareConcurrency || 8) <= 2 || !!n.connection?.saveData || (parseFloat(get('sm-bench')) || 0) > 45);
             // Tagalog help flags: on unless switched off (partials.tagalog-flags).
             root.classList.toggle('tlx-off', get('sm-tl-flags') === '0');
         })();
@@ -199,7 +204,7 @@
     {{-- Tagalog help flags: the little Philippine flag that explains a
          technical word. Before app.js, so its click listener is first. --}}
     @include('partials.tagalog-flags')
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/wait-card.css', 'resources/js/app.js'])
     {{-- Google AdSense, only where the free plan carries ads and only for the
          person who sees them (App\Support\Ads): a paid account never loads it. --}}
     @if (\App\Support\Ads::wantsAdsenseScript())
@@ -216,30 +221,6 @@
          rather than renaming every push, so the next page to guess "styles"
          still works. --}}
     @stack('styles')
-    {{-- The note the page before this one left.
-         Read here, before a single pixel of this page is drawn, so the veil
-         it raised on the tap does not come down between the two — the seam
-         used to be a half-built page with a loading card sitting on it. The
-         body's own script takes it down once this page has actually painted. --}}
-    <script>
-        (() => {
-            let going = null;
-            try { going = sessionStorage.getItem('nav.going'); } catch (_) {}
-            if (!going) return;
-            // Stale notes are ignored: a tab reopened tomorrow on a restored
-            // session should not open behind a veil nobody raised.
-            if (Date.now() - (parseInt(going, 10) || 0) > 30000) {
-                try { sessionStorage.removeItem('nav.going'); } catch (_) {}
-                return;
-            }
-            document.documentElement.classList.add('nav-arriving', 'nav-held');
-        })();
-    </script>
-    <style>
-        /* The element is hidden in the markup, which is a display:none the
-           class cannot argue with — so the arriving state says so directly. */
-        html.nav-arriving .nav-loader[hidden] { display: flex; }
-    </style>
 </head>
 {{-- `body-class` lets a page opt into layout-level changes, e.g. the Collab
      Room hiding the mobile tab bar to use the full screen. --}}
@@ -879,30 +860,24 @@
          answering for themselves, and the module shell swaps panes without
          leaving the page, so it never wears this. --}}
     <style>
-        .nav-loader { position: fixed; inset: 0; z-index: 300; display: flex; align-items: center; justify-content: center;
-            background: rgb(249 250 251 / .72); backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px);
-            opacity: 0; pointer-events: none;
-            transition: opacity .28s cubic-bezier(.22,1,.36,1); }
-        /* pointer-events stay off until it is truly on, so a cancelled show
-           can never trap a tap behind an invisible sheet of glass. */
-        .nav-loader.is-on { opacity: 1; pointer-events: auto; }
-        html.dark .nav-loader { background: rgb(10 14 8 / .72); }
-        /* Nothing moves behind it. A page that scrolls under a veil is a page
-           being read before it is finished. */
-        html.nav-held, html.nav-held body { overflow: hidden; }
-        /* Arriving: straight on, no fade in. The veil was already up on the
-           page before this one, so fading it in here would be a blink. */
-        html.nav-arriving .nav-loader { opacity: 1; pointer-events: auto; transition: none; }
-        html.nav-arriving .nav-loader .bv-card { transform: none; opacity: 1; transition: none; }
-        /* The card lifts in rather than appearing, so a fast navigation that
-           never gets to show it does not flash a box at anybody. */
-        .nav-loader .bv-card { transform: translateY(6px) scale(.98); opacity: 0;
-            transition: transform .3s cubic-bezier(.22,1,.36,1), opacity .3s cubic-bezier(.22,1,.36,1); }
-        .nav-loader.is-on .bv-card { transform: none; opacity: 1; }
-        @media (prefers-reduced-motion: reduce) {
-            .nav-loader { transition: none; }
-            .nav-loader .bv-card { transition: none; transform: none; opacity: 1; }
-        }
+        /* The ground is the boot veil's own (partials/boot-veil-css), whole and with no blur: the next page opens on the
+           same ground with the same card, so nothing is seen to change. A see-through sheet cannot do that, since what
+           showed through it is gone, and blurring a whole screen is the dearest thing a small phone can be asked to
+           draw at the very moment it has the most to do (2026-11-26). */
+        .nav-loader { position: fixed; inset: 0; z-index: 300; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: #f1f3f5; touch-action: none; overscroll-behavior: contain; }
+        .nav-loader[hidden] { display: none; }
+        body.plaza-ground .nav-loader { background: #eef4e8; }
+        html.dark .nav-loader { background: #14171c; }
+        html.dark body.plaza-ground .nav-loader { background: #0b140d; }
+        .nav-loader.is-on { animation: navLoaderIn .12s ease-out both; }
+        @keyframes navLoaderIn { from { opacity: 0; } }
+        /* Only after a long wait, and only here: a way to stay. */
+        .nav-stay { position: absolute; bottom: calc(1.4rem + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translateX(-50%); padding: .55rem 1.1rem; border-radius: 999px;
+            font-size: .82rem; font-weight: 700; color: #4b5563; background: #fff; border: 1px solid #d1d5db; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+        .nav-loader.is-long .nav-stay { opacity: 1; pointer-events: auto; }
+        html.dark .nav-stay { color: #cdd8c0; background: #1c2416; border-color: #2b3a1c; }
+        @media (prefers-reduced-motion: reduce) { .nav-loader.is-on { animation: none; } }
 
         /* One slow tide for every gradient that wants to look alive — accent
            lines, season covers, progress fills. Sites give the element a
@@ -952,95 +927,83 @@
          happening and gives somebody something to read while it does. --}}
     <div id="navLoader" class="nav-loader{{ '' }}" hidden aria-hidden="true">
         @include('sm.partials.wait-card')
+        <button type="button" class="nav-stay" id="navStay">Stay on this page</button>
     </div>
     <script>
         (() => {
             const veil = document.getElementById('navLoader');
             if (!veil) return;
-            const root = document.documentElement;
+            let up = false, long = null;
             const clear = () => {
-                veil.classList.remove('is-on');
+                up = false;
+                clearTimeout(long);
+                veil.classList.remove('is-on', 'is-long');
                 veil.hidden = true;
-                root.classList.remove('nav-held', 'nav-arriving');
-                try { sessionStorage.removeItem('nav.going'); } catch (_) {}
+                try { sessionStorage.removeItem('nav.card'); } catch (_) {}
             };
-            const raise = () => {
+            /* The card, with a different line every time, left for the page we are on our way to (partials/boot-veil).
+               Session storage: it is about this tab, and must not ride along in a shared link. */
+            const leave = () => {
+                const card = veil.querySelector('.bv-card');
+                try { window.rollWaitLine?.(card); } catch (_) {}
+                try { sessionStorage.setItem('nav.card', JSON.stringify({ at: Date.now(), html: card.outerHTML })); } catch (_) {}
+            };
+            /* Up in the same breath as the tap. No class on <html>: half the app's rules hang off one, and asking a
+               small phone to look at every element again is what kept the card from showing until after the page had
+               begun to change. */
+            const raise = (brief) => {
+                if (up || document.documentElement.classList.contains('is-frame')) return;   // Anee Auto's own window
+                up = true;
+                leave();
                 veil.hidden = false;
-                root.classList.add('nav-held');
-                requestAnimationFrame(() => veil.classList.add('is-on'));
+                veil.classList.add('is-on');
+                // It stays for as long as the next page takes: it used to give up after five seconds, so on a slow line
+                // the old page came back as if the tap had done nothing. A file that only downloads is the exception.
+                long = setTimeout(() => { brief ? clear() : veil.classList.add('is-long'); }, brief ? 4000 : 12000);
             };
-            // A different line every time it goes up.
-            const roll = () => { try { window.rollWaitLine?.(veil.querySelector('.bv-card')); } catch (_) {} };
-            document.addEventListener('click', (e) => {
-                // Every real link, not only the ones that thought to ask:
-                // a tap that is about to unload this page should say so.
-                // data-no-nav-loader opts one out by hand; nothing else has
-                // to be listed, because the check below waits to see whether
-                // anybody claimed the click first.
-                const a = e.target.closest('a[href]');
-                if (!a || e.defaultPrevented) return;
-                if (a.hasAttribute('data-no-nav-loader')) return;
-                // Only a plain left-click in this tab is a navigation we will
-                // witness: new-tab clicks and downloads leave this page alone.
-                if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-                if ((a.target && a.target !== '_self') || a.hasAttribute('download')) return;
-                const href = a.getAttribute('href') || '';
-                if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
-                let url;
-                try { url = new URL(a.href, location.href); } catch (_) { return; }
-                if (url.origin !== location.origin) return;
-                // A hash-jump within this page never unloads it.
-                if (url.hash && url.pathname === location.pathname && url.search === location.search) return;
-                /* Asked at the end of the queue, not here.
-                 *
-                 * Scripts pushed to the foot of the page register their
-                 * click handlers AFTER this one, so a link they intercept
-                 * still looks like a navigation at this moment — and a veil
-                 * raised for a page that never leaves is a spinner nobody
-                 * can dismiss. A zero timeout lands after every listener has
-                 * had its say, when defaultPrevented finally tells the
-                 * truth. */
-                setTimeout(() => {
-                    if (e.defaultPrevented) return;
-                    roll();
-                    raise();
-                    /* A note for the page we are on our way to.
-                     *
-                     * It reads this before it draws anything and puts the
-                     * veil straight back up, so the seam between the two
-                     * pages is never a half-built one with a loading card
-                     * sitting on it. Session storage rather than a query
-                     * string: the note is about this tab, not about the URL,
-                     * and it must not survive into a shared link. */
-                    try { sessionStorage.setItem('nav.going', String(Date.now())); } catch (_) {}
-                    // And if we are somehow still here — a handler that
-                    // navigated by other means, a click that led nowhere —
-                    // the veil gives up rather than sitting on the page.
-                    setTimeout(clear, 5000);
-                }, 0);
-            });
-            /* Arrived. The veil comes down when the page is actually ready
-             * to be looked at, not when the document says it exists: images
-             * and web fonts land after DOMContentLoaded, and a page that
-             * reflows under somebody's eyes is the thing this is for.
-             *
-             * Two frames after load, so the first paint is already on screen
-             * underneath before the veil starts going. And a ceiling, because
-             * one slow image must not hold the whole page hostage. */
-            const arrived = () => requestAnimationFrame(() => requestAnimationFrame(clear));
-            if (root.classList.contains('nav-arriving')) {
-                if (document.readyState === 'complete') arrived();
-                else window.addEventListener('load', arrived, { once: true });
-                setTimeout(clear, 4000);
-            }
+            document.getElementById('navStay')?.addEventListener('click', () => { try { window.stop(); } catch (_) {} clear(); });
+            // Where the answer may be a file to keep and not a page to show.
+            const aFile = (u) => /(export|download|media\/save|\/pdf|\.(pdf|xlsx?|csv|zip|docx?|jpe?g|png|webp|mp4|webm)$)/i.test(u.pathname);
 
-            // Fired on every arrival including back/forward cache restores —
-            // the one signal that always says "you can see the page again".
-            // A restored page is already painted, so it clears at once.
-            window.addEventListener('pageshow', (e) => { if (e.persisted) clear(); });
-            // Leaving by any other road — a form post, a scripted assign —
-            // should raise it too rather than leave the page looking idle.
-            window.addEventListener('beforeunload', () => { try { sessionStorage.setItem('nav.going', String(Date.now())); } catch (_) {} });
+            if (window.navigation?.addEventListener) {
+                /* The browser itself says when this page is about to be left, whatever asked for it: a link, a form, a
+                   script. It says so only after every handler has had its chance to claim the tap. */
+                navigation.addEventListener('navigate', (e) => {
+                    if (e.hashChange || e.downloadRequest !== null || e.destination.sameDocument) return;
+                    let url;
+                    try { url = new URL(e.destination.url); } catch (_) { return; }
+                    if (url.origin !== location.origin) return;
+                    if (e.sourceElement?.closest?.('[data-no-nav-loader]')) return;
+                    raise(aFile(url));
+                });
+            } else {
+                // Asked at the window, after every handler on the page has had its say.
+                window.addEventListener('click', (e) => {
+                    const a = e.target.closest?.('a[href]');
+                    if (!a || e.defaultPrevented || a.hasAttribute('data-no-nav-loader')) return;
+                    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                    if ((a.target && a.target !== '_self') || a.hasAttribute('download')) return;
+                    const href = a.getAttribute('href') || '';
+                    if (!href || href.startsWith('#') || href.startsWith('javascript:')) return;
+                    let url;
+                    try { url = new URL(a.href, location.href); } catch (_) { return; }
+                    if (url.origin !== location.origin) return;
+                    if (url.hash && url.pathname === location.pathname && url.search === location.search) return;
+                    raise(aFile(url));
+                    setTimeout(() => { if (e.defaultPrevented) clear(); }, 0);
+                });
+                // Any other road out (a form, a script): nothing to raise here, but the next page opens on a card.
+                window.addEventListener('beforeunload', () => { if (!up) leave(); });
+            }
+            // A page that asks "leave without saving?" may be told no. Its clocks stand still while it asks, so a moment
+            // after the answer means it was told to stay; if it was told to go, this page is gone by then.
+            window.addEventListener('beforeunload', (e) => { setTimeout(() => { if (up && e.defaultPrevented) clear(); }, 2500); });
+            // Seen again after Back or Forward: it is already whole.
+            window.addEventListener('pageshow', (e) => {
+                if (e.persisted) clear();
+            });
+            // A link marked to stay out of this, for browsers that name the element only here.
+            document.addEventListener('click', (e) => { if (e.target.closest?.('[data-no-nav-loader]')) setTimeout(clear, 0); }, true);
         })();
 
         /* THE BACK ARROW WALKS BACK when it names the page we came from

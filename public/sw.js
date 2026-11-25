@@ -38,6 +38,10 @@ self.addEventListener('activate', (event) => {
             .then((keys) => Promise.all(keys
                 .filter((k) => k.startsWith('anee-shell-') && k !== CACHE)
                 .map((k) => caches.delete(k))))
+            /* The page is asked for while the worker is still getting up (2026-11-26): on a slow phone starting it took
+               longer than the line did, and every tap waited for that first. */
+            .then(() => self.registration.navigationPreload?.enable())
+            .catch(() => {})
             .then(() => self.clients.claim())
     );
 });
@@ -60,17 +64,44 @@ self.addEventListener('message', (event) => {
     // so this is how a shared phone stops holding the last person's farm.
     if (d.type === 'anee-clear-shelf') { event.waitUntil(caches.delete(RUNTIME)); return; }
     if (d.type !== 'anee-offline') return;
+    flagged = Promise.resolve(!!d.on);
     event.waitUntil(caches.open(FLAGS).then((c) => (d.on
-        ? c.put(FLAG_URL, new Response('1'))
+        ? Promise.all([c.put(FLAG_URL, new Response('1')), tidy(c)])
         // Turning it off also empties the copies — the person asked the
         // device to stop keeping the farm on disk.
         : Promise.all([c.delete(FLAG_URL), caches.delete(RUNTIME)]))));
 });
 
-const offlineOn = () => caches.open(FLAGS)
+/* Asked of the disk once, then remembered for as long as this worker lives: every picture and script on every page was
+   waiting for that one answer. */
+let flagged = null;
+const offlineOn = () => (flagged ??= caches.open(FLAGS)
     .then((c) => c.match(FLAG_URL))
     .then((r) => !!r)
-    .catch(() => false);
+    .catch(() => false));
+
+/* Once per phone: the shelf used to be filled with 189 pages, most of which the field refuses to open anyway (see
+   /app/offline-manifest). That is over a hundred megabytes of a small phone's room, given back. */
+const TIDIED = '/__tidied-2026-11-26';
+const tidy = async (flags) => {
+    try {
+        if (await flags.match(TIDIED)) return;
+        await flags.put(TIDIED, new Response('1'));
+        const c = await caches.open(RUNTIME);
+        for (const k of await c.keys()) {
+            const u = new URL(k.url);
+            const p = u.pathname;
+            const board = p === '/app/sm-activities' && (u.searchParams.has('module') || u.searchParams.has('partial'));
+            const rooms = /^\/app\/(community|sm-(lots|workers|inventory|reports|tags-module|documentation|settings|weather-page|post-harvest|media|expenses-report|labor-report|profit-report|protocol-report|hub)$)/.test(p)
+                && (p.startsWith('/app/community') || u.searchParams.has('partial') || p !== '/app/sm-hub');
+            if (board || rooms) await c.delete(k);
+        }
+    } catch (_) { /* it is only tidying */ }
+};
+
+/* A file whose name changes whenever it does (the bundle, the fonts): the kept copy is the file. No asking the server
+   whether it is still good, which on a slow line is a wait per file on every page. */
+const NEVER_CHANGES = /^\/(build\/assets|fonts)\//;
 
 /* "That page came off the shelf."
  *
@@ -112,7 +143,7 @@ self.addEventListener('fetch', (event) => {
        redirect to /app, so a copy one deploy old does no harm, and waiting on the network for it would be the very
        blank screen it is there to hide. */
     if (req.mode === 'navigate' && sameOrigin && new URL(req.url).pathname === LAUNCH_URL) {
-        const fresh = fetch(LAUNCH_URL, { cache: 'no-cache' }).then(async (res) => {
+        const fresh = Promise.resolve(event.preloadResponse).catch(() => null).then((r) => r || fetch(LAUNCH_URL, { cache: 'no-cache' })).then(async (res) => {
             if (res.ok) await (await caches.open(CACHE)).put(LAUNCH_URL, res.clone());
             return res;
         });
@@ -123,12 +154,14 @@ self.addEventListener('fetch', (event) => {
 
     if (req.mode === 'navigate') {
         event.respondWith((async () => {
-            const keep = await offlineOn();
+            const asked = offlineOn();
+            let keep = false;
             try {
-                const res = await fetch(req);
+                const res = (await event.preloadResponse) || await fetch(req);
+                keep = await asked;
                 if (keep && res.ok) {
-                    const c = await caches.open(RUNTIME);
-                    c.put(req, res.clone());
+                    const copy = res.clone();
+                    event.waitUntil(caches.open(RUNTIME).then((c) => c.put(req, copy)).catch(() => {}));
                 }
                 /* The line is up: whatever the last page was served from, it
                    is not what this one came from. AWAITED - once respondWith
@@ -139,6 +172,7 @@ self.addEventListener('fetch', (event) => {
                 await sayReachedTheServer();
                 return res;
             } catch (_) {
+                keep = await asked;
                 if (keep) {
                     /* ignoreVary, because the copy on the shelf was put
                        there by a warm fetch and this is a navigation: the
@@ -167,6 +201,8 @@ self.addEventListener('fetch', (event) => {
                     for (const k of await cache.keys()) {
                         const got = new URL(k.url);
                         if (got.pathname !== url.pathname) continue;
+                        // A fragment for the season's shell is not a page.
+                        if (got.searchParams.has('partial') && !url.searchParams.has('partial')) continue;
                         if ((got.searchParams.get('id') || '') !== (want || '')) continue;
                         const near = await cache.match(k, { ignoreVary: true });
                         if (near) { await sayServedFromShelf(); return near; }
@@ -179,6 +215,20 @@ self.addEventListener('fetch', (event) => {
     }
 
     if (!sameOrigin) return;
+    if (NEVER_CHANGES.test(new URL(req.url).pathname) && !req.headers.has('range')) {
+        event.respondWith((async () => {
+            if (!(await offlineOn())) return fetch(req);
+            const hit = await caches.match(req.url, { cacheName: RUNTIME, ignoreVary: true }).catch(() => null);
+            if (hit) return hit;
+            const res = await fetch(req);
+            if (res.status === 200 && res.type === 'basic') {
+                const copy = res.clone();
+                event.waitUntil(caches.open(RUNTIME).then((c) => c.put(req.url, copy)).catch(() => {}));
+            }
+            return res;
+        })());
+        return;
+    }
     event.respondWith((async () => {
         const keep = await offlineOn();
         if (!keep) return fetch(req);

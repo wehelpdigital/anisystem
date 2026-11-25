@@ -2736,7 +2736,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Name the card. Three of them can be on this page now — the
             // board's veil, the module loader and the app's own navigation
             // card — and rollWaitLine defaults to the first one it finds.
-            window.rollWaitLine?.($id('boardVeil')?.querySelector('.bv-card'));
+            // Turning it over does not start its four seconds again: one wait, however many lines it read out.
+            const bvCard = $id('boardVeil')?.querySelector('.bv-card');
+            const since = bvCard?.__shownAt;
+            if (bvCard) window.rollWaitLine?.(bvCard);
+            if (since) bvCard.__shownAt = since;
         }
         if (boardReady.cash && boardReady.weather) liftVeil('both');
     };

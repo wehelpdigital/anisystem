@@ -900,85 +900,39 @@ Route::middleware(['auth', 'subscription'])->group(function () {
         }
         $owner = \App\Support\WorkerContext::effectiveOwnerId();
 
-        /* EVERY DOOR IN THE APP EXCEPT THE ONES THAT NEED A MODEL.
+        /* WHAT THE FIELD CAN OPEN, AND NOTHING ELSE (2026-11-26).
          *
-         * This used to name four pages — the dashboard, the notes hub, and
-         * each season's hub and board — so walking to Lots or the Shed or
-         * the Reports out in the field hit the "you are offline" card even
-         * with the mode on and the shelf supposedly full. The shelf was
-         * full; it just had nothing on it for those rooms.
+         * With no signal the app opens the list in core.js (OFFLINE_OK_PATHS,
+         * OFFLINE_OK_MODULES) and refuses every other door, kept copy or not.
+         * This named 189 pages all the same, the season's board thirteen times
+         * over for each of three seasons: 38.7 MB sent to the phone, three at
+         * a time, a second and a half after the app was opened and again every
+         * half hour. On a slow line that WAS the slowness: the page somebody
+         * tapped waited behind pages nobody could open. Change that list and
+         * this one together.
          *
-         * Anee and the two planting analyses stay off the list on purpose:
-         * they are a question to a model over the wire, and a cached copy
-         * of the asking screen would only promise an answer that cannot
-         * come. Everything else a farm day opens is here. */
-        $names = [
-            'app.dashboard', 'sm.index', 'notes.hub', 'gallery.hub',
-            'maps.page', 'draw.page', 'contacts.page', 'support.index', 'tutorials.index',
-            'account.index', 'account.settings', 'account.subscription',
-            'community.index', 'community.connect.members',
-            'community.cofarmers', 'community.connect.requests',
-            'community.groups.index', 'community.saved',
-            'community.ranking', 'community.blog',
-            'community.my', 'community.messages.threads',
-        ];
+         * A page visited is kept by the worker whether or not it is named here. */
         $urls = [];
-        foreach ($names as $n) {
+        foreach (['app.dashboard', 'sm.index', 'sm.create', 'notes.hub', 'account.index', 'account.settings'] as $n) {
             if (\Illuminate\Support\Facades\Route::has($n)) {
                 $urls[] = route($n, [], false);
             }
         }
 
-        /* And every room of a season. Three seasons deep rather than five:
-         * this is ~25 pages each, and a warm that takes a minute is one the
-         * phone wanders away from before it finishes. The three most
-         * recently touched are the ones a farmer is actually working. */
-        $perSchedule = [
-            'sm.hub', 'sm.activities', 'sm.lots', 'sm.workers', 'sm.inventory',
-            'sm.notes', 'sm.reports', 'sm.tags',
-            'sm.documentation', 'sm.gallery', 'sm.settings', 'sm.weather.page',
-            'sm.attendance', 'sm.growth', 'sm.post-harvest', 'sm.board',
-            'sm.media', 'sm.expenses.report', 'sm.labor.report',
-            'sm.profit.report', 'sm.protocol.report', 'sm.worker-presentation',
-        ];
-
-        /* THE ONE A SEASON IS ACTUALLY OPENED BY.
-         *
-         * A schedule is not a set of pages, it is ONE page — the Activities
-         * shell — that fetches each module as a fragment and swaps it in
-         * (see showModule in activities.blade). That fetch asks for
-         * `…&partial=1`, which is a different address from the module's own
-         * page, so warming the page kept something the shell never asks for:
-         * tapping Lots with no signal threw, and the catch there drops you
-         * back on Activities. That is the whole of "I still cannot open Lots
-         * and it just goes back to the board".
-         *
-         * So each room is kept three ways: the fragment the shell fetches,
-         * the shell address the browser shows for it (what a refresh out in
-         * the field reloads), and the standalone page. `partial` rides on
-         * the end because that is the order the shell builds it in, and a
-         * cache key is the whole string. */
-        $shellKey = [
-            'sm.activities' => 'activities', 'sm.lots' => 'lots',
-            'sm.workers' => 'workers', 'sm.inventory' => 'inventory',
-            'sm.notes' => 'notes',
-            'sm.tags' => 'tags', 'sm.documentation' => 'documentation',
-            'sm.gallery' => 'gallery', 'sm.settings' => 'settings',
-            'sm.weather.page' => 'weather', 'sm.growth' => 'growth',
-            'sm.post-harvest' => 'post-harvest', 'sm.media' => 'media',
-        ];
+        /* A SEASON IS ONE PAGE. The Activities shell fetches a module as a
+         * fragment (…&partial=1) and swaps it in, so a room is kept twice: the
+         * fragment, and the page a link from outside opens. The shell's own
+         * address with ?module= on it is answered from the one kept copy of
+         * the shell (the worker's near miss), never stored again. */
         foreach (\App\Models\AsCroppingSchedule::active()->forClient($owner)
             ->orderByDesc('updated_at')->limit(3)->pluck('id') as $sid) {
-            $shell = route('sm.activities', ['id' => $sid], false);
-            foreach ($perSchedule as $n) {
-                if (! \Illuminate\Support\Facades\Route::has($n)) {
-                    continue;
-                }
-                $page = route($n, ['id' => $sid], false);
-                $urls[] = $page;
-                $urls[] = $page . (str_contains($page, '?') ? '&' : '?') . 'partial=1';
-                if (isset($shellKey[$n]) && $shellKey[$n] !== 'activities') {
-                    $urls[] = $shell . (str_contains($shell, '?') ? '&' : '?') . 'module=' . $shellKey[$n];
+            $urls[] = route('sm.hub', ['id' => $sid], false);
+            $urls[] = route('sm.activities', ['id' => $sid], false);
+            foreach (['sm.notes', 'sm.growth'] as $n) {
+                if (\Illuminate\Support\Facades\Route::has($n)) {
+                    $page = route($n, ['id' => $sid], false);
+                    $urls[] = $page;
+                    $urls[] = $page . (str_contains($page, '?') ? '&' : '?') . 'partial=1';
                 }
             }
         }
@@ -999,7 +953,8 @@ Route::middleware(['auth', 'subscription'])->group(function () {
                 continue;
             }
             foreach (scandir($abs) ?: [] as $f) {
-                if (preg_match('/\.(png|jpe?g|svg|webp|gif|ico)$/i', $f)) {
+                // The big ones are the public site's pictures; no page in the field draws them.
+                if (preg_match('/\.(png|jpe?g|svg|webp|gif|ico)$/i', $f) && filesize($abs . '/' . $f) < 110 * 1024) {
                     $assets[] = '/' . $dir . '/' . $f;
                 }
             }

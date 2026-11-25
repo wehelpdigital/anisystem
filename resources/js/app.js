@@ -2,4 +2,5 @@
 import './bootstrap';
 import './phone-camera';
 import './site-events';
+import './calm';
 import './core';

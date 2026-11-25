@@ -5,7 +5,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/js/public.js', 'resources/css/home-rest.css'],
+            input: ['resources/css/app.css', 'resources/js/app.js', 'resources/js/public.js', 'resources/css/home-rest.css', 'resources/css/wait-card.css', 'resources/css/plaza.css'],
             refresh: true,
         }),
         tailwindcss(),
@@ -21,7 +21,7 @@ export default defineConfig({
                         return 'realtime';
                     }
                     // What both entries share, in one chunk of its own: neither entry pulls the other in.
-                    if (/resources\/js\/(core|phone-camera|site-events)\.js$/.test(id) || /node_modules\/alpinejs\//.test(id)) {
+                    if (/resources\/js\/(core|phone-camera|site-events|calm)\.js$/.test(id) || /node_modules\/alpinejs\//.test(id)) {
                         return 'core';
                     }
                 },

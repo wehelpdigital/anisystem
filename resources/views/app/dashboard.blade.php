@@ -1649,6 +1649,10 @@
 
 </div>
 
+{{-- Everything the wall's cards and its composer need, about 200 KB of it, only where there is a wall: the Community
+     is closed since 2026-11-24 and this page still carried all of it (2026-11-26). --}}
+@php $plazaOn = \App\Support\WorkerContext::canUseCommunity() && \App\Support\Community::open(); @endphp
+@if ($plazaOn)
 {{-- The wall's cards work here too, so their sheets have to come along. --}}
 @include('community.partials.photo-editor')
 @include('community.partials.post-actions')
@@ -1656,6 +1660,7 @@
 {{-- Tapping your own photo on the composer asks what is on your mind, the
      same composer the community profile uses. --}}
 @include('community.partials.status-modal')
+@endif
 @endsection
 
 @push('scripts')
@@ -1678,8 +1683,9 @@
 </script>
 {{-- The co-farmer feed reuses the wall's post cards, so it needs the same
      community JS: reactions, comment form, emoji, photo, mentions, modal. --}}
-@include('community.partials.emoji-js')
 @include('community.partials.lightbox-js')
+@if ($plazaOn)
+@include('community.partials.emoji-js')
 @include('community.partials.comment-tools-js')
 @include('community.partials.react-js')
 @include('community.partials.mention-js')
@@ -1693,6 +1699,7 @@
      never counted as read. --}}
 @include('community.partials.views-js')
 @include('community.partials.mutual-js')
+@endif
 
 @push('scripts')
 <script>
@@ -1825,6 +1832,7 @@
 </script>
 @endpush
 
+@if ($plazaOn)
 {{-- Dashboard wall composer — posts to your own wall (the same wall shown in
      /app/community and on your profile). Photo + video (upload or record). --}}
 <script>
@@ -2048,6 +2056,8 @@
 })();
 </script>
 
+@endif
+
 {{-- Every sky the app can draw, and the colours that go with them. --}}
 @include('partials.weather-scenes')
 {{-- The calendar on the Cropping Schedules heading. --}}
@@ -2217,6 +2227,7 @@
 @endpush
 
 
+@if ($plazaOn)
 @push('sheets')
 {{-- The homepage's composer, in the same sheet the community wall's lives in.
      Moved here rather than rewritten: the ids the dashboard's JS binds to are
@@ -2355,6 +2366,7 @@
     </div>
 </div>
 @endpush
+@endif
 
 @push('scripts')
 <script>

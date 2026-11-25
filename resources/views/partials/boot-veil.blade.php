@@ -22,6 +22,21 @@
         const root = document.documentElement;
         const veil = document.getElementById('bootVeil');
         let lifted = false;
+        @unless ($fast)
+        /* THE SAME CARD, STILL UP (2026-11-26, the owner: on slow phones a tap "refreshes the page before the loader
+         * appears"). The page before put its waiting card up on the tap and left it here. Drawn now, before anything
+         * else of this page has been read, it is the same words in the same place: one wait, not a card, an empty
+         * screen, and another card. Without a note (a fresh visit, a reload from the browser) the ring turns. */
+        try {
+            const note = JSON.parse(sessionStorage.getItem('nav.card') || 'null');
+            sessionStorage.removeItem('nav.card');
+            if (note && note.html && Date.now() - note.at < 45000) {
+                veil.innerHTML = note.html;
+                veil.classList.add('has-card');
+                window.__navAt = note.at;
+            }
+        } catch (_) { /* the ring, then */ }
+        @endunless
         const lift = () => {
             if (lifted) return;
             lifted = true;
@@ -73,8 +88,21 @@
         };
         // A frame after the document is parsed: the last body stylesheet gets
         // to paint before anyone sees the page under here. Then the artwork.
+        /* The season's board and its modules have a wait of their own. While one is still up, this card stays in front
+           of it: taking it off would only show another card behind it. Eight seconds at most, then the page's own. */
+        const within = () => {
+            if (document.body.classList.contains('module-booting')) return true;
+            const b = document.getElementById('boardVeil');
+            return !!b && !b.hidden && !b.classList.contains('is-done') && getComputedStyle(b).display !== 'none';
+        };
+        const through = () => {
+            if (!veil.classList.contains('has-card')) { lift(); return; }
+            const until = performance.now() + 8000;
+            const look = () => { (within() && performance.now() < until) ? setTimeout(look, 120) : lift(); };
+            look();
+        };
         const soon = () => requestAnimationFrame(() => requestAnimationFrame(
-            () => { dressed().then(lift, lift); }
+            () => { dressed().then(through, through); }
         ));
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', soon);
         else soon();
@@ -82,8 +110,18 @@
         // Nothing may sit behind a spinner forever, and nothing may stay
         // hidden. A stalled asset, a script that threw, an event that never
         // came — it lifts anyway.
+        @if ($fast)
         setTimeout(lift, 6000);
+        @else
+        /* Not while the page is still being read: on a slow phone six seconds was sooner than the last of it, and what
+           came out from behind the veil was half a page. */
+        const giveUp = () => {
+            if (document.readyState === 'loading' && performance.now() < 20000) { setTimeout(giveUp, 1000); return; }
+            setTimeout(lift, 2600);   // the pictures' own cap, a breath later
+        };
+        setTimeout(giveUp, 6000);
+        @endif
         // Back/forward restores show a page that is already whole.
-        window.addEventListener('pageshow', lift);
+        window.addEventListener('pageshow', (e) => { if (e.persisted || @json($fast)) lift(); });
     })();
 </script>

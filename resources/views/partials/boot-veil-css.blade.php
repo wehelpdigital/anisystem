@@ -19,17 +19,18 @@
 <style>
     /* Hidden — but on a timer that CSS keeps by itself. If the script below
        never runs at all (it threw, it was stripped, the browser choked on
-       it), the page still comes back on its own after eight seconds. A
+       it), the page still comes back on its own after twenty four seconds (eight was
+       sooner than a slow phone had read it). A
        delayed zero-length animation is the only way to say "give up" in CSS,
        and it costs nothing when the script does its job. */
     html.booting body > *:not(#bootVeil) { visibility: hidden;
-        animation: bootReveal 0s linear 8s forwards; }
+        animation: bootReveal 0s linear 24s forwards; }
     @keyframes bootReveal { to { visibility: visible; } }
     .boot-veil { position: fixed; top: 0; right: 0; bottom: 0; left: 0;
         z-index: 400; display: flex; align-items: center; justify-content: center;
         background: #f1f3f5;
         transition: opacity .28s cubic-bezier(.22, 1, .36, 1);
-        animation: bootGiveUp 0s linear 8s forwards; }
+        animation: bootGiveUp 0s linear 24s forwards; }
     @keyframes bootGiveUp { to { opacity: 0; visibility: hidden; } }
     body.plaza-ground .boot-veil { background: #eef4e8; }
     html.dark .boot-veil { background: #14171c; }
@@ -38,6 +39,9 @@
     body.bg-white .boot-veil { background: #fff; }
     html.dark body.bg-white .boot-veil { background: #191d23; }
     .boot-veil.is-off { opacity: 0; pointer-events: none; }
+    /* Carrying the last page's card: nothing moves in, it was already there. */
+    .boot-veil.has-card { touch-action: none; overscroll-behavior: contain; }
+    .boot-veil.has-card .nav-stay { display: none; }
     .boot-veil-spin { display: block; width: 2.4rem; height: 2.4rem; border-radius: 999px;
         border: 3px solid rgba(74, 124, 42, .2); border-top-color: #4a7c2a;
         animation: bootVeilSpin .8s linear infinite; }

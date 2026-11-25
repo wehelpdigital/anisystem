@@ -39,6 +39,14 @@
          content is never stuck invisible. --}}
     <script>
         document.documentElement.classList.add('js');
+        (() => {
+            const root = document.documentElement, get = (k) => { try { return localStorage.getItem(k); } catch (_) { return null; } };
+            // A slow phone (2026-11-26): fewer things move and nothing is blurred (resources/js/calm.js). Chosen in
+            // Settings, or judged by what the phone says of itself and by the work it was timed on.
+            const lite = get('sm-lite'), n = navigator;
+            root.classList.toggle('sm-lite', lite ? lite === '1'
+                : (n.deviceMemory || 8) <= 2 || (n.hardwareConcurrency || 8) <= 2 || !!n.connection?.saveData || (parseFloat(get('sm-bench')) || 0) > 45);
+        })();
         window.addEventListener('load', function () {
             setTimeout(function () {
                 if (!window.__revealBooted) {
