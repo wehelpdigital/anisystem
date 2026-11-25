@@ -947,6 +947,15 @@ Route::middleware(['auth', 'subscription'])->group(function () {
          * icon joins the shelf the day it is added, with no list to update.
          */
         $assets = ['/data/ph-locations.json'];
+        // The files the kept pages are dressed by and run on, whether or not
+        // this phone has met them yet: they left the pages on 2026-11-26.
+        foreach (['css/app.css', 'css/wait-card.css', 'css/plaza.css', 'css/board.css', 'css/range-effect.css', 'js/app.js', 'js/board.js', 'js/range-effect.js'] as $f) {
+            try {
+                $assets[] = parse_url(\Illuminate\Support\Facades\Vite::asset('resources/' . $f), PHP_URL_PATH);
+            } catch (\Throwable) {
+                // Not built here: the page still says so itself.
+            }
+        }
         foreach (['images', 'images/anee', 'images/icons', 'images/pwa'] as $dir) {
             $abs = public_path($dir);
             if (! is_dir($abs)) {

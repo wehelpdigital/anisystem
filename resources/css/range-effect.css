@@ -1,0 +1,849 @@
+/* The Coverage Planner (sm/partials/range-effect), in a file the phone keeps since 2026-11-26. Plain CSS, after app.css. */
+    /* ===================== RANGE EFFECT (rfx-) =====================
+       Every colour is a token on .rfx, set again for dark mode (2026-10-30, the owner: "please fix readability and
+       fonts in dark or white mode"): body text stays at 4.5:1 or better on its card, labels and axis text at 3:1 or
+       better, in both modes. */
+    .rfx { position: fixed; inset: 0; z-index: 420; display: grid; place-items: center;
+        --rx-bg: #f4f7f0; --rx-card: #fff; --rx-soft: #f5f8f1; --rx-line: #e1ead6; --rx-line-2: #cddcbd; --rx-hover: #a9c98c;
+        --rx-ink: #132009; --rx-text: #2e3929; --rx-muted: #525e4e; --rx-faint: #687463; --rx-accent: #3b6b1f;
+        --rx-chip-ink: #2f5219; --rx-on: #2f5219; --rx-track: #e6eedf; --rx-dot: #d1d5db; --rx-veil: rgb(10 16 7 / .55);
+        --rx-gap-a: #fff1f1; --rx-gap-b: #ffe0e0; --rx-gap-edge: #f19c9c; --rx-gap-bg: #fef2f2; --rx-gap-line: #fecaca; --rx-gap-ink: #991b1b;
+        --rx-thin-bg: #fffbeb; --rx-thin-line: #fde68a; --rx-thin-ink: #92400e; --rx-thin-edge: #f59e0b;
+        --rx-late-bg: #f5f3ff; --rx-late-line: #ddd6fe; --rx-late-ink: #5b21b6; --rx-late-edge: #a78bfa;
+        --rx-gold-bg: #fff6d6; --rx-gold-line: #f3e3a3; --rx-gold-ink: #5c4500;
+        --rx-try-bg: #fffdf3; --rx-try-line: #f0dfa0; --rx-field: #fff; --rx-field-line: #e3d9b0; --rx-res-icon: #f6f1dc; --rx-how-bg: #f6efd2; --rx-how-ink: #6e5a1c;
+        --rx-saved-bg: #eef2ff; --rx-saved-line: #c7d2fe; --rx-saved-ink: #1e3a8a;
+        --rx-done-bg: #dcfce7; --rx-done-ink: #14532d; --rx-tag-bg: #eef1ea;
+        --rx-badge: #1f3a10; --rx-badge-ink: #fff; --rx-today: #2563eb; --rx-ap-off: #d9ddd3; --rx-ap-off-ink: #4f5a48;
+        --rx-rain: #5aa9e6; --rx-rain-ink: #175a92; --rx-water-bg: #e8f3fc; --rx-water-line: #a9d0f0; --rx-water-ink: #134a78;
+        /* What an application is doing: in the soil, being taken up, strongest, easing, fading away. */
+        --ph-soil: linear-gradient(180deg, #c99158, #8a5a2b); --ph-absorb: linear-gradient(180deg, #5fcfba, #12806f); --ph-strong: linear-gradient(180deg, #4f9030, #22500e);
+        --ph-easing: linear-gradient(180deg, #a6d67c, #6aa843); --ph-fading: linear-gradient(180deg, #e9f5dc, #c6e3ab);
+        /* Water in the soil: standing or fresh, moist, drying, too dry. */
+        --ph-wet: linear-gradient(180deg, #4fb0ee, #1769b8); --ph-moist: linear-gradient(180deg, #86c9ee, #3d8fc6);
+        --ph-drying: linear-gradient(180deg, #d6eaf6, #a4cde6); --ph-dry: linear-gradient(180deg, #f4dcaa, #d8a65a); }
+    html.dark .rfx {
+        --rx-bg: #0d120a; --rx-card: #151c11; --rx-soft: #1b2416; --rx-line: #2c3b22; --rx-line-2: #3d5230; --rx-hover: #6b8f50;
+        --rx-ink: #eef5e8; --rx-text: #d6e2cc; --rx-muted: #b1c0a5; --rx-faint: #93a487; --rx-accent: #a9d982;
+        --rx-chip-ink: #d3e8bf; --rx-on: #4a8128; --rx-track: #26331d; --rx-dot: #3d4c34; --rx-veil: rgb(0 0 0 / .65);
+        --rx-gap-a: #3a1717; --rx-gap-b: #2b1010; --rx-gap-edge: #b33a3a; --rx-gap-bg: rgb(220 38 38 / .14); --rx-gap-line: rgb(248 113 113 / .38); --rx-gap-ink: #fca5a5;
+        --rx-thin-bg: rgb(245 158 11 / .13); --rx-thin-line: rgb(251 191 36 / .38); --rx-thin-ink: #fcd34d; --rx-thin-edge: #f59e0b;
+        --rx-late-bg: rgb(139 92 246 / .16); --rx-late-line: rgb(167 139 250 / .42); --rx-late-ink: #c9bcff; --rx-late-edge: #a78bfa;
+        --rx-gold-bg: rgb(245 197 24 / .12); --rx-gold-line: rgb(245 197 24 / .38); --rx-gold-ink: #f7dc7c;
+        --rx-try-bg: #1c1a0e; --rx-try-line: #4d4421; --rx-field: #11170d; --rx-field-line: #4d4421; --rx-res-icon: #2a2614; --rx-how-bg: #2a2512; --rx-how-ink: #e3cf86;
+        --rx-saved-bg: rgb(99 102 241 / .16); --rx-saved-line: rgb(129 140 248 / .42); --rx-saved-ink: #c7d2fe;
+        --rx-done-bg: rgb(34 197 94 / .18); --rx-done-ink: #86efac; --rx-tag-bg: #26331d;
+        --rx-badge: #e3f1d6; --rx-badge-ink: #1f3a10; --rx-today: #60a5fa; --rx-ap-off: #3a4433; --rx-ap-off-ink: #c3cdb9;
+        --rx-rain: #4a9ad8; --rx-rain-ink: #9fd0f7; --rx-water-bg: rgb(59 130 246 / .14); --rx-water-line: rgb(96 165 250 / .42); --rx-water-ink: #bfdcf7; }
+    .rfx-sw { display: inline-block; flex: none; width: .9rem; height: .9rem; border-radius: .25rem; background: var(--ph-strong); vertical-align: -.1rem; }
+    .rfx .is-soil { --ph: var(--ph-soil); } .rfx .is-absorb { --ph: var(--ph-absorb); } .rfx .is-strong { --ph: var(--ph-strong); } .rfx .is-easing { --ph: var(--ph-easing); } .rfx .is-fading { --ph: var(--ph-fading); }
+    .rfx .rfx-sw[class*=is-] { background: var(--ph); }
+    .rfx .is-wet { --ph: var(--ph-wet); } .rfx .is-moist { --ph: var(--ph-moist); } .rfx .is-drying { --ph: var(--ph-drying); } .rfx .is-dry { --ph: var(--ph-dry); }
+    .rfx[hidden] { display: none; }
+    .rfx-veil { position: absolute; inset: 0; background: var(--rx-veil); backdrop-filter: blur(3px); opacity: 0; transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-box { position: relative; display: flex; flex-direction: column; width: 100%; height: 100%; color: var(--rx-text); background: var(--rx-bg); overflow: hidden;
+        opacity: 0; transform: translateY(18px) scale(.985); transition: opacity .32s cubic-bezier(.22,1,.36,1), transform .32s cubic-bezier(.22,1,.36,1); }
+    @media (min-width: 900px) { .rfx-box { width: min(96vw, 82rem); height: min(94vh, 60rem); border-radius: 1.4rem; box-shadow: 0 40px 90px -30px rgb(0 0 0 / .6); } }
+    .rfx.is-on .rfx-veil { opacity: 1; }
+    .rfx.is-on .rfx-box { opacity: 1; transform: none; }
+    html.rfx-lock { overflow: hidden; }
+    /* A notice, a question or the upgrade card asked from inside the sheet comes over it ("Anee could not confirm it"
+       after a look up sat behind it at 200), and the shared backdrop is lifted with the question. */
+    html.rfx-lock #confirm-sheet { z-index: 450; }
+    html.rfx-lock:has(#confirm-sheet.is-open) .sheet-backdrop { z-index: 445; }
+    html.rfx-lock #aneeUpgradeBox { z-index: 455; }
+    /* And any other sheet of the app opened while the planner is up (2026-10-30, the owner: "make sure all modal boxes,
+       things coming from the range effect when it is open will come infront"): the sheet and the backdrop under it.
+       The dialogs of the field questions sit in the browser's top layer already; the toasts and Anee's wait are higher. */
+    html.rfx-lock .sheet.is-open { z-index: 450; }
+    html.rfx-lock:has(.sheet.is-open) .sheet-backdrop.is-open { z-index: 445; }
+    .rfx-head { display: flex; align-items: center; gap: .8rem; padding: .85rem 1rem; background: linear-gradient(135deg, #1f3a12, #2f5219 60%, #3b6620); color: #fff; }
+    .rfx-logo { display: grid; place-items: center; flex: none; width: 2.6rem; height: 2.6rem; border-radius: .9rem; color: #14210c; background: #f5c518; box-shadow: 0 0 0 4px rgb(245 197 24 / .25); }
+    .rfx-logo svg { width: 1.45rem; height: 1.45rem; }
+    .rfx-head-t { min-width: 0; flex: 1; }
+    .rfx-head h2 { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; line-height: 1.2; color: #fff; }
+    .rfx-head p { margin-top: .1rem; font-size: .82rem; color: #dcebd0; line-height: 1.35; }
+    .rfx-hbtn { position: relative; display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .8rem; border-radius: .8rem; font-size: .86rem; font-weight: 800; color: #fff;
+        background: rgb(255 255 255 / .12); box-shadow: inset 0 0 0 1px rgb(255 255 255 / .25); transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-hbtn:hover { background: rgb(255 255 255 / .2); }
+    .rfx-hbtn svg { width: 1.05rem; height: 1.05rem; }
+    .rfx-hbtn b { position: absolute; top: -.35rem; right: -.35rem; min-width: 1.2rem; height: 1.2rem; padding: 0 .3rem; border-radius: 999px; font-size: .68rem; line-height: 1.2rem; color: #14210c; background: #f5c518; }
+    .rfx-x { display: grid; place-items: center; flex: none; width: 2.4rem; height: 2.4rem; border-radius: 999px; color: inherit; background: rgb(255 255 255 / .12); transition: background-color .28s, transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-x:hover { background: rgb(255 255 255 / .22); transform: rotate(90deg); }
+    .rfx-x svg { width: 1.15rem; height: 1.15rem; }
+    @media (max-width: 639.98px) { .rfx-head p { display: none; } .rfx-hbtn span { display: none; } .rfx-hbtn { padding: .55rem; } }
+    .rfx-scroll { flex: 1; overflow: auto; overscroll-behavior: contain; }
+    .rfx-controls { position: relative; z-index: 3; display: grid; gap: .6rem; padding: .9rem 1rem; background: var(--rx-card); border-bottom: 1px solid var(--rx-line); }
+    .rfx-row { display: grid; grid-template-columns: 6.6rem minmax(0, 1fr); gap: .75rem; align-items: center; }
+    .rfx-row.is-sub { align-items: start; }
+    .rfx-row.is-sub .rfx-label { padding-top: .5rem; }
+    .rfx-label { font-size: .72rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--rx-faint); }
+    @media (max-width: 639.98px) { .rfx-row { grid-template-columns: minmax(0, 1fr); gap: .35rem; } .rfx-row.is-sub .rfx-label { display: none; } }
+    .rfx-chips, .rfx-picks { display: flex; gap: .4rem; overflow-x: auto; scrollbar-width: none; padding: .15rem .1rem; }
+    .rfx-picks { flex-wrap: wrap; overflow: visible; }
+    .rfx-chips::-webkit-scrollbar { display: none; }
+    .rfx-chip { flex: none; display: inline-flex; align-items: center; gap: .35rem; padding: .45rem .8rem; border-radius: 999px; font-size: .86rem; font-weight: 800; white-space: nowrap; color: var(--rx-chip-ink); background: var(--rx-card);
+        box-shadow: inset 0 0 0 1.5px var(--rx-line-2); cursor: pointer; transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s, box-shadow .28s, transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-chip:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-chip.is-on { color: #fff; background: var(--rx-on); box-shadow: 0 8px 18px -10px rgb(47 82 25 / .8); }
+    .rfx-chip small { font-size: .74rem; font-weight: 700; opacity: .8; }
+    .rfx-chip.is-try { color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1.5px #f5c518; cursor: pointer; }
+    .rfx-chip.is-try:hover { box-shadow: inset 0 0 0 2px #f5c518, 0 8px 16px -10px rgb(184 138 0 / .8); }
+    .rfx-chip.is-try .rfx-pen { width: .8rem; height: .8rem; opacity: .7; }
+    .rfx-chip.is-try button, .rfx-sel .rfx-chip button { display: grid; place-items: center; width: 1.25rem; height: 1.25rem; border-radius: 999px; background: rgb(128 128 128 / .2); }
+    .rfx-chip.is-try button { margin-right: -.3rem; }
+    .rfx-chip.is-try button svg, .rfx-sel .rfx-chip button svg { width: .68rem; height: .68rem; }
+    .rfx-tabs { display: flex; gap: .3rem; padding: .25rem; border-radius: 1rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); overflow-x: auto; scrollbar-width: none; }
+    .rfx-tabs button { flex: 1 0 auto; padding: .52rem .8rem; border-radius: .75rem; font-size: .86rem; font-weight: 800; white-space: nowrap; color: var(--rx-muted); transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s, box-shadow .28s; }
+    .rfx-tabs button:hover { color: var(--rx-ink); }
+    .rfx-tabs button.is-on { color: var(--rx-ink); background: var(--rx-card); box-shadow: 0 4px 12px -6px rgb(0 0 0 / .35), inset 0 0 0 1px var(--rx-line); }
+    @media (max-width: 559.98px) { .rfx-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); } .rfx-tabs button { padding: .52rem .4rem; font-size: .82rem; } }
+    .rfx-picks .rfx-chip { animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 25ms); }
+    @keyframes rfxPop { from { opacity: 0; transform: translateY(6px) scale(.96); } }
+    .rfx-picks input[type=search] { flex: 1 1 100%; padding: .55rem .8rem; border-radius: .8rem; border: 1.5px solid var(--rx-line-2); font-size: .92rem; color: var(--rx-ink); background: var(--rx-field); }
+    .rfx-tries { display: grid; justify-items: start; gap: .45rem; }
+    .rfx-chips.is-wrap { flex-wrap: wrap; overflow: visible; padding: 0; }
+    .rfx-chips.is-wrap:empty { display: none; }
+    .rfx-chips.is-wrap .rfx-chip { max-width: 100%; white-space: normal; animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; }
+    .rfx-add { display: inline-flex; align-items: center; gap: .35rem; padding: .52rem .95rem; border-radius: 999px; font-size: .86rem; font-weight: 800; color: #14210c; background: #f5c518;
+        box-shadow: 0 8px 18px -10px rgb(184 138 0 / .9); transition: background-color .28s, transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s; }
+    .rfx-add:hover { background: #ffd43b; transform: translateY(-1px); }
+    .rfx-add svg { width: .9rem; height: .9rem; }
+    /* Several checks: the one the calendar shows is filled, the rest are outlined in their own colour. */
+    .rfx-sel { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .rfx-sel .rfx-chip { gap: .4rem; padding: .35rem .45rem .35rem .7rem; animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; }
+    .rfx-sel .rfx-chip i { width: .65rem; height: .65rem; border-radius: 999px; background: var(--sc); }
+    .rfx-sel .rfx-chip.is-on { background: var(--sc); color: #fff; }
+    .rfx-sel .rfx-chip.is-on i { background: #fff; }
+    .rfx-picks .rfx-chip.is-on::after { content: '✓'; font-size: .78rem; font-weight: 900; }
+    .rfx-hint { align-self: center; font-size: .78rem; font-weight: 600; color: var(--rx-faint); }
+    .rfx-muted { font-size: .84rem; color: var(--rx-muted); }
+    /* The picker: a sheet over the planner, the edit dialog over it in turn. */
+    .rfx-pickm .rfx-edit-c { gap: .65rem; width: min(100%, 42rem); padding-bottom: 0; }
+    .rfx-edit[data-rfx-edit] { z-index: 9; }
+    .rfx-ptabs { display: flex; gap: .35rem; overflow-x: auto; padding: .1rem .05rem .3rem; scrollbar-width: thin; }
+    .rfx-ptabs button { flex: none; padding: .42rem .8rem; border-radius: 999px; font-size: .82rem; font-weight: 800; white-space: nowrap; color: var(--rx-chip-ink); background: var(--rx-card);
+        box-shadow: inset 0 0 0 1.5px var(--rx-line-2); transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s, box-shadow .28s; }
+    .rfx-ptabs button:hover { box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-ptabs button.is-on { color: #fff; background: var(--rx-on); box-shadow: 0 6px 14px -10px rgb(47 82 25 / .8); }
+    .rfx-pickm .rfx-results { max-height: none; }
+    .rfx-res-n { flex: none; margin-left: auto; padding: .15rem .5rem; border-radius: 999px; font-style: normal; font-size: .7rem; font-weight: 900; color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px #f5c518; }
+    .rfx-pick-added { display: grid; gap: .45rem; padding: .65rem .7rem; border-radius: .95rem; background: var(--rx-try-bg); box-shadow: inset 0 0 0 1.5px var(--rx-try-line); }
+    .rfx-pick-added:empty { display: none; }
+    .rfx-pick-added.is-flash { animation: rfxGlow .7s cubic-bezier(.22,1,.36,1); }
+    @keyframes rfxGlow { 30% { box-shadow: inset 0 0 0 2px #f5c518, 0 0 0 5px rgb(245 197 24 / .3); } }
+    .rfx-pick-added > b { font-size: .8rem; color: var(--rx-ink); }
+    /* Added so far folds (the owner, 2026-10-30: "make the added so far contractable expandable with smooth animation to
+       avoid the modal to be too long"): a line with the count and the first names, the list below it. */
+    .rfx-pick-added { gap: 0; }
+    .rfx-pa-h { display: flex; align-items: center; gap: .5rem; width: 100%; min-width: 0; text-align: left; border-radius: .6rem; }
+    .rfx-pa-h b { flex: none; font-size: .82rem; color: var(--rx-ink); }
+    .rfx-pa-h > small { flex: none; padding: 0 .45rem; border-radius: 999px; font-size: .7rem; font-weight: 900; color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px #f5c518; }
+    .rfx-pa-peek { flex: 1; min-width: 0; font-size: .78rem; color: var(--rx-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .25s ease; }
+    .rfx-pa-h .rfx-dt-c { flex: none; width: 1rem; height: 1rem; margin-left: auto; color: var(--rx-muted); transition: transform .3s cubic-bezier(.22,1,.36,1); }
+    .rfx-pick-added.is-open .rfx-pa-h .rfx-dt-c { transform: rotate(180deg); }
+    .rfx-pick-added.is-open .rfx-pa-peek { opacity: 0; }
+    .rfx-pa-b { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .34s cubic-bezier(.22,1,.36,1); }
+    .rfx-pick-added.is-open .rfx-pa-b { grid-template-rows: 1fr; }
+    .rfx-pa-in { display: grid; gap: .45rem; min-height: 0; overflow: hidden; opacity: 0; transition: opacity .22s ease; }
+    .rfx-pick-added.is-open .rfx-pa-in { padding-top: .55rem; opacity: 1; transition: opacity .3s ease .08s; }
+    /* A long list scrolls inside, so the search below stays in reach. */
+    .rfx-pa-sc { display: grid; gap: .45rem; max-height: min(38vh, 17rem); overflow: auto; overscroll-behavior: contain; padding-right: .15rem; }
+    @media (prefers-reduced-motion: reduce) { .rfx-pa-b, .rfx-pa-in, .rfx-pa-h .rfx-dt-c { transition: none; } }
+    .rfx-pick-hint { padding: .4rem .2rem; font-size: .84rem; color: var(--rx-muted); }
+    .rfx-pick-foot { position: sticky; bottom: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin: 0 -1rem; padding: .7rem 1rem calc(.8rem + env(safe-area-inset-bottom));
+        font-size: .82rem; font-weight: 700; color: var(--rx-muted); background: var(--rx-card); box-shadow: 0 -1px 0 var(--rx-line); }
+    /* The products added, a group a kind, each kind by date. */
+    .rfx-tries-b { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .rfx-add.is-plan { color: #fff; background: var(--rx-on); box-shadow: 0 8px 18px -10px rgb(47 82 25 / .9); }
+    /* In the Protocol Builder: no saved readings (a protocol is not a season), its days and area in their own row. */
+    .rfx-pbdays { display: flex; flex-wrap: wrap; align-items: flex-end; gap: .6rem 1rem; }
+    .rfx-pbha { display: grid; gap: .25rem; font-size: .78rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-pbha > span:last-child { display: inline-flex; align-items: center; gap: .35rem; font-size: .9rem; color: var(--rx-ink); }
+    .rfx-pbha input { width: 5rem; padding: .5rem .6rem; border-radius: .75rem; border: 1.5px solid var(--rx-field-line); font-size: .92rem; color: var(--rx-ink); background: var(--rx-field); }
+    /* The what-if lot: its chip, dashed until it is in use, and its sheet. */
+    .rfx-chip.is-what { box-shadow: inset 0 0 0 1.5px var(--rx-line-2); background: repeating-linear-gradient(135deg, var(--rx-card) 0 6px, var(--rx-soft) 6px 12px); }
+    .rfx-chip.is-what.is-on { color: #fff; background: #6d28d9; box-shadow: 0 8px 18px -10px rgb(109 40 217 / .8); }
+    .rfx-chip.is-what .rfx-pen { width: .8rem; height: .8rem; opacity: .8; }
+    .rfx-whatm .rfx-edit-c { width: min(100%, 36rem); padding-bottom: 0; }
+    /* The lot: a tag, and its window. */
+    .rfx-lotpick { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem; min-width: 0; }
+    .rfx-lottag { display: inline-flex; align-items: center; gap: .55rem; max-width: 100%; min-width: 0; padding: .4rem .85rem .4rem .45rem; border-radius: 999px; text-align: left; color: var(--rx-ink);
+        background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-hover), 0 6px 14px -10px rgb(47 82 25 / .7);
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-lottag:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 2px var(--rx-on), 0 10px 18px -10px rgb(47 82 25 / .85); }
+    .rfx-lottag em { flex: none; display: grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px; font-style: normal; font-size: 1.05rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-lottag > span { display: grid; min-width: 0; }
+    .rfx-lottag b { font-size: .95rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rfx-lottag small { font-size: .74rem; color: var(--rx-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rfx-lottag .rfx-dt-c { flex: none; width: .95rem; height: .95rem; margin-left: .1rem; opacity: .7; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-lottag.is-pop .rfx-dt-c { transform: rotate(180deg); }
+    .rfx-lottag.is-what { box-shadow: inset 0 0 0 1.5px #8b5cf6, 0 6px 14px -10px rgb(109 40 217 / .8); }
+    .rfx-lottag.is-what em { background: rgb(139 92 246 / .16); box-shadow: none; }
+    .rfx-lotm .rfx-edit-c { width: min(100%, 34rem); }
+    .rfx-lotl { display: grid; gap: .35rem; max-height: min(52vh, 26rem); overflow: auto; padding: .15rem; margin: -.15rem; }
+    .rfx-lotr { display: flex; align-items: center; gap: .65rem; width: 100%; min-width: 0; padding: .6rem .7rem; border-radius: .9rem; text-align: left; color: var(--rx-text); background: var(--rx-card);
+        box-shadow: inset 0 0 0 1px var(--rx-line); transition: box-shadow .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), background-color .28s;
+        animation: rfxPop .3s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 22ms); }
+    .rfx-lotr:hover { box-shadow: inset 0 0 0 1.5px var(--rx-hover); transform: translateX(2px); }
+    .rfx-lotr.is-on { background: var(--rx-soft); box-shadow: inset 0 0 0 2px var(--rx-on); }
+    .rfx-lotr em { flex: none; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: .7rem; font-style: normal; font-size: 1.1rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-lotr > span { flex: 1; min-width: 0; }
+    .rfx-lotr b { display: block; font-size: .92rem; color: var(--rx-ink); overflow-wrap: anywhere; }
+    .rfx-lotr small { display: block; font-size: .76rem; line-height: 1.35; color: var(--rx-muted); }
+    .rfx-lotr i { flex: none; display: grid; place-items: center; width: 1.35rem; height: 1.35rem; border-radius: 999px; color: #fff; background: var(--rx-on); opacity: 0; transform: scale(.5);
+        transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-lotr i svg { width: .8rem; height: .8rem; }
+    .rfx-lotr.is-on i { opacity: 1; transform: none; }
+    .rfx-lotw { display: flex; align-items: stretch; gap: .4rem; padding-top: .65rem; border-top: 1px dashed var(--rx-line-2); }
+    .rfx-lotw .rfx-lotr { flex: 1; animation: none; background: repeating-linear-gradient(135deg, var(--rx-card) 0 6px, var(--rx-soft) 6px 12px); }
+    .rfx-lotw .rfx-lotr em { background: rgb(139 92 246 / .16); box-shadow: none; }
+    .rfx-lotw .rfx-lotr.is-on { box-shadow: inset 0 0 0 2px #8b5cf6; }
+    .rfx-lotw .rfx-lotr.is-on i { background: #7c3aed; }
+    .rfx-lotw .rfx-btn { flex: none; align-self: center; }
+    @media (prefers-reduced-motion: reduce) { .rfx-lotr { animation: none; } }
+    .rfx-w-f { display: grid; gap: .3rem; font-size: .78rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-w-f i { font-style: normal; font-weight: 600; }
+    .rfx-w-f input { width: 100%; padding: .6rem .7rem; border-radius: .75rem; border: 1.5px solid var(--rx-field-line); font-size: .94rem; color: var(--rx-ink); background: var(--rx-field); }
+    .rfx-w-q { display: grid; gap: .55rem; padding: .75rem .8rem; border-radius: .95rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-w-q b { display: block; font-size: .9rem; color: var(--rx-ink); }
+    .rfx-w-q small { display: block; font-size: .78rem; line-height: 1.45; color: var(--rx-muted); }
+    .rfx-w-qb { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .rfx-add.is-plan:hover { background: #2f6a16; }
+    .rfx-add.is-water { color: #fff; background: #1f78c4; box-shadow: 0 8px 18px -10px rgb(23 90 146 / .9); }
+    .rfx-add.is-water:hover { background: #17619f; }
+    html.dark .rfx-add.is-water { color: #0b1d2e; background: #6fb6ee; }
+    html.dark .rfx-add.is-water:hover { background: #8cc6f3; }
+    .rfx-chip.is-try.is-wat { color: var(--rx-water-ink); background: var(--rx-water-bg); box-shadow: inset 0 0 0 1.5px var(--rx-water-line); }
+    .rfx-chip.is-try.is-wat:hover { box-shadow: inset 0 0 0 2px #3d8fc6, 0 8px 16px -10px rgb(23 90 146 / .7); }
+    /* How the water goes on, in the watering sheet. */
+    .rfx-wmeth { display: grid; grid-template-columns: repeat(auto-fill, minmax(8.2rem, 1fr)); gap: .4rem; margin-top: .85rem; }
+    .rfx-wmeth[hidden] { display: none; }
+    .rfx-wmeth button { display: grid; gap: .1rem; padding: .55rem .7rem; border-radius: .85rem; text-align: left; color: var(--rx-text); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line);
+        transition: box-shadow .28s cubic-bezier(.22,1,.36,1), background-color .28s cubic-bezier(.22,1,.36,1), transform .2s cubic-bezier(.22,1,.36,1); }
+    .rfx-wmeth button:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--rx-water-line); }
+    .rfx-wmeth button b { font-size: .86rem; color: var(--rx-ink); }
+    .rfx-wmeth button small { font-size: .74rem; color: var(--rx-muted); }
+    .rfx-wmeth button.is-on { background: var(--rx-water-bg); box-shadow: inset 0 0 0 2px #3d8fc6; }
+    .rfx-watm .rfx-edit-c { max-width: 34rem; }
+    html.dark .rfx-add.is-plan:hover { background: #5a9a33; }
+    /* Onto the plan: each product, what it would do, then done. */
+    .rfx-applym .rfx-edit-c { width: min(100%, 38rem); padding-bottom: 0; }
+    .rfx-ap-list { display: grid; gap: .4rem; margin: 0; padding: 0; list-style: none; }
+    .rfx-ap-row { display: grid; grid-template-columns: 4.2rem minmax(0, 1fr) auto; align-items: center; gap: .6rem; padding: .55rem .65rem; border-radius: .85rem; background: var(--rx-soft); box-shadow: inset 3px 0 0 var(--rx-line-2);
+        animation: rfxPop .3s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 30ms); }
+    .rfx-ap-row.is-new { box-shadow: inset 3px 0 0 var(--rx-accent); }
+    .rfx-ap-row.is-join { box-shadow: inset 3px 0 0 #2563eb; }
+    .rfx-ap-row.is-there, .rfx-ap-row.is-twice, .rfx-ap-row.is-bad { opacity: .78; }
+    .rfx-ap-d { font-weight: 900; font-size: .86rem; color: var(--rx-ink); }
+    .rfx-ap-n b { display: block; font-size: .88rem; color: var(--rx-ink); overflow-wrap: anywhere; }
+    .rfx-ap-n small { display: block; font-size: .76rem; line-height: 1.4; color: var(--rx-muted); }
+    .rfx-ap-tag { display: inline-block; margin-right: .3rem; padding: 0 .45rem; border-radius: 999px; font-size: .68rem; font-weight: 900; color: var(--rx-ink); background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line-2); }
+    .rfx-ap-row.is-new .rfx-ap-tag { color: #fff; background: var(--rx-on); box-shadow: none; }
+    .rfx-ap-row.is-join .rfx-ap-tag { color: #fff; background: #2563eb; box-shadow: none; }
+    .rfx-ap-q { font-size: .8rem; font-weight: 800; color: var(--rx-text); white-space: nowrap; }
+    .rfx-ap-q input { width: 4.2rem; padding: .35rem .45rem; border-radius: .55rem; border: 1.5px solid var(--rx-field-line); font-size: .86rem; color: var(--rx-ink); background: var(--rx-field); }
+    .rfx-ap-q select { padding: .35rem .3rem; border-radius: .55rem; border: 1.5px solid var(--rx-field-line); font-size: .82rem; color: var(--rx-ink); background: var(--rx-field); }
+    @media (max-width: 559.98px) { .rfx-ap-row { grid-template-columns: 3.4rem minmax(0, 1fr); } .rfx-ap-q { grid-column: 2; } }
+    .rfx-ap-done { display: grid; justify-items: center; gap: .4rem; padding: 1rem .5rem; text-align: center; }
+    .rfx-ap-done img { width: 72px; height: 72px; }
+    .rfx-ap-done b { font-family: var(--font-heading); font-size: 1.1rem; color: var(--rx-ink); }
+    .rfx-ap-done p { font-size: .88rem; line-height: 1.5; color: var(--rx-text); }
+    .rfx-tgs { display: grid; gap: .45rem; width: 100%; }
+    .rfx-tgs:empty { display: none; }
+    .rfx-tg { display: grid; gap: .3rem; }
+    .rfx-tg-h { font-size: .72rem; font-weight: 900; letter-spacing: .04em; color: var(--rx-muted); }
+    .rfx-tg-h em { margin-left: .3rem; font-style: normal; font-weight: 700; letter-spacing: 0; color: var(--rx-faint); }
+    /* Group by: date applied, type, or the fertilizer itself; a pill slides under the one picked. */
+    .rfx-gby { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .55rem; }
+    .rfx-gby[hidden] { display: none; }
+    .rfx-gby-l { font-size: .72rem; font-weight: 900; letter-spacing: .04em; text-transform: uppercase; color: var(--rx-faint); }
+    .rfx-gby-s { position: relative; display: inline-grid; grid-template-columns: repeat(3, auto); padding: .2rem; border-radius: 999px; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-gby-s button { position: relative; z-index: 1; padding: .35rem .75rem; border-radius: 999px; font-size: .8rem; font-weight: 800; white-space: nowrap; color: var(--rx-muted); transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-gby-s button:hover { color: var(--rx-ink); }
+    .rfx-gby-s button[aria-checked=true] { color: var(--rx-ink); }
+    .rfx-gby-pill { position: absolute; z-index: 0; top: .2rem; bottom: .2rem; left: 0; width: 0; border-radius: 999px; background: var(--rx-card);
+        box-shadow: 0 0 0 1.5px var(--rx-hover), 0 4px 10px -6px rgb(0 0 0 / .35); transition: transform .28s cubic-bezier(.22,1,.36,1), width .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-tgs.is-regroup .rfx-tg, .rfx-plan.is-regroup .rfx-tg { animation: rfxPop .3s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 30ms); }
+    /* The plan's own, in a plain box under the added ones: read here, changed in the protocol or in Activities. */
+    .rfx-plan { justify-self: stretch; width: 100%; background: var(--rx-soft); box-shadow: inset 0 0 0 1.5px var(--rx-line); }
+    .rfx-plan .rfx-pa-h > small { color: var(--rx-ink); background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line-2); }
+    .rfx-pl-note { font-size: .78rem; line-height: 1.45; color: var(--rx-muted); }
+    .rfx-chip.is-plan { cursor: default; font-weight: 700; }
+    .rfx-chip.is-plan:hover { transform: none; box-shadow: inset 0 0 0 1.5px var(--rx-line-2); }
+    /* Changed or taken out in this reading (the owner, 2026-11-02): a line of the plan opens to change, x takes it out,
+       the arrow puts it back as the plan has it. */
+    .rfx-chip.is-plan.is-edit { cursor: pointer; }
+    .rfx-chip.is-plan.is-edit:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-chip.is-plan .rfx-pen { width: .8rem; height: .8rem; opacity: .6; }
+    .rfx-chip.is-plan button { display: grid; place-items: center; width: 1.25rem; height: 1.25rem; border-radius: 999px; background: rgb(128 128 128 / .2); transition: background-color .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-chip.is-plan button:hover { background: rgb(128 128 128 / .34); }
+    .rfx-chip.is-plan button:last-child { margin-right: -.3rem; }
+    .rfx-chip.is-plan button svg { width: .68rem; height: .68rem; }
+    .rfx-chip.is-plan.is-changed { color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1.5px #f5c518; }
+    .rfx-chip.is-plan.is-out { opacity: .62; background: transparent; box-shadow: inset 0 0 0 1.5px var(--rx-line); }
+    .rfx-chip.is-plan.is-out s { text-decoration-thickness: 1.5px; }
+    /* A chip's words in one piece: a long name wraps as a line of text (never inside "46-0-0"), its buttons stay at the end. */
+    .rfx-ct { min-width: 0; }
+    .rfx-ct .rfx-pl-tag, .rfx-ct .rfx-pl-done { margin-left: .3rem; white-space: nowrap; }
+    .rfx-nw { white-space: nowrap; }
+    .rfx-pl-tag { font-style: normal; padding: 0 .4rem; border-radius: 999px; font-size: .66rem; font-weight: 900; letter-spacing: .02em; color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px #f5c518; }
+    .rfx-chip.is-out .rfx-pl-tag { color: var(--rx-muted); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line-2); }
+    .rfx-plan .rfx-pa-h > small.is-ch { color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px #f5c518; white-space: nowrap; }
+    .rfx-pl-done { font-style: normal; font-size: .7rem; font-weight: 800; color: var(--rx-muted); }
+    @media (max-width: 479.98px) { .rfx-gby-s button { padding: .35rem .55rem; font-size: .76rem; } }
+    @media (prefers-reduced-motion: reduce) { .rfx-gby-pill { transition: none; } .rfx-tgs.is-regroup .rfx-tg, .rfx-plan.is-regroup .rfx-tg { animation: none; } }
+    .rfx-tg-h small { margin-left: .2rem; padding: 0 .4rem; border-radius: 999px; font-size: .68rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-chip.is-try [data-dupe] { margin-right: -.1rem; }
+    @keyframes rfxSlide { from { opacity: 0; transform: translateY(-8px); } }
+    .rfx-search { display: flex; align-items: center; gap: .5rem; padding: 0 .8rem; border-radius: .9rem; background: var(--rx-field); box-shadow: inset 0 0 0 1.5px var(--rx-field-line); }
+    .rfx-search svg { width: 1.1rem; height: 1.1rem; color: #b8941c; flex: none; }
+    .rfx-search input { flex: 1; min-width: 0; padding: .65rem 0; border: 0; background: transparent; font-size: .96rem; color: var(--rx-ink); outline: none; }
+    .rfx input::placeholder { color: var(--rx-faint); opacity: 1; }
+    .rfx-results { display: grid; gap: .35rem; max-height: 16rem; overflow: auto; }
+    .rfx-res { display: flex; align-items: center; gap: .6rem; padding: .6rem .7rem; border-radius: .8rem; text-align: left; background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-field-line);
+        transition: box-shadow .2s, transform .2s cubic-bezier(.22,1,.36,1); animation: rfxPop .28s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 22ms); }
+    .rfx-res:hover { box-shadow: inset 0 0 0 1.5px #f5c518; transform: translateX(2px); }
+    .rfx-res em { flex: none; display: grid; place-items: center; width: 2.2rem; height: 2.2rem; border-radius: .7rem; font-style: normal; font-size: 1.05rem; background: var(--rx-res-icon); }
+    .rfx-res b, .rfx-picked-p b { display: block; font-size: .9rem; color: var(--rx-ink); }
+    .rfx-res small, .rfx-picked-p small { display: block; font-size: .76rem; color: var(--rx-muted); line-height: 1.35; }
+    .rfx-picked { display: grid; gap: .6rem; }
+    .rfx-picked-p { display: flex; align-items: center; gap: .6rem; padding: .7rem; border-radius: .9rem; background: var(--rx-card); box-shadow: inset 0 0 0 1.5px #f5c518; }
+    .rfx-picked-p em { font-style: normal; font-size: 1.3rem; }
+    .rfx-picked-f { display: grid; gap: .6rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @media (max-width: 559.98px) { .rfx-picked-f { grid-template-columns: minmax(0, 1fr); } }
+    .rfx-picked-f label { display: grid; gap: .25rem; font-size: .78rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-picked-f label i { font-style: normal; font-weight: 600; }
+    .rfx-picked-f input, .rfx-picked-f select, .rfx-look-f input { width: 100%; padding: .6rem .7rem; border-radius: .75rem; border: 1.5px solid var(--rx-field-line); font-size: .94rem; background: var(--rx-field); color: var(--rx-ink); color-scheme: light; }
+    html.dark .rfx-picked-f input, html.dark .rfx-picked-f select { color-scheme: dark; }
+    .rfx-amt { display: grid; grid-template-columns: minmax(0, 1fr) 6.5rem; gap: .4rem; }
+    .rfx-how { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .3rem; padding: .25rem; border-radius: 1rem; background: var(--rx-how-bg); }
+    .rfx-how button { position: relative; z-index: 1; display: flex; align-items: center; gap: .55rem; min-width: 0; padding: .55rem .7rem; border-radius: .8rem; text-align: left; color: var(--rx-how-ink);
+        transition: color .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-how button[aria-checked=true] { color: var(--rx-ink); }
+    .rfx-how svg { flex: none; width: 1.7rem; height: 1.7rem; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-how button[aria-checked=true] svg { transform: scale(1.12) rotate(-4deg); }
+    .rfx-how b { display: block; font-size: .9rem; }
+    .rfx-how small { display: block; font-size: .74rem; font-weight: 600; line-height: 1.3; opacity: .9; }
+    .rfx-how-pill { position: absolute; z-index: 0; top: .25rem; bottom: .25rem; left: .25rem; width: calc(50% - .4rem); border-radius: .8rem; background: var(--rx-card);
+        box-shadow: inset 0 0 0 1.5px #f5c518, 0 6px 14px -8px rgb(92 69 0 / .5); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-how[data-on=foliar] .rfx-how-pill { transform: translateX(calc(100% + .3rem)); }
+    .rfx-picked-b { display: flex; justify-content: flex-end; gap: .5rem; }
+    .rfx-btn { display: inline-flex; align-items: center; justify-content: center; gap: .45rem; padding: .62rem 1rem; border-radius: .85rem; font-size: .9rem; font-weight: 800;
+        transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s, background-color .28s; }
+    .rfx-btn svg { width: 1.05rem; height: 1.05rem; }
+    .rfx-btn:hover { transform: translateY(-1px); }
+    .rfx-btn.is-go { color: #fff; background: #2f5219; box-shadow: 0 10px 20px -12px rgb(47 82 25 / .8); }
+    html.dark .rfx-btn.is-go { background: #3f7322; }
+    .rfx-btn.is-gold { color: #14210c; background: #f5c518; box-shadow: 0 10px 20px -12px rgb(184 138 0 / .8); }
+    .rfx-btn.is-ghost { color: var(--rx-text); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-line-2); }
+    .rfx-btn:disabled { opacity: .55; transform: none; }
+    .rfx-look { display: flex; gap: .8rem; align-items: flex-start; padding: .8rem; border-radius: .9rem; background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-field-line); }
+    .rfx-look > img { flex: none; width: 3rem; height: 3rem; }
+    .rfx-look b { font-size: .94rem; color: var(--rx-ink); }
+    .rfx-look p { margin-top: .2rem; font-size: .84rem; line-height: 1.5; color: var(--rx-muted); }
+    .rfx-look-f { display: grid; gap: .45rem; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: .6rem 0; }
+    @media (max-width: 559.98px) { .rfx-look-f { grid-template-columns: minmax(0, 1fr); } }
+    .rfx-look small { display: block; margin-top: .45rem; font-size: .76rem; color: var(--rx-muted); }
+
+    /* ---- the reading ---- */
+    .rfx-body { padding: 1rem; display: grid; gap: 1rem; }
+    @media (min-width: 900px) { .rfx-body { padding: 1.2rem 1.4rem 1.6rem; } }
+    /* Grid items keep their content's width unless told: the chart's scroll box would widen the whole sheet. */
+    .rfx-body > *, .rfx-controls > *, .rfx-row > * { min-width: 0; }
+    .rfx-loading { display: flex; justify-content: center; gap: .4rem; padding: 4rem 0; }
+    .rfx-loading span { width: .7rem; height: .7rem; border-radius: 999px; background: #4a7c2a; animation: rfxDot 1s ease-in-out infinite; }
+    .rfx-loading span:nth-child(2) { animation-delay: .15s; } .rfx-loading span:nth-child(3) { animation-delay: .3s; }
+    @keyframes rfxDot { 50% { transform: translateY(-8px); opacity: .5; } }
+    .rfx-card { border-radius: 1.2rem; background: var(--rx-card); box-shadow: 0 0 0 1px var(--rx-line), 0 18px 36px -30px rgb(0 0 0 / .5); animation: rfxIn .45s cubic-bezier(.22,1,.36,1) both; animation-delay: var(--d, 0s); }
+    @keyframes rfxIn { from { opacity: 0; transform: translateY(12px); } }
+    .rfx-card-h { display: flex; align-items: center; gap: .5rem; padding: .95rem 1rem .25rem; font-size: .76rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--rx-accent); }
+    .rfx-card-h small { margin-left: auto; font-size: .78rem; font-weight: 700; letter-spacing: 0; text-transform: none; color: var(--rx-muted); }
+    .rfx-banner { display: flex; align-items: center; gap: .7rem; padding: .75rem 1rem; border-radius: 1rem; font-size: .88rem; font-weight: 700; line-height: 1.5; color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px var(--rx-gold-line); }
+    .rfx-banner b { color: inherit; }
+    .rfx-banner.is-saved { color: var(--rx-saved-ink); background: var(--rx-saved-bg); box-shadow: inset 0 0 0 1px var(--rx-saved-line); }
+    .rfx-banner .rfx-btn { margin-left: auto; padding: .45rem .8rem; font-size: .82rem; }
+    .rfx-banner.is-miss { flex-wrap: wrap; font-weight: 600; animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; }
+    .rfx-banner.is-miss > span:first-child { flex: 1 1 16rem; }
+    .rfx-acts { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .rfx-acts .rfx-chip { padding: .38rem .75rem; font-size: .8rem; }
+    /* The summary. */
+    .rfx-sum { display: grid; gap: 1rem; padding: 1rem; grid-template-columns: auto minmax(0, 1fr); align-items: center; }
+    @media (max-width: 559.98px) { .rfx-sum { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; } }
+    .rfx-ring { position: relative; width: 8.2rem; aspect-ratio: 1; }
+    .rfx-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .rfx-ring circle { fill: none; stroke-width: 10; }
+    .rfx-ring .t, .rfx-mini .t { stroke: var(--rx-track); }
+    .rfx-ring .v { stroke-linecap: round; stroke-dasharray: 0 400; transition: stroke-dasharray 1.2s cubic-bezier(.22,1,.36,1); }
+    .rfx-ring-n { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; text-align: center; }
+    .rfx-ring-n b { font-family: var(--font-heading); font-size: 2rem; font-weight: 900; line-height: 1; color: var(--rx-ink); }
+    .rfx-ring-n small { margin-top: .25rem; font-size: .7rem; font-weight: 800; color: var(--rx-muted); line-height: 1.25; max-width: 5.8rem; }
+    .rfx-say h3 { font-family: var(--font-heading); font-size: 1.18rem; font-weight: 800; line-height: 1.3; color: var(--rx-ink); }
+    .rfx-say p { margin-top: .35rem; font-size: .92rem; line-height: 1.6; color: var(--rx-muted); }
+    .rfx-counts { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .7rem; }
+    .rfx-counts span { display: inline-flex; align-items: center; gap: .35rem; padding: .32rem .7rem; border-radius: 999px; font-size: .8rem; font-weight: 800; background: var(--rx-soft); color: var(--rx-text); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-counts i { width: .6rem; height: .6rem; border-radius: 3px; }
+    @media (max-width: 559.98px) { .rfx-counts { justify-content: center; } }
+    .rfx-runs { display: grid; gap: .45rem; padding: 0 1rem 1rem; }
+    .rfx-run { display: flex; align-items: flex-start; gap: .6rem; padding: .65rem .8rem; border-radius: .85rem; font-size: .88rem; line-height: 1.5; color: var(--rx-text); background: var(--rx-gap-bg); box-shadow: inset 0 0 0 1px var(--rx-gap-line); cursor: pointer;
+        transition: transform .2s cubic-bezier(.22,1,.36,1); animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; animation-delay: var(--d, 0s); }
+    .rfx-run:hover { transform: translateX(3px); }
+    .rfx-run b { color: var(--rx-gap-ink); }
+    .rfx-run.is-thin { background: var(--rx-thin-bg); box-shadow: inset 0 0 0 1px var(--rx-thin-line); } .rfx-run.is-thin b { color: var(--rx-thin-ink); }
+    .rfx-run.is-late { background: var(--rx-late-bg); box-shadow: inset 0 0 0 1px var(--rx-late-line); } .rfx-run.is-late b { color: var(--rx-late-ink); }
+    .rfx-run em { flex: none; font-style: normal; }
+    /* The season chart. Its text is sized for the drawing, which a phone scrolls sideways at 46rem. */
+    .rfx-chart { padding: .2rem 1rem 1rem; }
+    .rfx-chart-w { position: relative; overflow-x: auto; scrollbar-width: thin; }
+    .rfx-chart svg { display: block; min-width: 46rem; width: 100%; height: auto; overflow: visible; }
+    .rfx-chart .cov-l { fill: none; stroke: var(--rx-accent); stroke-width: 2.2; stroke-linejoin: round; }
+    .rfx-chart .rib { transform-box: fill-box; transform-origin: left; animation: rfxRib .9s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(.3s + var(--k, 0) * 40ms); }
+    @keyframes rfxRib { from { transform: scaleX(0); opacity: 0; } }
+    .rfx-chart .try-l { fill: none; stroke: #e0a800; stroke-width: 2.2; stroke-dasharray: 5 4; }
+    .rfx-chart .reveal { clip-path: inset(0 100% 0 0); animation: rfxWipe 1.3s cubic-bezier(.45,0,.25,1) .15s forwards; }
+    @keyframes rfxWipe { to { clip-path: inset(0 0 0 0); } }
+    .rfx-chart .ln { transition: opacity .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-chart .ln.is-off { opacity: 0; pointer-events: none; }
+    /* The chart's switches: filled in its colour when shown, a ring of it when hidden, a plus when not picked yet. */
+    .rfx-lnrow { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; padding: 0 1rem .55rem; }
+    .rfx-ln { display: inline-flex; align-items: center; gap: .4rem; min-height: 2rem; padding: .3rem .75rem .3rem .55rem; border-radius: 999px; font-size: .82rem; font-weight: 800; color: var(--rx-text); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-line-2);
+        transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1), transform .2s, opacity .2s; animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 30ms); }
+    .rfx-ln:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-ln:focus-visible { outline: 2px solid var(--rx-accent); outline-offset: 2px; }
+    .rfx-ln i { flex: none; width: .7rem; height: .7rem; border-radius: 999px; box-shadow: inset 0 0 0 2px var(--sc); transition: background-color .28s cubic-bezier(.22,1,.36,1), box-shadow .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-ln svg { flex: none; width: .75rem; height: .75rem; opacity: .7; }
+    .rfx-ln small { font-size: .68rem; font-weight: 700; opacity: .85; }
+    .rfx-ln.is-on { color: #fff; background: var(--sc); box-shadow: 0 8px 16px -12px var(--sc); }
+    .rfx-ln.is-on i { background: #fff; box-shadow: none; }
+    html.dark .rfx-ln.is-on { color: #111a0c; }
+    html.dark .rfx-ln.is-on i { background: #111a0c; }
+    .rfx-ln:not(.is-on):not(.is-add) { color: var(--rx-muted); }
+    .rfx-ln.is-add { color: var(--rx-muted); background: transparent; box-shadow: inset 0 0 0 1.5px var(--rx-line); }
+    .rfx-ln.is-busy { opacity: .55; pointer-events: none; }
+    .rfx-chart .grid { stroke: var(--rx-line); stroke-width: 1; }
+    .rfx-chart .base { stroke: var(--rx-line-2); stroke-width: 1.2; }
+    .rfx-chart .dose { stroke: var(--rx-faint); stroke-width: 1; stroke-dasharray: 2 4; }
+    /* Rain, hanging from the top of the season chart on a water check. */
+    .rfx-chart .rain { fill: var(--rx-rain); opacity: .5; transform-box: fill-box; transform-origin: top; animation: rfxDrip .7s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(.2s + var(--k, 0) * 4ms); }
+    @keyframes rfxDrip { from { transform: scaleY(0); } }
+    @media (prefers-reduced-motion: reduce) { .rfx-chart .rain { animation: none; } }
+    .rfx-chart .stg { font-size: 12px; font-weight: 800; fill: var(--rx-muted); }
+    .rfx-chart .mo { font-size: 12px; font-weight: 800; fill: var(--rx-faint); }
+    .rfx-chart .today { stroke: var(--rx-today); stroke-width: 1.5; stroke-dasharray: 3 3; }
+    .rfx-chart .t-today { fill: var(--rx-today); }
+    .rfx-chart .harv { stroke: #d97706; stroke-width: 1.5; }
+    .rfx-chart .t-harv { fill: #c2650a; }
+    html.dark .rfx-chart .t-harv { fill: #fbbf24; }
+    .rfx-chart .app { stroke-width: 1.8; cursor: pointer; transition: r .2s; }
+    .rfx-chart .app.is-done { fill: var(--rx-ink); stroke: var(--rx-card); }
+    .rfx-chart .app.is-plan { fill: var(--rx-card); stroke: var(--rx-ink); }
+    .rfx-chart .app.is-try { fill: #f5c518; stroke: #b8860b; }
+    .rfx-chart .app:hover { r: 6.5; }
+    /* The calendar. */
+    .rfx-cal { display: grid; gap: .4rem 1.1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); padding: .2rem .8rem 1rem; }
+    .rfx-month { margin-top: .8rem; min-width: 0; }
+    .rfx-month-h { display: flex; align-items: baseline; gap: .6rem; padding: 0 .2rem .4rem; }
+    .rfx-month-h b { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 800; color: var(--rx-ink); }
+    .rfx-month-h small { font-size: .78rem; color: var(--rx-muted); }
+    .rfx-wk { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .3rem; }
+    .rfx-wd { padding: 0 .2rem .2rem; font-size: .66rem; font-weight: 900; letter-spacing: .06em; text-align: center; text-transform: uppercase; color: var(--rx-faint); }
+    .rfx-cell { position: relative; min-height: 3.5rem; padding: .3rem .35rem; border-radius: .7rem; overflow: hidden; text-align: left; background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line);
+        transition: transform .2s cubic-bezier(.22,1,.36,1), box-shadow .2s; }
+    .rfx-cell:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1.5px var(--rx-hover), 0 10px 18px -12px rgb(0 0 0 / .5); z-index: 1; }
+    .rfx-cell.is-out { background: transparent; box-shadow: none; pointer-events: none; }
+    .rfx-cell.is-out .rfx-n { color: var(--rx-faint); opacity: .6; }
+    .rfx-fill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; overflow: hidden; background: linear-gradient(180deg, #86c25a, #4a7c2a);
+        transition: height .7s cubic-bezier(.22,1,.36,1); transition-delay: calc(var(--k, 0) * 6ms); }
+    .rfx-cal.is-in .rfx-fill { height: var(--h, 0%); }
+    /* The fill's colour is what the strongest product is doing that day; the cell's edge is what it means for the crop. */
+    .rfx-cell[data-p=absorb] .rfx-fill { background: var(--ph-absorb); }
+    .rfx-cell[data-p=strong] .rfx-fill { background: var(--ph-strong); }
+    .rfx-cell[data-p=easing] .rfx-fill { background: var(--ph-easing); }
+    .rfx-cell[data-p=fading] .rfx-fill { background: var(--ph-fading); }
+    .rfx-cell[data-p=wet] .rfx-fill { background: var(--ph-wet); }
+    .rfx-cell[data-p=moist] .rfx-fill { background: var(--ph-moist); }
+    .rfx-cell[data-p=drying] .rfx-fill { background: var(--ph-drying); }
+    .rfx-cell[data-p=dry] .rfx-fill { background: var(--ph-dry); }
+    .rfx-cell[data-p=wet] .rfx-fill::before { content: ''; position: absolute; left: 0; right: 0; top: -100%; height: 300%;
+        background: linear-gradient(0deg, transparent 40%, rgb(255 255 255 / .32) 50%, transparent 60%); animation: rfxRise 3.2s linear infinite; }
+    /* The rain of a day, at the cell's foot. */
+    .rfx-rn { position: absolute; z-index: 2; left: .25rem; bottom: .22rem; display: inline-flex; align-items: center; gap: .08rem; padding: 0 .22rem; border-radius: .35rem;
+        font-size: .58rem; font-weight: 900; line-height: 1rem; color: var(--rx-rain-ink); background: var(--rx-card); box-shadow: 0 0 0 1px var(--rx-water-line); }
+    .rfx-rn svg { width: .68rem; height: .68rem; fill: currentColor; }
+    @media (max-width: 639.98px) { .rfx-rn { left: .12rem; bottom: .12rem; padding: 0 .12rem; font-size: .5rem; line-height: .85rem; } .rfx-rn svg { width: .55rem; height: .55rem; } }
+    .rfx-cell[data-p=absorb] .rfx-fill::before { content: ''; position: absolute; left: 0; right: 0; top: -100%; height: 300%;
+        background: linear-gradient(0deg, transparent 38%, rgb(255 255 255 / .38) 50%, transparent 62%); animation: rfxRise 2.4s linear infinite; }
+    @keyframes rfxRise { from { transform: translateY(33%); } to { transform: translateY(-33%); } }
+    /* Still in the soil: an earth band at the foot of the day (urea turning into ammonium, a salt dissolving, manure breaking down). */
+    .rfx-soil { position: absolute; left: 0; right: 0; bottom: 0; height: 30%; transform: scaleY(0); transform-origin: bottom;
+        background: radial-gradient(circle, rgb(255 236 200 / .55) 0 1px, transparent 1.6px) 0 0 / 6px 5px, var(--ph-soil); animation: rfxSoil 7s linear infinite;
+        transition: transform .6s cubic-bezier(.22,1,.36,1); transition-delay: calc(var(--k, 0) * 6ms + .15s); }
+    .rfx-cal.is-in .rfx-soil { transform: none; }
+    .rfx-cell[data-p=soil] .rfx-soil { height: 42%; }
+    @keyframes rfxSoil { to { background-position: 12px -10px, 0 0; } }
+    .rfx-cell[data-s=gap] { background: repeating-linear-gradient(135deg, var(--rx-gap-a) 0 6px, var(--rx-gap-b) 6px 12px); box-shadow: inset 0 0 0 1.5px var(--rx-gap-edge); }
+    .rfx-cell[data-s=thin] { box-shadow: inset 0 0 0 2px var(--rx-thin-edge); }
+    .rfx-cell[data-s=late], .rfx-cell[data-s=extra] { box-shadow: inset 0 0 0 2px var(--rx-late-edge); }
+    .rfx-cell[data-s=late] .rfx-fill::after, .rfx-cell[data-s=extra] .rfx-fill::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(135deg, rgb(124 58 237 / .5) 0 3px, transparent 3px 7px); }
+    .rfx-cell.is-today { box-shadow: inset 0 0 0 2px var(--rx-today); }
+    .rfx-cell[data-t="1"]::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 2px #f5c518; pointer-events: none; animation: rfxTry 1.8s ease-in-out infinite; }
+    @keyframes rfxTry { 50% { box-shadow: inset 0 0 0 2px rgb(245 197 24 / .35); } }
+    .rfx-n { position: relative; z-index: 1; display: block; font-size: .84rem; font-weight: 900; line-height: 1.2; color: var(--rx-ink); }
+    .rfx-dl { position: relative; z-index: 1; display: block; font-size: .6rem; font-weight: 800; color: var(--rx-muted); white-space: nowrap; }
+    /* A day filled past its numbers: white on the deep fills, near black on the pale ones, in either mode. */
+    .rfx-cell.is-full .rfx-n { color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / .35); } .rfx-cell.is-full .rfx-dl { color: rgb(255 255 255 / .92); text-shadow: 0 1px 2px rgb(0 0 0 / .35); }
+    .rfx-cell.is-full.is-lt .rfx-n { color: #132009; text-shadow: none; } .rfx-cell.is-full.is-lt .rfx-dl { color: #2e3e24; text-shadow: none; }
+    .rfx-cell.is-half .rfx-dl { color: #fff; text-shadow: 0 1px 2px rgb(0 0 0 / .35); }
+    .rfx-cell.is-half.is-lt .rfx-dl { color: #2e3e24; text-shadow: none; }
+    .rfx-cell.is-full .rfx-n, .rfx-cell.is-full .rfx-dl, .rfx-cell.is-half .rfx-dl { transition: color .4s ease .5s; }
+    .rfx-crit { position: absolute; z-index: 1; top: .34rem; right: .3rem; display: flex; gap: 2px; }
+    .rfx-crit i { width: .34rem; height: .34rem; border-radius: 999px; background: var(--rx-dot); }
+    .rfx-cell.is-full .rfx-crit i { box-shadow: 0 0 0 1px rgb(255 255 255 / .55); }
+    .rfx-crit.c1 i:nth-child(-n+1), .rfx-crit.c2 i:nth-child(-n+2), .rfx-crit.c3 i:nth-child(-n+3) { background: #dc2626; }
+    .rfx-crit.c1 i:nth-child(-n+1) { background: #f59e0b; } .rfx-crit.c2 i:nth-child(-n+2) { background: #f97316; }
+    html.dark .rfx-crit.c1 i:nth-child(-n+1), html.dark .rfx-crit.c2 i:nth-child(-n+2), html.dark .rfx-crit.c3 i:nth-child(-n+3) { background: #f87171; }
+    html.dark .rfx-crit.c1 i:nth-child(-n+1) { background: #fbbf24; } html.dark .rfx-crit.c2 i:nth-child(-n+2) { background: #fb923c; }
+    /* What went on that day: a small badge per product, its mark saying how (granules, a spray, organic), filled when
+       done, outlined while planned, gold for a try. */
+    .rfx-ap { position: absolute; z-index: 2; right: .25rem; bottom: .25rem; display: flex; align-items: center; }
+    .rfx-ap i { display: grid; place-items: center; width: 1.2rem; height: 1.2rem; border-radius: 999px; color: var(--rx-badge-ink); background: var(--rx-badge); box-shadow: 0 0 0 1.5px var(--rx-card), 0 3px 6px -2px rgb(0 0 0 / .45);
+        animation: rfxPop .4s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(.4s + var(--k, 0) * 6ms); }
+    .rfx-ap i + i { margin-left: -.35rem; }
+    .rfx-ap i svg { width: .74rem; height: .74rem; fill: currentColor; }
+    .rfx-ap i.is-plan { color: var(--rx-ink); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-ink), 0 0 0 1.5px var(--rx-card), 0 3px 6px -2px rgb(0 0 0 / .3); }
+    .rfx-ap i.is-try { color: #5c4500; background: #f5c518; }
+    /* In the colour of the check the calendar shows when it acts on it, grey when it does not (2026-10-30, the owner:
+       "show all the applications but make the current selected nutrient target related a different color"). */
+    .rfx-ap i.is-rel { color: #fff; background: var(--sc, var(--rx-badge)); }
+    .rfx-ap i.is-other { color: var(--rx-ap-off-ink); background: var(--rx-ap-off); }
+    html.dark .rfx-ap i.is-rel { color: #111a0c; }
+    .rfx-ap i.is-plan.is-rel { color: var(--sc, var(--rx-ink)); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--sc, var(--rx-ink)), 0 0 0 1.5px var(--rx-card), 0 3px 6px -2px rgb(0 0 0 / .3); }
+    .rfx-ap i.is-plan.is-other { color: var(--rx-ap-off-ink); background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-ap-off-ink), 0 0 0 1.5px var(--rx-card), 0 3px 6px -2px rgb(0 0 0 / .3); }
+    .rfx-ap i.is-try.is-rel, .rfx-ap i.is-try.is-other { box-shadow: 0 0 0 2px #f5c518, 0 3px 6px -2px rgb(0 0 0 / .45); }
+    .rfx-ap b { margin-left: .1rem; padding: 0 .25rem; border-radius: 999px; font-size: .58rem; font-weight: 900; line-height: 1.05rem; color: var(--rx-ink); background: var(--rx-card); box-shadow: 0 0 0 1px var(--rx-line-2); }
+    @media (max-width: 639.98px) { .rfx-ap { right: .12rem; bottom: .12rem; } .rfx-ap i { width: 1rem; height: 1rem; } .rfx-ap i svg { width: .62rem; height: .62rem; } }
+    /* Side by side. */
+    .rfx-minis { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 9.4rem), 1fr)); gap: .5rem; padding: .7rem 1rem .3rem; }
+    .rfx-mini { display: flex; align-items: center; gap: .6rem; min-width: 0; padding: .55rem .65rem; border-radius: .95rem; text-align: left; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line);
+        transition: box-shadow .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1), background-color .28s; animation: rfxPop .35s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 50ms); }
+    .rfx-mini:hover { transform: translateY(-1px); }
+    .rfx-mini.is-on { background: var(--rx-card); box-shadow: inset 0 0 0 2px var(--sc), 0 12px 24px -18px var(--sc); }
+    .rfx-mini svg { flex: none; width: 2.8rem; height: 2.8rem; transform: rotate(-90deg); }
+    .rfx-mini circle { fill: none; stroke-width: 5; }
+    .rfx-mini .v { stroke-linecap: round; stroke-dasharray: 0 200; transition: stroke-dasharray 1s cubic-bezier(.22,1,.36,1); }
+    .rfx-mini > span { min-width: 0; display: grid; }
+    .rfx-mini b { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 900; line-height: 1.1; color: var(--rx-ink); }
+    .rfx-mini span span { font-size: .8rem; font-weight: 800; color: var(--rx-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rfx-mini small { font-size: .72rem; color: var(--rx-muted); }
+    .rfx-lanes { display: grid; gap: .4rem; padding: .7rem 1rem .5rem; }
+    .rfx-lane { display: grid; grid-template-columns: 5.6rem minmax(0, 1fr); gap: .55rem; align-items: center; animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(.08s + var(--k, 0) * 60ms); }
+    .rfx-lane-n { display: flex; align-items: center; gap: .35rem; min-width: 0; font-size: .76rem; font-weight: 800; line-height: 1.15; color: var(--rx-muted); text-align: left; overflow: hidden; }
+    .rfx-lane-n i { flex: none; width: .6rem; height: .6rem; border-radius: 999px; background: var(--sc); }
+    .rfx-lane.is-on .rfx-lane-n { color: var(--rx-ink); }
+    .rfx-lane-s { display: block; width: 100%; height: 2rem; border-radius: .45rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); cursor: pointer; clip-path: inset(0 100% 0 0 round .45rem);
+        animation: rfxLane 1.1s cubic-bezier(.45,0,.25,1) forwards; animation-delay: calc(.15s + var(--k, 0) * 90ms); }
+    @keyframes rfxLane { to { clip-path: inset(0 0 0 0 round .45rem); } }
+    .rfx-lane.is-on .rfx-lane-s { box-shadow: 0 0 0 2px var(--sc); }
+    .rfx-lane.is-head { animation: none; }
+    .rfx-stg { display: flex; overflow: hidden; }
+    .rfx-stg .rfx-sb { position: relative; flex: none; height: 1.5rem; border-left: 1px solid var(--rx-line-2); }
+    /* A stage's mark: a symbol and two letters in a pill over its band; a narrow band keeps the letters, a very narrow
+       one the symbol alone (each mark is its own size container). */
+    .rfx-chart-in { min-width: 46rem; }
+    .rfx-sbar { position: relative; height: 1.9rem; }
+    .rfx-sb { position: absolute; top: 0; bottom: 0; display: grid; place-items: center; padding: 0 1px; container-type: inline-size; cursor: pointer; }
+    .rfx-sb > span { display: inline-flex; align-items: center; gap: .2rem; max-width: 100%; padding: .18rem .45rem; border-radius: 999px; font-size: .72rem; font-weight: 900; line-height: 1.1; white-space: nowrap; overflow: hidden;
+        color: var(--rx-muted); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s, color .28s, background-color .28s; }
+    .rfx-sb i { font-style: normal; font-size: .82rem; }
+    .rfx-sb b { letter-spacing: .03em; color: inherit; }
+    .rfx-sb.c3 > span { color: var(--rx-gap-ink); background: var(--rx-gap-bg); box-shadow: inset 0 0 0 1px var(--rx-gap-line); }
+    .rfx-sb.c2 > span { color: var(--rx-thin-ink); background: var(--rx-thin-bg); box-shadow: inset 0 0 0 1px var(--rx-thin-line); }
+    .rfx-sb.is-now > span { box-shadow: inset 0 0 0 2px var(--rx-today), 0 6px 14px -10px var(--rx-today); }
+    .rfx-sb:hover > span { transform: translateY(-1px); box-shadow: inset 0 0 0 1.5px var(--rx-hover), 0 8px 16px -12px rgb(0 0 0 / .5); }
+    .rfx-sb:focus-visible { outline: none; }
+    .rfx-sb:focus-visible > span { outline: 2px solid var(--rx-accent); outline-offset: 1px; }
+    .rfx-sb.is-sm > span { padding: .1rem .3rem; font-size: .64rem; }
+    .rfx-sb.is-sm i { font-size: .7rem; }
+    @container (max-width: 3.3rem) { .rfx-sb i { display: none; } .rfx-sb > span { padding: .15rem .3rem; } }
+    @container (max-width: 1.7rem) { .rfx-sb i { display: inline; } .rfx-sb b { display: none; } .rfx-sb > span { padding: .15rem; } }
+    /* A stage, opened. */
+    .rfx-stgm .rfx-edit-c { gap: .7rem; width: min(100%, 32rem); }
+    .rfx-stgm .rfx-edit-c.is-step { animation: rfxPop .3s cubic-bezier(.22,1,.36,1); }
+    .rfx-stgm .rfx-day-h b { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+    .rfx-stg-ic { font-size: 1.35rem; line-height: 1; }
+    .rfx-stg-ab { padding: .1rem .45rem; border-radius: 999px; font-style: normal; font-size: .72rem; font-weight: 900; letter-spacing: .05em; color: var(--rx-ink); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line-2); }
+    .rfx-stg-when { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: .3rem .8rem; }
+    .rfx-stg-when b { display: block; font-family: var(--font-heading); font-size: 1.2rem; color: var(--rx-ink); }
+    .rfx-stg-when small { display: block; font-size: .8rem; font-weight: 700; color: var(--rx-muted); }
+    .rfx-stg-when > span { font-size: .8rem; font-weight: 800; color: var(--rx-today); }
+    .rfx-stgm .rfx-meter { margin-top: -.3rem; }
+    .rfx-stg-ra { padding: .7rem .8rem; border-radius: .9rem; background: var(--rx-try-bg); box-shadow: inset 0 0 0 1.5px var(--rx-try-line); }
+    .rfx-stg-ra.is-delay { background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line-2); }
+    .rfx-stg-ra > b { display: block; font-size: .88rem; color: var(--rx-ink); }
+    .rfx-stg-ra p { margin-top: .3rem; font-size: .84rem; line-height: 1.5; color: var(--rx-text); }
+    .rfx-stg-ra p b { color: var(--rx-ink); }
+    .rfx-stg-cmp { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; margin-top: .55rem; }
+    .rfx-stg-cmp span { display: grid; gap: .1rem; padding: .45rem .6rem; border-radius: .7rem; background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-stg-cmp span.is-ra { box-shadow: inset 0 0 0 1.5px #f5c518; }
+    .rfx-stg-cmp em { font-style: normal; font-size: .72rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-stg-cmp b { font-size: .9rem; color: var(--rx-ink); }
+    .rfx-stg-saw { margin-top: .45rem; }
+    .rfx-stg-saw summary { cursor: pointer; font-size: .8rem; font-weight: 800; color: var(--rx-accent); }
+    .rfx-stg-crit { padding: .65rem .8rem; border-radius: .9rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-stg-crit.c3 { background: var(--rx-gap-bg); box-shadow: inset 0 0 0 1px var(--rx-gap-line); }
+    .rfx-stg-crit.c2 { background: var(--rx-thin-bg); box-shadow: inset 0 0 0 1px var(--rx-thin-line); }
+    .rfx-stg-crit > b { display: block; font-size: .88rem; color: var(--rx-ink); }
+    .rfx-stg-crit p { margin-top: .25rem; font-size: .82rem; line-height: 1.5; color: var(--rx-text); }
+    .rfx-stg-cov { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .45rem; }
+    .rfx-stg-cov span { padding: .15rem .55rem; border-radius: 999px; font-size: .74rem; font-weight: 800; color: var(--rx-text); background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-stg-cov .is-ok { color: var(--rx-ink); }
+    .rfx-stg-cov .is-gap { color: var(--rx-gap-ink); }
+    .rfx-stg-cov .is-thin { color: var(--rx-thin-ink); }
+    .rfx-stg-do p { font-size: .84rem; line-height: 1.5; color: var(--rx-text); }
+    .rfx-stg-do p + p { margin-top: .25rem; }
+    .rfx-stg-do b, .rfx-stg-apps > b { color: var(--rx-ink); }
+    .rfx-stg-apps > b { display: block; font-size: .82rem; }
+    .rfx-stg-apps > p { margin-top: .2rem; font-size: .82rem; color: var(--rx-muted); }
+    .rfx-stg-apps ul { margin: .35rem 0 0; padding: 0; list-style: none; display: grid; gap: .3rem; }
+    .rfx-stg-apps li { display: grid; grid-template-columns: 4.6rem 1fr auto; align-items: center; gap: .5rem; padding: .4rem .55rem; border-radius: .7rem; font-size: .82rem; color: var(--rx-text); background: var(--rx-soft); }
+    .rfx-stg-apps li.is-rel { box-shadow: inset 3px 0 0 var(--rx-accent); }
+    .rfx-stg-apps li span { font-weight: 800; color: var(--rx-ink); }
+    .rfx-stg-apps li small { display: block; font-size: .68rem; font-weight: 700; color: var(--rx-muted); }
+    .rfx-stg-apps li em { font-style: normal; min-width: 0; }
+    .rfx-stg-apps li i { font-style: normal; font-size: .72rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-mo { position: relative; height: 1rem; font-size: .68rem; font-weight: 800; color: var(--rx-faint); }
+    .rfx-mo span { position: absolute; top: 0; padding-left: .15rem; border-left: 1px solid var(--rx-line-2); }
+    @media (max-width: 639.98px) {
+        .rfx-mini { gap: .45rem; padding: .5rem; } .rfx-mini svg { width: 2.3rem; height: 2.3rem; }
+        .rfx-lane { grid-template-columns: 4.8rem minmax(0, 1fr); gap: .4rem; }
+    }
+    .rfx-day-cmp { display: grid; gap: .45rem; margin-top: .7rem; padding-top: .6rem; border-top: 1px solid var(--rx-line); }
+    .rfx-day-cmp > div { display: grid; grid-template-columns: auto minmax(0, 1fr) 4.5rem; align-items: center; gap: .1rem .45rem; font-size: .84rem; }
+    .rfx-day-cmp > div > i { width: .6rem; height: .6rem; border-radius: 999px; background: var(--sc); }
+    .rfx-day-cmp b { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--rx-ink); }
+    .rfx-day-cmp .rfx-meter { margin: 0; height: .45rem; }
+    .rfx-day-cmp small { grid-column: 2 / -1; font-size: .76rem; color: var(--rx-muted); }
+    @media (max-width: 639.98px) {
+        .rfx-cal { padding: .2rem .4rem .8rem; }
+        .rfx-wk { gap: .18rem; }
+        .rfx-cell { min-height: 3.6rem; padding: .22rem .24rem; border-radius: .5rem; }
+        .rfx-n { font-size: .76rem; }
+        .rfx-dl { font-size: .54rem; letter-spacing: -.01em; }
+        .rfx-crit i { width: .28rem; height: .28rem; }
+    }
+    .rfx-legend { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem .85rem; padding: .3rem 1rem 1rem; font-size: .78rem; font-weight: 700; color: var(--rx-text); }
+    .rfx-legend + .rfx-legend { margin-top: -.5rem; }
+    .rfx-legend span { display: inline-flex; align-items: center; gap: .35rem; }
+    .rfx-legend i { display: inline-block; width: .9rem; height: .9rem; border-radius: .25rem; }
+    .rfx-leg-h { flex: 0 0 100%; font-size: .68rem; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--rx-faint); }
+    .rfx-leg-dot { border-radius: 999px !important; }
+    .rfx-leg-dot.is-done { background: var(--rx-ink); }
+    .rfx-leg-dot.is-plan { background: var(--rx-card); box-shadow: inset 0 0 0 1.5px var(--rx-ink); }
+    .rfx-leg-band.is-crit { background: rgb(220 38 38 / .28); } .rfx-leg-band.is-mid { background: rgb(249 115 22 / .26); }
+    /* The life of one application, left to right. */
+    .rfx-flow { gap: .35rem .3rem; }
+    .rfx-flow > span:not(.rfx-leg-h) { padding: .28rem .6rem .28rem .32rem; border-radius: 999px; color: var(--rx-text); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); animation: rfxPop .32s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 60ms); }
+    .rfx-flow > em { font-style: normal; font-weight: 900; color: var(--rx-faint); }
+    .rfx-leg-cell { width: 1.1rem !important; height: .9rem; border-radius: .25rem; background: var(--rx-card); }
+    .rfx-legend .rfx-crit i { width: .4rem; height: .4rem; border-radius: 999px; }
+    .rfx-leg-ap .rfx-ap { position: static; }
+    .rfx-leg-ap .rfx-ap i { display: grid; width: 1.2rem; height: 1.2rem; border-radius: 999px; animation: none; }
+    /* The products. */
+    .rfx-apps { display: grid; gap: .55rem; padding: 0 1rem 1rem; }
+    .rfx-app { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .75rem; padding: .8rem .85rem; border-radius: .95rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line);
+        animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; animation-delay: var(--d, 0s); }
+    .rfx-app.is-try { background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1.5px #f5c518; }
+    .rfx-app-d { display: grid; place-items: center; align-self: start; width: 3.2rem; padding: .45rem 0; border-radius: .75rem; background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line); text-align: center; }
+    .rfx-app-d b { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 900; line-height: 1; color: var(--rx-ink); }
+    .rfx-app-d small { font-size: .64rem; font-weight: 900; text-transform: uppercase; color: var(--rx-muted); }
+    .rfx-app-t b { font-size: .94rem; color: var(--rx-ink); }
+    .rfx-app-t small { display: block; margin-top: .15rem; font-size: .8rem; color: var(--rx-muted); line-height: 1.45; }
+    .rfx-app-t small b { font-size: inherit; color: var(--rx-ink); }
+    .rfx-bar { position: relative; height: .62rem; margin-top: .55rem; border-radius: 999px; background: var(--rx-track); overflow: hidden; }
+    .rfx-segs { position: absolute; inset: 0; clip-path: inset(0 100% 0 0); animation: rfxWipe 1s cubic-bezier(.45,0,.25,1) forwards; animation-delay: calc(var(--d, 0s) + .2s); }
+    .rfx-segs i { position: absolute; top: 0; bottom: 0; background: var(--ph, var(--ph-strong)); }
+    .rfx-segs i:first-child { border-radius: 999px 0 0 999px; } .rfx-segs i:last-child { border-radius: 0 999px 999px 0; } .rfx-segs i:only-child { border-radius: 999px; }
+    .rfx-phs { display: flex; flex-wrap: wrap; gap: .3rem .75rem; margin-top: .5rem; font-size: .76rem; font-weight: 700; color: var(--rx-text); }
+    .rfx-phs span { display: inline-flex; align-items: center; gap: .3rem; }
+    .rfx-phs .rfx-sw { width: .72rem; height: .72rem; }
+    .rfx-phs small { font-weight: 600; color: var(--rx-faint); }
+    .rfx-trace { display: block; margin-top: .4rem; padding: .4rem .6rem; border-radius: .6rem; font-size: .78rem; line-height: 1.45; color: var(--rx-thin-ink); background: var(--rx-thin-bg); }
+    .rfx-app-n { margin-top: .45rem; font-size: .82rem; line-height: 1.5; color: var(--rx-muted); }
+    .rfx-tag { display: inline-block; margin-left: .3rem; padding: .08rem .5rem; border-radius: 999px; font-size: .68rem; font-weight: 900; vertical-align: middle; color: var(--rx-muted); background: var(--rx-tag-bg); }
+    .rfx-tag.is-done { color: var(--rx-done-ink); background: var(--rx-done-bg); } .rfx-tag.is-try { color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px var(--rx-gold-line); }
+    .rfx-other { padding: 0 1rem 1rem; }
+    .rfx-other summary { cursor: pointer; font-size: .86rem; font-weight: 800; color: var(--rx-text); }
+    .rfx-other ul { margin: .5rem 0 0; padding: 0; list-style: none; display: grid; gap: .3rem; }
+    .rfx-other li { font-size: .84rem; color: var(--rx-muted); }
+    .rfx-empty { padding: 2.5rem 1rem; text-align: center; }
+    .rfx-empty img { width: 5rem; height: 5rem; margin: 0 auto; }
+    .rfx-empty b { display: block; margin-top: .8rem; font-family: var(--font-heading); font-size: 1.1rem; color: var(--rx-ink); }
+    .rfx-empty p { margin-top: .35rem; font-size: .9rem; line-height: 1.55; color: var(--rx-muted); }
+    /* The foot. */
+    .rfx-foot { display: flex; align-items: center; gap: .8rem; padding: .7rem 1rem calc(.7rem + env(safe-area-inset-bottom)); background: var(--rx-card); border-top: 1px solid var(--rx-line); }
+    .rfx-foot-note { flex: 1; min-width: 0; font-size: .8rem; line-height: 1.4; color: var(--rx-muted); }
+    @media (max-width: 559.98px) { .rfx-foot-note { display: none; } .rfx-foot .rfx-btn { flex: 1; } }
+    /* Saved, and one day opened. */
+    .rfx-drawer { position: absolute; z-index: 6; top: 0; right: 0; bottom: 0; width: min(100%, 24rem); display: flex; flex-direction: column; color: var(--rx-text); background: var(--rx-card); box-shadow: -20px 0 50px -20px rgb(0 0 0 / .5);
+        transform: translateX(100%); transition: transform .32s cubic-bezier(.22,1,.36,1); }
+    .rfx-drawer.is-on { transform: none; }
+    .rfx-drawer-h { display: flex; align-items: center; justify-content: space-between; padding: .9rem 1rem; border-bottom: 1px solid var(--rx-line); color: var(--rx-ink); }
+    .rfx-drawer-h b { font-family: var(--font-heading); font-size: 1.05rem; }
+    .rfx-drawer-h .rfx-x, .rfx-day-h .rfx-x { background: var(--rx-soft); color: var(--rx-text); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-drawer-b { flex: 1; overflow: auto; padding: .8rem; display: grid; align-content: start; gap: .5rem; }
+    .rfx-sv:hover { box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-sv b { display: block; font-size: .9rem; color: var(--rx-ink); }
+    .rfx-sv small { display: block; font-size: .76rem; color: var(--rx-muted); }
+    .rfx-sv-x { flex: none; display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 999px; color: var(--rx-faint); }
+    .rfx-sv-x:hover { color: #dc2626; background: var(--rx-gap-bg); }
+    .rfx-sv-x svg { width: .95rem; height: .95rem; }
+    .rfx-day { position: absolute; z-index: 7; left: 50%; bottom: 1rem; width: min(calc(100% - 2rem), 26rem); max-height: calc(100% - 6rem); overflow: auto; padding: 1rem; border-radius: 1.2rem; color: var(--rx-text); background: var(--rx-card); transform: translateX(-50%);
+        box-shadow: 0 0 0 1px var(--rx-line), 0 30px 60px -20px rgb(0 0 0 / .55); animation: rfxUp .3s cubic-bezier(.22,1,.36,1) both; }
+    @keyframes rfxUp { from { opacity: 0; transform: translate(-50%, 16px); } }
+    .rfx-day-h { display: flex; align-items: flex-start; gap: .6rem; }
+    .rfx-day-h b { display: block; font-family: var(--font-heading); font-size: 1.08rem; color: var(--rx-ink); }
+    .rfx-day-h small { display: block; font-size: .8rem; color: var(--rx-muted); }
+    .rfx-day-h .rfx-x { margin-left: auto; width: 2rem; height: 2rem; }
+    .rfx-day p { margin-top: .5rem; font-size: .88rem; line-height: 1.55; color: var(--rx-text); }
+    .rfx-day p b { color: var(--rx-ink); }
+    .rfx-day ul { margin: .5rem 0 0; padding: 0; list-style: none; display: grid; gap: .35rem; }
+    .rfx-day li { font-size: .84rem; line-height: 1.45; color: var(--rx-text); }
+    .rfx-day li b { color: var(--rx-ink); }
+    .rfx-edit { position: absolute; inset: 0; z-index: 8; display: grid; place-items: center; padding: 1rem; }
+    .rfx-edit[hidden] { display: none; }
+    .rfx-edit-veil { position: absolute; inset: 0; background: rgb(0 0 0 / .45); opacity: 0; transition: opacity .25s cubic-bezier(.22,1,.36,1); }
+    .rfx-edit-c { position: relative; display: grid; gap: .75rem; width: min(100%, 30rem); max-height: 100%; overflow: auto; padding: 1rem; border-radius: 1.2rem; color: var(--rx-text); background: var(--rx-card);
+        box-shadow: 0 0 0 1px var(--rx-line), 0 30px 70px -20px rgb(0 0 0 / .6); opacity: 0; transform: translateY(14px) scale(.98); transition: opacity .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-edit.is-on .rfx-edit-veil { opacity: 1; }
+    .rfx-edit.is-on .rfx-edit-c { opacity: 1; transform: none; }
+    .rfx-edit-b { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .5rem; }
+    .rfx-edit-b .is-del { margin-right: auto; color: var(--rx-gap-ink); }
+    @media (max-width: 559.98px) {
+        .rfx-edit { place-items: end center; padding: 0; }
+        .rfx-edit-c { width: 100%; border-radius: 1.2rem 1.2rem 0 0; padding-bottom: calc(1rem + env(safe-area-inset-bottom)); transform: translateY(40px); }
+    }
+    /* The logic switches. */
+    .rfx-logic { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 12.5rem), 1fr)); gap: .4rem; }
+    .rfx-tog { display: flex; align-items: center; gap: .55rem; min-width: 0; padding: .5rem .6rem; border-radius: .9rem; text-align: left; color: var(--rx-muted); background: var(--rx-card);
+        box-shadow: inset 0 0 0 1.5px var(--rx-line-2); transition: background-color .28s cubic-bezier(.22,1,.36,1), color .28s, box-shadow .28s, transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-tog:hover { transform: translateY(-1px); }
+    .rfx-tog em { flex: none; font-style: normal; font-size: 1.1rem; filter: grayscale(1); opacity: .6; transition: filter .28s, opacity .28s; }
+    .rfx-tog > span { flex: 1; min-width: 0; }
+    .rfx-tog b { display: block; font-size: .86rem; color: inherit; }
+    .rfx-tog small { display: block; font-size: .72rem; line-height: 1.3; opacity: .85; }
+    .rfx-tog-s { position: relative; flex: none; width: 2.1rem; height: 1.2rem; border-radius: 999px; background: var(--rx-track); box-shadow: inset 0 0 0 1px var(--rx-line-2); transition: background-color .28s; }
+    .rfx-tog-s::after { content: ''; position: absolute; top: .15rem; left: .15rem; width: .9rem; height: .9rem; border-radius: 999px; background: #fff; box-shadow: 0 1px 3px rgb(0 0 0 / .35); transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-tog.is-on { color: var(--rx-ink); box-shadow: inset 0 0 0 1.5px var(--rx-hover); background: var(--rx-soft); }
+    .rfx-tog.is-on em { filter: none; opacity: 1; }
+    .rfx-tog.is-on .rfx-tog-s { background: #3f7a22; box-shadow: none; }
+    .rfx-tog.is-on .rfx-tog-s::after { transform: translateX(.9rem); }
+    @media (max-width: 559.98px) { .rfx-logic { grid-template-columns: repeat(2, minmax(0, 1fr)); } .rfx-tog small { display: none; } .rfx-tog { padding: .5rem; gap: .4rem; } }
+    /* Apply on: a tag that opens the date picker. */
+    .rfx-when { position: relative; display: grid; gap: .25rem; align-content: start; font-size: .78rem; font-weight: 800; color: var(--rx-muted); }
+    .rfx-datetag { justify-self: start; display: inline-flex; align-items: center; gap: .45rem; padding: .55rem .8rem; border-radius: 999px; font-size: .92rem; font-weight: 800; color: var(--rx-ink);
+        background: var(--rx-field); box-shadow: inset 0 0 0 1.5px #f5c518, 0 6px 14px -10px rgb(184 138 0 / .8); transition: transform .28s cubic-bezier(.22,1,.36,1), box-shadow .28s, background-color .28s; }
+    .rfx-datetag:hover { transform: translateY(-1px); box-shadow: inset 0 0 0 2px #f5c518, 0 10px 18px -10px rgb(184 138 0 / .9); }
+    .rfx-datetag svg { width: 1.05rem; height: 1.05rem; color: #b8941c; }
+    .rfx-datetag .rfx-dt-c { width: .9rem; height: .9rem; opacity: .7; transition: transform .28s cubic-bezier(.22,1,.36,1); }
+    .rfx-datetag.is-pop .rfx-dt-c { transform: rotate(180deg); }
+    .rfx-datetag.is-flash { animation: rfxFlash .6s cubic-bezier(.22,1,.36,1); }
+    @keyframes rfxFlash { 40% { transform: scale(1.06); } }
+    .rfx-date-in { position: absolute; left: 0; bottom: 0; width: 1px; height: 1px; padding: 0; border: 0; opacity: 0; pointer-events: none; }
+    /* Editing a saved reading, in the foot. */
+    .rfx-editing { display: flex; align-items: center; gap: .4rem; min-width: 0; flex: 1; padding: .3rem .4rem .3rem .7rem; border-radius: 999px; background: var(--rx-saved-bg); box-shadow: inset 0 0 0 1px var(--rx-saved-line); color: var(--rx-saved-ink); animation: rfxPop .3s cubic-bezier(.22,1,.36,1) both; }
+    .rfx-editing[hidden] { display: none; }
+    .rfx-editing-l { flex: none; font-size: .68rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+    .rfx-editing b { min-width: 0; flex: 1; font-size: .86rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .rfx-editing input, .rfx-sv-in { flex: 1; min-width: 0; padding: .35rem .6rem; border-radius: .6rem; border: 1.5px solid var(--rx-saved-line); font-size: .88rem; color: var(--rx-ink); background: var(--rx-field); }
+    .rfx-ico { display: grid; place-items: center; flex: none; width: 1.9rem; height: 1.9rem; border-radius: 999px; color: inherit; transition: background-color .2s; }
+    .rfx-ico:hover { background: rgb(128 128 128 / .18); }
+    .rfx-ico svg { width: .95rem; height: .95rem; }
+    @media (max-width: 559.98px) { .rfx-foot { flex-wrap: wrap; } .rfx-editing { flex: 1 1 100%; } .rfx-foot .rfx-btn.is-ghost { flex: 1; } }
+    /* The guide notice. */
+    .rfx-banner.is-guide { align-items: flex-start; font-size: .82rem; font-weight: 600; color: var(--rx-muted); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-banner.is-guide b { color: var(--rx-ink); }
+    /* How much: the season line in the summary, and the card of the days. */
+    .rfx-amtline { margin-top: .8rem; display: grid; gap: .35rem; font-size: .86rem; line-height: 1.5; color: var(--rx-text); }
+    .rfx-amtline b { color: var(--rx-ink); }
+    .rfx-amtbar { position: relative; height: .7rem; border-radius: 999px; background: var(--rx-track); overflow: hidden; }
+    .rfx-amtbar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 999px; transition: width 1.1s cubic-bezier(.22,1,.36,1) .2s; }
+    .rfx-amtbar em { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--rx-ink); opacity: .5; }
+    .rfx-amt-g { display: grid; gap: 1rem; padding: .5rem 1rem 1rem; }
+    @media (min-width: 900px) { .rfx-amt-g { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .rfx-amt-g h4 { font-size: .8rem; font-weight: 800; color: var(--rx-text); margin-bottom: .35rem; }
+    .rfx-amt-g h4 small { font-weight: 600; color: var(--rx-faint); }
+    .rfx-amt-g svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .rfx-amt-g .ax { font-size: 13px; font-weight: 800; fill: var(--rx-faint); }
+    .rfx-amt-g .bar { transform-box: fill-box; transform-origin: bottom; animation: rfxBar .7s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 4ms); }
+    @keyframes rfxBar { from { transform: scaleY(0); } }
+    .rfx-amt-g .needl { fill: none; stroke: var(--rx-ink); stroke-width: 2.4; stroke-dasharray: 6 5; }
+    .rfx-amt-g .givel { fill: none; stroke: #3f9a26; stroke-width: 2.8; stroke-linejoin: round; }
+    html.dark .rfx-amt-g .givel { stroke: #8fd163; }
+    .rfx-amt-g .givea { fill: rgb(63 154 38 / .14); }
+    /* How it connects. */
+    .rfx-notes { display: grid; gap: .9rem; padding: .5rem 1rem 1rem; }
+    .rfx-notes h4 { display: flex; align-items: center; gap: .4rem; font-size: .74rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--rx-faint); margin-bottom: .45rem; }
+    .rfx-notes h4 i { font-style: normal; font-size: .62rem; padding: .05rem .4rem; border-radius: 999px; letter-spacing: 0; text-transform: none; color: var(--rx-muted); background: var(--rx-soft); }
+    .rfx-note { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: .65rem; padding: .7rem .8rem; border-radius: .9rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line);
+        animation: rfxIn .4s cubic-bezier(.22,1,.36,1) both; animation-delay: calc(var(--k, 0) * 50ms); }
+    .rfx-note + .rfx-note { margin-top: .45rem; }
+    .rfx-note > em { font-style: normal; font-size: 1.15rem; line-height: 1.3; }
+    .rfx-note b { display: block; font-size: .9rem; line-height: 1.4; color: var(--rx-ink); }
+    .rfx-note p { margin-top: .2rem; font-size: .84rem; line-height: 1.55; color: var(--rx-text); }
+    .rfx-note.is-warn { background: var(--rx-thin-bg); box-shadow: inset 0 0 0 1px var(--rx-thin-line); }
+    .rfx-note.is-good { box-shadow: inset 3px 0 0 #4f9030, inset 0 0 0 1px var(--rx-line); }
+    .rfx-note[data-jump] { cursor: pointer; transition: transform .2s cubic-bezier(.22,1,.36,1); }
+    .rfx-note[data-jump]:hover { transform: translateX(3px); }
+    .rfx-note small { display: inline-block; margin-top: .35rem; font-size: .74rem; font-weight: 800; color: var(--rx-accent); }
+    .rfx-others { display: grid; gap: .35rem; }
+    .rfx-others li { display: flex; flex-wrap: wrap; align-items: center; gap: .3rem .5rem; list-style: none; font-size: .84rem; line-height: 1.45; color: var(--rx-text); }
+    .rfx-others li b { color: var(--rx-ink); }
+    .rfx-others .rfx-chip { padding: .25rem .65rem; font-size: .76rem; }
+    .rfx-way { padding: .05rem .45rem; border-radius: 999px; font-size: .7rem; font-weight: 900; }
+    .rfx-way.is-less { color: var(--rx-thin-ink); background: var(--rx-thin-bg); } .rfx-way.is-more { color: var(--rx-done-ink); background: var(--rx-done-bg); }
+    .rfx-soilline { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .6rem; }
+    .rfx-soilline .rfx-chip { padding: .3rem .7rem; font-size: .78rem; text-decoration: none; }
+    @media (max-width: 559.98px) { .rfx-soilline { justify-content: center; } }
+    .rfx-note-acts { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+    .rfx-note-acts .rfx-chip { padding: .35rem .75rem; font-size: .8rem; text-decoration: none; }
+    .rfx-notes-more { justify-self: start; font-size: .82rem; font-weight: 800; color: var(--rx-accent); }
+    .rfx-day-amt { margin-top: .6rem; padding: .55rem .7rem; border-radius: .8rem; font-size: .84rem; line-height: 1.5; color: var(--rx-text); background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); }
+    .rfx-day-amt b { color: var(--rx-ink); }
+    /* A day's health mark: nitrogen lush (risk), or potassium and silicon helping. */
+    .rfx-hm { position: absolute; z-index: 2; left: .25rem; bottom: .25rem; display: grid; place-items: center; min-width: 1rem; height: 1rem; padding: 0 .2rem; border-radius: .35rem; font-size: .58rem; font-weight: 900; color: #fff; box-shadow: 0 0 0 1.5px var(--rx-card); }
+    .rfx-hm.is-n { background: #ea580c; } .rfx-hm.is-k { background: #2563eb; }
+    @media (max-width: 639.98px) { .rfx-hm { left: .12rem; bottom: .12rem; min-width: .85rem; height: .85rem; font-size: .5rem; } }
+    .rfx-cell[data-p=soil] .rfx-fill { background: var(--ph-soil); }
+    .rfx-sv { display: flex; align-items: center; gap: .3rem; padding: .35rem .4rem .35rem .3rem; border-radius: .9rem; background: var(--rx-soft); box-shadow: inset 0 0 0 1px var(--rx-line); transition: box-shadow .2s, transform .2s cubic-bezier(.22,1,.36,1); }
+    .rfx-sv.is-cur { box-shadow: inset 0 0 0 2px var(--rx-saved-line); background: var(--rx-saved-bg); }
+    .rfx-sv-open { flex: 1; min-width: 0; padding: .35rem .45rem; border-radius: .7rem; text-align: left; }
+    .rfx-sv-open:hover { background: rgb(128 128 128 / .08); }
+    /* Folding sections. */
+    .rfx-fold-h { cursor: pointer; user-select: none; padding-bottom: .95rem; border-radius: 1.2rem; transition: padding .3s cubic-bezier(.22,1,.36,1), background-color .2s; }
+    .rfx-fold-h:hover { background: rgb(128 128 128 / .06); }
+    .rfx-fold-h:focus-visible { outline: 2px solid var(--rx-accent); outline-offset: -2px; }
+    .rfx-fold.is-open > .rfx-fold-h { padding-bottom: .25rem; }
+    .rfx-fold-h { white-space: nowrap; }
+    .rfx-fold-h small { flex: 1 1 auto; min-width: 0; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rfx-chev { flex: none; width: 1.1rem; height: 1.1rem; color: var(--rx-muted); transition: transform .3s cubic-bezier(.22,1,.36,1); }
+    .rfx-fold.is-open .rfx-chev { transform: rotate(180deg); }
+    .rfx-fold-b { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .34s cubic-bezier(.22,1,.36,1); }
+    .rfx-fold.is-open > .rfx-fold-b { grid-template-rows: 1fr; }
+    .rfx-fold-in { min-height: 0; overflow: hidden; opacity: 0; transition: opacity .25s ease; }
+    .rfx-fold.is-open > .rfx-fold-b > .rfx-fold-in { opacity: 1; transition: opacity .3s ease .08s; }
+    .rfx-foldbar { display: flex; justify-content: flex-end; gap: .4rem; margin: -.4rem 0 -.5rem; }
+    .rfx-foldbar button { padding: .3rem .7rem; border-radius: 999px; font-size: .78rem; font-weight: 800; color: var(--rx-muted); background: var(--rx-card); box-shadow: inset 0 0 0 1px var(--rx-line-2); transition: color .2s, box-shadow .2s; }
+    .rfx-foldbar button:hover { color: var(--rx-ink); box-shadow: inset 0 0 0 1.5px var(--rx-hover); }
+    .rfx-trows { display: grid; gap: .45rem; padding: .3rem 1rem 1rem; }
+    .rfx-trow { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .6rem; padding: .6rem .75rem; border-radius: .85rem; font-size: .86rem; line-height: 1.5; color: var(--rx-gold-ink); background: var(--rx-gold-bg); box-shadow: inset 0 0 0 1px var(--rx-gold-line); }
+    .rfx-trow > span:first-child { flex: 1 1 16rem; }
+    .rfx-trow b { color: inherit; }
+    .rfx-meter { position: relative; height: .6rem; margin-top: .6rem; border-radius: 999px; background: var(--rx-track); overflow: hidden; }
+    .rfx-meter i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 999px; transition: width .5s cubic-bezier(.22,1,.36,1); }
+    @media (prefers-reduced-motion: reduce) {
+        .rfx *, .rfx *::before, .rfx *::after { animation: none !important; transition: none !important; }
+        .rfx-chart .reveal, .rfx-segs { clip-path: none; }
+        .rfx-fill { height: var(--h, 0%) !important; }
+        .rfx-soil { transform: none !important; }
+        .rfx-lane-s { clip-path: none !important; }
+    }
