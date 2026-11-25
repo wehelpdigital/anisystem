@@ -222,31 +222,14 @@ class NoteController extends BaseScheduleController
             return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
+        $bytes = (int) $request->file('video')->getSize();
+        \App\Support\Tier::assertStorage($bytes);
         try {
             $out = VideoOptimizer::storeCompressed($request->file('video'), 'schedule-notes/' . $schedule->id . '/videos');
         } catch (\Throwable $e) {
             return $this->jsonFail('The video could not be saved: ' . $e->getMessage(), 500);
         }
-
-        // Compress here, keep there. The clip and its poster are handed to the
-        // mother app once they are small, so a phone video costs one upload
-        // across rather than its full size, and both survive a deploy.
-        foreach (['video', 'poster'] as $part) {
-            $local = $out[$part] ?? null;
-            if (! $local || ! \App\Support\MediaStore::enabled()) {
-                continue;
-            }
-            $kept = \App\Support\MediaStore::putBinary(
-                Storage::disk('public')->get($local),
-                'notes',
-                pathinfo($local, PATHINFO_EXTENSION) ?: ($part === 'poster' ? 'jpg' : 'mp4'),
-                $schedule->id
-            );
-            if ($kept && $kept !== $local) {
-                Storage::disk('public')->delete($local);
-                $out[$part] = $kept;
-            }
-        }
+        $out = \App\Support\MediaStore::keepClip($out, 'notes', $schedule->id, $bytes);
 
         // The same clip can also sit in a Gallery album beside the photos of
         // the same walk — one upload, two doors to it. The album row points at

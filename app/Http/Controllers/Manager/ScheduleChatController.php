@@ -243,20 +243,16 @@ class ScheduleChatController extends BaseScheduleController
             : (str_starts_with($mime, 'audio/') ? 'audio' : 'file'));
 
         if ($kind === 'video') {
-            $made = \App\Support\VideoOptimizer::compress($file, 'schedule-chat/' . $scheduleId);
-            $disk = \Illuminate\Support\Facades\Storage::disk('public');
-            $path = \App\Support\MediaStore::putBinary($disk->get($made['video']), 'schedule-chat', 'mp4', $scheduleId);
-            $poster = null;
-            if (! empty($made['poster'])) {
-                $poster = \App\Support\MediaStore::putBinary($disk->get($made['poster']), 'schedule-chat', 'webp', $scheduleId);
-                $disk->delete($made['poster']);
-            }
-            $disk->delete($made['video']);
+            $bytes = (int) $file->getSize();
+            \App\Support\Tier::assertStorage($bytes);
+            // storeCompressed, not compress(): that method is gone, and no clip could be sent since (2026-11-26).
+            $made = \App\Support\VideoOptimizer::storeCompressed($file, 'schedule-chat/' . $scheduleId);
+            $made = \App\Support\MediaStore::keepClip($made, 'schedule-chat', $scheduleId, $bytes);
 
             return array_filter([
                 'type' => 'video',
-                'path' => $path,
-                'poster' => $poster,
+                'path' => $made['video'],
+                'poster' => $made['poster'] ?? null,
                 'name' => $file->getClientOriginalName(),
                 'mime' => 'video/mp4',
             ], fn ($v) => $v !== null);

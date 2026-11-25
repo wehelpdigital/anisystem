@@ -228,32 +228,16 @@ class NotesHubController extends Controller
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Pick a video (up to 300 MB).', 'errors' => $validator->errors()], 422);
         }
+        $bytes = (int) $request->file('video')->getSize();
+        \App\Support\Tier::assertStorage($bytes);
         try {
             $out = VideoOptimizer::storeCompressed($request->file('video'), 'notes/videos');
         } catch (\Throwable $e) {
             return response()->json(['success' => false, 'message' => 'The video could not be saved: ' . $e->getMessage()], 500);
         }
-
-        // Compress here, keep there — the same handover the schedule notebook
-        // does. This path used to stop at the local disk, which this app
-        // loses on every deploy: a global note's video "was not added"
-        // because by the time anyone looked, the file was gone.
-        foreach (['video', 'poster'] as $part) {
-            $local = $out[$part] ?? null;
-            if (! $local || ! \App\Support\MediaStore::enabled()) {
-                continue;
-            }
-            $kept = \App\Support\MediaStore::putBinary(
-                Storage::disk('public')->get($local),
-                'notes',
-                pathinfo($local, PATHINFO_EXTENSION) ?: ($part === 'poster' ? 'jpg' : 'mp4'),
-                'global'
-            );
-            if ($kept && $kept !== $local) {
-                Storage::disk('public')->delete($local);
-                $out[$part] = $kept;
-            }
-        }
+        // Kept where it landed on the bucket; on a disk a deploy clears, the mother app keeps it (a global note's
+        // video once "was not added" because the file was gone by the time anyone looked).
+        $out = \App\Support\MediaStore::keepClip($out, 'notes', 'global', $bytes);
 
         return response()->json(['success' => true, 'data' => [
             'type' => 'video',

@@ -32,6 +32,54 @@ class MediaStore
     }
 
     /**
+     * Whether the public disk itself outlives a deploy: the bucket (MEDIA_DISK=s3), which is the mother app's own.
+     * A file saved there has nowhere better to go.
+     */
+    public static function diskIsKept(): bool
+    {
+        return config('filesystems.disks.public.driver') === 's3';
+    }
+
+    /**
+     * Keep the clip VideoOptimizer just saved, and its poster.
+     *
+     * On the bucket it is kept already, so this only counts it. It used to be read back whole, turned into text half
+     * again its size and posted to the mother app, which put it in the same bucket: 10 to 15 more seconds for a 45 MB
+     * clip, past the 20 seconds the front door waits, so the phone said "Failed" for a clip that had arrived, and the
+     * copy was never compressed (2026-11-26, a worker's clips on an observation). On a disk a deploy clears, the
+     * mother app is still where it goes.
+     *
+     * @param array{video:string, poster:?string} $out
+     * @return array{video:string, poster:?string}
+     */
+    public static function keepClip(array $out, string $folder, $scope, int $bytes): array
+    {
+        if (self::diskIsKept()) {
+            Tier::recordUpload($bytes, (string) $out['video'], $folder);
+
+            return $out;
+        }
+        foreach (['video', 'poster'] as $part) {
+            $local = $out[$part] ?? null;
+            if (! $local || ! self::enabled()) {
+                continue;
+            }
+            $kept = self::putBinary(
+                Storage::disk('public')->get($local),
+                $folder,
+                pathinfo($local, PATHINFO_EXTENSION) ?: ($part === 'poster' ? 'jpg' : 'mp4'),
+                $scope
+            );
+            if ($kept && $kept !== $local) {
+                Storage::disk('public')->delete($local);
+                $out[$part] = $kept;
+            }
+        }
+
+        return $out;
+    }
+
+    /**
      * Keep raw bytes (a canvas export, a composed map picture).
      *
      * @return string|null the stored path, or null when it could not be kept

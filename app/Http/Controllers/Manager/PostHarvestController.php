@@ -213,30 +213,15 @@ class PostHarvestController extends BaseScheduleController
             return $this->jsonFail('Please check what you entered.', 422, ['errors' => $validator->errors()]);
         }
 
+        // The plan's storage, asked before a byte is kept.
+        $bytes = (int) $request->file('video')->getSize();
+        \App\Support\Tier::assertStorage($bytes);
         try {
             $out = VideoOptimizer::storeCompressed($request->file('video'), 'schedule-post-harvest/' . $schedule->id . '/videos');
         } catch (\Throwable $e) {
             return $this->jsonFail('The video could not be saved: ' . $e->getMessage(), 500);
         }
-
-        // Compress here, keep there — same trade the notes make: the clip
-        // crosses to the mother app once it is small, and survives a deploy.
-        foreach (['video', 'poster'] as $part) {
-            $local = $out[$part] ?? null;
-            if (! $local || ! MediaStore::enabled()) {
-                continue;
-            }
-            $kept = MediaStore::putBinary(
-                Storage::disk('public')->get($local),
-                'schedule-post-harvest',
-                pathinfo($local, PATHINFO_EXTENSION) ?: ($part === 'poster' ? 'jpg' : 'mp4'),
-                $schedule->id
-            );
-            if ($kept && $kept !== $local) {
-                Storage::disk('public')->delete($local);
-                $out[$part] = $kept;
-            }
-        }
+        $out = MediaStore::keepClip($out, 'schedule-post-harvest', $schedule->id, $bytes);
 
         // The poster travels back so the sheet can show a frame instead of a
         // black box, but it is not stored with the observation: there is one
