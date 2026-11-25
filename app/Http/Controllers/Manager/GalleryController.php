@@ -61,7 +61,9 @@ class GalleryController extends BaseScheduleController
             'everything' => $everything,
             'teamBox' => $teamBox,
             'counts' => [
-                'all' => count(array_filter($everything, fn ($m) => $m['kind'] !== 'video')),
+                // All of it, clips too (2026-11-26): a worker's video was safe in an album while All Media read 0 and
+                // "Nothing here yet", to the worker who had just sent it and to the owner looking for it.
+                'all' => count($everything),
                 'videos' => count(array_filter($everything, fn ($m) => $m['kind'] === 'video')),
                 'team' => count($teamBox),
             ],

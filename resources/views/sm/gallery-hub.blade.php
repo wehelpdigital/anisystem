@@ -93,7 +93,7 @@
 @section('content')
 @php
     $shelves = [
-        ['all', 'All Media', $counts['all'], 'Every picture your seasons have kept, newest first.'],
+        ['all', 'All Media', $counts['all'], 'Every photo, video, drawing and map your seasons have kept, newest first.'],
         ['albums', 'Albums', $counts['albums'], 'Groups of pictures you made, from every season.'],
         ['videos', 'Videos', $counts['videos'], 'Only the video clips.'],
         ['voice', 'Voice', $counts['voice'] ?? 0, 'Every voice recording, Quick Voice notes too. Play them here.'],
@@ -149,7 +149,7 @@
         @if (\App\Support\BackTo::key())<input type="hidden" name="from" value="{{ \App\Support\BackTo::key() }}">@endif
         <label class="ga-search">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-            <input type="search" name="q" value="{{ $q }}" placeholder="Search pictures" autocomplete="off">
+            <input type="search" name="q" value="{{ $q }}" placeholder="Search photos and videos" autocomplete="off">
         </label>
         <button type="submit" class="btn btn-primary btn-sm shrink-0">Search</button>
         @if ($q !== '')
@@ -279,7 +279,7 @@
                     ? 'Nothing in any season matches that.'
                     : ($tab === 'voice'
                         ? 'No recordings yet. Tap the mic on the seasons page and talk. Quick Voice saves them here.'
-                        : 'Nothing here yet. Your photos, drawings and saved maps show up here on their own.') }}
+                        : 'Nothing here yet. Your photos, videos, drawings and saved maps show up here on their own.') }}
             </p>
         @else
             <div class="ga-all" id="ghGrid">
@@ -361,7 +361,6 @@
             if (!r.ok) throw new Error('HTTP ' + r.status);
             const d = (await r.json()).data || {};
             (d.items || []).forEach((it) => {
-                if (more.dataset.tab === 'all' && it.type === 'video') return;   // stills shelf
                 const wrap = document.createElement('div');
                 wrap.className = 'ga-wrap';
                 if (it.kind === 'audio') {

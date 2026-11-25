@@ -54,7 +54,7 @@
         <div class="ga-modal-body" role="tablist">
             @php
                 $shelves = [
-                    ['all', 'All Media', $counts['all'], 'Every photo, drawing and map from this season.'],
+                    ['all', 'All Media', $counts['all'], 'Every photo, video, drawing and map from this season.'],
                     ['albums', 'Albums', count($albums), 'Groups of pictures you made.'],
                     ['videos', 'Videos', $counts['videos'], 'Only the video clips.'],
                     ['team', 'Team box', $counts['team'], 'Recordings, whiteboards and maps from the Collab Room.'],
@@ -82,7 +82,7 @@
     <div class="ga-tools">
         <label class="ga-search">
             <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/></svg>
-            <input type="search" id="gaFind" placeholder="Search pictures" autocomplete="off">
+            <input type="search" id="gaFind" placeholder="Search photos and videos" autocomplete="off">
         </label>
         <div class="ga-filters" id="gaFilters">
             <button type="button" class="ga-filter is-on" data-src="">Everything</button>
@@ -92,10 +92,11 @@
             <button type="button" class="ga-filter" data-src="Map">Maps</button>
             <button type="button" class="ga-filter" data-src="Album">Albums</button>
             <button type="button" class="ga-filter" data-src="Activity">Activities</button>
+            <button type="button" class="ga-filter" data-src="Observation">Observations</button>
         </div>
     </div>
     <div class="ga-all" id="gaAll"></div>
-    <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Pictures from notes, days, drawings and maps in this season show up here on their own.</p>
+    <p class="ga-none hidden" id="gaAllNone">Nothing here yet. Photos and videos from notes, days, observations, drawings and maps in this season show up here on their own.</p>
 </div>
 
 {{-- ============================== albums ============================== --}}
@@ -515,8 +516,9 @@
          * The "all pictures" shelf: read-only, and every tile knows the way
          * back to the record it came from. A drawing opens in the pad that
          * can change it; a map opens in Maps; a photo opens where it was
-         * explained. Videos get their own tab because you pick a video and
-         * scan photos, and mixing them makes both harder.
+         * explained. Videos are here too, in their place in time, and have a
+         * shelf of their own for picking one: left out of "All Media", a clip
+         * just sent in looked like a clip that was lost (2026-11-26).
          * ============================================================= */
         const KIND_LABEL = { drawing: 'Drawing', map: 'Map', video: 'Video', audio: 'Voice', image: '' };
         const VOICE_ICON = @json(asset('images/voice-recorder.png'));
@@ -657,8 +659,7 @@
 
         function paintAll() {
             const q = findText.trim().toLowerCase();
-            const shown = EVERYTHING.filter((m) => m.kind !== 'video')
-                .filter((m) => !findSource || m.source === findSource)
+            const shown = EVERYTHING.filter((m) => !findSource || m.source === findSource)
                 .filter((m) => !q || (m.title + ' ' + m.source).toLowerCase().includes(q));
 
             fill($('gaAll'), shown);

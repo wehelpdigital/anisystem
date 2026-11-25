@@ -66,7 +66,6 @@ class GalleryHubController extends Controller
             : 'all';
 
         $schedules = $this->schedules();
-        $stills = array_values(array_filter($items, fn ($m) => $m['type'] !== 'video'));
         $clips = array_values(array_filter($items, fn ($m) => $m['type'] === 'video'));
         // Every recording kept anywhere — quick voice notes, spoken notes on
         // a season — one shelf, each tile pointing at the one stored file.
@@ -77,7 +76,7 @@ class GalleryHubController extends Controller
             'team' => $this->teamBox($schedules, $q),
             'videos' => $clips,
             'voice' => $voices,
-            default => $stills,
+            default => $items,   // all of it, clips too: see GalleryController::page
         };
 
         $paged = $tab === 'albums' ? $shelf : array_slice($shelf, 0, self::PER_PAGE);
@@ -94,7 +93,7 @@ class GalleryHubController extends Controller
             'hasMore' => $tab !== 'albums' && count($shelf) > self::PER_PAGE,
             'total' => count($shelf),
             'counts' => [
-                'all' => count($stills),
+                'all' => count($items),
                 'videos' => count($clips),
                 'voice' => count($voices),
                 // Counted only when its own shelf is open; the button shows a
