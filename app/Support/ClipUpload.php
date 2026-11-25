@@ -187,12 +187,67 @@ class ClipUpload
         }
     }
 
-    /** An address the video tool can read the joined clip from. */
-    public static function address(string $path): string
+    /**
+     * How long a joined clip runs, or null when it will not say (a browser recording often does not).
+     *
+     * Read from where the clip lies, a few bytes at a time: the film's own header (`moov`, then `mvhd`) names its
+     * length, and stands before or after the pictures. The video tool on the live host let a 75 second clip through
+     * by its address (measured 2026-11-26), and fetching the whole clip to ask it one number is what the pieces were
+     * made to avoid.
+     */
+    public static function seconds(string $path): ?float
     {
-        $disk = Storage::disk('public');
+        try {
+            $at = 0;
+            for ($box = 0; $box < 60; $box++) {
+                $head = self::bytes($path, $at, 16);
+                if (strlen($head) < 8) {
+                    return null;
+                }
+                $size = unpack('N', substr($head, 0, 4))[1];
+                $type = substr($head, 4, 4);
+                $skip = 8;
+                if ($size === 1 && strlen($head) === 16) {
+                    $size = unpack('J', substr($head, 8, 8))[1];
+                    $skip = 16;
+                }
+                if ($type === 'moov') {
+                    $in = self::bytes($path, $at + $skip, 8192);
+                    $p = strpos($in, 'mvhd');
+                    if ($p === false) {
+                        return null;
+                    }
+                    $f = substr($in, $p + 4, 32);
+                    [$scale, $long] = ord($f[0]) === 1
+                        ? [unpack('N', substr($f, 20, 4))[1], unpack('J', substr($f, 24, 8))[1]]
+                        : [unpack('N', substr($f, 12, 4))[1], unpack('N', substr($f, 16, 4))[1]];
 
-        return MediaStore::diskIsKept() ? $disk->temporaryUrl($path, now()->addMinutes(5)) : $disk->path($path);
+                    return $scale > 0 && $long > 0 && $long !== 0xFFFFFFFF ? $long / $scale : null;
+                }
+                if ($size < 8 || ! preg_match('~^[\x20-\x7E]{4}$~', $type)) {
+                    return null;   // not this kind of file
+                }
+                $at += $size;
+            }
+        } catch (\Throwable $e) {
+            // A clip that will not say how long it is goes through.
+        }
+
+        return null;
+    }
+
+    /** Some bytes of a kept clip. Short or empty past its end. */
+    private static function bytes(string $path, int $from, int $count): string
+    {
+        if (! MediaStore::diskIsKept()) {
+            return (string) file_get_contents(Storage::disk('public')->path($path), false, null, $from, $count);
+        }
+        try {
+            return (string) self::client()->getObject(['Bucket' => self::bucket(), 'Key' => self::key($path),
+                'Range' => 'bytes=' . $from . '-' . ($from + $count - 1)])['Body'];
+        } catch (\Aws\Exception\AwsException $e) {
+            return '';   // past the end
+        }
     }
 
     public static function partsFor(int $bytes): int
