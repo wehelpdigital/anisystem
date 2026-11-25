@@ -99,6 +99,9 @@ const tidy = async (flags) => {
     } catch (_) { /* it is only tidying */ }
 };
 
+/* What is on its way to the shelf right now. */
+const shelving = new Set();
+
 /* A file whose name changes whenever it does (the bundle, the fonts): the kept copy is the file. No asking the server
    whether it is still good, which on a slow line is a wait per file on every page. */
 const NEVER_CHANGES = /^\/(build\/assets|fonts)\//;
@@ -153,6 +156,8 @@ self.addEventListener('fetch', (event) => {
     }
 
     if (req.mode === 'navigate') {
+        // Somebody is going somewhere: whatever was being put on the shelf meanwhile lets go of the line, now.
+        shelving.forEach((c) => c.abort());
         event.respondWith((async () => {
             const asked = offlineOn();
             let keep = false;
@@ -233,16 +238,22 @@ self.addEventListener('fetch', (event) => {
         const keep = await offlineOn();
         if (!keep) return fetch(req);
         const cache = await caches.open(RUNTIME);
+        // Asked for by the app itself, to be kept (core.js, warm): it carries a handle the next tap can pull.
+        const ctl = req.headers.has('x-shelf') ? new AbortController() : null;
+        if (ctl) shelving.add(ctl);
         try {
-            const res = await fetch(req);
+            const res = await (ctl ? fetch(req, { signal: ctl.signal }) : fetch(req));
             /* Not a slice of a video. A <video> asks for its file in ranges
                and gets 206s back, and cache.put refuses a 206 outright -- an
                unhandled rejection for every chunk of every clip, and a shelf
                that would fill with half-files if it did not. Whole answers
                only. */
-            if (res.ok && res.status !== 206 && !req.headers.has('range')) cache.put(req, res.clone());
+            if (res.ok && res.status !== 206 && !req.headers.has('range')) cache.put(req, res.clone()).catch(() => {}).finally(() => ctl && shelving.delete(ctl));
+            else if (ctl) shelving.delete(ctl);
             return res;
         } catch (_) {
+            // Let go of on purpose: that says nothing about the line.
+            if (ctl) { shelving.delete(ctl); return Response.error(); }
             /* MATCHED BY ADDRESS, NOT BY REQUEST OBJECT.
              *
              * `cache.match(req)` came back empty for the app's own bundle

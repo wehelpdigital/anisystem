@@ -2311,7 +2311,8 @@ document.addEventListener('pointerdown', (e) => {
     };
     // Read to the end: an answer whose body nobody reads goes on arriving while the next is asked for.
     const take = async (u, headers, signal) => {
-        const res = await fetch(u, { credentials: 'same-origin', headers, signal, priority: 'low' });
+        // x-shelf: the worker may drop it the moment somebody goes to another page (public/sw.js).
+        const res = await fetch(u, { credentials: 'same-origin', headers: { ...headers, 'X-Shelf': '1' }, signal, priority: 'low' });
         const body = res.body?.getReader?.();
         if (body) { while (!(await body.read()).done) { /* only so that it has all come */ } }
     };

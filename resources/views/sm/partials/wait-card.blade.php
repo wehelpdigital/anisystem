@@ -859,7 +859,7 @@
             if (!card) return;
             // Behind the card the tap put up (partials/boot-veil) nobody sees this one: it neither turns over nor
             // starts its four seconds again.
-            if (card.__shownAt && !card.closest('#navLoader') && document.querySelector('#bootVeil.has-card:not(.is-off)')) return;
+            if (!card.closest('#navLoader') && document.querySelector('#bootVeil.has-card:not(.is-off)')) { card.__shownAt ??= began; return; }
             card.__shownAt = performance.now();
             if (pool.length < 2) return;
 
@@ -897,7 +897,10 @@
         // A wait that began with a tap on the page before is measured from that tap: the reminder has been up and
         // readable all that time, and a slow phone should not be asked for four seconds more (2026-11-26).
         const began = window.__navAt ? performance.now() - Math.max(0, Date.now() - window.__navAt) : performance.now();
-        document.querySelectorAll('.bv-card').forEach((c) => { c.__shownAt = began; });
+        // The ones further down the page too, which have not been read yet when this runs.
+        const stamp = () => document.querySelectorAll('.bv-card').forEach((c) => { c.__shownAt ??= began; });
+        stamp();
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', stamp, { once: true });
     })();
     </script>
 @endonce
