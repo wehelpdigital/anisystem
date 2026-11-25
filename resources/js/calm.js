@@ -41,7 +41,7 @@
         }, 8000);
         one();
     };
-    window.addEventListener('load', () => setTimeout(time, 9000), { once: true });
+    window.addEventListener('load', () => setTimeout(time, 3500), { once: true });
 
     /* ---- the loops ---- */
     if (typeof document.getAnimations !== 'function' || !('IntersectionObserver' in window)) return;
