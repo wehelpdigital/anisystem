@@ -311,7 +311,7 @@ final class Wishlist
                 \App\Models\AnisystemNotification::create([
                     'userId' => (int) $uid,
                     'type' => 'wishlist',
-                    'title' => 'New on the First 50: ' . $row['firstName'] . ($row['town'] ? ' of ' . $row['town'] : ''),
+                    'title' => 'New on the wishlist: ' . $row['firstName'] . ($row['town'] ? ' of ' . $row['town'] : ''),
                     'body' => trim(($crop ? $crop . '. ' : '') . ($row['wishText'] ? '"' . Str::limit($row['wishText'], 120) . '"' : '')),
                     'url' => '/admin/wishlist?entry=' . $id,
                     'deleteStatus' => 1,

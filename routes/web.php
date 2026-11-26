@@ -476,9 +476,12 @@ Route::get('/best-farm-management-philippines', [App\Http\Controllers\PublicCont
 Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->defaults('face', 'ph')->name('ph.pricing');
 Route::get('/pricing/compare', [App\Http\Controllers\PublicController::class, 'compare'])->defaults('face', 'ph')->name('ph.pricing.compare');
 Route::get('/start', [App\Http\Controllers\PublicController::class, 'landing'])->defaults('face', 'ph')->name('ph.landing');
-// The First 50 wishlist: a page of its own, without the site's name or links (App\Support\Wishlist, 2026-11-26).
-Route::get('/unang-50', [App\Http\Controllers\WishlistController::class, 'show'])->name('wishlist');
-Route::post('/unang-50', [App\Http\Controllers\WishlistController::class, 'save'])->middleware('throttle:12,60')->name('wishlist.save');
+// The wishlist: a page of its own, without the site's name or links (App\Support\Wishlist, 2026-11-26). It began as
+// /unang-50; that address still lands here, with the friend's code it carried.
+Route::get('/wishlist', [App\Http\Controllers\WishlistController::class, 'show'])->name('wishlist');
+Route::post('/wishlist', [App\Http\Controllers\WishlistController::class, 'save'])->middleware('throttle:12,60')->name('wishlist.save');
+Route::get('/unang-50', fn (\Illuminate\Http\Request $r) => redirect('/wishlist' . ($r->getQueryString() ? '?' . $r->getQueryString() : ''), 301));
+Route::post('/unang-50', [App\Http\Controllers\WishlistController::class, 'save'])->middleware('throttle:12,60');
 Route::get('/legal', [App\Http\Controllers\LegalController::class, 'indexPh'])->defaults('face', 'ph')->name('ph.legal.index');
 Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'showPh'])->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('ph.legal.show');
 Route::get('/tutorial', [App\Http\Controllers\PublicController::class, 'tutorial'])->defaults('face', 'ph')->name('ph.tutorial');

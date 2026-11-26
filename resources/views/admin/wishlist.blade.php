@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Unang 50')
+@section('title', 'Wishlist')
 @section('subtitle', 'The farmers\' wishlist: who answered, and what they wish for')
 
 @push('head')
@@ -84,8 +84,8 @@
         const list = d.entries.filter((e) => filter === 'all' || e.status === filter);
         $id('wlBody').innerHTML = `
             <div class="ad-stats ad-rise">
-                <div class="card ad-stat"><b>${d.count}</b><span>Farmers answered</span><small>${d.spots > 0 ? d.spots + ' of ' + d.limit + ' places left' : 'The first ' + d.limit + ' are full'}</small></div>
-                <div class="card ad-stat"><b>${d.accepted}</b><span>In the First 50</span></div>
+                <div class="card ad-stat"><b>${d.count}</b><span>Farmers joined</span><small>${d.spots > 0 ? d.spots + ' of ' + d.limit + ' slots open (not shown to them)' : 'Past the ' + d.limit + ' slots planned'}</small></div>
+                <div class="card ad-stat"><b>${d.accepted}</b><span>Given a slot</span></div>
                 <div class="card ad-stat"><b>${d.entries.filter((e) => e.status === 'new').length}</b><span>Not contacted yet</span></div>
                 <div class="card ad-stat"><b>${d.entries.reduce((s, e) => s + e.friends, 0)}</b><span>Came through a friend's link</span></div>
             </div>

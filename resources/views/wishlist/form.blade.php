@@ -1,6 +1,8 @@
 <!doctype html>
-{{-- THE FIRST 50 (2026-11-26, the owner: "a wishlist form or wizard that i can market for the first 50 farmers, so
-     create that (do not show any anee branding or links to the main site) ... surprise me"). App\Support\Wishlist.
+{{-- THE WISHLIST (2026-11-26, the owner: "a wishlist form or wizard that i can market ... do not show any anee branding
+     or links to the main site ... surprise me"; then: "don't mention the 50, just say ... a technology that increases your
+     yield with 100% guarantee, join now for the first to try it for free, join the wishlist ... limited slots only").
+     App\Support\Wishlist. The guarantee is said with what stands behind it: no harvest gained, nothing paid.
 
      A page of its own: no layout, no app bundle, no link anywhere, no name, not in search results. One question to a
      screen, a big tap for every answer, Tagalog first with English one tap away, and the answers kept on the phone
@@ -12,15 +14,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Ang Unang 50 | Ang hiling ng magsasaka</title>
-    <meta name="description" content="Sabihin ang hiling mo para sa bukid. Ang unang 50 magsasaka ang mauunang makagamit.">
+    <title>Teknolohiyang nagpapataas ng ani | Sumali sa wishlist</title>
+    <meta name="description" content="May teknolohiya kaming nagpapataas ng ani, may 100% garantiya. Sumali sa wishlist at mauna kang makasubok nang libre. Limitado ang slots.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Ang Unang 50: ano ang hiling mo para sa bukid?">
-    <meta property="og:description" content="Dalawang minuto lang. Ang unang 50 magsasaka ang mauunang makagamit, at libre ang unang season.">
-    <meta property="og:image" content="{{ url('/images/unang-50/share.png') }}">
+    <meta property="og:title" content="May teknolohiya kaming nagpapataas ng ani mo, may 100% garantiya">
+    <meta property="og:description" content="Sumali sa wishlist at mauna kang makasubok nang libre. Limitado lang ang slots.">
+    <meta property="og:image" content="{{ url('/images/wishlist/share.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:url" content="{{ url('/unang-50') }}">
+    <meta property="og:url" content="{{ url('/wishlist') }}">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="theme-color" content="#1f3d1a">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8C%B1%3C/text%3E%3C/svg%3E">
@@ -133,15 +135,17 @@
         .gets li { display: flex; gap: .6rem; align-items: flex-start; font-weight: 700; line-height: 1.4; animation: stepIn .5s var(--ease) both; }
         .gets li:nth-child(2) { animation-delay: .08s; } .gets li:nth-child(3) { animation-delay: .16s; }
         .gets b { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; background: var(--leaf); color: #fff; display: grid; place-items: center; font-size: .8rem; }
-        .count { display: flex; align-items: center; gap: .9rem; margin-top: 1.3rem; padding: .9rem 1rem; border-radius: 1.2rem; background: var(--card); border: 1px solid var(--line); }
-        .ring { flex: none; width: 3.6rem; height: 3.6rem; position: relative; }
-        .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-        .ring circle { fill: none; stroke-width: 6; }
-        .ring .bg { stroke: var(--line); }
-        .ring .fg { stroke: var(--gold); stroke-linecap: round; transition: stroke-dashoffset 1.4s var(--ease) .3s; }
-        .ring b { position: absolute; inset: 0; display: grid; place-items: center; font-family: 'Display', sans-serif; font-size: 1.15rem; }
-        .count p { margin: 0; font-weight: 800; line-height: 1.35; }
-        .count small { display: block; font-weight: 600; color: var(--soft); }
+        /* The guarantee: a seal, and right under it what stands behind it. */
+        .guard { display: flex; align-items: center; gap: .9rem; margin-top: 1.3rem; padding: .95rem 1rem; border-radius: 1.2rem; background: var(--green); color: #fff; animation: pop .6s var(--ease) .25s both; }
+        .seal { flex: none; width: 4rem; height: 4rem; border-radius: 999px; display: grid; place-items: center; text-align: center; background: var(--gold); color: #1a1a1a;
+            font-family: 'Display', sans-serif; font-weight: 700; font-size: 1.05rem; line-height: .95; box-shadow: 0 0 0 4px rgb(245 197 24 / .35); }
+        .seal small { display: block; font-family: 'Body', sans-serif; font-size: .44rem; font-weight: 800; letter-spacing: .02em; margin-top: .1rem; }
+        .guard p { margin: 0; font-weight: 800; line-height: 1.35; }
+        .guard p small { display: block; margin-top: .2rem; font-weight: 600; color: #d9ead0; }
+        /* Limited slots: a dot that breathes beside the words. */
+        .slots { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1rem; padding: .45rem .85rem; border-radius: 999px; background: #fff1e6; color: #9a3412; font-weight: 800; font-size: .86rem; }
+        .slots i { width: .55rem; height: .55rem; border-radius: 999px; background: #ea580c; animation: breathe 1.6s ease-in-out infinite; }
+        @keyframes breathe { 50% { transform: scale(1.5); opacity: .45; } }
         .resume { margin-top: 1rem; display: flex; gap: .6rem; align-items: center; padding: .8rem .95rem; border-radius: 1rem; background: var(--mist); font-weight: 700; font-size: .9rem; }
         .resume[hidden] { display: none; }
         .resume button { margin-left: auto; border: 0; background: transparent; color: var(--leaf); font-weight: 800; cursor: pointer; }
@@ -205,8 +209,6 @@
 <script>
 (() => {
     const C = @json($choices);
-    const LIMIT = @json($limit);
-    let SPOTS = @json($spots);
     const OFFER = @json($offer);
     const REF = @json($ref);
     const SAVE_URL = @json(route('wishlist.save', [], false));
@@ -220,10 +222,10 @@
     /* Everything said on the page, in both languages. */
     const T = {
         tl: {
-            kicker: 'Para sa mga magsasakang gustong mauna', title: 'Ang <em>Unang 50</em>',
-            lead: 'May binubuo kaming katulong sa bukid na nasa telepono mo. Bago namin ito ilabas, gusto muna naming marinig ang hiling mo, para ikaw mismo ang humubog nito.',
-            left: (n) => n > 0 ? `${n} na puwesto na lang ang natitira` : 'Puno na ang unang 50', leftSub: (n) => n > 0 ? `sa ${LIMIT} na magsasaka` : 'Pero kasama ka pa rin sa susunod na batch',
-            start: 'Ibigay ang hiling ko', minutes: 'Dalawang minuto lang', resume: 'May naiwan kang sagot.', resumeGo: 'Ituloy', restart: 'Magsimula muli',
+            kicker: 'Bagong teknolohiya para sa bukid', title: 'Teknolohiyang <em>nagpapataas ng ani</em> mo',
+            lead: 'Tamang abono, tamang spray at tamang oras para sa mismong lote mo, kaya tumataas ang ani. Sumali sa wishlist at mauna kang makasubok nang libre.',
+            guard: '100% garantiya sa ani mo', guardSub: 'Kapag hindi tumaas ang ani mo, wala kang babayaran kahit piso.', seal: '100%', sealSub: 'GARANTIYA',
+            slots: 'Limitado lang ang slots', start: 'Sumali sa wishlist', minutes: 'Dalawang minuto lang', resume: 'May naiwan kang sagot.', resumeGo: 'Ituloy', restart: 'Magsimula muli',
             next: 'Susunod', skip: 'Laktawan', send: 'Ipadala ang hiling ko', sending: 'Ipinapadala…', back: 'Bumalik',
             name: 'Una sa lahat, ano ang pangalan mo?', first: 'Pangalan', last: 'Apelyido', optional: 'kung gusto mo',
             role: 'Alin ang pinakamalapit sa iyo?',
@@ -238,24 +240,24 @@
             payKicker: 'Wala kang babayaran ngayon', pay: 'Kung makakatulong ito na tumaas ang ani mo, paano mo gustong magbayad?', payAmount: 'Magkano ang patas para sa isang buong season?',
             payNote: 'Tanong lang ito para malaman namin ang patas para sa magsasaka. Wala kang babayaran sa pagsagot.',
             heard: 'Saan mo nalaman ito?',
-            contact: 'Paano ka namin makakausap?', contactHint: 'Dito ka namin sasabihan kung kasama ka sa unang 50.', mobile: 'Mobile number', email: 'Email', emailOpt: 'kung meron',
+            contact: 'Paano ka namin makakausap?', contactHint: 'Dito ka namin sasabihan kapag handa na ang slot mo.', mobile: 'Mobile number', email: 'Email', emailOpt: 'kung meron',
             via: 'Saan ka mas madaling makausap?', time: 'Anong oras ang pinakamaganda?',
-            consent: 'Pumapayag akong gamitin ang mga sagot ko para mapili ang unang 50 at para makausap ako tungkol dito. Hindi ito ibebenta o ibibigay kaninuman.',
+            consent: 'Pumapayag akong gamitin ang mga sagot ko para sa wishlist at para makausap ako tungkol dito. Hindi ito ibebenta o ibibigay kaninuman.',
             needPhone: 'Pakilagay ang mobile number mo (09XX XXX XXXX) o email.', needConsent: 'Pakitsek ang pahintulot sa itaas.', offline: 'Walang signal ngayon. Naitabi namin ang sagot mo, subukan ulit kapag may signal.',
-            thanks: (n) => `Salamat, ${n}!`, inLine: 'ang puwesto mo sa Unang 50', full: (p) => `Puno na ang unang 50, pero kasama ka sa susunod na batch. Ang puwesto mo: #${p}.`,
+            thanks: (n) => `Salamat, ${n}!`, inLine: 'ang puwesto mo sa wishlist',
             again: 'Natanggap na namin ito dati. Na-update ang mga sagot mo, at nasa dati ka pa ring puwesto.',
             cardTitle: 'Ang card mo', download: 'I-download', share: 'Ibahagi',
             climb: 'Umakyat sa listahan', climbSay: `Bawat kaibigang magsasaka na sasagot gamit ang link mo, aakyat ka ng ${3} puwesto.`, friends: (n) => n ? `${n} kaibigan na ang sumali gamit ang link mo.` : '',
-            copy: 'Kopyahin', copied: 'Nakopya ang link', shareText: 'Sumali ako sa Unang 50 para sa mga magsasaka. Sabihin mo rin ang hiling mo para sa bukid:',
+            copy: 'Kopyahin', copied: 'Nakopya ang link', shareText: 'Sumali ako sa wishlist ng bagong teknolohiya na nagpapataas ng ani, may 100% garantiya at libre ang unang subok. Sumali ka na rin, limitado lang ang slots:',
             tipsTitle: 'Habang naghihintay', tipsSay: 'Tatlong bagay na pwede mong gawin ngayong linggo, para sa sinabi mong pinakamabigat:',
             nextTitle: 'Ano ang susunod?', nextSay: (v) => `Kokontakin ka namin${v ? ' sa ' + v : ''} sa loob ng isang linggo para sa susunod na hakbang.`, edit: 'Baguhin ang sagot ko',
-            cardKicker: 'ANG UNANG 50', cardFarmer: 'Magsasaka', cardWish: 'Ang hiling ko:', of: 'ng',
+            cardKicker: 'WISHLIST', cardBottom: 'Kasama sa mauunang susubok', cardWish: 'Ang hiling ko:',
         },
         en: {
-            kicker: 'For farmers who want to go first', title: 'The <em>First 50</em>',
-            lead: 'We are building a farm helper that lives in your phone. Before we open it, we want to hear what you wish it could do, so you shape it yourself.',
-            left: (n) => n > 0 ? `${n} places left` : 'The first 50 are full', leftSub: (n) => n > 0 ? `of ${LIMIT} farmers` : 'You still join the next group',
-            start: 'Give my wish', minutes: 'Just two minutes', resume: 'You left some answers.', resumeGo: 'Continue', restart: 'Start again',
+            kicker: 'New technology for the farm', title: 'Technology that <em>raises your harvest</em>',
+            lead: 'The right fertilizer, the right spray and the right timing for your own lot, so your harvest goes up. Join the wishlist and be first to try it free.',
+            guard: '100% guarantee on your harvest', guardSub: 'If your harvest does not go up, you pay nothing, not a single peso.', seal: '100%', sealSub: 'GUARANTEE',
+            slots: 'Limited slots only', start: 'Join the wishlist', minutes: 'Just two minutes', resume: 'You left some answers.', resumeGo: 'Continue', restart: 'Start again',
             next: 'Next', skip: 'Skip', send: 'Send my wish', sending: 'Sending…', back: 'Back',
             name: 'First of all, what is your name?', first: 'First name', last: 'Last name', optional: 'if you like',
             role: 'Which one is closest to you?',
@@ -270,18 +272,18 @@
             payKicker: 'You pay nothing now', pay: 'If it helped you harvest more, how would you like to pay?', payAmount: 'What is fair for a whole season?',
             payNote: 'This is only a question, so we know what is fair for farmers. Answering costs nothing.',
             heard: 'Where did you hear about this?',
-            contact: 'How can we reach you?', contactHint: 'This is where we tell you if you are in the first 50.', mobile: 'Mobile number', email: 'Email', emailOpt: 'if you have one',
+            contact: 'How can we reach you?', contactHint: 'This is where we tell you when your slot is ready.', mobile: 'Mobile number', email: 'Email', emailOpt: 'if you have one',
             via: 'Where are you easiest to reach?', time: 'What time is best?',
-            consent: 'I agree that my answers are used to choose the first 50 and to contact me about it. They are never sold or given to anyone.',
+            consent: 'I agree that my answers are used for the wishlist and to contact me about it. They are never sold or given to anyone.',
             needPhone: 'Please give your mobile number (09XX XXX XXXX) or an email.', needConsent: 'Please tick the consent box above.', offline: 'No signal right now. Your answers are kept; try again when you have signal.',
-            thanks: (n) => `Thank you, ${n}!`, inLine: 'your place in the First 50', full: (p) => `The first 50 are full, but you are in the next group. Your place: #${p}.`,
+            thanks: (n) => `Thank you, ${n}!`, inLine: 'your place on the wishlist',
             again: 'We had your answers already. They are updated, and you keep your place.',
             cardTitle: 'Your card', download: 'Download', share: 'Share',
             climb: 'Move up the list', climbSay: `For every farmer friend who answers through your link, you move up ${3} places.`, friends: (n) => n ? `${n} friend${n === 1 ? '' : 's'} joined through your link.` : '',
-            copy: 'Copy', copied: 'Link copied', shareText: 'I joined the First 50 for farmers. Tell them your wish for the farm too:',
+            copy: 'Copy', copied: 'Link copied', shareText: 'I joined the wishlist for a new technology that raises the harvest, with a 100% guarantee and a free first try. Join too, slots are limited:',
             tipsTitle: 'While you wait', tipsSay: 'Three things you can do this week, for what you said is hardest:',
             nextTitle: 'What happens next?', nextSay: (v) => `We will contact you${v ? ' on ' + v : ''} within a week for the next step.`, edit: 'Change my answers',
-            cardKicker: 'THE FIRST 50', cardFarmer: 'Farmer', cardWish: 'My wish:', of: 'of',
+            cardKicker: 'WISHLIST', cardBottom: 'Among the first to try', cardWish: 'My wish:',
         },
     };
 
@@ -351,10 +353,11 @@
             <h1>${t('title')}</h1>
             <p class="lead">${t('lead')}</p>
             <ul class="gets">${(OFFER[S.lang] || []).map((x) => `<li><b>✓</b><span>${esc(x)}</span></li>`).join('')}</ul>
-            <div class="count">
-                <div class="ring"><svg viewBox="0 0 64 64"><circle class="bg" cx="32" cy="32" r="27"/><circle class="fg" id="ringFg" cx="32" cy="32" r="27" stroke-dasharray="169.6" stroke-dashoffset="169.6"/></svg><b>${Math.max(0, SPOTS)}</b></div>
-                <p>${t('left', SPOTS)}<small>${t('leftSub', SPOTS)}</small></p>
+            <div class="guard">
+                <span class="seal">${t('seal')}<small>${t('sealSub')}</small></span>
+                <p>${t('guard')}<small>${t('guardSub')}</small></p>
             </div>
+            <span class="slots"><i aria-hidden="true"></i>${t('slots')}</span>
             <div class="resume" id="resume" ${resumeAt ? '' : 'hidden'}><span>${t('resume')}</span><button type="button" data-restart>${t('restart')}</button></div>`,
         name: () => `
             <h2>${t('name')}</h2>
@@ -397,13 +400,12 @@
             <p class="err" id="err" hidden></p>`,
         done: () => {
             const d = S.done || {};
-            const link = location.origin + '/unang-50?r=' + encodeURIComponent(d.code || '');
-            const full = d.spots === 0 && d.position > LIMIT;
+            const link = location.origin + '/wishlist?r=' + encodeURIComponent(d.code || '');
             return `
             <div class="done-top">
                 <p class="kicker">${t('cardKicker')}</p>
                 <h2>${esc(t('thanks', A.firstName || ''))}</h2>
-                ${full ? `<p>${esc(t('full', d.position))}</p>` : `<div class="place" id="place" data-n="${d.position || 1}">#1</div><p>${t('inLine')}</p>`}
+                <div class="place" id="place" data-n="${d.position || 1}">#1</div><p>${t('inLine')}</p>
                 ${d.again ? `<p>${t('again')}</p>` : ''}
             </div>
             <div class="cardbox"><canvas id="card" width="1080" height="1350" aria-label="${esc(t('cardTitle'))}"></canvas></div>
@@ -441,10 +443,6 @@
         go.innerHTML = step.id === 'intro' ? `${resumeAt ? t('resumeGo') : t('start')} ${arrow}`
             : step.id === 'contact' ? `${t('send')} ${arrow}` : `${t('next')} ${arrow}`;
         state();
-        if (step.id === 'intro') requestAnimationFrame(() => requestAnimationFrame(() => {
-            const fg = $('#ringFg');
-            if (fg) fg.style.strokeDashoffset = String(169.6 * (1 - Math.max(0, Math.min(1, SPOTS / LIMIT))));
-        }));
         if (step.id === 'place') places();
         if (step.id === 'done') finish();
         window.scrollTo({ top: 0, behavior: 'auto' });
@@ -539,7 +537,7 @@
             });
             const body = await res.json().catch(() => ({}));
             if (!res.ok || !body.success) throw Object.assign(new Error(body.message || 'Error'), { server: true });
-            S.done = body.data; SPOTS = body.data.spots; S.at = STEPS.length - 1; dir = 'fwd'; keep(); paint();
+            S.done = body.data; S.at = STEPS.length - 1; dir = 'fwd'; keep(); paint();
         } catch (e) {
             err.textContent = e.server ? e.message : t('offline'); err.hidden = false;
             go.disabled = false; go.innerHTML = `${t('send')} ${arrow}`;
@@ -602,7 +600,7 @@
             lines.forEach((l, i) => g.fillText(l, bx + 40, by + 122 + i * 56));
         }
         g.fillStyle = '#ffffff'; g.font = font(800, 40, 'Body');
-        g.fillText(t('cardFarmer') + ' #' + (d.position || 1) + ' ' + t('of') + ' ' + LIMIT, 340, 1265);
+        g.fillText(t('cardBottom'), 300, 1265);
     }
     function wrap(g, text, max, f) {
         g.font = f; const out = []; let line = '';
@@ -612,13 +610,13 @@
     function round(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
     function download() {
         const cv = $('#card'); if (!cv) return;
-        const a = document.createElement('a'); a.download = 'unang-50.png'; a.href = cv.toDataURL('image/png'); document.body.appendChild(a); a.click(); a.remove();
+        const a = document.createElement('a'); a.download = 'wishlist.png'; a.href = cv.toDataURL('image/png'); document.body.appendChild(a); a.click(); a.remove();
     }
     async function shareCard() {
         const cv = $('#card'), link = $('#mylink')?.value || location.href;
         try {
             const blob = await new Promise((r) => cv.toBlob(r, 'image/png'));
-            const file = new File([blob], 'unang-50.png', { type: 'image/png' });
+            const file = new File([blob], 'wishlist.png', { type: 'image/png' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], text: t('shareText') + ' ' + link }); return; }
             if (navigator.share) { await navigator.share({ text: t('shareText'), url: link }); return; }
         } catch (e) { if (e && e.name === 'AbortError') return; }

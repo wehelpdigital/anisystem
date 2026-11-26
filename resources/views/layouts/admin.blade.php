@@ -282,7 +282,7 @@
             : (request()->routeIs('admin.reports') ? 'Reports'
             : (request()->routeIs('admin.interests') ? 'Interests'
             : (request()->routeIs('admin.activity') ? 'Activity'
-            : (request()->routeIs('admin.wishlist') ? 'Unang 50'
+            : (request()->routeIs('admin.wishlist') ? 'Wishlist'
             : (request()->routeIs('admin.sales') ? 'Sales Analysis'
             : (request()->routeIs('admin.orders') ? 'Orders'
             : (request()->routeIs('admin.newsletter') ? 'Newsletter' : 'Dashboard'))))))));
@@ -341,7 +341,7 @@
             </a>
             <a class="ad-nav-row {{ request()->routeIs('admin.wishlist') ? 'is-on' : '' }}" href="{{ route('admin.wishlist') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21V11m0 0c0-3 2-5 6-5 0 3-2 5-6 5zm0 0c0-3-2-5-6-5 0 3 2 5 6 5zM5 21h14"/></svg>
-                <span class="min-w-0"><b>Unang 50</b><i>The farmers' wishlist: who answered and what they wish for</i></span>
+                <span class="min-w-0"><b>Wishlist</b><i>The farmers who joined, and what they wish for</i></span>
             </a>
             <a class="ad-nav-row {{ request()->routeIs('admin.support') ? 'is-on' : '' }}" href="{{ route('admin.support') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8m-8 4h5m-9 7l3.5-3.5H19a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14z"/></svg>

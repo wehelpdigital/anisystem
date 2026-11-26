@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
  */
 class AdminWishlistController extends Controller
 {
-    public const STATUSES = ['new' => 'New', 'contacted' => 'Contacted', 'accepted' => 'In the First 50', 'notfit' => 'Not a fit'];
+    public const STATUSES = ['new' => 'New', 'contacted' => 'Contacted', 'accepted' => 'Gets a slot', 'notfit' => 'Not a fit'];
 
     public function page()
     {
@@ -31,7 +31,7 @@ class AdminWishlistController extends Controller
             'limit' => (int) config('wishlist.limit', 50),
             'spots' => Wishlist::spotsLeft(),
             'accepted' => count(array_filter($entries, fn ($e) => $e['status'] === 'accepted')),
-            'link' => url('/unang-50'),
+            'link' => url('/wishlist'),
         ]]);
     }
 
@@ -66,6 +66,6 @@ class AdminWishlistController extends Controller
                 fputcsv($out, array_map(fn ($k) => is_array($r[$k]) ? implode('; ', $r[$k]) : ($k === 'status' ? (self::STATUSES[$r[$k]] ?? $r[$k]) : $r[$k]), array_keys($cols)));
             }
             fclose($out);
-        }, 'first-50-' . now()->format('Y-m-d') . '.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
+        }, 'wishlist-' . now()->format('Y-m-d') . '.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
     }
 }

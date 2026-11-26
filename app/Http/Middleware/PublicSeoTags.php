@@ -21,8 +21,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class PublicSeoTags
 {
     private const SKIP = ['app', 'admin', 'mother-api', 'cron', 'deploy-check', 'sitemap.xml', 'storage', 'tools', 'api', 'share',
-        // The First 50 wishlist carries no name of the site, so no site tags either.
-        'unang-50'];
+        // The wishlist carries no name of the site, so no site tags either.
+        'wishlist', 'unang-50'];
 
     public function handle(Request $request, Closure $next): Response
     {
