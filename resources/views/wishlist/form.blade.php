@@ -42,13 +42,17 @@
         .wrap { max-width: 34rem; margin: 0 auto; min-height: 100svh; display: flex; flex-direction: column; padding: 0 1rem calc(6.5rem + env(safe-area-inset-bottom)); }
 
         /* The bar along the top: back, and how far. */
-        .top { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: .6rem; padding: .75rem 0 .6rem; background: linear-gradient(var(--cream) 75%, rgb(251 247 236 / 0)); }
+        /* The bar along the top runs the full width of the questions under it, edge to edge with them. */
+        .top { position: sticky; top: 0; z-index: 5; padding: 1rem 0 .8rem; background: linear-gradient(var(--cream) 75%, rgb(251 247 236 / 0)); }
         /* Nothing to go back to on the first screen and the last: no bar, the picture starts at the top. */
         .top.is-bare { display: none; }
-        .back { width: 2.4rem; height: 2.4rem; border-radius: 999px; border: 0; background: transparent; display: grid; place-items: center; cursor: pointer; transition: opacity .28s var(--ease), background .2s; }
-        .back:active { background: var(--mist); }
-        .back[hidden] { display: grid; visibility: hidden; opacity: 0; }
-        .bar { flex: 1; height: .5rem; border-radius: 999px; background: var(--line); overflow: hidden; transition: opacity .28s var(--ease); }
+        /* Back sits beside Next at the bottom, where the thumb already is. */
+        .back { flex: none; width: 3.5rem; height: 3.5rem; border-radius: 1.1rem; border: 2px solid var(--line); background: var(--card); display: grid; place-items: center;
+            cursor: pointer; color: var(--ink); animation: backIn .3s var(--ease) both; transition: background .2s, transform .18s var(--ease); }
+        .back:active { background: var(--mist); transform: scale(.96); }
+        .back[hidden] { display: none; }
+        @keyframes backIn { from { opacity: 0; transform: translateX(-8px); } }
+        .bar { width: 100%; height: .5rem; border-radius: 999px; background: var(--line); overflow: hidden; transition: opacity .28s var(--ease); }
         .bar i { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--leaf), var(--sprout)); transition: width .45s var(--ease); }
 
         /* The screens. One shows at a time; the next slides in from the side it comes from. */
@@ -184,15 +188,15 @@
 <body>
 <div class="wrap">
     <div class="top">
-        <button type="button" class="back" id="back" aria-label="Bumalik" hidden>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
-        </button>
         <div class="bar" id="bar" aria-hidden="true"><i></i></div>
     </div>
     <main class="stage" id="stage" aria-live="polite"></main>
 </div>
 <div class="foot" id="foot">
     <div class="foot-in">
+        <button type="button" class="back" id="back" aria-label="Back" hidden>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+        </button>
         <button type="button" class="skip" id="skip" hidden></button>
         <button type="button" class="go" id="go"></button>
     </div>
