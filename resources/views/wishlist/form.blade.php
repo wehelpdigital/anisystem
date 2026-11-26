@@ -14,11 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>We built the framework to increase your yield</title>
-    <meta name="description" content="We built the framework to increase your yield, and we are sharing it with you. Limited slots only.">
+    <title>We discovered the framework to increase your rice and corn yield</title>
+    <meta name="description" content="We discovered the framework to increase your rice and corn yield, and we are sharing it with you. 100% guaranteed. Limited slots only.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="We built the framework to increase your yield, and we are sharing it with you.">
-    <meta property="og:description" content="Limited slots only.">
+    <meta property="og:title" content="We discovered the framework to increase your rice and corn yield, and we are sharing it with you.">
+    <meta property="og:description" content="100% guaranteed. Limited slots only.">
     <meta property="og:image" content="{{ url('/images/wishlist/share.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -127,8 +127,13 @@
         @keyframes grow { from { transform: scaleY(0); } }
         .sway { animation: sway 5s ease-in-out infinite; transform-origin: 50% 100%; transform-box: fill-box; }
         @keyframes sway { 50% { transform: rotate(3deg); } }
-        h1 { font-size: 1.85rem; font-weight: 700; margin-top: .6rem; }
+        h1 { font-size: 1.7rem; font-weight: 700; margin-top: .6rem; text-wrap: balance; }
         .first-q { margin-top: 1.7rem; }
+        /* The guarantee, said right under the line, in the green of the word it backs. */
+        .sure { margin: .45rem 0 0; font-family: 'Display', 'Body', sans-serif; font-weight: 700; font-size: 1.35rem; color: var(--leaf);
+            display: inline-flex; align-items: center; gap: .45rem; animation: stepIn .5s var(--ease) .15s both; }
+        .sure::before { content: '✓'; width: 1.6rem; height: 1.6rem; border-radius: 999px; background: var(--gold); color: #1a1a1a; display: grid; place-items: center; font-size: .9rem; }
+        .sure + .slots { display: flex; width: fit-content; }
         h1 em { font-style: normal; color: var(--leaf); }
         .lead { font-size: 1.05rem; line-height: 1.55; color: #36402e; margin: .7rem 0 0; }
         .gets { list-style: none; margin: .8rem 0 0; padding: 0; display: grid; gap: .5rem; }
@@ -211,7 +216,8 @@
     /* Everything said on the page. */
     const T = {
         en: {
-            title: 'We built the <em>framework</em> to increase your yield, and we are sharing it with you.',
+            title: 'We discovered the <em>framework</em> to increase your rice and corn yield, and we are sharing it with you.',
+            sure: '100% guaranteed.',
             slots: 'Limited slots only', start: 'Join the wishlist', minutes: 'Just two minutes', resume: 'You left some answers.', resumeGo: 'Continue', restart: 'Start again',
             next: 'Next', skip: 'Skip', send: 'Send my wish', sending: 'Sending…', back: 'Back',
             name: 'First of all, what is your name?', first: 'First name', last: 'Last name', optional: 'if you like',
@@ -235,7 +241,7 @@
             again: 'We had your answers already. They are updated, and you keep your place.',
             cardTitle: 'Your card', download: 'Download', share: 'Share',
             climb: 'Move up the list', climbSay: `For every farmer friend who answers through your link, you move up ${3} places.`, friends: (n) => n ? `${n} friend${n === 1 ? '' : 's'} joined through your link.` : '',
-            copy: 'Copy', copied: 'Link copied', shareText: 'They built a framework to increase our yield. I joined the wishlist to try it free. Join too, slots are limited:',
+            copy: 'Copy', copied: 'Link copied', shareText: 'They discovered a framework to increase rice and corn yield, 100% guaranteed. I joined the wishlist to try it free. Join too, slots are limited:',
             tipsTitle: 'While you wait', tipsSay: 'Three things you can do this week, for what you said is hardest:',
             nextTitle: 'What happens next?', nextSay: (v) => `We will contact you${v ? ' on ' + v : ''} within a week for the next step.`, edit: 'Change my answers',
             cardKicker: 'THE YIELD FRAMEWORK', cardBottom: 'Among the first to try', cardWish: 'My wish:',
@@ -287,6 +293,7 @@
     const SCREENS = {
         name: () => `
             <h1>${t('title')}</h1>
+            <p class="sure">${t('sure')}</p>
             <span class="slots"><i aria-hidden="true"></i>${t('slots')}</span>
             <h2 class="first-q">${t('name')}</h2>
             <label class="field"><span>${t('first')}</span><input class="input" data-in="firstName" autocomplete="given-name" value="${esc(A.firstName)}" maxlength="60"></label>
