@@ -35,13 +35,13 @@ class WishlistController extends Controller
             'firstName' => 'required|string|max:60',
             'consent' => 'accepted',
         ], [
-            'firstName.required' => 'Pakisulat ang pangalan mo. (Please write your name.)',
-            'consent.accepted' => 'Pakitsek ang pahintulot sa dulo. (Please tick the consent box.)',
+            'firstName.required' => 'Please write your name.',
+            'consent.accepted' => 'Please tick the consent box.',
         ]);
         $phone = Wishlist::phone($request->input('phone'));
         $email = filter_var(trim((string) $request->input('email')), FILTER_VALIDATE_EMAIL);
         if (! $phone && ! $email) {
-            return response()->json(['success' => false, 'message' => 'Pakilagay ang mobile number mo (09XX XXX XXXX) o email. (Please give your mobile number or email.)',
+            return response()->json(['success' => false, 'message' => 'Please give your mobile number (09XX XXX XXXX) or an email.',
                 'errors' => ['phone' => ['A mobile number or an email is needed.']]], 422);
         }
 

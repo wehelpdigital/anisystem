@@ -5,20 +5,20 @@
      App\Support\Wishlist. The guarantee is said with what stands behind it: no harvest gained, nothing paid.
 
      A page of its own: no layout, no app bundle, no link anywhere, no name, not in search results. One question to a
-     screen, a big tap for every answer, Tagalog first with English one tap away, and the answers kept on the phone
+     screen, a big tap for every answer, in English (the owner took the Tagalog out the same day), and the answers kept on the phone
      as they are given, so a dropped signal or a closed tab loses nothing. Nothing turns the page but the Next button.
      At the end: their place in line, a card to post, a link that moves them up, and three things to do this week. --}}
-<html lang="tl">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Teknolohiyang nagpapataas ng ani | Sumali sa wishlist</title>
-    <meta name="description" content="May teknolohiya kaming nagpapataas ng ani, may 100% garantiya. Sumali sa wishlist at mauna kang makasubok nang libre. Limitado ang slots.">
+    <title>We built the framework to increase your yield | Join the wishlist</title>
+    <meta name="description" content="100% guarantee to increase your yield. Join the wishlist and be first to try it free. Limited slots only.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="May teknolohiya kaming nagpapataas ng ani mo, may 100% garantiya">
-    <meta property="og:description" content="Sumali sa wishlist at mauna kang makasubok nang libre. Limitado lang ang slots.">
+    <meta property="og:title" content="We built the framework to increase your yield">
+    <meta property="og:description" content="100% guarantee to increase your yield. Join the wishlist and be first to try it free. Limited slots only.">
     <meta property="og:image" content="{{ url('/images/wishlist/share.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -41,16 +41,15 @@
         button, input, select, textarea { font: inherit; color: inherit; }
         .wrap { max-width: 34rem; margin: 0 auto; min-height: 100svh; display: flex; flex-direction: column; padding: 0 1rem calc(6.5rem + env(safe-area-inset-bottom)); }
 
-        /* The bar along the top: back, how far, and the language. */
+        /* The bar along the top: back, and how far. */
         .top { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: .6rem; padding: .75rem 0 .6rem; background: linear-gradient(var(--cream) 75%, rgb(251 247 236 / 0)); }
+        /* Nothing to go back to on the first screen and the last: no bar, the picture starts at the top. */
+        .top.is-bare { display: none; }
         .back { width: 2.4rem; height: 2.4rem; border-radius: 999px; border: 0; background: transparent; display: grid; place-items: center; cursor: pointer; transition: opacity .28s var(--ease), background .2s; }
         .back:active { background: var(--mist); }
         .back[hidden] { display: grid; visibility: hidden; opacity: 0; }
         .bar { flex: 1; height: .5rem; border-radius: 999px; background: var(--line); overflow: hidden; transition: opacity .28s var(--ease); }
         .bar i { display: block; height: 100%; width: 0; border-radius: 999px; background: linear-gradient(90deg, var(--leaf), var(--sprout)); transition: width .45s var(--ease); }
-        .lang { display: inline-flex; padding: .2rem; border-radius: 999px; background: var(--card); border: 1px solid var(--line); }
-        .lang button { border: 0; background: transparent; padding: .35rem .65rem; border-radius: 999px; font-size: .78rem; font-weight: 800; color: var(--soft); cursor: pointer; transition: background .28s var(--ease), color .28s var(--ease); }
-        .lang button.is-on { background: var(--green); color: #fff; }
 
         /* The screens. One shows at a time; the next slides in from the side it comes from. */
         .stage { position: relative; flex: 1; }
@@ -128,10 +127,26 @@
         @keyframes grow { from { transform: scaleY(0); } }
         .sway { animation: sway 5s ease-in-out infinite; transform-origin: 50% 100%; transform-box: fill-box; }
         @keyframes sway { 50% { transform: rotate(3deg); } }
-        h1 { font-size: 2.35rem; font-weight: 700; margin-top: 1.1rem; }
+        h1 { font-size: 2.15rem; font-weight: 700; margin-top: .9rem; }
         h1 em { font-style: normal; color: var(--leaf); }
         .lead { font-size: 1.05rem; line-height: 1.55; color: #36402e; margin: .7rem 0 0; }
-        .gets { list-style: none; margin: 1.1rem 0 0; padding: 0; display: grid; gap: .5rem; }
+        /* THE FRAMEWORK: five steps on one line that draws itself downward, ending at the harvest. */
+        .fw-h { font-family: 'Display', 'Body', sans-serif; font-size: 1.15rem; margin: 1.7rem 0 0; }
+        .fw { list-style: none; margin: .7rem 0 0; padding: 0; position: relative; }
+        .fw::before { content: ''; position: absolute; left: 1.15rem; top: 1.3rem; bottom: 1.6rem; width: 2px; border-radius: 2px;
+            background: linear-gradient(var(--sprout), var(--gold)); transform-origin: top; animation: draw 1.5s var(--ease) .35s both; }
+        @keyframes draw { from { transform: scaleY(0); } }
+        .fw li { position: relative; display: flex; gap: .85rem; align-items: flex-start; padding: .5rem 0; animation: stepIn .5s var(--ease) both; animation-delay: calc(var(--i) * .13s + .25s); }
+        .fw-n { flex: none; position: relative; z-index: 1; width: 2.3rem; height: 2.3rem; border-radius: 999px; background: var(--card); border: 2px solid var(--sprout);
+            display: grid; place-items: center; font-size: 1.1rem; }
+        .fw-n.is-gold { background: var(--gold); border-color: var(--gold); font-size: 1.15rem; font-weight: 800; color: #1a1a1a; box-shadow: 0 0 0 5px rgb(245 197 24 / .25); }
+        .fw b { display: block; font-weight: 800; line-height: 1.3; padding-top: .15rem; }
+        .fw small { display: block; color: var(--soft); font-size: .88rem; line-height: 1.45; margin-top: .1rem; }
+        .fw .fw-end b { color: var(--green); font-size: 1.08rem; }
+        .stalk { transform-origin: 50% 100%; transform-box: fill-box; animation: grow 1.2s var(--ease) both; }
+        .rise { stroke-dasharray: 300; stroke-dashoffset: 300; animation: rise-line 1.6s var(--ease) 1.2s forwards; }
+        @keyframes rise-line { to { stroke-dashoffset: 0; } }
+        .gets { list-style: none; margin: .8rem 0 0; padding: 0; display: grid; gap: .5rem; }
         .gets li { display: flex; gap: .6rem; align-items: flex-start; font-weight: 700; line-height: 1.4; animation: stepIn .5s var(--ease) both; }
         .gets li:nth-child(2) { animation-delay: .08s; } .gets li:nth-child(3) { animation-delay: .16s; }
         .gets b { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; background: var(--leaf); color: #fff; display: grid; place-items: center; font-size: .8rem; }
@@ -190,10 +205,6 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
         </button>
         <div class="bar" id="bar" aria-hidden="true"><i></i></div>
-        <div class="lang" role="group" aria-label="Language">
-            <button type="button" data-lang="tl" class="is-on">Tagalog</button>
-            <button type="button" data-lang="en">English</button>
-        </div>
     </div>
     <main class="stage" id="stage" aria-live="polite"></main>
 </div>
@@ -219,44 +230,20 @@
     const tick = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
     const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
-    /* Everything said on the page, in both languages. */
+    /* Everything said on the page. */
     const T = {
-        tl: {
-            kicker: 'Bagong teknolohiya para sa bukid', title: 'Teknolohiyang <em>nagpapataas ng ani</em> mo',
-            lead: 'Tamang abono, tamang spray at tamang oras para sa mismong lote mo, kaya tumataas ang ani. Sumali sa wishlist at mauna kang makasubok nang libre.',
-            guard: '100% garantiya sa ani mo', guardSub: 'Kapag hindi tumaas ang ani mo, wala kang babayaran kahit piso.', seal: '100%', sealSub: 'GARANTIYA',
-            slots: 'Limitado lang ang slots', start: 'Sumali sa wishlist', minutes: 'Dalawang minuto lang', resume: 'May naiwan kang sagot.', resumeGo: 'Ituloy', restart: 'Magsimula muli',
-            next: 'Susunod', skip: 'Laktawan', send: 'Ipadala ang hiling ko', sending: 'Ipinapadala…', back: 'Bumalik',
-            name: 'Una sa lahat, ano ang pangalan mo?', first: 'Pangalan', last: 'Apelyido', optional: 'kung gusto mo',
-            role: 'Alin ang pinakamalapit sa iyo?',
-            place: 'Saan ang bukid mo?', province: 'Probinsya', town: 'Bayan o lungsod', pick: 'Piliin', placeHint: 'Para malaman namin ang panahon at lupa sa lugar mo.',
-            crops: 'Ano ang tanim mo?', cropsHint: 'Piliin lahat ng tanim mo.', seasons: 'Ilang beses kayo nagtatanim sa isang taon?',
-            size: 'Gaano kalaki ang sakahan mo?', lots: 'Ilang lote o pitak?', helpers: 'Sino ang katulong mo sa bukid?',
-            pains: 'Ano ang pinakamabigat sa pagsasaka mo ngayon?', painsHint: 'Pumili ng hanggang tatlo.',
-            wishKicker: 'Ang hiling mo', wishes: 'Kung may katulong ka sa bukid na laging nasa telepono mo, ano ang gusto mong gawin niya?', wishesHint: 'Pumili ng kahit ilan.',
-            wishText: 'May iba ka pang hiling?', wishTextHint: 'Isulat dito, kahit Ilocano, Bisaya o anumang wika.', wishPh: 'Halimbawa: Sana masabihan ako kapag may bagyong darating bago ako mag-abono.',
-            yield: 'Ilan ang ani mo noong huling season?', yieldHint: 'Kung hindi mo matandaan, ayos lang. Pwede mong laktawan ito.', yieldNum: 'Ani',
-            phone: 'Anong telepono ang gamit mo?', signal: 'Paano ang signal sa bukid?',
-            payKicker: 'Wala kang babayaran ngayon', pay: 'Kung makakatulong ito na tumaas ang ani mo, paano mo gustong magbayad?', payAmount: 'Magkano ang patas para sa isang buong season?',
-            payNote: 'Tanong lang ito para malaman namin ang patas para sa magsasaka. Wala kang babayaran sa pagsagot.',
-            heard: 'Saan mo nalaman ito?',
-            contact: 'Paano ka namin makakausap?', contactHint: 'Dito ka namin sasabihan kapag handa na ang slot mo.', mobile: 'Mobile number', email: 'Email', emailOpt: 'kung meron',
-            via: 'Saan ka mas madaling makausap?', time: 'Anong oras ang pinakamaganda?',
-            consent: 'Pumapayag akong gamitin ang mga sagot ko para sa wishlist at para makausap ako tungkol dito. Hindi ito ibebenta o ibibigay kaninuman.',
-            needPhone: 'Pakilagay ang mobile number mo (09XX XXX XXXX) o email.', needConsent: 'Pakitsek ang pahintulot sa itaas.', offline: 'Walang signal ngayon. Naitabi namin ang sagot mo, subukan ulit kapag may signal.',
-            thanks: (n) => `Salamat, ${n}!`, inLine: 'ang puwesto mo sa wishlist',
-            again: 'Natanggap na namin ito dati. Na-update ang mga sagot mo, at nasa dati ka pa ring puwesto.',
-            cardTitle: 'Ang card mo', download: 'I-download', share: 'Ibahagi',
-            climb: 'Umakyat sa listahan', climbSay: `Bawat kaibigang magsasaka na sasagot gamit ang link mo, aakyat ka ng ${3} puwesto.`, friends: (n) => n ? `${n} kaibigan na ang sumali gamit ang link mo.` : '',
-            copy: 'Kopyahin', copied: 'Nakopya ang link', shareText: 'Sumali ako sa wishlist ng bagong teknolohiya na nagpapataas ng ani, may 100% garantiya at libre ang unang subok. Sumali ka na rin, limitado lang ang slots:',
-            tipsTitle: 'Habang naghihintay', tipsSay: 'Tatlong bagay na pwede mong gawin ngayong linggo, para sa sinabi mong pinakamabigat:',
-            nextTitle: 'Ano ang susunod?', nextSay: (v) => `Kokontakin ka namin${v ? ' sa ' + v : ''} sa loob ng isang linggo para sa susunod na hakbang.`, edit: 'Baguhin ang sagot ko',
-            cardKicker: 'WISHLIST', cardBottom: 'Kasama sa mauunang susubok', cardWish: 'Ang hiling ko:',
-        },
         en: {
-            kicker: 'New technology for the farm', title: 'Technology that <em>raises your harvest</em>',
-            lead: 'The right fertilizer, the right spray and the right timing for your own lot, so your harvest goes up. Join the wishlist and be first to try it free.',
-            guard: '100% guarantee on your harvest', guardSub: 'If your harvest does not go up, you pay nothing, not a single peso.', seal: '100%', sealSub: 'GUARANTEE',
+            kicker: 'The Yield Framework', title: 'We built the <em>framework</em> to increase your yield.',
+            guard: '100% guarantee to increase your yield.', guardSub: 'If your yield does not go up, you pay nothing. Not a single peso.', seal: '100%', sealSub: 'GUARANTEE',
+            fwTitle: 'How the framework works', getTitle: 'When you join',
+            fw: [
+                ['🧪', 'Your soil and water first', 'We read your own lot before anything else.'],
+                ['🌱', 'The right seed', 'Matched to your land, your water and the season.'],
+                ['📅', 'The right day', 'Planting, fertilizer and spraying, each on its day.'],
+                ['⚖️', 'The right amount', 'Enough for the crop, and nothing wasted.'],
+                ['👀', 'Watched every week', 'Trouble caught early, before it costs you.'],
+            ],
+            fwEnd: 'A higher yield', fwEndSub: '100% guaranteed, or you pay nothing.',
             slots: 'Limited slots only', start: 'Join the wishlist', minutes: 'Just two minutes', resume: 'You left some answers.', resumeGo: 'Continue', restart: 'Start again',
             next: 'Next', skip: 'Skip', send: 'Send my wish', sending: 'Sending…', back: 'Back',
             name: 'First of all, what is your name?', first: 'First name', last: 'Last name', optional: 'if you like',
@@ -280,10 +267,10 @@
             again: 'We had your answers already. They are updated, and you keep your place.',
             cardTitle: 'Your card', download: 'Download', share: 'Share',
             climb: 'Move up the list', climbSay: `For every farmer friend who answers through your link, you move up ${3} places.`, friends: (n) => n ? `${n} friend${n === 1 ? '' : 's'} joined through your link.` : '',
-            copy: 'Copy', copied: 'Link copied', shareText: 'I joined the wishlist for a new technology that raises the harvest, with a 100% guarantee and a free first try. Join too, slots are limited:',
+            copy: 'Copy', copied: 'Link copied', shareText: 'They built a framework to increase our yield, with a 100% guarantee. I joined the wishlist to try it free. Join too, slots are limited:',
             tipsTitle: 'While you wait', tipsSay: 'Three things you can do this week, for what you said is hardest:',
             nextTitle: 'What happens next?', nextSay: (v) => `We will contact you${v ? ' on ' + v : ''} within a week for the next step.`, edit: 'Change my answers',
-            cardKicker: 'WISHLIST', cardBottom: 'Among the first to try', cardWish: 'My wish:',
+            cardKicker: 'THE YIELD FRAMEWORK', cardBottom: 'Among the first to try', cardWish: 'My wish:',
         },
     };
 
@@ -308,7 +295,8 @@
 
     const DONE = STEPS.length - 1;
     const read = () => { try { return JSON.parse(localStorage.getItem(KEY) || 'null') || {}; } catch (_) { return {}; } };
-    const S = Object.assign({ lang: 'tl', at: 0, a: { crops: [], pains: [], wishes: [] }, done: null }, read());
+    const S = Object.assign({ at: 0, a: { crops: [], pains: [], wishes: [] }, done: null }, read());
+    S.lang = 'en';   // English only (the owner, 2026-11-26)
     // Back on the page with answers half given: the first screen offers to carry on from there.
     let resumeAt = 0;
     if (S.done) S.at = DONE; else { resumeAt = S.at > 0 && S.at < DONE ? S.at : 0; S.at = 0; }
@@ -342,22 +330,29 @@
                     <g stroke="#3d6823" stroke-width="2" opacity=".55" fill="none">
                         <path d="M20 205 Q 80 186 140 200"/><path d="M160 208 Q 230 188 300 202"/><path d="M300 205 Q 350 192 400 198"/>
                     </g>
-                    <g class="sprout"><g class="sway">
-                        <path d="M118 188 C118 170 118 158 120 146" stroke="#2d5016" stroke-width="4" stroke-linecap="round" fill="none"/>
-                        <path d="M120 160 C 104 156 96 144 98 132 C 112 134 120 144 120 160Z" fill="#86b556"/>
-                        <path d="M121 150 C 136 146 146 134 144 120 C 128 124 120 136 121 150Z" fill="#6b9f3d"/>
-                    </g></g>
+                    ${[[60, 40], [120, 58], [180, 76], [240, 94], [300, 112]].map(([x, h], i) => `
+                    <g class="stalk" style="animation-delay:${.25 + i * .16}s"><g class="sway" style="animation-delay:${i * .4}s">
+                        <path d="M${x} 196 C ${x} ${196 - h * .5} ${x + 1} ${196 - h * .8} ${x + 3} ${196 - h}" stroke="#2d5016" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+                        <path d="M${x} ${196 - h * .45} C ${x - 16} ${196 - h * .5} ${x - 22} ${196 - h * .7} ${x - 20} ${196 - h * .82} C ${x - 8} ${196 - h * .74} ${x - 1} ${196 - h * .62} ${x} ${196 - h * .45}Z" fill="#86b556"/>
+                        <path d="M${x + 1} ${196 - h * .62} C ${x + 16} ${196 - h * .66} ${x + 22} ${196 - h * .84} ${x + 20} ${196 - h * .96} C ${x + 8} ${196 - h * .88} ${x + 2} ${196 - h * .78} ${x + 1} ${196 - h * .62}Z" fill="#6b9f3d"/>
+                        <ellipse cx="${x + 4}" cy="${196 - h - 7}" rx="${4 + i}" ry="${8 + i * 1.6}" fill="#e6b800"/>
+                    </g></g>`).join('')}
+                    <path class="rise" d="M48 148 C 120 128 200 104 312 66" stroke="#2d5016" stroke-width="2.5" stroke-dasharray="6 6" fill="none" opacity=".7"/>
+                    <path class="rise" d="M302 62 L314 65 L307 76" stroke="#2d5016" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".7"/>
                 </svg>
             </div>
             <p class="kicker">${t('kicker')}</p>
             <h1>${t('title')}</h1>
-            <p class="lead">${t('lead')}</p>
-            <ul class="gets">${(OFFER[S.lang] || []).map((x) => `<li><b>✓</b><span>${esc(x)}</span></li>`).join('')}</ul>
             <div class="guard">
                 <span class="seal">${t('seal')}<small>${t('sealSub')}</small></span>
                 <p>${t('guard')}<small>${t('guardSub')}</small></p>
             </div>
             <span class="slots"><i aria-hidden="true"></i>${t('slots')}</span>
+            <h3 class="fw-h">${t('fwTitle')}</h3>
+            <ol class="fw">${t('fw').map(([pic, b, sm], i) => `<li style="--i:${i}"><span class="fw-n" aria-hidden="true">${pic}</span><div><b>${esc(b)}</b><small>${esc(sm)}</small></div></li>`).join('')}
+                <li class="fw-end" style="--i:5"><span class="fw-n is-gold" aria-hidden="true">↑</span><div><b>${t('fwEnd')}</b><small>${t('fwEndSub')}</small></div></li></ol>
+            <h3 class="fw-h">${t('getTitle')}</h3>
+            <ul class="gets">${(OFFER.en || []).map((x) => `<li><b>✓</b><span>${esc(x)}</span></li>`).join('')}</ul>
             <div class="resume" id="resume" ${resumeAt ? '' : 'hidden'}><span>${t('resume')}</span><button type="button" data-restart>${t('restart')}</button></div>`,
         name: () => `
             <h2>${t('name')}</h2>
@@ -431,11 +426,10 @@
     function paint() {
         const step = STEPS[S.at];
         stage.innerHTML = `<section class="step is-on ${dir === 'back' ? 'from-back' : ''}" data-step="${step.id}">${SCREENS[step.id]()}</section>`;
-        document.documentElement.lang = S.lang === 'en' ? 'en' : 'tl';
-        document.querySelectorAll('[data-lang]').forEach((b) => b.classList.toggle('is-on', b.dataset.lang === S.lang));
         $('#bar i').style.width = (step.id === 'intro' ? 0 : Math.min(100, Math.round((Math.min(S.at, QN) / QN) * 100))) + '%';
         $('#bar').style.opacity = step.id === 'intro' || step.id === 'done' ? '0' : '1';
         back.hidden = step.id === 'intro' || step.id === 'done';
+        $('.top').classList.toggle('is-bare', step.id === 'intro' || step.id === 'done');
         back.setAttribute('aria-label', t('back'));
         foot.classList.toggle('is-gone', step.id === 'done');
         skip.hidden = !step.skippable;
@@ -498,7 +492,6 @@
     });
     skip.addEventListener('click', () => { S.at = Math.min(S.at + 1, STEPS.length - 2); dir = 'fwd'; keep(); paint(); });
     back.addEventListener('click', () => { S.at = Math.max(0, S.at - 1); dir = 'back'; keep(); paint(); });
-    document.querySelectorAll('[data-lang]').forEach((b) => b.addEventListener('click', () => { if (S.lang === b.dataset.lang) return; S.lang = b.dataset.lang; keep(); dir = 'fwd'; paint(); }));
 
     /* Provinces and towns, from the site's own list. */
     let PLACES = null;
