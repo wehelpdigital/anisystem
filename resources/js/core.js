@@ -223,6 +223,59 @@ document.addEventListener('error', (e) => {
 
 const csrf = () => document.querySelector('meta[name="csrf-token"]')?.content || '';
 
+/* WHAT THE PAGE NOTICES (2026-11-26, for the admin panel's Activity page; App\Support\UserActions).
+ *
+ * The server already knows every save. Three things only the page sees: a window opened (what somebody started to
+ * do), a locked door tapped (what they wanted), and its own script breaking. Kept in a little queue and sent a few
+ * seconds later, or as the page goes, one small request for many notes. Only when the layout printed the address
+ * (a member on the live site); everywhere else this does nothing. Never what anybody typed. */
+(function notes() {
+    const meta = document.querySelector('meta[name="anee-track"]');
+    if (!meta || !window.fetch) { window.aneeNote = () => {}; return; }
+    const url = meta.content;
+    const queue = [];
+    let timer = null;
+    const send = () => {
+        clearTimeout(timer);
+        if (!queue.length) return;
+        const now = Date.now();
+        const body = JSON.stringify({ e: queue.splice(0, 25).map((x) => ({ k: x.k, n: x.n, l: x.l, d: x.d, p: x.p, ago: Math.round((now - x.t) / 1000) })) });
+        try {
+            fetch(url, {
+                method: 'POST', keepalive: true, credentials: 'same-origin', body,
+                headers: { 'Content-Type': 'application/json', Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': csrf() },
+            }).catch(() => {});
+        } catch (_) { /* a lost note is a lost note */ }
+        if (queue.length) timer = setTimeout(send, 1000);
+    };
+    window.aneeNote = (k, n, l, d) => {
+        if (queue.length >= 60) return;
+        queue.push({ k, n: String(n || '').slice(0, 80), l: String(l || '').replace(/\s+/g, ' ').trim().slice(0, 160), d: d ? String(d).slice(0, 250) : '', p: location.pathname + location.search, t: Date.now() });
+        clearTimeout(timer);
+        timer = setTimeout(send, 6000);
+    };
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') send(); });
+    window.addEventListener('pagehide', send);
+
+    // What broke, three times a page at most. A lost connection is not the page's fault, and the browser's own
+    // noise (an extension's script, a resize loop) is nobody's.
+    let broke = 0;
+    const SKIP = /Script error|ResizeObserver|Failed to fetch|Load failed|NetworkError|AbortError|aborted|cancel/i;
+    const at = (src, line) => (src ? ' (' + String(src).replace(location.origin, '').slice(0, 80) + (line ? ':' + line : '') + ')' : '');
+    window.addEventListener('error', (e) => {
+        if (broke >= 3 || !e.message || SKIP.test(e.message) || (e.filename && !String(e.filename).startsWith(location.origin))) return;
+        broke++;
+        window.aneeNote('failed', 'js', 'Something broke on the page', e.message + at(e.filename, e.lineno));
+    });
+    window.addEventListener('unhandledrejection', (e) => {
+        const m = String((e.reason && (e.reason.message || e.reason)) || '');
+        // A refused save already reached the server and was counted there.
+        if (broke >= 3 || !m || SKIP.test(m) || (e.reason && (e.reason.status || e.reason.offline))) return;
+        broke++;
+        window.aneeNote('failed', 'js', 'Something broke on the page', m.slice(0, 200));
+    });
+})();
+
 /**
  * api('/app/sm-lots-store?scheduleId=1', {method:'POST', body:{...}})
  * - body objects are JSON-encoded; FormData passes through untouched.
@@ -644,6 +697,8 @@ window.openSheet = function openSheet(id) {
     });
     openSheets.push(el);
     layerSheets();
+    // What they started to do, in the sheet's own words (the admin panel's Activity page).
+    try { window.aneeNote?.('opened', 'sheet:' + id, el.querySelector('.sheet-title')?.textContent || ''); } catch (_) { /* never in the way */ }
     document.documentElement.style.overflow = 'hidden';
     // Floating widgets (the AI technician, the team chat) sit above sheets in
     // the stack, so their bubbles landed on top of a sheet's Cancel/Save row.
@@ -2943,6 +2998,8 @@ const auFace = () => {
 };
 
 window.aneeUpgrade = function aneeUpgrade(message, tier) {
+    // A door the plan keeps shut, tapped: what they wanted (the admin panel's Activity page).
+    try { window.aneeNote?.('locked', 'lock:' + (tier || ''), message || 'A locked door'); } catch (_) { /* never in the way */ }
     window.__tierLockMsg = message;
     window.__tierLockAt = Date.now();
     const rung = auRung(tier);

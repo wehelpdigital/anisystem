@@ -281,9 +281,10 @@
             : (request()->routeIs('admin.support') ? 'Support'
             : (request()->routeIs('admin.reports') ? 'Reports'
             : (request()->routeIs('admin.interests') ? 'Interests'
+            : (request()->routeIs('admin.activity') ? 'Activity'
             : (request()->routeIs('admin.sales') ? 'Sales Analysis'
             : (request()->routeIs('admin.orders') ? 'Orders'
-            : (request()->routeIs('admin.newsletter') ? 'Newsletter' : 'Dashboard'))))));
+            : (request()->routeIs('admin.newsletter') ? 'Newsletter' : 'Dashboard')))))));
     @endphp
     <header class="ad-top">
         <div class="ad-top-in">
@@ -332,6 +333,10 @@
             <a class="ad-nav-row {{ request()->routeIs('admin.interests') ? 'is-on' : '' }}" href="{{ route('admin.interests') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7z"/><circle cx="12" cy="12" r="3"/></svg>
                 <span class="min-w-0"><b>Interests</b><i>What people read and use, and the crops they care about</i></span>
+            </a>
+            <a class="ad-nav-row {{ request()->routeIs('admin.activity') ? 'is-on' : '' }}" href="{{ route('admin.activity') }}">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+                <span class="min-w-0"><b>Activity</b><i>What members try to do in the app, and where they stop</i></span>
             </a>
             <a class="ad-nav-row {{ request()->routeIs('admin.support') ? 'is-on' : '' }}" href="{{ route('admin.support') }}">
                 <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8m-8 4h5m-9 7l3.5-3.5H19a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14z"/></svg>

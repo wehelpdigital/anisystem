@@ -79,6 +79,7 @@
         delCaptcha: (id) => '{{ url('/admin/client') }}/' + id + '/delete-captcha',
         destroy: (id) => '{{ url('/admin/client') }}/' + id,
         views: (id) => '{{ url('/admin/data/client') }}/' + id + '/views',
+        doing: (id) => '{{ url('/admin/data/client') }}/' + id + '/activity',
     };
 
     /* ---------------- the list ---------------- */
@@ -241,6 +242,75 @@
         } catch (err) { toast(err.message, 'error'); b.disabled = false; b.textContent = 'Show older pages'; }
     });
 
+    /* WHAT THEY DO (App\Support\UserActions, 2026-11-26): their pages and their deeds in one line, newest first,
+       split into visits where they were away half an hour or more. A dot says what kind of line it is. */
+    const DO_DOT = { view: '#cbd5e1', did: '#4a7c2a', refused: '#ea7a1a', locked: '#e6b800', opened: '#3b82f6', failed: '#dc2626' };
+    const DO_SAY = { did: '', refused: 'refused', locked: 'locked door', opened: 'opened', failed: 'broke' };
+    let doLast = null;
+    const doLine = (r) => {
+        let head = '';
+        if (!doLast || doLast.day !== r.day) head = `<li class="pt-2 text-[11px] font-extrabold uppercase tracking-wider text-gray-400">${esc(r.day)}</li>`;
+        else if (doLast.ts - r.ts > 1800) head = '<li class="pt-1.5"><span class="block border-t border-dashed border-gray-200 dark:border-gray-700"></span></li>';
+        doLast = r;
+        const tag = DO_SAY[r.t] ? ` <span class="text-[10px] font-extrabold uppercase tracking-wider" style="color:${DO_DOT[r.t]}">${DO_SAY[r.t]}</span>` : '';
+        const sub = [r.sub, r.path, r.detail, r.before ? 'before signing up' : ''].filter(Boolean).map(esc).join(' · ');
+        return head + `<li class="flex gap-2 items-baseline ${r.before ? 'opacity-60' : ''}">
+            <span class="shrink-0 w-14 text-[11px] text-gray-400">${esc(r.time)}</span>
+            <span class="shrink-0 w-2 h-2 rounded-full" style="background:${DO_DOT[r.t] || DO_DOT.view};transform:translateY(-.05rem)" aria-hidden="true"></span>
+            <span class="min-w-0">
+                <span class="block text-xs ${r.t === 'view' ? 'text-gray-600 dark:text-gray-300' : 'font-semibold text-gray-900'} break-words">${esc(r.label || '')}${tag}</span>
+                ${sub ? `<span class="block text-[11px] text-gray-400 break-all">${sub}</span>` : ''}
+            </span></li>`;
+    };
+    function doingCard(d) {
+        const p = d.profile || {};
+        const tl = d.timeline || { rows: [] };
+        doLast = null;
+        const chip = (t, cls = 'badge-gray') => `<span class="badge ${cls}">${esc(t)}</span>`;
+        const group = (title, list, cls) => list && list.length ? `<div><p class="text-[11px] font-extrabold uppercase tracking-wider text-gray-400 mb-1">${title}</p><div class="flex flex-wrap gap-1.5">${list.map((x) => `<span class="badge ${cls}">${esc(x.label)} · ${x.n}</span>`).join(' ')}</div></div>` : '';
+        const body = tl.rows.length
+            ? `<ol class="space-y-1.5 border-l-2 border-gray-100 dark:border-gray-700 pl-2.5" id="ceDoList">${tl.rows.map(doLine).join('')}</ol>
+               ${tl.next ? `<button type="button" class="btn btn-white btn-sm w-full" id="ceDoMore" data-offset="${tl.next}">Show older</button>` : ''}`
+            : '<p class="text-xs text-gray-400">Nothing on record yet. Pages are kept from Nov 23, 2026, and what they do from Nov 26.</p>';
+        return `<p class="font-bold text-sm text-gray-900">What they do</p>
+            ${p.ready ? `<div class="flex flex-wrap gap-1.5 text-xs">
+                ${chip(p.did + ' thing' + (p.did === 1 ? '' : 's') + ' done', p.did ? 'badge-green' : 'badge-gray')}
+                ${p.lastDid ? chip('last ' + p.lastDid) : ''}
+                ${p.opened ? chip(p.opened + ' window' + (p.opened === 1 ? '' : 's') + ' opened', 'badge-blue') : ''}
+                ${p.locked ? chip(p.locked + ' locked door' + (p.locked === 1 ? '' : 's'), 'badge-yellow') : ''}
+                ${p.refused + p.failed ? chip((p.refused + p.failed) + ' stuck', 'badge-red') : ''}
+            </div>
+            ${group('Does most', p.top, 'badge-green')}
+            ${group('Wanted, but locked', p.locks, 'badge-yellow')}
+            ${group('Got stuck on', p.stuck, 'badge-red')}` : ''}
+            ${body}`;
+    }
+    async function loadDoing(id) {
+        const box = $id('ceDo');
+        if (!box) return;
+        try {
+            const res = await api(U.doing(id), { method: 'GET' });
+            if (!CUR || String(CUR.id) !== String(id) || !$id('ceDo')) return;
+            box.innerHTML = doingCard(res.data || {});
+            window.adminRise?.(box);
+        } catch (err) {
+            box.innerHTML = `<p class="font-bold text-sm text-gray-900">What they do</p><p class="text-xs text-gray-400">${esc(err.message)}</p>`;
+        }
+    }
+    document.addEventListener('click', async (e) => {
+        const b = e.target.closest('#ceDoMore');
+        if (!b || !CUR || b.disabled) return;
+        b.disabled = true;
+        b.textContent = 'Loading…';
+        try {
+            const res = await api(U.doing(CUR.id) + '?offset=' + encodeURIComponent(b.dataset.offset), { method: 'GET' });
+            const tl = (res.data || {}).timeline || { rows: [] };
+            $id('ceDoList').insertAdjacentHTML('beforeend', tl.rows.map(doLine).join(''));
+            if (tl.next) { b.dataset.offset = tl.next; b.disabled = false; b.textContent = 'Show older'; }
+            else b.remove();
+        } catch (err) { toast(err.message, 'error'); b.disabled = false; b.textContent = 'Show older'; }
+    });
+
     function paint() {
         const c = CUR;
         $id('clTitle').textContent = c.name;
@@ -315,6 +385,8 @@
 
             ${journeyCard(c.journey)}
 
+            <div class="card p-3.5 space-y-2.5" id="ceDo"><p class="font-bold text-sm text-gray-900">What they do</p><div class="ad-skel h-24 w-full"></div></div>
+
             ${interestsCard(c.interests)}
 
             <div class="card p-3.5 space-y-2.5">
@@ -388,6 +460,7 @@
                     </div>`}
             </div>`;
         wire();
+        loadDoing(c.id);
     }
 
     function wire() {

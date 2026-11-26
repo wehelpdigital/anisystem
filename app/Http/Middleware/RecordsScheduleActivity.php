@@ -22,7 +22,7 @@ class RecordsScheduleActivity
      * Route names said plainly. Anything not here is humanized from its
      * route name, so a new endpoint is legible before it is translated.
      */
-    private const SAYS = [
+    public const SAYS = [   // public: App\Support\UserActions says the same deeds in the same words
         'sm.update' => 'Updated the schedule settings',
         'sm.day-type' => 'Changed how days are counted',
         'sm.status' => 'Changed the season status',

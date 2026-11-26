@@ -81,6 +81,8 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\PublicSeoTags::class,
             // A guest's pages before signing up, for the admin panel and the mother app (2026-11-16).
             \App\Http\Middleware\TrackJourney::class,
+            // What a member does in the app: every write, said plainly, for the admin panel's Activity page (2026-11-26).
+            \App\Http\Middleware\RecordsUserActions::class,
         ]);
         $middleware->redirectGuestsTo(fn () => route('login'));
         $middleware->redirectUsersTo(fn () => route('app.dashboard'));
@@ -181,6 +183,8 @@ return Application::configure(basePath: dirname(__DIR__))
         // Page views: guests' after 180 days, everyone's after 400 (App\Support\PageViews, 2026-11-23).
         $schedule->call(fn () => \App\Support\PageViews::prune())
             ->name('page-views-prune')->dailyAt('03:20')->timezone('Asia/Manila');
+        $schedule->call(fn () => \App\Support\UserActions::prune())
+            ->name('user-actions-prune')->dailyAt('03:25')->timezone('Asia/Manila');
         // Proof the scheduler runs (Laravel Cloud's toggle, 2026-10-07):
         // /deploy-check shows the last tick, written to the shared settings.
         $schedule->call(fn () => \App\Models\AsSiteSetting::put('scheduler.tick', now()->toIso8601String()))

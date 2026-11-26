@@ -31,6 +31,12 @@
         document.addEventListener('gesturechange', function (e) { e.preventDefault(); });
     </script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- Where the page sends what it notices (core.js aneeNote): only for a member the Activity page counts. --}}
+    @auth
+        @if (\App\Support\UserActions::watching(request()))
+            <meta name="anee-track" content="{{ route('track') }}">
+        @endif
+    @endauth
     {{-- Offline Mode is a paid convenience, judged by the farm being worked:
          a worker standing in a paid farm has it, the same person on their
          own Libre account does not. app.js reads this before it keeps

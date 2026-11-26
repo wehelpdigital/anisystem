@@ -129,7 +129,7 @@ final class PageViews
     }
 
     /** Whether this person's pages are counted at all. */
-    private static function countsFor(Request $request, ?User $user, string $path): bool
+    public static function countsFor(Request $request, ?User $user, string $path): bool
     {
         // The live site only: a local copy shares the live database, and its clicks are ours, not a visitor's.
         if (! in_array(strtolower($request->getHost()), array_map('strtolower', (array) config('services.analytics.hosts')), true)) {
