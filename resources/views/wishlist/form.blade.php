@@ -261,7 +261,6 @@
         { id: 'size', ok: (a) => !!a.farmSize },
         { id: 'pains', ok: (a) => (a.pains || []).length > 0 },
         { id: 'wishes', ok: (a) => (a.wishes || []).length > 0 || (a.wishText || '').trim().length > 2 },
-        { id: 'yield', ok: () => true, skippable: true },
         { id: 'phone', ok: (a) => !!a.phoneType && !!a.signal },
         { id: 'pay', ok: (a) => !!a.payWay },
         { id: 'heard', ok: () => true, skippable: true },
@@ -316,10 +315,6 @@
         wishes: () => `
             <p class="kicker">${t('wishKicker')}</p><h2>${t('wishes')}</h2><p class="hint">${t('wishesHint')}</p>${opts('wishes', 'wishes', true)}
             <label class="field"><span>${t('wishText')} <small>${t('wishTextHint')}</small></span><textarea class="input" data-in="wishText" maxlength="600" placeholder="${esc(t('wishPh'))}">${esc(A.wishText)}</textarea></label>`,
-        yield: () => `
-            <h2>${t('yield')}</h2><p class="hint">${t('yieldHint')}</p>
-            <label class="field"><span>${t('yieldNum')}</span><input class="input" data-in="yieldNum" inputmode="decimal" value="${esc(A.yieldNum)}" placeholder="0"></label>
-            ${opts('yieldUnit', 'yieldUnit')}`,
         phone: () => `<h2>${t('phone')}</h2>${opts('phoneType', 'phoneType', false, 0, true)}<div class="sub"><h3>${t('signal')}</h3>${opts('signal', 'signal')}</div>`,
         pay: () => `
             <p class="kicker">${t('payKicker')}</p><h2>${t('pay')}</h2>${opts('payWay', 'payWay')}
