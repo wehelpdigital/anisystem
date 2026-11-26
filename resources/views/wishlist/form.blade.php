@@ -14,10 +14,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>We discovered the framework to increase your rice and corn yield</title>
-    <meta name="description" content="We discovered the framework to increase your rice and corn yield, and we are sharing it with you. 100% guaranteed. Limited slots only.">
+    <title>We developed the framework to increase your rice and corn yield</title>
+    <meta name="description" content="We developed the framework to increase your rice and corn yield, and we are sharing it with you. 100% guaranteed. Limited slots only.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="We discovered the framework to increase your rice and corn yield, and we are sharing it with you.">
+    <meta property="og:title" content="We developed the framework to increase your rice and corn yield, and we are sharing it with you.">
     <meta property="og:description" content="100% guaranteed. Limited slots only.">
     <meta property="og:image" content="{{ url('/images/wishlist/share.png') }}">
     <meta property="og:image:width" content="1200">
@@ -220,7 +220,7 @@
     /* Everything said on the page. */
     const T = {
         en: {
-            title: 'We discovered the <em>framework</em> to increase your rice and corn yield, and we are sharing it with you.',
+            title: 'We developed the <em>framework</em> to increase your rice and corn yield, and we are sharing it with you.',
             sure: '100% guaranteed.',
             slots: 'Limited slots only', start: 'Join the wishlist', minutes: 'Just two minutes', resume: 'You left some answers.', resumeGo: 'Continue', restart: 'Start again',
             next: 'Next', skip: 'Skip', send: 'Send my wish', sending: 'Sending…', back: 'Back',
@@ -245,7 +245,7 @@
             again: 'We had your answers already. They are updated, and you keep your place.',
             cardTitle: 'Your card', download: 'Download', share: 'Share',
             climb: 'Move up the list', climbSay: `For every farmer friend who answers through your link, you move up ${3} places.`, friends: (n) => n ? `${n} friend${n === 1 ? '' : 's'} joined through your link.` : '',
-            copy: 'Copy', copied: 'Link copied', shareText: 'They discovered a framework to increase rice and corn yield, 100% guaranteed. I joined the wishlist to try it free. Join too, slots are limited:',
+            copy: 'Copy', copied: 'Link copied', shareText: 'They developed a framework to increase rice and corn yield, 100% guaranteed. I joined the wishlist to try it free. Join too, slots are limited:',
             tipsTitle: 'While you wait', tipsSay: 'Three things you can do this week, for what you said is hardest:',
             nextTitle: 'What happens next?', nextSay: (v) => `We will contact you${v ? ' on ' + v : ''} within a week for the next step.`, edit: 'Change my answers',
             cardKicker: 'THE YIELD FRAMEWORK', cardBottom: 'Among the first to try', cardWish: 'My wish:',
