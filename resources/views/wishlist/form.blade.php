@@ -261,8 +261,7 @@
         { id: 'size', ok: (a) => !!a.farmSize },
         { id: 'pains', ok: (a) => (a.pains || []).length > 0 },
         { id: 'wishes', ok: (a) => (a.wishes || []).length > 0 || (a.wishText || '').trim().length > 2 },
-        { id: 'phone', ok: (a) => !!a.phoneType && !!a.signal },
-        { id: 'pay', ok: (a) => !!a.payWay },
+        { id: 'pay', ok: (a) => !!a.payAmount },
         { id: 'heard', ok: () => true, skippable: true },
         { id: 'contact', ok: (a) => !!a.consent && (/^(63|0)?9\d{9}$/.test((a.phone || '').replace(/\D+/g, '')) || /.+@.+\..+/.test(a.email || '')) },
         { id: 'done' },
@@ -315,10 +314,8 @@
         wishes: () => `
             <p class="kicker">${t('wishKicker')}</p><h2>${t('wishes')}</h2><p class="hint">${t('wishesHint')}</p>${opts('wishes', 'wishes', true)}
             <label class="field"><span>${t('wishText')} <small>${t('wishTextHint')}</small></span><textarea class="input" data-in="wishText" maxlength="600" placeholder="${esc(t('wishPh'))}">${esc(A.wishText)}</textarea></label>`,
-        phone: () => `<h2>${t('phone')}</h2>${opts('phoneType', 'phoneType', false, 0, true)}<div class="sub"><h3>${t('signal')}</h3>${opts('signal', 'signal')}</div>`,
         pay: () => `
-            <p class="kicker">${t('payKicker')}</p><h2>${t('pay')}</h2>${opts('payWay', 'payWay')}
-            <div class="sub"><h3>${t('payAmount')}</h3>${opts('payAmount', 'payAmount', false, 0, true)}</div>
+            <p class="kicker">${t('payKicker')}</p><h2>${t('payAmount')}</h2>${opts('payAmount', 'payAmount', false, 0, true)}
             <div class="note">${t('payNote')}</div>`,
         heard: () => `<h2>${t('heard')}</h2>${opts('heardFrom', 'heardFrom')}`,
         contact: () => `
