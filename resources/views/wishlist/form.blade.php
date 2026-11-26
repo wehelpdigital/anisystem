@@ -258,7 +258,7 @@
         { id: 'role', ok: (a) => !!a.role },
         { id: 'place', ok: (a) => !!a.province },
         { id: 'crops', ok: (a) => (a.crops || []).length > 0 && !!a.seasons },
-        { id: 'size', ok: (a) => !!a.farmSize && !!a.helpers },
+        { id: 'size', ok: (a) => !!a.farmSize },
         { id: 'pains', ok: (a) => (a.pains || []).length > 0 },
         { id: 'wishes', ok: (a) => (a.wishes || []).length > 0 || (a.wishText || '').trim().length > 2 },
         { id: 'yield', ok: () => true, skippable: true },
@@ -311,9 +311,7 @@
             <h2>${t('crops')}</h2><p class="hint">${t('cropsHint')}</p>${opts('crops', 'crops', true, 0, true)}
             <div class="sub"><h3>${t('seasons')}</h3>${opts('seasons', 'seasons', false, 0, true)}</div>`,
         size: () => `
-            <h2>${t('size')}</h2>${opts('farmSize', 'farmSize')}
-            <div class="sub"><h3>${t('lots')}</h3>${opts('lots', 'lots', false, 0, true)}</div>
-            <div class="sub"><h3>${t('helpers')}</h3>${opts('helpers', 'helpers')}</div>`,
+            <h2>${t('size')}</h2>${opts('farmSize', 'farmSize')}`,
         pains: () => `<h2>${t('pains')}</h2><p class="hint">${t('painsHint')}</p>${opts('pains', 'pains', true, 3)}`,
         wishes: () => `
             <p class="kicker">${t('wishKicker')}</p><h2>${t('wishes')}</h2><p class="hint">${t('wishesHint')}</p>${opts('wishes', 'wishes', true)}
