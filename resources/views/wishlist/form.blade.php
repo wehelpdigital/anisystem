@@ -14,11 +14,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>We built the framework to increase your yield | Join the wishlist</title>
-    <meta name="description" content="Join the wishlist and be first to try it free. Limited slots only.">
+    <title>We built the framework to increase your yield</title>
+    <meta name="description" content="We built the framework to increase your yield, and we are sharing it with you. Limited slots only.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="We built the framework to increase your yield">
-    <meta property="og:description" content="Join the wishlist and be first to try it free. Limited slots only.">
+    <meta property="og:title" content="We built the framework to increase your yield, and we are sharing it with you.">
+    <meta property="og:description" content="Limited slots only.">
     <meta property="og:image" content="{{ url('/images/wishlist/share.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -127,7 +127,7 @@
         @keyframes grow { from { transform: scaleY(0); } }
         .sway { animation: sway 5s ease-in-out infinite; transform-origin: 50% 100%; transform-box: fill-box; }
         @keyframes sway { 50% { transform: rotate(3deg); } }
-        h1 { font-size: 1.85rem; font-weight: 700; margin-top: .3rem; }
+        h1 { font-size: 1.85rem; font-weight: 700; margin-top: .6rem; }
         .first-q { margin-top: 1.7rem; }
         h1 em { font-style: normal; color: var(--leaf); }
         .lead { font-size: 1.05rem; line-height: 1.55; color: #36402e; margin: .7rem 0 0; }
@@ -211,7 +211,7 @@
     /* Everything said on the page. */
     const T = {
         en: {
-            kicker: 'Join the wishlist', title: 'We built the <em>framework</em> to increase your yield.',
+            title: 'We built the <em>framework</em> to increase your yield, and we are sharing it with you.',
             slots: 'Limited slots only', start: 'Join the wishlist', minutes: 'Just two minutes', resume: 'You left some answers.', resumeGo: 'Continue', restart: 'Start again',
             next: 'Next', skip: 'Skip', send: 'Send my wish', sending: 'Sending…', back: 'Back',
             name: 'First of all, what is your name?', first: 'First name', last: 'Last name', optional: 'if you like',
@@ -286,7 +286,6 @@
     /* Each screen, drawn from the answers so far. */
     const SCREENS = {
         name: () => `
-            <p class="kicker">${t('kicker')}</p>
             <h1>${t('title')}</h1>
             <span class="slots"><i aria-hidden="true"></i>${t('slots')}</span>
             <h2 class="first-q">${t('name')}</h2>
