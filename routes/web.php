@@ -476,6 +476,9 @@ Route::get('/best-farm-management-philippines', [App\Http\Controllers\PublicCont
 Route::get('/pricing', [App\Http\Controllers\PublicController::class, 'pricing'])->defaults('face', 'ph')->name('ph.pricing');
 Route::get('/pricing/compare', [App\Http\Controllers\PublicController::class, 'compare'])->defaults('face', 'ph')->name('ph.pricing.compare');
 Route::get('/start', [App\Http\Controllers\PublicController::class, 'landing'])->defaults('face', 'ph')->name('ph.landing');
+// The First 50 wishlist: a page of its own, without the site's name or links (App\Support\Wishlist, 2026-11-26).
+Route::get('/unang-50', [App\Http\Controllers\WishlistController::class, 'show'])->name('wishlist');
+Route::post('/unang-50', [App\Http\Controllers\WishlistController::class, 'save'])->middleware('throttle:12,60')->name('wishlist.save');
 Route::get('/legal', [App\Http\Controllers\LegalController::class, 'indexPh'])->defaults('face', 'ph')->name('ph.legal.index');
 Route::get('/legal/{slug}', [App\Http\Controllers\LegalController::class, 'showPh'])->where('slug', '[a-z0-9\-]+')->defaults('face', 'ph')->name('ph.legal.show');
 Route::get('/tutorial', [App\Http\Controllers\PublicController::class, 'tutorial'])->defaults('face', 'ph')->name('ph.tutorial');
@@ -826,6 +829,11 @@ Route::middleware(['auth', 'admin.panel'])->prefix('admin')->group(function () {
     Route::get('/interests', [App\Http\Controllers\Admin\AdminInterestsController::class, 'page'])->name('admin.interests');
     Route::get('/data/interests', [App\Http\Controllers\Admin\AdminInterestsController::class, 'data'])->name('admin.data.interests');
     Route::get('/data/client/{id}/views', [App\Http\Controllers\Admin\AdminInterestsController::class, 'clientViews'])->whereNumber('id')->name('admin.data.client.views');
+    // The First 50 wishlist's answers (2026-11-26).
+    Route::get('/wishlist', [App\Http\Controllers\Admin\AdminWishlistController::class, 'page'])->name('admin.wishlist');
+    Route::get('/data/wishlist', [App\Http\Controllers\Admin\AdminWishlistController::class, 'data'])->name('admin.data.wishlist');
+    Route::put('/wishlist/{id}', [App\Http\Controllers\Admin\AdminWishlistController::class, 'update'])->whereNumber('id')->name('admin.wishlist.update');
+    Route::get('/wishlist/export', [App\Http\Controllers\Admin\AdminWishlistController::class, 'export'])->name('admin.wishlist.export');
     // What members do in the app, for everyone and for one (2026-11-26).
     Route::get('/activity', [App\Http\Controllers\Admin\AdminActivityController::class, 'page'])->name('admin.activity');
     Route::get('/data/activity', [App\Http\Controllers\Admin\AdminActivityController::class, 'data'])->name('admin.data.activity');
