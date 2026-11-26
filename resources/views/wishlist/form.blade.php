@@ -1,8 +1,8 @@
 <!doctype html>
 {{-- THE WISHLIST (2026-11-26, the owner: "a wishlist form or wizard that i can market ... do not show any anee branding
      or links to the main site ... surprise me"; then: "don't mention the 50, just say ... a technology that increases your
-     yield with 100% guarantee, join now for the first to try it for free, join the wishlist ... limited slots only").
-     App\Support\Wishlist. The guarantee is said with what stands behind it: no harvest gained, nothing paid.
+     yield ... join the wishlist ... limited slots only", and at last: "remove the 100% guarantee ... just go with the
+     questions immediately"). App\Support\Wishlist. It opens on the first question, under one line and the slots.
 
      A page of its own: no layout, no app bundle, no link anywhere, no name, not in search results. One question to a
      screen, a big tap for every answer, in English (the owner took the Tagalog out the same day), and the answers kept on the phone
@@ -15,10 +15,10 @@
     <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>We built the framework to increase your yield | Join the wishlist</title>
-    <meta name="description" content="100% guarantee to increase your yield. Join the wishlist and be first to try it free. Limited slots only.">
+    <meta name="description" content="Join the wishlist and be first to try it free. Limited slots only.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="We built the framework to increase your yield">
-    <meta property="og:description" content="100% guarantee to increase your yield. Join the wishlist and be first to try it free. Limited slots only.">
+    <meta property="og:description" content="Join the wishlist and be first to try it free. Limited slots only.">
     <meta property="og:image" content="{{ url('/images/wishlist/share.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -127,36 +127,14 @@
         @keyframes grow { from { transform: scaleY(0); } }
         .sway { animation: sway 5s ease-in-out infinite; transform-origin: 50% 100%; transform-box: fill-box; }
         @keyframes sway { 50% { transform: rotate(3deg); } }
-        h1 { font-size: 2.15rem; font-weight: 700; margin-top: .9rem; }
+        h1 { font-size: 1.85rem; font-weight: 700; margin-top: .3rem; }
+        .first-q { margin-top: 1.7rem; }
         h1 em { font-style: normal; color: var(--leaf); }
         .lead { font-size: 1.05rem; line-height: 1.55; color: #36402e; margin: .7rem 0 0; }
-        /* THE FRAMEWORK: five steps on one line that draws itself downward, ending at the harvest. */
-        .fw-h { font-family: 'Display', 'Body', sans-serif; font-size: 1.15rem; margin: 1.7rem 0 0; }
-        .fw { list-style: none; margin: .7rem 0 0; padding: 0; position: relative; }
-        .fw::before { content: ''; position: absolute; left: 1.15rem; top: 1.3rem; bottom: 1.6rem; width: 2px; border-radius: 2px;
-            background: linear-gradient(var(--sprout), var(--gold)); transform-origin: top; animation: draw 1.5s var(--ease) .35s both; }
-        @keyframes draw { from { transform: scaleY(0); } }
-        .fw li { position: relative; display: flex; gap: .85rem; align-items: flex-start; padding: .5rem 0; animation: stepIn .5s var(--ease) both; animation-delay: calc(var(--i) * .13s + .25s); }
-        .fw-n { flex: none; position: relative; z-index: 1; width: 2.3rem; height: 2.3rem; border-radius: 999px; background: var(--card); border: 2px solid var(--sprout);
-            display: grid; place-items: center; font-size: 1.1rem; }
-        .fw-n.is-gold { background: var(--gold); border-color: var(--gold); font-size: 1.15rem; font-weight: 800; color: #1a1a1a; box-shadow: 0 0 0 5px rgb(245 197 24 / .25); }
-        .fw b { display: block; font-weight: 800; line-height: 1.3; padding-top: .15rem; }
-        .fw small { display: block; color: var(--soft); font-size: .88rem; line-height: 1.45; margin-top: .1rem; }
-        .fw .fw-end b { color: var(--green); font-size: 1.08rem; }
-        .stalk { transform-origin: 50% 100%; transform-box: fill-box; animation: grow 1.2s var(--ease) both; }
-        .rise { stroke-dasharray: 300; stroke-dashoffset: 300; animation: rise-line 1.6s var(--ease) 1.2s forwards; }
-        @keyframes rise-line { to { stroke-dashoffset: 0; } }
         .gets { list-style: none; margin: .8rem 0 0; padding: 0; display: grid; gap: .5rem; }
         .gets li { display: flex; gap: .6rem; align-items: flex-start; font-weight: 700; line-height: 1.4; animation: stepIn .5s var(--ease) both; }
         .gets li:nth-child(2) { animation-delay: .08s; } .gets li:nth-child(3) { animation-delay: .16s; }
         .gets b { flex: none; width: 1.5rem; height: 1.5rem; border-radius: 999px; background: var(--leaf); color: #fff; display: grid; place-items: center; font-size: .8rem; }
-        /* The guarantee: a seal, and right under it what stands behind it. */
-        .guard { display: flex; align-items: center; gap: .9rem; margin-top: 1.3rem; padding: .95rem 1rem; border-radius: 1.2rem; background: var(--green); color: #fff; animation: pop .6s var(--ease) .25s both; }
-        .seal { flex: none; width: 4rem; height: 4rem; border-radius: 999px; display: grid; place-items: center; text-align: center; background: var(--gold); color: #1a1a1a;
-            font-family: 'Display', sans-serif; font-weight: 700; font-size: 1.05rem; line-height: .95; box-shadow: 0 0 0 4px rgb(245 197 24 / .35); }
-        .seal small { display: block; font-family: 'Body', sans-serif; font-size: .44rem; font-weight: 800; letter-spacing: .02em; margin-top: .1rem; }
-        .guard p { margin: 0; font-weight: 800; line-height: 1.35; }
-        .guard p small { display: block; margin-top: .2rem; font-weight: 600; color: #d9ead0; }
         /* Limited slots: a dot that breathes beside the words. */
         .slots { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1rem; padding: .45rem .85rem; border-radius: 999px; background: #fff1e6; color: #9a3412; font-weight: 800; font-size: .86rem; }
         .slots i { width: .55rem; height: .55rem; border-radius: 999px; background: #ea580c; animation: breathe 1.6s ease-in-out infinite; }
@@ -233,17 +211,7 @@
     /* Everything said on the page. */
     const T = {
         en: {
-            kicker: 'The Yield Framework', title: 'We built the <em>framework</em> to increase your yield.',
-            guard: '100% guarantee to increase your yield.', guardSub: 'If your yield does not go up, you pay nothing. Not a single peso.', seal: '100%', sealSub: 'GUARANTEE',
-            fwTitle: 'How the framework works', getTitle: 'When you join',
-            fw: [
-                ['🧪', 'Your soil and water first', 'We read your own lot before anything else.'],
-                ['🌱', 'The right seed', 'Matched to your land, your water and the season.'],
-                ['📅', 'The right day', 'Planting, fertilizer and spraying, each on its day.'],
-                ['⚖️', 'The right amount', 'Enough for the crop, and nothing wasted.'],
-                ['👀', 'Watched every week', 'Trouble caught early, before it costs you.'],
-            ],
-            fwEnd: 'A higher yield', fwEndSub: '100% guaranteed, or you pay nothing.',
+            kicker: 'Join the wishlist', title: 'We built the <em>framework</em> to increase your yield.',
             slots: 'Limited slots only', start: 'Join the wishlist', minutes: 'Just two minutes', resume: 'You left some answers.', resumeGo: 'Continue', restart: 'Start again',
             next: 'Next', skip: 'Skip', send: 'Send my wish', sending: 'Sending…', back: 'Back',
             name: 'First of all, what is your name?', first: 'First name', last: 'Last name', optional: 'if you like',
@@ -267,7 +235,7 @@
             again: 'We had your answers already. They are updated, and you keep your place.',
             cardTitle: 'Your card', download: 'Download', share: 'Share',
             climb: 'Move up the list', climbSay: `For every farmer friend who answers through your link, you move up ${3} places.`, friends: (n) => n ? `${n} friend${n === 1 ? '' : 's'} joined through your link.` : '',
-            copy: 'Copy', copied: 'Link copied', shareText: 'They built a framework to increase our yield, with a 100% guarantee. I joined the wishlist to try it free. Join too, slots are limited:',
+            copy: 'Copy', copied: 'Link copied', shareText: 'They built a framework to increase our yield. I joined the wishlist to try it free. Join too, slots are limited:',
             tipsTitle: 'While you wait', tipsSay: 'Three things you can do this week, for what you said is hardest:',
             nextTitle: 'What happens next?', nextSay: (v) => `We will contact you${v ? ' on ' + v : ''} within a week for the next step.`, edit: 'Change my answers',
             cardKicker: 'THE YIELD FRAMEWORK', cardBottom: 'Among the first to try', cardWish: 'My wish:',
@@ -276,7 +244,6 @@
 
     /* The questions, in order. Each says what must be answered before Next works. */
     const STEPS = [
-        { id: 'intro' },
         { id: 'name', ok: (a) => (a.firstName || '').trim().length > 0 },
         { id: 'role', ok: (a) => !!a.role },
         { id: 'place', ok: (a) => !!a.province },
@@ -291,16 +258,15 @@
         { id: 'contact', ok: (a) => !!a.consent && (/^(63|0)?9\d{9}$/.test((a.phone || '').replace(/\D+/g, '')) || /.+@.+\..+/.test(a.email || '')) },
         { id: 'done' },
     ];
-    const QN = STEPS.length - 2;   // the questions between the first screen and the last
+    const QN = STEPS.length - 1;   // the questions before the last screen
 
     const DONE = STEPS.length - 1;
     const read = () => { try { return JSON.parse(localStorage.getItem(KEY) || 'null') || {}; } catch (_) { return {}; } };
     const S = Object.assign({ at: 0, a: { crops: [], pains: [], wishes: [] }, done: null }, read());
     S.lang = 'en';   // English only (the owner, 2026-11-26)
     // Back on the page with answers half given: the first screen offers to carry on from there.
-    let resumeAt = 0;
-    if (S.done) S.at = DONE; else { resumeAt = S.at > 0 && S.at < DONE ? S.at : 0; S.at = 0; }
-    const keep = () => { try { localStorage.setItem(KEY, JSON.stringify(Object.assign({}, S, { at: S.at === 0 && resumeAt ? resumeAt : S.at }))); } catch (_) { /* a private window keeps nothing */ } };
+    if (S.done) S.at = DONE; else if (!(S.at >= 0 && S.at < DONE)) S.at = 0;
+    const keep = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (_) { /* a private window keeps nothing */ } };
     const A = S.a;
     const t = (k, ...x) => { const v = T[S.lang][k]; return typeof v === 'function' ? v(...x) : v; };
     const word = (q, k) => { const o = (C[q] || []).find((x) => x.k === k); return o ? o[S.lang] : ''; };
@@ -319,43 +285,11 @@
 
     /* Each screen, drawn from the answers so far. */
     const SCREENS = {
-        intro: () => `
-            <div class="hero" aria-hidden="true">
-                <svg viewBox="0 0 400 216" preserveAspectRatio="xMidYMax slice">
-                    <circle class="sun" cx="300" cy="78" r="34" fill="#ffc53d"/>
-                    <circle class="sun" cx="300" cy="78" r="52" fill="#ffc53d" opacity=".18"/>
-                    <path d="M0 150 Q 100 112 200 140 T 400 128 V216 H0Z" fill="#a8cc7e"/>
-                    <path d="M0 172 Q 120 140 240 166 T 400 156 V216 H0Z" fill="#6b9f3d"/>
-                    <path d="M0 196 Q 140 170 280 192 T 400 186 V216 H0Z" fill="#4a7c2a"/>
-                    <g stroke="#3d6823" stroke-width="2" opacity=".55" fill="none">
-                        <path d="M20 205 Q 80 186 140 200"/><path d="M160 208 Q 230 188 300 202"/><path d="M300 205 Q 350 192 400 198"/>
-                    </g>
-                    ${[[60, 40], [120, 58], [180, 76], [240, 94], [300, 112]].map(([x, h], i) => `
-                    <g class="stalk" style="animation-delay:${.25 + i * .16}s"><g class="sway" style="animation-delay:${i * .4}s">
-                        <path d="M${x} 196 C ${x} ${196 - h * .5} ${x + 1} ${196 - h * .8} ${x + 3} ${196 - h}" stroke="#2d5016" stroke-width="3.5" stroke-linecap="round" fill="none"/>
-                        <path d="M${x} ${196 - h * .45} C ${x - 16} ${196 - h * .5} ${x - 22} ${196 - h * .7} ${x - 20} ${196 - h * .82} C ${x - 8} ${196 - h * .74} ${x - 1} ${196 - h * .62} ${x} ${196 - h * .45}Z" fill="#86b556"/>
-                        <path d="M${x + 1} ${196 - h * .62} C ${x + 16} ${196 - h * .66} ${x + 22} ${196 - h * .84} ${x + 20} ${196 - h * .96} C ${x + 8} ${196 - h * .88} ${x + 2} ${196 - h * .78} ${x + 1} ${196 - h * .62}Z" fill="#6b9f3d"/>
-                        <ellipse cx="${x + 4}" cy="${196 - h - 7}" rx="${4 + i}" ry="${8 + i * 1.6}" fill="#e6b800"/>
-                    </g></g>`).join('')}
-                    <path class="rise" d="M48 148 C 120 128 200 104 312 66" stroke="#2d5016" stroke-width="2.5" stroke-dasharray="6 6" fill="none" opacity=".7"/>
-                    <path class="rise" d="M302 62 L314 65 L307 76" stroke="#2d5016" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity=".7"/>
-                </svg>
-            </div>
+        name: () => `
             <p class="kicker">${t('kicker')}</p>
             <h1>${t('title')}</h1>
-            <div class="guard">
-                <span class="seal">${t('seal')}<small>${t('sealSub')}</small></span>
-                <p>${t('guard')}<small>${t('guardSub')}</small></p>
-            </div>
             <span class="slots"><i aria-hidden="true"></i>${t('slots')}</span>
-            <h3 class="fw-h">${t('fwTitle')}</h3>
-            <ol class="fw">${t('fw').map(([pic, b, sm], i) => `<li style="--i:${i}"><span class="fw-n" aria-hidden="true">${pic}</span><div><b>${esc(b)}</b><small>${esc(sm)}</small></div></li>`).join('')}
-                <li class="fw-end" style="--i:5"><span class="fw-n is-gold" aria-hidden="true">↑</span><div><b>${t('fwEnd')}</b><small>${t('fwEndSub')}</small></div></li></ol>
-            <h3 class="fw-h">${t('getTitle')}</h3>
-            <ul class="gets">${(OFFER.en || []).map((x) => `<li><b>✓</b><span>${esc(x)}</span></li>`).join('')}</ul>
-            <div class="resume" id="resume" ${resumeAt ? '' : 'hidden'}><span>${t('resume')}</span><button type="button" data-restart>${t('restart')}</button></div>`,
-        name: () => `
-            <h2>${t('name')}</h2>
+            <h2 class="first-q">${t('name')}</h2>
             <label class="field"><span>${t('first')}</span><input class="input" data-in="firstName" autocomplete="given-name" value="${esc(A.firstName)}" maxlength="60"></label>
             <label class="field"><span>${t('last')} <small>(${t('optional')})</small></span><input class="input" data-in="lastName" autocomplete="family-name" value="${esc(A.lastName)}" maxlength="60"></label>`,
         role: () => `<h2>${t('role')}</h2>${opts('role', 'role')}`,
@@ -426,16 +360,15 @@
     function paint() {
         const step = STEPS[S.at];
         stage.innerHTML = `<section class="step is-on ${dir === 'back' ? 'from-back' : ''}" data-step="${step.id}">${SCREENS[step.id]()}</section>`;
-        $('#bar i').style.width = (step.id === 'intro' ? 0 : Math.min(100, Math.round((Math.min(S.at, QN) / QN) * 100))) + '%';
-        $('#bar').style.opacity = step.id === 'intro' || step.id === 'done' ? '0' : '1';
-        back.hidden = step.id === 'intro' || step.id === 'done';
-        $('.top').classList.toggle('is-bare', step.id === 'intro' || step.id === 'done');
+        $('#bar i').style.width = Math.min(100, Math.round(((Math.min(S.at, QN - 1) + 1) / QN) * 100)) + '%';
+        $('#bar').style.opacity = step.id === 'done' ? '0' : '1';
+        back.hidden = S.at === 0 || step.id === 'done';
+        $('.top').classList.toggle('is-bare', step.id === 'done');
         back.setAttribute('aria-label', t('back'));
         foot.classList.toggle('is-gone', step.id === 'done');
         skip.hidden = !step.skippable;
         skip.textContent = t('skip');
-        go.innerHTML = step.id === 'intro' ? `${resumeAt ? t('resumeGo') : t('start')} ${arrow}`
-            : step.id === 'contact' ? `${t('send')} ${arrow}` : `${t('next')} ${arrow}`;
+        go.innerHTML = step.id === 'contact' ? `${t('send')} ${arrow}` : `${t('next')} ${arrow}`;
         state();
         if (step.id === 'place') places();
         if (step.id === 'done') finish();
@@ -443,7 +376,7 @@
     }
     function state() {
         const step = STEPS[S.at];
-        go.disabled = !(step.id === 'intro' || (step.ok ? step.ok(A) : true));
+        go.disabled = !(step.ok ? step.ok(A) : true);
     }
 
     // A tap on a choice: one answer, or several up to the limit. It never turns the page.
@@ -463,11 +396,10 @@
             }
             keep(); state(); return;
         }
-        if (e.target.closest('[data-restart]')) { resumeAt = 0; S.at = 0; Object.keys(A).forEach((k) => { if (k !== 'ref') delete A[k]; }); Object.assign(A, { crops: [], pains: [], wishes: [] }); keep(); paint(); return; }
         if (e.target.closest('[data-copy]')) { copy($('#mylink').value); return; }
         if (e.target.closest('[data-download]')) { download(); return; }
         if (e.target.closest('[data-share-card]')) { shareCard(); return; }
-        if (e.target.closest('[data-edit]')) { S.done = null; S.at = 1; resumeAt = 0; finish.fell = false; dir = 'back'; keep(); paint(); }
+        if (e.target.closest('[data-edit]')) { S.done = null; S.at = 0; finish.fell = false; dir = 'back'; keep(); paint(); }
     });
     const nudge = (el) => el.animate?.([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' }], { duration: 260 });
     const onIn = (e) => {
@@ -486,8 +418,7 @@
         if (go.disabled) return;
         const step = STEPS[S.at];
         if (step.id === 'contact') return send();
-        if (step.id === 'intro' && resumeAt) { S.at = resumeAt; resumeAt = 0; }
-        else S.at = Math.min(S.at + 1, STEPS.length - 2);
+        S.at = Math.min(S.at + 1, STEPS.length - 2);
         dir = 'fwd'; keep(); paint();
     });
     skip.addEventListener('click', () => { S.at = Math.min(S.at + 1, STEPS.length - 2); dir = 'fwd'; keep(); paint(); });
