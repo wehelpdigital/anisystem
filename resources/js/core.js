@@ -3067,6 +3067,12 @@ window.aneeUpgrade = function aneeUpgrade(message, tier) {
     box.classList.add('is-open');
 };
 
+/* A rung's name and price, for a page that names the plan without opening the sheet (the tools' locked films). */
+window.aneeTierCard = (tier) => {
+    const t = AU_TIERS[auRung(tier)];
+    return t ? { name: t.name, price: t.price, per: t.per } : null;
+};
+
 /* Locked doors, wired once for the whole app: any element carrying
    data-tier-lock="<rung>" (with data-lock-say for the sentence)
    opens the upgrade sheet instead of doing what it looks like it does.

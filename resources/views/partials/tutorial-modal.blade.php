@@ -50,13 +50,16 @@
         <div class="tutv-body">
             <p class="tutv-kicker">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.55-2.28A1 1 0 0121 8.62v6.76a1 1 0 01-1.45.9L15 14M5 7h8a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V9a2 2 0 012-2z"/></svg>
-                Quick tutorial
+                <span id="tutvKick">Quick tutorial</span>
             </p>
             <h3 class="tutv-title" id="tutvTitle"></h3>
             <p class="tutv-blurb" id="tutvBlurb"></p>
+            {{-- A locked tool's film (the dashboard's tools, 2026-11-28): the plan it comes with, and the way to it. --}}
+            <p class="tutv-plan" id="tutvPlan" hidden></p>
             <div class="tutv-acts">
                 <button type="button" class="tutv-never" data-tutv-never>Don’t show this again</button>
                 <button type="button" class="tutv-close" data-tutv-close>Close</button>
+                <a class="tutv-up" id="tutvUp" href="/account/subscription" hidden></a>
             </div>
         </div>
     </div>
@@ -256,8 +259,28 @@
         transition: background .28s cubic-bezier(.22,1,.36,1), color .28s cubic-bezier(.22,1,.36,1),
             border-color .28s cubic-bezier(.22,1,.36,1), transform .28s cubic-bezier(.22,1,.36,1); }
     .tutv-never:hover, .tutv-never:focus-visible { background: #fbe0dc; border-color: #f0b8b0; color: #9a1d13; transform: translateY(-1px); outline: none; }
-    /* Opened by a tile's Preview: asked for, so there is nothing to stop showing. */
+    /* Opened by a tile: asked for, so there is nothing to stop showing. */
     .tutv-wrap.is-preview .tutv-never { display: none; }
+    /* A locked tool: the plan it comes with, a yellow way to it, and Close stepping back to a quiet button. */
+    .tutv-plan { display: flex; gap: .55rem; align-items: flex-start; margin-top: .8rem; padding: .7rem .85rem; border-radius: .9rem;
+        background: #fff7db; border: 1px solid #f3e1a1; color: #6b5300; font-size: .86rem; font-weight: 700; line-height: 1.45;
+        animation: tutvPlanIn .35s cubic-bezier(.22,1,.36,1) both; }
+    .tutv-plan::before { content: ''; flex: none; width: 1.05rem; height: 1.05rem; margin-top: .1rem; background: currentColor;
+        -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='10.5' width='16' height='10' rx='2.5'/%3E%3Cpath d='M8 10.5V7a4 4 0 0 1 8 0v3.5'/%3E%3C/svg%3E") center / contain no-repeat;
+                mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='10.5' width='16' height='10' rx='2.5'/%3E%3Cpath d='M8 10.5V7a4 4 0 0 1 8 0v3.5'/%3E%3C/svg%3E") center / contain no-repeat; }
+    .tutv-plan[hidden] { display: none; }
+    @keyframes tutvPlanIn { from { opacity: 0; transform: translateY(4px); } }
+    html.dark .tutv-plan { background: rgb(245 197 24 / .12); border-color: rgb(245 197 24 / .3); color: #f3d77a; }
+    .tutv-up { display: flex; align-items: center; justify-content: center; gap: .45rem; flex-wrap: wrap; width: 100%; min-height: 3rem; padding: .7rem 1.2rem;
+        border-radius: 1rem; background: #f5c518; color: #1a1a1a; font-weight: 800; font-size: .95rem; text-decoration: none; text-align: center;
+        box-shadow: 0 10px 24px -14px rgb(199 158 0 / .95); transition: transform .28s cubic-bezier(.22,1,.36,1), background .28s cubic-bezier(.22,1,.36,1); }
+    .tutv-up small { font-weight: 700; font-size: .8rem; opacity: .75; }
+    .tutv-up:hover, .tutv-up:focus-visible { background: #f7d13e; transform: translateY(-2px); outline: none; }
+    .tutv-up:active { transform: translateY(0) scale(.985); }
+    .tutv-up[hidden] { display: none; }
+    .tutv-wrap.is-locked .tutv-close { background: transparent; color: var(--color-gray-600, #4b5563); box-shadow: none; animation: none;
+        border: 1px solid var(--color-gray-200, #e5e7eb); min-height: 2.7rem; }
+    html.dark .tutv-wrap.is-locked .tutv-close { color: #cdd8c0; border-color: #2b3a1c; }
     .tutv-never:active { transform: translateY(0) scale(.985); }
     @media (min-width: 640px) {
         .tutv-acts { flex-direction: row; align-items: center; justify-content: flex-end; }
@@ -608,6 +631,7 @@
             wrap.hidden = true;
             wrap.setAttribute('aria-hidden', 'true');
             wrap.classList.remove('is-closing', 'is-preview');
+            paintLock(null);
             screen.classList.remove('is-swapping');
             card.style.removeProperty('height');
             card.style.removeProperty('transition');
@@ -656,11 +680,33 @@
     /* A tile's "Preview" (2026-10-17, the owner: a play icon on every module of the dashboard, even a
        locked one): the card at once, whatever "never again" or an earlier Close said, with no "never
        again" of its own, and the clip already playing (the tap is the farmer's own). */
-    function preview(key) {
+    /* A locked tool's film says which plan opens it and offers the way there. Standing in somebody else's farm,
+       the plan is the farm's: they are told whose decision it is, and nothing is sold to them. */
+    const kick = document.getElementById('tutvKick'), lockLine = document.getElementById('tutvPlan'), up = document.getElementById('tutvUp');
+    function paintLock(lock) {
+        wrap.classList.toggle('is-locked', !!lock);
+        if (kick) kick.textContent = lock ? 'Locked on your plan' : 'Quick tutorial';
+        if (!lockLine || !up) return;
+        if (!lock) { lockLine.hidden = true; up.hidden = true; return; }
+        const plan = window.aneeTierCard ? window.aneeTierCard(lock.rung) : null;
+        if (window.AU_IS_WORKER) {
+            lockLine.textContent = (window.AU_FARM_NAME || 'This farm') + ' does not have this yet. Only the farm owner can change that.';
+            up.hidden = true;
+        } else {
+            lockLine.textContent = plan ? 'This comes with ' + plan.name + '. Watch how it works, then upgrade to use it.' : (lock.say || 'This needs a higher plan.');
+            up.textContent = plan ? 'Upgrade to ' + plan.name : 'See the plans';
+            if (plan) { const sm = document.createElement('small'); sm.textContent = plan.price + plan.per; up.appendChild(sm); }
+            up.hidden = false;
+        }
+        lockLine.hidden = false;
+    }
+
+    function preview(key, lock) {
         const item = data().items[key];
         if (!item) return false;
         offerSeq++;                      // an offer still waiting must not replace it
         wrap.classList.add('is-preview');
+        paintLock(lock || null);
         show(key);
         if (!pick(item).youtube) video.play().catch(() => {});
         return true;
