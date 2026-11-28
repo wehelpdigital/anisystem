@@ -53,7 +53,9 @@ SITE_URLS = {"/", "/features", "/pricing", "/about", "/tutorial", "/contact", "/
              # The Nutrients guides (2026-10-30): one page per plant nutrient and the overview.
              "/nutrients",
              # The landing pages for farm management searches (2026-11-18 app, 2026-11-24 software and farm management).
-             "/best-farm-management-app-philippines", "/best-farm-management-software-philippines", "/best-farm-management-philippines"}
+             "/best-farm-management-app-philippines", "/best-farm-management-software-philippines", "/best-farm-management-philippines",
+             # Southeast Asia (2026-11-28): the app and the software.
+             "/top-farming-management-app-southeast-asia", "/best-farming-management-software-southeast-asia"}
 
 
 def url_map():

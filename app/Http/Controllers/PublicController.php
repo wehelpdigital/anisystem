@@ -99,6 +99,18 @@ class PublicController extends Controller
         return view('public.farm-management', ['facts' => $this->landingFacts()]);
     }
 
+    /** Southeast Asia (2026-11-28, the owner: "top farming management app in southeast asia, top farming management
+     *  software in southeast asia, best farming management app in southeast asia and so on"). One view, two pages. */
+    public function seaApp()
+    {
+        return view('public.sea-farm-app', ['facts' => $this->landingFacts(), 'variant' => 'app']);
+    }
+
+    public function seaSoftware()
+    {
+        return view('public.sea-farm-app', ['facts' => $this->landingFacts(), 'variant' => 'software']);
+    }
+
     /** The live counts the landing pages print, rounded down and kept an hour. */
     private function landingFacts(): array
     {

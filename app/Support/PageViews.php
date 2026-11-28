@@ -271,7 +271,7 @@ final class PageViews
             in_array($first, ['how-it-works', 'features-tour'], true) => 'how-it-works',
             $first === 'ask-anee' => 'ask-anee',
             $first === 'start' => 'ad-landing',
-            in_array($first, ['best-farm-management-app-philippines', 'best-farm-management-software-philippines', 'best-farm-management-philippines'], true) => 'best-app',
+            in_array($first, ['best-farm-management-app-philippines', 'best-farm-management-software-philippines', 'best-farm-management-philippines', 'top-farming-management-app-southeast-asia', 'best-farming-management-software-southeast-asia'], true) => 'best-app',
             in_array($first, ['legal', 'privacy', 'terms', 'cookies'], true) => 'legal',
             in_array($first, ['about', 'contact'], true) => 'about',
             default => 'other',

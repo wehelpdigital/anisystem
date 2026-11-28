@@ -311,7 +311,7 @@
                     <a href="{{ route('home') }}" class="nav-xl nav-home hover:text-brand-600 {{ request()->routeIs('home', 'ph.home') ? 'text-brand-700' : '' }}">Home</a>
                     {{-- How It Works, with Features under it (2026-10-01). The words themselves still open the steps. --}}
                     <div class="relative" x-data="{ h: false }" @mouseenter="h = true" @mouseleave="h = false" @focusin="h = true" @focusout="h = $el.contains($event.relatedTarget)">
-                        <a href="{{ route('how') }}" class="inline-flex items-center gap-1 whitespace-nowrap hover:text-brand-600 {{ request()->routeIs('how', 'ph.how', 'how.why', 'ph.how.why', 'how.vs', 'ph.how.vs', 'how.auto', 'ph.how.auto', 'how.easy', 'ph.how.easy', 'best.app', 'ph.best.app', 'best.software', 'ph.best.software', 'farm.management', 'ph.farm.management', 'features', 'ph.features', 'site.features.show') ? 'text-brand-700' : '' }}" :aria-expanded="h">
+                        <a href="{{ route('how') }}" class="inline-flex items-center gap-1 whitespace-nowrap hover:text-brand-600 {{ request()->routeIs('how', 'ph.how', 'how.why', 'ph.how.why', 'how.vs', 'ph.how.vs', 'how.auto', 'ph.how.auto', 'how.easy', 'ph.how.easy', 'best.app', 'ph.best.app', 'best.software', 'ph.best.software', 'farm.management', 'ph.farm.management', 'sea.app', 'ph.sea.app', 'sea.software', 'ph.sea.software', 'features', 'ph.features', 'site.features.show') ? 'text-brand-700' : '' }}" :aria-expanded="h">
                             How It Works
                             <svg class="w-3.5 h-3.5 transition-transform duration-300" :class="h && 'rotate-180'" fill="none" stroke="currentColor" stroke-width="2.6" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
                         </a>
@@ -537,6 +537,8 @@
                         <li><a href="{{ route('best.app') }}">Best farm management app in the Philippines</a></li>
                         <li><a href="{{ route('best.software') }}">Best farm management software in the Philippines</a></li>
                         <li><a href="{{ route('farm.management') }}">Farm management in the Philippines</a></li>
+                        <li><a href="{{ route('sea.app') }}">Top farming management app in Southeast Asia</a></li>
+                        <li><a href="{{ route('sea.software') }}">Best farming management software in Southeast Asia</a></li>
                         <li><a href="{{ route('features') }}">Features</a></li>
                         <li><a href="{{ url('/ask-anee') }}">Ask Anee for free</a></li>
                         <li><a href="{{ url('/questions') }}">Farmers' questions</a></li>
@@ -666,7 +668,7 @@
     </footer>
 
     {{-- The way in, one tap away on a phone, on the selling pages (2026-11-24): guests only. --}}
-    @if (! auth()->check() && request()->routeIs('home', 'ph.home', 'how', 'ph.how', 'how.*', 'ph.how.*', 'features', 'ph.features', 'site.features.show', 'pricing', 'ph.pricing', 'pricing.compare', 'ph.pricing.compare', 'about', 'ph.about', 'best.app', 'ph.best.app', 'best.software', 'ph.best.software', 'farm.management', 'ph.farm.management'))
+    @if (! auth()->check() && request()->routeIs('home', 'ph.home', 'how', 'ph.how', 'how.*', 'ph.how.*', 'features', 'ph.features', 'site.features.show', 'pricing', 'ph.pricing', 'pricing.compare', 'ph.pricing.compare', 'about', 'ph.about', 'best.app', 'ph.best.app', 'best.software', 'ph.best.software', 'farm.management', 'ph.farm.management', 'sea.app', 'ph.sea.app', 'sea.software', 'ph.sea.software'))
         @include('public.partials.sticky-cta')
     @endif
     @stack('scripts')
